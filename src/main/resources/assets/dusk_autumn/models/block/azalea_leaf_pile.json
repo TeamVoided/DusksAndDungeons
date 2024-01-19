@@ -1,0 +1,6 @@
+{
+    "parent": "dusk_autumn:block/leaf_pile",
+    "textures": {
+        "all": "minecraft:block/azalea_leaves"
+    }
+}

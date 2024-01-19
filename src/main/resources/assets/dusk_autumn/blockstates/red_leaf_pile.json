@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "": {
+      "model": "dusk_autumn:block/red_leaf_pile"
+    },
+    "type=bottom": {
+      "model": "dusk_autumn:block/red_leaf_pile"
+    },
+    "type=top": {
+      "model": "minecraft:block/andesite_slab_top"
+    }
+  }
+}

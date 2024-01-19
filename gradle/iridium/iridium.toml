@@ -1,6 +1,6 @@
-projectTitle = "TeamVoidedTemplateMod"
-modId = "team-voided-template-mod"
-githubRepo = "Teamvoided/TeamVoidedTemplateMod"
+projectTitle = "DuskBlocks"
+modId = "dusk_autumn"
+githubRepo = "Teamvoided/DuskBlocks"
 discordServerInviteId = "KZ5Q364hEg"
 authors = [ "Dusk" ]
 majorMinecraftVersion = "1.20"

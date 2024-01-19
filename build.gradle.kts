@@ -10,7 +10,7 @@ plugins {
 group = project.properties["maven_group"]!!
 version = project.properties["mod_version"]!!
 base.archivesName.set(project.properties["archives_base_name"] as String)
-description = "TeamVoided Template"
+description = ">B("
 val modid = project.properties["modid"]!! as String
 
 repositories {
@@ -19,10 +19,26 @@ repositories {
 
 modSettings {
     modId(modid)
-    modName("Team Voided Template")
+    modName("Dusk Autumns Blocks")
 
-    entrypoint("main", "org.teamvoided.template.Template::commonInit")
-    entrypoint("client", "org.teamvoided.template.Template::clientInit")
+    entrypoint("main", "org.teamvoided.dusk_autumn.DuskAutumns::commonInit")
+    entrypoint("client", "org.teamvoided.dusk_autumn.DuskAutumns::clientInit")
+    entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.datagen.DuskAutumnsData")
+    mixinFile("dusk_autumn.mixins.json")
+}
+
+loom {
+    runs {
+        // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
+        create("DataGen") {
+            client()
+            ideConfigGenerated(true)
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.modid=${modid}")
+            runDir("build/datagen")
+        }
+    }
 }
 
 tasks {
@@ -41,3 +57,5 @@ tasks {
         withSourcesJar()
     }
 }
+
+sourceSets["main"].resources.srcDir("src/main/generated")
