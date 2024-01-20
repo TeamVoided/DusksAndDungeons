@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumn
 
-import net.minecraft.entity.passive.FoxEntity
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumn.init.DuskBlocks
@@ -21,7 +20,6 @@ object DuskAutumns {
         DuskItems.init()
         DuskWorldgen.init()
         DuskParticles.init()
-        for (x in FoxEntity.Variant.entries) println("[${x.name}-${x}]")
     }
 
     fun clientInit() {
