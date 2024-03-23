@@ -1,6 +1,6 @@
 {
     "parent": "dusk_autumn:block/leaf_pile",
     "textures": {
-        "all": "dusk_autumn:block/golden_birch_leaves"
+        "all": "dusk_autumn:block/cascade_leaves"
     }
 }

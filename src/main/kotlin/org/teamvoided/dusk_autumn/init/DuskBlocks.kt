@@ -27,9 +27,7 @@ object DuskBlocks {
         .strength(0.2F).nonOpaque().suffocates(Blocks::never).blockVision(Blocks::never).lavaIgnitable()
         .pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::never).noCollision().nonSolid()
         .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.PLANT)
-//    val GOLDEN_BIRCH_COLOR = 16761873
-    val GOLDEN_BIRCH_COLOR = 16760872
-    val RED_LEAF_COLOR = 13846346
+    val CASCADE_LEAF_COLOR = 13846346
 
 
     val BLUE_PETALS = register("blue_petals", PinkPetalsBlock(AbstractBlock.Settings.create().mapColor(MapColor.PLANT)
@@ -50,28 +48,28 @@ object DuskBlocks {
         .mapColor(MapColor.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY)))
     val POTTED_GOLDEN_BIRCH_SAPLING = register("potted_golden_birch_sapling", Blocks.createFlowerPotBlock(GOLDEN_BIRCH_SAPLING))
 
-    val RED_LEAVES = register("red_leaves", FallingLeavesBlock(AbstractBlock.Settings.create().strength(0.2f).ticksRandomly()
+    val CASCADE_LEAVES = register("cascade_leaves", FallingLeavesBlock(AbstractBlock.Settings.create().strength(0.2f).ticksRandomly()
         .nonOpaque().allowsSpawning (Blocks::canSpawnOnLeaves).suffocates (Blocks::never).blockVision (Blocks::never)
         .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock (Blocks::never).sounds(BlockSoundGroup.CHERRY_LEAVES)
         .mapColor(MapColor.RED),DuskParticles.CASCADE_LEAF_PARTICLE)
     )
 
-    val BLUE_PLANKS = register(
-        "blue_planks", Block(
+    val CASCADE_PLANKS = register(
+        "cascade_planks", Block(
             AbstractBlock.Settings.create()
                 .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD)
+                .strength(2.0F, 3.0F).sounds(BlockSoundGroup.NETHER_WOOD)
                 .lavaIgnitable()
         )
     )
-    val STRIPPED_BLUE_LOG = register(
-        "stripped_blue_log", Blocks.createPillarBlock(
-            MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.WOOD
+    val STRIPPED_CASCADE_LOG = register(
+        "stripped_cascade_log", Blocks.createPillarBlock(
+            MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.NETHER_WOOD
         )
     )
-    val BLUE_LOG = register(
-        "blue_log", Blocks.createPillarBlock(
-            MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.WOOD
+    val CASCADE_LOG = register(
+        "cascade_log", Blocks.createPillarBlock(
+            MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.NETHER_WOOD
         )
     )
 
@@ -82,7 +80,7 @@ object DuskBlocks {
     val ACACIA_LEAF_PILE = register("acacia_leaf_pile", LeafPileBlock(leafPileSettings))
     val DARK_OAK_LEAF_PILE = register("dark_oak_leaf_pile", LeafPileBlock(leafPileSettings))
     val MANGROVE_LEAF_PILE = register("mangrove_leaf_pile", LeafPileBlock(leafPileSettings))
-    val RED_LEAF_PILE = register("red_leaf_pile", FallingLeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.CHERRY_LEAVES).mapColor(MapColor.RED),DuskParticles.CASCADE_LEAF_PARTICLE))
+    val CASCADE_LEAF_PILE = register("cascade_leaf_pile", FallingLeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.CHERRY_LEAVES).mapColor(MapColor.RED),DuskParticles.CASCADE_LEAF_PARTICLE))
     val CHERRY_LEAF_PILE = register("cherry_leaf_pile", FallingLeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.CHERRY_LEAVES).mapColor(MapColor.PINK),ParticleTypes.CHERRY_LEAVES))
     val AZALEA_LEAF_PILE = register("azalea_leaf_pile", LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.AZALEA_LEAVES).mapColor(MapColor.PLANT)))
     val FLOWERING_AZALEA_LEAF_PILE = register("flowering_azalea_leaf_pile", LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.AZALEA_LEAVES).mapColor(MapColor.PLANT)))
@@ -93,8 +91,8 @@ object DuskBlocks {
         val cutoutList = listOf(
             BLUE_PETALS, VIOLET_DAISY, POTTED_VIOLET_DAISY,
             GOLDEN_BIRCH_LEAVES, GOLDEN_BIRCH_SAPLING, POTTED_GOLDEN_BIRCH_SAPLING,
-            RED_LEAVES,
-            RED_LEAF_PILE, OAK_LEAF_PILE, SPRUCE_LEAF_PILE, BIRCH_LEAF_PILE, JUNGLE_LEAF_PILE, ACACIA_LEAF_PILE,
+            CASCADE_LEAVES,
+            CASCADE_LEAF_PILE, OAK_LEAF_PILE, SPRUCE_LEAF_PILE, BIRCH_LEAF_PILE, JUNGLE_LEAF_PILE, ACACIA_LEAF_PILE,
             DARK_OAK_LEAF_PILE, MANGROVE_LEAF_PILE, CHERRY_LEAF_PILE, AZALEA_LEAF_PILE,
             FLOWERING_AZALEA_LEAF_PILE, GOLDEN_BIRCH_LEAF_PILE
         )
@@ -130,8 +128,10 @@ object DuskBlocks {
         )
         ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> FoliageColors.getSpruceColor() }, SPRUCE_LEAF_PILE)
         ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> FoliageColors.getBirchColor() }, BIRCH_LEAF_PILE)
-        ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> GOLDEN_BIRCH_COLOR }, *arrayOf(GOLDEN_BIRCH_LEAVES, GOLDEN_BIRCH_LEAF_PILE))
-        ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> RED_LEAF_COLOR }, *arrayOf(RED_LEAVES, RED_LEAF_PILE))
+        ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> CASCADE_LEAF_COLOR }, *arrayOf(CASCADE_LEAVES, CASCADE_LEAF_PILE))
+
+//    val GOLDEN_BIRCH_COLOR = 16761873
+//    val GOLDEN_BIRCH_COLOR = 16760872
 
     }
 

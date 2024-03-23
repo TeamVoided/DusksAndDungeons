@@ -13,18 +13,18 @@ import org.teamvoided.dusk_autumn.DuskAutumns
 
 object DuskItems {
 
-    val BLUE_PLANKS = register("blue_planks", BlockItem(DuskBlocks.BLUE_PLANKS, Item.Settings()))
-    val STRIPPED_BLUE_LOG = register("stripped_blue_log", BlockItem(DuskBlocks.STRIPPED_BLUE_LOG, Item.Settings()))
-    val BLUE_LOG = register("blue_log", BlockItem(DuskBlocks.BLUE_LOG, Item.Settings()))
+    val CASCADE_PLANKS = register("cascade_planks", BlockItem(DuskBlocks.CASCADE_PLANKS, Item.Settings()))
+    val STRIPPED_CASCADE_LOG = register("stripped_cascade_log", BlockItem(DuskBlocks.STRIPPED_CASCADE_LOG, Item.Settings()))
+    val CASCADE_LOG = register("cascade_log", BlockItem(DuskBlocks.CASCADE_LOG, Item.Settings()))
 
     val BLUE_PETALS = register("blue_petals", BlockItem(DuskBlocks.BLUE_PETALS, Item.Settings()))
     val VIOLET_DAISY = register("violet_daisy", BlockItem(DuskBlocks.VIOLET_DAISY, Item.Settings()))
 
     val GOLDEN_BIRCH_LEAVES = register("golden_birch_leaves", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAVES, Item.Settings()))
     val GOLDEN_BIRCH_SAPLING = register("golden_birch_sapling", BlockItem(DuskBlocks.GOLDEN_BIRCH_SAPLING, Item.Settings()))
-    val RED_LEAVES = register("red_leaves", BlockItem(DuskBlocks.RED_LEAVES, Item.Settings()))
+    val CASCADE_LEAVES = register("cascade_leaves", BlockItem(DuskBlocks.CASCADE_LEAVES, Item.Settings()))
 
-    val RED_LEAF_PILE = register("red_leaf_pile", BlockItem(DuskBlocks.RED_LEAF_PILE, Item.Settings()))
+    val CASCADE_LEAF_PILE = register("cascade_leaf_pile", BlockItem(DuskBlocks.CASCADE_LEAF_PILE, Item.Settings()))
     val OAK_LEAF_PILE = register("oak_leaf_pile", BlockItem(DuskBlocks.OAK_LEAF_PILE, Item.Settings()))
     val BIRCH_LEAF_PILE = register("birch_leaf_pile", BlockItem(DuskBlocks.BIRCH_LEAF_PILE, Item.Settings()))
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", BlockItem(DuskBlocks.SPRUCE_LEAF_PILE, Item.Settings()))
@@ -72,8 +72,7 @@ object DuskItems {
         )
         ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getSpruceColor()}, SPRUCE_LEAF_PILE)
         ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getBirchColor()}, BIRCH_LEAF_PILE)
-        ColorProviderRegistry.ITEM.register({ _, _ -> DuskBlocks.GOLDEN_BIRCH_COLOR }, *arrayOf(GOLDEN_BIRCH_LEAVES,GOLDEN_BIRCH_LEAF_PILE))
-        ColorProviderRegistry.ITEM.register({ _, _ -> DuskBlocks.RED_LEAF_COLOR }, *arrayOf(RED_LEAVES, RED_LEAF_PILE))
+        ColorProviderRegistry.ITEM.register({ _, _ -> DuskBlocks.CASCADE_LEAF_COLOR }, *arrayOf(CASCADE_LEAVES, CASCADE_LEAF_PILE))
     }
 
     fun register(id: String, item: Item): Item {

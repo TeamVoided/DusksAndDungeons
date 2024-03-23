@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/leaves",
     "textures": {
-        "all": "dusk_autumn:block/golden_birch_leaves"
+        "all": "dusk_autumn:block/cascade_leaves"
     }
 }

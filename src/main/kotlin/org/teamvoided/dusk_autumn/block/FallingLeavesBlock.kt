@@ -4,8 +4,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.LeavesBlock
 import net.minecraft.client.util.ParticleUtil
 import net.minecraft.particle.DefaultParticleType
-import net.minecraft.particle.ParticleType
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator

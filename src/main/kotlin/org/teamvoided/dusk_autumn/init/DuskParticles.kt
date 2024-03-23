@@ -20,7 +20,8 @@ object DuskParticles {
     fun initClient() {
         ParticleFactoryRegistry.getInstance()
             .register(CASCADE_LEAF_PARTICLE, ParticleFactoryRegistry.PendingParticleFactory {
-                ParticleFactory { _, world, x, y, z, _, _, _ -> FallingLeafParticle(
+                ParticleFactory { _, world, x, y, z, _, _, _ ->
+                    FallingLeafParticle(
                         world, x, y, z, it
                     )
                 }
