@@ -18,6 +18,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     private fun leafPile(num: Number? = null): Identifier =
         id("block/parent/leaf_pile${if (num != null) "_$num" else ""}")
 
+    private fun leafPileHanging(num: Number? = null): Identifier =
+        id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
+
 
     val leafPiles = listOf(
         Pair(DuskBlocks.OAK_LEAF_PILE, Blocks.OAK_LEAVES)
@@ -31,6 +34,12 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             val layer3 = gen.parentedModel(it.modelSuffix("_12"), texture, leafPile(12))
             val layer4 = gen.parentedModel(it.modelSuffix("_16"), texture, leafPile(16))
 
+
+            val hanging1 = gen.parentedModel(it, texture, leafPileHanging())
+            val hanging2 = gen.parentedModel(it.modelSuffix("_8"), texture, leafPileHanging(8))
+            val hanging3 = gen.parentedModel(it.modelSuffix("_12"), texture, leafPileHanging(12))
+            val hanging4 = gen.parentedModel(it.modelSuffix("_16"), texture, leafPileHanging(16))
+
             gen.blockStateCollector.accept(
                 MultipartBlockStateSupplier.create(DuskBlocks.OAK_LEAF_PILE)
                     .with(
@@ -40,27 +49,26 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                         When.create().set(Properties.LAYERS, 2).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
                     ).with(
-                        When.create().set(Properties.LAYERS, 4).set(Properties.HANGING, false),
+                        When.create().set(Properties.LAYERS, 3).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
                     ).with(
-                        When.create().set(Properties.LAYERS, 8).set(Properties.HANGING, false),
+                        When.create().set(Properties.LAYERS, 4).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer4)
                     )
-//                    .with(
-//                        When.create().set(Properties.LAYERS, 1).set(Properties.HANGING, true),
-//                        BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
-//                    ).with(
-//                        When.create().set(Properties.LAYERS, 2).set(Properties.HANGING, true),
-//                        BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
-//                    ).with(
-//                        When.create().set(Properties.LAYERS, 4).set(Properties.HANGING, true),
-//                        BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
-//                    ).with(
-//                        When.create().set(Properties.LAYERS, 8).set(Properties.HANGING, true),
-//                        BlockStateVariant.create().put(VariantSettings.MODEL, layer4)
-//                    )
+                    .with(
+                        When.create().set(Properties.LAYERS, 1).set(Properties.HANGING, true),
+                        BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
+                    ).with(
+                        When.create().set(Properties.LAYERS, 2).set(Properties.HANGING, true),
+                        BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
+                    ).with(
+                        When.create().set(Properties.LAYERS, 3).set(Properties.HANGING, true),
+                        BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
+                    ).with(
+                        When.create().set(Properties.LAYERS, 4).set(Properties.HANGING, true),
+                        BlockStateVariant.create().put(VariantSettings.MODEL, hanging4)
+                    )
             )
-            val x = Properties.HANGING
         }
 //                .with(
 //                    When.create().set(Properties.LAYERS, 8),
@@ -71,9 +79,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     override fun generateItemModels(gen: ItemModelGenerator) {}
 
-    private fun BlockStateModelGenerator.parentedModel(block: Block, parent: Identifier): Identifier =
-        Model(parent.myb, Optional.empty(), ALL_TEX)
-            .upload(block.model(), Texture().put(ALL_TEX, block.model()), this.modelCollector)
+//    private fun BlockStateModelGenerator.parentedModel(block: Block, parent: Identifier): Identifier =
+//        Model(parent.myb, Optional.empty(), ALL_TEX)
+//            .upload(block.model(), Texture().put(ALL_TEX, block.model()), this.modelCollector)
 
     private fun BlockStateModelGenerator.parentedModel(block: Block, textBlock: Block, parent: Identifier): Identifier =
         Model(parent.myb, Optional.empty(), ALL_TEX)
