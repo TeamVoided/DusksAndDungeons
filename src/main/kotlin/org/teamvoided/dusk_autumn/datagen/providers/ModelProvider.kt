@@ -35,10 +35,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             val layer4 = gen.parentedModel(it.modelSuffix("_16"), texture, leafPile(16))
 
 
-            val hanging1 = gen.parentedModel(it, texture, leafPileHanging())
-            val hanging2 = gen.parentedModel(it.modelSuffix("_8"), texture, leafPileHanging(8))
-            val hanging3 = gen.parentedModel(it.modelSuffix("_12"), texture, leafPileHanging(12))
-            val hanging4 = gen.parentedModel(it.modelSuffix("_16"), texture, leafPileHanging(16))
+            val hanging1 = gen.parentedModel(it.modelSuffix("_hanging"), texture, leafPileHanging())
+            val hanging2 = gen.parentedModel(it.modelSuffix("_hanging_8"), texture, leafPileHanging(8))
+            val hanging3 = gen.parentedModel(it.modelSuffix("_hanging_12"), texture, leafPileHanging(12))
+            val hanging4 = gen.parentedModel(it.modelSuffix("_hanging_16"), texture, leafPileHanging(16))
 
             gen.blockStateCollector.accept(
                 MultipartBlockStateSupplier.create(DuskBlocks.OAK_LEAF_PILE)
