@@ -39,6 +39,14 @@ object DuskBiomes {
         DefaultBiomeFeatures.addSprings(generationSettings)
         DefaultBiomeFeatures.addFrozenTopLayer(generationSettings)
     }
+    private fun addAutumnAnimals(spawnSettings: SpawnSettings.Builder) {
+        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.SHEEP, 4, 4, 4))
+        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.COW, 2, 4, 4))
+        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.CHICKEN, 8, 4, 4))
+        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 10, 2, 3))
+        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 4, 2, 4))
+        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 4, 2, 4))
+    }
 
     private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder, forest: Boolean) {
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.ORE_LAPIS_EXTRA)
@@ -74,12 +82,7 @@ object DuskBiomes {
 
     fun createAutumnForestBiomes(context: BootstrapContext<Biome?>): Biome {
         val spawnSettings = SpawnSettings.Builder()
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.SHEEP, 8, 4, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.COW, 6, 4, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.CHICKEN, 10, 4, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 8, 2, 3))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 4, 2, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 1, 2, 4))
+        addAutumnAnimals(spawnSettings)
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
         val generationSettings = GenerationSettings.Builder(
             context.lookup(RegistryKeys.PLACED_FEATURE),
@@ -99,7 +102,7 @@ object DuskBiomes {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(16295516)
+                .grassColor(15965003)
                 .foliageColor(16078100)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
@@ -110,12 +113,7 @@ object DuskBiomes {
 
     fun createAutumnPlainsBiomes(context: BootstrapContext<Biome?>): Biome {
         val spawnSettings = SpawnSettings.Builder()
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.SHEEP, 8, 4, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.COW, 6, 4, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.CHICKEN, 10, 4, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 8, 2, 3))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 4, 2, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 1, 2, 4))
+        addAutumnAnimals(spawnSettings)
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
         val generationSettings = GenerationSettings.Builder(
             context.lookup(RegistryKeys.PLACED_FEATURE),
@@ -136,7 +134,7 @@ object DuskBiomes {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(16758129)
+                .grassColor(16224051)
                 .foliageColor(16081176)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
@@ -169,7 +167,7 @@ object DuskBiomes {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(16758129)
+                .grassColor(16224051)
                 .foliageColor(16081176)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)

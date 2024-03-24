@@ -63,7 +63,7 @@ object DuskBlocks {
     val CASCADE_LOG = register(
         "cascade_log", Blocks.createPillarBlock(
             MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD
-        )
+        ),
     )
     val STRIPPED_CASCADE_LOG = register(
         "stripped_cascade_log", Blocks.createPillarBlock(

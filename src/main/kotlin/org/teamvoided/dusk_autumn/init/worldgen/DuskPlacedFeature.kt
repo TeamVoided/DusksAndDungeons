@@ -23,8 +23,8 @@ object DuskPlacedFeature {
     val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
     val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
     val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
-    val AUTUMN_TREE = create("autumn_tree")
-    val AUTUMN_TREE_BEES = create("autumn_tree_bees")
+    val CASCADE_TREE = create("cascade_tree")
+    val CASCADE_TREE_BEES = create("cascade_tree_bees")
     val DARK_OAK_AUTUMN = create("dark_oak_autumn")
     val COBBLESTONE_ROCK = create("cobblestone_rock")
     val DISK_PODZOL = create("disk_podzol")
@@ -84,13 +84,13 @@ object DuskPlacedFeature {
             PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.GOLDEN_BIRCH_SAPLING)
         )
         c.register(
-            AUTUMN_TREE,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_TREE),
+            CASCADE_TREE,
+            holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE),
             PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
         )
         c.register(
-            AUTUMN_TREE_BEES,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_TREE_BEES),
+            CASCADE_TREE_BEES,
+            holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE_BEES),
             PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
         )
         c.register(
@@ -112,8 +112,8 @@ object DuskPlacedFeature {
         )
         c.register(
             PATCH_PUMPKIN_EXTRA,
-            holderProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_PUMPKIN),
-            RarityFilterPlacementModifier.create(75),
+            holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_PUMPKIN_EXTRA),
+            RarityFilterPlacementModifier.create(50),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()

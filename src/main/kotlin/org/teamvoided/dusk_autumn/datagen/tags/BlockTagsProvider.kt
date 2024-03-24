@@ -41,6 +41,12 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.LEAVES)
             .add(DuskBlocks.CASCADE_LEAVES)
             .forceAddTag(DuskBlockTags.LEAF_PILES)
+        getOrCreateTagBuilder(BlockTags.SAPLINGS)
+            .add(DuskBlocks.CASCADE_SAPLING)
+            .add(DuskBlocks.GOLDEN_BIRCH_SAPLING)
+        getOrCreateTagBuilder(BlockTags.FLOWER_POTS)
+            .add(DuskBlocks.POTTED_CASCADE_SAPLING)
+            .add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING)
 
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
             .add(DuskBlocks.BLUE_PETALS)

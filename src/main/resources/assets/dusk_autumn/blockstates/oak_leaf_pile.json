@@ -1,7 +1,25 @@
 {
-    "variants": {
-        "": {
-            "model": "dusk_autumn:block/oak_leaf_pile"
-        }
+  "variants": {
+    "layers=1, hanging=false": {
+      "model": "dusk_autumn:block/oak_leaf_pile"
+    },
+    "layers=2, hanging=false": {
+      "model": "dusk_autumn:block/oak_leaf_pile_8"
+    },
+    "layers=3, hanging=false": {
+      "model": "dusk_autumn:block/oak_leaf_pile_12"
+    },
+    "layers=1, hanging=true": {
+      "model": "dusk_autumn:block/oak_leaf_pile"
+    },
+    "layers=2, hanging=true": {
+      "model": "dusk_autumn:block/oak_leaf_pile_8"
+    },
+    "layers=3, hanging=true": {
+      "model": "dusk_autumn:block/oak_leaf_pile_12"
+    },
+    "layers=4": {
+      "model": "minecraft:block/oak_leaves"
     }
+  }
 }

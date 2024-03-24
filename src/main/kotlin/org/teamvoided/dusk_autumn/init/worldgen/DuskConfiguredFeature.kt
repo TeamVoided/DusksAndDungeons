@@ -38,10 +38,11 @@ object DuskConfiguredFeature {
     val COBBLESTONE_ROCK = create("cobblestone_rock")
     val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
     val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
-    val AUTUMN_TREE = create("autumn_tree")
-    val AUTUMN_TREE_BEES = create("autumn_tree_bees")
+    val CASCADE_TREE = create("cascade_tree")
+    val CASCADE_TREE_BEES = create("cascade_tree_bees")
     val DARK_OAK_AUTUMN = create("dark_oak_autumn")
     val DISK_PODZOL = create("disk_podzol")
+    val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
     val FLOWER_AUTUMN = create("flower_autumn")
@@ -59,11 +60,31 @@ object DuskConfiguredFeature {
         val placedFeatures: HolderProvider<PlacedFeature> =
             context.lookup(RegistryKeys.PLACED_FEATURE)
 
+        fun createRandomPatchFeatureConfig(block: BlockStateProvider, tries: Int): RandomPatchFeatureConfig {
+            return ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                tries,
+                PlacedFeatureUtil.onlyWhenEmpty(Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(block))
+            )
+        }
+        val petalFlowerBuilder = DataPool.builder<BlockState>()
+        for (i in 1..4) {
+            val var35: Iterator<*> = Direction.Type.HORIZONTAL.iterator()
+            while (var35.hasNext()) {
+                val direction = var35.next() as Direction
+                petalFlowerBuilder.add(
+                    (DuskBlocks.BLUE_PETALS.defaultState.with(PinkPetalsBlock.AMOUNT, i) as BlockState).with(
+                        PinkPetalsBlock.FACING,
+                        direction
+                    ) as BlockState, 1
+                )
+            }
+        }
+
         ConfiguredFeatureUtil.registerConfiguredFeature<SingleStateFeatureConfig, Feature<SingleStateFeatureConfig>>(
             context,
             COBBLESTONE_ROCK,
             Feature.FOREST_ROCK,
-            SingleStateFeatureConfig(Blocks.MOSSY_COBBLESTONE.defaultState)
+            SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
         )
         val goldenBirchTree = builder(Blocks.BIRCH_LOG, DuskBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
         val cascadeTree = TreeFeatureConfig.Builder(
@@ -121,7 +142,7 @@ object DuskConfiguredFeature {
             ).build()
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
-            context, AUTUMN_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
+            context, CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of<TreeDecorator>(
                     AlterGroundRadiusTreeDecorator(
                         BlockStateProvider.of(Blocks.PODZOL), 2, 5, blockTags.getTagOrThrow(
@@ -143,7 +164,7 @@ object DuskConfiguredFeature {
             ).build()
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
-            context, AUTUMN_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
+            context, CASCADE_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
 //                    BeehiveTreeDecorator(0.02F),
                     AlterGroundRadiusTreeDecorator(
@@ -210,6 +231,20 @@ object DuskConfiguredFeature {
                 ), UniformIntProvider.create(2, 6), 2
             )
         )
+        ConfiguredFeatureUtil.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
+            context,
+            PATCH_PUMPKIN_EXTRA,
+            Feature.RANDOM_PATCH,
+            createRandomPatchFeatureConfig(
+                WeightedBlockStateProvider(
+                    DataPool.builder<BlockState>().add(Blocks.PUMPKIN.defaultState, 14)
+                        .add(Blocks.CARVED_PUMPKIN.defaultState, 1)
+                        .add(Blocks.CARVED_PUMPKIN.defaultState.with(HorizontalFacingBlock.FACING, Direction.SOUTH), 1)
+                        .add(Blocks.CARVED_PUMPKIN.defaultState.with(HorizontalFacingBlock.FACING, Direction.EAST), 1)
+                        .add(Blocks.CARVED_PUMPKIN.defaultState.with(HorizontalFacingBlock.FACING, Direction.WEST), 1)
+                ), 64
+            )
+        )
         ConfiguredFeatureUtil.registerConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>>(
             context,
             AUTUMN_WOODS_VEGETATION,
@@ -228,9 +263,9 @@ object DuskConfiguredFeature {
                             *arrayOfNulls<PlacementModifier>(0)
                         ), 0.005f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES), 0.15f),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.AUTUMN_TREE_BEES), 0.65f)
-                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.DARK_OAK_AUTUMN)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.DARK_OAK_AUTUMN), 0.425f),
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.425f)
+                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>>(
@@ -238,24 +273,18 @@ object DuskConfiguredFeature {
             Feature.RANDOM_SELECTOR,
             RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES), 0.2f),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.AUTUMN_TREE_BEES), 0.7f)
-                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.DARK_OAK_AUTUMN)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.DARK_OAK_AUTUMN), 0.45f),
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.45f)
+                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
             )
         )
-        fun createRandomPatchFeatureConfig(block: BlockStateProvider, tries: Int): RandomPatchFeatureConfig {
-            return ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                tries,
-                PlacedFeatureUtil.onlyWhenEmpty(Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(block))
-            )
-        }
         ConfiguredFeatureUtil.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
             context,
             FLOWER_AUTUMN,
             Feature.FLOWER,
             createRandomPatchFeatureConfig(
                 WeightedBlockStateProvider(
-                    DataPool.builder<BlockState>().add(Blocks.CORNFLOWER.defaultState, 7)
+                    DataPool.builder<BlockState>().add(Blocks.CORNFLOWER.defaultState, 5)
                         .add(Blocks.POPPY.defaultState, 5)
                         .add(DuskBlocks.CASCADE_SAPLING.defaultState, 1)
                 ), 64
@@ -269,19 +298,6 @@ object DuskConfiguredFeature {
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.ROSE_BUSH))
             )
         )
-        val petalFlowerBuilder = DataPool.builder<BlockState>()
-        for (i in 1..4) {
-            val var35: Iterator<*> = Direction.Type.HORIZONTAL.iterator()
-            while (var35.hasNext()) {
-                val direction = var35.next() as Direction
-                petalFlowerBuilder.add(
-                    (DuskBlocks.BLUE_PETALS.defaultState.with(PinkPetalsBlock.AMOUNT, i) as BlockState).with(
-                        PinkPetalsBlock.FACING,
-                        direction
-                    ) as BlockState, 1
-                )
-            }
-        }
         ConfiguredFeatureUtil.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
             context, BLUE_PETALS, Feature.FLOWER, RandomPatchFeatureConfig(
                 96, 6, 2, PlacedFeatureUtil.onlyWhenEmpty<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
