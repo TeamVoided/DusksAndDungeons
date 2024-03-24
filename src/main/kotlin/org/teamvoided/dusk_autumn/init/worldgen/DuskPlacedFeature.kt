@@ -21,21 +21,17 @@ import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 object DuskPlacedFeature {
     val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
-
-    //    val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
-//    val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
-    val GOLDEN_BIRCH_TALL_CHECKED = create("golden_birch_tall_checked")
-
-    //    val AUTUMN_TREE = create("autumn_tree")
-//    val AUTUMN_TREE_BEES = create ("autumn_tree_bees")
-    val AUTUMN_TREE_CHECKED = create("autumn_tree_checked")
+    val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
+    val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
+    val AUTUMN_TREE = create("autumn_tree")
+    val AUTUMN_TREE_BEES = create("autumn_tree_bees")
     val DARK_OAK_AUTUMN = create("dark_oak_autumn")
-    val COBBLESTONE_ROCK_FOREST = create("cobblestone_rock_forest")
-    val COBBLESTONE_ROCK_PLAINS = create("cobblestone_rock_plains")
+    val COBBLESTONE_ROCK = create("cobblestone_rock")
     val DISK_PODZOL = create("disk_podzol")
+    val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
-//    val AUTUMN_WOODS_FLOWER = create("autumn_woods_flower")
+    val FLOWER_AUTUMN = create("flower_autumn")
     val PATCH_ROSEBUSH = create("patch_rosebush")
     val BLUE_PETALS = create("blue_petals")
 
@@ -62,6 +58,14 @@ object DuskPlacedFeature {
         }
 
         c.register(
+            COBBLESTONE_ROCK,
+            holderProvider.getHolderOrThrow(DuskConfiguredFeature.COBBLESTONE_ROCK),
+            RarityFilterPlacementModifier.create(3),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
             ORE_LAPIS_EXTRA,
             holderProvider.getHolderOrThrow(OreConfiguredFeatures.ORE_LAPIS),
             commonOrePlacementModifiers(
@@ -70,56 +74,50 @@ object DuskPlacedFeature {
             )
         )
         c.register(
-            GOLDEN_BIRCH_TALL_CHECKED,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
-            *arrayOf<PlacementModifier>(PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.GOLDEN_BIRCH_SAPLING))
+            GOLDEN_BIRCH_TALL,
+            holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL),
+            PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.GOLDEN_BIRCH_SAPLING)
         )
         c.register(
-            AUTUMN_TREE_CHECKED,
+            GOLDEN_BIRCH_TALL_BEES,
+            holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
+            PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.GOLDEN_BIRCH_SAPLING)
+        )
+        c.register(
+            AUTUMN_TREE,
             holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_TREE),
-            *arrayOf<PlacementModifier>(PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING))
+            PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
+        )
+        c.register(
+            AUTUMN_TREE_BEES,
+            holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_TREE_BEES),
+            PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
         )
         c.register(
             DARK_OAK_AUTUMN,
             holderProvider.getHolderOrThrow(DuskConfiguredFeature.DARK_OAK_AUTUMN),
-            *arrayOf<PlacementModifier>(PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING))
-        )
-        c.register(
-            COBBLESTONE_ROCK_FOREST,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.COBBLESTONE_ROCK),
-            *arrayOf<PlacementModifier>(
-                CountPlacementModifier.create(2),
-                InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-                BiomePlacementModifier.getInstance()
-            )
-        )
-        c.register(
-            COBBLESTONE_ROCK_PLAINS,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.COBBLESTONE_ROCK),
-            *arrayOf<PlacementModifier>(
-                PlacedFeatureUtil.createCountExtraModifier(0, 0.2f, 1),
-                InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-                BiomePlacementModifier.getInstance()
-            )
+            PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
         )
         c.register(
             DISK_PODZOL,
             holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_PODZOL),
-            *arrayOf<PlacementModifier>(
-                PlacedFeatureUtil.createCountExtraModifier(0, 0.05f, 1),
-                InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
-                RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
-                BlockPredicateFilterPlacementModifier.create(
-                    BlockPredicate.matchingBlocks(*arrayOf<Block>(Blocks.DIRT), (Blocks.GRASS_BLOCK))
-                )
+            PlacedFeatureUtil.createCountExtraModifier(0, 0.05f, 1),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
+            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
+            BlockPredicateFilterPlacementModifier.create(
+                BlockPredicate.matchingBlocks(*arrayOf<Block>(Blocks.DIRT), (Blocks.GRASS_BLOCK))
             ),
             BiomePlacementModifier.getInstance()
         )
-
-
+        c.register(
+            PATCH_PUMPKIN_EXTRA,
+            holderProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_PUMPKIN),
+            RarityFilterPlacementModifier.create(75),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+            BiomePlacementModifier.getInstance()
+        )
         c.register(
             AUTUMN_WOODS_VEGETATION,
             holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_WOODS_VEGETATION),
@@ -137,6 +135,17 @@ object DuskPlacedFeature {
             SurfaceWaterDepthFilterPlacementModifier.create(0),
             PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            FLOWER_AUTUMN,
+            holderProvider.getHolderOrThrow(DuskConfiguredFeature.FLOWER_AUTUMN),
+            *arrayOf<PlacementModifier>(
+                NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
+                RarityFilterPlacementModifier.create(28),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+                BiomePlacementModifier.getInstance()
+            )
         )
         c.register(
             BLUE_PETALS,
