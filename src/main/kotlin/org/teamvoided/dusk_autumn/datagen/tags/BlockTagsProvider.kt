@@ -30,7 +30,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE)
             .add(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE)
 //VANILLA
-        getOrCreateTagBuilder(BlockTags.LOGS)
+        getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
             .forceAddTag(DuskBlockTags.CASCADE_LOGS)
         getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
             .add(DuskBlocks.BLUE_PETALS)

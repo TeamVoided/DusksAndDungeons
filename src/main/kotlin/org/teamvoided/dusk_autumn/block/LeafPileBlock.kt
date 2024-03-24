@@ -29,7 +29,7 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
     override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean {
         val layers = state.get(LAYERS)
         val hanging = state.get(HANGING)
-        return if (context.stack.isOf(this.asItem()) && layers < 4) {
+        return if (context.stack.isOf(this.asItem()) && layers < MAX_LAYERS) {
             if (context.canReplaceExisting()) {
                 context.side == if (hanging) Direction.DOWN else Direction.UP
             } else {
@@ -39,6 +39,7 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
             layers == 1
         }
     }
+
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
         val blockPos = ctx.blockPos
         val blockStateCurrent = ctx.world.getBlockState(blockPos)
@@ -60,6 +61,7 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
         return if (stateFrom.isOf(this)) true
         else super.isSideInvisible(state, stateFrom, direction)
@@ -81,7 +83,8 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
     override fun getOutlineShape(
         state: BlockState, world: BlockView?, pos: BlockPos?, context: ShapeContext?
     ): VoxelShape {
-        return if (state.get(HANGING)) DEFAULT_HANGING_SHAPE else DEFAULT_SHAPE
+        return if (state.get(HANGING)) HANGING_LAYERS_TO_SHAPE[state.get(LAYERS)] else DEFAULT_LAYERS_TO_SHAPE[
+            state.get(LAYERS)]
     }
 
     override fun getCollisionShape(
@@ -139,6 +142,7 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
         return state.with(LeavesBlock.DISTANCE, i)
     }
 
+    @Suppress("DEPRECATION")
     override fun getFluidState(state: BlockState): FluidState {
         return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
     }
@@ -177,15 +181,25 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
         val DEFAULT_HANGING_SHAPE = createCuboidShape(0.0, 12.0, 0.0, 16.0, 16.0, 16.0)
         val FULL_SHAPE = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         val DEFAULT_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            DEFAULT_SHAPE,
+            VoxelShapes.empty(),
+            createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
             FULL_SHAPE,
+            FULL_SHAPE,
+            FULL_SHAPE,
+            FULL_SHAPE,
+            FULL_SHAPE,
         )
         val HANGING_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            DEFAULT_HANGING_SHAPE,
+            VoxelShapes.empty(),
+            createCuboidShape(0.0, 12.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 8.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 4.0, 0.0, 16.0, 16.0, 16.0),
+            FULL_SHAPE,
+            FULL_SHAPE,
+            FULL_SHAPE,
+            FULL_SHAPE,
             FULL_SHAPE,
         )
 

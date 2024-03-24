@@ -27,7 +27,7 @@ import org.teamvoided.dusk_autumn.block.sapling.CascadeSaplingGenerator
 import org.teamvoided.dusk_autumn.block.sapling.GoldenBirchSaplingGenerator
 
 object DuskBlocks {
-
+    @Suppress("DEPRECATION")
     val leafPileSettings = AbstractBlock.Settings.create()
         .strength(0.2F).nonOpaque().suffocates(Blocks::never).blockVision(Blocks::never).lavaIgnitable()
         .pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::never).noCollision().nonSolid()
@@ -61,7 +61,8 @@ object DuskBlocks {
     val POTTED_CASCADE_SAPLING =
         register("potted_cascade_sapling", Blocks.createFlowerPotBlock(CASCADE_SAPLING))
     val CASCADE_LOG = register(
-        "cascade_log", Blocks.createPillarBlock(
+        "cascade_log",
+        Blocks.createPillarBlock(
             MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD
         ),
     )

@@ -27,8 +27,8 @@ abstract class ThreeWideTreeSaplingGenerator : SaplingGenerator() {
         state: BlockState,
         random: RandomGenerator
     ): Boolean {
-        for (i in 0 downTo -1) {
-            for (j in 0 downTo -1) {
+        for (i in 1 downTo -1) {
+            for (j in 1 downTo -1) {
                 if (canGenerateLargeTree(state, world, pos, i, j)) {
                     return this.generateThreeWideTree(world, chunkGenerator, pos, state, random, i, j)
                 }
@@ -55,12 +55,11 @@ abstract class ThreeWideTreeSaplingGenerator : SaplingGenerator() {
                 .registryManager
                 .get(RegistryKeys.CONFIGURED_FEATURE)
                 .getHolder(registryKey)
-                .orElse(null as Holder.Reference<ConfiguredFeature<*, *>>)
-                    as Holder<ConfiguredFeature<*, *>>
+                .orElse(null)
             if (holder == null) {
                 return false
             } else {
-                val configuredFeature = holder.value() as ConfiguredFeature<*, *>
+                val configuredFeature = holder.value()
                 val blockState = Blocks.AIR.defaultState
                 world.setBlockState(pos.add(x - 1, 0, z - 1), blockState, Block.NO_REDRAW)
                 world.setBlockState(pos.add(x, 0, z - 1), blockState, Block.NO_REDRAW)
