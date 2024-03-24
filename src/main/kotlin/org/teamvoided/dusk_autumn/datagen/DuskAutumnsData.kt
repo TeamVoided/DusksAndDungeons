@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistrySetBuilder
 import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
+import org.teamvoided.dusk_autumn.datagen.providers.ModelProvider
 import org.teamvoided.dusk_autumn.datagen.tags.BiomeTagsProvider
 import org.teamvoided.dusk_autumn.datagen.tags.BlockTagsProvider
 import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
@@ -19,6 +20,7 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         pack.addProvider(::DuskAutumnsWorldGenerator)
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::BlockTagsProvider)
+        pack.addProvider(::ModelProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
