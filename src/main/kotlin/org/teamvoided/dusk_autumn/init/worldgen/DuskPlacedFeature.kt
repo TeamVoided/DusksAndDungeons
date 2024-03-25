@@ -1,10 +1,8 @@
 package org.teamvoided.dusk_autumn.init.worldgen
 
 import com.google.common.collect.ImmutableList
-import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.registry.Holder
-import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.math.int_provider.ClampedIntProvider
@@ -14,11 +12,15 @@ import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
-import net.minecraft.world.gen.feature.*
+import net.minecraft.world.gen.feature.ConfiguredFeature
+import net.minecraft.world.gen.feature.OreConfiguredFeatures
+import net.minecraft.world.gen.feature.PlacedFeature
+import net.minecraft.world.gen.feature.PlacementModifier
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 
+@Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
 object DuskPlacedFeature {
     val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
     val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
@@ -35,92 +37,79 @@ object DuskPlacedFeature {
     val PATCH_ROSEBUSH = create("patch_rosebush")
     val BLUE_PETALS = create("blue_petals")
 
-    fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumns.id(id))
 
     fun init() {}
 
-    fun bootstrapPlacedFeatures(c: BootstrapContext<PlacedFeature>) {
-        val holderProvider: HolderProvider<ConfiguredFeature<*, *>> = c.lookup(RegistryKeys.CONFIGURED_FEATURE)
-        fun orePlacementModifiers(
-            firstModifier: PlacementModifier,
-            secondModifier: PlacementModifier
-        ): List<PlacementModifier> {
-            return listOf(
-                firstModifier,
-                InSquarePlacementModifier.getInstance(),
-                secondModifier,
-                BiomePlacementModifier.getInstance()
-            )
-        }
+    fun orePlacementModifiers(
+        firstModifier: PlacementModifier, secondModifier: PlacementModifier
+    ): List<PlacementModifier> {
+        return listOf(
+            firstModifier, InSquarePlacementModifier.getInstance(),
+            secondModifier, BiomePlacementModifier.getInstance()
+        )
+    }
 
-        fun commonOrePlacementModifiers(count: Int, modifier: PlacementModifier): List<PlacementModifier> {
-            return orePlacementModifiers(CountPlacementModifier.create(count), modifier)
-        }
+    fun commonOrePlacementModifiers(count: Int, modifier: PlacementModifier): List<PlacementModifier> {
+        return orePlacementModifiers(CountPlacementModifier.create(count), modifier)
+    }
+
+    fun bootstrapPlacedFeatures(c: BootstrapContext<PlacedFeature>) {
+        val holderProvider = c.lookup(RegistryKeys.CONFIGURED_FEATURE)
 
         c.register(
-            COBBLESTONE_ROCK,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.COBBLESTONE_ROCK),
+            COBBLESTONE_ROCK, holderProvider.getHolderOrThrow(DuskConfiguredFeature.COBBLESTONE_ROCK),
             RarityFilterPlacementModifier.create(3),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            ORE_LAPIS_EXTRA,
-            holderProvider.getHolderOrThrow(OreConfiguredFeatures.ORE_LAPIS),
+            ORE_LAPIS_EXTRA, holderProvider.getHolderOrThrow(OreConfiguredFeatures.ORE_LAPIS),
             commonOrePlacementModifiers(
                 20,
                 HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(80))
             )
         )
         c.register(
-            GOLDEN_BIRCH_TALL,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL),
+            GOLDEN_BIRCH_TALL, holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL),
             PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.GOLDEN_BIRCH_SAPLING)
         )
         c.register(
-            GOLDEN_BIRCH_TALL_BEES,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
+            GOLDEN_BIRCH_TALL_BEES, holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
             PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.GOLDEN_BIRCH_SAPLING)
         )
         c.register(
-            CASCADE_TREE,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE),
+            CASCADE_TREE, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE),
             PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
         )
         c.register(
-            CASCADE_TREE_BEES,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE_BEES),
+            CASCADE_TREE_BEES, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE_BEES),
             PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
         )
         c.register(
-            DARK_OAK_AUTUMN,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.DARK_OAK_AUTUMN),
+            DARK_OAK_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DARK_OAK_AUTUMN),
             PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
         )
         c.register(
-            DISK_PODZOL,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_PODZOL),
+            DISK_PODZOL, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_PODZOL),
             PlacedFeatureUtil.createCountExtraModifier(0, 0.05f, 1),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
             BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(*arrayOf<Block>(Blocks.DIRT), (Blocks.GRASS_BLOCK))
+                BlockPredicate.matchingBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK))
             ),
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            PATCH_PUMPKIN_EXTRA,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_PUMPKIN_EXTRA),
+            PATCH_PUMPKIN_EXTRA, holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_PUMPKIN_EXTRA),
             RarityFilterPlacementModifier.create(50),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            AUTUMN_WOODS_VEGETATION,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_WOODS_VEGETATION),
+            AUTUMN_WOODS_VEGETATION, holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_WOODS_VEGETATION),
             CountPlacementModifier.create(14),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
@@ -137,9 +126,8 @@ object DuskPlacedFeature {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            FLOWER_AUTUMN,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.FLOWER_AUTUMN),
-            *arrayOf<PlacementModifier>(
+            FLOWER_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.FLOWER_AUTUMN),
+            *arrayOf(
                 NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
                 RarityFilterPlacementModifier.create(28),
                 InSquarePlacementModifier.getInstance(),
@@ -148,9 +136,8 @@ object DuskPlacedFeature {
             )
         )
         c.register(
-            BLUE_PETALS,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.BLUE_PETALS),
-            *arrayOf<PlacementModifier>(
+            BLUE_PETALS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.BLUE_PETALS),
+            *arrayOf(
                 NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
                 RarityFilterPlacementModifier.create(28),
                 InSquarePlacementModifier.getInstance(),
@@ -159,8 +146,7 @@ object DuskPlacedFeature {
             )
         )
         c.register(
-            PATCH_ROSEBUSH,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_ROSEBUSH),
+            PATCH_ROSEBUSH, holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_ROSEBUSH),
             RarityFilterPlacementModifier.create(7),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
@@ -191,4 +177,7 @@ object DuskPlacedFeature {
         registryKey: RegistryKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
         placementModifiers: List<PlacementModifier>
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
+
+
+    fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumns.id(id))
 }
