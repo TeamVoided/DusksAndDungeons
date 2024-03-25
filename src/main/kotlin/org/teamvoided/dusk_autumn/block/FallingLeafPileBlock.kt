@@ -15,7 +15,7 @@ class FallingLeafPileBlock(settings: Settings, val particle: DefaultParticleType
             val blockPos = pos.down()
             val blockStateBelow = world.getBlockState(blockPos)
             if (state.get(HANGING) && state.get(PILE_LAYERS) < 4) {
-                spawnParticle(world, pos.d.add(0, 1, 0), random, particle)
+                spawnParticle(world, pos.d.add(0, (state.get(PILE_LAYERS) / 4), 0), random, particle)
             } else if (!isFaceFullSquare(blockStateBelow.getOutlineShape(world, blockPos), Direction.UP)) {
                 spawnParticle(world, pos, random, particle)
             }
