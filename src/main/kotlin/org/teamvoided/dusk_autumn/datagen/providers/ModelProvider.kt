@@ -23,19 +23,19 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
 
     val leafPiles = listOf(
-        Pair(DuskBlocks.OAK_LEAF_PILE, Blocks.OAK_LEAVES),
-        Pair(DuskBlocks.SPRUCE_LEAF_PILE, Blocks.SPRUCE_LEAVES),
-        Pair(DuskBlocks.BIRCH_LEAF_PILE, Blocks.BIRCH_LEAVES),
-        Pair(DuskBlocks.JUNGLE_LEAF_PILE, Blocks.JUNGLE_LEAVES),
-        Pair(DuskBlocks.ACACIA_LEAF_PILE, Blocks.ACACIA_LEAVES),
-        Pair(DuskBlocks.DARK_OAK_LEAF_PILE, Blocks.DARK_OAK_LEAVES),
-        Pair(DuskBlocks.MANGROVE_LEAF_PILE, Blocks.MANGROVE_LEAVES),
-        Pair(DuskBlocks.CHERRY_LEAF_PILE, Blocks.CHERRY_LEAVES),
-        Pair(DuskBlocks.AZALEA_LEAF_PILE, Blocks.AZALEA_LEAVES),
-        Pair(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE, Blocks.FLOWERING_AZALEA_LEAVES),
-        Pair(DuskBlocks.CASCADE_LEAF_PILE, DuskBlocks.CASCADE_LEAVES),
-        Pair(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, DuskBlocks.GOLDEN_BIRCH_LEAVES)
-        )
+        (DuskBlocks.OAK_LEAF_PILE to Blocks.OAK_LEAVES),
+        (DuskBlocks.SPRUCE_LEAF_PILE to Blocks.SPRUCE_LEAVES),
+        (DuskBlocks.BIRCH_LEAF_PILE to Blocks.BIRCH_LEAVES),
+        (DuskBlocks.JUNGLE_LEAF_PILE to Blocks.JUNGLE_LEAVES),
+        (DuskBlocks.ACACIA_LEAF_PILE to Blocks.ACACIA_LEAVES),
+        (DuskBlocks.DARK_OAK_LEAF_PILE to Blocks.DARK_OAK_LEAVES),
+        (DuskBlocks.MANGROVE_LEAF_PILE to Blocks.MANGROVE_LEAVES),
+        (DuskBlocks.CHERRY_LEAF_PILE to Blocks.CHERRY_LEAVES),
+        (DuskBlocks.AZALEA_LEAF_PILE to Blocks.AZALEA_LEAVES),
+        (DuskBlocks.FLOWERING_AZALEA_LEAF_PILE to Blocks.FLOWERING_AZALEA_LEAVES),
+        (DuskBlocks.CASCADE_LEAF_PILE to DuskBlocks.CASCADE_LEAVES),
+        (DuskBlocks.GOLDEN_BIRCH_LEAF_PILE to DuskBlocks.GOLDEN_BIRCH_LEAVES)
+    )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
         leafPiles.forEach { (it, texture) ->
