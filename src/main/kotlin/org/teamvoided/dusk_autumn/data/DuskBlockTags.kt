@@ -8,6 +8,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 object DuskBlockTags {
     val CASCADE_LOGS = create("cascade_logs")
     val LEAF_PILES = create("leaf_piles")
+    val LEAF_PILES_PLACE_ON = create("leaf_piles_place_on")
 
     fun create(id: String): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id(id))
 }
