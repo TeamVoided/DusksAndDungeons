@@ -17,6 +17,7 @@ import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
+import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 object DuskBiomes {
@@ -89,10 +90,11 @@ object DuskBiomes {
             context.lookup(RegistryKeys.CONFIGURED_CARVER)
         )
         addBasicFeatures(generationSettings)
-//        DefaultBiomeFeatures.addLargeFerns(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
-//        DefaultBiomeFeatures.addGiantTaigaGrass(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.BROWN_MUSHROOM_OLD_GROWTH)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.RED_MUSHROOM_OLD_GROWTH)
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings, true)
@@ -102,7 +104,7 @@ object DuskBiomes {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(15965003)
+                .grassColor(16224051)
                 .foliageColor(16078100)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
@@ -120,11 +122,9 @@ object DuskBiomes {
             context.lookup(RegistryKeys.CONFIGURED_CARVER)
         )
         addBasicFeatures(generationSettings)
-        DefaultBiomeFeatures.addLargeFerns(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         DefaultBiomeFeatures.addPlainsTallGrass(generationSettings)
-        DefaultBiomeFeatures.addGiantTaigaGrass(generationSettings)
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings, false)
@@ -134,7 +134,7 @@ object DuskBiomes {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(16224051)
+                .grassColor(16366449)
                 .foliageColor(16081176)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
@@ -167,7 +167,7 @@ object DuskBiomes {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(16224051)
+                .grassColor(16366449)
                 .foliageColor(16081176)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)

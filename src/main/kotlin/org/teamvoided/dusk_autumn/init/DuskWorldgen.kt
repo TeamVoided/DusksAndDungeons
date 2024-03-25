@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import net.minecraft.registry.*
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
-import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.TrunkPlacer
 import net.minecraft.world.gen.trunk.TrunkPlacerType
 import org.teamvoided.dusk_autumn.DuskAutumns.id
@@ -19,7 +18,7 @@ object DuskWorldgen {
 
     val ALTER_GROUND_RADIUS = registerTreeDecorator("alter_ground_radius", AlterGroundRadiusTreeDecorator.CODEC)
     val ALTER_ON_GROUND = registerTreeDecorator("alter_on_ground", AlterOnGroundTreeDecorator.CODEC)
-    val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", DarkOakTrunkPlacer.CODEC)
+//    val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", ThreeWideTrunkPlacer.CODEC)
 
 
     fun init() {

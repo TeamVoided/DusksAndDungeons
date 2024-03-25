@@ -33,6 +33,9 @@ import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import java.util.*
+import java.util.List
+import kotlin.collections.Iterator
+import kotlin.collections.listOf
 
 object DuskConfiguredFeature {
     val COBBLESTONE_ROCK = create("cobblestone_rock")
@@ -60,12 +63,6 @@ object DuskConfiguredFeature {
         val placedFeatures: HolderProvider<PlacedFeature> =
             context.lookup(RegistryKeys.PLACED_FEATURE)
 
-        fun createRandomPatchFeatureConfig(block: BlockStateProvider, tries: Int): RandomPatchFeatureConfig {
-            return ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                tries,
-                PlacedFeatureUtil.onlyWhenEmpty(Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(block))
-            )
-        }
         val petalFlowerBuilder = DataPool.builder<BlockState>()
         for (i in 1..4) {
             val var35: Iterator<*> = Direction.Type.HORIZONTAL.iterator()
@@ -231,18 +228,38 @@ object DuskConfiguredFeature {
                 ), UniformIntProvider.create(2, 6), 2
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(
+        ConfiguredFeatureUtil.registerConfiguredFeature(
             context,
             PATCH_PUMPKIN_EXTRA,
             Feature.RANDOM_PATCH,
-            createRandomPatchFeatureConfig(
-                WeightedBlockStateProvider(
-                    DataPool.builder<BlockState>().add(Blocks.PUMPKIN.defaultState, 14)
-                        .add(Blocks.CARVED_PUMPKIN.defaultState, 1)
-                        .add(Blocks.CARVED_PUMPKIN.defaultState.with(HorizontalFacingBlock.FACING, Direction.SOUTH), 1)
-                        .add(Blocks.CARVED_PUMPKIN.defaultState.with(HorizontalFacingBlock.FACING, Direction.EAST), 1)
-                        .add(Blocks.CARVED_PUMPKIN.defaultState.with(HorizontalFacingBlock.FACING, Direction.WEST), 1)
-                ), 64
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig<SimpleBlockFeatureConfig, Feature<SimpleBlockFeatureConfig>>(
+                Feature.SIMPLE_BLOCK,
+                SimpleBlockFeatureConfig(
+                    WeightedBlockStateProvider(
+                        DataPool.builder<BlockState>()
+                            .add(Blocks.PUMPKIN.defaultState, 16)
+                            .add(Blocks.CARVED_PUMPKIN.defaultState, 1)
+                            .add(
+                                Blocks.CARVED_PUMPKIN.defaultState.with(
+                                    HorizontalFacingBlock.FACING,
+                                    Direction.SOUTH
+                                ), 1
+                            )
+                            .add(
+                                Blocks.CARVED_PUMPKIN.defaultState.with(
+                                    HorizontalFacingBlock.FACING,
+                                    Direction.EAST
+                                ), 1
+                            )
+                            .add(
+                                Blocks.CARVED_PUMPKIN.defaultState.with(
+                                    HorizontalFacingBlock.FACING,
+                                    Direction.WEST
+                                ), 1
+                            )
+                    )
+                ),
+                listOf(Blocks.GRASS_BLOCK, Blocks.FARMLAND, Blocks.PODZOL, Blocks.PUMPKIN, Blocks.CARVED_PUMPKIN)
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature<RandomFeatureConfig, Feature<RandomFeatureConfig>>(
@@ -282,12 +299,18 @@ object DuskConfiguredFeature {
             context,
             FLOWER_AUTUMN,
             Feature.FLOWER,
-            createRandomPatchFeatureConfig(
-                WeightedBlockStateProvider(
-                    DataPool.builder<BlockState>().add(Blocks.CORNFLOWER.defaultState, 5)
-                        .add(Blocks.POPPY.defaultState, 5)
-                        .add(DuskBlocks.CASCADE_SAPLING.defaultState, 1)
-                ), 64
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                64,
+                PlacedFeatureUtil.onlyWhenEmpty(
+                    Feature.SIMPLE_BLOCK,
+                    SimpleBlockFeatureConfig(
+                        WeightedBlockStateProvider(
+                            DataPool.builder<BlockState>().add(Blocks.CORNFLOWER.defaultState, 5)
+                                .add(Blocks.POPPY.defaultState, 5)
+                                .add(DuskBlocks.CASCADE_SAPLING.defaultState, 1)
+                        )
+                    )
+                )
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature<RandomPatchFeatureConfig, Feature<RandomPatchFeatureConfig>>(

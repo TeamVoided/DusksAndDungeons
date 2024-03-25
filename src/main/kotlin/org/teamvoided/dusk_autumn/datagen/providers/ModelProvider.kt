@@ -23,8 +23,19 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
 
     val leafPiles = listOf(
-        Pair(DuskBlocks.OAK_LEAF_PILE, Blocks.OAK_LEAVES)
-    )
+        Pair(DuskBlocks.OAK_LEAF_PILE, Blocks.OAK_LEAVES),
+        Pair(DuskBlocks.SPRUCE_LEAF_PILE, Blocks.SPRUCE_LEAVES),
+        Pair(DuskBlocks.BIRCH_LEAF_PILE, Blocks.BIRCH_LEAVES),
+        Pair(DuskBlocks.JUNGLE_LEAF_PILE, Blocks.JUNGLE_LEAVES),
+        Pair(DuskBlocks.ACACIA_LEAF_PILE, Blocks.ACACIA_LEAVES),
+        Pair(DuskBlocks.DARK_OAK_LEAF_PILE, Blocks.DARK_OAK_LEAVES),
+        Pair(DuskBlocks.MANGROVE_LEAF_PILE, Blocks.MANGROVE_LEAVES),
+        Pair(DuskBlocks.CHERRY_LEAF_PILE, Blocks.CHERRY_LEAVES),
+        Pair(DuskBlocks.AZALEA_LEAF_PILE, Blocks.AZALEA_LEAVES),
+        Pair(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE, Blocks.FLOWERING_AZALEA_LEAVES),
+        Pair(DuskBlocks.CASCADE_LEAF_PILE, DuskBlocks.CASCADE_LEAVES),
+        Pair(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, DuskBlocks.GOLDEN_BIRCH_LEAVES)
+        )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
         leafPiles.forEach { (it, texture) ->
@@ -32,16 +43,13 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             val layer1 = gen.parentedModel(it, texture, leafPile())
             val layer2 = gen.parentedModel(it.modelSuffix("_8"), texture, leafPile(8))
             val layer3 = gen.parentedModel(it.modelSuffix("_12"), texture, leafPile(12))
-            val layer4 = gen.parentedModel(it.modelSuffix("_16"), texture, leafPile(16))
-
-
             val hanging1 = gen.parentedModel(it.modelSuffix("_hanging"), texture, leafPileHanging())
             val hanging2 = gen.parentedModel(it.modelSuffix("_hanging_8"), texture, leafPileHanging(8))
             val hanging3 = gen.parentedModel(it.modelSuffix("_hanging_12"), texture, leafPileHanging(12))
-            val hanging4 = gen.parentedModel(it.modelSuffix("_hanging_16"), texture, leafPileHanging(16))
+            val full = gen.parentedModel(it.modelSuffix("_16"), texture, leafPile(16))
 
             gen.blockStateCollector.accept(
-                MultipartBlockStateSupplier.create(DuskBlocks.OAK_LEAF_PILE)
+                MultipartBlockStateSupplier.create(it)
                     .with(
                         When.create().set(Properties.LAYERS, 1).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
@@ -51,9 +59,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                     ).with(
                         When.create().set(Properties.LAYERS, 3).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
-                    ).with(
-                        When.create().set(Properties.LAYERS, 4).set(Properties.HANGING, false),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, layer4)
                     )
                     .with(
                         When.create().set(Properties.LAYERS, 1).set(Properties.HANGING, true),
@@ -64,9 +69,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                     ).with(
                         When.create().set(Properties.LAYERS, 3).set(Properties.HANGING, true),
                         BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
-                    ).with(
-                        When.create().set(Properties.LAYERS, 4).set(Properties.HANGING, true),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, hanging4)
+                    )
+                    .with(
+                        When.create().set(Properties.LAYERS, 4),
+                        BlockStateVariant.create().put(VariantSettings.MODEL, full)
                     )
             )
         }

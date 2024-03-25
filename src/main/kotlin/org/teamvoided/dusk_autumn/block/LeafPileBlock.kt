@@ -36,7 +36,7 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
                 true
             }
         } else {
-            layers == 1
+            false
         }
     }
 
@@ -63,7 +63,12 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
 
     @Suppress("DEPRECATION")
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
-        return if (stateFrom.isOf(this)) true
+        return if (
+            stateFrom.isOf(this) &&
+            state.get(HANGING) == stateFrom.get(HANGING) &&
+            state.get(LAYERS) < MAX_LAYERS &&
+            state.get(LAYERS) <= stateFrom.get(LAYERS)
+        ) true
         else super.isSideInvisible(state, stateFrom, direction)
     }
 
