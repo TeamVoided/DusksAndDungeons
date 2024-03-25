@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.IntFunction;
 
+@SuppressWarnings("SameParameterValue")
 @Mixin(FoxEntity.Variant.class)
 public class FoxEntityVariantMixin {
     @Mutable
@@ -27,7 +28,7 @@ public class FoxEntityVariantMixin {
     @Mutable
     @Shadow
     @Final
-    private static StringIdentifiable.EnumCodec<FoxEntity.Variant> CODEC;
+    public static StringIdentifiable.EnumCodec<FoxEntity.Variant> CODEC;
     @Mutable
     @Shadow
     @Final
@@ -56,6 +57,7 @@ public class FoxEntityVariantMixin {
     }
 
 
+    @SuppressWarnings("UnusedReturnValue")
     @Unique
     private static FoxEntity.Variant register(String name, int id, String typeName) {
         ArrayList<FoxEntity.Variant> values = new ArrayList<>(Arrays.asList(field_18003));
