@@ -29,6 +29,7 @@ import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import org.teamvoided.dusk_autumn.DuskAutumns
+import org.teamvoided.dusk_autumn.data.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
@@ -108,7 +109,7 @@ object DuskConfiguredFeature {
                         20,
                         40,
                         blockTags.getTagOrThrow(
-                            BlockTags.SCULK_REPLACEABLE_WORLD_GEN
+                            DuskBlockTags.LEAF_PILES_PLACE_ON
                         )
                     )
                 )
@@ -132,7 +133,7 @@ object DuskConfiguredFeature {
                         20,
                         40,
                         blockTags.getTagOrThrow(
-                            BlockTags.SCULK_REPLACEABLE_WORLD_GEN
+                            DuskBlockTags.LEAF_PILES_PLACE_ON
                         )
                     )
                 )
@@ -154,7 +155,7 @@ object DuskConfiguredFeature {
                         10,
                         20,
                         blockTags.getTagOrThrow(
-                            BlockTags.SCULK_REPLACEABLE_WORLD_GEN
+                            DuskBlockTags.LEAF_PILES_PLACE_ON
                         )
                     )
                 )
@@ -177,7 +178,7 @@ object DuskConfiguredFeature {
                         10,
                         20,
                         blockTags.getTagOrThrow(
-                            BlockTags.SCULK_REPLACEABLE_WORLD_GEN
+                            DuskBlockTags.LEAF_PILES_PLACE_ON
                         )
                     )
                 )
@@ -203,7 +204,7 @@ object DuskConfiguredFeature {
                             BlockStateProvider.of(
                                 DuskBlocks.DARK_OAK_LEAF_PILE.defaultState
                             ), 2, 10, 20, blockTags.getTagOrThrow(
-                                BlockTags.SCULK_REPLACEABLE_WORLD_GEN
+                                DuskBlockTags.LEAF_PILES_PLACE_ON
                             )
                         )
                     )

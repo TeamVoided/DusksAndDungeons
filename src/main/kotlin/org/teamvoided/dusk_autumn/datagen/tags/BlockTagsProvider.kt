@@ -29,7 +29,17 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.AZALEA_LEAF_PILE)
             .add(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE)
             .add(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE)
+        getOrCreateTagBuilder(DuskBlockTags.LEAF_PILES_PLACE_ON)
+            .forceAddTag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
+            .forceAddTag(BlockTags.STONE_BRICKS)
+            .forceAddTag(BlockTags.LOGS_THAT_BURN)
+            .add(Blocks.MELON)
+            .add(Blocks.PUMPKIN)
+            .add(Blocks.CARVED_PUMPKIN)
+
 //VANILLA
+        getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND)
+            .forceAddTag(DuskBlockTags.LEAF_PILES)
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
             .forceAddTag(DuskBlockTags.CASCADE_LOGS)
         getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
@@ -47,6 +57,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.FLOWER_POTS)
             .add(DuskBlocks.POTTED_CASCADE_SAPLING)
             .add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING)
+        getOrCreateTagBuilder(BlockTags.MUSHROOM_GROW_BLOCK)
+            .forceAddTag(BlockTags.LOGS)
 
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
             .add(DuskBlocks.BLUE_PETALS)
