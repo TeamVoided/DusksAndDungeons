@@ -9,6 +9,7 @@ import net.minecraft.data.client.model.*
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import java.util.*
 
@@ -51,33 +52,33 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.blockStateCollector.accept(
                 MultipartBlockStateSupplier.create(it)
                     .with(
-                        When.create().set(Properties.LAYERS, 1).set(Properties.HANGING, false),
+                        When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
                     ).with(
-                        When.create().set(Properties.LAYERS, 2).set(Properties.HANGING, false),
+                        When.create().set(LeafPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
                     ).with(
-                        When.create().set(Properties.LAYERS, 3).set(Properties.HANGING, false),
+                        When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
                     )
                     .with(
-                        When.create().set(Properties.LAYERS, 1).set(Properties.HANGING, true),
+                        When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, true),
                         BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
                     ).with(
-                        When.create().set(Properties.LAYERS, 2).set(Properties.HANGING, true),
+                        When.create().set(LeafPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, true),
                         BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
                     ).with(
-                        When.create().set(Properties.LAYERS, 3).set(Properties.HANGING, true),
+                        When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, true),
                         BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
                     )
                     .with(
-                        When.create().set(Properties.LAYERS, 4),
+                        When.create().set(LeafPileBlock.PILE_LAYERS, 4),
                         BlockStateVariant.create().put(VariantSettings.MODEL, full)
                     )
             )
         }
 //                .with(
-//                    When.create().set(Properties.LAYERS, 8),
+//                    When.create().set(LeafPileBlock.PILE_LAYERS, 8),
 //                    BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
 //                        .put(VariantSettings.UVLOCK, true)
 //                )
