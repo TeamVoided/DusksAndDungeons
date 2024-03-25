@@ -12,13 +12,14 @@ import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
 import org.teamvoided.dusk_autumn.init.worldgen.DuskPlacedFeature
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
+import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 
 
 object DuskWorldgen {
 
     val ALTER_GROUND_RADIUS = registerTreeDecorator("alter_ground_radius", AlterGroundRadiusTreeDecorator.CODEC)
     val ALTER_ON_GROUND = registerTreeDecorator("alter_on_ground", AlterOnGroundTreeDecorator.CODEC)
-//    val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", ThreeWideTrunkPlacer.CODEC)
+    val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", ThreeWideTrunkPlacer.CODEC)
 
 
     fun init() {
@@ -28,9 +29,9 @@ object DuskWorldgen {
     }
 
     private fun <P : TreeDecorator> registerTreeDecorator(id: String, codec: Codec<P>): TreeDecoratorType<P> {
-        return Registry.register(Registries.TREE_DECORATOR_TYPE, id(id), TreeDecoratorType<P>(codec))
+        return Registry.register(Registries.TREE_DECORATOR_TYPE, id(id), TreeDecoratorType(codec))
     }
-    private fun <P : TrunkPlacer?> registerTrunkPlacer(id: String, codec: Codec<P?>): TrunkPlacerType<P> {
-        return Registry.register(Registries.TRUNK_PLACER_TYPE, id(id), TrunkPlacerType<P>(codec))
+    private fun <P : TrunkPlacer> registerTrunkPlacer(id: String, codec: Codec<P>): TrunkPlacerType<P> {
+        return Registry.register(Registries.TRUNK_PLACER_TYPE, id(id), TrunkPlacerType(codec))
     }
 }
