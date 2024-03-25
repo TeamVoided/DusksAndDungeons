@@ -24,102 +24,84 @@ import net.minecraft.world.WorldAccess
 import java.util.*
 import kotlin.math.min
 
-open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
+
+@Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
+open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
+    init {
+        this.defaultState = stateManager.defaultState
+            .with(DISTANCE, 6)
+            .with(HANGING, false)
+            .with(PILE_LAYERS, 1)
+            .with(WATERLOGGED, false)
+    }
 
     override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean {
-        val layers = state.get(LAYERS)
-        val hanging = state.get(HANGING)
-        return if (context.stack.isOf(this.asItem()) && layers < MAX_LAYERS) {
+        return if (context.stack.isOf(this.asItem()) && state.get(PILE_LAYERS) < MAX_LAYERS) {
             if (context.canReplaceExisting()) {
-                context.side == if (hanging) Direction.DOWN else Direction.UP
-            } else {
-                true
-            }
-        } else {
-            false
-        }
+                context.side == if (state.get(HANGING)) Direction.DOWN else Direction.UP
+            } else true
+        } else false
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
+
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
         val blockPos = ctx.blockPos
-        val blockStateCurrent = ctx.world.getBlockState(blockPos)
-        if (blockStateCurrent.isOf(this)) {
-            return blockStateCurrent.with(
-                LAYERS, (blockStateCurrent.get(LAYERS) + 1)
-            )
-        } else {
-            val fluidState = ctx.world.getFluidState(blockPos)
-            val blockState = (defaultState.with(HANGING, false)).with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
-            val direction = ctx.side
-            if (direction != Direction.DOWN && (direction == Direction.UP || !(ctx.hitPos.y - blockPos.y.toDouble() > 0.5))) {
-                return blockState
-            } else {
-                return blockState.with(
-                    HANGING, true
-                )
-            }
-        }
+        val oldState = ctx.world.getBlockState(blockPos)
+        if (oldState.isOf(this))
+            return oldState.with(PILE_LAYERS, addLayer(oldState.get(PILE_LAYERS)))
+
+        val fluidState = ctx.world.getFluidState(blockPos)
+        val state = (defaultState.with(HANGING, false)).with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
+        val direction = ctx.side
+        if (direction != Direction.DOWN && (direction == Direction.UP || !(ctx.hitPos.y - blockPos.y.toDouble() > 0.5)))
+            return state
+
+        return state.with(HANGING, true)
+
     }
 
-    @Suppress("DEPRECATION")
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
-        return if (
-            stateFrom.isOf(this) &&
+        return if (stateFrom.isOf(this) &&
             state.get(HANGING) == stateFrom.get(HANGING) &&
-            state.get(LAYERS) < MAX_LAYERS &&
-            state.get(LAYERS) <= stateFrom.get(LAYERS)
+            state.get(PILE_LAYERS) < MAX_LAYERS &&
+            state.get(PILE_LAYERS) <= stateFrom.get(PILE_LAYERS)
         ) true
         else super.isSideInvisible(state, stateFrom, direction)
     }
 
     override fun canPathfindThrough(
-        state: BlockState?,
-        world: BlockView?,
-        pos: BlockPos?,
-        type: NavigationType
-    ): Boolean {
-        return true
-    }
+        state: BlockState, world: BlockView, pos: BlockPos, type: NavigationType
+    ): Boolean = true
 
-    override fun getSidesShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
-        return VoxelShapes.empty()
-    }
+    override fun getSidesShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape = VoxelShapes.empty()
 
     override fun getOutlineShape(
-        state: BlockState, world: BlockView?, pos: BlockPos?, context: ShapeContext?
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
-        return if (state.get(HANGING)) HANGING_LAYERS_TO_SHAPE[state.get(LAYERS)] else DEFAULT_LAYERS_TO_SHAPE[
-            state.get(LAYERS)]
+        return if (state.get(HANGING))
+            HANGING_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]
+        else
+            DEFAULT_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]
     }
 
     override fun getCollisionShape(
-        state: BlockState,
-        world: BlockView?,
-        pos: BlockPos?,
-        context: ShapeContext?
-    ): VoxelShape {
-        return VoxelShapes.empty()
-    }
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
+    ): VoxelShape = VoxelShapes.empty()
 
-    override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator?) {
+
+    override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
         world.setBlockState(pos, updateDistanceFromLogs(state, world, pos), NOTIFY_ALL)
     }
 
-    override fun getOpacity(state: BlockState?, world: BlockView?, pos: BlockPos?): Int {
-        return 1
-    }
+    override fun getOpacity(state: BlockState, world: BlockView, pos: BlockPos): Int = 1
 
     override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction?,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos?,
-        neighborPos: BlockPos?
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
-        if (state.get(LeavesBlock.WATERLOGGED)) {
+        if (state.get(LeavesBlock.WATERLOGGED))
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
-        }
+
         val i = getDistanceFromLog(neighborState) + 1
         if (i != 1 || state.get(LeavesBlock.DISTANCE) as Int != i) {
             world.scheduleBlockTick(pos, this, 1)
@@ -131,23 +113,15 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
     private fun updateDistanceFromLogs(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
         var i = 7
         val mutable = BlockPos.Mutable()
-        val var5 = Direction.entries.toTypedArray()
-        val var6 = var5.size
 
-        for (var7 in 0 until var6) {
-            val direction = var5[var7]
+        for (direction in Direction.entries) {
             mutable[pos] = direction
-            i = min(i.toDouble(), (getDistanceFromLog(world.getBlockState(mutable)) + 1).toDouble())
-                .toInt()
-            if (i == 1) {
-                break
-            }
+            i = min(i, (getDistanceFromLog(world.getBlockState(mutable)) + 1))
+            if (i == 1) break
         }
-
         return state.with(LeavesBlock.DISTANCE, i)
     }
 
-    @Suppress("DEPRECATION")
     override fun getFluidState(state: BlockState): FluidState {
         return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
     }
@@ -165,61 +139,42 @@ open class LeafPileBlock(settings: Settings?) : Block(settings), Waterloggable {
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(DISTANCE, HANGING, LAYERS, WATERLOGGED)
+        builder.add(DISTANCE, HANGING, PILE_LAYERS, WATERLOGGED)
     }
 
-    init {
-        this.defaultState = (stateManager.defaultState)
-            .with(DISTANCE, 7)
-            .with(HANGING, false)
-            .with(LAYERS, 1)
-            .with(WATERLOGGED, false)
-    }
 
     companion object {
+        val MAX_LAYERS = 4
+
+        val PILE_LAYERS: IntProperty = IntProperty.of("layers", 1, MAX_LAYERS)
+        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val DISTANCE: IntProperty = Properties.DISTANCE_1_7
         val HANGING: BooleanProperty = Properties.HANGING
-        val MAX_LAYERS: Int = 4
-        val LAYERS: IntProperty = Properties.LAYERS
-        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
-        val DEFAULT_SHAPE = createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0)
-        val DEFAULT_HANGING_SHAPE = createCuboidShape(0.0, 12.0, 0.0, 16.0, 16.0, 16.0)
-        val FULL_SHAPE = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+
+        val FULL_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+
         val DEFAULT_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            VoxelShapes.empty(),
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
             FULL_SHAPE,
-            FULL_SHAPE,
-            FULL_SHAPE,
-            FULL_SHAPE,
-            FULL_SHAPE,
         )
         val HANGING_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            VoxelShapes.empty(),
             createCuboidShape(0.0, 12.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 8.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 4.0, 0.0, 16.0, 16.0, 16.0),
             FULL_SHAPE,
-            FULL_SHAPE,
-            FULL_SHAPE,
-            FULL_SHAPE,
-            FULL_SHAPE,
         )
 
-        private fun getDistanceFromLog(state: BlockState): Int {
-            return getOptionalDistanceFromLog(state).orElse(7)
-        }
 
-        fun getOptionalDistanceFromLog(state: BlockState): OptionalInt {
-            return if (state.isIn(BlockTags.LOGS)) {
-                OptionalInt.of(0)
-            } else {
-                if (state.contains(DISTANCE)) OptionalInt.of(
-                    (state.get(DISTANCE))
-                ) else OptionalInt.empty()
-            }
+        fun addLayer(i: Int): Int = min(MAX_LAYERS, (i + 1))
+
+        private fun getDistanceFromLog(state: BlockState): Int = getOptionalDistanceFromLog(state).orElse(7)
+
+        private fun getOptionalDistanceFromLog(state: BlockState): OptionalInt {
+            return if (state.isIn(BlockTags.LOGS)) OptionalInt.of(0)
+            else if (state.contains(DISTANCE)) OptionalInt.of((state.get(DISTANCE)))
+            else OptionalInt.empty()
         }
     }
 }
