@@ -278,7 +278,7 @@ object DuskConfiguredFeature {
     }
 
 
-    fun create(id: String): RegistryKey<ConfiguredFeature<*, *>> =
+    fun create(id: String): RegistryKey<ConfiguredFeature<*, *>?> =
         RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, DuskAutumns.id(id))
 
 }

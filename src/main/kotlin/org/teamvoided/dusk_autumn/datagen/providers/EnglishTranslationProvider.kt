@@ -1,3 +1,4 @@
+
 package org.teamvoided.dusk_autumn.datagen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -9,6 +10,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 
+@Suppress("MemberVisibilityCanBePrivate")
 class EnglishTranslationProvider(o: FabricDataOutput) : FabricLanguageProvider(o) {
 
     val items = listOf(DuskItems.CASCADE_SAPLING)

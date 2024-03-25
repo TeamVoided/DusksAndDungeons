@@ -15,11 +15,11 @@ import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
-    private val ALL_TEX: TextureKey = TextureKey.of("all")
-    private fun leafPile(num: Number? = null): Identifier =
+    private val ALL_KRY: TextureKey = TextureKey.of("all")
+    private fun leafPile(num: String? = null): Identifier =
         id("block/parent/leaf_pile${if (num != null) "_$num" else ""}")
 
-    private fun leafPileHanging(num: Number? = null): Identifier =
+    private fun leafPileHanging(num: String? = null): Identifier =
         id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
 
 
@@ -39,16 +39,19 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
+
+        gen.registerDoor(DuskBlocks.CASCADE_DOOR)
+        gen.registerDoor(DuskBlocks.BLUE_DOOR)
+        gen.registerTrapdoor(DuskBlocks.CASCADE_TRAPDOOR)
+
         leafPiles.forEach { (it, texture) ->
-
             val layer1 = gen.parentedModel(it, texture, leafPile())
-            val layer2 = gen.parentedModel(it.modelSuffix("_8"), texture, leafPile(8))
-            val layer3 = gen.parentedModel(it.modelSuffix("_12"), texture, leafPile(12))
+            val layer2 = gen.parentedModel(it.modelSuffix("_8"), texture, leafPile("8"))
+            val layer3 = gen.parentedModel(it.modelSuffix("_12"), texture, leafPile("12"))
             val hanging1 = gen.parentedModel(it.modelSuffix("_hanging"), texture, leafPileHanging())
-            val hanging2 = gen.parentedModel(it.modelSuffix("_hanging_8"), texture, leafPileHanging(8))
-            val hanging3 = gen.parentedModel(it.modelSuffix("_hanging_12"), texture, leafPileHanging(12))
-            val full = gen.parentedModel(it.modelSuffix("_16"), texture, leafPile(16))
-
+            val hanging2 = gen.parentedModel(it.modelSuffix("_hanging_8"), texture, leafPileHanging("8"))
+            val hanging3 = gen.parentedModel(it.modelSuffix("_hanging_12"), texture, leafPileHanging("12"))
+            val full = gen.parentedModel(it.modelSuffix("_full"), texture, leafPile("full"))
             gen.blockStateCollector.accept(
                 MultipartBlockStateSupplier.create(it)
                     .with(
@@ -77,30 +80,28 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                     )
             )
         }
-//                .with(
-//                    When.create().set(LeafPileBlock.PILE_LAYERS, 8),
-//                    BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
-//                        .put(VariantSettings.UVLOCK, true)
-//                )
+
+        /*.with(
+            When.create().set(LeafPileBlock.PILE_LAYERS, 8),
+            BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
+                .put(VariantSettings.UVLOCK, true)
+        )*/
+
     }
 
     override fun generateItemModels(gen: ItemModelGenerator) {}
 
-//    private fun BlockStateModelGenerator.parentedModel(block: Block, parent: Identifier): Identifier =
-//        Model(parent.myb, Optional.empty(), ALL_TEX)
-//            .upload(block.model(), Texture().put(ALL_TEX, block.model()), this.modelCollector)
+//    private fun BlockStateModelGenerator.parentedModel(block: Block, parent: Identifier): Identifier = this.parentedModel(block, block, parent)
 
     private fun BlockStateModelGenerator.parentedModel(block: Block, textBlock: Block, parent: Identifier): Identifier =
-        Model(parent.myb, Optional.empty(), ALL_TEX)
-            .upload(block.model(), Texture().put(ALL_TEX, textBlock.model()), this.modelCollector)
+        Model(parent.myb, Optional.empty(), ALL_KRY)
+            .upload(block.model(), Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
 
     private fun BlockStateModelGenerator.parentedModel(
-        block: Identifier,
-        textBlock: Block,
-        parent: Identifier
+        block: Identifier, textBlock: Block, parent: Identifier
     ): Identifier =
-        Model(parent.myb, Optional.empty(), ALL_TEX)
-            .upload(block, Texture().put(ALL_TEX, textBlock.model()), this.modelCollector)
+        Model(parent.myb, Optional.empty(), ALL_KRY)
+            .upload(block, Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
 
 
     private val <T : Any?> T.myb get() = Optional.ofNullable(this)

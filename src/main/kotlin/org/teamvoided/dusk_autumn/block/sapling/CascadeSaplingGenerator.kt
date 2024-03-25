@@ -14,7 +14,7 @@ class CascadeSaplingGenerator : ThreeWideTreeSaplingGenerator() {
     override fun getThreeWideTreeFeature(
         random: RandomGenerator?,
         bees: Boolean
-    ): RegistryKey<ConfiguredFeature<*, *>?>? {
+    ): RegistryKey<ConfiguredFeature<*, *>?> {
         return if (bees) DuskConfiguredFeature.CASCADE_TREE_BEES else DuskConfiguredFeature.CASCADE_TREE
     }
 }
