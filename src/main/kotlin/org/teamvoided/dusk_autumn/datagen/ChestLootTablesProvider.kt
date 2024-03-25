@@ -14,26 +14,24 @@ import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.data.DuskLootTables
+import org.teamvoided.dusk_autumn.util.Utils
 import java.util.function.BiConsumer
 
 class ChestLootTablesProvider(o: FabricDataOutput) : SimpleFabricLootTableProvider(o, LootContextTypes.CHEST) {
     override fun generate(gen: BiConsumer<Identifier, LootTable.Builder>) {
-        fun uniformNum(x: Number, y: Number): UniformLootNumberProvider =
-        UniformLootNumberProvider.create(x.toFloat(), y.toFloat())
-        fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, y))
 
         // eStrongholdLibraryLootTable
         gen.accept(
             DuskLootTables.COOL_CHEST,
             LootTable.builder().pool(
-                LootPool.builder().rolls(uniformNum(2, 10))
+                LootPool.builder().rolls(Utils.uniformNum(2, 10))
                     .with(
                         ItemEntry.builder(Items.BOOK).weight(20)
-                            .apply(setCount(1, 3))
+                            .apply(Utils.setCount(1, 3))
                     )
                     .with(
                         ItemEntry.builder(Items.PAPER).weight(20)
-                            .apply(setCount(2, 7))
+                            .apply(Utils.setCount(2, 7))
                     )
                     .with(ItemEntry.builder(Items.MAP))
                     .with(ItemEntry.builder(Items.COMPASS))
