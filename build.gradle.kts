@@ -25,6 +25,7 @@ modSettings {
     entrypoint("client", "org.teamvoided.dusk_autumn.DuskAutumns::clientInit")
     entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.datagen.DuskAutumnsData")
     mixinFile("dusk_autumn.mixins.json")
+    accessWidener("dusk_autumn.accesswidener")
 }
 
 loom {
