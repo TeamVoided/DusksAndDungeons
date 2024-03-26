@@ -30,6 +30,7 @@ import org.teamvoided.dusk_autumn.data.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
+import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -73,7 +74,7 @@ object DuskConfiguredFeature {
         val goldenBirchTree = builder(Blocks.BIRCH_LOG, DuskBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
         val cascadeTree = TreeFeatureConfig.Builder(
             BlockStateProvider.of(DuskBlocks.CASCADE_LOG),
-            DarkOakTrunkPlacer(7, 3, 2),
+            ThreeWideTrunkPlacer(7, 3, 2),
             BlockStateProvider.of(DuskBlocks.CASCADE_LEAVES),
             DarkOakFoliagePlacer(ConstantIntProvider.create(0), ConstantIntProvider.create(0)),
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())

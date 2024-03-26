@@ -5,7 +5,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.TestableWorld
 import net.minecraft.world.gen.feature.TreeFeature
@@ -31,57 +30,65 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
     ): List<FoliagePlacer.TreeNode> {
         val list: MutableList<FoliagePlacer.TreeNode> = Lists.newArrayList()
         val blockPos = startPos.down()
+        setToDirt(world, replacer, random, blockPos.north().west(), config)
+        setToDirt(world, replacer, random, blockPos.north(), config)
+        setToDirt(world, replacer, random, blockPos.north().east(), config)
+        setToDirt(world, replacer, random, blockPos.west(), config)
         setToDirt(world, replacer, random, blockPos, config)
         setToDirt(world, replacer, random, blockPos.east(), config)
+        setToDirt(world, replacer, random, blockPos.south().west(), config)
         setToDirt(world, replacer, random, blockPos.south(), config)
         setToDirt(world, replacer, random, blockPos.south().east(), config)
-        val direction = Direction.Type.HORIZONTAL.random(random)
-        val i = height - random.nextInt(4)
-        var j = 2 - random.nextInt(3)
         val posX = startPos.x
         val posY = startPos.y
         val posZ = startPos.z
-        var n = posX
-        var o = posZ
-        val p = posY + height - 1
+        val posYAlt = posY + height - 1
         var r: Int
-        var q = 0
-        while (q < height) {
-            if (q >= i && j > 0) {
-                n += direction.offsetX
-                o += direction.offsetZ
-                --j
-            }
+        var g = 0
+        while (g < height) {
 
-            r = posY + q
-            val blockPos2 = BlockPos(n, r, o)
+            r = posY + g
+            val blockPos2 = BlockPos(posX, r, posZ)
             if (TreeFeature.isAirOrLeaves(world, blockPos2)) {
+                this.placeTrunkBlock(world, replacer, random, blockPos2.north().west(), config)
+                this.placeTrunkBlock(world, replacer, random, blockPos2.north(), config)
+                this.placeTrunkBlock(world, replacer, random, blockPos2.north().east(), config)
+                this.placeTrunkBlock(world, replacer, random, blockPos2.west(), config)
                 this.placeTrunkBlock(world, replacer, random, blockPos2, config)
                 this.placeTrunkBlock(world, replacer, random, blockPos2.east(), config)
+                this.placeTrunkBlock(world, replacer, random, blockPos2.south().west(), config)
                 this.placeTrunkBlock(world, replacer, random, blockPos2.south(), config)
-                this.placeTrunkBlock(world, replacer, random, blockPos2.east().south(), config)
+                this.placeTrunkBlock(world, replacer, random, blockPos2.south().east(), config)
             }
-            ++q
+            ++g
         }
 
-        list.add(FoliagePlacer.TreeNode(BlockPos(n, p, o), 0, true))
+        list.add(FoliagePlacer.TreeNode(BlockPos(posX, posYAlt, posZ), 0, true))
 
-        q = -1
-        while (q <= 2) {
-            r = -1
-            while (r <= 2) {
-                if ((q < 0 || q > 1 || r < 0 || r > 1) && random.nextInt(3) <= 0) {
-                    val s = random.nextInt(3) + 2
+        g = -2
+        while (g <= 3) {
+            r = -2
+            while (r <= 3) {
+//                does not place on corner, then not interior, then chance to place
+                if (!((g < -1 ||g > 2) && (r < -1 ||r > 2)) && (g < 0 || g > 1 || r < 0 || r > 1) && random.nextInt(6) <= 0) {
+                    val randMax = random.nextInt(2) + 3
+                    val randOffset = random.nextInt(3) - 1
 
-                    for (t in 0 until s) {
-                        this.placeTrunkBlock(world, replacer, random, BlockPos(posX + q, p - t - 1, posZ + r), config)
+                    for (t in 0 until randMax) {
+                        this.placeTrunkBlock(world, replacer, random, BlockPos(posX + g, posYAlt - t + randOffset, posZ + r), config)
+                        this.placeTrunkBlock(world, replacer, random, BlockPos(posX + g - 1, posYAlt - t + randOffset, posZ + r), config)
+                        this.placeTrunkBlock(world, replacer, random, BlockPos(posX + g, posYAlt - t + randOffset, posZ + r - 1), config)
+                        this.placeTrunkBlock(world, replacer, random, BlockPos(posX + g - 1, posYAlt - t + randOffset, posZ + r - 1), config)
+
+//              Debug
+//                        this.placeTrunkBlock(world, replacer, random, BlockPos(posX + q, posYAlt - t + randOffset + 20, posZ + r), config)
                     }
 
-                    list.add(FoliagePlacer.TreeNode(BlockPos(n + q, p, o + r), 0, false))
+                    list.add(FoliagePlacer.TreeNode(BlockPos(posX + g, posYAlt, posZ + r), 0, false))
                 }
                 ++r
             }
-            ++q
+            ++g
         }
 
         return list
@@ -91,4 +98,6 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
         val CODEC: Codec<ThreeWideTrunkPlacer> =
             RecordCodecBuilder.create { fillTrunkPlacerFields(it).apply(it, ::ThreeWideTrunkPlacer) }
     }
+//        suprise tool i want to use later
+//        val direction = Direction.Type.HORIZONTAL.random(random)
 }
