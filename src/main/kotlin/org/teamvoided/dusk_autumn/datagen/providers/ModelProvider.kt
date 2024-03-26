@@ -40,9 +40,14 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
 
+        gen.registerFlowerPotPlant(DuskBlocks.CASCADE_SAPLING,DuskBlocks.POTTED_CASCADE_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED)
+        gen.registerSingleton(DuskBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
         gen.registerDoor(DuskBlocks.CASCADE_DOOR)
         gen.registerDoor(DuskBlocks.BLUE_DOOR)
         gen.registerTrapdoor(DuskBlocks.CASCADE_TRAPDOOR)
+        gen.registerFlowerPotPlant(DuskBlocks.GOLDEN_BIRCH_SAPLING,DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED)
+        gen.registerSingleton(DuskBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
+        gen.method_49378(DuskBlocks.BLUE_PETALS)
 
         leafPiles.forEach { (it, texture) ->
             val layer1 = gen.parentedModel(it, texture, leafPile())
