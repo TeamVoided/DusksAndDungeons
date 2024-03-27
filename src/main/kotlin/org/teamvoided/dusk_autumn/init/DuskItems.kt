@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumn.init
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
@@ -13,12 +14,13 @@ import org.teamvoided.dusk_autumn.DuskAutumns
 object DuskItems {
 
     val CASCADE_SAPLING = register("cascade_sapling", BlockItem(DuskBlocks.CASCADE_SAPLING))
+    val CASCADE_LEAVES = register("cascade_leaves", BlockItem(DuskBlocks.CASCADE_LEAVES))
     val CASCADE_LOG = register("cascade_log", BlockItem(DuskBlocks.CASCADE_LOG))
     val STRIPPED_CASCADE_LOG = register("stripped_cascade_log", BlockItem(DuskBlocks.STRIPPED_CASCADE_LOG))
     val CASCADE_PLANKS = register("cascade_planks", BlockItem(DuskBlocks.CASCADE_PLANKS))
     val CASCADE_DOOR = register("cascade_door", TallBlockItem(DuskBlocks.CASCADE_DOOR, Item.Settings()))
     val BLUE_DOOR = register("blue_door", TallBlockItem(DuskBlocks.BLUE_DOOR, Item.Settings()))
-    val CASCADE_LEAVES = register("cascade_leaves", BlockItem(DuskBlocks.CASCADE_LEAVES))
+    val CASCADE_TRAPDOOR = register("cascade_trapdoor", BlockItem(DuskBlocks.CASCADE_TRAPDOOR))
     val CASCADE_SIGN = register(
         "cascade_sign",
         SignItem(Item.Settings().maxCount(16), DuskBlocks.CASCADE_SIGN, DuskBlocks.CASCADE_WALL_SIGN)
@@ -33,10 +35,9 @@ object DuskItems {
     val BLUE_PETALS = register("blue_petals", BlockItem(DuskBlocks.BLUE_PETALS))
     val VIOLET_DAISY = register("violet_daisy", BlockItem(DuskBlocks.VIOLET_DAISY))
 
-    val GOLDEN_BIRCH_LEAVES = register("golden_birch_leaves", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAVES))
     val GOLDEN_BIRCH_SAPLING = register("golden_birch_sapling", BlockItem(DuskBlocks.GOLDEN_BIRCH_SAPLING))
+    val GOLDEN_BIRCH_LEAVES = register("golden_birch_leaves", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAVES))
 
-    val CASCADE_LEAF_PILE = register("cascade_leaf_pile", BlockItem(DuskBlocks.CASCADE_LEAF_PILE))
     val OAK_LEAF_PILE = register("oak_leaf_pile", BlockItem(DuskBlocks.OAK_LEAF_PILE))
     val BIRCH_LEAF_PILE = register("birch_leaf_pile", BlockItem(DuskBlocks.BIRCH_LEAF_PILE))
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", BlockItem(DuskBlocks.SPRUCE_LEAF_PILE))
@@ -48,6 +49,7 @@ object DuskItems {
     val AZALEA_LEAF_PILE = register("azalea_leaf_pile", BlockItem(DuskBlocks.AZALEA_LEAF_PILE))
     val FLOWERING_AZALEA_LEAF_PILE =
         register("flowering_azalea_leaf_pile", BlockItem(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE))
+    val CASCADE_LEAF_PILE = register("cascade_leaf_pile", BlockItem(DuskBlocks.CASCADE_LEAF_PILE))
     val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE))
 
     fun init() {

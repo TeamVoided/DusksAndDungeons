@@ -8,6 +8,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
 import org.teamvoided.dusk_autumn.datagen.providers.BlockLootTableProvider
 import org.teamvoided.dusk_autumn.datagen.providers.EnglishTranslationProvider
 import org.teamvoided.dusk_autumn.datagen.providers.ModelProvider
+import org.teamvoided.dusk_autumn.datagen.providers.RecipesProvider
 import org.teamvoided.dusk_autumn.datagen.tags.BiomeTagsProvider
 import org.teamvoided.dusk_autumn.datagen.tags.BlockTagsProvider
 import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
@@ -24,6 +25,7 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         pack.addProvider(::BlockTagsProvider)
         pack.addProvider(::ModelProvider)
         pack.addProvider(::EnglishTranslationProvider)
+        pack.addProvider(::RecipesProvider)
         pack.addProvider(::BlockLootTableProvider)
     }
 

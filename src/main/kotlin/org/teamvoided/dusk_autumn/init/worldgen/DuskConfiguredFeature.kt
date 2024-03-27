@@ -19,17 +19,20 @@ import net.minecraft.world.gen.feature.size.ThreeLayersFeatureSize
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
-import net.minecraft.world.gen.foliage.BlobFoliagePlacer
-import net.minecraft.world.gen.foliage.DarkOakFoliagePlacer
-import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer
+import net.minecraft.world.gen.foliage.*
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
+import net.minecraft.world.gen.treedecorator.CocoaBeansTreeDecorator
+import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
+import net.minecraft.world.gen.treedecorator.TreeDecorator
+import net.minecraft.world.gen.treedecorator.TrunkVineTreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.data.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
+import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
@@ -44,6 +47,7 @@ object DuskConfiguredFeature {
     val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
     val DARK_OAK_AUTUMN = create("dark_oak_autumn")
     val ACACIA_AUTUMN = create("acacia_autumn")
+    val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
     val DISK_PODZOL = create("disk_podzol")
     val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
@@ -78,21 +82,19 @@ object DuskConfiguredFeature {
             BlockStateProvider.of(DuskBlocks.CASCADE_LOG),
             ThreeWideTrunkPlacer(7, 3, 2),
             BlockStateProvider.of(DuskBlocks.CASCADE_LEAVES),
-            RandomSpreadFoliagePlacer(
-                ConstantIntProvider.create(3),
+            CascadeFoliagePlacer(
                 ConstantIntProvider.create(0),
-                ConstantIntProvider.create(2),
-                50
+                ConstantIntProvider.create(0)
             ),
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
         val cascadeLeafPile = AlterOnGroundTreeDecorator(
             WeightedBlockStateProvider(
                 DataPool.builder<BlockState>()
-                    .add(DuskBlocks.CASCADE_LEAF_PILE.defaultState, 5)
+                    .add(DuskBlocks.CASCADE_LEAF_PILE.defaultState, 9)
                     .add(
                         DuskBlocks.CASCADE_LEAF_PILE.defaultState
-                            .with(LeafPileBlock.PILE_LAYERS, 2), 3
+                            .with(LeafPileBlock.PILE_LAYERS, 2), 4
                     )
                     .add(
                         DuskBlocks.CASCADE_LEAF_PILE.defaultState
@@ -106,10 +108,10 @@ object DuskConfiguredFeature {
         val goldenBirchLeafPile = AlterOnGroundTreeDecorator(
             WeightedBlockStateProvider(
                 DataPool.builder<BlockState>()
-                    .add(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.defaultState, 5)
+                    .add(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.defaultState, 9)
                     .add(
                         DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.defaultState
-                            .with(LeafPileBlock.PILE_LAYERS, 2), 3
+                            .with(LeafPileBlock.PILE_LAYERS, 2), 4
                     )
                     .add(
                         DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.defaultState
@@ -183,10 +185,10 @@ object DuskConfiguredFeature {
                         AlterOnGroundTreeDecorator(
                             WeightedBlockStateProvider(
                                 DataPool.builder<BlockState>()
-                                    .add(DuskBlocks.DARK_OAK_LEAF_PILE.defaultState, 5)
+                                    .add(DuskBlocks.DARK_OAK_LEAF_PILE.defaultState, 9)
                                     .add(
                                         DuskBlocks.DARK_OAK_LEAF_PILE.defaultState
-                                            .with(LeafPileBlock.PILE_LAYERS, 2), 3
+                                            .with(LeafPileBlock.PILE_LAYERS, 2), 4
                                     )
                                     .add(
                                         DuskBlocks.DARK_OAK_LEAF_PILE.defaultState
@@ -208,18 +210,14 @@ object DuskConfiguredFeature {
                 TwoLayersFeatureSize(1, 0, 1)
             )
                 .forceDirt().ignoreVines().decorators(
-                    ImmutableList.of(
-                        AlterGroundRadiusTreeDecorator(
-                            BlockStateProvider.of(Blocks.PODZOL), 2, 5,
-                            blockTags.getTagOrThrow(BlockTags.DIRT)
-                        ),
+                    ImmutableList.of<TreeDecorator>(
                         AlterOnGroundTreeDecorator(
                             WeightedBlockStateProvider(
                                 DataPool.builder<BlockState>()
-                                    .add(DuskBlocks.ACACIA_LEAF_PILE.defaultState, 5)
+                                    .add(DuskBlocks.ACACIA_LEAF_PILE.defaultState, 9)
                                     .add(
                                         DuskBlocks.ACACIA_LEAF_PILE.defaultState
-                                            .with(LeafPileBlock.PILE_LAYERS, 2), 3
+                                            .with(LeafPileBlock.PILE_LAYERS, 4), 3
                                     )
                                     .add(
                                         DuskBlocks.ACACIA_LEAF_PILE.defaultState
@@ -232,7 +230,16 @@ object DuskConfiguredFeature {
                     )
                 ).build()
         )
-
+        ConfiguredFeatureUtil.registerConfiguredFeature<TreeFeatureConfig, Feature<TreeFeatureConfig>>(
+            c, ACACIA_BUSH_AUTUMN, Feature.TREE,
+            TreeFeatureConfig.Builder(
+                BlockStateProvider.of(Blocks.ACACIA_LOG),
+                StraightTrunkPlacer(1, 0, 0),
+                BlockStateProvider.of(Blocks.ACACIA_LEAVES),
+                AcaciaFoliagePlacer(UniformIntProvider.create(1, 2), ConstantIntProvider.create(0)),
+                TwoLayersFeatureSize(0, 0, 0)
+            ).build()
+        )
         ConfiguredFeatureUtil.registerConfiguredFeature<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
             c, DISK_PODZOL, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz(
@@ -256,19 +263,19 @@ object DuskConfiguredFeature {
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
-                            .add(Blocks.PUMPKIN.defaultState, 16)
-                            .add(Blocks.CARVED_PUMPKIN.defaultState, 1)
+                            .add(Blocks.PUMPKIN.defaultState, 32)
+                            .add(Blocks.CARVED_PUMPKIN.defaultState, 4)
                             .add(
                                 Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 1
+                                    .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 4
                             )
                             .add(
                                 Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.EAST), 1
+                                    .with(HorizontalFacingBlock.FACING, Direction.EAST), 4
                             )
                             .add(
                                 Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.WEST), 1
+                                    .with(HorizontalFacingBlock.FACING, Direction.WEST), 4
                             )
                             .add(Blocks.JACK_O_LANTERN.defaultState, 1)
                             .add(
@@ -311,8 +318,9 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, AUTUMN_PASTURES_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.DARK_OAK_AUTUMN), 0.45f),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.45f)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_AUTUMN), 0.4f),
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_BUSH_AUTUMN), 0.2f),
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.2f)
                 ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
             )
         )
