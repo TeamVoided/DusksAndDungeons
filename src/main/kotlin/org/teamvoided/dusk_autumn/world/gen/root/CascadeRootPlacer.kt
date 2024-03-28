@@ -23,8 +23,7 @@ class CascadeRootPlacer(
     rootProvider: BlockStateProvider,
     aboveRootPlacement: Optional<AboveRootPlacement>,
     private val cascadeRootConfig: CascadeRootConfig
-) :
-    RootPlacer(trunkOffsetY, rootProvider, aboveRootPlacement) {
+) : RootPlacer(trunkOffsetY, rootProvider, aboveRootPlacement) {
     override fun generate(
         world: TestableWorld,
         replacer: BiConsumer<BlockPos, BlockState>,
@@ -87,13 +86,7 @@ class CascadeRootPlacer(
                 if (this.canReplace(world, blockPos)) {
                     potentialRootPositions.add(blockPos)
                     if (!this.canGrow(
-                            world,
-                            random,
-                            blockPos,
-                            direction,
-                            origin,
-                            potentialRootPositions,
-                            rootLength + 1
+                            world, random, blockPos, direction, origin, potentialRootPositions, rootLength + 1
                         )
                     ) {
                         return false
@@ -108,10 +101,7 @@ class CascadeRootPlacer(
     }
 
     protected fun getPotentialRootPositions(
-        pos: BlockPos,
-        direction: Direction,
-        random: RandomGenerator,
-        origin: BlockPos
+        pos: BlockPos, direction: Direction, random: RandomGenerator, origin: BlockPos
     ): List<BlockPos> {
         val blockPos = pos.down()
         val blockPos2 = pos.offset(direction)
@@ -159,13 +149,10 @@ class CascadeRootPlacer(
     companion object {
         const val MAX_ROOT_WIDTH: Int = 8
         const val MAX_ROOT_LENGTH: Int = 15
-        val CODEC: Codec<CascadeRootPlacer> =
-            RecordCodecBuilder.create { instance ->
-                rootPlacerCodec(instance)
-                    .and(
-                        CascadeRootConfig.CODEC.fieldOf("cascade_root_placement")
-                            .forGetter<CascadeRootConfig>{it.}
-                    ).apply(instance, ::CascadeRootPlacer)
-            }
+        val CODEC: Codec<CascadeRootPlacer> = RecordCodecBuilder.create { instance ->
+            rootPlacerCodec(instance).and(
+                    CascadeRootConfig.CODEC.fieldOf("cascade_root_placement").forGetter { it.cascadeRootConfig })
+                .apply(instance, ::CascadeRootPlacer)
+        }
     }
 }
