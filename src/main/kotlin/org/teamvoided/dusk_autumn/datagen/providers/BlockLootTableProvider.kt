@@ -82,7 +82,7 @@ class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider
                                         SetCountLootFunction.builder(
                                             UniformLootNumberProvider.create(
                                                 0.0f,
-                                                layers.toFloat() * (2.0f / 3.0f)
+                                                layers * (2.0f / 3.0f)
                                             )
                                         )
                                     )

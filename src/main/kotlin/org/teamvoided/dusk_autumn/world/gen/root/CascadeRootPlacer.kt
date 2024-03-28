@@ -160,12 +160,12 @@ class CascadeRootPlacer(
         const val MAX_ROOT_WIDTH: Int = 8
         const val MAX_ROOT_LENGTH: Int = 15
         val CODEC: Codec<CascadeRootPlacer> =
-            RecordCodecBuilder.create {
-                rootPlacerCodec(it)
+            RecordCodecBuilder.create { instance ->
+                rootPlacerCodec(instance)
                     .and(
                         CascadeRootPlacement.CODEC.fieldOf("cascade_root_placement")
-                            .forGetter<CascadeRootPlacement>(placer)
-                    ).apply(it, ::CascadeRootPlacer)
+                            .forGetter<CascadeRootPlacement>{it.}
+                    ).apply(instance, ::CascadeRootPlacer)
             }
     }
 }
