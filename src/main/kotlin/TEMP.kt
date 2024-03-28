@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.world.gen.root
+package net.minecraft.world.gen.root
 
 import com.google.common.collect.Lists
 import com.mojang.serialization.Codec
@@ -10,19 +10,16 @@ import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.TestableWorld
 import net.minecraft.world.gen.feature.TreeFeatureConfig
-import net.minecraft.world.gen.root.AboveRootPlacement
-import net.minecraft.world.gen.root.RootPlacer
-import net.minecraft.world.gen.root.RootPlacerType
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
 import java.util.*
 import java.util.function.BiConsumer
 
-class CascadeRootPlacer(
+class MangroveRootPlacer(
     trunkOffsetY: IntProvider?,
     rootProvider: BlockStateProvider?,
     aboveRootPlacement: Optional<AboveRootPlacement?>?,
-    private val cascadeRootPlacement: CascadeRootPlacement
+    private val mangroveRootPlacement: MangroveRootPlacement
 ) :
     RootPlacer(trunkOffsetY, rootProvider, aboveRootPlacement) {
     override fun generate(
@@ -77,7 +74,7 @@ class CascadeRootPlacer(
         potentialRootPositions: MutableList<BlockPos>,
         rootLength: Int
     ): Boolean {
-        val i = cascadeRootPlacement.maxRootLength()
+        val i = mangroveRootPlacement.maxRootLength()
         if (rootLength != i && potentialRootPositions.size <= i) {
             val list = this.getPotentialRootPositions(pos, direction, random, origin)
             val var10: Iterator<*> = list.iterator()
@@ -116,8 +113,8 @@ class CascadeRootPlacer(
         val blockPos = pos.down()
         val blockPos2 = pos.offset(direction)
         val i = pos.getManhattanDistance(origin)
-        val j = cascadeRootPlacement.maxRootWidth()
-        val f = cascadeRootPlacement.randomSkewChance()
+        val j = mangroveRootPlacement.maxRootWidth()
+        val f = mangroveRootPlacement.randomSkewChance()
         return if (i > j - 3 && i <= j) {
             if (random.nextFloat() < f) java.util.List.of(blockPos, blockPos2.down()) else java.util.List.of(blockPos)
         } else if (i > j) {
@@ -132,7 +129,7 @@ class CascadeRootPlacer(
     override fun canReplace(world: TestableWorld, pos: BlockPos): Boolean {
         return super.canReplace(world, pos) || world.testBlockState(
             pos
-        ) { block: BlockState -> block.isIn(cascadeRootPlacement.canGrowThrough()) }
+        ) { block: BlockState -> block.isIn(mangroveRootPlacement.canGrowThrough()) }
     }
 
     override fun placeRoot(
@@ -143,9 +140,9 @@ class CascadeRootPlacer(
         config: TreeFeatureConfig
     ) {
         if (world.testBlockState(pos) { block: BlockState ->
-                block.isIn(cascadeRootPlacement.muddyRootsIn())
+                block.isIn(mangroveRootPlacement.muddyRootsIn())
             }) {
-            val blockState = cascadeRootPlacement.muddyRootsProvider().getBlockState(random, pos)
+            val blockState = mangroveRootPlacement.muddyRootsProvider().getBlockState(random, pos)
             replacer.accept(pos, this.applyWaterlogging(world, pos, blockState))
         } else {
             super.placeRoot(world, replacer, random, pos, config)
@@ -159,13 +156,14 @@ class CascadeRootPlacer(
     companion object {
         const val MAX_ROOT_WIDTH: Int = 8
         const val MAX_ROOT_LENGTH: Int = 15
-        val CODEC: Codec<CascadeRootPlacer> =
+        val CODEC: Codec<net.minecraft.world.gen.root.org.teamvoided.dusk_autumn.world.gen.root.MangroveRootPlacer> =
             RecordCodecBuilder.create {
                 rootPlacerCodec(it)
                     .and(
-                        CascadeRootPlacement.CODEC.fieldOf("cascade_root_placement")
-                            .forGetter<CascadeRootPlacement>(placer)
-                    ).apply(it, ::CascadeRootPlacer)
+                        MangroveRootPlacement.CODEC.fieldOf("mangrove_root_placement")
+                            .forGetter<MangroveRootPlacement>(
+                                { placer: placer.mangroveRootPlacement })
+                    ).apply(it, ::MangroveRootPlacer)
             }
     }
 }

@@ -22,10 +22,7 @@ import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import net.minecraft.world.gen.foliage.*
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
-import net.minecraft.world.gen.treedecorator.CocoaBeansTreeDecorator
-import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
-import net.minecraft.world.gen.treedecorator.TrunkVineTreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import org.teamvoided.dusk_autumn.DuskAutumns
@@ -35,6 +32,7 @@ import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
+import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
 
@@ -80,7 +78,7 @@ object DuskConfiguredFeature {
         )
         val cascadeTree = TreeFeatureConfig.Builder(
             BlockStateProvider.of(DuskBlocks.CASCADE_LOG),
-            ThreeWideTrunkPlacer(7, 3, 2),
+            ThreeWideTrunkPlacer(9, 2, 1),
             BlockStateProvider.of(DuskBlocks.CASCADE_LEAVES),
             CascadeFoliagePlacer(
                 ConstantIntProvider.create(0),
@@ -152,6 +150,32 @@ object DuskConfiguredFeature {
                         BlockStateProvider.of(Blocks.PODZOL), 2, 20,
                         blockTags.getTagOrThrow(BlockTags.DIRT)
                     ),
+                    AttachedToTrunkTreeDecorator(
+                        0.14f,
+                        1,
+                        1,
+                        BlockStateProvider.of(
+                            Blocks.BIRCH_LOG.defaultState.with(
+                                PillarBlock.AXIS,
+                                Direction.Axis.X
+                            )
+                        ),
+                        2,
+                        listOf(Direction.EAST, Direction.WEST)
+                    ),
+                    AttachedToTrunkTreeDecorator(
+                        0.14f,
+                        1,
+                        1,
+                        BlockStateProvider.of(
+                            Blocks.BIRCH_LOG.defaultState.with(
+                                PillarBlock.AXIS,
+                                Direction.Axis.Z
+                            )
+                        ),
+                        2,
+                        listOf(Direction.NORTH, Direction.SOUTH)
+                    ),
                     goldenBirchLeafPile
                 )
             ).build()
@@ -163,6 +187,32 @@ object DuskConfiguredFeature {
                     AlterGroundRadiusTreeDecorator(
                         BlockStateProvider.of(Blocks.PODZOL), 2, 20,
                         blockTags.getTagOrThrow(BlockTags.DIRT)
+                    ),
+                    AttachedToTrunkTreeDecorator(
+                        0.14f,
+                        1,
+                        1,
+                        BlockStateProvider.of(
+                            Blocks.BIRCH_LOG.defaultState.with(
+                                PillarBlock.AXIS,
+                                Direction.Axis.X
+                            )
+                        ),
+                        2,
+                        listOf(Direction.EAST, Direction.WEST)
+                    ),
+                    AttachedToTrunkTreeDecorator(
+                        0.14f,
+                        1,
+                        1,
+                            BlockStateProvider.of(
+                                Blocks.BIRCH_LOG.defaultState.with(
+                                    PillarBlock.AXIS,
+                                    Direction.Axis.Z
+                                )
+                            ),
+                        2,
+                        listOf(Direction.NORTH, Direction.SOUTH)
                     ),
                     goldenBirchLeafPile
                 )
@@ -236,7 +286,7 @@ object DuskConfiguredFeature {
                 BlockStateProvider.of(Blocks.ACACIA_LOG),
                 StraightTrunkPlacer(1, 0, 0),
                 BlockStateProvider.of(Blocks.ACACIA_LEAVES),
-                AcaciaFoliagePlacer(UniformIntProvider.create(1, 2), ConstantIntProvider.create(0)),
+                BushFoliagePlacer(UniformIntProvider.create(1, 2), UniformIntProvider.create(1, 2), 2),
                 TwoLayersFeatureSize(0, 0, 0)
             ).build()
         )

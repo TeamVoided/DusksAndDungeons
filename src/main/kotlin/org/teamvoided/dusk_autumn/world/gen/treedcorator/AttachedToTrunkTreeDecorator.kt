@@ -4,6 +4,8 @@ import com.mojang.datafixers.kinds.App
 import com.mojang.datafixers.util.Function6
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.registry.RegistryCodecs
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Util
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.util.math.BlockPos
@@ -11,6 +13,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
+import org.teamvoided.dusk_autumn.init.DuskWorldgen
 import java.util.function.Function
 
 class AttachedToTrunkTreeDecorator(
@@ -23,9 +26,9 @@ class AttachedToTrunkTreeDecorator(
 ) :
     TreeDecorator() {
     override fun generate(placer: Placer) {
-        val set: MutableSet<BlockPos?> = HashSet<BlockPos?>()
+        val set: MutableSet<BlockPos> = HashSet()
         val randomGenerator = placer.random
-        val var4: Iterator<*> = Util.copyShuffled(placer.leafPositions, randomGenerator).iterator()
+        val var4: Iterator<*> = Util.copyShuffled(placer.logPositions, randomGenerator).iterator()
 
         while (true) {
             var blockPos: BlockPos
@@ -58,7 +61,7 @@ class AttachedToTrunkTreeDecorator(
         }
     }
 
-    private fun hasRequiredEmptyBlocks(placer: Placer, pos: BlockPos, direction: Direction?): Boolean {
+    private fun hasRequiredEmptyBlocks(placer: Placer, pos: BlockPos, direction: Direction): Boolean {
         for (i in 1..this.requiredEmptyBlocks) {
             val blockPos = pos.offset(direction, i)
             if (!placer.isAir(blockPos)) {
@@ -70,39 +73,23 @@ class AttachedToTrunkTreeDecorator(
     }
 
     override fun getType(): TreeDecoratorType<*> {
-        return TreeDecoratorType.ATTACHED_TO_LEAVES
+        return DuskWorldgen.ATTACHED_TO_TRUNK
     }
 
-//    companion object {
-//        val CODEC: Codec<AttachedToTrunkTreeDecorator?>? = RecordCodecBuilder.create(
-//            Function<RecordCodecBuilder.Instance<AttachedToTrunkTreeDecorator?>, App<RecordCodecBuilder.Mu<AttachedToTrunkTreeDecorator>, AttachedToTrunkTreeDecorator>> { instance: RecordCodecBuilder.Instance<AttachedToTrunkTreeDecorator?> ->
-//                instance.group(
-//                    Codec.floatRange(0.0f, 1.0f).fieldOf("probability")
-//                        .forGetter { attachedToTrunkTreeDecorator: AttachedToTrunkTreeDecorator -> attachedToTrunkTreeDecorator.probability },
-//                    Codec.intRange(0, 16).fieldOf("exclusion_radius_xz")
-//                        .forGetter { attachedToTrunkTreeDecorator: AttachedToTrunkTreeDecorator -> attachedToTrunkTreeDecorator.xzExclusionRadius },
-//                    Codec.intRange(0, 16).fieldOf("exclusion_radius_y")
-//                        .forGetter { attachedToTrunkTreeDecorator: AttachedToTrunkTreeDecorator -> attachedToTrunkTreeDecorator.yExclusionRadius },
-//                    BlockStateProvider.TYPE_CODEC.fieldOf("block_provider")
-//                        .forGetter { attachedToTrunkTreeDecorator: AttachedToTrunkTreeDecorator -> attachedToTrunkTreeDecorator.blockProvider },
-//                    Codec.intRange(1, 16).fieldOf("required_empty_blocks")
-//                        .forGetter { attachedToTrunkTreeDecorator: AttachedToTrunkTreeDecorator -> attachedToTrunkTreeDecorator.requiredEmptyBlocks },
-//                    Codecs.withNonEmptyList(Direction.CODEC.listOf())
-//                        .fieldOf("directions")
-//                        .forGetter { attachedToTrunkTreeDecorator: AttachedToTrunkTreeDecorator -> attachedToTrunkTreeDecorator.directions }
-//                ).apply<Any>(
-//                    instance,
-//                    Function6<*, *, *, *, *, *, *> { probability: *, xzExclusionRadius: *, yExclusionRadius: *, blockProvider: *, requiredEmptyBlocks: *, directions: * ->
-//                        AttachedToTrunkTreeDecorator(
-//                            probability,
-//                            xzExclusionRadius,
-//                            yExclusionRadius,
-//                            blockProvider,
-//                            requiredEmptyBlocks,
-//                            directions
-//                        )
-//                    } as Function6<*, *, *, *, *, *, *>?
-//                )
-//            })
-//    }
+    companion object {
+        val CODEC: Codec<AttachedToTrunkTreeDecorator> = RecordCodecBuilder.create {
+            it.group(
+                Codec.floatRange(0.0f, 1.0f).fieldOf("probability").forGetter { decorator -> decorator.probability },
+                Codec.intRange(0, 16).fieldOf("xz_exclusion_radius").forGetter { decorator -> decorator.xzExclusionRadius },
+                Codec.intRange(0, 16).fieldOf("y_exclusion_radius")
+                    .forGetter { decorator -> decorator.yExclusionRadius },
+                BlockStateProvider.TYPE_CODEC.fieldOf("block_provider")
+                    .forGetter { decorator -> decorator.blockProvider },
+                Codec.intRange(1, 16).fieldOf("required_empty_blocks")
+                    .forGetter { decorator -> decorator.requiredEmptyBlocks },
+                Codecs.withNonEmptyList(Direction.CODEC.listOf()).fieldOf("directions")
+                    .forGetter { placement -> placement.directions },
+            ).apply(it, ::AttachedToTrunkTreeDecorator)
+        }
+    }
 }
