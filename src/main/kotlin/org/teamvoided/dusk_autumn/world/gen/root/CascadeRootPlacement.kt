@@ -17,46 +17,18 @@ data class CascadeRootPlacement(
     val maxRootLength: Int,
     val randomSkewChance: Float
 ) {
-    fun canGrowThrough(): HolderSet<Block> {
-        return this.canGrowThrough
-    }
-
-    fun muddyRootsIn(): HolderSet<Block> {
-        return this.muddyRootsIn
-    }
-
-    fun muddyRootsProvider(): BlockStateProvider {
-        return this.muddyRootsProvider
-    }
-
-    fun maxRootWidth(): Int {
-        return this.maxRootWidth
-    }
-
-    fun maxRootLength(): Int {
-        return this.maxRootLength
-    }
-
-    fun randomSkewChance(): Float {
-        return this.randomSkewChance
-    }
-
     companion object {
-        val CODEC: Codec<CascadeRootPlacement> = RecordCodecBuilder.create {
-            it.group(
-                RegistryCodecs.homogeneousList(RegistryKeys.BLOCK)
-                    .fieldOf("can_grow_through").forGetter { placement -> placement.canGrowThrough },
+        val CODEC: Codec<CascadeRootPlacement> = RecordCodecBuilder.create { instance ->
+            instance.group(
+                RegistryCodecs.homogeneousList(RegistryKeys.BLOCK).fieldOf("can_grow_through")
+                    .forGetter { it.canGrowThrough },
                 RegistryCodecs.homogeneousList(RegistryKeys.BLOCK).fieldOf("muddy_roots_in")
-                    .forGetter { placement -> placement.muddyRootsIn },
-                BlockStateProvider.TYPE_CODEC.fieldOf("muddy_roots_provider")
-                    .forGetter { placement -> placement.muddyRootsProvider },
-                Codec.intRange(1, 12).fieldOf("max_root_width")
-                    .forGetter { placement -> placement.maxRootWidth },
-                Codec.intRange(1, 64).fieldOf("max_root_length")
-                    .forGetter { placement -> placement.maxRootLength },
-                Codec.floatRange(0.0f, 1.0f).fieldOf("random_skew_chance")
-                    .forGetter { placement -> placement.randomSkewChance },
-            ).apply(it, ::CascadeRootPlacement)
+                    .forGetter { it.muddyRootsIn },
+                BlockStateProvider.TYPE_CODEC.fieldOf("muddy_roots_provider").forGetter { it.muddyRootsProvider },
+                Codec.intRange(1, 12).fieldOf("max_root_width").forGetter { it.maxRootWidth },
+                Codec.intRange(1, 64).fieldOf("max_root_length").forGetter { it.maxRootLength },
+                Codec.floatRange(0.0f, 1.0f).fieldOf("random_skew_chance").forGetter { it.randomSkewChance },
+            ).apply(instance, ::CascadeRootPlacement)
         }
     }
 }
