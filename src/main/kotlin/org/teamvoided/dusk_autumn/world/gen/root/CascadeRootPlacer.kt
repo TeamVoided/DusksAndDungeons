@@ -19,10 +19,10 @@ import java.util.*
 import java.util.function.BiConsumer
 
 class CascadeRootPlacer(
-    trunkOffsetY: IntProvider?,
-    rootProvider: BlockStateProvider?,
-    aboveRootPlacement: Optional<AboveRootPlacement?>?,
-    private val cascadeRootPlacement: CascadeRootPlacement
+    trunkOffsetY: IntProvider,
+    rootProvider: BlockStateProvider,
+    aboveRootPlacement: Optional<AboveRootPlacement>,
+    private val cascadeRootConfig: CascadeRootConfig
 ) :
     RootPlacer(trunkOffsetY, rootProvider, aboveRootPlacement) {
     override fun generate(
@@ -77,7 +77,7 @@ class CascadeRootPlacer(
         potentialRootPositions: MutableList<BlockPos>,
         rootLength: Int
     ): Boolean {
-        val i = cascadeRootPlacement.maxRootLength()
+        val i = cascadeRootConfig.maxRootLength
         if (rootLength != i && potentialRootPositions.size <= i) {
             val list = this.getPotentialRootPositions(pos, direction, random, origin)
             val var10: Iterator<*> = list.iterator()
@@ -109,15 +109,15 @@ class CascadeRootPlacer(
 
     protected fun getPotentialRootPositions(
         pos: BlockPos,
-        direction: Direction?,
+        direction: Direction,
         random: RandomGenerator,
-        origin: BlockPos?
+        origin: BlockPos
     ): List<BlockPos> {
         val blockPos = pos.down()
         val blockPos2 = pos.offset(direction)
         val i = pos.getManhattanDistance(origin)
-        val j = cascadeRootPlacement.maxRootWidth()
-        val f = cascadeRootPlacement.randomSkewChance()
+        val j = cascadeRootConfig.maxRootWidth
+        val f = cascadeRootConfig.randomSkewChance
         return if (i > j - 3 && i <= j) {
             if (random.nextFloat() < f) java.util.List.of(blockPos, blockPos2.down()) else java.util.List.of(blockPos)
         } else if (i > j) {
@@ -132,7 +132,7 @@ class CascadeRootPlacer(
     override fun canReplace(world: TestableWorld, pos: BlockPos): Boolean {
         return super.canReplace(world, pos) || world.testBlockState(
             pos
-        ) { block: BlockState -> block.isIn(cascadeRootPlacement.canGrowThrough()) }
+        ) { block: BlockState -> block.isIn(cascadeRootConfig.canGrowThrough) }
     }
 
     override fun placeRoot(
@@ -143,9 +143,9 @@ class CascadeRootPlacer(
         config: TreeFeatureConfig
     ) {
         if (world.testBlockState(pos) { block: BlockState ->
-                block.isIn(cascadeRootPlacement.muddyRootsIn())
+                block.isIn(cascadeRootConfig.muddyRootsIn)
             }) {
-            val blockState = cascadeRootPlacement.muddyRootsProvider().getBlockState(random, pos)
+            val blockState = cascadeRootConfig.muddyRootsProvider.getBlockState(random, pos)
             replacer.accept(pos, this.applyWaterlogging(world, pos, blockState))
         } else {
             super.placeRoot(world, replacer, random, pos, config)
@@ -163,8 +163,8 @@ class CascadeRootPlacer(
             RecordCodecBuilder.create { instance ->
                 rootPlacerCodec(instance)
                     .and(
-                        CascadeRootPlacement.CODEC.fieldOf("cascade_root_placement")
-                            .forGetter<CascadeRootPlacement>{it.}
+                        CascadeRootConfig.CODEC.fieldOf("cascade_root_placement")
+                            .forGetter<CascadeRootConfig>{it.}
                     ).apply(instance, ::CascadeRootPlacer)
             }
     }

@@ -9,7 +9,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
 @JvmRecord
-data class CascadeRootPlacement(
+data class CascadeRootConfig(
     val canGrowThrough: HolderSet<Block>,
     val muddyRootsIn: HolderSet<Block>,
     val muddyRootsProvider: BlockStateProvider,
@@ -18,7 +18,7 @@ data class CascadeRootPlacement(
     val randomSkewChance: Float
 ) {
     companion object {
-        val CODEC: Codec<CascadeRootPlacement> = RecordCodecBuilder.create { instance ->
+        val CODEC: Codec<CascadeRootConfig> = RecordCodecBuilder.create { instance ->
             instance.group(
                 RegistryCodecs.homogeneousList(RegistryKeys.BLOCK).fieldOf("can_grow_through")
                     .forGetter { it.canGrowThrough },
@@ -28,7 +28,7 @@ data class CascadeRootPlacement(
                 Codec.intRange(1, 12).fieldOf("max_root_width").forGetter { it.maxRootWidth },
                 Codec.intRange(1, 64).fieldOf("max_root_length").forGetter { it.maxRootLength },
                 Codec.floatRange(0.0f, 1.0f).fieldOf("random_skew_chance").forGetter { it.randomSkewChance },
-            ).apply(instance, ::CascadeRootPlacement)
+            ).apply(instance, ::CascadeRootConfig)
         }
     }
 }
