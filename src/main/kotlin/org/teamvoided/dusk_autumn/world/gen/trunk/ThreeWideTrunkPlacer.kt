@@ -12,9 +12,11 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig
 import net.minecraft.world.gen.foliage.FoliagePlacer
 import net.minecraft.world.gen.trunk.TrunkPlacer
 import net.minecraft.world.gen.trunk.TrunkPlacerType
+import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
 import java.util.function.BiConsumer
 import java.util.function.Function
+import kotlin.math.abs
 
 class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
     override fun getType(): TrunkPlacerType<*> {
@@ -47,19 +49,19 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
         var r: Int
         var g = 0
         while (g < height) {
-
             r = posY + g
             val blockPos2 = BlockPos(posX, r, posZ)
             if (TreeFeature.isAirOrLeaves(world, blockPos2)) {
-                placeChance(2, world, replacer, random, blockPos2.north().west(), config)
+                val chance = (height * 1.3 - g).toInt()
+                placeChance(chance, g, world, replacer, random, blockPos2.north().west(), config)
                 placeTrunkBlock(world, replacer, random, blockPos2.north(), config)
-                placeChance(2, world, replacer, random, blockPos2.north().east(), config)
+                placeChance(chance, g, world, replacer, random, blockPos2.north().east(), config)
                 placeTrunkBlock(world, replacer, random, blockPos2.west(), config)
                 placeTrunkBlock(world, replacer, random, blockPos2, config)
                 placeTrunkBlock(world, replacer, random, blockPos2.east(), config)
-                placeChance(2, world, replacer, random, blockPos2.south().west(), config)
+                placeChance(chance, g, world, replacer, random, blockPos2.south().west(), config)
                 placeTrunkBlock(world, replacer, random, blockPos2.south(), config)
-                placeChance(2, world, replacer, random, blockPos2.south().east(), config)
+                placeChance(chance, g, world, replacer, random, blockPos2.south().east(), config)
             }
             ++g
         }
@@ -77,7 +79,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
 
                     for (t in 0 until randMax) {
                         placeChance(
-                            3,
+                            7, 1,
                             world,
                             replacer,
                             random,
@@ -85,7 +87,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
                             config
                         )
                         placeChance(
-                            3,
+                            7, 1,
                             world,
                             replacer,
                             random,
@@ -93,7 +95,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
                             config
                         )
                         placeChance(
-                            3,
+                            7, 1,
                             world,
                             replacer,
                             random,
@@ -101,7 +103,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
                             config
                         )
                         placeChance(
-                            3,
+                            7, 1,
                             world,
                             replacer,
                             random,
@@ -125,13 +127,14 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
 
     fun placeChance(
         chance: Int,
+        height: Int,
         world: TestableWorld,
         replacer: BiConsumer<BlockPos, BlockState>,
         random: RandomGenerator,
         pos: BlockPos,
         config: TreeFeatureConfig
     ): Boolean? {
-        return if (random.nextInt(chance) > 0) {
+        return if (random.nextInt(chance) > 0 || height < 1) {
             this.placeTrunkBlock(world, replacer, random, pos, config, Function.identity())
         } else null
     }

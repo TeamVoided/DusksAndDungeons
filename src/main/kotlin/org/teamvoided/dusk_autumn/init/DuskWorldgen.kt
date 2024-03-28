@@ -11,6 +11,7 @@ import net.minecraft.world.gen.foliage.FoliagePlacerType
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
+import org.teamvoided.dusk_autumn.init.worldgen.DuskFeatures
 import org.teamvoided.dusk_autumn.init.worldgen.DuskPlacedFeature
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
@@ -30,6 +31,7 @@ object DuskWorldgen {
         DuskBiomes.init()
         DuskConfiguredFeature.init()
         DuskPlacedFeature.init()
+        DuskFeatures.init()
     }
 
     private fun <P : TreeDecorator> registerTreeDecorator(id: String, codec: Codec<P>): TreeDecoratorType<P> {
