@@ -51,15 +51,15 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
             val blockPos2 = BlockPos(posX, r, posZ)
             if (TreeFeature.isAirOrLeaves(world, blockPos2)) {
                 val chance = (height * 1.2 - g).toInt()
-//                placeTrunkBlock(world, replacer, random, blockPos2.north().west(), config)
-//                placeTrunkBlock(world, replacer, random, blockPos2.north(), config)
-//                placeTrunkBlock(world, replacer, random, blockPos2.north().east(), config)
-//                placeTrunkBlock(world, replacer, random, blockPos2.west(), config)
-//                placeTrunkBlock(world, replacer, random, blockPos2, config)
-//                placeTrunkBlock(world, replacer, random, blockPos2.east(), config)
-//                placeTrunkBlock(world, replacer, random, blockPos2.south().west(), config)
-//                placeTrunkBlock(world, replacer, random, blockPos2.south(), config)
-//                placeTrunkBlock(world, replacer, random, blockPos2.south().east(), config)
+                placeTrunkBlock(world, replacer, random, blockPos2.north().west(), config)
+                placeTrunkBlock(world, replacer, random, blockPos2.north(), config)
+                placeTrunkBlock(world, replacer, random, blockPos2.north().east(), config)
+                placeTrunkBlock(world, replacer, random, blockPos2.west(), config)
+                placeTrunkBlock(world, replacer, random, blockPos2, config)
+                placeTrunkBlock(world, replacer, random, blockPos2.east(), config)
+                placeTrunkBlock(world, replacer, random, blockPos2.south().west(), config)
+                placeTrunkBlock(world, replacer, random, blockPos2.south(), config)
+                placeTrunkBlock(world, replacer, random, blockPos2.south().east(), config)
             }
             ++g
         }

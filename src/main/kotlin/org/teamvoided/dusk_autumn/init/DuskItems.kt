@@ -39,8 +39,7 @@ object DuskItems {
     val GOLDEN_BIRCH_SAPLING = register("golden_birch_sapling", BlockItem(DuskBlocks.GOLDEN_BIRCH_SAPLING))
     val GOLDEN_BIRCH_LEAVES = register("golden_birch_leaves", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAVES))
 
-    val FARMERS_HAT = register("farmers_hat", FarmersHat(Item.Settings()))
-    val TURTLE_HELMET = register("turtle_helmet", ArmorItem(ArmorMaterials.TURTLE, ArmorItem.ArmorSlot.HELMET, Item.Settings()))
+    val FARMERS_HAT = register("farmers_hat", FarmersHat(Item.Settings().maxCount(1)))
 
 
     val OAK_LEAF_PILE = register("oak_leaf_pile", BlockItem(DuskBlocks.OAK_LEAF_PILE))

@@ -5,7 +5,7 @@ import net.minecraft.item.DyeableItem
 import net.minecraft.item.Equippable
 import net.minecraft.item.Item
 
-class FarmersHat(settings: Item.Settings) : Item(settings), Equippable, DyeableItem {
+class FarmersHat(settings: Settings) : Item(settings), Equippable, DyeableItem {
     override fun getPreferredSlot(): EquipmentSlot {
         return EquipmentSlot.HEAD
     }
