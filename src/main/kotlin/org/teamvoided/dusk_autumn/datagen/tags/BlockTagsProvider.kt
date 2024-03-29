@@ -31,12 +31,15 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE)
         getOrCreateTagBuilder(DuskBlockTags.LEAF_PILES_PLACE_ON)
             .forceAddTag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
+            .add(Blocks.COBBLESTONE)
+            .add(Blocks.MOSSY_COBBLESTONE)
             .forceAddTag(BlockTags.STONE_BRICKS)
             .forceAddTag(BlockTags.LOGS)
             .add(Blocks.MELON)
             .add(Blocks.PUMPKIN)
             .add(Blocks.CARVED_PUMPKIN)
             .add(Blocks.JACK_O_LANTERN)
+            .add(Blocks.FARMLAND)
 
 //VANILLA
         getOrCreateTagBuilder(BlockTags.PLANKS)

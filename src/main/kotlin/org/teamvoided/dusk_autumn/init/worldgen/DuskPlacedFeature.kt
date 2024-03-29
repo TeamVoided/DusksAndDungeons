@@ -126,18 +126,17 @@ object DuskPlacedFeature {
         c.register(
             AUTUMN_PASTURES_VEGETATION,
             holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
-            PlacedFeatureUtil.createCountExtraModifier(2, 0.1f, 1),
+            PlacedFeatureUtil.createCountExtraModifier(0, 0.2f, 1),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
             PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
-
         c.register(
             FLOWER_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.FLOWER_AUTUMN),
             *arrayOf(
                 NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-                RarityFilterPlacementModifier.create(28),
+                RarityFilterPlacementModifier.create(21),
                 InSquarePlacementModifier.getInstance(),
                 PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
                 BiomePlacementModifier.getInstance()
@@ -147,7 +146,7 @@ object DuskPlacedFeature {
             BLUE_PETALS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.BLUE_PETALS),
             *arrayOf(
                 NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-                RarityFilterPlacementModifier.create(28),
+                RarityFilterPlacementModifier.create(14),
                 InSquarePlacementModifier.getInstance(),
                 PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
                 BiomePlacementModifier.getInstance()
@@ -161,7 +160,6 @@ object DuskPlacedFeature {
             CountPlacementModifier.create(ClampedIntProvider.create(UniformIntProvider.create(-3, 1), 0, 1)),
             BiomePlacementModifier.getInstance()
         )
-
 
 //        VegetationPlacedFeatures.class
 //        MiscPlacedFeatures.class

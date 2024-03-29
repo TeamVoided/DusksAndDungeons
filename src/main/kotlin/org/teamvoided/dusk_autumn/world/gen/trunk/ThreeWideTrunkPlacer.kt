@@ -64,14 +64,14 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
             ++g
         }
 
-//        list.add(FoliagePlacer.TreeNode(BlockPos(posX, posYAlt, posZ), 0, true))
+        list.add(FoliagePlacer.TreeNode(BlockPos(posX, posYAlt, posZ), 0, true))
 
         g = -2
         while (g <= 3) {
             r = -2
             while (r <= 3) {
 //                does not place on corner, then not interior, then chance to place
-                if (!((g < -1 || g > 2) && (r < -1 || r > 2)) && (g < 0 || g > 1 || r < 0 || r > 1) && random.nextInt(6) <= 0) {
+                if (!((g < -1 || g > 2) && (r < -1 || r > 2)) && (g < 0 || g > 1 || r < 0 || r > 1) && random.nextInt(9) <= 0) {
                     val randMax = random.nextInt(3) + 3
                     val randOffset = random.nextInt(4) - 1
 
@@ -108,7 +108,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
 //              Debug
 //                        placeTrunkBlock(world, replacer, random, BlockPos(posX + q, posYAlt - t + randOffset + 20, posZ + r), config)
                     }
-//                    list.add(FoliagePlacer.TreeNode(BlockPos(posX + g, posYAlt + randOffset, posZ + r), 0, false))
+                    list.add(FoliagePlacer.TreeNode(BlockPos(posX + g, posYAlt + randOffset, posZ + r), 0, false))
                 }
                 ++r
             }

@@ -79,7 +79,7 @@ object DuskItems {
 
     fun initClient() {
         ColorProviderRegistry.ITEM.register(
-            { _, _ -> FoliageColors.getColor(0.8, 0.4) },
+            { _, _ -> FoliageColors.getDefaultColor() },
             OAK_LEAF_PILE,
             JUNGLE_LEAF_PILE,
             ACACIA_LEAF_PILE,

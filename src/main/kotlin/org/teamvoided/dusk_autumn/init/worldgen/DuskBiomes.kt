@@ -26,6 +26,9 @@ object DuskBiomes {
     val AUTUMN_PASTURES = create("autumn_pastures")
     val AUTUMN_CASCADES = create("autumn_cascades")
     val AUTUMN_WETLANDS = create("autumn_wetlands")
+//        .grassColor(16366449)
+
+
     fun init() {}
 
     private fun getSkyColor(temperature: Float): Int {
@@ -48,7 +51,7 @@ object DuskBiomes {
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.CHICKEN, 8, 4, 4))
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.RABBIT, 10, 2, 3))
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FOX, 4, 2, 4))
-        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 4, 2, 4))
+        spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 2, 2, 4))
     }
 
     private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder, forest: Boolean) {
@@ -106,7 +109,7 @@ object DuskBiomes {
                 .waterFogColor(329011)
                 .fogColor(11587327)
                 .grassColor(16224051)
-                .foliageColor(16078100)
+                .foliageColor(15751706)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
                 .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FLOWER_FOREST))
@@ -126,6 +129,7 @@ object DuskBiomes {
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         DefaultBiomeFeatures.addPlainsTallGrass(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_PLAIN)
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings, false)
@@ -135,8 +139,8 @@ object DuskBiomes {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(16366449)
-                .foliageColor(16081176)
+                .grassColor(15768399)
+                .foliageColor(15097636)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
                 .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FLOWER_FOREST))
@@ -168,7 +172,7 @@ object DuskBiomes {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(16366449)
+                .grassColor(15768399)
                 .foliageColor(16081176)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
