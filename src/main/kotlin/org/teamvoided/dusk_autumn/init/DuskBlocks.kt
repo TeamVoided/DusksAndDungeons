@@ -17,6 +17,7 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.FallingLeafPileBlock
 import org.teamvoided.dusk_autumn.block.FallingLeavesBlock
@@ -48,8 +49,7 @@ object DuskBlocks {
 
     val CASCADE_SAPLING = register(
         "cascade_sapling", SaplingBlock(
-            WoodTypes.CHERRY,
-//            CascadeSaplingGenerator(),
+            SaplingGenerators.CASCADE,
             AbstractBlock.Settings.create()
                 .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly()
                 .sounds(BlockSoundGroup.CHERRY_SAPLING).pistonBehavior(PistonBehavior.DESTROY)
@@ -147,8 +147,7 @@ object DuskBlocks {
     )
     val GOLDEN_BIRCH_SAPLING = register(
         "golden_birch_sapling", SaplingBlock(
-//            GoldenBirchSaplingGenerator(),
-            WoodTypes.CHERRY,
+            SaplingGenerators.GOLDEN_BIRCH,
             AbstractBlock.Settings.create()
                 .mapColor(MapColor.YELLOW).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)
                 .pistonBehavior(PistonBehavior.DESTROY)
