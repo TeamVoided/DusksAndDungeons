@@ -59,7 +59,7 @@ class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider
         add(DuskBlocks.CASCADE_LEAF_PILE) { leafPile(it, DuskBlocks.CASCADE_LEAVES) }
         add(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE) { leafPile(it, DuskBlocks.GOLDEN_BIRCH_LEAVES) }
 
-        add(DuskBlocks.BLUE_PETALS, ::method_49358)
+        add(DuskBlocks.BLUE_PETALS, ::flowerbedDrops)
         add(DuskBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DuskBlocks.CASCADE_SAPLING) }
         add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DuskBlocks.GOLDEN_BIRCH_SAPLING) }
         add(DuskBlocks.POTTED_VIOLET_DAISY, ::pottedPlantDrops)

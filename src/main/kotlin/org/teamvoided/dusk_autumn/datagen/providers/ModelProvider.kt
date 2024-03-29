@@ -47,7 +47,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerDoor(DuskBlocks.BLUE_DOOR)
         gen.registerFlowerPotPlant(DuskBlocks.GOLDEN_BIRCH_SAPLING,DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerSingleton(DuskBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
-        gen.method_49378(DuskBlocks.BLUE_PETALS)
+        gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
 
         leafPiles.forEach { (it, texture) ->
             val layer1 = gen.parentedModel(it, texture, leafPile())

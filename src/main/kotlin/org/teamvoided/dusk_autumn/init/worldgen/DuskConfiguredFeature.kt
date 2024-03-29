@@ -19,25 +19,16 @@ import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import net.minecraft.world.gen.foliage.*
-import net.minecraft.world.gen.root.AboveRootPlacement
-import net.minecraft.world.gen.root.MangroveRootPlacement
-import net.minecraft.world.gen.root.MangroveRootPlacer
-import net.minecraft.world.gen.root.RootPlacer
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
-import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
-import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
-import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
 import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.data.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
-import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootConfig
-import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootPlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
@@ -73,7 +64,7 @@ object DuskConfiguredFeature {
         val petalFlowerBuilder = DataPool.builder<BlockState>()
         (1..4).forEach { count ->
             Direction.Type.HORIZONTAL.forEach { direction ->
-                petalFlowerBuilder.add(
+                petalFlowerBuilder.method_34975(
                     DuskBlocks.BLUE_PETALS.defaultState
                         .with(PinkPetalsBlock.AMOUNT, count).with(PinkPetalsBlock.FACING, direction),
                     1
@@ -275,30 +266,30 @@ object DuskConfiguredFeature {
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
-                            .add(Blocks.PUMPKIN.defaultState, 32)
-                            .add(Blocks.CARVED_PUMPKIN.defaultState, 4)
-                            .add(
+                            .method_34975(Blocks.PUMPKIN.defaultState, 32)
+                            .method_34975(Blocks.CARVED_PUMPKIN.defaultState, 4)
+                            .method_34975(
                                 Blocks.CARVED_PUMPKIN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 4
                             )
-                            .add(
+                            .method_34975(
                                 Blocks.CARVED_PUMPKIN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.EAST), 4
                             )
-                            .add(
+                            .method_34975(
                                 Blocks.CARVED_PUMPKIN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.WEST), 4
                             )
-                            .add(Blocks.JACK_O_LANTERN.defaultState, 1)
-                            .add(
+                            .method_34975(Blocks.JACK_O_LANTERN.defaultState, 1)
+                            .method_34975(
                                 Blocks.JACK_O_LANTERN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 1
                             )
-                            .add(
+                            .method_34975(
                                 Blocks.JACK_O_LANTERN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.EAST), 1
                             )
-                            .add(
+                            .method_34975(
                                 Blocks.JACK_O_LANTERN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.WEST), 1
                             )
@@ -343,9 +334,9 @@ object DuskConfiguredFeature {
                     Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                         WeightedBlockStateProvider(
                             DataPool.builder<BlockState>()
-                                .add(Blocks.CORNFLOWER.defaultState, 5)
-                                .add(Blocks.POPPY.defaultState, 5)
-                                .add(DuskBlocks.CASCADE_SAPLING.defaultState, 1)
+                                .method_34975(Blocks.CORNFLOWER.defaultState, 5)
+                                .method_34975(Blocks.POPPY.defaultState, 5)
+                                .method_34975(DuskBlocks.CASCADE_SAPLING.defaultState, 1)
                         )
                     )
                 )
@@ -384,9 +375,9 @@ object DuskConfiguredFeature {
         return AlterOnGroundTreeDecorator(
             WeightedBlockStateProvider(
                 DataPool.builder<BlockState>()
-                    .add(leafPile.defaultState, 9)
-                    .add(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 2), 4)
-                    .add(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 3), 1)
+                    .method_34975(leafPile.defaultState, 9)
+                    .method_34975(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 2), 4)
+                    .method_34975(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 3), 1)
             ),
             3, 10, 20,
             blockTags.getTagOrThrow(DuskBlockTags.LEAF_PILES_PLACE_ON)

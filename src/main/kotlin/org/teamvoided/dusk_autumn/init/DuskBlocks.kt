@@ -3,8 +3,7 @@ package org.teamvoided.dusk_autumn.init
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.block.*
-import net.minecraft.block.Blocks.createFlowerPotBlock
-import net.minecraft.block.Blocks.createPillarBlock
+import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
@@ -22,18 +21,15 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.FallingLeafPileBlock
 import org.teamvoided.dusk_autumn.block.FallingLeavesBlock
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
-import org.teamvoided.dusk_autumn.block.sapling.CascadeSaplingGenerator
-import org.teamvoided.dusk_autumn.block.sapling.GoldenBirchSaplingGenerator
 
-@Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused")
+@Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
 object DuskBlocks {
     val leafPileSettings = AbstractBlock.Settings.create()
-        .strength(0.2F).nonOpaque().suffocates(Blocks::never).blockVision(Blocks::never).lavaIgnitable()
-        .pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::never).noCollision().nonSolid()
+        .strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).lavaIgnitable()
+        .pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid).noCollision().nonSolid()
         .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.PLANT)
 
     const val CASCADE_LEAF_COLOR = 13846346
-
 
     val BLUE_PETALS = register(
         "blue_petals", PinkPetalsBlock(
@@ -48,21 +44,23 @@ object DuskBlocks {
                 .offsetType(AbstractBlock.OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-    val POTTED_VIOLET_DAISY = register("potted_violet_daisy", createFlowerPotBlock(VIOLET_DAISY))
+    val POTTED_VIOLET_DAISY = register("potted_violet_daisy", pottedVariant(VIOLET_DAISY))
 
     val CASCADE_SAPLING = register(
         "cascade_sapling", SaplingBlock(
-            CascadeSaplingGenerator(), AbstractBlock.Settings.create()
+            WoodTypes.CHERRY,
+//            CascadeSaplingGenerator(),
+            AbstractBlock.Settings.create()
                 .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly()
                 .sounds(BlockSoundGroup.CHERRY_SAPLING).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-    val POTTED_CASCADE_SAPLING = register("potted_cascade_sapling", createFlowerPotBlock(CASCADE_SAPLING))
+    val POTTED_CASCADE_SAPLING = register("potted_cascade_sapling", pottedVariant(CASCADE_SAPLING))
     val CASCADE_LOG = register(
-        "cascade_log", createPillarBlock(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
+        "cascade_log", method_47375(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
     )
     val STRIPPED_CASCADE_LOG = register(
-        "stripped_cascade_log", createPillarBlock(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
+        "stripped_cascade_log", method_47375(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
     )
     val CASCADE_PLANKS = register(
         "cascade_planks", Block(
@@ -74,59 +72,66 @@ object DuskBlocks {
     )
     val CASCADE_DOOR = register(
         "cascade_door", DoorBlock(
+            BlockSetType.CHERRY,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
-                .pistonBehavior(PistonBehavior.DESTROY), BlockSetType.CHERRY
+                .pistonBehavior(PistonBehavior.DESTROY),
         )
     )
     val BLUE_DOOR = register(
         "blue_door", DoorBlock(
+            BlockSetType.DARK_OAK,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
-                .pistonBehavior(PistonBehavior.DESTROY), BlockSetType.DARK_OAK
+                .pistonBehavior(PistonBehavior.DESTROY),
         )
     )
     val CASCADE_TRAPDOOR = register(
         "cascade_trapdoor", TrapdoorBlock(
+            BlockSetType.CHERRY,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).instrument(NoteBlockInstrument.BASS)
                 .strength(3.0f).nonOpaque()
-                .allowsSpawning(Blocks::never).lavaIgnitable(), BlockSetType.CHERRY
+                .allowsSpawning(Blocks::nonSpawnable).lavaIgnitable(),
         )
     )
     val CASCADE_LEAVES = register(
         "cascade_leaves", FallingLeavesBlock(
             AbstractBlock.Settings.create().strength(0.2f).ticksRandomly()
-                .nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never)
-                .blockVision(Blocks::never)
-                .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::never)
+                .nonOpaque().allowsSpawning(Blocks::allowOcelotsAndParrots).suffocates(Blocks::nonSolid)
+                .blockVision(Blocks::nonSolid)
+                .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
                 .sounds(BlockSoundGroup.CHERRY_LEAVES)
                 .mapColor(MapColor.RED), DuskParticles.CASCADE_LEAF_PARTICLE
         )
     )
     val CASCADE_SIGN = register(
         "cascade_sign", SignBlock(
+            SignType.CHERRY,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
-                .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(), SignType.CHERRY
+                .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
     val CASCADE_WALL_SIGN = register(
         "cascade_wall_sign", WallSignBlock(
+            SignType.CHERRY,
             AbstractBlock.Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).dropsLike(CASCADE_SIGN)
-                .lavaIgnitable(), SignType.CHERRY
+                .lavaIgnitable(),
         )
     )
     val CASCADE_HANGING_SIGN = register(
         "cascade_hanging_sign", CeilingHangingSignBlock(
+            SignType.CHERRY,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
-                .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(), SignType.CHERRY
+                .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
     val CASCADE_WALL_HANGING_SIGN = register(
         "cascade_wall_hanging_sign", WallHangingSignBlock(
+            SignType.CHERRY,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable()
-                .dropsLike(CASCADE_HANGING_SIGN), SignType.CHERRY
+                .dropsLike(CASCADE_HANGING_SIGN),
         )
     )
 
@@ -134,21 +139,23 @@ object DuskBlocks {
         "golden_birch_leaves", LeavesBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.YELLOW)
                 .strength(0.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque()
-                .allowsSpawning(Blocks::canSpawnOnLeaves)
-                .suffocates(Blocks::never).blockVision(Blocks::never).lavaIgnitable()
+                .allowsSpawning(Blocks::allowOcelotsAndParrots)
+                .suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY)
-                .solidBlock(Blocks::never)
+                .solidBlock(Blocks::nonSolid)
         )
     )
     val GOLDEN_BIRCH_SAPLING = register(
         "golden_birch_sapling", SaplingBlock(
-            GoldenBirchSaplingGenerator(), AbstractBlock.Settings.create()
+//            GoldenBirchSaplingGenerator(),
+            WoodTypes.CHERRY,
+            AbstractBlock.Settings.create()
                 .mapColor(MapColor.YELLOW).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS)
                 .pistonBehavior(PistonBehavior.DESTROY)
         )
     )
     val POTTED_GOLDEN_BIRCH_SAPLING =
-        register("potted_golden_birch_sapling", createFlowerPotBlock(GOLDEN_BIRCH_SAPLING))
+        register("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING))
 
     val OAK_LEAF_PILE = register("oak_leaf_pile", LeafPileBlock(leafPileSettings))
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", LeafPileBlock(leafPileSettings))
@@ -190,7 +197,7 @@ object DuskBlocks {
             DARK_OAK_LEAF_PILE, MANGROVE_LEAF_PILE, CHERRY_LEAF_PILE, AZALEA_LEAF_PILE,
             FLOWERING_AZALEA_LEAF_PILE, GOLDEN_BIRCH_LEAF_PILE
         ).forEach {
-            BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout());
+            BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout())
         }
 
         ColorProviderRegistry.BLOCK.register(
