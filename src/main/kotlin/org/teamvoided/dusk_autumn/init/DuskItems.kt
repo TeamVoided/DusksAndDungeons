@@ -95,6 +95,8 @@ object DuskItems {
             CASCADE_LEAVES,
             CASCADE_LEAF_PILE
         )
+        ColorProviderRegistry.ITEM.register({ stack, _ -> DyeableItem. }, FARMERS_HAT)
+
     }
 
     fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, DuskAutumns.id(id), item)
