@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumn.init
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
@@ -95,7 +94,10 @@ object DuskItems {
             CASCADE_LEAVES,
             CASCADE_LEAF_PILE
         )
-        ColorProviderRegistry.ITEM.register({ stack, _ -> DyeableItem. }, FARMERS_HAT)
+        ColorProviderRegistry.ITEM.register({ stack, _ ->
+            val value = object : DyeableItem {}
+            value.getColor(stack)
+        }, FARMERS_HAT)
 
     }
 
