@@ -1,169 +1,135 @@
-package net.minecraft.world.gen.root
-
-import com.google.common.collect.Lists
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.block.BlockState
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.int_provider.IntProvider
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.TestableWorld
-import net.minecraft.world.gen.feature.TreeFeatureConfig
-import net.minecraft.world.gen.stateprovider.BlockStateProvider
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
-import java.util.*
-import java.util.function.BiConsumer
-
-class MangroveRootPlacer(
-    trunkOffsetY: IntProvider?,
-    rootProvider: BlockStateProvider?,
-    aboveRootPlacement: Optional<AboveRootPlacement?>?,
-    private val mangroveRootPlacement: MangroveRootPlacement
-) :
-    RootPlacer(trunkOffsetY, rootProvider, aboveRootPlacement) {
-    override fun generate(
-        world: TestableWorld,
-        replacer: BiConsumer<BlockPos, BlockState>,
-        random: RandomGenerator,
-        pos: BlockPos,
-        trunkPos: BlockPos,
-        config: TreeFeatureConfig
-    ): Boolean {
-        val list: MutableList<BlockPos> = Lists.newArrayList()
-        val mutable = pos.mutableCopy()
-
-        while (mutable.y < trunkPos.y) {
-            if (!this.canReplace(world, mutable)) {
-                return false
-            }
-
-            mutable.move(Direction.UP)
-        }
-
-        list.add(trunkPos.down())
-        var var9: Iterator<*> = Direction.Type.HORIZONTAL.iterator()
-
-        while (var9.hasNext()) {
-            val direction = var9.next() as Direction
-            val blockPos = trunkPos.offset(direction)
-            val list2: MutableList<BlockPos> = Lists.newArrayList()
-            if (!this.canGrow(world, random, blockPos, direction, trunkPos, list2, 0)) {
-                return false
-            }
-
-            list.addAll(list2)
-            list.add(trunkPos.offset(direction))
-        }
-
-        var9 = list.iterator()
-
-        while (var9.hasNext()) {
-            this.placeRoot(world, replacer, random, var9.next(), config)
-        }
-
-        return true
-    }
-
-    private fun canGrow(
-        world: TestableWorld,
-        random: RandomGenerator,
-        pos: BlockPos,
-        direction: Direction,
-        origin: BlockPos,
-        potentialRootPositions: MutableList<BlockPos>,
-        rootLength: Int
-    ): Boolean {
-        val i = mangroveRootPlacement.maxRootLength()
-        if (rootLength != i && potentialRootPositions.size <= i) {
-            val list = this.getPotentialRootPositions(pos, direction, random, origin)
-            val var10: Iterator<*> = list.iterator()
-
-            while (var10.hasNext()) {
-                val blockPos = var10.next() as BlockPos
-                if (this.canReplace(world, blockPos)) {
-                    potentialRootPositions.add(blockPos)
-                    if (!this.canGrow(
-                            world,
-                            random,
-                            blockPos,
-                            direction,
-                            origin,
-                            potentialRootPositions,
-                            rootLength + 1
-                        )
-                    ) {
-                        return false
-                    }
-                }
-            }
-
-            return true
-        } else {
-            return false
-        }
-    }
-
-    protected fun getPotentialRootPositions(
-        pos: BlockPos,
-        direction: Direction?,
-        random: RandomGenerator,
-        origin: BlockPos?
-    ): List<BlockPos> {
-        val blockPos = pos.down()
-        val blockPos2 = pos.offset(direction)
-        val i = pos.getManhattanDistance(origin)
-        val j = mangroveRootPlacement.maxRootWidth()
-        val f = mangroveRootPlacement.randomSkewChance()
-        return if (i > j - 3 && i <= j) {
-            if (random.nextFloat() < f) java.util.List.of(blockPos, blockPos2.down()) else java.util.List.of(blockPos)
-        } else if (i > j) {
-            java.util.List.of(blockPos)
-        } else if (random.nextFloat() < f) {
-            java.util.List.of(blockPos)
-        } else {
-            if (random.nextBoolean()) java.util.List.of(blockPos2) else java.util.List.of(blockPos)
-        }
-    }
-
-    override fun canReplace(world: TestableWorld, pos: BlockPos): Boolean {
-        return super.canReplace(world, pos) || world.testBlockState(
-            pos
-        ) { block: BlockState -> block.isIn(mangroveRootPlacement.canGrowThrough()) }
-    }
-
-    override fun placeRoot(
-        world: TestableWorld,
-        replacer: BiConsumer<BlockPos, BlockState>,
-        random: RandomGenerator,
-        pos: BlockPos,
-        config: TreeFeatureConfig
-    ) {
-        if (world.testBlockState(pos) { block: BlockState ->
-                block.isIn(mangroveRootPlacement.muddyRootsIn())
-            }) {
-            val blockState = mangroveRootPlacement.muddyRootsProvider().getBlockState(random, pos)
-            replacer.accept(pos, this.applyWaterlogging(world, pos, blockState))
-        } else {
-            super.placeRoot(world, replacer, random, pos, config)
-        }
-    }
-
-    override fun getType(): RootPlacerType<*> {
-        return DuskWorldgen.CASCADE_ROOT_PLACER
-    }
-
-    companion object {
-        const val MAX_ROOT_WIDTH: Int = 8
-        const val MAX_ROOT_LENGTH: Int = 15
-        val CODEC: Codec<net.minecraft.world.gen.root.org.teamvoided.dusk_autumn.world.gen.root.MangroveRootPlacer> =
-            RecordCodecBuilder.create {
-                rootPlacerCodec(it)
-                    .and(
-                        MangroveRootPlacement.CODEC.fieldOf("mangrove_root_placement")
-                            .forGetter<MangroveRootPlacement>(
-                                { placer: placer.mangroveRootPlacement })
-                    ).apply(it, ::MangroveRootPlacer)
-            }
-    }
-}
+//package net.minecraft.item
+//
+//import com.google.common.collect.ImmutableMultimap
+//import com.google.common.collect.Multimap
+//import net.minecraft.block.dispenser.DispenserBehavior
+//import net.minecraft.block.dispenser.DispenserBlock
+//import net.minecraft.block.dispenser.ItemDispenserBehavior
+//import net.minecraft.entity.EquipmentSlot
+//import net.minecraft.entity.LivingEntity
+//import net.minecraft.entity.attribute.EntityAttribute
+//import net.minecraft.entity.attribute.EntityAttributeModifier
+//import net.minecraft.entity.attribute.EntityAttributes
+//import net.minecraft.entity.mob.MobEntity
+//import net.minecraft.entity.player.PlayerEntity
+//import net.minecraft.predicate.entity.EntityPredicates
+//import net.minecraft.sound.SoundEvent
+//import net.minecraft.util.Hand
+//import net.minecraft.util.TypedActionResult
+//import net.minecraft.util.Util
+//import net.minecraft.util.math.BlockPointer
+//import net.minecraft.util.math.Box
+//import net.minecraft.util.math.Direction
+//import net.minecraft.world.World
+//import java.util.*
+//import java.util.function.Consumer
+//
+//open class ArmorItem(val material: ArmorMaterial, val armorSlot: ArmorSlot, settings: Settings) : Item(
+//    settings.maxDamageIfAbsent(
+//        material.getDurability(armorSlot)
+//    )
+//),
+//    Equippable {
+//    val protection: Int = material.getProtection(armorSlot)
+//    val toughness: Float = material.toughness
+//    protected val knockbackResistance: Float = material.knockbackResistance
+//    private val attributeModifiers: Multimap<EntityAttribute, EntityAttributeModifier>
+//
+//    init {
+//        DispenserBlock.registerBehavior(this, DISPENSER_BEHAVIOR)
+//        val builder = ImmutableMultimap.builder<EntityAttribute, EntityAttributeModifier>()
+//        val uUID = SLOT_UUID_MODIFIERS[armorSlot]
+//        builder.put(
+//            EntityAttributes.GENERIC_ARMOR, EntityAttributeModifier(
+//                uUID, "Armor modifier",
+//                protection.toDouble(), EntityAttributeModifier.Operation.ADDITION
+//            )
+//        )
+//        builder.put(
+//            EntityAttributes.GENERIC_ARMOR_TOUGHNESS, EntityAttributeModifier(
+//                uUID, "Armor toughness",
+//                toughness.toDouble(), EntityAttributeModifier.Operation.ADDITION
+//            )
+//        )
+//        if (material === ArmorMaterials.NETHERITE) {
+//            builder.put(
+//                EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, EntityAttributeModifier(
+//                    uUID, "Armor knockback resistance",
+//                    knockbackResistance.toDouble(), EntityAttributeModifier.Operation.ADDITION
+//                )
+//            )
+//        }
+//
+//        this.attributeModifiers = builder.build()
+//    }
+//
+//    override fun getEnchantability(): Int {
+//        return material.enchantability
+//    }
+//
+//    override fun canRepair(stack: ItemStack, ingredient: ItemStack): Boolean {
+//        return material.repairIngredient.test(ingredient) || super.canRepair(stack, ingredient)
+//    }
+//
+//    override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
+//        return this.use(this, world, user, hand)
+//    }
+//
+//    override fun getAttributeModifiers(slot: EquipmentSlot): Multimap<EntityAttribute, EntityAttributeModifier> {
+//        return if (slot == armorSlot.equipmentSlot) this.attributeModifiers else super.getAttributeModifiers(slot)
+//    }
+//
+//    override fun getPreferredSlot(): EquipmentSlot {
+//        return armorSlot.equipmentSlot
+//    }
+//
+//    override fun getEquipSound(): SoundEvent {
+//        return material.equipSound
+//    }
+//
+//    enum class ArmorSlot(val equipmentSlot: EquipmentSlot, val translationKey: String) {
+//        HELMET(EquipmentSlot.HEAD, "helmet"),
+//        CHESTPLATE(EquipmentSlot.CHEST, "chestplate"),
+//        LEGGINGS(EquipmentSlot.LEGS, "leggings"),
+//        BOOTS(EquipmentSlot.FEET, "boots")
+//    }
+//
+//    companion object {
+//        private val SLOT_UUID_MODIFIERS: EnumMap<ArmorSlot, UUID> = Util.make(EnumMap<Any?, Any?>(
+//            ArmorSlot::class.java
+//        ), Consumer { map: EnumMap<*, *> ->
+//            map[ArmorSlot.BOOTS] = UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B")
+//            map[ArmorSlot.LEGGINGS] = UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D")
+//            map[ArmorSlot.CHESTPLATE] = UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E")
+//            map[ArmorSlot.HELMET] = UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")
+//        }) as EnumMap<*, *>
+//        val DISPENSER_BEHAVIOR: DispenserBehavior = object : ItemDispenserBehavior() {
+//            override fun dispenseSilently(pointer: BlockPointer, stack: ItemStack): ItemStack {
+//                return if (dispenseArmor(pointer, stack)) stack else super.dispenseSilently(pointer, stack)
+//            }
+//        }
+//
+//        fun dispenseArmor(pointer: BlockPointer, armor: ItemStack): Boolean {
+//            val blockPos = pointer.pos.offset(pointer.blockState.get(DispenserBlock.FACING) as Direction)
+//            val list = pointer.world.getEntitiesByClass(
+//                LivingEntity::class.java,
+//                Box(blockPos),
+//                EntityPredicates.EXCEPT_SPECTATOR.and(EntityPredicates.Equippable(armor))
+//            )
+//            if (list.isEmpty()) {
+//                return false
+//            } else {
+//                val livingEntity = list[0] as LivingEntity
+//                val equipmentSlot = MobEntity.getPreferredEquipmentSlot(armor)
+//                val itemStack = armor.split(1)
+//                livingEntity.equipStack(equipmentSlot, itemStack)
+//                if (livingEntity is MobEntity) {
+//                    livingEntity.setEquipmentDropChance(equipmentSlot, 2.0f)
+//                    livingEntity.setPersistent()
+//                }
+//
+//                return true
+//            }
+//        }
+//    }
+//}

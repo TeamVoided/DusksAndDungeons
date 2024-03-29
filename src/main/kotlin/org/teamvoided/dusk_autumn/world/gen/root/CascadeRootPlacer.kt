@@ -14,12 +14,13 @@ import net.minecraft.world.gen.root.AboveRootPlacement
 import net.minecraft.world.gen.root.RootPlacer
 import net.minecraft.world.gen.root.RootPlacerType
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
+import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
 import java.util.*
 import java.util.function.BiConsumer
 
 class CascadeRootPlacer(
-    trunkOffsetY: IntProvider,
+    val trunkOffsetY: IntProvider,
     rootProvider: BlockStateProvider,
     aboveRootPlacement: Optional<AboveRootPlacement>,
     private val cascadeRootConfig: CascadeRootConfig
@@ -34,12 +35,18 @@ class CascadeRootPlacer(
     ): Boolean {
         val list: MutableList<BlockPos> = Lists.newArrayList()
         val mutable = pos.mutableCopy()
+//        val direction = Direction.Type.HORIZONTAL.random(random)
+//        val function = Function { state: BlockState ->
+//            state.method_47968(
+//                PillarBlock.AXIS,
+//                direction.axis
+//            )
+//        }
 
         while (mutable.y < trunkPos.y) {
             if (!this.canReplace(world, mutable)) {
                 return false
             }
-
             mutable.move(Direction.UP)
         }
 
@@ -47,23 +54,29 @@ class CascadeRootPlacer(
         var var9: Iterator<*> = Direction.Type.HORIZONTAL.iterator()
 
         while (var9.hasNext()) {
-            val direction = var9.next() as Direction
-            val blockPos = trunkPos.offset(direction)
+            val dir = var9.next() as Direction
+            val blockPos = trunkPos.up(trunkOffsetY.get(random)).offset(dir, 2)
             val list2: MutableList<BlockPos> = Lists.newArrayList()
-            if (!this.canGrow(world, random, blockPos, direction, trunkPos, list2, 0)) {
+            if (!this.canGrow(world, random, blockPos, dir, trunkPos, list2, 0)) {
                 return false
             }
-
             list.addAll(list2)
-            list.add(trunkPos.offset(direction))
+            list.add(trunkPos.offset(dir, 1))
+
+//            for (dir2 in Direction.Type.HORIZONTAL){
+//                val blockPos2 = blockPos.offset(dir, 2)
+//                val list3: MutableList<BlockPos> = Lists.newArrayList()
+//                if (!this.canGrow(world, random, blockPos2, dir, blockPos, list3, 0)) {
+//                    return false
+//                }
+//                list.addAll(list3)
+//                list.add(trunkPos.offset(dir, 1))
+//            }
         }
-
         var9 = list.iterator()
-
         while (var9.hasNext()) {
             this.placeRoot(world, replacer, random, var9.next(), config)
         }
-
         return true
     }
 
@@ -109,13 +122,13 @@ class CascadeRootPlacer(
         val j = cascadeRootConfig.maxRootWidth
         val f = cascadeRootConfig.randomSkewChance
         return if (i > j - 3 && i <= j) {
-            if (random.nextFloat() < f) java.util.List.of(blockPos, blockPos2.down()) else java.util.List.of(blockPos)
+            if (random.nextFloat() < f) listOf(blockPos, blockPos2.down()) else listOf(blockPos)
         } else if (i > j) {
-            java.util.List.of(blockPos)
+            listOf(blockPos)
         } else if (random.nextFloat() < f) {
-            java.util.List.of(blockPos)
+            listOf(blockPos)
         } else {
-            if (random.nextBoolean()) java.util.List.of(blockPos2) else java.util.List.of(blockPos)
+            if (random.nextBoolean()) listOf(blockPos2) else listOf(blockPos)
         }
     }
 
@@ -141,17 +154,22 @@ class CascadeRootPlacer(
             super.placeRoot(world, replacer, random, pos, config)
         }
     }
+    override fun getTrunkOrigin(pos: BlockPos, random: RandomGenerator?): BlockPos {
+        return pos
+    }
 
     override fun getType(): RootPlacerType<*> {
         return DuskWorldgen.CASCADE_ROOT_PLACER
     }
+
+
 
     companion object {
         const val MAX_ROOT_WIDTH: Int = 8
         const val MAX_ROOT_LENGTH: Int = 15
         val CODEC: Codec<CascadeRootPlacer> = RecordCodecBuilder.create { instance ->
             rootPlacerCodec(instance).and(
-                    CascadeRootConfig.CODEC.fieldOf("cascade_root_placement").forGetter { it.cascadeRootConfig })
+                CascadeRootConfig.CODEC.fieldOf("cascade_root_placement").forGetter { it.cascadeRootConfig })
                 .apply(instance, ::CascadeRootPlacer)
         }
     }

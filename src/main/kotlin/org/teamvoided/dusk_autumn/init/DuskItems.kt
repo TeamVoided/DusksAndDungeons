@@ -9,6 +9,7 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DuskAutumns
+import org.teamvoided.dusk_autumn.item.FarmersHat
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object DuskItems {
@@ -37,6 +38,10 @@ object DuskItems {
 
     val GOLDEN_BIRCH_SAPLING = register("golden_birch_sapling", BlockItem(DuskBlocks.GOLDEN_BIRCH_SAPLING))
     val GOLDEN_BIRCH_LEAVES = register("golden_birch_leaves", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAVES))
+
+    val FARMERS_HAT = register("farmers_hat", FarmersHat(Item.Settings()))
+    val TURTLE_HELMET = register("turtle_helmet", ArmorItem(ArmorMaterials.TURTLE, ArmorItem.ArmorSlot.HELMET, Item.Settings()))
+
 
     val OAK_LEAF_PILE = register("oak_leaf_pile", BlockItem(DuskBlocks.OAK_LEAF_PILE))
     val BIRCH_LEAF_PILE = register("birch_leaf_pile", BlockItem(DuskBlocks.BIRCH_LEAF_PILE))

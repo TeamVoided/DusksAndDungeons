@@ -3,8 +3,7 @@ package org.teamvoided.dusk_autumn.init.worldgen
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.*
 import net.minecraft.fluid.Fluids
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.*
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.unmapped.C_cxbmzbuz
 import net.minecraft.unmapped.C_cxbmzbuz.C_pkkqenbk
@@ -20,16 +19,25 @@ import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import net.minecraft.world.gen.foliage.*
+import net.minecraft.world.gen.root.AboveRootPlacement
+import net.minecraft.world.gen.root.MangroveRootPlacement
+import net.minecraft.world.gen.root.MangroveRootPlacer
+import net.minecraft.world.gen.root.RootPlacer
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
+import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
+import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
+import net.minecraft.world.gen.trunk.UpwardsBranchingTrunkPlacer
 import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.data.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
+import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootConfig
+import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootPlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
@@ -82,43 +90,29 @@ object DuskConfiguredFeature {
             BlockStateProvider.of(DuskBlocks.CASCADE_LEAVES),
             CascadeFoliagePlacer(
                 ConstantIntProvider.create(0),
-                ConstantIntProvider.create(0)
+                ConstantIntProvider.create(1)
             ),
+//            Optional.of(
+//                CascadeRootPlacer(
+//                    UniformIntProvider.create(3, 7),
+//                    BlockStateProvider.of(DuskBlocks.CASCADE_LOG),
+//                    Optional.empty(),
+//                    CascadeRootConfig(
+//                        blockTags.getTagOrThrow(BlockTags.REPLACEABLE_BY_TREES),
+//                        HolderSet.createDirect(
+//                            { it.builtInRegistryHolder },
+//                            *arrayOf(Blocks.DIRT)
+//                        ),
+//                        BlockStateProvider.of(Blocks.ROOTED_DIRT),
+//                        8,
+//                        15,
+//                        0.2f
+//                    )
+//                )
+//            ),
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
-        val cascadeLeafPile = AlterOnGroundTreeDecorator(
-            WeightedBlockStateProvider(
-                DataPool.builder<BlockState>()
-                    .add(DuskBlocks.CASCADE_LEAF_PILE.defaultState, 9)
-                    .add(
-                        DuskBlocks.CASCADE_LEAF_PILE.defaultState
-                            .with(LeafPileBlock.PILE_LAYERS, 2), 4
-                    )
-                    .add(
-                        DuskBlocks.CASCADE_LEAF_PILE.defaultState
-                            .with(LeafPileBlock.PILE_LAYERS, 3), 1
-                    )
-            ),
-            3, 10, 20,
-            blockTags.getTagOrThrow(DuskBlockTags.LEAF_PILES_PLACE_ON)
-        )
         val goldenBirchTree = builder(Blocks.BIRCH_LOG, DuskBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
-        val goldenBirchLeafPile = AlterOnGroundTreeDecorator(
-            WeightedBlockStateProvider(
-                DataPool.builder<BlockState>()
-                    .add(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.defaultState, 9)
-                    .add(
-                        DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.defaultState
-                            .with(LeafPileBlock.PILE_LAYERS, 2), 4
-                    )
-                    .add(
-                        DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.defaultState
-                            .with(LeafPileBlock.PILE_LAYERS, 3), 1
-                    )
-            ),
-            3, 10, 20,
-            blockTags.getTagOrThrow(DuskBlockTags.LEAF_PILES_PLACE_ON)
-        )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
@@ -126,7 +120,7 @@ object DuskConfiguredFeature {
                         BlockStateProvider.of(Blocks.PODZOL), 2, 5,
                         blockTags.getTagOrThrow(BlockTags.DIRT)
                     ),
-                    cascadeLeafPile
+                    leafPiles(DuskBlocks.CASCADE_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -139,7 +133,7 @@ object DuskConfiguredFeature {
                         2, 5,
                         blockTags.getTagOrThrow(BlockTags.DIRT)
                     ),
-                    cascadeLeafPile
+                    leafPiles(DuskBlocks.CASCADE_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -176,7 +170,7 @@ object DuskConfiguredFeature {
                         2,
                         listOf(Direction.NORTH, Direction.SOUTH)
                     ),
-                    goldenBirchLeafPile
+                    leafPiles(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -205,16 +199,16 @@ object DuskConfiguredFeature {
                         0.14f,
                         1,
                         1,
-                            BlockStateProvider.of(
-                                Blocks.BIRCH_LOG.defaultState.with(
-                                    PillarBlock.AXIS,
-                                    Direction.Axis.Z
-                                )
-                            ),
+                        BlockStateProvider.of(
+                            Blocks.BIRCH_LOG.defaultState.with(
+                                PillarBlock.AXIS,
+                                Direction.Axis.Z
+                            )
+                        ),
                         2,
                         listOf(Direction.NORTH, Direction.SOUTH)
                     ),
-                    goldenBirchLeafPile
+                    leafPiles(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -232,22 +226,7 @@ object DuskConfiguredFeature {
                             BlockStateProvider.of(Blocks.PODZOL), 2, 5,
                             blockTags.getTagOrThrow(BlockTags.DIRT)
                         ),
-                        AlterOnGroundTreeDecorator(
-                            WeightedBlockStateProvider(
-                                DataPool.builder<BlockState>()
-                                    .add(DuskBlocks.DARK_OAK_LEAF_PILE.defaultState, 9)
-                                    .add(
-                                        DuskBlocks.DARK_OAK_LEAF_PILE.defaultState
-                                            .with(LeafPileBlock.PILE_LAYERS, 2), 4
-                                    )
-                                    .add(
-                                        DuskBlocks.DARK_OAK_LEAF_PILE.defaultState
-                                            .with(LeafPileBlock.PILE_LAYERS, 3), 1
-                                    )
-                            ),
-                            3, 10, 20,
-                            blockTags.getTagOrThrow(DuskBlockTags.LEAF_PILES_PLACE_ON)
-                        )
+                        leafPiles(DuskBlocks.DARK_OAK_LEAF_PILE, blockTags)
                     )
                 ).build()
         )
@@ -260,24 +239,7 @@ object DuskConfiguredFeature {
                 TwoLayersFeatureSize(1, 0, 1)
             )
                 .forceDirt().ignoreVines().decorators(
-                    ImmutableList.of<TreeDecorator>(
-                        AlterOnGroundTreeDecorator(
-                            WeightedBlockStateProvider(
-                                DataPool.builder<BlockState>()
-                                    .add(DuskBlocks.ACACIA_LEAF_PILE.defaultState, 9)
-                                    .add(
-                                        DuskBlocks.ACACIA_LEAF_PILE.defaultState
-                                            .with(LeafPileBlock.PILE_LAYERS, 4), 3
-                                    )
-                                    .add(
-                                        DuskBlocks.ACACIA_LEAF_PILE.defaultState
-                                            .with(LeafPileBlock.PILE_LAYERS, 3), 1
-                                    )
-                            ),
-                            3, 10, 20,
-                            blockTags.getTagOrThrow(DuskBlockTags.LEAF_PILES_PLACE_ON)
-                        )
-                    )
+                    ImmutableList.of<TreeDecorator>(leafPiles(DuskBlocks.ACACIA_LEAF_PILE, blockTags))
                 ).build()
         )
         ConfiguredFeatureUtil.registerConfiguredFeature<TreeFeatureConfig, Feature<TreeFeatureConfig>>(
@@ -418,6 +380,18 @@ object DuskConfiguredFeature {
         )
     }
 
+    fun leafPiles(leafPile: Block, blockTags: HolderProvider<Block>): AlterOnGroundTreeDecorator {
+        return AlterOnGroundTreeDecorator(
+            WeightedBlockStateProvider(
+                DataPool.builder<BlockState>()
+                    .add(leafPile.defaultState, 9)
+                    .add(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 2), 4)
+                    .add(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 3), 1)
+            ),
+            3, 10, 20,
+            blockTags.getTagOrThrow(DuskBlockTags.LEAF_PILES_PLACE_ON)
+        )
+    }
 
     fun create(id: String): RegistryKey<ConfiguredFeature<*, *>?> =
         RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, DuskAutumns.id(id))
