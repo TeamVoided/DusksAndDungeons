@@ -24,6 +24,7 @@ data class FarmlandConfig(
     val fenceBlock: BlockStateProvider,
     val waterBlock: BlockStateProvider,
     val cropFeature: Holder<PlacedFeature>,
+    val cropGuarantee: Boolean,
     val cropFeatureChance: Float,
     val scarecrow: List<EntityType<*>>
 ) : FeatureConfig {
@@ -33,13 +34,14 @@ data class FarmlandConfig(
                 instance.group(
                     TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("replaceable").forGetter { it.replaceable },
                     IntProvider.create(0, 64).fieldOf("farm_size").forGetter { it.farmSize },
-                    Codec.intRange(1, 256).fieldOf("vertical_range").forGetter { it.farmVerticalRange },
+                    Codec.intRange(1, 256).fieldOf("farm_vertical_range").forGetter { it.farmVerticalRange },
                     BlockStateProvider.TYPE_CODEC.fieldOf("farmland_block").forGetter { it.farmlandBlock },
                     Codec.floatRange(0.0f, 1.0f).fieldOf("farmland_chance").forGetter { it.farmlandChance },
                     IntProvider.create(0, 64).fieldOf("fence_amount").forGetter { it.fenceAmount },
                     BlockStateProvider.TYPE_CODEC.fieldOf("fence_block").forGetter { it.fenceBlock },
                     BlockStateProvider.TYPE_CODEC.fieldOf("water_block").forGetter { it.waterBlock },
                     PlacedFeature.REGISTRY_CODEC.fieldOf("crop_feature").forGetter { it.cropFeature },
+                    Codec.BOOL.fieldOf("crop_guarantee").forGetter { it.cropGuarantee },
                     Codec.floatRange(0.0f, 1.0f).fieldOf("crop_feature_chance").forGetter { it.cropFeatureChance },
                     Registries.ENTITY_TYPE.codec.listOf().fieldOf("entity_type").forGetter { it.scarecrow }
                 ).apply(instance, ::FarmlandConfig)
