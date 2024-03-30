@@ -3,7 +3,7 @@ package org.teamvoided.dusk_autumn.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
 import net.minecraft.block.BlockState
-import net.minecraft.registry.tag.BlockTags
+import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.VerticalSurfaceType
@@ -70,7 +70,13 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
                 val isEdge = isEdgeX || isEdgeZ
                 val isCorner = isEdgeX && isEdgeZ
                 val isEdgeNotCorner = isEdge && !isCorner
-                if ( (!isEdgeNotCorner || !(random.nextFloat() > 0.5f))) {
+
+                if (isEdgeZ) world.placeDebug(mutable.up(), 1)
+                if (isEdgeX) world.placeDebug(mutable.up(), 2)
+                if (isCorner) world.placeDebug(mutable.up(), 3)
+
+
+                if ((!isEdgeNotCorner || !(random.nextFloat() > 0.5f))) {
 //                    (!isCorner) &&
                     mutable[pos, i, 0] = j
                     var k = 0
@@ -174,5 +180,19 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
             }
         }
         return true
+    }
+
+    fun  StructureWorldAccess.placeDebug(
+        pos: BlockPos,
+        block: Int
+    ) {
+        val x = when (block) {
+            1 -> Blocks.GREEN_STAINED_GLASS
+            2 -> Blocks.YELLOW_STAINED_GLASS
+            3 -> Blocks.RED_STAINED_GLASS
+            else -> Blocks.BLUE_STAINED_GLASS
+        }.defaultState
+
+        this.setBlockState(pos, x, 2)
     }
 }
