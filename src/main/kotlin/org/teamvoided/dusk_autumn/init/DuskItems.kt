@@ -3,8 +3,10 @@ package org.teamvoided.dusk_autumn.init
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.item.*
+import net.minecraft.item.org.teamvoided.dusk_autumn.item.DuskFoodComponents
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DuskAutumns
@@ -38,9 +40,6 @@ object DuskItems {
     val GOLDEN_BIRCH_SAPLING = register("golden_birch_sapling", BlockItem(DuskBlocks.GOLDEN_BIRCH_SAPLING))
     val GOLDEN_BIRCH_LEAVES = register("golden_birch_leaves", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAVES))
 
-    val FARMERS_HAT = register("farmers_hat", FarmersHat(Item.Settings().maxCount(1)))
-
-
     val OAK_LEAF_PILE = register("oak_leaf_pile", BlockItem(DuskBlocks.OAK_LEAF_PILE))
     val BIRCH_LEAF_PILE = register("birch_leaf_pile", BlockItem(DuskBlocks.BIRCH_LEAF_PILE))
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", BlockItem(DuskBlocks.SPRUCE_LEAF_PILE))
@@ -54,6 +53,15 @@ object DuskItems {
         register("flowering_azalea_leaf_pile", BlockItem(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE))
     val CASCADE_LEAF_PILE = register("cascade_leaf_pile", BlockItem(DuskBlocks.CASCADE_LEAF_PILE))
     val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE))
+
+    val FARMERS_HAT = register("farmers_hat", FarmersHat(Item.Settings().maxCount(1)))
+    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DuskBlocks.WILD_WHEAT, Item.Settings()))
+
+
+    val GOLDEN_BEETROOT = register(
+        "golden_beetroot",
+        AliasedBlockItem(DuskBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DuskFoodComponents.GOLDEN_BEETROOT))
+    )
 
     fun init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL_BLOCKS)

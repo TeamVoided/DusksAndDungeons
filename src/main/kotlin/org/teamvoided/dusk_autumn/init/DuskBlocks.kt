@@ -3,8 +3,10 @@ package org.teamvoided.dusk_autumn.init
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.block.*
+import net.minecraft.block.AbstractBlock.OffsetType
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
+import net.minecraft.block.org.teamvoided.dusk_autumn.block.GoldenBeetrootsBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.block.sign.*
@@ -18,6 +20,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
+import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.FallingLeafPileBlock
 import org.teamvoided.dusk_autumn.block.FallingLeavesBlock
@@ -48,7 +51,7 @@ object DuskBlocks {
     val POTTED_VIOLET_DAISY = register("potted_violet_daisy", pottedVariant(VIOLET_DAISY))
 
     val CASCADE_SAPLING = register(
-        "cascade_sapling", SaplingBlock(
+        "cascade_sapling", ThreeWideTreeSaplingBlock(
             SaplingGenerators.CASCADE,
             AbstractBlock.Settings.create()
                 .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly()
@@ -185,6 +188,23 @@ object DuskBlocks {
         "golden_birch_leaf_pile",
         LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.GRASS).mapColor(MapColor.YELLOW))
     )
+    val WILD_WHEAT = register(
+        "wild_wheat",
+        TallPlantBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.PLANT).noCollision().breakInstantly()
+                .sounds(BlockSoundGroup.CROP).offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
+        )
+    )
+
+
+    val GOLDEN_BEETROOTS = register(
+        "golden_beetroots",
+        GoldenBeetrootsBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.PLANT).noCollision().ticksRandomly().breakInstantly()
+                .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
+        )
+    )
+
 
     fun init() {}
     fun initClient() {
@@ -194,7 +214,8 @@ object DuskBlocks {
             GOLDEN_BIRCH_SAPLING, POTTED_GOLDEN_BIRCH_SAPLING, GOLDEN_BIRCH_LEAVES,
             CASCADE_LEAF_PILE, OAK_LEAF_PILE, SPRUCE_LEAF_PILE, BIRCH_LEAF_PILE, JUNGLE_LEAF_PILE, ACACIA_LEAF_PILE,
             DARK_OAK_LEAF_PILE, MANGROVE_LEAF_PILE, CHERRY_LEAF_PILE, AZALEA_LEAF_PILE,
-            FLOWERING_AZALEA_LEAF_PILE, GOLDEN_BIRCH_LEAF_PILE
+            FLOWERING_AZALEA_LEAF_PILE, GOLDEN_BIRCH_LEAF_PILE,
+            WILD_WHEAT, GOLDEN_BEETROOTS
         ).forEach {
             BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout())
         }
@@ -215,7 +236,7 @@ object DuskBlocks {
                 if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
                 else GrassColors.getColor(0.8, 0.4)
             },
-            BLUE_PETALS
+            BLUE_PETALS, WILD_WHEAT
         )
         ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> FoliageColors.getSpruceColor() }, SPRUCE_LEAF_PILE)
         ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> FoliageColors.getBirchColor() }, BIRCH_LEAF_PILE)

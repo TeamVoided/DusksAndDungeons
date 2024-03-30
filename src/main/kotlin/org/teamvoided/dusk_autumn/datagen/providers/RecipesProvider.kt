@@ -24,7 +24,6 @@ class RecipesProvider(o: FabricDataOutput) : FabricRecipeProvider(o) {
                     DuskItems.CASCADE_PLANKS
                 )
             ).offerTo(exporter)
-
         createLeafPilesRecipe(DuskBlocks.OAK_LEAF_PILE, Items.OAK_LEAVES, exporter)
         createLeafPilesRecipe(DuskBlocks.SPRUCE_LEAF_PILE, Items.SPRUCE_LEAVES, exporter)
         createLeafPilesRecipe(DuskBlocks.BIRCH_LEAF_PILE, Items.BIRCH_LEAVES, exporter)
@@ -37,6 +36,18 @@ class RecipesProvider(o: FabricDataOutput) : FabricRecipeProvider(o) {
         createLeafPilesRecipe(DuskBlocks.CHERRY_LEAF_PILE, Items.CHERRY_LEAVES, exporter)
         createLeafPilesRecipe(DuskBlocks.CASCADE_LEAF_PILE, DuskItems.CASCADE_LEAVES, exporter)
         createLeafPilesRecipe(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, DuskItems.GOLDEN_BIRCH_LEAVES, exporter)
+        ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DuskItems.FARMERS_HAT, 1)
+            .ingredient('#', Ingredient.ofItems(Items.WHEAT))
+            .ingredient('@', Ingredient.ofItems(Items.STRING))
+            .ingredient('%', Ingredient.ofItems(Items.LEATHER))
+            .pattern("###")
+            .pattern("@%@")
+            .pattern("# #")
+            .criterion(
+                "has_farmers_hat", conditionsFromItem(
+                    DuskItems.FARMERS_HAT
+                )
+            ).offerTo(exporter)
     }
 
     fun createLeafPilesRecipe(output: ItemConvertible, input: ItemConvertible, exporter: RecipeExporter) {

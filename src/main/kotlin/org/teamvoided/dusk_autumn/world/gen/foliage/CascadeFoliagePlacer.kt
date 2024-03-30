@@ -2,16 +2,22 @@ package org.teamvoided.dusk_autumn.world.gen.foliage
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.TestableWorld
 import net.minecraft.world.gen.feature.TreeFeatureConfig
 import net.minecraft.world.gen.foliage.FoliagePlacer
 import net.minecraft.world.gen.foliage.FoliagePlacerType
+import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
 
-class CascadeFoliagePlacer(intProvider: IntProvider?, intProvider2: IntProvider?) :
-    FoliagePlacer(intProvider, intProvider2) {
+class CascadeFoliagePlacer(
+    radius: IntProvider,
+    offset: IntProvider,
+    private val foliageHeight: IntProvider,
+    private val leafPlacementAttempts: Int) :
+    FoliagePlacer(radius, offset) {
     override fun getType(): FoliagePlacerType<*> {
         return DuskWorldgen.CASCADE_FOLIAGE_PLACER
     }
@@ -27,18 +33,13 @@ class CascadeFoliagePlacer(intProvider: IntProvider?, intProvider2: IntProvider?
         k: Int,
         l: Int
     ) {
-        val blockPos = treeNode.center.up(l)
-        val giantTrunk = treeNode.isGiantTrunk
-        if (giantTrunk) {
-            this.generateSquare(world, c_pwcqvmho, random, treeFeatureConfig, blockPos, k + 2, -1, giantTrunk)
-            this.generateSquare(world, c_pwcqvmho, random, treeFeatureConfig, blockPos, k + 3, 0, giantTrunk)
-            this.generateSquare(world, c_pwcqvmho, random, treeFeatureConfig, blockPos, k + 2, 1, giantTrunk)
-            if (random.nextBoolean()) {
-                this.generateSquare(world, c_pwcqvmho, random, treeFeatureConfig, blockPos, k, 2, giantTrunk)
-            }
-        } else {
-            this.generateSquare(world, c_pwcqvmho, random, treeFeatureConfig, blockPos, k + 2, -1, giantTrunk)
-            this.generateSquare(world, c_pwcqvmho, random, treeFeatureConfig, blockPos, k + 1, 0, giantTrunk)
+        val blockPos = treeNode.center
+        val mutable = blockPos.mutableCopy()
+
+        for (m in 0 until this.leafPlacementAttempts) {
+            mutable[blockPos, random.nextInt(k) - random.nextInt(k), random.nextInt(j) - random.nextInt(j)] =
+                random.nextInt(k) - random.nextInt(k)
+            placeFoliageBlock(world, c_pwcqvmho, random, treeFeatureConfig, mutable)
         }
     }
 
@@ -83,7 +84,29 @@ class CascadeFoliagePlacer(intProvider: IntProvider?, intProvider2: IntProvider?
 
     companion object {
         val CODEC: Codec<CascadeFoliagePlacer> =
-            RecordCodecBuilder.create { fillFoliagePlacerFields(it)
-                .apply(it, ::CascadeFoliagePlacer) }
+            RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<CascadeFoliagePlacer> ->
+                fillFoliagePlacerFields(instance).and(
+                    instance.group(
+                        IntProvider.create(1, 512).fieldOf("foliage_height")
+                            .forGetter { placer: CascadeFoliagePlacer -> placer.foliageHeight },
+                        Codec.intRange(0, 256).fieldOf("leaf_placement_attempts")
+                            .forGetter { placer: CascadeFoliagePlacer -> placer.leafPlacementAttempts }
+                    )
+                ).apply(
+                    instance
+                ) { radius: IntProvider, offset: IntProvider, foliageHeight: IntProvider, leafPlacementAttempts: Int ->
+                    CascadeFoliagePlacer(
+                        radius,
+                        offset,
+                        foliageHeight,
+                        leafPlacementAttempts
+                    )
+                }
+            }
+//        val CODEC: Codec<CascadeFoliagePlacer> =
+//            RecordCodecBuilder.create {
+//                fillFoliagePlacerFields(it)
+//                    .apply(it, ::CascadeFoliagePlacer)
+//            }
     }
 }

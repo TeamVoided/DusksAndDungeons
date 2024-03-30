@@ -6,6 +6,7 @@ import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
 import java.util.*
 
 object SaplingGenerators {
+
     val CASCADE = WoodTypes(
         id("cascade").toString(),
         Optional.of(DuskConfiguredFeature.CASCADE_TREE),
@@ -13,7 +14,7 @@ object SaplingGenerators {
         Optional.of(DuskConfiguredFeature.CASCADE_TREE_BEES)
     )
     val GOLDEN_BIRCH = WoodTypes(
-        id("cascade").toString(),
+        id("golden_birch").toString(),
         Optional.empty(),
         Optional.of(DuskConfiguredFeature.GOLDEN_BIRCH_TALL),
         Optional.of(DuskConfiguredFeature.GOLDEN_BIRCH_TALL_BEES)

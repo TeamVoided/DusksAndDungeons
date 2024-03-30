@@ -64,7 +64,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
             ++g
         }
 
-        list.add(FoliagePlacer.TreeNode(BlockPos(posX, posYAlt, posZ), 0, true))
+//        list.add(FoliagePlacer.TreeNode(BlockPos(posX, posYAlt, posZ), 0, true))
 
         g = -2
         while (g <= 3) {

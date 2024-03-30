@@ -21,6 +21,7 @@ import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import net.minecraft.world.gen.foliage.*
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
+import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
@@ -79,9 +80,11 @@ object DuskConfiguredFeature {
             BlockStateProvider.of(DuskBlocks.CASCADE_LOG),
             ThreeWideTrunkPlacer(9, 2, 1),
             BlockStateProvider.of(DuskBlocks.CASCADE_LEAVES),
-            CascadeFoliagePlacer(
+            RandomSpreadFoliagePlacer(
+                ConstantIntProvider.create(3),
                 ConstantIntProvider.create(0),
-                ConstantIntProvider.create(1)
+                ConstantIntProvider.create(2),
+                75
             ),
 //            Optional.of(
 //                CascadeRootPlacer(
@@ -118,7 +121,7 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CASCADE_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
-//                    BeehiveTreeDecorator(0.02F),
+                    BeehiveTreeDecorator(0.02F),
                     AlterGroundRadiusTreeDecorator(
                         BlockStateProvider.of(Blocks.PODZOL),
                         2, 5,
@@ -168,7 +171,7 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, GOLDEN_BIRCH_TALL_BEES, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
-//                        BeehiveTreeDecorator(0.02F),
+                        BeehiveTreeDecorator(0.02F),
                     AlterGroundRadiusTreeDecorator(
                         BlockStateProvider.of(Blocks.PODZOL), 2, 20,
                         blockTags.getTagOrThrow(BlockTags.DIRT)

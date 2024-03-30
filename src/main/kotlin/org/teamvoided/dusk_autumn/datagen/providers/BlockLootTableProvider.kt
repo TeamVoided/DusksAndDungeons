@@ -2,9 +2,13 @@ package org.teamvoided.dusk_autumn.datagen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
+import net.minecraft.block.BeetrootsBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.CarrotsBlock
+import net.minecraft.block.org.teamvoided.dusk_autumn.block.GoldenBeetrootsBlock
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
@@ -12,12 +16,14 @@ import net.minecraft.loot.condition.BlockStatePropertyLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LootTableEntry
+import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
+import org.teamvoided.dusk_autumn.init.DuskItems
 
 class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider(o) {
 
@@ -37,9 +43,9 @@ class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider
         add(DuskBlocks.CASCADE_DOOR, ::doorDrops)
         add(DuskBlocks.BLUE_DOOR, ::doorDrops)
 
-        add(DuskBlocks.CASCADE_LEAVES) { leavesDrops(it, DuskBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES) }
+        add(DuskBlocks.CASCADE_LEAVES) { oakLeavesDrops(it, DuskBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES) }
         add(DuskBlocks.GOLDEN_BIRCH_LEAVES) {
-            oakLeavesDrops(
+            leavesDrops(
                 it,
                 DuskBlocks.GOLDEN_BIRCH_SAPLING,
                 *LEAVES_SAPLING_DROP_CHANCES
@@ -63,6 +69,28 @@ class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider
         add(DuskBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DuskBlocks.CASCADE_SAPLING) }
         add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DuskBlocks.GOLDEN_BIRCH_SAPLING) }
         add(DuskBlocks.POTTED_VIOLET_DAISY, ::pottedPlantDrops)
+
+        add(
+            DuskBlocks.GOLDEN_BEETROOTS,
+            applyExplosionDecay(
+                DuskBlocks.GOLDEN_BEETROOTS, LootTable.builder().pool(
+                    LootPool.builder().with(
+                        ItemEntry.builder(
+                            DuskItems.GOLDEN_BEETROOT
+                        )
+                    )
+                ).pool(
+                    LootPool.builder().conditionally(
+                        BlockStatePropertyLootCondition.builder(DuskBlocks.GOLDEN_BEETROOTS).properties(
+                            StatePredicate.Builder.create().exactMatch(BeetrootsBlock.AGE, 4)
+                        )
+                    ).with(
+                        ItemEntry.builder(DuskItems.GOLDEN_BEETROOT)
+                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286f, 3))
+                    )
+                )
+            )
+        )
     }
 
     private fun constantLootNumber(i: Number): ConstantLootNumberProvider =
