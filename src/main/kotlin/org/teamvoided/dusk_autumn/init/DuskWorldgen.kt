@@ -29,7 +29,7 @@ object DuskWorldgen {
     val ALTER_GROUND_RADIUS = registerTreeDecorator("alter_ground_radius", AlterGroundRadiusTreeDecorator.CODEC)
     val ALTER_ON_GROUND = registerTreeDecorator("alter_on_ground", AlterOnGroundTreeDecorator.CODEC)
     val ATTACHED_TO_TRUNK = registerTreeDecorator("attached_to_trunk", AttachedToTrunkTreeDecorator.CODEC)
-    val BEEHIVE_TREE_DECORATOR_NOT_NULL =
+    val BEEHIVE_BIG_TREE_DECORATOR =
         registerTreeDecorator("beehive_tree_decorator_not_null", BeehiveBigTreeDecorator.CODEC)
 
     val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", ThreeWideTrunkPlacer.CODEC)
