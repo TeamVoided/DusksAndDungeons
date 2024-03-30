@@ -43,9 +43,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
             farmlandConfig,
             randomGenerator,
             set,
-            blockPos,
-            widthX,
-            widthZ
+            blockPos
         )
         return set.isNotEmpty()
     }
@@ -72,7 +70,8 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
                 val isEdge = isEdgeX || isEdgeZ
                 val isCorner = isEdgeX && isEdgeZ
                 val isEdgeNotCorner = isEdge && !isCorner
-                if (!isCorner && (!isEdgeNotCorner || !(random.nextFloat() > 0.5f))) {
+                if ( (!isEdgeNotCorner || !(random.nextFloat() > 0.5f))) {
+//                    (!isCorner) &&
                     mutable[pos, i, 0] = j
                     var k = 0
                     while (world.testBlockState(mutable) { it.isIn(config.canPlaceUnder) } && k < config.farmVerticalRange) {
@@ -91,10 +90,12 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
                         )
                     ) {
                         val blockPos = mutable2.toImmutable()
-                        val canPlaceGround = placeGround(world, config, replaceable, random, mutable2)
-                        if (canPlaceGround) {
+                        if (placeGround(world, config, replaceable, random, mutable2)) {
                             set.add(blockPos)
                         }
+                    }
+                    if (isCorner) {
+                        placeFence(world, config, replaceable, random, mutable2)
                     }
                 }
             }
@@ -108,9 +109,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         config: FarmlandConfig,
         random: RandomGenerator,
         positions: Set<BlockPos>,
-        centerBlock: BlockPos,
-        radiusX: Int,
-        radiusZ: Int
+        centerBlock: BlockPos
     ) {
         val var8: Iterator<*> = positions.iterator()
         while (var8.hasNext()) {
@@ -144,15 +143,34 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         random: RandomGenerator,
         pos: BlockPos.Mutable
     ): Boolean {
-        for (i in 0 until 1) {
-            val blockState = config.farmlandBlock.getBlockState(random, pos)
+        val blockState = config.farmlandBlock.getBlockState(random, pos)
+        val blockState2 = world.getBlockState(pos)
+        if (!blockState.isOf(blockState2.block)) {
+            if (!replaceable.test(blockState2)) {
+                return false
+            }
+            world.setBlockState(pos, blockState, 2)
+            pos.move(Direction.DOWN)
+        }
+        return true
+    }
+
+    protected fun placeFence(
+        world: StructureWorldAccess,
+        config: FarmlandConfig,
+        replaceable: Predicate<BlockState>,
+        random: RandomGenerator,
+        pos: BlockPos.Mutable
+    ): Boolean {
+        for (i in 0 until 5) {
+            val blockState = config.fenceBlock.getBlockState(random, pos)
             val blockState2 = world.getBlockState(pos)
             if (!blockState.isOf(blockState2.block)) {
-                if (!replaceable.test(blockState2)) {
-                    return false
-                }
+//                if (!replaceable.test(blockState2)) {
+//                    return false
+//                }
+                pos.move(Direction.UP)
                 world.setBlockState(pos, blockState, 2)
-                pos.move(Direction.DOWN)
             }
         }
         return true

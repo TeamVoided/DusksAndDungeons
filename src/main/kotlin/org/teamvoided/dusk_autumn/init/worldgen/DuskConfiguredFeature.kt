@@ -81,7 +81,7 @@ object DuskConfiguredFeature {
             c, FARMLAND_TEST, DuskFeatures.FARMLAND, FarmlandConfig(
                 BlockTags.DIRT,
                 DuskBlockTags.FARMLAND_PLACES_UNDER,
-                UniformIntProvider.create(2, 32),
+                UniformIntProvider.create(2, 8),
                 3,
                 BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
                 0.9f,
