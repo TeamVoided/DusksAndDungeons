@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.init.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.*
+import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
 import net.minecraft.registry.*
 import net.minecraft.registry.tag.BlockTags
@@ -9,6 +10,7 @@ import net.minecraft.unmapped.C_cxbmzbuz
 import net.minecraft.unmapped.C_cxbmzbuz.C_pkkqenbk
 import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.VerticalSurfaceType
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.BootstrapContext
@@ -29,12 +31,13 @@ import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.data.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
-import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
+import kotlin.reflect.jvm.internal.impl.util.ModuleVisibilityHelper.EMPTY
 
 @Suppress("MemberVisibilityCanBePrivate")
 object DuskConfiguredFeature {
@@ -53,6 +56,7 @@ object DuskConfiguredFeature {
     val FLOWER_AUTUMN = create("flower_autumn")
     val PATCH_ROSEBUSH = create("patch_rosebush")
     val BLUE_PETALS = create("blue_petals")
+    val FARMLAND_TEST = create("farmland_test")
 
 
     fun init() {}
@@ -72,6 +76,24 @@ object DuskConfiguredFeature {
                 )
             }
         }
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, FARMLAND_TEST, DuskFeatures.FARMLAND, FarmlandConfig(
+                BlockTags.DIRT,
+                UniformIntProvider.create(2, 32),
+                3,
+                BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
+                0.9f,
+                UniformIntProvider.create(4, 16),
+                BlockStateProvider.of(Blocks.DARK_OAK_FENCE),
+                BlockStateProvider.of(Blocks.WATER),
+                PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(UndergroundConfiguredFeatures.MOSS_VEGETATION),
+                    *arrayOfNulls<PlacementModifier>(0)
+                ),
+                0.3f,
+                listOf()
+            )
+        )
 
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
@@ -171,7 +193,7 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, GOLDEN_BIRCH_TALL_BEES, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
-                        BeehiveTreeDecorator(0.02F),
+                    BeehiveTreeDecorator(0.02F),
                     AlterGroundRadiusTreeDecorator(
                         BlockStateProvider.of(Blocks.PODZOL), 2, 20,
                         blockTags.getTagOrThrow(BlockTags.DIRT)

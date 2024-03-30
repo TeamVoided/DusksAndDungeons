@@ -16,7 +16,7 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
 data class FarmlandConfig(
     var replaceable: TagKey<Block>,
-    val farmSize: Int,
+    val farmSize: IntProvider,
     val farmVerticalRange: Int,
     val farmlandBlock: BlockStateProvider,
     val farmlandChance: Float,
@@ -25,14 +25,14 @@ data class FarmlandConfig(
     val waterBlock: BlockStateProvider,
     val cropFeature: Holder<PlacedFeature>,
     val cropFeatureChance: Float,
-    val scarecrow: List<EntityType<*>>?
+    val scarecrow: List<EntityType<*>>
 ) : FeatureConfig {
     companion object {
         val CODEC =
             RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<FarmlandConfig> ->
                 instance.group(
                     TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("replaceable").forGetter { it.replaceable },
-                    Codec.intRange(1, 256).fieldOf("farm_size").forGetter { it.farmSize },
+                    IntProvider.create(0, 64).fieldOf("farm_size").forGetter { it.farmSize },
                     Codec.intRange(1, 256).fieldOf("vertical_range").forGetter { it.farmVerticalRange },
                     BlockStateProvider.TYPE_CODEC.fieldOf("farmland_block").forGetter { it.farmlandBlock },
                     Codec.floatRange(0.0f, 1.0f).fieldOf("farmland_chance").forGetter { it.farmlandChance },
