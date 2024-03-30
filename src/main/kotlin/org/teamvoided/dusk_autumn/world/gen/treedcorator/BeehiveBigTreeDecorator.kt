@@ -13,14 +13,11 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
-import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
 class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() {
-    override fun getType(): TreeDecoratorType<*> {
-        return DuskWorldgen.BEEHIVE_TREE_DECORATOR_NOT_NULL
-    }
+    override fun getType(): TreeDecoratorType<*> = DuskWorldgen.BEEHIVE_BIG_TREE_DECORATOR
 
     override fun generate(placer: Placer) {
         val randomGenerator = placer.random
