@@ -16,6 +16,7 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
 data class FarmlandConfig(
     var replaceable: TagKey<Block>,
+    var canPlaceUnder: TagKey<Block>,
     val farmSize: IntProvider,
     val farmVerticalRange: Int,
     val farmlandBlock: BlockStateProvider,
@@ -33,6 +34,7 @@ data class FarmlandConfig(
             RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<FarmlandConfig> ->
                 instance.group(
                     TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("replaceable").forGetter { it.replaceable },
+                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("can_place_under").forGetter { it.canPlaceUnder },
                     IntProvider.create(0, 64).fieldOf("farm_size").forGetter { it.farmSize },
                     Codec.intRange(1, 256).fieldOf("farm_vertical_range").forGetter { it.farmVerticalRange },
                     BlockStateProvider.TYPE_CODEC.fieldOf("farmland_block").forGetter { it.farmlandBlock },

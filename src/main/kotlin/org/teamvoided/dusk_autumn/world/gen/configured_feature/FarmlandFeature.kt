@@ -75,18 +75,18 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
                 if (!isCorner && (!isEdgeNotCorner || !(random.nextFloat() > 0.5f))) {
                     mutable[pos, i, 0] = j
                     var k = 0
-                    while (world.testBlockState(mutable) { it.isIn(BlockTags.REPLACEABLE) } && k < config.farmVerticalRange) {
+                    while (world.testBlockState(mutable) { it.isIn(config.canPlaceUnder) } && k < config.farmVerticalRange) {
                         mutable.move(direction)
                         ++k
                     }
                     k = 0
-                    while (world.testBlockState(mutable) { !it.isIn(BlockTags.REPLACEABLE) } && k < config.farmVerticalRange) {
+                    while (world.testBlockState(mutable) { !it.isIn(config.canPlaceUnder) } && k < config.farmVerticalRange) {
                         mutable.move(direction2)
                         ++k
                     }
                     mutable2[mutable] = direction
                     val blockState = world.getBlockState(mutable2)
-                    if ((world.getBlockState(mutable).isIn(BlockTags.REPLACEABLE)) && blockState.isSideSolidFullSquare(
+                    if ((world.getBlockState(mutable).isIn(config.canPlaceUnder)) && blockState.isSideSolidFullSquare(
                             world, mutable2, direction2
                         )
                     ) {
@@ -115,11 +115,11 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         val var8: Iterator<*> = positions.iterator()
         while (var8.hasNext()) {
             val blockPos = var8.next() as BlockPos
-            if (config.cropFeatureChance > 0.0f && random.nextFloat() < config.cropFeatureChance) {
+            if (config.cropFeatureChance > 0.0f && random.nextFloat() < config.cropFeatureChance && blockPos != centerBlock) {
                 generateCropFeature(world, config, context.generator, random, blockPos)
             }
         }
-//        if (config.cropGuarantee) generateCropFeature(world, config, context.generator, random, centerBlock)
+        if (config.cropGuarantee) generateCropFeature(world, config, context.generator, random, centerBlock)
     }
 
     protected open fun generateCropFeature(

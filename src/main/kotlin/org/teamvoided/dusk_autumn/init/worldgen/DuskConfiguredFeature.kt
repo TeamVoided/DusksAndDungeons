@@ -80,6 +80,7 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, FARMLAND_TEST, DuskFeatures.FARMLAND, FarmlandConfig(
                 BlockTags.DIRT,
+                DuskBlockTags.FARMLAND_PLACES_UNDER,
                 UniformIntProvider.create(2, 32),
                 3,
                 BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
@@ -92,7 +93,7 @@ object DuskConfiguredFeature {
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
                 true,
-                0.05f,
+                0.0f,
                 listOf()
             )
         )
@@ -293,19 +294,19 @@ object DuskConfiguredFeature {
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
-                            .method_34975(Blocks.PUMPKIN.defaultState, 32)
-                            .method_34975(Blocks.CARVED_PUMPKIN.defaultState, 4)
+                            .method_34975(Blocks.PUMPKIN.defaultState, 64)
+                            .method_34975(Blocks.CARVED_PUMPKIN.defaultState, 8)
                             .method_34975(
                                 Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 4
+                                    .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 8
                             )
                             .method_34975(
                                 Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.EAST), 4
+                                    .with(HorizontalFacingBlock.FACING, Direction.EAST), 8
                             )
                             .method_34975(
                                 Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.WEST), 4
+                                    .with(HorizontalFacingBlock.FACING, Direction.WEST), 8
                             )
                             .method_34975(Blocks.JACK_O_LANTERN.defaultState, 1)
                             .method_34975(
