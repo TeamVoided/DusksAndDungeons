@@ -3,12 +3,10 @@ package org.teamvoided.dusk_autumn.world.gen.treedcorator
 import com.mojang.serialization.Codec
 import net.minecraft.block.BeehiveBlock
 import net.minecraft.block.Blocks
-import net.minecraft.block.entity.BeehiveBlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.EntityType
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.Registries
-import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
@@ -29,28 +27,41 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
                 (logPos[0].y + 1 + randomGenerator.nextInt(3)).toDouble(),
                 logPos[logPos.size - 1].y.toDouble()
             ).toInt()
-            val placementPos = logPos.filter { it.y == i }.flatMap { pos ->
+            val placementPos = logPos.filter { it.y >= i - 2 }.flatMap { pos ->
                 if (pos == null) return
                 SPAWN_DIRECTIONS.map(pos::offset)
             }
             if (placementPos.isNotEmpty()) {
-                val optional = placementPos.shuffled().stream().filter { pos: BlockPos ->
-                    placer.isAir(pos) && placer.isAir(pos.offset(WORLDGEN_FACING))
-                }.findFirst()
-                if (!optional.isEmpty) {
+                val finalPos =
+                    placementPos.shuffled()
+                        .firstOrNull {
+                            placer.isAir(it) && !placer.isAir(it.up()) && placer.isAir(it.offset(WORLDGEN_FACING))
+                        }
+                if (finalPos != null) {
                     placer.replace(
-                        optional.get(),
+                        finalPos,
                         Blocks.BEE_NEST.defaultState.with(BeehiveBlock.FACING, WORLDGEN_FACING)
                     )
-                    placer.world.getBlockEntity(optional.get(), BlockEntityType.BEEHIVE)
-                        .ifPresent { blockEntity: BeehiveBlockEntity ->
-                            val i = 2 + randomGenerator.nextInt(2)
-                            for (j in 0 until i) {
+                    placer.world.getBlockEntity(finalPos, BlockEntityType.BEEHIVE)
+                        .ifPresent {
+                            (0 until 2 + randomGenerator.nextInt(2)).forEach { _ ->
                                 val nbtCompound = NbtCompound()
                                 nbtCompound.putString("id", Registries.ENTITY_TYPE.getId(EntityType.BEE).toString())
-                                blockEntity.addBee(nbtCompound, randomGenerator.nextInt(599), false)
+                                it.addBee(nbtCompound, randomGenerator.nextInt(599), false)
                             }
                         }
+                    /* Debugging of hive spawns
+                    placementPos.filter {
+                        placer.isAir(it) && !placer.isAir(it.up()) && !placer.isAir(it.offset(WORLDGEN_FACING))
+                    }.forEach { placer.replace(it, Blocks.YELLOW_GLAZED_TERRACOTTA.defaultState) }
+                    placementPos.filter {
+                        placer.isAir(it) && !placer.isAir(it.up())
+                                && placer.world.testBlockState(it.up()) { b -> b.block != Blocks.YELLOW_GLAZED_TERRACOTTA || b.block != Blocks.BEEHIVE }
+                    }
+                        .forEach {
+                            placer.replace(it, Blocks.GREEN_STAINED_GLASS.defaultState)
+                        }
+                     */
                 }
             }
         }
