@@ -87,10 +87,11 @@ object DuskConfiguredFeature {
                 BlockStateProvider.of(Blocks.DARK_OAK_FENCE),
                 BlockStateProvider.of(Blocks.WATER),
                 PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(UndergroundConfiguredFeatures.MOSS_VEGETATION),
+                    configuredFeatures.getHolderOrThrow(UndergroundConfiguredFeatures.DRIPLEAF),
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
-                0.3f,
+                true,
+                0.05f,
                 listOf()
             )
         )
@@ -106,7 +107,7 @@ object DuskConfiguredFeature {
                 ConstantIntProvider.create(3),
                 ConstantIntProvider.create(0),
                 ConstantIntProvider.create(2),
-                75
+                100
             ),
 //            Optional.of(
 //                CascadeRootPlacer(

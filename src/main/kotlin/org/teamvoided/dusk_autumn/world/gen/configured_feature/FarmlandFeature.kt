@@ -28,7 +28,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         val widthX = randomGenerator.range(3, maxSize + 1)
         val widthZ = randomGenerator.range((widthX / 2), widthX + 1)
 
-        val set = this.placeGroundAndGetPositions(
+        val set = placeGroundAndGetPositions(
             structureWorldAccess,
             farmlandConfig,
             randomGenerator,
@@ -37,7 +37,16 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
             widthX,
             widthZ
         )
-        this.generateVegetation(context, structureWorldAccess, farmlandConfig, randomGenerator, set, widthX, widthZ)
+        generateVegetation(
+            context,
+            structureWorldAccess,
+            farmlandConfig,
+            randomGenerator,
+            set,
+            blockPos,
+            widthX,
+            widthZ
+        )
         return set.isNotEmpty()
     }
 
@@ -52,13 +61,12 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
     ): Set<BlockPos> {
         val mutable = pos.mutableCopy()
         val mutable2 = mutable.mutableCopy()
-        val direction = VerticalSurfaceType.FLOOR
-        val direction2 = VerticalSurfaceType.CEILING
+        val direction = VerticalSurfaceType.FLOOR.direction
+        val direction2 = direction.opposite
         val set: MutableSet<BlockPos> = HashSet()
 
         for (i in -radiusX..radiusX) {
             val isEdgeX = i == -radiusX || i == radiusX
-
             for (j in -radiusZ..radiusZ) {
                 val isEdgeZ = j == -radiusZ || j == radiusZ
                 val isEdge = isEdgeX || isEdgeZ
@@ -67,27 +75,24 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
                 if (!isCorner && (!isEdgeNotCorner || !(random.nextFloat() > 0.5f))) {
                     mutable[pos, i, 0] = j
                     var k = 0
-                    while (world.testBlockState(mutable) { !it.isIn(BlockTags.REPLACEABLE) } && k < config.farmVerticalRange
-                    ) {
-                        mutable.move(direction.direction)
+                    while (world.testBlockState(mutable) { !it.isIn(BlockTags.REPLACEABLE) } && k < config.farmVerticalRange) {
+                        mutable.move(direction)
                         ++k
                     }
                     k = 0
                     while (world.testBlockState(mutable) { !it.isIn(BlockTags.REPLACEABLE) } && k < config.farmVerticalRange) {
-                        mutable.move(direction2.direction)
+                        mutable.move(direction2)
                         ++k
                     }
                     mutable2[mutable] = Direction.DOWN
                     val blockState = world.getBlockState(mutable2)
                     if ((world.getBlockState(mutable).isIn(BlockTags.REPLACEABLE)) && blockState.isSideSolidFullSquare(
-                            world,
-                            mutable2,
-                            Direction.UP
+                            world, mutable2, Direction.UP
                         )
                     ) {
                         val blockPos = mutable2.toImmutable()
-                        val bl6 = this.placeGround(world, config, replaceable, random, mutable2)
-                        if (bl6) {
+                        val canPlaceGround = placeGround(world, config, replaceable, random, mutable2)
+                        if (canPlaceGround) {
                             set.add(blockPos)
                         }
                     }
@@ -103,14 +108,16 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         config: FarmlandConfig,
         random: RandomGenerator,
         positions: Set<BlockPos>,
+        centerBlock: BlockPos,
         radiusX: Int,
         radiusZ: Int
     ) {
+        if (config.cropGuarantee) generateCropFeature(world, config, context.generator, random, centerBlock)
         val var8: Iterator<*> = positions.iterator()
         while (var8.hasNext()) {
             val blockPos = var8.next() as BlockPos
             if (config.cropFeatureChance > 0.0f && random.nextFloat() < config.cropFeatureChance) {
-                this.generateCropFeature(world, config, context.generator, random, blockPos)
+                generateCropFeature(world, config, context.generator, random, blockPos)
             }
         }
     }
