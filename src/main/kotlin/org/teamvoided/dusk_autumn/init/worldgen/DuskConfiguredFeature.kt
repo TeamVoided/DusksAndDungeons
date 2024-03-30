@@ -241,6 +241,7 @@ object DuskConfiguredFeature {
             )
                 .forceDirt().ignoreVines().decorators(
                     ImmutableList.of(
+                        BeehiveBigTreeDecorator(0.02F),
                         AlterGroundRadiusTreeDecorator(
                             BlockStateProvider.of(Blocks.PODZOL), 2, 5,
                             blockTags.getTagOrThrow(BlockTags.DIRT)
