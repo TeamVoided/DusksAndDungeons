@@ -10,7 +10,6 @@ import net.minecraft.world.gen.trunk.TrunkPlacerType
 import net.minecraft.world.gen.foliage.FoliagePlacerType
 import net.minecraft.world.gen.root.RootPlacer
 import net.minecraft.world.gen.root.RootPlacerType
-import net.minecraft.world.gen.treedecorator.AttachedToLeavesTreeDecorator
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
@@ -21,7 +20,7 @@ import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootPlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
-import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveTreeDecoratorNotNull
+import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 
 
@@ -31,7 +30,7 @@ object DuskWorldgen {
     val ALTER_ON_GROUND = registerTreeDecorator("alter_on_ground", AlterOnGroundTreeDecorator.CODEC)
     val ATTACHED_TO_TRUNK = registerTreeDecorator("attached_to_trunk", AttachedToTrunkTreeDecorator.CODEC)
     val BEEHIVE_TREE_DECORATOR_NOT_NULL =
-        registerTreeDecorator("beehive_tree_decorator_not_null", BeehiveTreeDecoratorNotNull.CODEC)
+        registerTreeDecorator("beehive_tree_decorator_not_null", BeehiveBigTreeDecorator.CODEC)
 
     val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", ThreeWideTrunkPlacer.CODEC)
 
