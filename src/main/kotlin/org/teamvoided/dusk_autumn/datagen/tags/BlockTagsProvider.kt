@@ -42,6 +42,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.FARMLAND)
 
 //VANILLA
+        getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES)
+            .add(DuskBlocks.BLUE_PETALS)
         getOrCreateTagBuilder(BlockTags.PLANKS)
             .add(DuskBlocks.CASCADE_PLANKS)
         getOrCreateTagBuilder(BlockTags.WOODEN_DOORS)

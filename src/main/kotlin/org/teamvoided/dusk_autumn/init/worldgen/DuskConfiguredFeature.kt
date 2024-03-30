@@ -35,6 +35,7 @@ import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandCo
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
+import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
 import kotlin.reflect.jvm.internal.impl.util.ModuleVisibilityHelper.EMPTY
@@ -144,7 +145,7 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CASCADE_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
-                    BeehiveTreeDecorator(0.02F),
+                    BeehiveBigTreeDecorator(0.02F),
                     AlterGroundRadiusTreeDecorator(
                         BlockStateProvider.of(Blocks.PODZOL),
                         2, 5,
