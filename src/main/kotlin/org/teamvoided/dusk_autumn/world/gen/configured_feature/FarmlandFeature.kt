@@ -3,11 +3,13 @@ package org.teamvoided.dusk_autumn.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
 import net.minecraft.block.BlockState
+import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.VerticalSurfaceType
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.StructureWorldAccess
+import net.minecraft.world.WorldAccess
 import net.minecraft.world.gen.chunk.ChunkGenerator
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.util.FeatureContext
@@ -108,7 +110,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
             for (j in -biggerRadZ..biggerRadZ) {
                 val isEdgeZ = j == -biggerRadZ || j == biggerRadZ
                 if (((isEdgeZ && (i <= (-biggerRadX + fenceLengthX) || i >= (biggerRadX - fenceLengthX))) ||
-                    (isEdgeX && (j <= (-biggerRadZ + fenceLengthZ) || j >= (biggerRadZ - fenceLengthZ)))) &&
+                            (isEdgeX && (j <= (-biggerRadZ + fenceLengthZ) || j >= (biggerRadZ - fenceLengthZ)))) &&
                     (random.nextFloat() < config.fenceChance)
                 ) {
                     placeFence(
@@ -145,8 +147,8 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         generator: ChunkGenerator,
         random: RandomGenerator,
         pos: BlockPos
-    ): Boolean {
-        return config.cropFeature.value().place(
+    ) {
+        config.cropFeature.value().place(
             world,
             generator,
             random,
@@ -161,26 +163,44 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         random: RandomGenerator,
         pos: BlockPos.Mutable
     ): Boolean {
-        val blockState = config.farmlandBlock.getBlockState(random, pos)
-        val blockState2 = world.getBlockState(pos)
-        if (!blockState.isOf(blockState2.block)) {
-            if (!replaceable.test(blockState2)) return false
-            world.setBlockState(pos, blockState, 2)
+        val farmBlock = config.farmlandBlock.getBlockState(random, pos)
+        val worldBlock = world.getBlockState(pos)
+        if (!farmBlock.isOf(worldBlock.block)) {
+            if (!replaceable.test(worldBlock)) return false
+            world.setBlockState(pos, farmBlock, 2)
             pos.move(Direction.DOWN)
         }
         return true
     }
 
-//    this, in fact, does not update neighbors when placed with placed features
+    private fun placeWater(
+        world: WorldAccess,
+        config: FarmlandConfig,
+        random: RandomGenerator,
+        pos: BlockPos
+    ) {
+        val directions = Direction.entries.toTypedArray()
+        val directionsLeft = directions.size
+        for (looper in 0 until directionsLeft) {
+            val direction = directions[looper]
+            val bl = world.getBlockState(pos.offset(direction)).isIn(BlockTags.REPLACEABLE)
+            if (bl && direction != Direction.UP || !bl && direction == Direction.UP) {
+                return
+            }
+            world.setBlockState(pos, config.waterBlock.getBlockState(random, pos), 2)
+        }
+    }
+
+    //    this, in fact, does not update neighbors when placed with placed features
     protected fun placeFence(
         world: StructureWorldAccess,
         config: FarmlandConfig,
         random: RandomGenerator,
         pos: BlockPos
     ) {
-        val blockState = config.fenceBlock.getBlockState(random, pos)
-        val blockState2 = world.getBlockState(pos)
-        if (blockState2.isIn(config.farmlandCanPlaceUnder))
-            world.setBlockState(pos, blockState, 2)
+        val fenceBlock = config.fenceBlock.getBlockState(random, pos)
+        val worldBlock = world.getBlockState(pos)
+        if (worldBlock.isIn(config.farmlandCanPlaceUnder))
+            world.setBlockState(pos, fenceBlock, 2)
     }
 }
