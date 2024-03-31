@@ -6,6 +6,7 @@ import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import org.teamvoided.dusk_autumn.init.DuskParticles
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
+import org.teamvoided.dusk_autumn.item.DuskItemGroups
 
 @Suppress("unused")
 object DuskAutumns {
@@ -20,6 +21,7 @@ object DuskAutumns {
         DuskItems.init()
         DuskWorldgen.init()
         DuskParticles.init()
+        DuskItemGroups.init()
     }
 
     fun clientInit() {

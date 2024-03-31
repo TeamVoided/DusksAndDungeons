@@ -1,16 +1,22 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.item.*
 import net.minecraft.item.org.teamvoided.dusk_autumn.item.DuskFoodComponents
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.text.Text
+import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.item.FarmersHat
+
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object DuskItems {
@@ -62,10 +68,9 @@ object DuskItems {
         "golden_beetroot",
         AliasedBlockItem(DuskBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DuskFoodComponents.GOLDEN_BEETROOT))
     )
-
     fun init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL_BLOCKS)
-            .register(ItemGroupEvents.ModifyEntries {
+            .register(ModifyEntries {
                 it.addAfter(
                     Items.FLOWERING_AZALEA_LEAVES,
                     GOLDEN_BIRCH_LEAVES,
@@ -106,10 +111,12 @@ object DuskItems {
             val value = object : DyeableItem {}
             value.getColor(stack)
         }, FARMERS_HAT)
-
     }
 
     fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, DuskAutumns.id(id), item)
 
     fun BlockItem(block: Block) = BlockItem(block, Item.Settings())
+    private fun createRegistryKey(name: String): RegistryKey<ItemGroup> {
+        return RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier(name))
+    }
 }

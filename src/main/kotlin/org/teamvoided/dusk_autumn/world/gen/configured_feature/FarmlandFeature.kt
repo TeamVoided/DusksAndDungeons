@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumn.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.VerticalSurfaceType
@@ -14,6 +13,7 @@ import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.util.FeatureContext
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 import java.util.function.Predicate
+import kotlin.math.min
 
 open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
     Feature<FarmlandConfig>(codec) {
@@ -23,8 +23,8 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         val randomGenerator = context.random
         val blockPos = context.origin
         val replaceable =
-            Predicate { state: BlockState -> state.isIn(farmlandConfig.replaceable) }
-        val maxSize = farmlandConfig.farmSize[randomGenerator]
+            Predicate { state: BlockState -> state.isIn(farmlandConfig.farmlandReplaceable) }
+        val maxSize = farmlandConfig.farmWidth[randomGenerator]
         val widthX = randomGenerator.range(3, maxSize + 1)
         val widthZ = randomGenerator.range((widthX / 2), widthX + 1)
 
@@ -71,27 +71,23 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
                 val isCorner = isEdgeX && isEdgeZ
                 val isEdgeNotCorner = isEdge && !isCorner
 
-                if (isEdgeZ) world.placeDebug(mutable.up(), 1)
-                if (isEdgeX) world.placeDebug(mutable.up(), 2)
-                if (isCorner) world.placeDebug(mutable.up(), 3)
 
-
-                if ((!isEdgeNotCorner || !(random.nextFloat() > 0.5f))) {
-//                    (!isCorner) &&
+                if ((!isCorner) && (!isEdgeNotCorner || !(random.nextFloat() > 0.75f)) && !(random.nextFloat() > config.farmlandChance)) {
                     mutable[pos, i, 0] = j
                     var k = 0
-                    while (world.testBlockState(mutable) { it.isIn(config.canPlaceUnder) } && k < config.farmVerticalRange) {
+                    while (world.testBlockState(mutable) { it.isIn(config.farmlandCanPlaceUnder) } && k < config.farmVerticalRange) {
                         mutable.move(direction)
                         ++k
                     }
                     k = 0
-                    while (world.testBlockState(mutable) { !it.isIn(config.canPlaceUnder) } && k < config.farmVerticalRange) {
+                    while (world.testBlockState(mutable) { !it.isIn(config.farmlandCanPlaceUnder) } && k < config.farmVerticalRange) {
                         mutable.move(direction2)
                         ++k
                     }
                     mutable2[mutable] = direction
                     val blockState = world.getBlockState(mutable2)
-                    if ((world.getBlockState(mutable).isIn(config.canPlaceUnder)) && blockState.isSideSolidFullSquare(
+                    if ((world.getBlockState(mutable)
+                            .isIn(config.farmlandCanPlaceUnder)) && blockState.isSideSolidFullSquare(
                             world, mutable2, direction2
                         )
                     ) {
@@ -100,9 +96,27 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
                             set.add(blockPos)
                         }
                     }
-                    if (isCorner) {
-                        placeFence(world, config, replaceable, random, mutable2)
-                    }
+                }
+            }
+        }
+        val biggerRadX = radiusX + 1
+        val biggerRadZ = radiusZ + 1
+        val fenceLengthX = min(config.fenceLength[random], biggerRadX)
+        val fenceLengthZ = min(config.fenceLength[random], biggerRadZ)
+        for (i in -biggerRadX..biggerRadX) {
+            val isEdgeX = i == -biggerRadX || i == biggerRadX
+            for (j in -biggerRadZ..biggerRadZ) {
+                val isEdgeZ = j == -biggerRadZ || j == biggerRadZ
+                if (((isEdgeZ && (i <= (-biggerRadX + fenceLengthX) || i >= (biggerRadX - fenceLengthX))) ||
+                    (isEdgeX && (j <= (-biggerRadZ + fenceLengthZ) || j >= (biggerRadZ - fenceLengthZ)))) &&
+                    (random.nextFloat() < config.fenceChance)
+                ) {
+                    placeFence(
+                        world,
+                        config,
+                        random,
+                        pos.offset(Direction.Axis.X, i).offset(Direction.Axis.Z, j)
+                    )
                 }
             }
         }
@@ -117,11 +131,9 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         positions: Set<BlockPos>,
         centerBlock: BlockPos
     ) {
-        val var8: Iterator<*> = positions.iterator()
-        while (var8.hasNext()) {
-            val blockPos = var8.next() as BlockPos
-            if (config.cropFeatureChance > 0.0f && random.nextFloat() < config.cropFeatureChance && blockPos != centerBlock) {
-                generateCropFeature(world, config, context.generator, random, blockPos)
+        positions.forEach {
+            if (config.cropFeatureChance > 0.0f && random.nextFloat() < config.cropFeatureChance && it != centerBlock) {
+                generateCropFeature(world, config, context.generator, random, it.offset(Direction.UP))
             }
         }
         if (config.cropGuarantee) generateCropFeature(world, config, context.generator, random, centerBlock)
@@ -138,7 +150,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
             world,
             generator,
             random,
-            pos.offset(Direction.UP)
+            pos
         )
     }
 
@@ -152,47 +164,23 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         val blockState = config.farmlandBlock.getBlockState(random, pos)
         val blockState2 = world.getBlockState(pos)
         if (!blockState.isOf(blockState2.block)) {
-            if (!replaceable.test(blockState2)) {
-                return false
-            }
+            if (!replaceable.test(blockState2)) return false
             world.setBlockState(pos, blockState, 2)
             pos.move(Direction.DOWN)
         }
         return true
     }
 
+//    this, in fact, does not update neighbors when placed with placed features
     protected fun placeFence(
         world: StructureWorldAccess,
         config: FarmlandConfig,
-        replaceable: Predicate<BlockState>,
         random: RandomGenerator,
-        pos: BlockPos.Mutable
-    ): Boolean {
-        for (i in 0 until 5) {
-            val blockState = config.fenceBlock.getBlockState(random, pos)
-            val blockState2 = world.getBlockState(pos)
-            if (!blockState.isOf(blockState2.block)) {
-//                if (!replaceable.test(blockState2)) {
-//                    return false
-//                }
-                pos.move(Direction.UP)
-                world.setBlockState(pos, blockState, 2)
-            }
-        }
-        return true
-    }
-
-    fun  StructureWorldAccess.placeDebug(
-        pos: BlockPos,
-        block: Int
+        pos: BlockPos
     ) {
-        val x = when (block) {
-            1 -> Blocks.GREEN_STAINED_GLASS
-            2 -> Blocks.YELLOW_STAINED_GLASS
-            3 -> Blocks.RED_STAINED_GLASS
-            else -> Blocks.BLUE_STAINED_GLASS
-        }.defaultState
-
-        this.setBlockState(pos, x, 2)
+        val blockState = config.fenceBlock.getBlockState(random, pos)
+        val blockState2 = world.getBlockState(pos)
+        if (blockState2.isIn(config.farmlandCanPlaceUnder))
+            world.setBlockState(pos, blockState, 2)
     }
 }

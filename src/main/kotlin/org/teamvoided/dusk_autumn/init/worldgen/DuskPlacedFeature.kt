@@ -35,6 +35,8 @@ object DuskPlacedFeature {
     val FLOWER_AUTUMN = create("flower_autumn")
     val PATCH_ROSEBUSH = create("patch_rosebush")
     val BLUE_PETALS = create("blue_petals")
+    val AUTUMN_FARMLANDS = create("autumn_farmlands")
+    val CROPS_WILD_WHEAT = create("crops/wild_wheat")
 
 
     fun init() {}
@@ -158,6 +160,21 @@ object DuskPlacedFeature {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             CountPlacementModifier.create(ClampedIntProvider.create(UniformIntProvider.create(-3, 1), 0, 1)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            AUTUMN_FARMLANDS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_FARMLAND),
+            RarityFilterPlacementModifier.create(7),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
+            CountPlacementModifier.create(ClampedIntProvider.create(UniformIntProvider.create(-3, 1), 0, 1)),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            CROPS_WILD_WHEAT, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CROPS_WILD_WHEAT),
+            RarityFilterPlacementModifier.create(7),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
 

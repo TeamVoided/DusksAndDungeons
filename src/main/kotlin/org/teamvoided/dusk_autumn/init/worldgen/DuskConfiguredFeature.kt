@@ -2,7 +2,6 @@ package org.teamvoided.dusk_autumn.init.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.*
-import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluids
 import net.minecraft.registry.*
 import net.minecraft.registry.tag.BlockTags
@@ -10,7 +9,7 @@ import net.minecraft.unmapped.C_cxbmzbuz
 import net.minecraft.unmapped.C_cxbmzbuz.C_pkkqenbk
 import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
-import net.minecraft.util.math.VerticalSurfaceType
+import net.minecraft.util.math.int_provider.BiasedToBottomIntProvider
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.BootstrapContext
@@ -23,7 +22,6 @@ import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import net.minecraft.world.gen.foliage.*
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
-import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
@@ -38,7 +36,6 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDeco
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
-import kotlin.reflect.jvm.internal.impl.util.ModuleVisibilityHelper.EMPTY
 
 @Suppress("MemberVisibilityCanBePrivate")
 object DuskConfiguredFeature {
@@ -57,7 +54,15 @@ object DuskConfiguredFeature {
     val FLOWER_AUTUMN = create("flower_autumn")
     val PATCH_ROSEBUSH = create("patch_rosebush")
     val BLUE_PETALS = create("blue_petals")
-    val FARMLAND_TEST = create("farmland_test")
+    val AUTUMN_FARMLAND = create("autumn_farmland")
+    val CROPS_WILD_WHEAT = create("crops/wild_wheat")
+    val AUTUMN_FARMLAND_CROPS = create("crops/autumn_farmland_crops")
+    val CROPS_WHEAT = create("crops/wheat")
+    val CROPS_CARROTS = create("crops/carrots")
+    val CROPS_POTATOES = create("crops/potatoes")
+    val CROPS_PUMPKIN = create("crops/pumpkins")
+    val CROPS_BEETROOTS = create("crops/beetroots")
+    val CROPS_GOLDEN_BEETROOTS = create("crops/golden_beetroots")
 
 
     fun init() {}
@@ -77,27 +82,6 @@ object DuskConfiguredFeature {
                 )
             }
         }
-        ConfiguredFeatureUtil.registerConfiguredFeature(
-            c, FARMLAND_TEST, DuskFeatures.FARMLAND, FarmlandConfig(
-                BlockTags.DIRT,
-                DuskBlockTags.FARMLAND_PLACES_UNDER,
-                UniformIntProvider.create(2, 8),
-                3,
-                BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
-                0.9f,
-                UniformIntProvider.create(4, 16),
-                BlockStateProvider.of(Blocks.DARK_OAK_FENCE),
-                BlockStateProvider.of(Blocks.WATER),
-                PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(UndergroundConfiguredFeatures.DRIPLEAF),
-                    *arrayOfNulls<PlacementModifier>(0)
-                ),
-                true,
-                0.0f,
-                listOf()
-            )
-        )
-
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
         )
@@ -196,7 +180,7 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, GOLDEN_BIRCH_TALL_BEES, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
-                    BeehiveTreeDecorator(0.02F),
+                    BeehiveBigTreeDecorator(0.02F),
                     AlterGroundRadiusTreeDecorator(
                         BlockStateProvider.of(Blocks.PODZOL), 2, 20,
                         blockTags.getTagOrThrow(BlockTags.DIRT)
@@ -268,7 +252,7 @@ object DuskConfiguredFeature {
                 BlockStateProvider.of(Blocks.ACACIA_LOG),
                 StraightTrunkPlacer(1, 0, 0),
                 BlockStateProvider.of(Blocks.ACACIA_LEAVES),
-                BushFoliagePlacer(UniformIntProvider.create(1, 2), UniformIntProvider.create(1, 2), 2),
+                AcaciaFoliagePlacer(UniformIntProvider.create(1, 2), UniformIntProvider.create(1, 2)),
                 TwoLayersFeatureSize(0, 0, 0)
             ).build()
         )
@@ -384,7 +368,147 @@ object DuskConfiguredFeature {
                 )
             )
         )
-
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, AUTUMN_FARMLAND, DuskFeatures.FARMLAND, FarmlandConfig(
+                BlockTags.DIRT,
+                DuskBlockTags.FARMLAND_PLACES_UNDER,
+                BiasedToBottomIntProvider.create(2, 16),
+                3,
+                BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
+                0.9f,
+                BiasedToBottomIntProvider.create(1, 24),
+                BlockStateProvider.of(Blocks.DARK_OAK_FENCE),
+                0.8f,
+                BlockStateProvider.of(Blocks.WATER),
+                PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(AUTUMN_FARMLAND_CROPS),
+                    *arrayOfNulls<PlacementModifier>(0)
+                ),
+                true,
+                0.01f,
+                listOf()
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, AUTUMN_FARMLAND_CROPS, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
+                listOf(
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(CROPS_WHEAT),
+                            *arrayOfNulls<PlacementModifier>(0)
+                        ), 0.175f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(CROPS_CARROTS),
+                            *arrayOfNulls<PlacementModifier>(0)
+                        ), 0.175f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(CROPS_POTATOES),
+                            *arrayOfNulls<PlacementModifier>(0)
+                        ), 0.175f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(CROPS_BEETROOTS),
+                            *arrayOfNulls<PlacementModifier>(0)
+                        ), 0.175f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(CROPS_BEETROOTS),
+                            *arrayOfNulls<PlacementModifier>(0)
+                        ), 0.175f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(CROPS_GOLDEN_BEETROOTS),
+                            *arrayOfNulls<PlacementModifier>(0)
+                        ), 0.05f
+                    )
+                ), PlacedFeatureUtil.placedInline(
+                    configuredFeatures.getHolderOrThrow(CROPS_WILD_WHEAT),
+                    *arrayOfNulls<PlacementModifier>(0)
+                )
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, CROPS_WILD_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                    BlockStateProvider.of(
+                        DuskBlocks.WILD_WHEAT.defaultState
+                    )
+                )
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, CROPS_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                    BlockStateProvider.of(
+                        Blocks.WHEAT.defaultState.with(
+                            CropBlock.AGE, 7
+                        )
+                    )
+                )
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, CROPS_CARROTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                    BlockStateProvider.of(
+                        Blocks.CARROTS.defaultState.with(
+                            CropBlock.AGE, 7
+                        )
+                    )
+                )
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, CROPS_POTATOES, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                    BlockStateProvider.of(
+                        Blocks.POTATOES.defaultState.with(
+                            CropBlock.AGE, 7
+                        )
+                    )
+                )
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, CROPS_PUMPKIN, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                    BlockStateProvider.of(
+                        Blocks.PUMPKIN_STEM.defaultState.with(
+                            CropBlock.AGE, 7
+                        )
+                    )
+                )
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, CROPS_BEETROOTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                    BlockStateProvider.of(
+                        Blocks.BEETROOTS.defaultState.with(
+                            BeetrootsBlock.AGE, 3
+                        )
+                    )
+                )
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, CROPS_GOLDEN_BEETROOTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                    BlockStateProvider.of(
+                        DuskBlocks.GOLDEN_BEETROOTS.defaultState.with(
+                            BeetrootsBlock.AGE, 3
+                        )
+                    )
+                )
+            )
+        )
     }
 
     fun builder(

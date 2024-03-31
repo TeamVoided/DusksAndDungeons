@@ -55,20 +55,24 @@ object DuskBiomes {
     }
 
     private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder, forest: Boolean) {
+        generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DuskPlacedFeature.AUTUMN_FARMLANDS)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.ORE_LAPIS_EXTRA)
-        generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeature.COBBLESTONE_ROCK)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_PODZOL)
+        generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeature.COBBLESTONE_ROCK)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.PATCH_PUMPKIN_EXTRA)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.FLOWER_AUTUMN)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.BLUE_PETALS)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.CROPS_WILD_WHEAT)
         if (forest) {
             generationSettings.feature(
-                GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.AUTUMN_WOODS_VEGETATION
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                DuskPlacedFeature.AUTUMN_WOODS_VEGETATION
             )
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.PATCH_ROSEBUSH)
         } else {
             generationSettings.feature(
-                GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
             )
         }
     }
@@ -129,7 +133,10 @@ object DuskBiomes {
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         DefaultBiomeFeatures.addPlainsTallGrass(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_PLAIN)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            VegetationPlacedFeatures.PATCH_GRASS_PLAIN
+        )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings, false)
