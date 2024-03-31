@@ -2,11 +2,7 @@ package org.teamvoided.dusk_autumn
 
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
-import org.teamvoided.dusk_autumn.init.DuskBlocks
-import org.teamvoided.dusk_autumn.init.DuskItems
-import org.teamvoided.dusk_autumn.init.DuskParticles
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
-import org.teamvoided.dusk_autumn.item.DuskItemGroups
+import org.teamvoided.dusk_autumn.init.*
 
 @Suppress("unused")
 object DuskAutumns {

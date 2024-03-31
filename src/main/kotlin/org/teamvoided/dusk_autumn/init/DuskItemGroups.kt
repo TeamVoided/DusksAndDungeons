@@ -1,24 +1,22 @@
-package org.teamvoided.dusk_autumn.item
+package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
-import org.teamvoided.dusk_autumn.init.DuskItems
+import org.teamvoided.dusk_autumn.DuskAutumns.id
+import kotlin.jvm.optionals.getOrNull
 
 
 object DuskItemGroups {
-    fun init() {
-        val duskAutumn: ItemGroup = FabricItemGroup.builder()
+    val DUSK_AUTUMN_TAB: ItemGroup = register("dusk_items",
+        FabricItemGroup.builder()
             .icon { ItemStack(DuskItems.CASCADE_SAPLING) }
             .name(Text.translatable("itemGroup.dusk_autumn.dusk_items"))
-            .entries { context, entries ->
+            .entries { _, entries ->
                 entries.addStacks(
                     mutableSetOf(
                         ItemStack(DuskItems.CASCADE_SAPLING),
@@ -48,19 +46,19 @@ object DuskItemGroups {
                         ItemStack(DuskItems.WILD_WHEAT),
                         ItemStack(DuskItems.GOLDEN_BEETROOT),
                         ItemStack(DuskItems.BLUE_DOOR)
-                        )
+                    )
                 )
             }
             .build()
+    )
 
-        Registry.register<ItemGroup, ItemGroup>(
-            Registries.ITEM_GROUP,
-            Identifier("dusk_autumn", "test_group"),
-            duskAutumn
-        )
+    fun init() {}
+    @Suppress("SameParameterValue")
+    private fun register(name: String, itemGroup: ItemGroup): ItemGroup {
+        return Registry.register(Registries.ITEM_GROUP, id(name), itemGroup)
     }
 
-    private fun createRegistryKey(name: String): RegistryKey<ItemGroup> {
-        return RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier(name))
+    fun getKey(itemGroup: ItemGroup): RegistryKey<ItemGroup>? {
+        return Registries.ITEM_GROUP.getKey(itemGroup)?.getOrNull()
     }
 }

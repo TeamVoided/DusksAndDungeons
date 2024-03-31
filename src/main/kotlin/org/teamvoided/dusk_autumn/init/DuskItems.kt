@@ -1,7 +1,6 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.block.Block
@@ -12,10 +11,9 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns
-import org.teamvoided.dusk_autumn.item.FarmersHat
+import org.teamvoided.dusk_autumn.item.FarmersHatItem
 
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -60,7 +58,7 @@ object DuskItems {
     val CASCADE_LEAF_PILE = register("cascade_leaf_pile", BlockItem(DuskBlocks.CASCADE_LEAF_PILE))
     val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE))
 
-    val FARMERS_HAT = register("farmers_hat", FarmersHat(Item.Settings().maxCount(1)))
+    val FARMERS_HAT = register("farmers_hat", FarmersHatItem(Item.Settings().maxCount(1)))
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DuskBlocks.WILD_WHEAT, Item.Settings()))
 
 
