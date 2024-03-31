@@ -10,6 +10,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.util.math.Direction
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
+import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
 import kotlin.math.max
 import kotlin.math.min
@@ -32,11 +33,10 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
                 SPAWN_DIRECTIONS.map(pos::offset)
             }
             if (placementPos.isNotEmpty()) {
-                val finalPos =
-                    placementPos.shuffled()
-                        .firstOrNull {
-                            placer.isAir(it) && !placer.isAir(it.up()) && placer.isAir(it.offset(WORLDGEN_FACING))
-                        }
+                val finalPos = placementPos.shuffled()
+                    .firstOrNull {
+                        placer.isAir(it) && !placer.isAir(it.up()) && placer.isAir(it.offset(WORLDGEN_FACING))
+                    }
                 if (finalPos != null) {
                     placer.replace(
                         finalPos,
@@ -44,12 +44,13 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
                     )
                     placer.world.getBlockEntity(finalPos, BlockEntityType.BEEHIVE)
                         .ifPresent {
-                            (0 until 2 + randomGenerator.nextInt(2)).forEach { _ ->
-                                val nbtCompound = NbtCompound()
-                                nbtCompound.putString("id", Registries.ENTITY_TYPE.getId(EntityType.BEE).toString())
-                                it.addBee(nbtCompound, randomGenerator.nextInt(599), false)
+                            for (ignored in 0 until 2 + randomGenerator.nextInt(2)) {
+                                val nbt = NbtCompound()
+                                nbt.putString("id", Registries.ENTITY_TYPE.getId(EntityType.BEE).toString())
+                                it.addBee(nbt, randomGenerator.nextInt(599), false)
                             }
                         }
+                    return
                     /* Debugging of hive spawns
                     placementPos.filter {
                         placer.isAir(it) && !placer.isAir(it.up()) && !placer.isAir(it.offset(WORLDGEN_FACING))
@@ -64,6 +65,7 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
                      */
                 }
             }
+            LOGGER.info("No beehive was placed by BeehiveBigTreeDecorator!")
         }
     }
 
