@@ -372,20 +372,21 @@ object DuskConfiguredFeature {
             c, AUTUMN_FARMLAND, DuskFeatures.FARMLAND, FarmlandConfig(
                 BlockTags.DIRT,
                 DuskBlockTags.FARMLAND_PLACES_UNDER,
-                BiasedToBottomIntProvider.create(2, 16),
-                3,
                 BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
                 0.9f,
-                BiasedToBottomIntProvider.create(1, 24),
+                BiasedToBottomIntProvider.create(2, 16),
+                4,
                 BlockStateProvider.of(Blocks.DARK_OAK_FENCE),
-                0.8f,
+                0.9f,
+                BiasedToBottomIntProvider.create(1, 24),
                 BlockStateProvider.of(Blocks.WATER),
+                0.2f,
                 PlacedFeatureUtil.placedInline(
                     configuredFeatures.getHolderOrThrow(AUTUMN_FARMLAND_CROPS),
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
+                0.025f,
                 true,
-                0.01f,
                 listOf()
             )
         )
@@ -436,22 +437,24 @@ object DuskConfiguredFeature {
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CROPS_WILD_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                Feature.SIMPLE_BLOCK,
+                SimpleBlockFeatureConfig(
                     BlockStateProvider.of(
                         DuskBlocks.WILD_WHEAT.defaultState
                     )
-                )
+                ), ImmutableList.of(Blocks.AIR), 32
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CROPS_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
+                Feature.SIMPLE_BLOCK,
+                SimpleBlockFeatureConfig(
                     BlockStateProvider.of(
                         Blocks.WHEAT.defaultState.with(
                             CropBlock.AGE, 7
                         )
                     )
-                )
+                ),
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
