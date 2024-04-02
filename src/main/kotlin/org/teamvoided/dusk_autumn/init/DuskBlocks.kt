@@ -195,13 +195,18 @@ object DuskBlocks {
                 .sounds(BlockSoundGroup.CROP).offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-
-
     val GOLDEN_BEETROOTS = register(
         "golden_beetroots",
         GoldenBeetrootsBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.PLANT).noCollision().ticksRandomly().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
+        )
+    )
+    val MOONBERRY_VINE = register(
+        "moonberry_vine",
+        VineBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.PLANT).replaceable().noCollision().ticksRandomly()
+                .strength(0.2f).sounds(BlockSoundGroup.VINE).lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
         )
     )
 

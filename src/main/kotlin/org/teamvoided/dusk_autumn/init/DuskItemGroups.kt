@@ -41,6 +41,7 @@ object DuskItemGroups {
                         ItemStack(DuskItems.CHERRY_LEAF_PILE),
                         ItemStack(DuskItems.AZALEA_LEAF_PILE),
                         ItemStack(DuskItems.FLOWERING_AZALEA_LEAF_PILE),
+                        ItemStack(DuskItems.CASCADE_LEAF_PILE),
                         ItemStack(DuskItems.GOLDEN_BIRCH_LEAF_PILE),
                         ItemStack(DuskItems.FARMERS_HAT),
                         ItemStack(DuskItems.WILD_WHEAT),

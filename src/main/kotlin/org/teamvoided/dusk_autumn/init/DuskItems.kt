@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.item.*
 import net.minecraft.item.org.teamvoided.dusk_autumn.item.DuskFoodComponents
@@ -60,12 +61,14 @@ object DuskItems {
 
     val FARMERS_HAT = register("farmers_hat", FarmersHatItem(Item.Settings().maxCount(1)))
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DuskBlocks.WILD_WHEAT, Item.Settings()))
-
-
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
-        AliasedBlockItem(DuskBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DuskFoodComponents.GOLDEN_BEETROOT))
+        AliasedBlockItem(
+            DuskBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DuskFoodComponents.GOLDEN_BEETROOT)
+        )
     )
+    val MOONBERRY_VINE = register("moonberry_vine", BlockItem(DuskBlocks.MOONBERRY_VINE))
+
     fun init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL_BLOCKS)
             .register(ModifyEntries {

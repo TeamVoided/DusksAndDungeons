@@ -1,17 +1,23 @@
 package org.teamvoided.dusk_autumn.datagen.providers
 
+import com.mojang.datafixers.util.Pair
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.VineBlock
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
+import net.minecraft.data.client.model.When.PropertyCondition
+import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
+import net.minecraft.util.Util
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import java.util.*
+import java.util.function.Function
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
@@ -39,7 +45,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
-
         gen.registerFlowerPotPlant(DuskBlocks.CASCADE_SAPLING,DuskBlocks.POTTED_CASCADE_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerSingleton(DuskBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
         gen.registerDoor(DuskBlocks.CASCADE_DOOR)
@@ -50,6 +55,18 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
+        gen.registerWallPlant(DuskBlocks.MOONBERRY_VINE)
+//        gen.blockStateCollector.accept(
+//            MultipartBlockStateSupplier.create(DuskBlocks.MOONBERRY_VINE)
+//                .with(
+//                    When.create().set(VineBlock.EAST, true),
+//                    BlockStateVariant.create().put(VariantSettings.MODEL, gen.parentedModel(DuskBlocks.MOONBERRY_VINE, Blocks.VINE, leafPile()))
+//                )
+//                .with(
+//                    When.create().set(VineBlock.EAST, true),
+//                    BlockStateVariant.create().put(VariantSettings.MODEL, gen.parentedModel(DuskBlocks.MOONBERRY_VINE, Blocks.VINE, ))
+//                )
+//        )
 
         leafPiles.forEach { (it, texture) ->
             val layer1 = gen.parentedModel(it, texture, leafPile())
