@@ -204,9 +204,10 @@ object DuskBlocks {
     )
     val MOONBERRY_VINE = register(
         "moonberry_vine",
-        VineBlock(
-            AbstractBlock.Settings.create().mapColor(MapColor.PLANT).replaceable().noCollision().ticksRandomly()
-                .strength(0.2f).sounds(BlockSoundGroup.VINE).lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
+        GlowLichenBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.PLANT).noCollision().strength(0.2f)
+                .sounds(BlockSoundGroup.GLOW_LICHEN).luminance(GlowLichenBlock.getLuminanceSupplier(3)).lavaIgnitable()
+                .pistonBehavior(PistonBehavior.DESTROY)
         )
     )
 
@@ -220,7 +221,7 @@ object DuskBlocks {
             CASCADE_LEAF_PILE, OAK_LEAF_PILE, SPRUCE_LEAF_PILE, BIRCH_LEAF_PILE, JUNGLE_LEAF_PILE, ACACIA_LEAF_PILE,
             DARK_OAK_LEAF_PILE, MANGROVE_LEAF_PILE, CHERRY_LEAF_PILE, AZALEA_LEAF_PILE,
             FLOWERING_AZALEA_LEAF_PILE, GOLDEN_BIRCH_LEAF_PILE,
-            WILD_WHEAT, GOLDEN_BEETROOTS
+            WILD_WHEAT, GOLDEN_BEETROOTS, MOONBERRY_VINE
         ).forEach {
             BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout())
         }
