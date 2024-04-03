@@ -59,7 +59,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
-        gen.registerItemModel(DuskItems.MOONBERRY)
+        gen.registerItemModel(DuskItems.MOONBERRIES)
 
         leafPiles.forEach { (it, texture) ->
             val layer1 = gen.parentedModel(it, texture, leafPile())

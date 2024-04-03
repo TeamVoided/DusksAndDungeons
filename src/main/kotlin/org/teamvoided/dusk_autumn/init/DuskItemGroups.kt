@@ -49,7 +49,7 @@ object DuskItemGroups {
                         ItemStack(DuskItems.BLUE_DOOR),
                         ItemStack(DuskItems.MOONBERRY_VINELET),
                         ItemStack(DuskItems.MOONBERRY_VINE),
-                        ItemStack(DuskItems.MOONBERRY)
+                        ItemStack(DuskItems.MOONBERRIES)
                     )
                 )
             }

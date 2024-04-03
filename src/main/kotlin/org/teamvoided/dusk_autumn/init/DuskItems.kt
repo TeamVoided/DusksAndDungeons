@@ -68,7 +68,7 @@ object DuskItems {
     )
     val MOONBERRY_VINE = register("moonberry_vine", BlockItem(DuskBlocks.MOONBERRY_VINE))
     val MOONBERRY_VINELET = register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
-    val MOONBERRY = register("moonberry", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRY)))
+    val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRIES)))
 
 
     fun init() {
