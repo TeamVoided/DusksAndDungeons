@@ -1,0 +1,39 @@
+{
+	"ambientocclusion": false,
+	"textures": {
+		"1": "dusk_autumn:block/moonberry_vine_berries",
+		"2": "dusk_autumn:block/moonberry_vine_berries_extra",
+		"particle": "dusk_autumn:block/moonberry_vine_berries"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0.8],
+			"to": [16, 16, 0.8],
+			"shade": false,
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 6, 1],
+			"to": [16, 22, 1],
+			"shade": false,
+			"rotation": {"angle": 45, "axis": "x", "origin": [8, 8, 2]},
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#2"},
+				"south": {"uv": [16, 16, 0, 0], "rotation": 180, "texture": "#2"}
+			}
+		},
+		{
+			"from": [0, -6, 1],
+			"to": [16, 10, 1],
+			"shade": false,
+			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 2]},
+			"faces": {
+				"north": {"uv": [0, 16, 16, 0], "texture": "#2"},
+				"south": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#2"}
+			}
+		}
+	]
+}

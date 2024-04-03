@@ -22,9 +22,7 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.block.FallingLeafPileBlock
-import org.teamvoided.dusk_autumn.block.FallingLeavesBlock
-import org.teamvoided.dusk_autumn.block.LeafPileBlock
+import org.teamvoided.dusk_autumn.block.*
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
 object DuskBlocks {
@@ -204,10 +202,16 @@ object DuskBlocks {
     )
     val MOONBERRY_VINE = register(
         "moonberry_vine",
-        GlowLichenBlock(
-            AbstractBlock.Settings.create().mapColor(MapColor.PLANT).noCollision().strength(0.2f)
-                .sounds(BlockSoundGroup.GLOW_LICHEN).luminance(GlowLichenBlock.getLuminanceSupplier(3)).lavaIgnitable()
-                .pistonBehavior(PistonBehavior.DESTROY)
+        MoonberryVineBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f)
+                .sounds(BlockSoundGroup.CAVE_VINES).luminance(MoonberryVineBlock.getLuminanceSupplier(8, 13))
+                .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
+        )
+    )
+    val MOONBERRY_VINELET = register(
+        "moonberry_vinelet", MoonberryVineletBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f).ticksRandomly()
+                .sounds(BlockSoundGroup.CAVE_VINES).lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
         )
     )
 
@@ -221,7 +225,7 @@ object DuskBlocks {
             CASCADE_LEAF_PILE, OAK_LEAF_PILE, SPRUCE_LEAF_PILE, BIRCH_LEAF_PILE, JUNGLE_LEAF_PILE, ACACIA_LEAF_PILE,
             DARK_OAK_LEAF_PILE, MANGROVE_LEAF_PILE, CHERRY_LEAF_PILE, AZALEA_LEAF_PILE,
             FLOWERING_AZALEA_LEAF_PILE, GOLDEN_BIRCH_LEAF_PILE,
-            WILD_WHEAT, GOLDEN_BEETROOTS, MOONBERRY_VINE
+            WILD_WHEAT, GOLDEN_BEETROOTS, MOONBERRY_VINE, MOONBERRY_VINELET
         ).forEach {
             BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout())
         }
@@ -242,7 +246,7 @@ object DuskBlocks {
                 if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
                 else GrassColors.getColor(0.8, 0.4)
             },
-            BLUE_PETALS, WILD_WHEAT
+            BLUE_PETALS
         )
         ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> FoliageColors.getSpruceColor() }, SPRUCE_LEAF_PILE)
         ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> FoliageColors.getBirchColor() }, BIRCH_LEAF_PILE)

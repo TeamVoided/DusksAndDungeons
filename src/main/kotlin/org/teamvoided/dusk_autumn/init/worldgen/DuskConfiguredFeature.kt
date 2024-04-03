@@ -373,14 +373,14 @@ object DuskConfiguredFeature {
                 BlockTags.DIRT,
                 DuskBlockTags.FARMLAND_PLACES_UNDER,
                 BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
-                0.9f,
+                0.85f,
                 BiasedToBottomIntProvider.create(2, 16),
                 4,
                 BlockStateProvider.of(Blocks.DARK_OAK_FENCE),
                 0.9f,
                 BiasedToBottomIntProvider.create(1, 24),
                 BlockStateProvider.of(Blocks.WATER),
-                0.3f,
+                0.4f,
                 PlacedFeatureUtil.placedInline(
                     configuredFeatures.getHolderOrThrow(AUTUMN_FARMLAND_CROPS),
                     *arrayOfNulls<PlacementModifier>(0)
@@ -413,7 +413,7 @@ object DuskConfiguredFeature {
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(CROPS_BEETROOTS),
+                            configuredFeatures.getHolderOrThrow(CROPS_PUMPKIN),
                             *arrayOfNulls<PlacementModifier>(0)
                         ), 0.175f
                     ),
@@ -442,61 +442,46 @@ object DuskConfiguredFeature {
                     BlockStateProvider.of(
                         DuskBlocks.WILD_WHEAT.defaultState
                     )
-                ), ImmutableList.of(Blocks.AIR), 32
+                ), ImmutableList.of(Blocks.PODZOL, Blocks.GRASS_BLOCK, Blocks.FARMLAND), 32
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CROPS_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockFeatureConfig(
-                    BlockStateProvider.of(
-                        Blocks.WHEAT.defaultState.with(
-                            CropBlock.AGE, 7
-                        )
-                    )
+                    basicCropAges(Blocks.WHEAT)
                 ),
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CROPS_CARROTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                    BlockStateProvider.of(
-                        Blocks.CARROTS.defaultState.with(
-                            CropBlock.AGE, 7
-                        )
-                    )
+                    basicCropAges(Blocks.CARROTS)
                 )
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CROPS_POTATOES, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                    BlockStateProvider.of(
-                        Blocks.POTATOES.defaultState.with(
-                            CropBlock.AGE, 7
-                        )
-                    )
+                    basicCropAges(Blocks.POTATOES)
                 )
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CROPS_PUMPKIN, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                    BlockStateProvider.of(
-                        Blocks.PUMPKIN_STEM.defaultState.with(
-                            CropBlock.AGE, 7
-                        )
-                    )
+                    basicCropAges(Blocks.PUMPKIN_STEM)
                 )
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CROPS_BEETROOTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                    BlockStateProvider.of(
-                        Blocks.BEETROOTS.defaultState.with(
-                            BeetrootsBlock.AGE, 3
-                        )
+                    WeightedBlockStateProvider(
+                        DataPool.builder<BlockState>()
+                            .method_34975(Blocks.BEETROOTS.defaultState, 3)
+                            .method_34975(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 2)
+                            .method_34975(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 3), 1)
                     )
                 )
             )
@@ -504,10 +489,11 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CROPS_GOLDEN_BEETROOTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                    BlockStateProvider.of(
-                        DuskBlocks.GOLDEN_BEETROOTS.defaultState.with(
-                            BeetrootsBlock.AGE, 3
-                        )
+                    WeightedBlockStateProvider(
+                        DataPool.builder<BlockState>()
+                            .method_34975(DuskBlocks.GOLDEN_BEETROOTS.defaultState, 1)
+                            .method_34975(DuskBlocks.GOLDEN_BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 1)
+                            .method_34975(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 3), 1)
                     )
                 )
             )
@@ -524,6 +510,26 @@ object DuskConfiguredFeature {
             BlockStateProvider.of(foliage),
             BlobFoliagePlacer(ConstantIntProvider.create(foliageRadius), ConstantIntProvider.create(0), 3),
             TwoLayersFeatureSize(1, 0, 1)
+        )
+    }
+
+    //    val petalFlowerBuilder = DataPool.builder<BlockState>()
+//    (1..4).forEach { count ->
+//        Direction.Type.HORIZONTAL.forEach { direction ->
+//            petalFlowerBuilder.method_34975(
+//                DuskBlocks.BLUE_PETALS.defaultState
+//                    .with(PinkPetalsBlock.AMOUNT, count).with(PinkPetalsBlock.FACING, direction),
+//                1
+//            )
+//        }
+//    }
+    fun basicCropAges(crop: Block): WeightedBlockStateProvider {
+        val crops = DataPool.builder<BlockState>()
+        (1..7).forEach { age ->
+            crops.method_34975(crop.defaultState.with(CropBlock.AGE, age), 7 - age + 1)
+        }
+        return WeightedBlockStateProvider(
+                    crops
         )
     }
 

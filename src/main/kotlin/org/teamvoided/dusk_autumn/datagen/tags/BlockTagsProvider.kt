@@ -40,6 +40,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.CARVED_PUMPKIN)
             .add(Blocks.JACK_O_LANTERN)
             .add(Blocks.FARMLAND)
+        getOrCreateTagBuilder(DuskBlockTags.MOONBERRY_PLACEABLE_OVERRIDE)
+            .add(Blocks.FARMLAND)
         getOrCreateTagBuilder(DuskBlockTags.FARMLAND_PLACES_UNDER)
             .forceAddTag(BlockTags.REPLACEABLE)
             .forceAddTag(BlockTags.MAINTAINS_FARMLAND)

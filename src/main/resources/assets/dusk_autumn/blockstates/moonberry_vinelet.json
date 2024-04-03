@@ -1,0 +1,28 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vinelet_0"
+      },
+      "when": {
+        "age": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vinelet_1"
+      },
+      "when": {
+        "age": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vinelet_2"
+      },
+      "when": {
+        "age": "2"
+      }
+    }
+  ]
+}

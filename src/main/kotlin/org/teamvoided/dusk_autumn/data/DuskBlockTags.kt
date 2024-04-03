@@ -10,6 +10,7 @@ object DuskBlockTags {
     val LEAF_PILES = create("leaf_piles")
     val LEAF_PILES_PLACE_ON = create("leaf_piles_place_on")
     val FARMLAND_PLACES_UNDER = create("farmland_places_under")
+    val MOONBERRY_PLACEABLE_OVERRIDE = create("moonberry_placeable_override")
 
     fun create(id: String): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id(id))
 }

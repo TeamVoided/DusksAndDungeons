@@ -4,10 +4,9 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.item.*
-import net.minecraft.item.org.teamvoided.dusk_autumn.item.DuskFoodComponents
+import org.teamvoided.dusk_autumn.item.DuskFoodComponents
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -68,6 +67,9 @@ object DuskItems {
         )
     )
     val MOONBERRY_VINE = register("moonberry_vine", BlockItem(DuskBlocks.MOONBERRY_VINE))
+    val MOONBERRY_VINELET = register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
+    val MOONBERRY = register("moonberry", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRY)))
+
 
     fun init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL_BLOCKS)

@@ -5,8 +5,9 @@
     "vine": "dusk_autumn:block/moonberry_vine_berries"
   },
   "elements": [
-    {   "from": [ 0, 0, 0.1 ],
-      "to": [ 16, 16, 0.1 ],
+    {   "from": [ 0, 0, 0.8 ],
+      "to": [ 16, 16, 0.8 ],
+      "shade": false,
       "faces": {
         "north": { "uv": [ 16, 0, 0, 16 ], "texture": "#vine" },
         "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#vine" }

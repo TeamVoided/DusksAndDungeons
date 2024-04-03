@@ -1,13 +1,15 @@
 {
+  "ambientocclusion": false,
   "textures": {
     "1": "dusk_autumn:block/moonberry_vine_berries",
     "2": "dusk_autumn:block/moonberry_vine_berries_extra",
-    "particle": "dusk_autumn:block/moonberry_vine"
+    "particle": "dusk_autumn:block/moonberry_vine_berries"
   },
   "elements": [
     {
       "from": [0, 0.8, 0],
       "to": [16, 0.8, 16],
+      "shade": false,
       "faces": {
         "north": {"uv": [0, 0, 16, 0], "texture": "#1"},
         "east": {"uv": [0, 0, 16, 0], "texture": "#1"},

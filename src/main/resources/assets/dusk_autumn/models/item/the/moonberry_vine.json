@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dusk_autumn:block/moonberry_vine_berries"
+  }
+}
