@@ -58,6 +58,7 @@ object DuskBiomes {
         generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DuskPlacedFeature.AUTUMN_FARMLANDS)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.ORE_LAPIS_EXTRA)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_PODZOL)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_MUD)
         generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeature.COBBLESTONE_ROCK)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.PATCH_PUMPKIN_EXTRA)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.FLOWER_AUTUMN)

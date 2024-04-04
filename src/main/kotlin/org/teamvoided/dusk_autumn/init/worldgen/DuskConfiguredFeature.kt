@@ -36,6 +36,8 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDeco
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
+import kotlin.collections.forEach
+import kotlin.collections.listOf
 
 @Suppress("MemberVisibilityCanBePrivate")
 object DuskConfiguredFeature {
@@ -48,6 +50,7 @@ object DuskConfiguredFeature {
     val ACACIA_AUTUMN = create("acacia_autumn")
     val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
     val DISK_PODZOL = create("disk_podzol")
+    val DISK_MUD = create("disk_mud")
     val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
@@ -82,9 +85,6 @@ object DuskConfiguredFeature {
                 )
             }
         }
-        ConfiguredFeatureUtil.registerConfiguredFeature(
-            c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
-        )
         val cascadeTree = TreeFeatureConfig.Builder(
             BlockStateProvider.of(DuskBlocks.CASCADE_LOG),
             ThreeWideTrunkPlacer(9, 2, 1),
@@ -116,6 +116,9 @@ object DuskConfiguredFeature {
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
         val goldenBirchTree = builder(Blocks.BIRCH_LOG, DuskBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
+        )
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
@@ -270,8 +273,15 @@ object DuskConfiguredFeature {
                         )
                     )
                 ),
-                BlockPredicate.matchingBlocks(listOf(Blocks.DIRT, Blocks.GRASS_BLOCK)),
+                BlockPredicate.matchingBlocks(listOf(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.STONE)),
                 UniformIntProvider.create(2, 6), 2
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
+            c, DISK_MUD, Feature.DISK, DiskFeatureConfig(
+                C_cxbmzbuz.method_43312(Blocks.MUD), BlockPredicate.matchingBlocks(
+                    listOf(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.GRAVEL, Blocks.SAND, Blocks.MUD)
+                ), UniformIntProvider.create(2, 6), 2
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
@@ -529,7 +539,7 @@ object DuskConfiguredFeature {
             crops.method_34975(crop.defaultState.with(CropBlock.AGE, age), 7 - age + 1)
         }
         return WeightedBlockStateProvider(
-                    crops
+            crops
         )
     }
 

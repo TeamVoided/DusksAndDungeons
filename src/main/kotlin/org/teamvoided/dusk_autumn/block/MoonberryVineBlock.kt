@@ -2,7 +2,6 @@ package org.teamvoided.dusk_autumn.block
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.*
-import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
@@ -21,7 +20,6 @@ import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.util.math.MathHelper
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
@@ -90,23 +88,23 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         hit: BlockHitResult
     ): ActionResult {
         val berryState = state.get(BERRIES)
-        val berryState2 = berryState == 2
-        if (!berryState2 && player.getStackInHand(hand).isOf(Items.BONE_MEAL)) {
+        val has2berry = berryState == 2
+        if (!has2berry && player.getStackInHand(hand).isOf(Items.BONE_MEAL)) {
             return ActionResult.PASS
-        } else if (berryState > 1) {
-            val rand13 = 1 + world.random.nextInt(if (world.isNight) 3 else 2)
-            dropStack(world, pos, ItemStack(DuskItems.MOONBERRIES, rand13 + (if (berryState2) 1 else 0)))
+        } else if (berryState >= 1) {
+            val rand13 = 1 + world.random.nextInt(if (world.isNight) 2 else 1)
+            dropStack(world, pos, ItemStack(DuskItems.MOONBERRIES, rand13 + (if (has2berry) 1 else 0)))
             world.playSound(
                 null,
                 pos,
-                SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES,
+                SoundEvents.BLOCK_CAVE_VINES_PICK_BERRIES,
                 SoundCategory.BLOCKS,
                 1.0f,
                 0.8f + world.random.nextFloat() * 0.4f
             )
-            val blockState = state.with(BERRIES, 0)
-            world.setBlockState(pos, blockState, 2)
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(player, blockState))
+            val has0berry = state.with(BERRIES, 0)
+            world.setBlockState(pos, has0berry, 2)
+            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(player, has0berry))
             return ActionResult.success(world.isClient)
         } else {
             return super.onUse(state, world, pos, player, hand, hit)
@@ -151,36 +149,6 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
                     if (state.get(BERRIES) > 1) luminance
                     else luminanceLow
                 } else 0
-            }
-        }
-
-        fun pickBerries(picker: Entity, state: BlockState, world: World, pos: BlockPos): ActionResult {
-            if (state.get(BERRIES) > 0) {
-                if (state.get(BERRIES) > 1)
-                    dropStack(
-                        world, pos,
-                        ItemStack(DuskItems.MOONBERRIES, MathHelper.nextBetween(world.random, 1, 3))
-                    )
-                else
-                    dropStack(
-                        world, pos,
-                        ItemStack(DuskItems.MOONBERRIES, MathHelper.nextBetween(world.random, 0, 2))
-                    )
-                val f = MathHelper.nextBetween(world.random, 0.8f, 1.2f)
-                world.playSound(
-                    null,
-                    pos,
-                    SoundEvents.BLOCK_CAVE_VINES_PICK_BERRIES,
-                    SoundCategory.BLOCKS,
-                    1.0f,
-                    f
-                )
-                val blockState = state.with(BERRIES, 0)
-                world.setBlockState(pos, blockState, 2)
-                world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(picker, blockState))
-                return ActionResult.success(world.isClient)
-            } else {
-                return ActionResult.PASS
             }
         }
     }

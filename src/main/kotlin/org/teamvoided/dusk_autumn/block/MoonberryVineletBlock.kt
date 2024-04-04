@@ -51,7 +51,7 @@ class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
         return if (age == MAX_AGE) DuskBlocks.MOONBERRY_VINE.defaultState.with(
             AbstractLichenBlock.getProperty(Direction.DOWN),
             true
-        )
+        ).with(MoonberryVineBlock.BERRIES, 1)
         else super.withAge(
             age
         )
@@ -75,7 +75,6 @@ class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
         }
         const val MAX_AGE: Int = 3
         val AGE: IntProperty = Properties.AGE_2
-        private const val BOX_OFFSET = 3.0f
         private val SHAPE =
             arrayOf(
                 createCuboidShape(5.0, -1.0, 5.0, 11.0, 1.0, 11.0),

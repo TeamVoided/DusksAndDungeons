@@ -5,17 +5,13 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.BeetrootsBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.block.CarrotsBlock
-import net.minecraft.block.org.teamvoided.dusk_autumn.block.GoldenBeetrootsBlock
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
-import net.minecraft.loot.entry.AlternativeEntry
-import net.minecraft.loot.entry.ItemEntry
-import net.minecraft.loot.entry.LootTableEntry
+import net.minecraft.loot.entry.*
 import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
@@ -87,6 +83,18 @@ class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider
                     ).with(
                         ItemEntry.builder(DuskItems.GOLDEN_BEETROOT)
                             .apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286f, 3))
+                    )
+                )
+            )
+        )
+        add(
+            DuskBlocks.MOONBERRY_VINELET,
+            applyExplosionDecay(
+                DuskBlocks.MOONBERRY_VINELET, LootTable.builder().pool(
+                    LootPool.builder().with(
+                        ItemEntry.builder(
+                            DuskItems.MOONBERRY_VINELET
+                        )
                     )
                 )
             )

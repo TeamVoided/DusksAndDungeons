@@ -47,6 +47,9 @@ class EnglishTranslationProvider(o: FabricDataOutput) : FabricLanguageProvider(o
         DuskItems.FARMERS_HAT,
         DuskItems.WILD_WHEAT,
         DuskItems.GOLDEN_BEETROOT,
+        DuskItems.MOONBERRY_VINE,
+        DuskItems.MOONBERRY_VINELET,
+        DuskItems.MOONBERRIES
     )
     val blocks = listOf(
         DuskBlocks.GOLDEN_BEETROOTS,

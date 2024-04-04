@@ -30,6 +30,7 @@ object DuskPlacedFeature {
     val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
     val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val DISK_PODZOL = create("disk_podzol")
+    val DISK_MUD = create("disk_mud")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
     val FLOWER_AUTUMN = create("flower_autumn")
@@ -108,12 +109,22 @@ object DuskPlacedFeature {
         )
         c.register(
             DISK_PODZOL, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_PODZOL),
-            PlacedFeatureUtil.createCountExtraModifier(0, 0.05f, 1),
+            PlacedFeatureUtil.createCountExtraModifier(1, 0.025f, 0),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
             BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK))
+                BlockPredicate.matchingBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK), (Blocks.PODZOL))
+            ),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DISK_MUD, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_MUD),
+            PlacedFeatureUtil.createCountExtraModifier(0, 0.05f, 1),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
+            BlockPredicateFilterPlacementModifier.create(
+                BlockPredicate.matchingBlocks(Blocks.WATER)
             ),
             BiomePlacementModifier.getInstance()
         )

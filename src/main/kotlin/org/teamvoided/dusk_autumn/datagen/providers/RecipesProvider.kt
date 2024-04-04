@@ -2,8 +2,10 @@ package org.teamvoided.dusk_autumn.datagen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
@@ -48,6 +50,8 @@ class RecipesProvider(o: FabricDataOutput) : FabricRecipeProvider(o) {
                     DuskItems.FARMERS_HAT
                 )
             ).offerTo(exporter)
+        offerShapelessRecipe(exporter, Items.PURPLE_DYE, DuskItems.MOONBERRIES, "purple_dye")
+
     }
 
     fun createLeafPilesRecipe(output: ItemConvertible, input: ItemConvertible, exporter: RecipeExporter) {
