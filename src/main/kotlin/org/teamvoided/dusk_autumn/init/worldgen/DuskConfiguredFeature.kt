@@ -255,7 +255,7 @@ object DuskConfiguredFeature {
                 BlockStateProvider.of(Blocks.ACACIA_LOG),
                 StraightTrunkPlacer(1, 0, 0),
                 BlockStateProvider.of(Blocks.ACACIA_LEAVES),
-                AcaciaFoliagePlacer(UniformIntProvider.create(1, 2), UniformIntProvider.create(1, 2)),
+                AcaciaFoliagePlacer(UniformIntProvider.create(1, 2), UniformIntProvider.create(0, 1)),
                 TwoLayersFeatureSize(0, 0, 0)
             ).build()
         )
@@ -344,10 +344,10 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, AUTUMN_PASTURES_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_AUTUMN), 0.4f),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_BUSH_AUTUMN), 0.2f),
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES), 0.2f),
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.2f)
-                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
+                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_AUTUMN)
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(

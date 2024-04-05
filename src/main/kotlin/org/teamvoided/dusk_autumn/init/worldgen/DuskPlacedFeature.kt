@@ -74,11 +74,11 @@ object DuskPlacedFeature {
         )
         c.register(
             CASCADE_TREE, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE),
-            PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
+            PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.CASCADE_SAPLING)
         )
         c.register(
             CASCADE_TREE_BEES, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE_BEES),
-            PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
+            PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.CASCADE_SAPLING)
         )
         c.register(
             GOLDEN_BIRCH_TALL, holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL),
@@ -139,7 +139,7 @@ object DuskPlacedFeature {
         c.register(
             AUTUMN_PASTURES_VEGETATION,
             holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
-            PlacedFeatureUtil.createCountExtraModifier(0, 0.2f, 1),
+            NoiseBasedCountPlacementModifier.create(20, 80.0, 0.0),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
             PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
@@ -147,23 +147,19 @@ object DuskPlacedFeature {
         )
         c.register(
             FLOWER_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.FLOWER_AUTUMN),
-            *arrayOf(
-                NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-                RarityFilterPlacementModifier.create(21),
-                InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-                BiomePlacementModifier.getInstance()
-            )
+            NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
+            RarityFilterPlacementModifier.create(21),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+            BiomePlacementModifier.getInstance()
         )
         c.register(
             BLUE_PETALS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.BLUE_PETALS),
-            *arrayOf(
-                NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-                RarityFilterPlacementModifier.create(14),
-                InSquarePlacementModifier.getInstance(),
-                PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-                BiomePlacementModifier.getInstance()
-            )
+            NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
+            RarityFilterPlacementModifier.create(14),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+            BiomePlacementModifier.getInstance()
         )
         c.register(
             PATCH_ROSEBUSH, holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_ROSEBUSH),
@@ -175,7 +171,7 @@ object DuskPlacedFeature {
         )
         c.register(
             AUTUMN_FARMLANDS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_FARMLAND),
-            RarityFilterPlacementModifier.create(7),
+            RarityFilterPlacementModifier.create(14),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
             CountPlacementModifier.create(ClampedIntProvider.create(UniformIntProvider.create(-3, 1), 0, 1)),

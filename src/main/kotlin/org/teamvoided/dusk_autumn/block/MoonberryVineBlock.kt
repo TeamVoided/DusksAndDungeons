@@ -30,7 +30,6 @@ import org.teamvoided.dusk_autumn.init.DuskItems
 import java.util.function.ToIntFunction
 
 class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Waterloggable, Fertilizable {
-    private val spreadBehavior = LichenSpreadBehavior(this)
 
     public override fun getCodec(): MapCodec<MoonberryVineBlock> {
         return moonberryVineBlockMapCodec
@@ -126,7 +125,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
     }
 
     override fun getLichenSpreadBehavior(): LichenSpreadBehavior {
-        return this.spreadBehavior
+        return LichenSpreadBehavior(this)
     }
 
 
