@@ -67,6 +67,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.CROPS)
             .add(DuskBlocks.GOLDEN_BEETROOTS)
             .add(DuskBlocks.MOONBERRY_VINELET)
+        getOrCreateTagBuilder(BlockTags.BEE_GROWABLES)
+            .add(DuskBlocks.MOONBERRY_VINE)
         getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND)
             .forceAddTag(DuskBlockTags.LEAF_PILES)
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
@@ -91,6 +93,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
             .add(DuskBlocks.BLUE_PETALS)
+            .add(DuskBlocks.MOONBERRY_VINE)
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
             .add(DuskBlocks.BLUE_PETALS)
     }
