@@ -210,7 +210,7 @@ object DuskBlocks {
     )
     val MOONBERRY_VINELET = register(
         "moonberry_vinelet", MoonberryVineletBlock(
-            AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f).ticksRandomly()
+            AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f).ticksRandomly().breakInstantly()
                 .sounds(BlockSoundGroup.CAVE_VINES).lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
         )
     )

@@ -96,5 +96,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.MOONBERRY_VINE)
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
             .add(DuskBlocks.BLUE_PETALS)
+            .add(DuskBlocks.MOONBERRY_VINE)
     }
 }

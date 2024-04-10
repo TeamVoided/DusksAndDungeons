@@ -30,6 +30,7 @@ import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.data.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
+import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
@@ -89,7 +90,7 @@ object DuskConfiguredFeature {
             BlockStateProvider.of(DuskBlocks.CASCADE_LOG),
             ThreeWideTrunkPlacer(9, 2, 1),
             BlockStateProvider.of(DuskBlocks.CASCADE_LEAVES),
-            RandomSpreadFoliagePlacer(
+            CascadeFoliagePlacer(
                 ConstantIntProvider.create(3),
                 ConstantIntProvider.create(0),
                 ConstantIntProvider.create(2),
