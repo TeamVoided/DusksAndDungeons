@@ -32,7 +32,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.AUTUMN_WOODS)
         getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT_STRUCTURE)
             .forceAddTag(DuskBiomeTags.IS_AUTUMN)
-        getOrCreateTagBuilder(BiomeTags.HAS_VILLAGE_PLAINS_STRUCTURE)
+        getOrCreateTagBuilder(BiomeTags.HAS_VILLAGE_TAIGA_STRUCTURE)
             .add(DuskBiomes.AUTUMN_PASTURES)
         getOrCreateTagBuilder(BiomeTags.HAS_PILLAGER_OUTPOST_STRUCTURE)
             .add(DuskBiomes.AUTUMN_PASTURES)
