@@ -2,6 +2,8 @@ package org.teamvoided.dusk_autumn.init.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
+import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.Fluids
 import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -31,6 +33,7 @@ object DuskPlacedFeature {
     val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val DISK_PODZOL = create("disk_podzol")
     val DISK_MUD = create("disk_mud")
+    val DISK_RED_SAND = create("disk_red_sand")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
     val FLOWER_AUTUMN = create("flower_autumn")
@@ -124,7 +127,17 @@ object DuskPlacedFeature {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
             BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(Blocks.WATER)
+                BlockPredicate.matchingFluids(*arrayOf<Fluid>(Fluids.WATER))
+            ),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DISK_RED_SAND, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_RED_SAND),
+            CountPlacementModifier.create(3),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
+            BlockPredicateFilterPlacementModifier.create(
+                BlockPredicate.matchingFluids(*arrayOf<Fluid>(Fluids.WATER))
             ),
             BiomePlacementModifier.getInstance()
         )

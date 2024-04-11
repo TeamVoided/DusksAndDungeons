@@ -37,6 +37,7 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDeco
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
+import java.util.List
 import kotlin.collections.forEach
 import kotlin.collections.listOf
 
@@ -52,6 +53,7 @@ object DuskConfiguredFeature {
     val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
     val DISK_PODZOL = create("disk_podzol")
     val DISK_MUD = create("disk_mud")
+    val DISK_RED_SAND = create("disk_red_sand")
     val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
@@ -281,7 +283,38 @@ object DuskConfiguredFeature {
         ConfiguredFeatureUtil.registerConfiguredFeature<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
             c, DISK_MUD, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz.method_43312(Blocks.MUD), BlockPredicate.matchingBlocks(
-                    listOf(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.GRAVEL, Blocks.SAND, Blocks.MUD)
+                    listOf(
+                        Blocks.DIRT,
+                        Blocks.GRASS_BLOCK,
+                        Blocks.MYCELIUM,
+                        Blocks.PODZOL,
+                        Blocks.GRAVEL,
+                        Blocks.SAND,
+                        Blocks.MUD
+                    )
+                ), UniformIntProvider.create(2, 6), 1
+            )
+        )
+
+        ConfiguredFeatureUtil.registerConfiguredFeature<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
+            c, DISK_RED_SAND, Feature.DISK, DiskFeatureConfig(
+                C_cxbmzbuz(
+                    BlockStateProvider.of(Blocks.RED_SAND), listOf(
+                        C_pkkqenbk(
+                            BlockPredicate.matchingBlocks(Direction.DOWN.vector, *arrayOf<Block>(Blocks.AIR)),
+                            BlockStateProvider.of(Blocks.RED_SANDSTONE)
+                        )
+                    )
+                ), BlockPredicate.matchingBlocks(
+                    listOf(
+                        Blocks.DIRT,
+                        Blocks.GRASS_BLOCK,
+                        Blocks.MYCELIUM,
+                        Blocks.PODZOL,
+                        Blocks.GRAVEL,
+                        Blocks.SAND,
+                        Blocks.MUD
+                    )
                 ), UniformIntProvider.create(2, 6), 2
             )
         )
@@ -346,7 +379,10 @@ object DuskConfiguredFeature {
             c, AUTUMN_PASTURES_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES), 0.2f),
+                    WeightedPlacedFeature(
+                        placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES),
+                        0.2f
+                    ),
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.2f)
                 ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_AUTUMN)
             )
@@ -408,7 +444,7 @@ object DuskConfiguredFeature {
                         PlacedFeatureUtil.placedInline(
                             configuredFeatures.getHolderOrThrow(CROPS_WHEAT),
                             *arrayOfNulls<PlacementModifier>(0)
-                        ), 0.175f
+                        ), 0.25f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(

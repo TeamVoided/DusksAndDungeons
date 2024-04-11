@@ -17,6 +17,7 @@ import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
 import org.teamvoided.dusk_autumn.init.worldgen.DuskFeatures
 import org.teamvoided.dusk_autumn.init.worldgen.DuskPlacedFeature
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
+import org.teamvoided.dusk_autumn.world.gen.foliage.ManhattanFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootPlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
@@ -36,6 +37,7 @@ object DuskWorldgen {
     val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", ThreeWideTrunkPlacer.CODEC)
 
     val CASCADE_FOLIAGE_PLACER = registerFoliagePlacer("cascade_foliage_placer", CascadeFoliagePlacer.CODEC)
+    val MANHATTAN_FOLIAGE_PLACER = registerFoliagePlacer("manhattan_foliage_placer", ManhattanFoliagePlacer.CODEC)
 
     val CASCADE_ROOT_PLACER = registerRootPlacer("cascade_root_placer", CascadeRootPlacer.CODEC)
 
