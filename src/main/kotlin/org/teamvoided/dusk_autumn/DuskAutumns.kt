@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumn
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumn.init.*
+import org.teamvoided.dusk_autumn.modules.SnifferInjection
 
 @Suppress("unused")
 object DuskAutumns {
@@ -18,6 +19,7 @@ object DuskAutumns {
         DuskWorldgen.init()
         DuskParticles.init()
         DuskItemGroups.init()
+        SnifferInjection.init()
     }
 
     fun clientInit() {
