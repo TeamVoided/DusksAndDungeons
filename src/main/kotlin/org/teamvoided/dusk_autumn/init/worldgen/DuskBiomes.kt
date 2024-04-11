@@ -139,8 +139,8 @@ object DuskBiomes {
             VegetationPlacedFeatures.PATCH_GRASS_PLAIN
         )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
-        addAutumnFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
+        addAutumnFeatures(generationSettings)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
             DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
