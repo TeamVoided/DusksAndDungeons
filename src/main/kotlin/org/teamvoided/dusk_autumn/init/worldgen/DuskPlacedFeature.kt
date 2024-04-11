@@ -123,7 +123,7 @@ object DuskPlacedFeature {
         )
         c.register(
             DISK_MUD, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_MUD),
-            PlacedFeatureUtil.createCountExtraModifier(0, 0.05f, 1),
+            PlacedFeatureUtil.createCountExtraModifier(0, 0.33f, 1),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
             BlockPredicateFilterPlacementModifier.create(

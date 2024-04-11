@@ -204,7 +204,7 @@ object DuskBlocks {
         "moonberry_vine",
         MoonberryVineBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f)
-                .sounds(BlockSoundGroup.CAVE_VINES).luminance(MoonberryVineBlock.getLuminanceSupplier(8, 13))
+                .sounds(BlockSoundGroup.CAVE_VINES).luminance(MoonberryVineBlock.getLuminanceSupplier(8, 11))
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
         )
     )

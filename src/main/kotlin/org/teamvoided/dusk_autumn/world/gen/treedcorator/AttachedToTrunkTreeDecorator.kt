@@ -42,7 +42,7 @@ class AttachedToTrunkTreeDecorator(
                         }
 
                         blockPos = var4.next() as BlockPos
-                        direction = Util.getRandom(this.directions, randomGenerator) as Direction
+                        direction = Util.getRandom(this.directions, randomGenerator)
                         blockPos2 = blockPos.offset(direction)
                     } while (set.contains(blockPos2))
                 } while (!(randomGenerator.nextFloat() < this.probability))
