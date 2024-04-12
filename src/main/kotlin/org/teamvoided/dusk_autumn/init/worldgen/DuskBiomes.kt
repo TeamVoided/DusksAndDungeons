@@ -59,7 +59,6 @@ object DuskBiomes {
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.BLUE_PETALS)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.CROPS_WILD_WHEAT)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_MUD)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_RED_SAND)
     }private fun addAutumnSwampFeatures(generationSettings: GenerationSettings.Builder) {
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_NORMAL)
@@ -87,7 +86,13 @@ object DuskBiomes {
         addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_RED_SAND)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, MiscPlacedFeatures.DISK_GRAVEL)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_PODZOL)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeature.AUTUMN_WOODS_VEGETATION
+        )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
@@ -100,11 +105,6 @@ object DuskBiomes {
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_PODZOL)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.AUTUMN_WOODS_VEGETATION
-        )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.PATCH_ROSEBUSH)
 
         return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
@@ -132,7 +132,12 @@ object DuskBiomes {
         addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_RED_SAND)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, MiscPlacedFeatures.DISK_GRAVEL)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
+        )
         DefaultBiomeFeatures.addPlainsTallGrass(generationSettings)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
@@ -141,10 +146,6 @@ object DuskBiomes {
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
-        )
 
         return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
             BiomeEffects.Builder()
@@ -172,16 +173,17 @@ object DuskBiomes {
         addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_RED_SAND)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, MiscPlacedFeatures.DISK_GRAVEL)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
+        )
         DefaultBiomeFeatures.addPlainsTallGrass(generationSettings)
         DefaultBiomeFeatures.addGiantTaigaGrass(generationSettings)
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
-        )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_RIVER)
 
         return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
@@ -211,6 +213,10 @@ object DuskBiomes {
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
         addAutumnSwampFeatures(generationSettings)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeature.AUTUMN_WETLANDS_VEGETATION
+        )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         addAutumnFeatures(generationSettings)
         DefaultBiomeFeatures.addSwampVegetation(generationSettings)
@@ -223,7 +229,7 @@ object DuskBiomes {
                 .skyColor(OverworldBiomeCreator.getSkyColor(0.25f))
                 .grassColor(16366449)
                 .foliageColor(13533233)
-                .grassColorModifier(GrassColorModifier.SWAMP)
+//                .grassColorModifier(GrassColorModifier.SWAMP)
                 .moodSound(BiomeMoodSound.CAVE)
                 .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_SWAMP))
                 .build()

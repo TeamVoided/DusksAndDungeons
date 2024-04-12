@@ -52,6 +52,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.PUMPKIN)
             .add(Blocks.CARVED_PUMPKIN)
             .add(Blocks.JACK_O_LANTERN)
+        getOrCreateTagBuilder(DuskBlockTags.REPLACEABLE_OR_DIRT)
+            .forceAddTag(BlockTags.REPLACEABLE)
+            .forceAddTag(BlockTags.REPLACEABLE_BY_TREES)
+            .forceAddTag(BlockTags.DIRT)
 
 //VANILLA
         getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES)

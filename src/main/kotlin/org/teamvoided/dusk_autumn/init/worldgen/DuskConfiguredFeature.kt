@@ -5,6 +5,7 @@ import net.minecraft.block.*
 import net.minecraft.fluid.Fluids
 import net.minecraft.registry.*
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.unmapped.C_cxbmzbuz
 import net.minecraft.unmapped.C_cxbmzbuz.C_pkkqenbk
 import net.minecraft.util.collection.DataPool
@@ -22,6 +23,7 @@ import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import net.minecraft.world.gen.foliage.*
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
+import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
@@ -37,18 +39,18 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDeco
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
-import java.util.List
-import kotlin.collections.forEach
-import kotlin.collections.listOf
 
 @Suppress("MemberVisibilityCanBePrivate")
 object DuskConfiguredFeature {
     val COBBLESTONE_ROCK = create("cobblestone_rock")
     val CASCADE_TREE = create("cascade_tree")
     val CASCADE_TREE_BEES = create("cascade_tree_bees")
+    val CASCADE_TREE_WETLANDS = create("cascade_tree_wetlands")
     val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
     val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
+    val GOLDEN_BIRCH_TALL_WETLANDS = create("golden_birch_tall_wetlands")
     val DARK_OAK_AUTUMN = create("dark_oak_autumn")
+    val DARK_OAK_AUTUMN_WETLANDS = create("dark_oak_autumn_wetlands")
     val ACACIA_AUTUMN = create("acacia_autumn")
     val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
     val DISK_PODZOL = create("disk_podzol")
@@ -57,6 +59,7 @@ object DuskConfiguredFeature {
     val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
+    val AUTUMN_WETLANDS_VEGETATION = create("autumn_wetlands_vegetation")
     val FLOWER_AUTUMN = create("flower_autumn")
     val PATCH_ROSEBUSH = create("patch_rosebush")
     val BLUE_PETALS = create("blue_petals")
@@ -119,9 +122,43 @@ object DuskConfiguredFeature {
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
         val goldenBirchTree = builder(Blocks.BIRCH_LOG, DuskBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
-        ConfiguredFeatureUtil.registerConfiguredFeature(
-            c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
+        val birchDecorator1 = AttachedToTrunkTreeDecorator(
+            0.14f,
+            1,
+            1,
+            BlockStateProvider.of(
+                Blocks.BIRCH_LOG.defaultState.with(
+                    PillarBlock.AXIS,
+                    Direction.Axis.X
+                )
+            ),
+            2,
+            listOf(Direction.EAST, Direction.WEST)
         )
+        val birchDecorator2 = AttachedToTrunkTreeDecorator(
+            0.14f,
+            1,
+            1,
+            BlockStateProvider.of(
+                Blocks.BIRCH_LOG.defaultState.with(
+                    PillarBlock.AXIS,
+                    Direction.Axis.Z
+                )
+            ),
+            2,
+            listOf(Direction.NORTH, Direction.SOUTH)
+        )
+
+//        ConfiguredFeatureUtil.registerConfiguredFeature(
+//            c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
+//        )
+        ConfiguredFeatureUtil.registerConfiguredFeature<OreFeatureConfig, Feature<OreFeatureConfig>>(
+            c,
+            COBBLESTONE_ROCK,
+            Feature.ORE,
+            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.REPLACEABLE_OR_DIRT), Blocks.COBBLESTONE.defaultState, 33)
+        )
+
         ConfiguredFeatureUtil.registerConfiguredFeature(
             c, CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
@@ -147,38 +184,27 @@ object DuskConfiguredFeature {
             ).build()
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, CASCADE_TREE_WETLANDS, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
+                ImmutableList.of(
+                    LeavesVineTreeDecorator(0.25F),
+                    BeehiveBigTreeDecorator(0.02F),
+                    AlterGroundRadiusTreeDecorator(
+                        BlockStateProvider.of(Blocks.PODZOL), 2, 5,
+                        blockTags.getTagOrThrow(BlockTags.DIRT)
+                    ),
+                    leafPiles(DuskBlocks.CASCADE_LEAF_PILE, blockTags)
+                )
+            ).build()
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
             c, GOLDEN_BIRCH_TALL, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
                     AlterGroundRadiusTreeDecorator(
                         BlockStateProvider.of(Blocks.PODZOL), 2, 20,
                         blockTags.getTagOrThrow(BlockTags.DIRT)
                     ),
-                    AttachedToTrunkTreeDecorator(
-                        0.14f,
-                        1,
-                        1,
-                        BlockStateProvider.of(
-                            Blocks.BIRCH_LOG.defaultState.with(
-                                PillarBlock.AXIS,
-                                Direction.Axis.X
-                            )
-                        ),
-                        2,
-                        listOf(Direction.EAST, Direction.WEST)
-                    ),
-                    AttachedToTrunkTreeDecorator(
-                        0.14f,
-                        1,
-                        1,
-                        BlockStateProvider.of(
-                            Blocks.BIRCH_LOG.defaultState.with(
-                                PillarBlock.AXIS,
-                                Direction.Axis.Z
-                            )
-                        ),
-                        2,
-                        listOf(Direction.NORTH, Direction.SOUTH)
-                    ),
+                    birchDecorator1,
+                    birchDecorator2,
                     leafPiles(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
@@ -191,32 +217,26 @@ object DuskConfiguredFeature {
                         BlockStateProvider.of(Blocks.PODZOL), 2, 20,
                         blockTags.getTagOrThrow(BlockTags.DIRT)
                     ),
-                    AttachedToTrunkTreeDecorator(
-                        0.14f,
-                        1,
-                        1,
-                        BlockStateProvider.of(
-                            Blocks.BIRCH_LOG.defaultState.with(
-                                PillarBlock.AXIS,
-                                Direction.Axis.X
-                            )
-                        ),
-                        2,
-                        listOf(Direction.EAST, Direction.WEST)
+                    birchDecorator1,
+                    birchDecorator2,
+                    leafPiles(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                )
+            ).build()
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c,
+            GOLDEN_BIRCH_TALL_WETLANDS,
+            Feature.TREE,
+            builder(Blocks.BIRCH_LOG, DuskBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 3).ignoreVines().decorators(
+                ImmutableList.of(
+                    LeavesVineTreeDecorator(0.25F),
+                    BeehiveBigTreeDecorator(0.02F),
+                    AlterGroundRadiusTreeDecorator(
+                        BlockStateProvider.of(Blocks.PODZOL), 2, 20,
+                        blockTags.getTagOrThrow(BlockTags.DIRT)
                     ),
-                    AttachedToTrunkTreeDecorator(
-                        0.14f,
-                        1,
-                        1,
-                        BlockStateProvider.of(
-                            Blocks.BIRCH_LOG.defaultState.with(
-                                PillarBlock.AXIS,
-                                Direction.Axis.Z
-                            )
-                        ),
-                        2,
-                        listOf(Direction.NORTH, Direction.SOUTH)
-                    ),
+                    birchDecorator1,
+                    birchDecorator2,
                     leafPiles(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
@@ -231,6 +251,26 @@ object DuskConfiguredFeature {
             )
                 .forceDirt().ignoreVines().decorators(
                     ImmutableList.of(
+                        BeehiveBigTreeDecorator(0.02F),
+                        AlterGroundRadiusTreeDecorator(
+                            BlockStateProvider.of(Blocks.PODZOL), 2, 5,
+                            blockTags.getTagOrThrow(BlockTags.DIRT)
+                        ),
+                        leafPiles(DuskBlocks.DARK_OAK_LEAF_PILE, blockTags)
+                    )
+                ).build()
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, DARK_OAK_AUTUMN_WETLANDS, Feature.TREE, TreeFeatureConfig.Builder(
+                BlockStateProvider.of(Blocks.DARK_OAK_LOG),
+                DarkOakTrunkPlacer(6, 3, 1),
+                BlockStateProvider.of(Blocks.DARK_OAK_LEAVES),
+                DarkOakFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0)),
+                ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
+            )
+                .forceDirt().ignoreVines().decorators(
+                    ImmutableList.of(
+                        LeavesVineTreeDecorator(0.25F),
                         BeehiveBigTreeDecorator(0.02F),
                         AlterGroundRadiusTreeDecorator(
                             BlockStateProvider.of(Blocks.PODZOL), 2, 5,
@@ -352,7 +392,15 @@ object DuskConfiguredFeature {
                             )
                     )
                 ),
-                listOf(Blocks.GRASS_BLOCK, Blocks.FARMLAND, Blocks.PODZOL, Blocks.PUMPKIN, Blocks.CARVED_PUMPKIN)
+                listOf(
+                    Blocks.GRASS_BLOCK,
+                    Blocks.FARMLAND,
+                    Blocks.PODZOL,
+                    Blocks.COBBLESTONE,
+                    Blocks.PUMPKIN,
+                    Blocks.CARVED_PUMPKIN,
+                    Blocks.JACK_O_LANTERN
+                )
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
@@ -385,6 +433,32 @@ object DuskConfiguredFeature {
                     ),
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.2f)
                 ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_AUTUMN)
+            )
+        )
+        ConfiguredFeatureUtil.registerConfiguredFeature(
+            c, AUTUMN_WETLANDS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
+                listOf(
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM),
+                            *arrayOfNulls(0)
+                        ), 0.0025f
+                    ),
+                    WeightedPlacedFeature(
+                        PlacedFeatureUtil.placedInline(
+                            configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM),
+                            *arrayOfNulls(0)
+                        ), 0.005f
+                    ),
+                    WeightedPlacedFeature(
+                        placedFeatures.getHolderOrThrow(DuskPlacedFeature.DARK_OAK_AUTUMN_WETLANDS),
+                        0.425f
+                    ),
+                    WeightedPlacedFeature(
+                        placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_WETLANDS),
+                        0.425f
+                    )
+                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS)
             )
         )
         ConfiguredFeatureUtil.registerConfiguredFeature(
