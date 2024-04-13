@@ -94,7 +94,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
                         )
                     ) {
                         val blockPos = mutable2.toImmutable()
-                        if (placeGround(world, config, random, mutable2)) {
+                        if (placeGround(world, config, random, mutable2, replaceable)) {
                             set.add(blockPos)
                         }
                     }
@@ -160,10 +160,9 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) :
         world: StructureWorldAccess,
         config: FarmlandConfig,
         random: RandomGenerator,
-        pos: BlockPos.Mutable
+        pos: BlockPos.Mutable,
+        replaceable: Predicate<BlockState>
     ): Boolean {
-        val replaceable =
-            Predicate { state: BlockState -> state.isIn(config.farmlandReplaceable) }
         val farmBlock = config.farmlandBlock.getBlockState(random, pos)
         val waterBlock = config.waterBlock.getBlockState(random, pos)
         val worldBlock = world.getBlockState(pos)
