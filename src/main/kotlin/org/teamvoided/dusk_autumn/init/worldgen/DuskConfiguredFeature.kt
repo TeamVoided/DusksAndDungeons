@@ -501,7 +501,7 @@ object DuskConfiguredFeature {
                 0.9f,
                 BiasedToBottomIntProvider.create(1, 24),
                 BlockStateProvider.of(Blocks.WATER),
-                0.6f,
+                0.9f,
                 PlacedFeatureUtil.placedInline(
                     configuredFeatures.getHolderOrThrow(AUTUMN_FARMLAND_CROPS),
                     *arrayOfNulls<PlacementModifier>(0)

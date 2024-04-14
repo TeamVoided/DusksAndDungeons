@@ -170,7 +170,7 @@ object DuskPlacedFeature {
             CountPlacementModifier.create(14),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
-            PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
+            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
         c.register(

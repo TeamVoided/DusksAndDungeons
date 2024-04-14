@@ -82,6 +82,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS)
             .forceAddTag(DuskBlockTags.LEAF_PILES)
         getOrCreateTagBuilder(BlockTags.FLOWERS)
+            .add(DuskBlocks.CHERRY_LEAF_PILE)
             .add(DuskBlocks.BLUE_PETALS)
         getOrCreateTagBuilder(BlockTags.LEAVES)
             .add(DuskBlocks.CASCADE_LEAVES)

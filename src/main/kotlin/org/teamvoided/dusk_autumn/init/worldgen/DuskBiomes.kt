@@ -113,7 +113,7 @@ object DuskBiomes {
                 .waterFogColor(329011)
                 .fogColor(11587327)
                 .grassColor(16224051)
-                .foliageColor(15751706)
+                .foliageColor(15097636)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
                 .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FLOWER_FOREST))
