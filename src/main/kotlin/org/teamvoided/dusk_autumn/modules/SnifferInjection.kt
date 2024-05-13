@@ -18,6 +18,6 @@ object SnifferInjection {
 
     private fun lootLoad(id: Identifier, builder: LootTable.Builder) {
         if (id == LootTables.SNIFFER_DIGGING_GAMEPLAY)
-            builder.modifyPools { it.with(LootTableEntry.builder(ADD_MOONBERRIES)) }
+            builder.pool(LootPool.builder().with(LootTableEntry.builder(ADD_MOONBERRIES)))
     }
 }
