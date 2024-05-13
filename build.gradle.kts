@@ -1,3 +1,5 @@
+@file:Suppress("LocalVariableName", "VariableNaming")
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -15,6 +17,9 @@ val modid = project.properties["modid"]!! as String
 
 repositories {
     mavenCentral()
+    maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/") {
+        name = "GeckoLib"
+    }
 }
 
 modSettings {
@@ -26,6 +31,12 @@ modSettings {
     entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.datagen.DuskAutumnsData")
     mixinFile("dusk_autumn.mixins.json")
     accessWidener("dusk_autumn.accesswidener")
+}
+
+dependencies {
+    val geckolib_version = "4.5.1"
+
+    modImplementation("software.bernie.geckolib:geckolib-fabric-1.20.6:${geckolib_version}")
 }
 
 loom {
