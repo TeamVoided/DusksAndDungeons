@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.block.Block
 import net.minecraft.client.color.world.FoliageColors
+import net.minecraft.entity.EntityType
 import net.minecraft.item.*
 import org.teamvoided.dusk_autumn.item.DuskFoodComponents
 import net.minecraft.registry.Registries
@@ -69,6 +70,7 @@ object DuskItems {
     val MOONBERRY_VINE = register("moonberry_vine", BlockItem(DuskBlocks.MOONBERRY_VINE))
     val MOONBERRY_VINELET = register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRIES)))
+    val CRAB_SPAWN_EGG = register("crab_spawn_egg", (SpawnEggItem(DuskEntities.CRAB, 0xffffff, 0xffffff, Item.Settings())))
 
 
     fun init() {
