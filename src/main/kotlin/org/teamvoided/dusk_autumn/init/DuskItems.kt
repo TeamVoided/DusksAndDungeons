@@ -5,15 +5,16 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.block.Block
 import net.minecraft.client.color.world.FoliageColors
-import net.minecraft.entity.EntityType
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.item.*
-import org.teamvoided.dusk_autumn.item.DuskFoodComponents
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns
+import org.teamvoided.dusk_autumn.item.DuskFoodComponents
 import org.teamvoided.dusk_autumn.item.FarmersHatItem
 
 
@@ -59,7 +60,12 @@ object DuskItems {
     val CASCADE_LEAF_PILE = register("cascade_leaf_pile", BlockItem(DuskBlocks.CASCADE_LEAF_PILE))
     val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", BlockItem(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE))
 
-    val FARMERS_HAT = register("farmers_hat", FarmersHatItem(Item.Settings().maxCount(1)))
+    val FARMERS_HAT = register(
+        "farmers_hat",
+        FarmersHatItem(
+            Item.Settings().maxCount(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
+        )
+    )
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DuskBlocks.WILD_WHEAT, Item.Settings()))
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
@@ -68,9 +74,11 @@ object DuskItems {
         )
     )
     val MOONBERRY_VINE = register("moonberry_vine", BlockItem(DuskBlocks.MOONBERRY_VINE))
-    val MOONBERRY_VINELET = register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
+    val MOONBERRY_VINELET =
+        register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRIES)))
-    val CRAB_SPAWN_EGG = register("crab_spawn_egg", (SpawnEggItem(DuskEntities.CRAB, 0xffffff, 0xffffff, Item.Settings())))
+    val CRAB_SPAWN_EGG =
+        register("crab_spawn_egg", (SpawnEggItem(DuskEntities.CRAB, 0xffffff, 0xffffff, Item.Settings())))
 
 
     fun init() {
@@ -112,10 +120,7 @@ object DuskItems {
             CASCADE_LEAVES,
             CASCADE_LEAF_PILE
         )
-        ColorProviderRegistry.ITEM.register({ stack, _ ->
-            val value = object : DyeableItem {}
-            value.getColor(stack)
-        }, FARMERS_HAT)
+        ColorProviderRegistry.ITEM.register({ stack, _ -> stack.get(DataComponentTypes.DYED_COLOR)?.rgb ?: 0xffffff })
     }
 
     fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, DuskAutumns.id(id), item)

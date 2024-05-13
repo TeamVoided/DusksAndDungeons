@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumn.init.worldgen
 import net.minecraft.client.sound.MusicType
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
+import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BiomeMoodSound
@@ -11,7 +12,6 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.world.biome.*
 import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
-import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.*
 import org.teamvoided.dusk_autumn.DuskAutumns.id

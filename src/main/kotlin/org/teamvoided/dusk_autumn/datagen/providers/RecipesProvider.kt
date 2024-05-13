@@ -10,10 +10,12 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
+import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
+import java.util.concurrent.CompletableFuture
 
-class RecipesProvider(o: FabricDataOutput) : FabricRecipeProvider(o) {
+class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
     override fun generateRecipes(exporter: RecipeExporter) {
         ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, DuskBlocks.BLUE_DOOR, 3)
             .ingredient('#', Ingredient.ofItems(DuskItems.CASCADE_PLANKS))

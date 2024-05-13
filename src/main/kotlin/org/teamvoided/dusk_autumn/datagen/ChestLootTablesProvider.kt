@@ -9,20 +9,22 @@ import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextTypes
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.function.EnchantWithLevelsLootFunction
-import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
-import net.minecraft.loot.provider.number.UniformLootNumberProvider
-import net.minecraft.util.Identifier
+import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumn.data.DuskLootTables
 import org.teamvoided.dusk_autumn.util.Utils
+import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
 
-class ChestLootTablesProvider(o: FabricDataOutput) : SimpleFabricLootTableProvider(o, LootContextTypes.CHEST) {
-    override fun generate(gen: BiConsumer<Identifier, LootTable.Builder>) {
+class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    SimpleFabricLootTableProvider(o, r, LootContextTypes.CHEST) {
+    override fun generate(provider: HolderLookup.Provider, gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
         // eStrongholdLibraryLootTable
         gen.accept(
-            DuskLootTables.COOL_CHEST,
+            RegistryKey.of(RegistryKeys.LOOT_TABLE, DuskLootTables.COOL_CHEST),
             LootTable.builder().pool(
                 LootPool.builder().rolls(Utils.uniformNum(2, 10))
                     .with(

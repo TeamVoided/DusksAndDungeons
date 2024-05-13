@@ -4,15 +4,18 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItemGroups.DUSK_AUTUMN_TAB
 import org.teamvoided.dusk_autumn.init.DuskItemGroups.getKey
 import org.teamvoided.dusk_autumn.init.DuskItems
+import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
-class EnglishTranslationProvider(o: FabricDataOutput) : FabricLanguageProvider(o) {
+class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    FabricLanguageProvider(o, r) {
 
     val items = listOf(
         DuskItems.CASCADE_SAPLING,
@@ -54,7 +57,8 @@ class EnglishTranslationProvider(o: FabricDataOutput) : FabricLanguageProvider(o
     val blocks = listOf(
         DuskBlocks.GOLDEN_BEETROOTS,
     )
-    override fun generateTranslations(gen: TranslationBuilder) {
+
+    override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         items.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }
 
@@ -67,4 +71,5 @@ class EnglishTranslationProvider(o: FabricDataOutput) : FabricLanguageProvider(o
 
     val Item.id get() = Registries.ITEM.getId(this)
     val Block.id get() = Registries.BLOCK.getId(this)
+
 }

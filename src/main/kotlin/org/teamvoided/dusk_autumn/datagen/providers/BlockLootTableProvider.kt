@@ -11,17 +11,22 @@ import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
-import net.minecraft.loot.entry.*
+import net.minecraft.loot.entry.AlternativeEntry
+import net.minecraft.loot.entry.ItemEntry
+import net.minecraft.loot.entry.LootTableEntry
 import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
+import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
+import java.util.concurrent.CompletableFuture
 
-class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider(o) {
+class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+    FabricBlockLootTableProvider(o, r) {
 
 
     val dropsItSelf = listOf(
@@ -109,7 +114,7 @@ class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider
             LootPool.builder().with(
                 AlternativeEntry.builder(
                     AlternativeEntry.builder(LeafPileBlock.PILE_LAYERS.values) { layers ->
-                        if (layers == 4) LootTableEntry.builder(leaves.lootTableId)
+                        if (layers == 4) LootTableEntry.method_428(leaves.lootTableId)
                         else
                             applyExplosionDecay(
                                 leaves,
@@ -129,7 +134,7 @@ class BlockLootTableProvider(o: FabricDataOutput) : FabricBlockLootTableProvider
                             )
                     },
                     AlternativeEntry.builder(LeafPileBlock.PILE_LAYERS.values) { layers ->
-                        if (layers == 4) LootTableEntry.builder(leaves.lootTableId)
+                        if (layers == 4) LootTableEntry.method_428(leaves.lootTableId)
                         else
                             ItemEntry.builder(pile)
                                 .apply(SetCountLootFunction.builder(constantLootNumber(layers)))

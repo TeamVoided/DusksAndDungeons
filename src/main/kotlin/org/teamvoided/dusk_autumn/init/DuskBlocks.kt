@@ -41,7 +41,7 @@ object DuskBlocks {
     )
     val VIOLET_DAISY = register(
         "violet_daisy", FlowerBlock(
-            StatusEffects.HASTE, 10, AbstractBlock.Settings.create()
+            StatusEffects.HASTE, 10f, AbstractBlock.Settings.create()
                 .mapColor(MapColor.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)
                 .offsetType(AbstractBlock.OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         )
@@ -58,10 +58,10 @@ object DuskBlocks {
     )
     val POTTED_CASCADE_SAPLING = register("potted_cascade_sapling", pottedVariant(CASCADE_SAPLING))
     val CASCADE_LOG = register(
-        "cascade_log", method_47375(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
+        "cascade_log", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
     )
     val STRIPPED_CASCADE_LOG = register(
-        "stripped_cascade_log", method_47375(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
+        "stripped_cascade_log", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
     )
     val CASCADE_PLANKS = register(
         "cascade_planks", Block(

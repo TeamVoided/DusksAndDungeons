@@ -3,7 +3,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("fabric-loom") version "1.3.8"
+    id("fabric-loom") version "1.6.3"
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.serialization") version "1.9.23"
     id("org.teamvoided.iridium") version "3.1.9"
@@ -54,7 +54,7 @@ loom {
 }
 
 tasks {
-    val targetJavaVersion = 17
+    val targetJavaVersion = 21
     withType<JavaCompile> {
         options.encoding = "UTF-8"
         options.release.set(targetJavaVersion)

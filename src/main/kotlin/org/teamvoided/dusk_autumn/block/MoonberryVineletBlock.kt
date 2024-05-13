@@ -18,9 +18,7 @@ import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 
 class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
-    override fun getCodec(): MapCodec<MoonberryVineletBlock> {
-        return moonberryVineletBlockMapCodec
-    }
+    override fun getCodec(): MapCodec<MoonberryVineletBlock> = CODEC
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(*arrayOf<Property<*>>(AGE))
@@ -68,11 +66,8 @@ class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
     }
 
     companion object {
-        val moonberryVineletBlockMapCodec: MapCodec<MoonberryVineletBlock> = method_54094 { settings: Settings ->
-            MoonberryVineletBlock(
-                settings
-            )
-        }
+        val CODEC: MapCodec<MoonberryVineletBlock> = createCodec(::MoonberryVineletBlock)
+
         const val MAX_AGE: Int = 3
         val AGE: IntProperty = Properties.AGE_2
         private val SHAPE =

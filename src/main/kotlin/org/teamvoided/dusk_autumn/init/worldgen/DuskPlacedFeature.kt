@@ -4,14 +4,13 @@ import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
+import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.int_provider.ClampedIntProvider
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
-import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
@@ -64,7 +63,7 @@ object DuskPlacedFeature {
     }
 
     fun bootstrapPlacedFeatures(c: BootstrapContext<PlacedFeature>) {
-        val holderProvider = c.lookup(RegistryKeys.CONFIGURED_FEATURE)
+        val holderProvider = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
 
         val cascadeSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.CASCADE_SAPLING)
         val goldenBirchSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.GOLDEN_BIRCH_SAPLING)

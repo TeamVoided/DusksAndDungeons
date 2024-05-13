@@ -31,9 +31,8 @@ import java.util.function.ToIntFunction
 
 class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Waterloggable, Fertilizable {
 
-    public override fun getCodec(): MapCodec<MoonberryVineBlock> {
-        return moonberryVineBlockMapCodec
-    }
+    public override fun getCodec(): MapCodec<MoonberryVineBlock> = CODEC
+
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         super.appendProperties(builder)
@@ -41,12 +40,8 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
     }
 
     override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos,
-        neighborPos: BlockPos
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
         if (state.get(WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
@@ -130,16 +125,11 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
 
 
     init {
-        this.defaultState =
-            defaultState.with(WATERLOGGED, false).with(BERRIES, 0)
+        this.defaultState = defaultState.with(WATERLOGGED, false).with(BERRIES, 0)
     }
 
     companion object {
-        val moonberryVineBlockMapCodec: MapCodec<MoonberryVineBlock> = method_54094 { settings: Settings ->
-            MoonberryVineBlock(
-                settings
-            )
-        }
+        val CODEC: MapCodec<MoonberryVineBlock> = createCodec(::MoonberryVineBlock)
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val BERRIES: IntProperty = IntProperty.of("berries", 0, 2)
         fun getLuminanceSupplier(luminanceLow: Int, luminance: Int): ToIntFunction<BlockState> {

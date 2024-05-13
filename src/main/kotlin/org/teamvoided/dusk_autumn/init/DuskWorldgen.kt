@@ -1,6 +1,9 @@
 package org.teamvoided.dusk_autumn.init
 
 import com.mojang.serialization.Codec
+import net.minecraft.item.ArmorItem
+import net.minecraft.item.ArmorItem.ArmorSlot
+import net.minecraft.item.ArmorMaterials
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.world.gen.foliage.FoliagePlacer

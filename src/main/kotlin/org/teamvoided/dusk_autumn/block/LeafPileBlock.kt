@@ -69,9 +69,9 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
         else super.isSideInvisible(state, stateFrom, direction)
     }
 
-    override fun canPathfindThrough(
+   /* override fun canPathfindThrough(
         state: BlockState, world: BlockView, pos: BlockPos, type: NavigationType
-    ): Boolean = true
+    ): Boolean = true*/
 
     override fun getSidesShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape = VoxelShapes.empty()
 

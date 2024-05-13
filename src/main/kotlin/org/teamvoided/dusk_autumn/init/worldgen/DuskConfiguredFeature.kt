@@ -13,7 +13,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.int_provider.BiasedToBottomIntProvider
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
-import net.minecraft.world.gen.BootstrapContext
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.size.ThreeLayersFeatureSize
@@ -77,14 +76,14 @@ object DuskConfiguredFeature {
     fun init() {}
 
     fun bootstrapConfiguredFeatures(c: BootstrapContext<ConfiguredFeature<*, *>>) {
-        val blockTags = c.lookup(RegistryKeys.BLOCK)
-        val configuredFeatures = c.lookup(RegistryKeys.CONFIGURED_FEATURE)
-        val placedFeatures = c.lookup(RegistryKeys.PLACED_FEATURE)
+        val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)
+        val configuredFeatures = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+        val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
 
         val petalFlowerBuilder = DataPool.builder<BlockState>()
         (1..4).forEach { count ->
             Direction.Type.HORIZONTAL.forEach { direction ->
-                petalFlowerBuilder.method_34975(
+                petalFlowerBuilder.addWeighted(
                     DuskBlocks.BLUE_PETALS.defaultState
                         .with(PinkPetalsBlock.AMOUNT, count).with(PinkPetalsBlock.FACING, direction),
                     1
@@ -152,14 +151,14 @@ object DuskConfiguredFeature {
 //        ConfiguredFeatureUtil.registerConfiguredFeature(
 //            c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
 //        )
-        ConfiguredFeatureUtil.registerConfiguredFeature<OreFeatureConfig, Feature<OreFeatureConfig>>(
+        ConfiguredFeatureUtil.method_39708<OreFeatureConfig, Feature<OreFeatureConfig>>(
             c,
             COBBLESTONE_ROCK,
             Feature.ORE,
             OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.REPLACEABLE_OR_DIRT), Blocks.COBBLESTONE.defaultState, 33)
         )
 
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
                     AlterGroundRadiusTreeDecorator(
@@ -170,7 +169,7 @@ object DuskConfiguredFeature {
                 )
             ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CASCADE_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
                     BeehiveBigTreeDecorator(0.02F),
@@ -183,7 +182,7 @@ object DuskConfiguredFeature {
                 )
             ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CASCADE_TREE_WETLANDS, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
                     LeavesVineTreeDecorator(0.25F),
@@ -196,7 +195,7 @@ object DuskConfiguredFeature {
                 )
             ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, GOLDEN_BIRCH_TALL, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
                     AlterGroundRadiusTreeDecorator(
@@ -209,7 +208,7 @@ object DuskConfiguredFeature {
                 )
             ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, GOLDEN_BIRCH_TALL_BEES, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
                     BeehiveBigTreeDecorator(0.02F),
@@ -223,7 +222,7 @@ object DuskConfiguredFeature {
                 )
             ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c,
             GOLDEN_BIRCH_TALL_WETLANDS,
             Feature.TREE,
@@ -241,7 +240,7 @@ object DuskConfiguredFeature {
                 )
             ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, DARK_OAK_AUTUMN, Feature.TREE, TreeFeatureConfig.Builder(
                 BlockStateProvider.of(Blocks.DARK_OAK_LOG),
                 DarkOakTrunkPlacer(6, 3, 1),
@@ -260,7 +259,7 @@ object DuskConfiguredFeature {
                     )
                 ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, DARK_OAK_AUTUMN_WETLANDS, Feature.TREE, TreeFeatureConfig.Builder(
                 BlockStateProvider.of(Blocks.DARK_OAK_LOG),
                 DarkOakTrunkPlacer(6, 3, 1),
@@ -280,7 +279,7 @@ object DuskConfiguredFeature {
                     )
                 ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, ACACIA_AUTUMN, Feature.TREE, TreeFeatureConfig.Builder(
                 BlockStateProvider.of(Blocks.ACACIA_LOG),
                 StraightTrunkPlacer(4, 2, 0),
@@ -292,7 +291,7 @@ object DuskConfiguredFeature {
                     ImmutableList.of<TreeDecorator>(leafPiles(DuskBlocks.ACACIA_LEAF_PILE, blockTags))
                 ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature<TreeFeatureConfig, Feature<TreeFeatureConfig>>(
+        ConfiguredFeatureUtil.method_39708<TreeFeatureConfig, Feature<TreeFeatureConfig>>(
             c, ACACIA_BUSH_AUTUMN, Feature.TREE,
             TreeFeatureConfig.Builder(
                 BlockStateProvider.of(Blocks.ACACIA_LOG),
@@ -302,7 +301,7 @@ object DuskConfiguredFeature {
                 TwoLayersFeatureSize(0, 0, 0)
             ).build()
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
+        ConfiguredFeatureUtil.method_39708<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
             c, DISK_PODZOL, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz(
                     BlockStateProvider.of(Blocks.DIRT), listOf(
@@ -320,7 +319,7 @@ object DuskConfiguredFeature {
                 UniformIntProvider.create(2, 6), 2
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
+        ConfiguredFeatureUtil.method_39708<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
             c, DISK_MUD, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz.method_43312(Blocks.MUD), BlockPredicate.matchingBlocks(
                     listOf(
@@ -336,7 +335,7 @@ object DuskConfiguredFeature {
             )
         )
 
-        ConfiguredFeatureUtil.registerConfiguredFeature<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
+        ConfiguredFeatureUtil.method_39708<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
             c, DISK_RED_SAND, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz(
                     BlockStateProvider.of(Blocks.RED_SAND), listOf(
@@ -358,35 +357,35 @@ object DuskConfiguredFeature {
                 ), UniformIntProvider.create(2, 6), 2
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, PATCH_PUMPKIN_EXTRA, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
-                            .method_34975(Blocks.PUMPKIN.defaultState, 64)
-                            .method_34975(Blocks.CARVED_PUMPKIN.defaultState, 8)
-                            .method_34975(
+                            .addWeighted(Blocks.PUMPKIN.defaultState, 64)
+                            .addWeighted(Blocks.CARVED_PUMPKIN.defaultState, 8)
+                            .addWeighted(
                                 Blocks.CARVED_PUMPKIN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 8
                             )
-                            .method_34975(
+                            .addWeighted(
                                 Blocks.CARVED_PUMPKIN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.EAST), 8
                             )
-                            .method_34975(
+                            .addWeighted(
                                 Blocks.CARVED_PUMPKIN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.WEST), 8
                             )
-                            .method_34975(Blocks.JACK_O_LANTERN.defaultState, 1)
-                            .method_34975(
+                            .addWeighted(Blocks.JACK_O_LANTERN.defaultState, 1)
+                            .addWeighted(
                                 Blocks.JACK_O_LANTERN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 1
                             )
-                            .method_34975(
+                            .addWeighted(
                                 Blocks.JACK_O_LANTERN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.EAST), 1
                             )
-                            .method_34975(
+                            .addWeighted(
                                 Blocks.JACK_O_LANTERN.defaultState
                                     .with(HorizontalFacingBlock.FACING, Direction.WEST), 1
                             )
@@ -403,7 +402,7 @@ object DuskConfiguredFeature {
                 )
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, AUTUMN_WOODS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
                     WeightedPlacedFeature(
@@ -423,7 +422,7 @@ object DuskConfiguredFeature {
                 ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, AUTUMN_PASTURES_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
@@ -435,7 +434,7 @@ object DuskConfiguredFeature {
                 ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_AUTUMN)
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, AUTUMN_WETLANDS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
                     WeightedPlacedFeature(
@@ -461,27 +460,27 @@ object DuskConfiguredFeature {
                 ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS)
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, FLOWER_AUTUMN, Feature.FLOWER, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 64,
                 PlacedFeatureUtil.onlyWhenEmpty(
                     Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                         WeightedBlockStateProvider(
                             DataPool.builder<BlockState>()
-                                .method_34975(Blocks.CORNFLOWER.defaultState, 5)
-                                .method_34975(Blocks.POPPY.defaultState, 5)
-                                .method_34975(DuskBlocks.CASCADE_SAPLING.defaultState, 1)
+                                .addWeighted(Blocks.CORNFLOWER.defaultState, 5)
+                                .addWeighted(Blocks.POPPY.defaultState, 5)
+                                .addWeighted(DuskBlocks.CASCADE_SAPLING.defaultState, 1)
                         )
                     )
                 )
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, PATCH_ROSEBUSH, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.ROSE_BUSH))
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, BLUE_PETALS, Feature.FLOWER, RandomPatchFeatureConfig(
                 96, 6, 2,
                 PlacedFeatureUtil.onlyWhenEmpty(
@@ -489,7 +488,7 @@ object DuskConfiguredFeature {
                 )
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, AUTUMN_FARMLAND, DuskFeatures.FARMLAND, FarmlandConfig(
                 BlockTags.DIRT,
                 DuskBlockTags.FARMLAND_PLACES_UNDER,
@@ -511,7 +510,7 @@ object DuskConfiguredFeature {
                 listOf()
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, AUTUMN_FARMLAND_CROPS, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
                     WeightedPlacedFeature(
@@ -556,7 +555,7 @@ object DuskConfiguredFeature {
                 )
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CROPS_WILD_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockFeatureConfig(
@@ -566,7 +565,7 @@ object DuskConfiguredFeature {
                 ), ImmutableList.of(Blocks.PODZOL, Blocks.GRASS_BLOCK, Blocks.FARMLAND), 32
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CROPS_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockFeatureConfig(
@@ -574,47 +573,47 @@ object DuskConfiguredFeature {
                 ),
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CROPS_CARROTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     basicCropAges(Blocks.CARROTS)
                 )
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CROPS_POTATOES, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     basicCropAges(Blocks.POTATOES)
                 )
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CROPS_PUMPKIN, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     basicCropAges(Blocks.PUMPKIN_STEM)
                 )
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CROPS_BEETROOTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
-                            .method_34975(Blocks.BEETROOTS.defaultState, 3)
-                            .method_34975(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 2)
-                            .method_34975(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 3), 1)
+                            .addWeighted(Blocks.BEETROOTS.defaultState, 3)
+                            .addWeighted(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 2)
+                            .addWeighted(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 3), 1)
                     )
                 )
             )
         )
-        ConfiguredFeatureUtil.registerConfiguredFeature(
+        ConfiguredFeatureUtil.method_39708(
             c, CROPS_GOLDEN_BEETROOTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
-                            .method_34975(DuskBlocks.GOLDEN_BEETROOTS.defaultState, 1)
-                            .method_34975(DuskBlocks.GOLDEN_BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 1)
-                            .method_34975(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 3), 1)
+                            .addWeighted(DuskBlocks.GOLDEN_BEETROOTS.defaultState, 1)
+                            .addWeighted(DuskBlocks.GOLDEN_BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 1)
+                            .addWeighted(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 3), 1)
                     )
                 )
             )
@@ -637,7 +636,7 @@ object DuskConfiguredFeature {
     //    val petalFlowerBuilder = DataPool.builder<BlockState>()
 //    (1..4).forEach { count ->
 //        Direction.Type.HORIZONTAL.forEach { direction ->
-//            petalFlowerBuilder.method_34975(
+//            petalFlowerBuilder.addWeighted(
 //                DuskBlocks.BLUE_PETALS.defaultState
 //                    .with(PinkPetalsBlock.AMOUNT, count).with(PinkPetalsBlock.FACING, direction),
 //                1
@@ -647,7 +646,7 @@ object DuskConfiguredFeature {
     fun basicCropAges(crop: Block): WeightedBlockStateProvider {
         val crops = DataPool.builder<BlockState>()
         (1..7).forEach { age ->
-            crops.method_34975(crop.defaultState.with(CropBlock.AGE, age), 7 - age + 1)
+            crops.addWeighted(crop.defaultState.with(CropBlock.AGE, age), 7 - age + 1)
         }
         return WeightedBlockStateProvider(
             crops
@@ -658,9 +657,9 @@ object DuskConfiguredFeature {
         return AlterOnGroundTreeDecorator(
             WeightedBlockStateProvider(
                 DataPool.builder<BlockState>()
-                    .method_34975(leafPile.defaultState, 9)
-                    .method_34975(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 2), 4)
-                    .method_34975(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 3), 1)
+                    .addWeighted(leafPile.defaultState, 9)
+                    .addWeighted(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 2), 4)
+                    .addWeighted(leafPile.defaultState.with(LeafPileBlock.PILE_LAYERS, 3), 1)
             ),
             3, 10, 20,
             blockTags.getTagOrThrow(DuskBlockTags.LEAF_PILES_PLACE_ON)
