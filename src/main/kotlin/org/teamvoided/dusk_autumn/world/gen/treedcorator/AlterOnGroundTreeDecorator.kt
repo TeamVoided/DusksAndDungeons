@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.world.gen.treedcorator
 
 import com.google.common.collect.Lists
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.Block
 import net.minecraft.registry.HolderSet
@@ -16,7 +17,11 @@ import kotlin.math.abs
 
 
 class AlterOnGroundTreeDecorator(
-    private val provider: BlockStateProvider, private val radius: Int, private val radiusPercentChance: Int, private val foliagePercentChance: Int, val canBePlacedOn: HolderSet<Block>
+    private val provider: BlockStateProvider,
+    private val radius: Int,
+    private val radiusPercentChance: Int,
+    private val foliagePercentChance: Int,
+    val canBePlacedOn: HolderSet<Block>
 ) : TreeDecorator() {
     override fun getType(): TreeDecoratorType<*> {
         return DuskWorldgen.ALTER_ON_GROUND
@@ -70,7 +75,7 @@ class AlterOnGroundTreeDecorator(
     private fun setBlock(placer: Placer, pos: BlockPos) {
         for (i in 2 downTo -3) {
             val blockPos = pos.up(i)
-            if (placer.world.testBlockState(blockPos) { it.isIn(canBePlacedOn) } && placer.isAir(blockPos.up())){
+            if (placer.world.testBlockState(blockPos) { it.isIn(canBePlacedOn) } && placer.isAir(blockPos.up())) {
                 placer.replace(blockPos.up(), provider.getBlockState(placer.random, pos))
                 break
             }
@@ -83,16 +88,17 @@ class AlterOnGroundTreeDecorator(
 
 
     companion object {
-
-        val CODEC: Codec<AlterOnGroundTreeDecorator> = RecordCodecBuilder.create {
-            it.group(
-                BlockStateProvider.TYPE_CODEC.fieldOf("block_provider").forGetter { decorator -> decorator.provider },
-                Codec.intRange(0, 15).fieldOf("radius").forGetter { decorator -> decorator.radius },
-                Codec.intRange(1, 100).fieldOf("radius_percent_chance").forGetter { decorator -> decorator.radiusPercentChance },
-                Codec.intRange(1, 100).fieldOf("foliage_percent_chance").forGetter { decorator -> decorator.foliagePercentChance },
-                RegistryCodecs.homogeneousList(RegistryKeys.BLOCK).fieldOf("can_be_placed_on").forGetter { placement -> placement.canBePlacedOn },
-            ).apply(it, ::AlterOnGroundTreeDecorator)
+        val CODEC: MapCodec<AlterOnGroundTreeDecorator> = RecordCodecBuilder.mapCodec { instance ->
+            instance.group(
+                BlockStateProvider.TYPE_CODEC.fieldOf("block_provider").forGetter { it.provider },
+                Codec.intRange(0, 15).fieldOf("radius").forGetter { it.radius },
+                Codec.intRange(1, 100).fieldOf("radius_percent_chance").forGetter { it.radiusPercentChance },
+                Codec.intRange(1, 100).fieldOf("foliage_percent_chance").forGetter { it.foliagePercentChance },
+                RegistryCodecs.homogeneousList(RegistryKeys.BLOCK).fieldOf("can_be_placed_on")
+                    .forGetter { it.canBePlacedOn },
+            ).apply(instance, ::AlterOnGroundTreeDecorator)
         }
+
     }
 
 }

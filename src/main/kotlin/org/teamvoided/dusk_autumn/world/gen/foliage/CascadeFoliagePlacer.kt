@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumn.world.gen.foliage
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -118,26 +119,14 @@ class CascadeFoliagePlacer(
     }
 
     companion object {
-        val CODEC: Codec<CascadeFoliagePlacer> =
-            RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<CascadeFoliagePlacer> ->
-                fillFoliagePlacerFields(instance).and(
-                    instance.group(
-                        IntProvider.create(1, 512).fieldOf("foliage_height")
-                            .forGetter { placer: CascadeFoliagePlacer -> placer.foliageHeight },
-                        Codec.intRange(0, 256).fieldOf("leaf_placement_attempts")
-                            .forGetter { placer: CascadeFoliagePlacer -> placer.leafPlacementAttempts }
-                    )
-                ).apply(
-                    instance
-                ) { radius: IntProvider, offset: IntProvider, foliageHeight: IntProvider, leafPlacementAttempts: Int ->
-                    CascadeFoliagePlacer(
-                        radius,
-                        offset,
-                        foliageHeight,
-                        leafPlacementAttempts
-                    )
-                }
-            }
+        val CODEC: MapCodec<CascadeFoliagePlacer> = RecordCodecBuilder.mapCodec { instance ->
+            fillFoliagePlacerFields(instance).and(
+                instance.group(
+                    IntProvider.method_35004(1, 512).fieldOf("foliage_height").forGetter { it.foliageHeight },
+                    Codec.intRange(0, 256).fieldOf("leaf_placement_attempts").forGetter { it.leafPlacementAttempts }
+                )
+            ).apply(instance, ::CascadeFoliagePlacer)
+        }
 //        val CODEC: Codec<CascadeFoliagePlacer> =
 //            RecordCodecBuilder.create {
 //                fillFoliagePlacerFields(it)

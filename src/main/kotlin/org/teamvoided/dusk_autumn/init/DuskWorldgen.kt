@@ -1,9 +1,6 @@
 package org.teamvoided.dusk_autumn.init
 
-import com.mojang.serialization.Codec
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ArmorItem.ArmorSlot
-import net.minecraft.item.ArmorMaterials
+import com.mojang.serialization.MapCodec
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.world.gen.foliage.FoliagePlacer
@@ -52,19 +49,19 @@ object DuskWorldgen {
         DuskFeatures.init()
     }
 
-    private fun <P : TreeDecorator> registerTreeDecorator(id: String, codec: Codec<P>): TreeDecoratorType<P> {
+    private fun <P : TreeDecorator> registerTreeDecorator(id: String, codec: MapCodec<P>): TreeDecoratorType<P> {
         return Registry.register(Registries.TREE_DECORATOR_TYPE, id(id), TreeDecoratorType(codec))
     }
 
-    private fun <P : TrunkPlacer> registerTrunkPlacer(id: String, codec: Codec<P>): TrunkPlacerType<P> {
+    private fun <P : TrunkPlacer> registerTrunkPlacer(id: String, codec: MapCodec<P>): TrunkPlacerType<P> {
         return Registry.register(Registries.TRUNK_PLACER_TYPE, id(id), TrunkPlacerType(codec))
     }
 
-    private fun <P : FoliagePlacer> registerFoliagePlacer(id: String, codec: Codec<P>): FoliagePlacerType<P> {
+    private fun <P : FoliagePlacer> registerFoliagePlacer(id: String, codec: MapCodec<P>): FoliagePlacerType<P> {
         return Registry.register(Registries.FOLIAGE_PLACER_TYPE, id(id), FoliagePlacerType(codec))
     }
 
-    private fun <P : RootPlacer> registerRootPlacer(id: String, codec: Codec<P>): RootPlacerType<P> {
+    private fun <P : RootPlacer> registerRootPlacer(id: String, codec: MapCodec<P>): RootPlacerType<P> {
         return Registry.register(Registries.ROOT_PLACER_TYPE, id(id), RootPlacerType(codec))
     }
 }

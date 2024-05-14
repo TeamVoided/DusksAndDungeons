@@ -1,7 +1,7 @@
 package org.teamvoided.dusk_autumn.world.gen.trunk
 
 import com.google.common.collect.Lists
-import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
@@ -133,8 +133,8 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
     }
 
     companion object {
-        val CODEC: Codec<ThreeWideTrunkPlacer> =
-            RecordCodecBuilder.create { fillTrunkPlacerFields(it).apply(it, ::ThreeWideTrunkPlacer) }
+        val CODEC: MapCodec<ThreeWideTrunkPlacer> =
+            RecordCodecBuilder.mapCodec { fillTrunkPlacerFields(it).apply(it, ::ThreeWideTrunkPlacer) }
     }
 //        suprise tool i want to use later
 //        val direction = Direction.Type.HORIZONTAL.random(random)

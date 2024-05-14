@@ -1,6 +1,6 @@
 package org.teamvoided.dusk_autumn.world.gen.foliage
 
-import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.util.random.RandomGenerator
@@ -69,16 +69,7 @@ class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) :
     }
 
     companion object {
-        val CODEC: Codec<ManhattanFoliagePlacer> =
-            RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<ManhattanFoliagePlacer> ->
-                fillFoliagePlacerFields(instance).apply(
-                    instance
-                ) { radius: IntProvider, offset: IntProvider ->
-                    ManhattanFoliagePlacer(
-                        radius,
-                        offset
-                    )
-                }
-            }
+        val CODEC: MapCodec<ManhattanFoliagePlacer> =
+            RecordCodecBuilder.mapCodec { fillFoliagePlacerFields(it).apply(it, ::ManhattanFoliagePlacer) }
     }
 }

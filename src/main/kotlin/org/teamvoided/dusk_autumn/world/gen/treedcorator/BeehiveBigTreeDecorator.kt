@@ -1,12 +1,11 @@
 package org.teamvoided.dusk_autumn.world.gen.treedcorator
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import net.minecraft.block.BeehiveBlock
 import net.minecraft.block.Blocks
+import net.minecraft.block.entity.BeehiveBlockEntity.Occupant
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.entity.EntityType
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.registry.Registries
 import net.minecraft.util.math.Direction
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
@@ -45,9 +44,7 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
                     placer.world.getBlockEntity(finalPos, BlockEntityType.BEEHIVE)
                         .ifPresent {
                             for (ignored in 0 until 2 + randomGenerator.nextInt(2)) {
-                                val nbt = NbtCompound()
-                                nbt.putString("id", Registries.ENTITY_TYPE.getId(EntityType.BEE).toString())
-                                it.addBee(nbt, randomGenerator.nextInt(599), false)
+                                it.addBee(Occupant.method_57584(randomGenerator.nextInt(599)))
                             }
                         }
                     return
@@ -70,8 +67,9 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
     }
 
     companion object {
-        val CODEC: Codec<BeehiveBigTreeDecorator> = Codec.floatRange(0.0f, 1.0f)
-            .fieldOf("probability").xmap(::BeehiveBigTreeDecorator) { it.probability }.codec()
+        val CODEC: MapCodec<BeehiveBigTreeDecorator> = Codec.floatRange(0.0f, 1.0f)
+            .fieldOf("probability")
+            .xmap(::BeehiveBigTreeDecorator) { it.probability }
 
         private val WORLDGEN_FACING = Direction.SOUTH
         private val SPAWN_DIRECTIONS =

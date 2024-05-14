@@ -2,26 +2,17 @@ package org.teamvoided.dusk_autumn.block
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.*
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
-import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
@@ -69,7 +60,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
     }
 
-    override fun isTranslucent(state: BlockState, world: BlockView, pos: BlockPos): Boolean {
+   /* override fun isTranslucent(state: BlockState, world: BlockView, pos: BlockPos): Boolean {
         return state.fluidState.isEmpty
     }
 
@@ -108,7 +99,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
 
     override fun hasRandomTicks(state: BlockState): Boolean {
         return state.get(BERRIES) < 2
-    }
+    }*/
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
         val blockstate = state.get(BERRIES)

@@ -7,6 +7,7 @@ import net.minecraft.entity.passive.PassiveEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.world.World
+import org.teamvoided.dusk_autumn.init.DuskEntities
 import software.bernie.geckolib.animatable.GeoEntity
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.animation.AnimatableManager
@@ -18,6 +19,7 @@ class CrabEntity : AnimalEntity, GeoEntity {
     private val cache: AnimatableInstanceCache = GeckoLibUtil.createInstanceCache(this)
 
     constructor(entityType: EntityType<out AnimalEntity>, world: World) : super(entityType, world)
+    constructor(world: World) : super(DuskEntities.CRAB, world)
 
     override fun createChild(world: ServerWorld, entity: PassiveEntity): PassiveEntity? = null
 

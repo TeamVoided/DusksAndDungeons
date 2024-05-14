@@ -1,11 +1,8 @@
 package org.teamvoided.dusk_autumn.world.gen.treedcorator
 
-import com.mojang.datafixers.kinds.App
-import com.mojang.datafixers.util.Function6
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.registry.RegistryCodecs
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Util
 import net.minecraft.util.dynamic.Codecs
 import net.minecraft.util.math.BlockPos
@@ -14,15 +11,14 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
-import java.util.function.Function
 
 class AttachedToTrunkTreeDecorator(
-    protected val probability: Float,
-    protected val xzExclusionRadius: Int,
-    protected val yExclusionRadius: Int,
-    protected val blockProvider: BlockStateProvider,
-    protected val requiredEmptyBlocks: Int,
-    protected val directions: List<Direction>
+    val probability: Float,
+    val xzExclusionRadius: Int,
+    val yExclusionRadius: Int,
+    val blockProvider: BlockStateProvider,
+    val requiredEmptyBlocks: Int,
+    val directions: List<Direction>
 ) :
     TreeDecorator() {
     override fun generate(placer: Placer) {
@@ -77,19 +73,15 @@ class AttachedToTrunkTreeDecorator(
     }
 
     companion object {
-        val CODEC: Codec<AttachedToTrunkTreeDecorator> = RecordCodecBuilder.create {
-            it.group(
-                Codec.floatRange(0.0f, 1.0f).fieldOf("probability").forGetter { decorator -> decorator.probability },
-                Codec.intRange(0, 16).fieldOf("xz_exclusion_radius").forGetter { decorator -> decorator.xzExclusionRadius },
-                Codec.intRange(0, 16).fieldOf("y_exclusion_radius")
-                    .forGetter { decorator -> decorator.yExclusionRadius },
-                BlockStateProvider.TYPE_CODEC.fieldOf("block_provider")
-                    .forGetter { decorator -> decorator.blockProvider },
-                Codec.intRange(1, 16).fieldOf("required_empty_blocks")
-                    .forGetter { decorator -> decorator.requiredEmptyBlocks },
-                Codecs.withNonEmptyList(Direction.CODEC.listOf()).fieldOf("directions")
-                    .forGetter { placement -> placement.directions },
-            ).apply(it, ::AttachedToTrunkTreeDecorator)
+        val CODEC: MapCodec<AttachedToTrunkTreeDecorator> = RecordCodecBuilder.mapCodec { instance ->
+            instance.group(
+                Codec.floatRange(0.0f, 1.0f).fieldOf("probability").forGetter { it.probability },
+                Codec.intRange(0, 16).fieldOf("xz_exclusion_radius").forGetter { it.xzExclusionRadius },
+                Codec.intRange(0, 16).fieldOf("y_exclusion_radius").forGetter { it.yExclusionRadius },
+                BlockStateProvider.TYPE_CODEC.fieldOf("block_provider").forGetter { it.blockProvider },
+                Codec.intRange(1, 16).fieldOf("required_empty_blocks").forGetter { it.requiredEmptyBlocks },
+                Codecs.withNonEmptyList(Direction.CODEC.listOf()).fieldOf("directions").forGetter { it.directions },
+            ).apply(instance, ::AttachedToTrunkTreeDecorator)
         }
     }
 }

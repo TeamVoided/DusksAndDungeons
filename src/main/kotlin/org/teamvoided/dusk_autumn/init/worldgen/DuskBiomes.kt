@@ -10,13 +10,12 @@ import net.minecraft.sound.BiomeMoodSound
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.biome.*
-import net.minecraft.world.biome.BiomeEffects.GrassColorModifier
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.*
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
 object DuskBiomes {
     val AUTUMN_WOODS = create("autumn_woods")
     val AUTUMN_PASTURES = create("autumn_pastures")
@@ -76,13 +75,13 @@ object DuskBiomes {
         context.register(AUTUMN_WETLANDS, createAutumnWetlands(context))
     }
 
-    fun createAutumnForest(context: BootstrapContext<Biome>): Biome {
+    fun createAutumnForest(c: BootstrapContext<Biome>): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
 
         val generationSettings = GenerationSettings
-            .Builder(context.lookup(RegistryKeys.PLACED_FEATURE), context.lookup(RegistryKeys.CONFIGURED_CARVER))
+            .Builder(c.getRegistryLookup(RegistryKeys.PLACED_FEATURE), c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
         addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
@@ -122,13 +121,13 @@ object DuskBiomes {
     }
 //grass 16434531 15647087
 
-    fun createAutumnPlains(context: BootstrapContext<Biome>): Biome {
+    fun createAutumnPlains(c: BootstrapContext<Biome>): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
 
         val generationSettings = GenerationSettings
-            .Builder(context.lookup(RegistryKeys.PLACED_FEATURE), context.lookup(RegistryKeys.CONFIGURED_CARVER))
+            .Builder(c.getRegistryLookup(RegistryKeys.PLACED_FEATURE), c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
         addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
@@ -169,7 +168,7 @@ object DuskBiomes {
         spawnSettings.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.DROWNED, 100, 1, 1))
 
         val generationSettings = GenerationSettings
-            .Builder(context.lookup(RegistryKeys.PLACED_FEATURE), context.lookup(RegistryKeys.CONFIGURED_CARVER))
+            .Builder(context.getRegistryLookup(RegistryKeys.PLACED_FEATURE), context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
         addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
@@ -207,7 +206,7 @@ object DuskBiomes {
         spawnSettings.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
         val generationSettings = GenerationSettings
-            .Builder(context.lookup(RegistryKeys.PLACED_FEATURE),context.lookup(RegistryKeys.CONFIGURED_CARVER))
+            .Builder(context.getRegistryLookup(RegistryKeys.PLACED_FEATURE),context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
         DefaultBiomeFeatures.addFossils(generationSettings)
         addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)

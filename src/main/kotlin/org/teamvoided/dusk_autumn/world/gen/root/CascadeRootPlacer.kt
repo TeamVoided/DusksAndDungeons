@@ -1,7 +1,7 @@
 package org.teamvoided.dusk_autumn.world.gen.root
 
 import com.google.common.collect.Lists
-import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
@@ -14,7 +14,6 @@ import net.minecraft.world.gen.root.AboveRootPlacement
 import net.minecraft.world.gen.root.RootPlacer
 import net.minecraft.world.gen.root.RootPlacerType
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
-import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.init.DuskWorldgen
 import java.util.*
 import java.util.function.BiConsumer
@@ -154,6 +153,7 @@ class CascadeRootPlacer(
             super.placeRoot(world, replacer, random, pos, config)
         }
     }
+
     override fun getTrunkOrigin(pos: BlockPos, random: RandomGenerator?): BlockPos {
         return pos
     }
@@ -163,14 +163,13 @@ class CascadeRootPlacer(
     }
 
 
-
     companion object {
         const val MAX_ROOT_WIDTH: Int = 8
         const val MAX_ROOT_LENGTH: Int = 15
-        val CODEC: Codec<CascadeRootPlacer> = RecordCodecBuilder.create { instance ->
+        val CODEC: MapCodec<CascadeRootPlacer> = RecordCodecBuilder.mapCodec { instance ->
             rootPlacerCodec(instance).and(
-                CascadeRootConfig.CODEC.fieldOf("cascade_root_placement").forGetter { it.cascadeRootConfig })
-                .apply(instance, ::CascadeRootPlacer)
+                CascadeRootConfig.CODEC.fieldOf("cascade_root_placement").forGetter { it.cascadeRootConfig }
+            ).apply(instance, ::CascadeRootPlacer)
         }
     }
 }

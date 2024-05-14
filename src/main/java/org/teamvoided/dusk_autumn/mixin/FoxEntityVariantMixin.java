@@ -47,7 +47,7 @@ public class FoxEntityVariantMixin {
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void clInit(CallbackInfo ci) {
         register("SILVER", 2, "silver");
-        CODEC = StringIdentifiable.createCodec(() -> field_18003);
+        CODEC = StringIdentifiable.createEnumCodec(() -> field_18003);
         VARIANTS = IdListUtil.sortArray(FoxEntity.Variant::getId, field_18003, IdListUtil.OutOfBoundsHandler.ZERO);
     }
 
