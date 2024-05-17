@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.datagen
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import org.teamvoided.dusk_autumn.datagen.tags.EntityTypeTagsProvider
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistrySetBuilder
 import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
@@ -23,7 +24,7 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         pack.addProvider(::DuskAutumnsWorldGenerator)
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::BlockTagsProvider)
-//        pack.addProvider(::EntityTypeTagsProvider)
+        pack.addProvider(::EntityTypeTagsProvider)
         pack.addProvider(::ModelProvider)
         pack.addProvider(::EnglishTranslationProvider)
         pack.addProvider(::RecipesProvider)
