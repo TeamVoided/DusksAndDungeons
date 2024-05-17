@@ -2,12 +2,13 @@ package org.teamvoided.dusk_autumn.entity
 
 
 import net.minecraft.block.BlockState
-import net.minecraft.entity.*
+import net.minecraft.entity.EntityData
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.SpawnReason
 import net.minecraft.entity.ai.control.AquaticMoveControl
 import net.minecraft.entity.ai.pathing.PathNodeType
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.data.TrackedData
-import net.minecraft.entity.mob.MobEntity
 import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.entity.passive.PassiveEntity
 import net.minecraft.item.ItemStack
@@ -33,6 +34,12 @@ class CrabEntity : AnimalEntity, GeoEntity {
     private val FALL_DAMAGE_REDUCTION = 5
     private val TARGET_ENTITY_ID: TrackedData<OptionalInt>? = null
 
+    init {
+//        this.lookControl = LookControl(this)
+        this.addPathfindingPenalty(PathNodeType.WATER, 4.0f)
+        this.addPathfindingPenalty(PathNodeType.TRAPDOOR, -1.0f)
+        this.moveControl = AquaticMoveControl(this, 85, 10, 0.02f, 0.1f, true)
+    }
 
     constructor(entityType: EntityType<out AnimalEntity>, world: World) : super(entityType, world)
     constructor(world: World) : super(DuskEntities.CRAB, world)
@@ -88,35 +95,18 @@ class CrabEntity : AnimalEntity, GeoEntity {
 //        initializeMemories(this, world.random)
         return super.initialize(world, difficulty, spawnReason, entityData)
     }
-    override fun getAmbientSound(): SoundEvent? {
-        return SoundEvents.ENTITY_PARROT_IMITATE_SPIDER
-    }
 
-    override fun getHurtSound(source: DamageSource): SoundEvent? {
-        return SoundEvents.ENTITY_IRON_GOLEM_HURT
-    }
-
-    override fun getDeathSound(): SoundEvent? {
-        return SoundEvents.ENTITY_WITHER_DEATH
-    }
-
+    override fun getAmbientSound(): SoundEvent = SoundEvents.ENTITY_PARROT_IMITATE_SPIDER
+    override fun getHurtSound(source: DamageSource): SoundEvent = SoundEvents.ENTITY_IRON_GOLEM_HURT
+    override fun getDeathSound(): SoundEvent = SoundEvents.ENTITY_WITHER_DEATH
     override fun playStepSound(pos: BlockPos, state: BlockState) {
         this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15f, 1.0f)
     }
 
-    override fun isPushedByFluids(): Boolean {
-        return false
-    }
-    override fun getTarget(): LivingEntity? {
-        return this.attackTarget
-    }
+    override fun isPushedByFluids(): Boolean = false
 
-    init {
-//        this.lookControl = LookControl(this)
-        this.addPathfindingPenalty(PathNodeType.WATER, 4.0f)
-        this.addPathfindingPenalty(PathNodeType.TRAPDOOR, -1.0f)
-        this.moveControl = AquaticMoveControl(this, 85, 10, 0.02f, 0.1f, true)
-    }
+//    override fun getTarget(): LivingEntity? = this.attackTarget
+
     override fun getAnimatableInstanceCache(): AnimatableInstanceCache = cache
 
 }
