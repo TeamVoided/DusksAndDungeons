@@ -19,11 +19,7 @@ object DuskEntities {
             .maxTrackingRange(10)
     )
     fun init() {
-        FabricDefaultAttributeRegistry.register(CRAB, MobEntity.createAttributes()
-            .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 5.0)
-            .add(EntityAttributes.GENERIC_MAX_HEALTH, 7.0)
-            .build()
-        )
+        FabricDefaultAttributeRegistry.register(CRAB, CrabEntity.createAttributes().build())
     }
     fun <T : Entity> register(id: String, entityType: EntityType.Builder<T>): EntityType<T> =
         Registry.register(Registries.ENTITY_TYPE, id(id), entityType.build(id))
