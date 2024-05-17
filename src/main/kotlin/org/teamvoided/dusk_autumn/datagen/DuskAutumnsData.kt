@@ -23,6 +23,7 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         pack.addProvider(::DuskAutumnsWorldGenerator)
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::BlockTagsProvider)
+//        pack.addProvider(::EntityTypeTagsProvider)
         pack.addProvider(::ModelProvider)
         pack.addProvider(::EnglishTranslationProvider)
         pack.addProvider(::RecipesProvider)
