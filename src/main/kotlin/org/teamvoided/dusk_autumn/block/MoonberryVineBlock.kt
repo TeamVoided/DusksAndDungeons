@@ -2,14 +2,23 @@ package org.teamvoided.dusk_autumn.block
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.*
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
+import net.minecraft.util.ActionResult
+import net.minecraft.util.Hand
+import net.minecraft.util.ItemInteractionResult
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
@@ -60,51 +69,64 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
     }
 
-   /* override fun isTranslucent(state: BlockState, world: BlockView, pos: BlockPos): Boolean {
-        return state.fluidState.isEmpty
+    override fun onInteract(
+        stack: ItemStack,
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        entity: PlayerEntity,
+        hand: Hand,
+        hitResult: BlockHitResult
+    ): ItemInteractionResult {
+        val berries = state.get(BERRIES)
+        val bl = berries == 2
+        return if (!bl && stack.isOf(Items.BONE_MEAL)) ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION else super.onInteract(
+            stack,
+            state,
+            world,
+            pos,
+            entity,
+            hand,
+            hitResult
+        )
     }
-
     override fun onUse(
         state: BlockState,
         world: World,
         pos: BlockPos,
-        player: PlayerEntity,
-        hand: Hand,
-        hit: BlockHitResult
+        entity: PlayerEntity,
+        hitResult: BlockHitResult
     ): ActionResult {
-        val berryState = state.get(BERRIES)
-        val has2berry = berryState == 2
-        if (!has2berry && player.getStackInHand(hand).isOf(Items.BONE_MEAL)) {
-            return ActionResult.PASS
-        } else if (berryState >= 1) {
-            val rand13 = 1 + world.random.nextInt(if (world.isNight) 2 else 1)
-            dropStack(world, pos, ItemStack(DuskItems.MOONBERRIES, rand13 + (if (has2berry) 1 else 0)))
+        val i = state.get(SweetBerryBushBlock.AGE)
+        val bl = i == 3
+        if (i > 1) {
+            val j = 1 + world.random.nextInt(2)
+            dropStack(world, pos, ItemStack(DuskItems.MOONBERRIES, j + (if (bl) 1 else 0)))
             world.playSound(
                 null,
                 pos,
-                SoundEvents.BLOCK_CAVE_VINES_PICK_BERRIES,
+                SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES,
                 SoundCategory.BLOCKS,
                 1.0f,
                 0.8f + world.random.nextFloat() * 0.4f
             )
-            val has0berry = state.with(BERRIES, 0)
-            world.setBlockState(pos, has0berry, 2)
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(player, has0berry))
+            val blockState = state.with(SweetBerryBushBlock.AGE, 1)
+            world.setBlockState(pos, blockState, 2)
+            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(entity, blockState))
             return ActionResult.success(world.isClient)
         } else {
-            return super.onUse(state, world, pos, player, hand, hit)
+            return super.onUse(state, world, pos, entity, hitResult)
         }
     }
 
-
-    override fun hasRandomTicks(state: BlockState): Boolean {
+    override fun getRandomTicks(state: BlockState): Boolean {
         return state.get(BERRIES) < 2
-    }*/
+    }
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
-        val blockstate = state.get(BERRIES)
-        if (blockstate < 3 && random.nextInt(5) == 0 && world.isNight && world.isSkyVisible(pos)) {
-            val blockState = state.with(BERRIES, blockstate + 1)
+        val berries = state.get(BERRIES)
+        if (berries < 3 && random.nextInt(5) == 0 && world.isNight && world.isSkyVisible(pos)) {
+            val blockState = state.with(BERRIES, berries + 1)
             world.setBlockState(pos, blockState, 2)
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(blockState))
         }

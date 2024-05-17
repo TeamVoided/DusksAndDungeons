@@ -4,7 +4,7 @@
 		{
 			"description": {
 				"identifier": "geometry.unknown",
-				"texture_width": 32,
+				"texture_width": 64,
 				"texture_height": 32,
 				"visible_bounds_width": 2,
 				"visible_bounds_height": 1.5,
@@ -13,72 +13,77 @@
 			"bones": [
 				{
 					"name": "crab",
-					"pivot": [0, 0, 0]
+					"pivot": [0, 2, 0]
 				},
 				{
 					"name": "body",
 					"parent": "crab",
-					"pivot": [0, 0, 0],
+					"pivot": [0, -1, 0],
 					"cubes": [
-						{"origin": [-4, 3, -3], "size": [8, 4, 6], "uv": [0, 0]}
+						{"origin": [-4, 2, -3], "size": [8, 4, 6], "uv": [0, 0]},
+						{"origin": [-4, 2, -3], "size": [8, 4, 6], "inflate": 0.25, "uv": [28, 0]}
 					]
 				},
 				{
 					"name": "claw_left",
 					"parent": "crab",
-					"pivot": [0, 0, 0],
+					"pivot": [0, -1, 0],
 					"cubes": [
-						{"origin": [3, 3, -6], "size": [2, 3, 3], "uv": [22, 0]}
+						{"origin": [3, 2, -7], "size": [2, 3, 4], "pivot": [4, 3.5, -3], "rotation": [30, 44.5, 0], "uv": [20, 18]},
+						{"origin": [3, 2, -7], "size": [2, 3, 4], "inflate": -0.1, "pivot": [4, 3.5, -3], "rotation": [30, 44.5, 0], "uv": [20, 25]}
 					]
 				},
 				{
 					"name": "claw_right",
 					"parent": "crab",
-					"pivot": [-4, 3.5, -3],
+					"pivot": [-4, 4.5, -3],
 					"cubes": [
-						{"origin": [-6, 1, -9], "size": [4, 5, 6], "uv": [0, 10]}
+						{"origin": [-6, 2, -9], "size": [4, 5, 6], "pivot": [-4, 4.5, -3], "rotation": [22.5, -22.5, 0], "uv": [0, 10]},
+						{"origin": [-6, 2, -9], "size": [4, 5, 6], "inflate": -0.1, "pivot": [-4, 4.5, -3], "rotation": [22.5, -22.5, 0], "uv": [0, 21]}
 					]
 				},
 				{
 					"name": "legs_left",
 					"parent": "crab",
-					"pivot": [4, 4, 0]
+					"pivot": [4, 3, 0],
+					"rotation": [0, 0, -15]
 				},
 				{
-					"name": "front",
+					"name": "left_front",
 					"parent": "legs_left",
-					"pivot": [4, 4, 0],
+					"pivot": [4, 3, 0],
 					"cubes": [
-						{"origin": [4, 0, -3], "size": [3, 4, 3], "uv": [20, 10]}
+						{"origin": [4, -1, -3], "size": [3, 4, 3], "uv": [30, 10]}
 					]
 				},
 				{
-					"name": "back",
+					"name": "left_back",
 					"parent": "legs_left",
-					"pivot": [4, 4, 0],
+					"pivot": [4, 3, 0],
 					"cubes": [
-						{"origin": [4, 0, 0], "size": [3, 4, 3], "uv": [17, 18]}
+						{"origin": [4, -1, 0], "size": [3, 4, 3], "uv": [42, 10]}
 					]
 				},
 				{
 					"name": "legs_right",
 					"parent": "crab",
-					"pivot": [-4, 4, 0]
+					"pivot": [-4, 3, 0],
+					"rotation": [0, 0, 15]
 				},
 				{
 					"name": "right_front",
 					"parent": "legs_right",
-					"pivot": [-4, 4, 0],
+					"pivot": [-4, 3, 0],
 					"cubes": [
-						{"origin": [-7, 0, -3], "size": [3, 4, 3], "uv": [0, 21]}
+						{"origin": [-7, -1, -3], "size": [3, 4, 3], "uv": [30, 10], "mirror": true}
 					]
 				},
 				{
 					"name": "right_back",
 					"parent": "legs_right",
-					"pivot": [-4, 4, 0],
+					"pivot": [-4, 3, 0],
 					"cubes": [
-						{"origin": [-7, 0, 0], "size": [3, 4, 3], "uv": [9, 25]}
+						{"origin": [-7, -1, 0], "size": [3, 4, 3], "uv": [42, 10], "mirror": true}
 					]
 				}
 			]

@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.client.render.item.ItemModels
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
 import net.minecraft.state.property.Properties
@@ -303,7 +304,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )*/
     }
 
-    override fun generateItemModels(gen: ItemModelGenerator) {}
+    override fun generateItemModels(gen: ItemModelGenerator) {
+//        gen.register(DuskItems.CRAB_SPAWN_EGG, Models.)
+    }
 
 //    private fun BlockStateModelGenerator.parentedModel(block: Block, parent: Identifier): Identifier = this.parentedModel(block, block, parent)
 
