@@ -21,6 +21,7 @@ import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.entity.passive.PassiveEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.tag.ItemTags
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
@@ -42,14 +43,14 @@ import java.util.*
 
 class CrabEntity : AnimalEntity, Angerable, GeoEntity {
     private val cache: AnimatableInstanceCache = GeckoLibUtil.createInstanceCache(this)
-    private val FALL_DAMAGE_REDUCTION = 5
+    private val fallDamageReduction = 5
     private val TARGET_ENTITY_ID: TrackedData<OptionalInt>? = null
     private var targetUuid: UUID? = null
 
     init {
-//        this.addPathfindingPenalty(PathNodeType.WATER, 4.0f)
+        this.addPathfindingPenalty(PathNodeType.WATER, 0.0f)
         this.addPathfindingPenalty(PathNodeType.TRAPDOOR, -1.0f)
-        this.moveControl = AquaticMoveControl(this, 85, 10, 0.02f, 0.1f, false)
+        this.moveControl = AquaticMoveControl(this, 85, 20, swimSpeed, landSpeed, false)
     }
 
     constructor(entityType: EntityType<out AnimalEntity>, world: World) : super(entityType, world)
@@ -68,7 +69,7 @@ class CrabEntity : AnimalEntity, Angerable, GeoEntity {
     }
 
     override fun initGoals() {
-        goalSelector.add(1, SwimGoal(this))
+//        goalSelector.add(1, SwimGoal(this))
 //        goalSelector.add(1, WolfEscapeDangerGoal(this, 1.5))
 //        goalSelector.add(
 //            3, AvoidLlamaGoal(
@@ -88,8 +89,7 @@ class CrabEntity : AnimalEntity, Angerable, GeoEntity {
         )
         goalSelector.add(10, LookAroundGoal(this))
         targetSelector.add(
-            3,
-            RevengeGoal(this, *arrayOfNulls(0)).setGroupRevenge(*arrayOfNulls(0))
+            3, RevengeGoal(this, *arrayOfNulls(0)).setGroupRevenge(*arrayOfNulls(0))
         )
         targetSelector.add(
             4, TargetGoal(
@@ -113,10 +113,12 @@ class CrabEntity : AnimalEntity, Angerable, GeoEntity {
 
     override fun createChild(world: ServerWorld, entity: PassiveEntity): PassiveEntity? = null
 
-    override fun isBreedingItem(stack: ItemStack?): Boolean = false
+    override fun isBreedingItem(stack: ItemStack): Boolean = stack.isIn(ItemTags.LEAVES)
+
+
 
     override fun computeFallDamage(fallDistance: Float, damageMultiplier: Float): Int {
-        return super.computeFallDamage(fallDistance, damageMultiplier) - FALL_DAMAGE_REDUCTION
+        return super.computeFallDamage(fallDistance, damageMultiplier) - fallDamageReduction
     }
 
     override fun initialize(
@@ -129,11 +131,11 @@ class CrabEntity : AnimalEntity, Angerable, GeoEntity {
     }
 
     override fun getAmbientSound(): SoundEvent = SoundEvents.ENTITY_PARROT_IMITATE_SPIDER
-    override fun getHurtSound(source: DamageSource): SoundEvent = SoundEvents.ENTITY_IRON_GOLEM_HURT
-    override fun getDeathSound(): SoundEvent = SoundEvents.ENTITY_WITHER_DEATH
     override fun playStepSound(pos: BlockPos, state: BlockState) {
         this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15f, 1.0f)
     }
+    override fun getHurtSound(source: DamageSource): SoundEvent = SoundEvents.ENTITY_IRON_GOLEM_HURT
+    override fun getDeathSound(): SoundEvent = SoundEvents.ENTITY_WITHER_SKELETON_DEATH
 
     override fun isPushedByFluids(): Boolean = false
     override fun getAnimatableInstanceCache(): AnimatableInstanceCache = cache
@@ -161,11 +163,12 @@ class CrabEntity : AnimalEntity, Angerable, GeoEntity {
         fun createAttributes(): DefaultAttributeContainer.Builder {
             return MobEntity.createAttributes()
                 .add(EntityAttributes.GENERIC_ARMOR, 4.0)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1.0)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 7.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
                 .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0)
         }
+        private val landSpeed = 0.6f
+        private val swimSpeed = 0.02f
         private val ANGER_TIME: TrackedData<Int> =
             DataTracker.registerData(CrabEntity::class.java, TrackedDataHandlerRegistry.INTEGER)
         private val ANGER_TIME_RANGE: UniformIntProvider = TimeHelper.betweenSeconds(20, 39)

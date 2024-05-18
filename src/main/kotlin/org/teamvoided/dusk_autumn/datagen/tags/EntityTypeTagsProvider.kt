@@ -14,5 +14,7 @@ class EntityTypeTagsProvider(output: FabricDataOutput, registriesFuture: Complet
             .add(DuskEntities.CRAB)
         getOrCreateTagBuilder(EntityTypeTags.ARTHROPOD)
             .add(DuskEntities.CRAB)
+        getOrCreateTagBuilder(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
+            .add(DuskEntities.CRAB)
     }
 }
