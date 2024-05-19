@@ -2,7 +2,7 @@ package org.teamvoided.dusk_autumn.datagen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BiomeTags
@@ -56,21 +56,21 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(BiomeTags.SPAWNS_COLD_TYPED_FROGS)
             .forceAddTag(DuskBiomeTags.IS_AUTUMN)
 //Fabric
-        getOrCreateTagBuilder(ConventionalBiomeTags.CLIMATE_COLD)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_COLD_OVERWORLD)
             .forceAddTag(DuskBiomeTags.IS_AUTUMN)
-        getOrCreateTagBuilder(ConventionalBiomeTags.TREE_DECIDUOUS)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_DECIDUOUS_TREE)
             .add(DuskBiomes.AUTUMN_WOODS)
             .add(DuskBiomes.AUTUMN_PASTURES)
             .add(DuskBiomes.AUTUMN_WETLANDS)
-        getOrCreateTagBuilder(ConventionalBiomeTags.VEGETATION_SPARSE)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_VEGETATION_SPARSE)
             .add(DuskBiomes.AUTUMN_PASTURES)
-        getOrCreateTagBuilder(ConventionalBiomeTags.FOREST)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_FOREST)
             .add(DuskBiomes.AUTUMN_WOODS)
-        getOrCreateTagBuilder(ConventionalBiomeTags.PLAINS)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_PLAINS)
             .add(DuskBiomes.AUTUMN_PASTURES)
-        getOrCreateTagBuilder(ConventionalBiomeTags.RIVER)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_RIVER)
             .add(DuskBiomes.AUTUMN_CASCADES)
-        getOrCreateTagBuilder(ConventionalBiomeTags.SWAMP)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_SWAMP)
             .add(DuskBiomes.AUTUMN_WETLANDS)
     }
 }

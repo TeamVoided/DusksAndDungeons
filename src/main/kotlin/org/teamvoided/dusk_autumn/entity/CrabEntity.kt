@@ -4,6 +4,7 @@ package org.teamvoided.dusk_autumn.entity
 import net.minecraft.block.BlockState
 import net.minecraft.entity.EntityData
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.SpawnReason
 import net.minecraft.entity.ai.control.AquaticMoveControl
 import net.minecraft.entity.ai.goal.*
@@ -19,8 +20,10 @@ import net.minecraft.entity.mob.Angerable
 import net.minecraft.entity.mob.MobEntity
 import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.entity.passive.PassiveEntity
+import net.minecraft.entity.passive.org.teamvoided.dusk_autumn.data.DuskEntityTypeTags
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.tag.EntityTypeTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvent
@@ -89,21 +92,18 @@ class CrabEntity : AnimalEntity, Angerable, GeoEntity {
         )
         goalSelector.add(10, LookAroundGoal(this))
         targetSelector.add(
-            3, RevengeGoal(this, *arrayOfNulls(0)).setGroupRevenge(*arrayOfNulls(0))
+            1, RevengeGoal(this, *arrayOfNulls(0)).setGroupRevenge(*arrayOfNulls(0))
         )
         targetSelector.add(
-            4, TargetGoal(
+            2, TargetGoal(
                 this,
                 PlayerEntity::class.java, 10, true, false
-            ) { entity -> this.shouldAngerAt(entity) }
+            ) { entity: LivingEntity ->
+                val entityType = entity.type
+                entityType.isIn(DuskEntityTypeTags.CRAB_ATTACKS)
+            }
         )
-        targetSelector.add(
-            7, TargetGoal(
-                this,
-                AbstractSkeletonEntity::class.java, false
-            )
-        )
-        targetSelector.add(8, UniversalAngerGoal(this, true))
+        targetSelector.add(3, UniversalAngerGoal(this, true))
     }
 
     override fun initDataTracker(builder: DataTracker.Builder) {
@@ -113,7 +113,7 @@ class CrabEntity : AnimalEntity, Angerable, GeoEntity {
 
     override fun createChild(world: ServerWorld, entity: PassiveEntity): PassiveEntity? = null
 
-    override fun isBreedingItem(stack: ItemStack): Boolean = stack.isIn(ItemTags.LEAVES)
+    override fun isBreedingItem(stack: ItemStack): Boolean = stack.isIn(ItemTags.BOATS)
 
 
 
@@ -130,17 +130,17 @@ class CrabEntity : AnimalEntity, Angerable, GeoEntity {
         return super.initialize(world, difficulty, spawnReason, entityData)
     }
 
-    override fun getAmbientSound(): SoundEvent = SoundEvents.ENTITY_PARROT_IMITATE_SPIDER
+    override fun getAmbientSound(): SoundEvent = SoundEvents.ENTITY_WITHER_SKELETON_AMBIENT
     override fun playStepSound(pos: BlockPos, state: BlockState) {
         this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15f, 1.0f)
     }
-    override fun getHurtSound(source: DamageSource): SoundEvent = SoundEvents.ENTITY_IRON_GOLEM_HURT
+    override fun getHurtSound(source: DamageSource): SoundEvent = SoundEvents.ENTITY_WITHER_SKELETON_HURT
     override fun getDeathSound(): SoundEvent = SoundEvents.ENTITY_WITHER_SKELETON_DEATH
 
     override fun isPushedByFluids(): Boolean = false
     override fun getAnimatableInstanceCache(): AnimatableInstanceCache = cache
     override fun getAngerTime(): Int {
-        return dataTracker.get(ANGER_TIME) as Int
+        return dataTracker.get(ANGER_TIME)
     }
 
     override fun setAngerTime(ticks: Int) {

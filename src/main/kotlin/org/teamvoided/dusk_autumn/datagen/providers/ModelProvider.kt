@@ -41,6 +41,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
+        gen.registerCubeAllModelTexturePool(DuskBlocks.VOLCANIC_SAND)
+        gen.registerParentedItemModel(DuskItems.VOLCANIC_SAND, id("block/volcanic_sand"))
+        gen.registerParentedItemModel(DuskItems.CRAB_SPAWN_EGG, Identifier("minecraft:item/template_spawn_egg"))
+
         gen.registerFlowerPotPlant(
             DuskBlocks.CASCADE_SAPLING,
             DuskBlocks.POTTED_CASCADE_SAPLING,

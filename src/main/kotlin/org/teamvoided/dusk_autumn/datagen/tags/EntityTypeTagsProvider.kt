@@ -2,6 +2,8 @@ package org.teamvoided.dusk_autumn.datagen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.passive.org.teamvoided.dusk_autumn.data.DuskEntityTypeTags
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.EntityTypeTags
 import org.teamvoided.dusk_autumn.init.DuskEntities
@@ -16,5 +18,10 @@ class EntityTypeTagsProvider(output: FabricDataOutput, registriesFuture: Complet
             .add(DuskEntities.CRAB)
         getOrCreateTagBuilder(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
             .add(DuskEntities.CRAB)
+        getOrCreateTagBuilder(DuskEntityTypeTags.CRAB_ATTACKS)
+            .add(EntityType.COD)
+            .add(EntityType.SALMON)
+            .add(EntityType.TROPICAL_FISH)
+            .add(EntityType.DROWNED)
     }
 }

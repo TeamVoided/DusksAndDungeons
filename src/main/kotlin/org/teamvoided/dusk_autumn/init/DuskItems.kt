@@ -20,7 +20,7 @@ import org.teamvoided.dusk_autumn.item.FarmersHatItem
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object DuskItems {
-
+    val VOLCANIC_SAND = register("volcanic_sand", BlockItem(DuskBlocks.VOLCANIC_SAND))
     val CASCADE_SAPLING = register("cascade_sapling", BlockItem(DuskBlocks.CASCADE_SAPLING))
     val CASCADE_LEAVES = register("cascade_leaves", BlockItem(DuskBlocks.CASCADE_LEAVES))
     val CASCADE_LOG = register("cascade_log", BlockItem(DuskBlocks.CASCADE_LOG))

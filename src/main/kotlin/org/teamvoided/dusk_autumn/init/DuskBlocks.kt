@@ -33,6 +33,15 @@ object DuskBlocks {
 
     const val CASCADE_LEAF_COLOR = 13846346
 
+    val VOLCANIC_SAND = register(
+        "volcanic_sand",
+        GravelBlock(
+            net.minecraft.util.Color(6710886),
+            AbstractBlock.Settings.create().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).strength(0.5f)
+                .sounds(BlockSoundGroup.SAND)
+        )
+    )
+
     val BLUE_PETALS = register(
         "blue_petals", PinkPetalsBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.PLANT)
@@ -43,7 +52,7 @@ object DuskBlocks {
         "violet_daisy", FlowerBlock(
             StatusEffects.HASTE, 10f, AbstractBlock.Settings.create()
                 .mapColor(MapColor.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)
-                .offsetType(AbstractBlock.OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
+                .offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
     val POTTED_VIOLET_DAISY = register("potted_violet_daisy", pottedVariant(VIOLET_DAISY))
