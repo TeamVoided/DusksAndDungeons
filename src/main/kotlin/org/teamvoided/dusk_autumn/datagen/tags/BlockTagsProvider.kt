@@ -58,6 +58,17 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.DIRT)
 
 //VANILLA
+        getOrCreateTagBuilder(BlockTags.SAND)
+            .add(DuskBlocks.VOLCANIC_SAND)
+        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+            .add(DuskBlocks.VOLCANIC_SAND)
+        getOrCreateTagBuilder(BlockTags.NETHER_CARVER_REPLACEABLES)
+            .add(DuskBlocks.VOLCANIC_SAND)
+        getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
+            .add(DuskBlocks.VOLCANIC_SAND)
+        getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS)
+            .add(DuskBlocks.VOLCANIC_SAND)
+
         getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES)
             .forceAddTag(DuskBlockTags.LEAF_PILES)
             .add(DuskBlocks.BLUE_PETALS)
