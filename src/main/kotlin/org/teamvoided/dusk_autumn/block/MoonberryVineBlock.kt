@@ -26,6 +26,7 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import net.minecraft.world.event.GameEvent
+import org.teamvoided.dusk_autumn.data.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskItems
 import java.util.function.ToIntFunction
 
@@ -97,7 +98,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         entity: PlayerEntity,
         hitResult: BlockHitResult
     ): ActionResult {
-        val i = state.get(SweetBerryBushBlock.AGE)
+        val i = state.get(BERRIES)
         val bl = i == 3
         if (i > 1) {
             val j = 1 + world.random.nextInt(2)

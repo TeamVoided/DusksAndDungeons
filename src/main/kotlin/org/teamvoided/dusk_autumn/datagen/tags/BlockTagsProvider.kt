@@ -12,7 +12,12 @@ import java.util.concurrent.CompletableFuture
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
     override fun configure(arg: HolderLookup.Provider) {
+        duskTags()
+        vanillaTags()
+        conventionTags()
+    }
 
+    fun duskTags() {
         getOrCreateTagBuilder(DuskBlockTags.CASCADE_LOGS)
             .add(DuskBlocks.CASCADE_LOG)
             .add(DuskBlocks.STRIPPED_CASCADE_LOG)
@@ -40,7 +45,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.CARVED_PUMPKIN)
             .add(Blocks.JACK_O_LANTERN)
             .add(Blocks.FARMLAND)
-        getOrCreateTagBuilder(DuskBlockTags.MOONBERRY_PLACEABLE_OVERRIDE)
+        getOrCreateTagBuilder(DuskBlockTags.MOONBERRY_CAN_PLACE_ON)
             .add(Blocks.FARMLAND)
         getOrCreateTagBuilder(DuskBlockTags.FARMLAND_PLACES_UNDER)
             .forceAddTag(BlockTags.REPLACEABLE)
@@ -56,8 +61,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE_BY_TREES)
             .forceAddTag(BlockTags.DIRT)
+    }
 
-//VANILLA
+    fun vanillaTags() {
         getOrCreateTagBuilder(BlockTags.SAND)
             .add(DuskBlocks.VOLCANIC_SAND)
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
@@ -114,4 +120,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.BLUE_PETALS)
             .add(DuskBlocks.MOONBERRY_VINE)
     }
+
+    fun conventionTags() {}
 }

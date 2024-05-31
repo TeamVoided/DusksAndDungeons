@@ -12,19 +12,26 @@ import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
 import java.util.concurrent.CompletableFuture
 
 class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    FabricTagProvider<Biome>(o, RegistryKeys.BIOME, r)  {
+    FabricTagProvider<Biome>(o, RegistryKeys.BIOME, r) {
     override fun configure(arg: HolderLookup.Provider) {
+        duskTags()
+        vanillaTags()
+        conventionTags()
+    }
 
+    fun duskTags() {
         getOrCreateTagBuilder(DuskBiomeTags.IS_AUTUMN)
             .add(DuskBiomes.AUTUMN_WOODS)
             .add(DuskBiomes.AUTUMN_PASTURES)
             .add(DuskBiomes.AUTUMN_CASCADES)
             .add(DuskBiomes.AUTUMN_WETLANDS)
         getOrCreateTagBuilder(DuskBiomeTags.SPAWNS_SILVER_FOXES)
-            .forceAddTag(DuskBiomeTags.IS_AUTUMN)
-//Vanilla
+            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
+    }
+
+    fun vanillaTags() {
         getOrCreateTagBuilder(BiomeTags.OVERWORLD)
-            .forceAddTag(DuskBiomeTags.IS_AUTUMN)
+            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(BiomeTags.FOREST)
             .add(DuskBiomes.AUTUMN_WOODS)
         getOrCreateTagBuilder(BiomeTags.RIVER)
@@ -40,7 +47,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(BiomeTags.TRAIL_RUINS_HAS_STRUCTURE)
             .add(DuskBiomes.AUTUMN_WOODS)
         getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT_STRUCTURE)
-            .forceAddTag(DuskBiomeTags.IS_AUTUMN)
+            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(BiomeTags.HAS_VILLAGE_TAIGA_STRUCTURE)
             .add(DuskBiomes.AUTUMN_PASTURES)
         getOrCreateTagBuilder(BiomeTags.HAS_PILLAGER_OUTPOST_STRUCTURE)
@@ -52,17 +59,22 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(BiomeTags.HAS_RUINED_PORTAL_SWAMP_STRUCTURE)
             .add(DuskBiomes.AUTUMN_WETLANDS)
         getOrCreateTagBuilder(BiomeTags.STRONGHOLD_BIASED_TO)
-            .forceAddTag(DuskBiomeTags.IS_AUTUMN)
-        getOrCreateTagBuilder(BiomeTags.SPAWNS_COLD_TYPED_FROGS)
-            .forceAddTag(DuskBiomeTags.IS_AUTUMN)
-//Fabric
-        getOrCreateTagBuilder(ConventionalBiomeTags.IS_COLD_OVERWORLD)
-            .forceAddTag(DuskBiomeTags.IS_AUTUMN)
-        getOrCreateTagBuilder(ConventionalBiomeTags.IS_DECIDUOUS_TREE)
             .add(DuskBiomes.AUTUMN_WOODS)
             .add(DuskBiomes.AUTUMN_PASTURES)
+        getOrCreateTagBuilder(BiomeTags.SPAWNS_COLD_TYPED_FROGS)
+            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
+    }
+
+    fun conventionTags() {
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_COLD_OVERWORLD)
+            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_DECIDUOUS_TREE)
+            .add(DuskBiomes.AUTUMN_WOODS)
             .add(DuskBiomes.AUTUMN_WETLANDS)
-        getOrCreateTagBuilder(ConventionalBiomeTags.IS_VEGETATION_SPARSE)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_VEGETATION_DENSE_OVERWORLD)
+            .add(DuskBiomes.AUTUMN_WOODS)
+            .add(DuskBiomes.AUTUMN_WETLANDS)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_VEGETATION_SPARSE_OVERWORLD)
             .add(DuskBiomes.AUTUMN_PASTURES)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_FOREST)
             .add(DuskBiomes.AUTUMN_WOODS)
@@ -71,6 +83,8 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_RIVER)
             .add(DuskBiomes.AUTUMN_CASCADES)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_SWAMP)
+            .add(DuskBiomes.AUTUMN_WETLANDS)
+        getOrCreateTagBuilder(ConventionalBiomeTags.IS_WET_OVERWORLD)
             .add(DuskBiomes.AUTUMN_WETLANDS)
     }
 }
