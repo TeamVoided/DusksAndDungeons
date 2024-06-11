@@ -66,7 +66,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
         gen.registerCubeAllModelTexturePool(DuskBlocks.VOLCANIC_SAND)
         gen.registerDustable(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND)
-        gen.registerSingleton(DuskBlocks.VOLCANIC_SANDSTONE, TexturedModel.CUBE_BOTTOM_TOP)
+        gen.registerSingleton(DuskBlocks.VOLCANIC_SANDSTONE, TexturedModel.SIDE_TOP_BOTTOM_WALL)
 
 
 
@@ -319,9 +319,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //    private fun BlockStateModelGenerator.parentedModel(block: Block, parent: Identifier): Identifier = this.parentedModel(block, block, parent)
 
     private fun BlockStateModelGenerator.parentedModel(
-        block: Block,
-        textBlock: Block,
-        parent: Identifier
+        block: Block, textBlock: Block, parent: Identifier
     ): Identifier =
         Model(parent.myb, Optional.empty(), ALL_KRY)
             .upload(block.model(), Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
