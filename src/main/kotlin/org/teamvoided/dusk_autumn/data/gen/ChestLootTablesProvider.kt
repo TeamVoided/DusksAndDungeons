@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.datagen
+package org.teamvoided.dusk_autumn.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider

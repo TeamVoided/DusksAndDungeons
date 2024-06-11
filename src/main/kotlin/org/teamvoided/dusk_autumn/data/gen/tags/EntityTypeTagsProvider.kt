@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.datagen.tags
+package org.teamvoided.dusk_autumn.data.gen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider

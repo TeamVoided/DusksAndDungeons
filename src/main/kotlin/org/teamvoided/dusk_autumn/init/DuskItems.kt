@@ -20,7 +20,6 @@ import org.teamvoided.dusk_autumn.item.FarmersHatItem
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object DuskItems {
-    val VOLCANIC_SAND = register("volcanic_sand", BlockItem(DuskBlocks.VOLCANIC_SAND))
     val CASCADE_SAPLING = register("cascade_sapling", BlockItem(DuskBlocks.CASCADE_SAPLING))
     val CASCADE_LEAVES = register("cascade_leaves", BlockItem(DuskBlocks.CASCADE_LEAVES))
     val CASCADE_LOG = register("cascade_log", BlockItem(DuskBlocks.CASCADE_LOG))
@@ -79,6 +78,12 @@ object DuskItems {
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRIES)))
     val CRAB_SPAWN_EGG =
         register("crab_spawn_egg", (SpawnEggItem(DuskEntities.CRAB, 0xffffff, 0xffffff, Item.Settings())))
+
+
+    val VOLCANIC_SAND = register("volcanic_sand", BlockItem(DuskBlocks.VOLCANIC_SAND))
+    val SUSPICIOUS_VOLCANIC_SAND = register("suspicious_volcanic_sand", BlockItem(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND))
+    val VOLCANIC_SANDSTONE = register("volcanic_sandstone", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE))
+
 
 
     fun init() {

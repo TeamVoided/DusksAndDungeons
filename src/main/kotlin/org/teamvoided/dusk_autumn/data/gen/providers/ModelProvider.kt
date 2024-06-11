@@ -1,10 +1,9 @@
-package org.teamvoided.dusk_autumn.datagen.providers
+package org.teamvoided.dusk_autumn.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.client.render.item.ItemModels
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
 import net.minecraft.state.property.Properties
@@ -41,7 +40,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
-        gen.registerCubeAllModelTexturePool(DuskBlocks.VOLCANIC_SAND)
         gen.registerParentedItemModel(DuskItems.VOLCANIC_SAND, id("block/volcanic_sand"))
         gen.registerParentedItemModel(DuskItems.CRAB_SPAWN_EGG, Identifier("minecraft:item/template_spawn_egg"))
 
@@ -65,6 +63,12 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
         gen.registerItemModel(DuskItems.MOONBERRIES)
+
+        gen.registerCubeAllModelTexturePool(DuskBlocks.VOLCANIC_SAND)
+        gen.registerDustable(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND)
+        gen.registerSingleton(DuskBlocks.VOLCANIC_SANDSTONE, TexturedModel.CUBE_BOTTOM_TOP)
+
+
 
         leafPiles.forEach { (it, texture) ->
             val layer1 = gen.parentedModel(it, texture, leafPile())

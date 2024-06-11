@@ -19,6 +19,7 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.sound.SoundEvents
 import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.DuskAutumns.id
@@ -32,15 +33,6 @@ object DuskBlocks {
         .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.PLANT)
 
     const val CASCADE_LEAF_COLOR = 13846346
-
-    val VOLCANIC_SAND = register(
-        "volcanic_sand",
-        GravelBlock(
-            net.minecraft.util.Color(6710886),
-            AbstractBlock.Settings.create().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).strength(0.5f)
-                .sounds(BlockSoundGroup.SAND)
-        )
-    )
 
     val BLUE_PETALS = register(
         "blue_petals", PinkPetalsBlock(
@@ -224,6 +216,74 @@ object DuskBlocks {
                 .pistonBehavior(PistonBehavior.DESTROY)
         )
     )
+
+    val VOLCANIC_SAND = register(
+        "volcanic_sand",
+        GravelBlock(
+            net.minecraft.util.Color(6710886),
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.SNARE)
+                .strength(0.5f)
+                .sounds(BlockSoundGroup.SAND)
+        )
+    )
+    val SUSPICIOUS_VOLCANIC_SAND = register(
+        "suspicious_volcanic_sand",
+        BrushableBlock(
+            VOLCANIC_SAND,
+            SoundEvents.ITEM_BRUSH_BRUSHING_SAND,
+            SoundEvents.ITEM_BRUSH_BRUSHING_SAND_COMPLETE,
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.SNARE)
+                .strength(0.25f).sounds(BlockSoundGroup.SUSPICIOUS_SAND).pistonBehavior(PistonBehavior.DESTROY)
+        )
+    )
+    val VOLCANIC_SANDSTONE = register(
+        "volcanic_sandstone",
+        Block(
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
+                .toolRequired().strength(0.8f)
+        )
+    )
+    val VOLCANIC_SANDSTONE_STAIRS = register("volcanic_sandstone_stairs", legacyStairsOf(VOLCANIC_SANDSTONE))
+    val VOLCANIC_SANDSTONE_SLAB = register(
+        "volcanic_sandstone_slab",
+        SlabBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
+                .toolRequired().strength(2.0f, 6.0f)
+        )
+    )
+    val VOLCANIC_SANDSTONE_WALL = register("volcanic_sandstone_wall", WallBlock(AbstractBlock.Settings.variantOf(VOLCANIC_SANDSTONE).solid()))
+    val CHISELED_VOLCANIC_SANDSTONE = register(
+        "chiseled_volcanic_sandstone",
+        Block(
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
+                .toolRequired().strength(0.8f)
+        )
+    )
+    val CUT_VOLCANIC_SANDSTONE = register(
+        "cut_volcanic_sandstone",
+        Block(
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
+                .toolRequired().strength(0.8f)
+        )
+    )
+    val CUT_VOLCANIC_SANDSTONE_SLAB = register(
+        "cut_volcanic_sandstone_slab",
+        SlabBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
+                .toolRequired().strength(2.0f, 6.0f)
+        )
+    )
+    val SMOOTH_VOLCANIC_SANDSTONE = register(
+        "smooth_volcanic_sandstone",
+        Block(
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
+                .toolRequired().strength(2.0f, 6.0f)
+        )
+    )
+    val SMOOTH_VOLCANIC_SANDSTONE_STAIRS =
+        register("smooth_volcanic_sandstone_stairs", legacyStairsOf(SMOOTH_VOLCANIC_SANDSTONE))
+    val SMOOTH_VOLCANIC_SANDSTONE_SLAB =
+        register("smooth_volcanic_sandstone_slab", SlabBlock(AbstractBlock.Settings.variantOf(SMOOTH_VOLCANIC_SANDSTONE)))
 
 
     fun init() {}
