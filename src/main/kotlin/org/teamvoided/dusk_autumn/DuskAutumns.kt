@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumn
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
+import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
 import org.teamvoided.dusk_autumn.client.entity.crab.CrabRenderer
 import org.teamvoided.dusk_autumn.init.*
 import org.teamvoided.dusk_autumn.modules.SnifferInjection

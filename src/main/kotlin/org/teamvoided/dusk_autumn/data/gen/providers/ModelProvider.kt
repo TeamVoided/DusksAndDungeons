@@ -6,9 +6,12 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
+import net.minecraft.data.family.BlockFamilies
+import net.minecraft.data.family.BlockFamily
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
@@ -38,10 +41,13 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         (DuskBlocks.CASCADE_LEAF_PILE to DuskBlocks.CASCADE_LEAVES),
         (DuskBlocks.GOLDEN_BIRCH_LEAF_PILE to DuskBlocks.GOLDEN_BIRCH_LEAVES)
     )
+    val blockFamily = listOf(
+        DuskBlockFamilies.VOLCANIC_SANDSTONE,
+        DuskBlockFamilies.CUT_VOLCANIC_SANDSTONE,
+        DuskBlockFamilies.SMOOTH_VOLCANIC_SANDSTONE
+    )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
-        gen.registerParentedItemModel(DuskItems.VOLCANIC_SAND, id("block/volcanic_sand"))
-        gen.registerParentedItemModel(DuskItems.CRAB_SPAWN_EGG, Identifier("minecraft:item/template_spawn_egg"))
 
         gen.registerFlowerPotPlant(
             DuskBlocks.CASCADE_SAPLING,
@@ -63,12 +69,24 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
         gen.registerItemModel(DuskItems.MOONBERRIES)
+        gen.registerParentedItemModel(DuskItems.CRAB_SPAWN_EGG, Identifier("minecraft:item/template_spawn_egg"))
 
         gen.registerCubeAllModelTexturePool(DuskBlocks.VOLCANIC_SAND)
         gen.registerDustable(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND)
-        gen.registerSingleton(DuskBlocks.VOLCANIC_SANDSTONE, TexturedModel.SIDE_TOP_BOTTOM_WALL)
+//        blockFamily.forEach {
+//            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
+//        }
+        gen.registerCubeAllModelTexturePool(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE).family(DuskBlockFamilies.SMOOTH_VOLCANIC_SANDSTONE)
 
 
+//        gen.registerSingleton(DuskBlocks.VOLCANIC_SANDSTONE, TexturedModel.SIDE_TOP_BOTTOM_WALL)
+//        gen.registerSingleton(DuskBlocks.CUT_VOLCANIC_SANDSTONE, TexturedModel.CUBE_COLUMN)
+//        gen.registerSingleton(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE) {
+//            TexturedModel.CUBE_COLUMN.get(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE)
+//        }
+//        gen.registerSingleton(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE) {
+//            TexturedModel.getCubeAll(Texture.getSubId(DuskBlocks.VOLCANIC_SANDSTONE, "_top"))
+//        }
 
         leafPiles.forEach { (it, texture) ->
             val layer1 = gen.parentedModel(it, texture, leafPile())

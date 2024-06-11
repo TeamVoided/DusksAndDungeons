@@ -252,13 +252,6 @@ object DuskBlocks {
         )
     )
     val VOLCANIC_SANDSTONE_WALL = register("volcanic_sandstone_wall", WallBlock(AbstractBlock.Settings.variantOf(VOLCANIC_SANDSTONE).solid()))
-    val CHISELED_VOLCANIC_SANDSTONE = register(
-        "chiseled_volcanic_sandstone",
-        Block(
-            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
-                .toolRequired().strength(0.8f)
-        )
-    )
     val CUT_VOLCANIC_SANDSTONE = register(
         "cut_volcanic_sandstone",
         Block(
@@ -271,6 +264,13 @@ object DuskBlocks {
         SlabBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
                 .toolRequired().strength(2.0f, 6.0f)
+        )
+    )
+    val CHISELED_VOLCANIC_SANDSTONE = register(
+        "chiseled_volcanic_sandstone",
+        Block(
+            AbstractBlock.Settings.create().mapColor(MapColor.BLACK).instrument(NoteBlockInstrument.BASEDRUM)
+                .toolRequired().strength(0.8f)
         )
     )
     val SMOOTH_VOLCANIC_SANDSTONE = register(
@@ -286,7 +286,9 @@ object DuskBlocks {
         register("smooth_volcanic_sandstone_slab", SlabBlock(AbstractBlock.Settings.variantOf(SMOOTH_VOLCANIC_SANDSTONE)))
 
 
-    fun init() {}
+    fun init() {
+        DuskBlockFamilies.init()
+    }
     fun initClient() {
         listOf(
             CASCADE_SAPLING, POTTED_CASCADE_SAPLING, CASCADE_LEAVES,
