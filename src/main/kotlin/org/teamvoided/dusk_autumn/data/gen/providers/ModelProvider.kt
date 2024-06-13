@@ -1,13 +1,13 @@
 package org.teamvoided.dusk_autumn.data.gen.providers
 
+import com.google.common.collect.ImmutableMap
+import com.google.gson.JsonElement
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
-import net.minecraft.data.family.BlockFamilies
-import net.minecraft.data.family.BlockFamily
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
@@ -16,6 +16,8 @@ import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import java.util.*
+import java.util.function.BiConsumer
+import java.util.function.Supplier
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
@@ -48,7 +50,27 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
+        gen.sandstoneModels = mapOf(
+            DuskBlocks.VOLCANIC_SANDSTONE to TexturedModel.SIDE_TOP_BOTTOM_WALL[DuskBlocks.VOLCANIC_SANDSTONE],
+            DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE to TexturedModel.getCubeAll(
+                Texture.getSubId(DuskBlocks.VOLCANIC_SANDSTONE, "_top")
+            ),
+            DuskBlocks.CUT_VOLCANIC_SANDSTONE to TexturedModel.CUBE_COLUMN[DuskBlocks.VOLCANIC_SANDSTONE].texture { texture: Texture ->
+                texture.put(
+                    TextureKey.SIDE,
+                    Texture.getId(DuskBlocks.CUT_VOLCANIC_SANDSTONE)
+                )
+            },
+            DuskBlocks.CHISELED_VOLCANIC_SANDSTONE to TexturedModel.CUBE_COLUMN[DuskBlocks.CHISELED_VOLCANIC_SANDSTONE].texture { texture: Texture ->
+                texture.put(TextureKey.END, Texture.getSubId(DuskBlocks.VOLCANIC_SANDSTONE, "_top"))
+                texture.put(TextureKey.SIDE, Texture.getId(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE))
+            }
+        )
 
+
+        gen.registerSingleton(DuskBlocks.CASCADE_LOG_STRAIGHT) {
+            TexturedModel.CUBE_COLUMN.get(DuskBlocks.CASCADE_LOG_STRAIGHT)
+        }
         gen.registerFlowerPotPlant(
             DuskBlocks.CASCADE_SAPLING,
             DuskBlocks.POTTED_CASCADE_SAPLING,
@@ -73,17 +95,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
         gen.registerCubeAllModelTexturePool(DuskBlocks.VOLCANIC_SAND)
         gen.registerDustable(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND)
-//        blockFamily.forEach {
-//            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
-//        }
-        gen.registerCubeAllModelTexturePool(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE).family(DuskBlockFamilies.SMOOTH_VOLCANIC_SANDSTONE)
-
-
-//        gen.registerSingleton(DuskBlocks.VOLCANIC_SANDSTONE, TexturedModel.SIDE_TOP_BOTTOM_WALL)
-//        gen.registerSingleton(DuskBlocks.CUT_VOLCANIC_SANDSTONE, TexturedModel.CUBE_COLUMN)
-//        gen.registerSingleton(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE) {
-//            TexturedModel.CUBE_COLUMN.get(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE)
-//        }
+        blockFamily.forEach {
+            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
+        }
 //        gen.registerSingleton(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE) {
 //            TexturedModel.getCubeAll(Texture.getSubId(DuskBlocks.VOLCANIC_SANDSTONE, "_top"))
 //        }

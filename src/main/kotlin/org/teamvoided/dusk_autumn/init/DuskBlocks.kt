@@ -6,7 +6,7 @@ import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
-import net.minecraft.block.org.teamvoided.dusk_autumn.block.GoldenBeetrootsBlock
+import org.teamvoided.dusk_autumn.block.GoldenBeetrootsBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.block.sign.*
@@ -60,6 +60,9 @@ object DuskBlocks {
     val POTTED_CASCADE_SAPLING = register("potted_cascade_sapling", pottedVariant(CASCADE_SAPLING))
     val CASCADE_LOG = register(
         "cascade_log", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
+    )
+    val CASCADE_LOG_STRAIGHT = register(
+        "cascade_log_straight", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
     )
     val STRIPPED_CASCADE_LOG = register(
         "stripped_cascade_log", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
@@ -197,7 +200,7 @@ object DuskBlocks {
     val GOLDEN_BEETROOTS = register(
         "golden_beetroots",
         GoldenBeetrootsBlock(
-            AbstractBlock.Settings.create().mapColor(MapColor.PLANT).noCollision().ticksRandomly().breakInstantly()
+            AbstractBlock.Settings.create().mapColor(MapColor.GOLD).noCollision().ticksRandomly().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
@@ -251,7 +254,8 @@ object DuskBlocks {
                 .toolRequired().strength(2.0f, 6.0f)
         )
     )
-    val VOLCANIC_SANDSTONE_WALL = register("volcanic_sandstone_wall", WallBlock(AbstractBlock.Settings.variantOf(VOLCANIC_SANDSTONE).solid()))
+    val VOLCANIC_SANDSTONE_WALL =
+        register("volcanic_sandstone_wall", WallBlock(AbstractBlock.Settings.variantOf(VOLCANIC_SANDSTONE).solid()))
     val CUT_VOLCANIC_SANDSTONE = register(
         "cut_volcanic_sandstone",
         Block(
@@ -283,12 +287,16 @@ object DuskBlocks {
     val SMOOTH_VOLCANIC_SANDSTONE_STAIRS =
         register("smooth_volcanic_sandstone_stairs", legacyStairsOf(SMOOTH_VOLCANIC_SANDSTONE))
     val SMOOTH_VOLCANIC_SANDSTONE_SLAB =
-        register("smooth_volcanic_sandstone_slab", SlabBlock(AbstractBlock.Settings.variantOf(SMOOTH_VOLCANIC_SANDSTONE)))
+        register(
+            "smooth_volcanic_sandstone_slab",
+            SlabBlock(AbstractBlock.Settings.variantOf(SMOOTH_VOLCANIC_SANDSTONE))
+        )
 
 
     fun init() {
         DuskBlockFamilies.init()
     }
+
     fun initClient() {
         listOf(
             CASCADE_SAPLING, POTTED_CASCADE_SAPLING, CASCADE_LEAVES,

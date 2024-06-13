@@ -1,4 +1,4 @@
-package net.minecraft.block.org.teamvoided.dusk_autumn.block
+package org.teamvoided.dusk_autumn.block
 
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.BeetrootsBlock

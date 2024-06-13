@@ -111,7 +111,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
                 1.0f,
                 0.8f + world.random.nextFloat() * 0.4f
             )
-            val blockState = state.with(SweetBerryBushBlock.AGE, 1)
+            val blockState = state.with(BERRIES, 0)
             world.setBlockState(pos, blockState, 2)
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(entity, blockState))
             return ActionResult.success(world.isClient)
@@ -126,7 +126,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
         val berries = state.get(BERRIES)
-        if (berries < 3 && random.nextInt(5) == 0 && world.isNight && world.isSkyVisible(pos)) {
+        if (berries < 3 && random.nextInt(5) == 0 && world.isNight) {
             val blockState = state.with(BERRIES, berries + 1)
             world.setBlockState(pos, blockState, 2)
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(blockState))

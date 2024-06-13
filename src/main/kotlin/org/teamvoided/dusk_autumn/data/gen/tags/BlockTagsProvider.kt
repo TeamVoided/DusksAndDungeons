@@ -88,6 +88,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE)
             .add(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE_STAIRS)
             .add(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE_SLAB)
+        getOrCreateTagBuilder(BlockTags.WALLS)
+            .add(DuskBlocks.VOLCANIC_SANDSTONE_WALL)
 
         getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES)
             .forceAddTag(DuskBlockTags.LEAF_PILES)

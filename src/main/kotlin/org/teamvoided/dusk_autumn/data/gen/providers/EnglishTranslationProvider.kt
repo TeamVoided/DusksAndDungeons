@@ -52,10 +52,24 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
         DuskItems.GOLDEN_BEETROOT,
         DuskItems.MOONBERRY_VINE,
         DuskItems.MOONBERRY_VINELET,
-        DuskItems.MOONBERRIES
+        DuskItems.MOONBERRIES,
+
+        DuskItems.VOLCANIC_SAND,
+        DuskItems.SUSPICIOUS_VOLCANIC_SAND,
+        DuskItems.VOLCANIC_SANDSTONE,
+        DuskItems.VOLCANIC_SANDSTONE_STAIRS,
+        DuskItems.VOLCANIC_SANDSTONE_SLAB,
+        DuskItems.VOLCANIC_SANDSTONE_WALL,
+        DuskItems.CUT_VOLCANIC_SANDSTONE,
+        DuskItems.CUT_VOLCANIC_SANDSTONE_SLAB,
+        DuskItems.CHISELED_VOLCANIC_SANDSTONE,
+        DuskItems.SMOOTH_VOLCANIC_SANDSTONE,
+        DuskItems.SMOOTH_VOLCANIC_SANDSTONE_STAIRS,
+        DuskItems.SMOOTH_VOLCANIC_SANDSTONE_SLAB
     )
     val blocks = listOf(
         DuskBlocks.GOLDEN_BEETROOTS,
+        DuskBlocks.GOLDEN_CARROTS
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
