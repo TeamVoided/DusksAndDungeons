@@ -3,7 +3,10 @@ package org.teamvoided.dusk_autumn.init.worldgen
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.*
 import net.minecraft.fluid.Fluids
-import net.minecraft.registry.*
+import net.minecraft.registry.BootstrapContext
+import net.minecraft.registry.HolderProvider
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.unmapped.C_cxbmzbuz
@@ -19,7 +22,9 @@ import net.minecraft.world.gen.feature.size.ThreeLayersFeatureSize
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
-import net.minecraft.world.gen.foliage.*
+import net.minecraft.world.gen.foliage.AcaciaFoliagePlacer
+import net.minecraft.world.gen.foliage.BlobFoliagePlacer
+import net.minecraft.world.gen.foliage.DarkOakFoliagePlacer
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator

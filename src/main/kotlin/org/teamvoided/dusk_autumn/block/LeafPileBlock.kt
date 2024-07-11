@@ -2,7 +2,6 @@ package org.teamvoided.dusk_autumn.block
 
 import net.minecraft.block.*
 import net.minecraft.client.util.ParticleUtil
-import net.minecraft.entity.ai.pathing.NavigationType
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext

@@ -76,8 +76,6 @@ object DuskItems {
     val MOONBERRY_VINELET =
         register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRIES)))
-    val CRAB_SPAWN_EGG =
-        register("crab_spawn_egg", (SpawnEggItem(DuskEntities.CRAB, 0xffffff, 0xffffff, Item.Settings())))
 
 
     val VOLCANIC_SAND = register("volcanic_sand", BlockItem(DuskBlocks.VOLCANIC_SAND))

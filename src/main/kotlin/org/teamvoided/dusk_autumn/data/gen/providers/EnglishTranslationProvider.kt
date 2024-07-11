@@ -68,8 +68,7 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
         DuskItems.SMOOTH_VOLCANIC_SANDSTONE_SLAB
     )
     val blocks = listOf(
-        DuskBlocks.GOLDEN_BEETROOTS,
-        DuskBlocks.GOLDEN_CARROTS
+        DuskBlocks.GOLDEN_BEETROOTS
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {

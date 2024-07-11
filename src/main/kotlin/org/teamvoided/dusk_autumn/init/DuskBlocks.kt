@@ -6,7 +6,6 @@ import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
-import org.teamvoided.dusk_autumn.block.GoldenBeetrootsBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.block.sign.*

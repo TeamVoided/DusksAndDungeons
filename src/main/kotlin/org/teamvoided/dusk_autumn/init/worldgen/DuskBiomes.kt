@@ -12,7 +12,10 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.world.biome.*
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
 import net.minecraft.world.gen.GenerationStep
-import net.minecraft.world.gen.feature.*
+import net.minecraft.world.gen.feature.DefaultBiomeFeatures
+import net.minecraft.world.gen.feature.MiscPlacedFeatures
+import net.minecraft.world.gen.feature.OceanPlacedFeatures
+import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")

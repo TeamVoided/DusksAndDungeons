@@ -14,7 +14,10 @@ import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
-import net.minecraft.world.gen.feature.*
+import net.minecraft.world.gen.feature.ConfiguredFeature
+import net.minecraft.world.gen.feature.OreConfiguredFeatures
+import net.minecraft.world.gen.feature.PlacedFeature
+import net.minecraft.world.gen.feature.PlacementModifier
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.init.DuskBlocks

@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumn.data
 
-import net.minecraft.block.Block
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.world.biome.Biome

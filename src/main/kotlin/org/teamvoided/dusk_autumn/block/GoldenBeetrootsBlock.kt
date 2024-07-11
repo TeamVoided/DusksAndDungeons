@@ -7,8 +7,6 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.World
-import org.teamvoided.dusk_autumn.block.MoonberryVineletBlock
 import org.teamvoided.dusk_autumn.init.DuskItems
 
 class GoldenBeetrootsBlock(settings: AbstractBlock.Settings) : BeetrootsBlock(settings) {

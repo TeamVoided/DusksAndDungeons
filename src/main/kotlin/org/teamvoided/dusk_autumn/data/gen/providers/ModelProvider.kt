@@ -1,7 +1,5 @@
 package org.teamvoided.dusk_autumn.data.gen.providers
 
-import com.google.common.collect.ImmutableMap
-import com.google.gson.JsonElement
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -16,8 +14,6 @@ import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import java.util.*
-import java.util.function.BiConsumer
-import java.util.function.Supplier
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
@@ -91,7 +87,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
         gen.registerItemModel(DuskItems.MOONBERRIES)
-        gen.registerParentedItemModel(DuskItems.CRAB_SPAWN_EGG, Identifier("minecraft:item/template_spawn_egg"))
 
         gen.registerCubeAllModelTexturePool(DuskBlocks.VOLCANIC_SAND)
         gen.registerDustable(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND)
