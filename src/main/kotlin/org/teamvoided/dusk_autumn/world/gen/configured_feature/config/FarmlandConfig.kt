@@ -14,8 +14,8 @@ import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
 data class FarmlandConfig(
-    var farmlandReplaceable: TagKey<Block>,
-    var farmlandCanPlaceUnder: TagKey<Block>,
+    val farmlandReplaceable: TagKey<Block>,
+    val farmlandCanPlaceUnder: TagKey<Block>,
     val farmlandBlock: BlockStateProvider,
     val farmlandChance: Float,
     val farmWidth: IntProvider,
