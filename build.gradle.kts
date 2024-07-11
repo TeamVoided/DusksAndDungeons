@@ -1,57 +1,68 @@
 @file:Suppress("LocalVariableName", "VariableNaming")
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("fabric-loom") version "1.6.3"
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.serialization") version "1.9.23"
-    id("org.teamvoided.iridium") version "3.1.9"
+    alias(libs.plugins.fabric.loom)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.iridium)
+    alias(libs.plugins.iridium.publish)
+    alias(libs.plugins.iridium.upload)
 }
 
-group = project.properties["maven_group"]!!
-version = project.properties["mod_version"]!!
-base.archivesName.set(project.properties["archives_base_name"] as String)
-description = ">B("
-val modid = project.properties["modid"]!! as String
+group = property("maven_group")!!
+version = property("mod_version")!!
+base.archivesName.set(modSettings.modId())
+
+val modrinth_id: String? by project
+val curse_id: String? by project
 
 repositories {
+    maven("https://teamvoided.org/releases")
+    maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
     mavenCentral()
-    maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/") {
-        name = "GeckoLib"
-    }
 }
 
 modSettings {
-    modId(modid)
-    modName("Dusk Autumns Blocks")
-
     entrypoint("main", "org.teamvoided.dusk_autumn.DuskAutumns::commonInit")
     entrypoint("client", "org.teamvoided.dusk_autumn.DuskAutumns::clientInit")
     entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.data.gen.DuskAutumnsData")
+
     mixinFile("dusk_autumn.mixins.json")
     accessWidener("dusk_autumn.accesswidener")
 }
 
 dependencies {
-    val geckolib_version = "4.5.1"
-
-    modImplementation("software.bernie.geckolib:geckolib-fabric-1.20.6:${geckolib_version}")
+    modImplementation(fileTree("libs"))
+    modImplementation(libs.modmenu)
 }
 
 loom {
     runs {
         // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
-        create("DataGen") {
-            client()
-            ideConfigGenerated(true)
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=${modid}")
-            runDir("build/datagen")
+//        splitEnvironmentSourceSets()
+        runs {
+            create("DataGen") {
+                client()
+                ideConfigGenerated(true)
+                vmArg("-Dfabric-api.datagen")
+                vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+                vmArg("-Dfabric-api.datagen.modid=${modSettings.modId()}")
+                runDir("build/datagen")
+            }
+
+            create("TestWorld") {
+                client()
+                ideConfigGenerated(true)
+                runDir("run")
+                programArgs("--quickPlaySingleplayer", "test")
+            }
         }
     }
 }
+sourceSets["main"].resources.srcDir("src/main/generated")
 
 tasks {
     val targetJavaVersion = 21
@@ -60,14 +71,39 @@ tasks {
         options.release.set(targetJavaVersion)
     }
 
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = targetJavaVersion.toString()
+    withType<KotlinCompile>().all {
+        compilerOptions.jvmTarget = JvmTarget.JVM_21
     }
 
     java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
         withSourcesJar()
     }
+    jar {
+        val valTaskNames = gradle.startParameter.taskNames
+        if (!valTaskNames.contains("runDataGen")) {
+            exclude("org/teamvoided/dusk_autumn/data/gen/*")
+        } else {
+            println("Running datagen for task ${valTaskNames.joinToString(" ")}")
+        }
+    }
 }
 
-sourceSets["main"].resources.srcDir("src/main/generated")
+/*publishScript {
+    releaseRepository("TeamVoided", "https://maven.teamvoided.org/releases")
+    publication(modSettings.modId(), false)
+    publishSources(true)
+}
+
+uploadConfig {
+//    debugMode = true
+    modrinthId = modrinth_id
+    curseId = curse_id
+
+    // FabricApi
+    modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
+    curseDependency("fabric-api", uploadConfig.REQUIRED)
+    // Fabric Language Kotlin
+    modrinthDependency("Ha28R6CL", uploadConfig.REQUIRED)
+    curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
+}*/
