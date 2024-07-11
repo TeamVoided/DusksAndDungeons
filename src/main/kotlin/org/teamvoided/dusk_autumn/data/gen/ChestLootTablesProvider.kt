@@ -3,18 +3,11 @@ package org.teamvoided.dusk_autumn.data.gen
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider
 import net.minecraft.item.Item
-import net.minecraft.item.Items
-import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextTypes
 import net.minecraft.loot.entry.ItemEntry
-import net.minecraft.loot.function.EnchantWithLevelsLootFunction
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import org.teamvoided.dusk_autumn.data.DuskLootTables
-import org.teamvoided.dusk_autumn.util.Utils
 import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
 

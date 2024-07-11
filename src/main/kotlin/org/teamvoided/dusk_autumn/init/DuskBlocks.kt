@@ -8,7 +8,10 @@ import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
-import net.minecraft.block.sign.*
+import net.minecraft.block.sign.CeilingHangingSignBlock
+import net.minecraft.block.sign.SignBlock
+import net.minecraft.block.sign.WallHangingSignBlock
+import net.minecraft.block.sign.WallSignBlock
 import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.client.color.world.GrassColors

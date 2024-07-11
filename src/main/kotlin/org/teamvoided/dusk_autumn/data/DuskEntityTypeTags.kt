@@ -3,7 +3,6 @@ package net.minecraft.entity.passive.org.teamvoided.dusk_autumn.data
 import net.minecraft.entity.EntityType
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 object DuskEntityTypeTags {
