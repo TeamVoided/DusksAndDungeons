@@ -85,9 +85,10 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                         BlockStatePropertyLootCondition.builder(DuskBlocks.GOLDEN_BEETROOTS).properties(
                             StatePredicate.Builder.create().exactMatch(BeetrootsBlock.AGE, 4)
                         )
-                    ).with(
+                    )
+                        .with(
                         ItemEntry.builder(DuskItems.GOLDEN_BEETROOT)
-                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286f, 3))
+//                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286f, 3))
                     )
                 )
             )
@@ -143,7 +144,8 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                                         StatePredicate.Builder.create().exactMatch(LeafPileBlock.PILE_LAYERS, layers)
                                     )
                                 )
-                    }.conditionally(WITH_SHEARS_OR_SILK_TOUCH)
+                    }
+//                        .conditionally(WITH_SHEARS_OR_SILK_TOUCH)
                 )
             )
         )

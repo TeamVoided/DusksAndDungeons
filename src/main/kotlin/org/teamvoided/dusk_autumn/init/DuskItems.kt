@@ -12,8 +12,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.util.Identifier
-import org.teamvoided.dusk_autumn.DuskAutumns
+import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.item.DuskFoodComponents
 import org.teamvoided.dusk_autumn.item.FarmersHatItem
 
@@ -81,15 +80,21 @@ object DuskItems {
     val VOLCANIC_SAND = register("volcanic_sand", BlockItem(DuskBlocks.VOLCANIC_SAND))
     val SUSPICIOUS_VOLCANIC_SAND = register("suspicious_volcanic_sand", BlockItem(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND))
     val VOLCANIC_SANDSTONE = register("volcanic_sandstone", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE))
-    val VOLCANIC_SANDSTONE_STAIRS = register("volcanic_sandstone_stairs", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE_STAIRS))
+    val VOLCANIC_SANDSTONE_STAIRS =
+        register("volcanic_sandstone_stairs", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE_STAIRS))
     val VOLCANIC_SANDSTONE_SLAB = register("volcanic_sandstone_slab", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE_SLAB))
     val VOLCANIC_SANDSTONE_WALL = register("volcanic_sandstone_wall", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE_WALL))
     val CUT_VOLCANIC_SANDSTONE = register("cut_volcanic_sandstone", BlockItem(DuskBlocks.CUT_VOLCANIC_SANDSTONE))
-    val CUT_VOLCANIC_SANDSTONE_SLAB = register("cut_volcanic_sandstone_slab", BlockItem(DuskBlocks.CUT_VOLCANIC_SANDSTONE_SLAB))
-    val CHISELED_VOLCANIC_SANDSTONE = register("chiseled_volcanic_sandstone", BlockItem(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE))
-    val SMOOTH_VOLCANIC_SANDSTONE = register("smooth_volcanic_sandstone", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE))
-    val SMOOTH_VOLCANIC_SANDSTONE_STAIRS = register("smooth_volcanic_sandstone_stairs", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE_STAIRS))
-    val SMOOTH_VOLCANIC_SANDSTONE_SLAB = register("smooth_volcanic_sandstone_slab", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE_SLAB))
+    val CUT_VOLCANIC_SANDSTONE_SLAB =
+        register("cut_volcanic_sandstone_slab", BlockItem(DuskBlocks.CUT_VOLCANIC_SANDSTONE_SLAB))
+    val CHISELED_VOLCANIC_SANDSTONE =
+        register("chiseled_volcanic_sandstone", BlockItem(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE))
+    val SMOOTH_VOLCANIC_SANDSTONE =
+        register("smooth_volcanic_sandstone", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE))
+    val SMOOTH_VOLCANIC_SANDSTONE_STAIRS =
+        register("smooth_volcanic_sandstone_stairs", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE_STAIRS))
+    val SMOOTH_VOLCANIC_SANDSTONE_SLAB =
+        register("smooth_volcanic_sandstone_slab", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE_SLAB))
 //add void util compat
 
 
@@ -132,13 +137,13 @@ object DuskItems {
             CASCADE_LEAVES,
             CASCADE_LEAF_PILE
         )
-        ColorProviderRegistry.ITEM.register({ stack, _ -> stack.get(DataComponentTypes.DYED_COLOR)?.rgb ?: 0xffffff })
+        ColorProviderRegistry.ITEM.register({ stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) })
     }
 
-    fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, DuskAutumns.id(id), item)
+    fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, id(id), item)
 
     fun BlockItem(block: Block) = BlockItem(block, Item.Settings())
     private fun createRegistryKey(name: String): RegistryKey<ItemGroup> {
-        return RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier(name))
+        return RegistryKey.of(RegistryKeys.ITEM_GROUP, id(name))
     }
 }

@@ -110,14 +110,14 @@ object DuskBlocks {
     )
     val CASCADE_SIGN = register(
         "cascade_sign", SignBlock(
-            SignType.CHERRY,
+            WoodType.CHERRY,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
     val CASCADE_WALL_SIGN = register(
         "cascade_wall_sign", WallSignBlock(
-            SignType.CHERRY,
+            WoodType.CHERRY,
             AbstractBlock.Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).dropsLike(CASCADE_SIGN)
                 .lavaIgnitable(),
@@ -125,14 +125,14 @@ object DuskBlocks {
     )
     val CASCADE_HANGING_SIGN = register(
         "cascade_hanging_sign", CeilingHangingSignBlock(
-            SignType.CHERRY,
+            WoodType.CHERRY,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
     val CASCADE_WALL_HANGING_SIGN = register(
         "cascade_wall_hanging_sign", WallHangingSignBlock(
-            SignType.CHERRY,
+            WoodType.CHERRY,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable()
                 .dropsLike(CASCADE_HANGING_SIGN),

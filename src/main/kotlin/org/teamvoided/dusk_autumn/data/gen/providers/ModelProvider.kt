@@ -363,6 +363,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private fun Block.modelSuffix(str: String) = this.model().suffix(str)
 
-    private fun Identifier.suffix(str: String) = Identifier(this.namespace, "${this.path}$str")
+    private fun Identifier.suffix(str: String) = Identifier.of(this.namespace, "${this.path}$str")
     private fun Block.model(): Identifier = ModelIds.getBlockModelId(this)
 }

@@ -82,7 +82,7 @@ object DuskBiomes {
     fun createAutumnForest(c: BootstrapContext<Biome>): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
-        DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
+        DefaultBiomeFeatures.method_30581(spawnSettings)
 
         val generationSettings = GenerationSettings
             .Builder(c.getRegistryLookup(RegistryKeys.PLACED_FEATURE), c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
@@ -128,7 +128,7 @@ object DuskBiomes {
     fun createAutumnPlains(c: BootstrapContext<Biome>): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
-        DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
+        DefaultBiomeFeatures.method_30581(spawnSettings)
 
         val generationSettings = GenerationSettings
             .Builder(c.getRegistryLookup(RegistryKeys.PLACED_FEATURE), c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
@@ -168,7 +168,7 @@ object DuskBiomes {
         val spawnSettings = SpawnSettings.Builder()
         spawnSettings.spawn(SpawnGroup.WATER_CREATURE, SpawnEntry(EntityType.SQUID, 2, 1, 4))
             .spawn(SpawnGroup.WATER_AMBIENT, SpawnEntry(EntityType.SALMON, 5, 1, 5))
-        DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
+        DefaultBiomeFeatures.method_30581(spawnSettings)
         spawnSettings.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.DROWNED, 100, 1, 1))
 
         val generationSettings = GenerationSettings
@@ -206,7 +206,7 @@ object DuskBiomes {
     fun createAutumnWetlands(context: BootstrapContext<Biome>): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
-        DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
+        DefaultBiomeFeatures.method_30581(spawnSettings)
         spawnSettings.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
         val generationSettings = GenerationSettings

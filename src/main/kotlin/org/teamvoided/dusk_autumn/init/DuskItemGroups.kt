@@ -50,7 +50,6 @@ object DuskItemGroups {
                         ItemStack(DuskItems.MOONBERRY_VINELET),
                         ItemStack(DuskItems.MOONBERRY_VINE),
                         ItemStack(DuskItems.MOONBERRIES),
-                        ItemStack(DuskItems.CRAB_SPAWN_EGG),
 
                         ItemStack(DuskItems.VOLCANIC_SAND),
                         ItemStack(DuskItems.SUSPICIOUS_VOLCANIC_SAND),

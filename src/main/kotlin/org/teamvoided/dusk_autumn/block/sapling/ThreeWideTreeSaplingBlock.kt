@@ -3,8 +3,8 @@ package net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
-import net.minecraft.block.WoodTypes
 import net.minecraft.block.sapling.SaplingBlock
+import net.minecraft.block.sapling.TreeGrower
 import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -17,7 +17,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature
 import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
 
 
-class ThreeWideTreeSaplingBlock(generator: WoodTypes, settings: Settings) : SaplingBlock(
+class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Settings) : SaplingBlock(
     generator,
     settings
 ) {

@@ -29,5 +29,5 @@ object DuskAutumns {
         DuskParticles.initClient()
     }
 
-    fun id(path: String) = Identifier(MODID, path)
+    fun id(path: String) = Identifier.of(MODID, path)
 }
