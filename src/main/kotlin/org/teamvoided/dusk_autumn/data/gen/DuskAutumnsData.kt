@@ -12,6 +12,7 @@ import org.teamvoided.dusk_autumn.data.gen.providers.RecipesProvider
 import org.teamvoided.dusk_autumn.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusk_autumn.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusk_autumn.data.gen.tags.EntityTypeTagsProvider
+import org.teamvoided.dusk_autumn.data.gen.tags.ItemTagsProvider
 import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
 import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
 import org.teamvoided.dusk_autumn.init.worldgen.DuskPlacedFeature
@@ -22,13 +23,15 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         val pack = gen.createPack()
 
         pack.addProvider(::DuskAutumnsWorldGenerator)
-        pack.addProvider(::BiomeTagsProvider)
-        pack.addProvider(::BlockTagsProvider)
-        pack.addProvider(::EntityTypeTagsProvider)
         pack.addProvider(::ModelProvider)
         pack.addProvider(::EnglishTranslationProvider)
         pack.addProvider(::RecipesProvider)
         pack.addProvider(::BlockLootTableProvider)
+
+        pack.addProvider(::ItemTagsProvider)
+        pack.addProvider(::BiomeTagsProvider)
+        pack.addProvider(::BlockTagsProvider)
+        pack.addProvider(::EntityTypeTagsProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {

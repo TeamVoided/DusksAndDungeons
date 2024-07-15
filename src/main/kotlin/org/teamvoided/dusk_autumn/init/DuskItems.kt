@@ -137,7 +137,10 @@ object DuskItems {
             CASCADE_LEAVES,
             CASCADE_LEAF_PILE
         )
-        ColorProviderRegistry.ITEM.register({ stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) })
+        ColorProviderRegistry.ITEM.register(
+            { stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) },
+            FARMERS_HAT
+        )
     }
 
     fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, id(id), item)

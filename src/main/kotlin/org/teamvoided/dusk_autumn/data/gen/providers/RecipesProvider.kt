@@ -2,16 +2,17 @@ package org.teamvoided.dusk_autumn.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.minecraft.data.server.recipe.ComplexRecipeJsonFactory
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RecipeCategory
+import net.minecraft.recipe.*
 import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import java.util.concurrent.CompletableFuture
+import java.util.function.Function
 
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
     override fun generateRecipes(exporter: RecipeExporter) {
@@ -51,6 +52,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
                 )
             ).offerTo(exporter)
         offerShapelessRecipe(exporter, Items.PURPLE_DYE, DuskItems.MOONBERRIES, "purple_dye")
+//        ComplexRecipeJsonFactory.create(::ArmorDyeRecipe).offerTo(exporter, "armor_dye")
 
     }
 
