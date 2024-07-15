@@ -20,6 +20,12 @@ object DuskAutumns {
         DuskParticles.init()
         DuskItemGroups.init()
         SnifferInjection.init()
+       /* CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
+            val test = literal("end").executes {
+                0
+            }.build()
+            dispatcher.root.addChild(test)
+        }*/
     }
 
     fun clientInit() {
@@ -30,5 +36,5 @@ object DuskAutumns {
     }
 
     fun id(path: String) = Identifier.of(MODID, path)
-    fun mc(path: String) = Identifier.ofDefault( path)
+    fun mc(path: String) = Identifier.ofDefault(path)
 }
