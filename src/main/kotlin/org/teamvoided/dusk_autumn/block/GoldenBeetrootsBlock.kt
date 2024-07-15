@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumn.block
 
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.BeetrootsBlock
 import net.minecraft.block.BlockState
 import net.minecraft.item.ItemConvertible
@@ -9,7 +8,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.random.RandomGenerator
 import org.teamvoided.dusk_autumn.init.DuskItems
 
-class GoldenBeetrootsBlock(settings: AbstractBlock.Settings) : BeetrootsBlock(settings) {
+class GoldenBeetrootsBlock(settings: Settings) : BeetrootsBlock(settings) {
     override fun getSeedsItem(): ItemConvertible {
         return DuskItems.GOLDEN_BEETROOT
     }
