@@ -22,32 +22,21 @@ import kotlin.math.min
 open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfig>(codec) {
 
     override fun place(context: FeatureContext<FarmlandConfig>): Boolean {
-        val structureWorldAccess = context.world
-        val farmlandConfig = context.config
-        val randomGenerator = context.random
-        val blockPos = context.origin
-        val replaceable = { state: BlockState -> state.isIn(farmlandConfig.farmlandReplaceable) }
-        val widthX = randomGenerator.range(3, farmlandConfig.farmWidth[randomGenerator] + 1)
-        val widthZ = randomGenerator.range(3, farmlandConfig.farmWidth[randomGenerator] + 1)
+        val worldAccess = context.world
+        val config = context.config
+        val random = context.random
+        val pos = context.origin
+        val replaceable = { state: BlockState -> state.isIn(config.farmlandReplaceable) }
+        val widthX = random.range(3, config.farmWidth[random] + 1)
+        val widthZ = random.range(3, config.farmWidth[random] + 1)
 
-        val set = placeGroundAndGetPositions(
-            structureWorldAccess,
-            farmlandConfig,
-            randomGenerator,
-            blockPos,
-            replaceable,
-            widthX,
-            widthZ
-        )
-        generateVegetation(
-            context,
-            structureWorldAccess,
-            farmlandConfig,
-            randomGenerator,
-            set,
-            blockPos
-        )
-        return set.isNotEmpty()
+        val set = placeGroundAndGetPositions(worldAccess, config, random, pos, replaceable, widthX, widthZ)
+        if (set.isNotEmpty()) {
+            generateFences(widthX, widthZ, config, random, worldAccess, pos)
+            generateVegetation(context, worldAccess, config, random, set, pos)
+            return true
+        }
+        return false
     }
 
     protected open fun placeGroundAndGetPositions(
@@ -77,11 +66,13 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                 if (isCorner) continue@loopBreak
                 if (isEdgeNotCorner || (random.nextFloat() > 0.75f)) continue@loopBreak
                 if (random.nextFloat() > config.farmlandChance) continue@loopBreak
+                if (world.getBlockState(mutable).fluidState.isIn(FluidTags.WATER)) continue@loopBreak
 
                 mutable[pos, i, 0] = j
                 var k = 0
                 while (world.testBlockState(mutable) { it.isIn(config.farmlandCanPlaceUnder) }) {
                     if (k >= config.farmVerticalRange) break
+                    if (world.getBlockState(mutable).fluidState.isIn(FluidTags.WATER)) continue@loopBreak
                     mutable.move(direction)
                     ++k
                 }
@@ -103,9 +94,19 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                         set.add(blockPos)
                     }
                 }
-
             }
         }
+        return set
+    }
+
+    private fun generateFences(
+        radiusX: Int,
+        radiusZ: Int,
+        config: FarmlandConfig,
+        random: RandomGenerator,
+        world: StructureWorldAccess,
+        pos: BlockPos
+    ) {
         val biggerRadX = radiusX + 1
         val biggerRadZ = radiusZ + 1
         val fenceLengthX = min(config.fenceLength[random], biggerRadX)
@@ -123,7 +124,6 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                 placeFence(world, config, random, pos.offset(Direction.Axis.X, i).offset(Direction.Axis.Z, j))
             }
         }
-        return set
     }
 
     private fun generateVegetation(
@@ -148,16 +148,9 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         generator: ChunkGenerator,
         random: RandomGenerator,
         pos: BlockPos
-    ) {
-        config.cropFeature.value().place(
-            world,
-            generator,
-            random,
-            pos
-        )
-    }
+    ) = config.cropFeature.value().place(world, generator, random, pos)
 
-    protected fun placeGround(
+    private fun placeGround(
         world: StructureWorldAccess,
         config: FarmlandConfig,
         random: RandomGenerator,
@@ -198,6 +191,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         return true
     }
 
+    // It does now :)
     //    this, in fact, does not update neighbors when placed with placed features
     private fun placeFence(
         world: StructureWorldAccess, config: FarmlandConfig, random: RandomGenerator, posIn: BlockPos
@@ -232,13 +226,13 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         }
     }
 
-//    fun placeScarecrow(
-//        world: StructureWorldAccess,
-//        config: FarmlandConfig,
-//        random: RandomGenerator,
-//        pos: BlockPos
-//    ) {
-//        val scarecrow = Util.getRandom(config.scarecrow, random)
-//        world.spawnEntity(scarecrow)
-//    }
+    /*fun placeScarecrow(
+        world: StructureWorldAccess,
+        config: FarmlandConfig,
+        random: RandomGenerator,
+        pos: BlockPos
+    ) {
+        val scarecrow = Util.getRandom(config.scarecrow, random)
+        world.spawnEntity(scarecrow)
+    }*/
 }
