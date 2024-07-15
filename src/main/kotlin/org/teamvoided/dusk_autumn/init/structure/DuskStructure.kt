@@ -1,5 +1,3 @@
 package org.teamvoided.dusk_autumn.init.structure
 
-object DuskStructure {
-
-}
+object DuskStructure
