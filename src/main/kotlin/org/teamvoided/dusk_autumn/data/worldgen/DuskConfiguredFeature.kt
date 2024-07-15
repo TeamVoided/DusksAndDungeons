@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.init.worldgen
+package org.teamvoided.dusk_autumn.data.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.*
@@ -35,6 +35,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
+import org.teamvoided.dusk_autumn.init.worldgen.DuskFeatures
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
@@ -76,9 +77,6 @@ object DuskConfiguredFeature {
     val CROPS_PUMPKIN = create("crops/pumpkins")
     val CROPS_BEETROOTS = create("crops/beetroots")
     val CROPS_GOLDEN_BEETROOTS = create("crops/golden_beetroots")
-
-
-    fun init() {}
 
     fun bootstrapConfiguredFeatures(c: BootstrapContext<ConfiguredFeature<*, *>>) {
         val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)

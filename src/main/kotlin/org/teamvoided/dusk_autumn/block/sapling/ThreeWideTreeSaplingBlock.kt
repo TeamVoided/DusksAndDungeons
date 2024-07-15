@@ -14,7 +14,7 @@ import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.BlockView
 import net.minecraft.world.gen.chunk.ChunkGenerator
 import net.minecraft.world.gen.feature.ConfiguredFeature
-import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
 
 
 class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Settings) : SaplingBlock(

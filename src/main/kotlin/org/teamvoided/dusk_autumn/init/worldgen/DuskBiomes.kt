@@ -17,6 +17,7 @@ import net.minecraft.world.gen.feature.MiscPlacedFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
 object DuskBiomes {

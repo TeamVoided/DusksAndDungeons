@@ -14,8 +14,8 @@ import org.teamvoided.dusk_autumn.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusk_autumn.data.gen.tags.EntityTypeTagsProvider
 import org.teamvoided.dusk_autumn.data.gen.tags.ItemTagsProvider
 import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
-import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
-import org.teamvoided.dusk_autumn.init.worldgen.DuskPlacedFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
 
 class DuskAutumnsData : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {

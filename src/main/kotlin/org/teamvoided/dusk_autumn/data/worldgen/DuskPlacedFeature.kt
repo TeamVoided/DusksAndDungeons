@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.init.worldgen
+package org.teamvoided.dusk_autumn.data.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
@@ -48,9 +48,6 @@ object DuskPlacedFeature {
     val BLUE_PETALS = create("blue_petals")
     val AUTUMN_FARMLANDS = create("autumn_farmlands")
     val CROPS_WILD_WHEAT = create("crops/wild_wheat")
-
-
-    fun init() {}
 
     fun orePlacementModifiers(
         firstModifier: PlacementModifier, secondModifier: PlacementModifier

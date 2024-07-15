@@ -13,9 +13,9 @@ import net.minecraft.world.gen.trunk.TrunkPlacer
 import net.minecraft.world.gen.trunk.TrunkPlacerType
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
-import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
 import org.teamvoided.dusk_autumn.init.worldgen.DuskFeatures
-import org.teamvoided.dusk_autumn.init.worldgen.DuskPlacedFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.foliage.ManhattanFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootPlacer
@@ -44,8 +44,6 @@ object DuskWorldgen {
 
     fun init() {
         DuskBiomes.init()
-        DuskConfiguredFeature.init()
-        DuskPlacedFeature.init()
         DuskFeatures.init()
     }
 
