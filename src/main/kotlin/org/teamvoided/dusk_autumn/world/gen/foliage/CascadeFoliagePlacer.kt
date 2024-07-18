@@ -50,14 +50,14 @@ class CascadeFoliagePlacer(
             val list = listOf(3, 4, 5, 5, 5, 5, 4, 2, 1)
 
             if (bigTrunk) {
-                for (idx in 0..9) {
+                for (idx in 0..8) {
                     this.generateSquare(
                         world, place, random, treeFeatureConfig,
                         treeCenter.down(4), list[idx], idx, bigTrunk
                     )
                 }
             } else {
-                for (idx in 3..9) {
+                for (idx in 3..8) {
                     this.generateSquare(
                         world, place, random, treeFeatureConfig,
                         treeCenter.down(4), (list[idx] / 2), idx, bigTrunk
