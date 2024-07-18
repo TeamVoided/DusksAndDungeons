@@ -6,6 +6,7 @@ import net.minecraft.block.BeetrootsBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
@@ -13,11 +14,13 @@ import net.minecraft.loot.condition.BlockStatePropertyLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LootTableEntry
+import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
@@ -37,6 +40,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     )
 
     override fun generate() {
+        val enchants = field_51845.getLookupOrThrow(RegistryKeys.ENCHANTMENT)
         dropsItSelf.forEach(::addDrop)
 
         add(DuskBlocks.CASCADE_DOOR, ::doorDrops)
@@ -69,10 +73,12 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DuskBlocks.GOLDEN_BIRCH_SAPLING) }
         add(DuskBlocks.POTTED_VIOLET_DAISY, ::pottedPlantDrops)
 
+        // why does this not use cropDrops?
         add(
             DuskBlocks.GOLDEN_BEETROOTS,
             applyExplosionDecay(
-                DuskBlocks.GOLDEN_BEETROOTS, LootTable.builder().pool(
+                DuskBlocks.GOLDEN_BEETROOTS,
+                LootTable.builder().pool(
                     LootPool.builder().with(
                         ItemEntry.builder(
                             DuskItems.GOLDEN_BEETROOT
@@ -83,10 +89,12 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                         BlockStatePropertyLootCondition.builder(DuskBlocks.GOLDEN_BEETROOTS).properties(
                             StatePredicate.Builder.create().exactMatch(BeetrootsBlock.AGE, 4)
                         )
-                    )
-                        .with(
-                        ItemEntry.builder(DuskItems.GOLDEN_BEETROOT)
-//                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286f, 3))
+                    ).with(
+                        ItemEntry.builder(DuskItems.GOLDEN_BEETROOT).apply(
+                            ApplyBonusLootFunction.method_463(
+                                enchants.getHolderOrThrow(Enchantments.FORTUNE), 0.5714286f, 3
+                            )
+                        )
                     )
                 )
             )
@@ -143,7 +151,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                                     )
                                 )
                     }
-//                        .conditionally(WITH_SHEARS_OR_SILK_TOUCH)
+                        .conditionally(this.method_60392())
                 )
             )
         )
