@@ -31,6 +31,7 @@ modSettings {
     entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.data.gen.DuskAutumnsData")
 
     mixinFile("dusk_autumn.mixins.json")
+    mixinFile("dusk_autumn.client.mixins.json")
     accessWidener("dusk_autumn.accesswidener")
 }
 
