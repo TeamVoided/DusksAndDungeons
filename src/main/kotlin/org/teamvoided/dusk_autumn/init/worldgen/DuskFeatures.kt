@@ -12,7 +12,7 @@ object DuskFeatures {
 
     val FARMLAND = register("farmland_feature", FarmlandFeature(FarmlandConfig.CODEC))
 
-    fun init() {}
+    fun init() = Unit
     private fun <C : FeatureConfig, F : Feature<C>> register(name: String, feature: F): F =
         Registry.register(Registries.FEATURE, DuskAutumns.id(name), feature)
 }

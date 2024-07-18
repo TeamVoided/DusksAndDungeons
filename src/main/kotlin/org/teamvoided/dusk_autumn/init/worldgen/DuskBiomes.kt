@@ -13,9 +13,10 @@ object DuskBiomes {
     val AUTUMN_WETLANDS = create("autumn_wetlands")
 
 
-    fun init() = Unit
+    fun init() {
 
 
+    }
 
     fun create(id: String): RegistryKey<Biome> = RegistryKey.of(RegistryKeys.BIOME, id(id))
 
