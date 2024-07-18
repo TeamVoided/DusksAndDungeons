@@ -56,7 +56,7 @@ object DuskItemGroups {
             .build()
     )
 
-    fun init() {}
+    fun init() = Unit
     @Suppress("SameParameterValue")
     private fun register(name: String, itemGroup: ItemGroup): ItemGroup {
         return Registry.register(Registries.ITEM_GROUP, id(name), itemGroup)

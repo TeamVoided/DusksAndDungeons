@@ -28,7 +28,7 @@ object DuskBiomes {
 //        .grassColor(16366449)
 
 
-    fun init() {}
+    fun init() = Unit
 
     private fun getSkyColor(temperature: Float): Int {
         val f = MathHelper.clamp(temperature / 3.0f, -1.0f, 1.0f)
