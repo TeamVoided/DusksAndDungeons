@@ -1,7 +1,5 @@
 package org.teamvoided.dusk_autumn.init
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
 import net.minecraft.block.Blocks.*
@@ -12,16 +10,11 @@ import net.minecraft.block.sign.CeilingHangingSignBlock
 import net.minecraft.block.sign.SignBlock
 import net.minecraft.block.sign.WallHangingSignBlock
 import net.minecraft.block.sign.WallSignBlock
-import net.minecraft.client.color.world.BiomeColors
-import net.minecraft.client.color.world.FoliageColors
-import net.minecraft.client.color.world.GrassColors
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.sound.SoundEvents
 import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.DuskAutumns.id
@@ -224,49 +217,6 @@ object DuskBlocks {
 
     fun init() {
         DuskBlockFamilies.init()
-    }
-
-    fun initClient() {
-        listOf(
-            CASCADE_SAPLING, POTTED_CASCADE_SAPLING, CASCADE_LEAVES,
-            BLUE_PETALS, VIOLET_DAISY, POTTED_VIOLET_DAISY,
-            GOLDEN_BIRCH_SAPLING, POTTED_GOLDEN_BIRCH_SAPLING, GOLDEN_BIRCH_LEAVES,
-            CASCADE_LEAF_PILE, OAK_LEAF_PILE, SPRUCE_LEAF_PILE, BIRCH_LEAF_PILE, JUNGLE_LEAF_PILE, ACACIA_LEAF_PILE,
-            DARK_OAK_LEAF_PILE, MANGROVE_LEAF_PILE, CHERRY_LEAF_PILE, AZALEA_LEAF_PILE,
-            FLOWERING_AZALEA_LEAF_PILE, GOLDEN_BIRCH_LEAF_PILE,
-            WILD_WHEAT, GOLDEN_BEETROOTS, MOONBERRY_VINE, MOONBERRY_VINELET
-        ).forEach {
-            BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout())
-        }
-
-        ColorProviderRegistry.BLOCK.register(
-            { _, world, pos, _ ->
-                if (world != null && pos != null) BiomeColors.getFoliageColor(world, pos)
-                else FoliageColors.getColor(0.8, 0.4)
-            },
-            OAK_LEAF_PILE,
-            JUNGLE_LEAF_PILE,
-            ACACIA_LEAF_PILE,
-            DARK_OAK_LEAF_PILE,
-            MANGROVE_LEAF_PILE
-        )
-        ColorProviderRegistry.BLOCK.register(
-            { _, world, pos, _ ->
-                if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
-                else GrassColors.getColor(0.8, 0.4)
-            },
-            BLUE_PETALS
-        )
-        ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> FoliageColors.getSpruceColor() }, SPRUCE_LEAF_PILE)
-        ColorProviderRegistry.BLOCK.register({ _, _, _, _ -> FoliageColors.getBirchColor() }, BIRCH_LEAF_PILE)
-        ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> CASCADE_LEAF_COLOR },
-            CASCADE_LEAVES,
-            CASCADE_LEAF_PILE
-        )
-
-//    val GOLDEN_BIRCH_COLOR = 16761873
-//    val GOLDEN_BIRCH_COLOR = 16760872
     }
 
     fun register(id: String, block: Block): Block = Registry.register(Registries.BLOCK, id(id), block)

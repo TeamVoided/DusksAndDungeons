@@ -12,7 +12,7 @@ object DuskAutumns {
     @JvmField
     val LOGGER = LoggerFactory.getLogger(DuskAutumns::class.java)
 
-    fun commonInit() {
+    fun init() {
         LOGGER.info("Hello from Common")
         DuskBlocks.init()
         DuskItems.init()
@@ -30,7 +30,6 @@ object DuskAutumns {
 
     fun clientInit() {
         LOGGER.info("Hello from Client")
-        DuskBlocks.initClient()
         DuskItems.initClient()
         DuskParticles.initClient()
     }

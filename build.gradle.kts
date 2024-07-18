@@ -26,8 +26,8 @@ repositories {
 }
 
 modSettings {
-    entrypoint("main", "org.teamvoided.dusk_autumn.DuskAutumns::commonInit")
-    entrypoint("client", "org.teamvoided.dusk_autumn.DuskAutumns::clientInit")
+    entrypoint("main", "org.teamvoided.dusk_autumn.DuskAutumns::init")
+    entrypoint("client", "org.teamvoided.dusk_autumn.DuskAutumnsClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.data.gen.DuskAutumnsData")
 
     mixinFile("dusk_autumn.mixins.json")
@@ -41,8 +41,7 @@ dependencies {
 
 loom {
     runs {
-        // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
-//        splitEnvironmentSourceSets()
+        splitEnvironmentSourceSets()
         runs {
             create("DataGen") {
                 client()
