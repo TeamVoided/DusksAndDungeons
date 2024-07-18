@@ -1,4 +1,4 @@
-package net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling
+package org.teamvoided.dusk_autumn.block.sapling
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

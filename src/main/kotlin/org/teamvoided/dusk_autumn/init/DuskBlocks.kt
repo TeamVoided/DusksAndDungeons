@@ -15,8 +15,8 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
-import net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
+import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
+import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
 
