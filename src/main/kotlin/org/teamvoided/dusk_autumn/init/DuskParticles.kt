@@ -1,12 +1,10 @@
 package org.teamvoided.dusk_autumn.init
 
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
 import net.minecraft.particle.DefaultParticleType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
 
 
 object DuskParticles {
@@ -15,9 +13,5 @@ object DuskParticles {
 
     fun init() {
         Registry.register(Registries.PARTICLE_TYPE, id("cascade_leaf_particle"), CASCADE_LEAF_PARTICLE)
-    }
-
-    fun initClient() {
-        ParticleFactoryRegistry.getInstance().register(CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
     }
 }

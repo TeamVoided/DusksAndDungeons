@@ -28,12 +28,6 @@ object DuskAutumns {
         }*/
     }
 
-    fun clientInit() {
-        LOGGER.info("Hello from Client")
-        DuskItems.initClient()
-        DuskParticles.initClient()
-    }
-
     fun id(path: String) = Identifier.of(MODID, path)
     fun mc(path: String) = Identifier.ofDefault(path)
 }
