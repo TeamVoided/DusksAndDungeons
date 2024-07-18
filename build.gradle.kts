@@ -21,7 +21,10 @@ val curse_id: String? by project
 
 repositories {
     maven("https://teamvoided.org/releases")
-    maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
+    exclusiveContent {
+        forRepository { maven("https://maven.terraformersmc.com/") }
+        filter { includeGroup("com.terraformersmc") }
+    }
     mavenCentral()
 }
 
@@ -38,6 +41,7 @@ modSettings {
 dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
+    modImplementation(libs.biolith)
 }
 
 loom {
