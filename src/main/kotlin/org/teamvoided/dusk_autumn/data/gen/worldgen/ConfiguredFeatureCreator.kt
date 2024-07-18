@@ -74,8 +74,10 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
 
+@Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
 object ConfiguredFeatureCreator {
 
+    @Suppress("LongMethod")
     fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
         val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)
         val configuredFeatures = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
