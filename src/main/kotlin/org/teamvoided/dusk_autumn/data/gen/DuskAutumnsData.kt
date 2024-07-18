@@ -13,9 +13,9 @@ import org.teamvoided.dusk_autumn.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusk_autumn.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusk_autumn.data.gen.tags.EntityTypeTagsProvider
 import org.teamvoided.dusk_autumn.data.gen.tags.ItemTagsProvider
-import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
+import org.teamvoided.dusk_autumn.data.gen.worldgen.BiomeCreator
+import org.teamvoided.dusk_autumn.data.gen.worldgen.ConfiguredFeatureCreator
+import org.teamvoided.dusk_autumn.data.gen.worldgen.PlacedFeatureCreator
 
 class DuskAutumnsData : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
@@ -35,8 +35,8 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
-        gen.add(RegistryKeys.BIOME, DuskBiomes::boostrap)
-        gen.add(RegistryKeys.CONFIGURED_FEATURE, DuskConfiguredFeature::bootstrapConfiguredFeatures)
-        gen.add(RegistryKeys.PLACED_FEATURE, DuskPlacedFeature::bootstrapPlacedFeatures)
+        gen.add(RegistryKeys.BIOME, BiomeCreator::boostrap)
+        gen.add(RegistryKeys.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
+        gen.add(RegistryKeys.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
     }
 }
