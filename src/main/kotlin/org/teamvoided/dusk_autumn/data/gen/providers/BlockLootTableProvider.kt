@@ -36,7 +36,8 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         DuskBlocks.STRIPPED_CASCADE_LOG,
         DuskBlocks.CASCADE_PLANKS,
         DuskBlocks.CASCADE_TRAPDOOR,
-        DuskBlocks.GOLDEN_BIRCH_SAPLING
+        DuskBlocks.GOLDEN_BIRCH_SAPLING,
+        DuskBlocks.VIOLET_DAISY
     )
 
     override fun generate() {
@@ -71,7 +72,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DuskBlocks.BLUE_PETALS, ::flowerbedDrops)
         add(DuskBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DuskBlocks.CASCADE_SAPLING) }
         add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DuskBlocks.GOLDEN_BIRCH_SAPLING) }
-        add(DuskBlocks.POTTED_VIOLET_DAISY, ::pottedPlantDrops)
+        add(DuskBlocks.POTTED_VIOLET_DAISY) { pottedPlantDrops(DuskBlocks.VIOLET_DAISY) }
 
         // why does this not use cropDrops?
         add(
@@ -103,11 +104,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             DuskBlocks.MOONBERRY_VINELET,
             applyExplosionDecay(
                 DuskBlocks.MOONBERRY_VINELET, LootTable.builder().pool(
-                    LootPool.builder().with(
-                        ItemEntry.builder(
-                            DuskItems.MOONBERRY_VINELET
-                        )
-                    )
+                    LootPool.builder().with(ItemEntry.builder(DuskItems.MOONBERRY_VINELET))
                 )
             )
         )
