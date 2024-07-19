@@ -32,7 +32,7 @@ class DuskAutumnsClient {
         ClientTickEvents.END_CLIENT_TICK.register {
             if (key.isPressed && cooldown < 1) {
                 it.networkHandler?.sendCommand("place feature dusk_autumn:cascade_tree")
-                cooldown = 60
+                cooldown = 35
             }
 
             if (cooldown > 0) cooldown--
