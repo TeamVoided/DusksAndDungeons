@@ -497,7 +497,7 @@ object ConfiguredFeatureCreator {
                 DuskBlockTags.FARMLAND_PLACES_UNDER,
                 BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
                 0.85f,
-                BiasedToBottomIntProvider.create(2, 16),
+                BiasedToBottomIntProvider.create(3, 16),
                 4,
                 BlockStateProvider.of(Blocks.DARK_OAK_FENCE),
                 0.9f,

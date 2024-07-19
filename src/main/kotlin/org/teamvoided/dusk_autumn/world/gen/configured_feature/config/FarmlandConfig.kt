@@ -40,7 +40,7 @@ data class FarmlandConfig(
                         .forGetter { it.farmlandCanPlaceUnder },
                     BlockStateProvider.TYPE_CODEC.fieldOf("farmland_block").forGetter { it.farmlandBlock },
                     Codec.floatRange(0.0f, 1.0f).fieldOf("farmland_chance").forGetter { it.farmlandChance },
-                    IntProvider.method_35004(0, 64).fieldOf("farm_width").forGetter { it.farmWidth },
+                    IntProvider.method_35004(3, 64).fieldOf("farm_width").forGetter { it.farmWidth },
                     Codec.intRange(1, 256).fieldOf("farm_vertical_range").forGetter { it.farmVerticalRange },
                     BlockStateProvider.TYPE_CODEC.fieldOf("fence_block").forGetter { it.fenceBlock },
                     Codec.floatRange(0.0f, 1.0f).fieldOf("fence_chance").forGetter { it.fenceChance },
