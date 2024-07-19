@@ -1,11 +1,15 @@
 package org.teamvoided.dusk_autumn
 
+import com.mojang.blaze3d.platform.InputUtil
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.client.color.world.GrassColors
+import net.minecraft.client.option.KeyBind
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
 import org.teamvoided.dusk_autumn.init.DuskBlocks
@@ -14,16 +18,29 @@ import org.teamvoided.dusk_autumn.init.DuskItems
 import org.teamvoided.dusk_autumn.init.DuskParticles.CASCADE_LEAF_PARTICLE
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
 
+@Suppress("unused")
 class DuskAutumnsClient {
 
+    val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
+
+    var cooldown = 0
     fun init() {
-        blocksClient()
-        initClient()
+        initBlocks()
+        initItems()
         ParticleFactoryRegistry.getInstance().register(CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
+
+        ClientTickEvents.END_CLIENT_TICK.register {
+            if (key.isPressed && cooldown < 1) {
+                it.networkHandler?.sendCommand("place feature dusk_autumn:cascade_tree")
+                cooldown = 60
+            }
+
+            if (cooldown > 0) cooldown--
+        }
     }
 
 
-    private fun blocksClient() {
+    private fun initBlocks() {
         listOf(
             DuskBlocks.CASCADE_SAPLING,
             DuskBlocks.POTTED_CASCADE_SAPLING,
@@ -80,7 +97,7 @@ class DuskAutumnsClient {
 //    val GOLDEN_BIRCH_COLOR = 16760872    }
     }
 
-    private fun initClient() {
+    private fun initItems() {
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getDefaultColor() },
             DuskItems.OAK_LEAF_PILE,
