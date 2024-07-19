@@ -218,9 +218,9 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
 
         val fenceBlock = config.fenceBlock.getBlockState(random, pos)
         world.setBlockState(pos, fenceBlock, Block.NOTIFY_ALL)
-        for (x in Direction.Type.HORIZONTAL) {
+        for (dir in Direction.Type.HORIZONTAL) {
             world.updateNeighbor(
-                x, world.getBlockState(pos.offset(x)), pos, pos.offset(x),
+                dir, world.getBlockState(pos.offset(dir)), pos, pos.offset(dir),
                 Block.NOTIFY_ALL, Block.UPDATE_LIMIT
             )
         }
