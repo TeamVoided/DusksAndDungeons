@@ -127,10 +127,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                 if (random.nextFloat() >= config.fenceChance) continue@loopBreak
 
                 val fencePos = pos.offset(Direction.Axis.X, i).offset(Direction.Axis.Z, j)
-                if (placeFence(world, config, random, fencePos)) {
-                    fencePositions.add(fencePos)
-                }
-
+                placeFence(world, config, random, fencePos)?.let { fencePositions.add(it) }
             }
         }
         return fencePositions
@@ -205,7 +202,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
     //    this, in fact, does not update neighbors when placed with placed features
     private fun placeFence(
         world: StructureWorldAccess, config: FarmlandConfig, random: RandomGenerator, posIn: BlockPos
-    ): Boolean {
+    ): BlockPos? {
         var pos = posIn
         val maxVertical = 8
         var x = 0
@@ -213,22 +210,22 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         while (!world.getBlockState(pos).isIn(BlockTags.REPLACEABLE)) {
             pos = pos.up()
             x++
-            if (x >= maxVertical) return false
+            if (x >= maxVertical) return null
         }
         x = 0
 
-        if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return false
+        if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return null
 
         while (world.getBlockState(pos.down()).isIn(BlockTags.REPLACEABLE)) {
             pos = pos.down()
-            if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return false
+            if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return null
             x++
-            if (x >= maxVertical) return false
+            if (x >= maxVertical) return null
         }
 
         val fenceBlock = config.fenceBlock.getBlockState(random, pos)
-        world.setBlockState(posIn, fenceBlock, Block.NOTIFY_ALL)
-        return true
+        world.setBlockState(pos, fenceBlock, Block.NOTIFY_ALL)
+        return pos
     }
 
     private fun updateFence(pos: BlockPos, world: StructureWorldAccess) {
