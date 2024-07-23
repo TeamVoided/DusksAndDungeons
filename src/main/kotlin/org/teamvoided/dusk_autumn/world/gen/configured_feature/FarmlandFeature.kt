@@ -4,6 +4,8 @@ package org.teamvoided.dusk_autumn.world.gen.configured_feature
 import com.mojang.serialization.Codec
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.FenceBlock
+import net.minecraft.block.HorizontalConnectingBlock
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.util.math.BlockPos
@@ -19,35 +21,26 @@ import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandCo
 import java.util.function.Predicate
 import kotlin.math.min
 
+
 open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfig>(codec) {
 
     override fun place(context: FeatureContext<FarmlandConfig>): Boolean {
-        val structureWorldAccess = context.world
-        val farmlandConfig = context.config
-        val randomGenerator = context.random
-        val blockPos = context.origin
-        val replaceable = { state: BlockState -> state.isIn(farmlandConfig.farmlandReplaceable) }
-        val widthX = randomGenerator.range(3, farmlandConfig.farmWidth[randomGenerator] + 1)
-        val widthZ = randomGenerator.range(3, farmlandConfig.farmWidth[randomGenerator] + 1)
+        val worldAccess = context.world
+        val config = context.config
+        val random = context.random
+        val pos = context.origin
+        val replaceable = { state: BlockState -> state.isIn(config.farmlandReplaceable) }
+        val widthX = random.range(3, config.farmWidth[random] + 1)
+        val widthZ = random.range(3, config.farmWidth[random] + 1)
 
-        val set = placeGroundAndGetPositions(
-            structureWorldAccess,
-            farmlandConfig,
-            randomGenerator,
-            blockPos,
-            replaceable,
-            widthX,
-            widthZ
-        )
-        generateVegetation(
-            context,
-            structureWorldAccess,
-            farmlandConfig,
-            randomGenerator,
-            set,
-            blockPos
-        )
-        return set.isNotEmpty()
+        val set = placeGroundAndGetPositions(worldAccess, config, random, pos, replaceable, widthX, widthZ)
+        if (set.isNotEmpty()) {
+            val fencePositions = generateFences(widthX, widthZ, config, random, worldAccess, pos)
+            generateVegetation(context, worldAccess, config, random, set, pos)
+            fencePositions.forEach { updateFence(it, worldAccess) }
+            return true
+        }
+        return false
     }
 
     protected open fun placeGroundAndGetPositions(
@@ -77,11 +70,13 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                 if (isCorner) continue@loopBreak
                 if (isEdgeNotCorner || (random.nextFloat() > 0.75f)) continue@loopBreak
                 if (random.nextFloat() > config.farmlandChance) continue@loopBreak
+                if (world.getBlockState(mutable).fluidState.isIn(FluidTags.WATER)) continue@loopBreak
 
                 mutable[pos, i, 0] = j
                 var k = 0
                 while (world.testBlockState(mutable) { it.isIn(config.farmlandCanPlaceUnder) }) {
                     if (k >= config.farmVerticalRange) break
+                    if (world.getBlockState(mutable).fluidState.isIn(FluidTags.WATER)) continue@loopBreak
                     mutable.move(direction)
                     ++k
                 }
@@ -103,9 +98,20 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                         set.add(blockPos)
                     }
                 }
-
             }
         }
+        return set
+    }
+
+    private fun generateFences(
+        radiusX: Int,
+        radiusZ: Int,
+        config: FarmlandConfig,
+        random: RandomGenerator,
+        world: StructureWorldAccess,
+        pos: BlockPos
+    ): List<BlockPos> {
+        val fencePositions = mutableListOf<BlockPos>()
         val biggerRadX = radiusX + 1
         val biggerRadZ = radiusZ + 1
         val fenceLengthX = min(config.fenceLength[random], biggerRadX)
@@ -120,10 +126,11 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                 if (!(edgeZValid || edgeXValid)) continue@loopBreak
                 if (random.nextFloat() >= config.fenceChance) continue@loopBreak
 
-                placeFence(world, config, random, pos.offset(Direction.Axis.X, i).offset(Direction.Axis.Z, j))
+                val fencePos = pos.offset(Direction.Axis.X, i).offset(Direction.Axis.Z, j)
+                placeFence(world, config, random, fencePos)?.let { fencePositions.add(it) }
             }
         }
-        return set
+        return fencePositions
     }
 
     private fun generateVegetation(
@@ -148,16 +155,9 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         generator: ChunkGenerator,
         random: RandomGenerator,
         pos: BlockPos
-    ) {
-        config.cropFeature.value().place(
-            world,
-            generator,
-            random,
-            pos
-        )
-    }
+    ) = config.cropFeature.value().place(world, generator, random, pos)
 
-    protected fun placeGround(
+    private fun placeGround(
         world: StructureWorldAccess,
         config: FarmlandConfig,
         random: RandomGenerator,
@@ -198,10 +198,11 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         return true
     }
 
+    // It does now :)
     //    this, in fact, does not update neighbors when placed with placed features
     private fun placeFence(
         world: StructureWorldAccess, config: FarmlandConfig, random: RandomGenerator, posIn: BlockPos
-    ) {
+    ): BlockPos? {
         var pos = posIn
         val maxVertical = 8
         var x = 0
@@ -209,36 +210,68 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         while (!world.getBlockState(pos).isIn(BlockTags.REPLACEABLE)) {
             pos = pos.up()
             x++
-            if (x >= maxVertical) return
+            if (x >= maxVertical) return null
         }
         x = 0
 
-        if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return
+        if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return null
 
         while (world.getBlockState(pos.down()).isIn(BlockTags.REPLACEABLE)) {
             pos = pos.down()
-            if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return
+            if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return null
             x++
-            if (x >= maxVertical) return
+            if (x >= maxVertical) return null
         }
 
         val fenceBlock = config.fenceBlock.getBlockState(random, pos)
         world.setBlockState(pos, fenceBlock, Block.NOTIFY_ALL)
-        for (x in Direction.Type.HORIZONTAL) {
-            world.updateNeighbor(
-                x, world.getBlockState(pos.offset(x)), pos, pos.offset(x),
-                Block.NOTIFY_ALL, Block.UPDATE_LIMIT
-            )
+        return pos
+    }
+
+    private fun updateFence(pos: BlockPos, world: StructureWorldAccess) {
+        val fenceBlock = world.getBlockState(pos)
+        if (fenceBlock.block is FenceBlock) {
+            val fence = fenceBlock.block as FenceBlock
+
+            val north = pos.north()
+            val east = pos.east()
+            val south = pos.south()
+            val west = pos.west()
+            val state = world.getBlockState(north)
+            val state2 = world.getBlockState(east)
+            val state3 = world.getBlockState(south)
+            val state4 = world.getBlockState(west)
+
+            val updatedFence = fenceBlock
+                .with(
+                    HorizontalConnectingBlock.NORTH,
+                    fence.canConnect(state, state.isSideSolidFullSquare(world, north, Direction.SOUTH), Direction.SOUTH)
+                )
+                .with(
+                    HorizontalConnectingBlock.EAST,
+                    fence.canConnect(state2, state2.isSideSolidFullSquare(world, east, Direction.WEST), Direction.WEST)
+                )
+                .with(
+                    HorizontalConnectingBlock.SOUTH,
+                    fence.canConnect(
+                        state3, state3.isSideSolidFullSquare(world, south, Direction.NORTH), Direction.NORTH
+                    )
+                )
+                .with(
+                    HorizontalConnectingBlock.WEST,
+                    fence.canConnect(state4, state4.isSideSolidFullSquare(world, west, Direction.EAST), Direction.EAST)
+                )
+            world.setBlockState(pos, updatedFence, Block.UPDATE_NONE)
         }
     }
 
-//    fun placeScarecrow(
-//        world: StructureWorldAccess,
-//        config: FarmlandConfig,
-//        random: RandomGenerator,
-//        pos: BlockPos
-//    ) {
-//        val scarecrow = Util.getRandom(config.scarecrow, random)
-//        world.spawnEntity(scarecrow)
-//    }
+    /*fun placeScarecrow(
+        world: StructureWorldAccess,
+        config: FarmlandConfig,
+        random: RandomGenerator,
+        pos: BlockPos
+    ) {
+        val scarecrow = Util.getRandom(config.scarecrow, random)
+        world.spawnEntity(scarecrow)
+    }*/
 }

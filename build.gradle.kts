@@ -21,28 +21,32 @@ val curse_id: String? by project
 
 repositories {
     maven("https://teamvoided.org/releases")
-    maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
+    exclusiveContent {
+        forRepository { maven("https://maven.terraformersmc.com/") }
+        filter { includeGroup("com.terraformersmc") }
+    }
     mavenCentral()
 }
 
 modSettings {
-    entrypoint("main", "org.teamvoided.dusk_autumn.DuskAutumns::commonInit")
-    entrypoint("client", "org.teamvoided.dusk_autumn.DuskAutumns::clientInit")
+    entrypoint("main", "org.teamvoided.dusk_autumn.DuskAutumns::init")
+    entrypoint("client", "org.teamvoided.dusk_autumn.DuskAutumnsClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.data.gen.DuskAutumnsData")
 
     mixinFile("dusk_autumn.mixins.json")
+    mixinFile("dusk_autumn.client.mixins.json")
     accessWidener("dusk_autumn.accesswidener")
 }
 
 dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
+    modImplementation(libs.biolith)
 }
 
 loom {
     runs {
-        // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
-//        splitEnvironmentSourceSets()
+        splitEnvironmentSourceSets()
         runs {
             create("DataGen") {
                 client()

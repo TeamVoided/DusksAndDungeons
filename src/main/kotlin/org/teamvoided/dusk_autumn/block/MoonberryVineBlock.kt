@@ -27,7 +27,6 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import net.minecraft.world.event.GameEvent
 import org.teamvoided.dusk_autumn.init.DuskItems
-import java.util.function.ToIntFunction
 
 class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Waterloggable, Fertilizable {
 
@@ -49,53 +48,35 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
-    override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean {
-        return context.stack.isOf(DuskItems.MOONBERRY_VINE)
-    }
+    override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean =
+        context.stack.isOf(DuskItems.MOONBERRY_VINE)
 
-    override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState): Boolean {
-        return state.get(BERRIES) < 2
-    }
+    override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState): Boolean = state.get(BERRIES) < 2
 
-    override fun canFertilize(world: World, random: RandomGenerator, pos: BlockPos, state: BlockState): Boolean {
-        return world.isNight
-    }
+
+    override fun canFertilize(world: World, random: RandomGenerator, pos: BlockPos, state: BlockState): Boolean =
+        world.isNight
+
 
     override fun fertilize(world: ServerWorld, random: RandomGenerator, pos: BlockPos, state: BlockState) {
         world.setBlockState(pos, state.with(BERRIES, state.get(BERRIES) + 1), 2)
     }
 
-    override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
-    }
+    override fun getFluidState(state: BlockState): FluidState =
+        if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
+
 
     override fun onInteract(
-        stack: ItemStack,
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        entity: PlayerEntity,
-        hand: Hand,
-        hitResult: BlockHitResult
+        stack: ItemStack, state: BlockState, world: World,
+        pos: BlockPos, entity: PlayerEntity, hand: Hand, hitResult: BlockHitResult
     ): ItemInteractionResult {
-        val berries = state.get(BERRIES)
-        val bl = berries == 2
-        return if (!bl && stack.isOf(Items.BONE_MEAL)) ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION else super.onInteract(
-            stack,
-            state,
-            world,
-            pos,
-            entity,
-            hand,
-            hitResult
-        )
+        val bl = state.get(BERRIES) == 2
+        return if (!bl && stack.isOf(Items.BONE_MEAL)) ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
+        else super.onInteract(stack, state, world, pos, entity, hand, hitResult)
     }
+
     override fun onUse(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        entity: PlayerEntity,
-        hitResult: BlockHitResult
+        state: BlockState, world: World, pos: BlockPos, entity: PlayerEntity, hitResult: BlockHitResult
     ): ActionResult {
         val i = state.get(BERRIES)
         val bl = i == 3
@@ -145,8 +126,8 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         val CODEC: MapCodec<MoonberryVineBlock> = createCodec(::MoonberryVineBlock)
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val BERRIES: IntProperty = IntProperty.of("berries", 0, 2)
-        fun getLuminanceSupplier(luminanceLow: Int, luminance: Int): ToIntFunction<BlockState> {
-            return ToIntFunction { state: BlockState ->
+        fun getLuminanceSupplier(luminanceLow: Int, luminance: Int): (BlockState) -> Int {
+            return { state ->
                 if (hasAnyDirection(state) && state.get(BERRIES) > 0) {
                     if (state.get(BERRIES) > 1) luminance
                     else luminanceLow

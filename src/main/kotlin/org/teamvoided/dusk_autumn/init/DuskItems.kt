@@ -1,10 +1,8 @@
 package org.teamvoided.dusk_autumn.init
 
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.block.Block
-import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.item.*
@@ -76,27 +74,8 @@ object DuskItems {
         register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRIES)))
 
-
-    val VOLCANIC_SAND = register("volcanic_sand", BlockItem(DuskBlocks.VOLCANIC_SAND))
-    val SUSPICIOUS_VOLCANIC_SAND = register("suspicious_volcanic_sand", BlockItem(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND))
-    val VOLCANIC_SANDSTONE = register("volcanic_sandstone", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE))
-    val VOLCANIC_SANDSTONE_STAIRS =
-        register("volcanic_sandstone_stairs", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE_STAIRS))
-    val VOLCANIC_SANDSTONE_SLAB = register("volcanic_sandstone_slab", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE_SLAB))
-    val VOLCANIC_SANDSTONE_WALL = register("volcanic_sandstone_wall", BlockItem(DuskBlocks.VOLCANIC_SANDSTONE_WALL))
-    val CUT_VOLCANIC_SANDSTONE = register("cut_volcanic_sandstone", BlockItem(DuskBlocks.CUT_VOLCANIC_SANDSTONE))
-    val CUT_VOLCANIC_SANDSTONE_SLAB =
-        register("cut_volcanic_sandstone_slab", BlockItem(DuskBlocks.CUT_VOLCANIC_SANDSTONE_SLAB))
-    val CHISELED_VOLCANIC_SANDSTONE =
-        register("chiseled_volcanic_sandstone", BlockItem(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE))
-    val SMOOTH_VOLCANIC_SANDSTONE =
-        register("smooth_volcanic_sandstone", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE))
-    val SMOOTH_VOLCANIC_SANDSTONE_STAIRS =
-        register("smooth_volcanic_sandstone_stairs", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE_STAIRS))
-    val SMOOTH_VOLCANIC_SANDSTONE_SLAB =
-        register("smooth_volcanic_sandstone_slab", BlockItem(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE_SLAB))
 //add void util compat
-
+    //???
 
     fun init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL_BLOCKS)
@@ -118,26 +97,6 @@ object DuskItems {
                     GOLDEN_BIRCH_SAPLING
                 )
             })
-    }
-
-    fun initClient() {
-        ColorProviderRegistry.ITEM.register(
-            { _, _ -> FoliageColors.getDefaultColor() },
-            OAK_LEAF_PILE,
-            JUNGLE_LEAF_PILE,
-            ACACIA_LEAF_PILE,
-            DARK_OAK_LEAF_PILE,
-            MANGROVE_LEAF_PILE
-        )
-
-        ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getSpruceColor() }, SPRUCE_LEAF_PILE)
-        ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getBirchColor() }, BIRCH_LEAF_PILE)
-        ColorProviderRegistry.ITEM.register(
-            { _, _ -> DuskBlocks.CASCADE_LEAF_COLOR },
-            CASCADE_LEAVES,
-            CASCADE_LEAF_PILE
-        )
-        ColorProviderRegistry.ITEM.register({ stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) })
     }
 
     fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, id(id), item)

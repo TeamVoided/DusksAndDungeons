@@ -51,6 +51,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
                 )
             ).offerTo(exporter)
         offerShapelessRecipe(exporter, Items.PURPLE_DYE, DuskItems.MOONBERRIES, "purple_dye")
+//        ComplexRecipeJsonFactory.create(::ArmorDyeRecipe).offerTo(exporter, "armor_dye")
 
     }
 

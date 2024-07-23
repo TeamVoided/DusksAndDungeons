@@ -1,4 +1,4 @@
-package net.minecraft.entity.passive.org.teamvoided.dusk_autumn.data
+package org.teamvoided.dusk_autumn.data.tags
 
 import net.minecraft.entity.EntityType
 import net.minecraft.registry.RegistryKeys

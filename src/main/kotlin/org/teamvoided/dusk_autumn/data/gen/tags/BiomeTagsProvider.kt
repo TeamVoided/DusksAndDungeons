@@ -7,7 +7,7 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.world.biome.Biome
-import org.teamvoided.dusk_autumn.data.DuskBiomeTags
+import org.teamvoided.dusk_autumn.data.tags.DuskBiomeTags
 import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
 import java.util.concurrent.CompletableFuture
 

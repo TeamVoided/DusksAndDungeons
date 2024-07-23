@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.init.worldgen
+package org.teamvoided.dusk_autumn.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.Blocks
@@ -19,53 +19,37 @@ import net.minecraft.world.gen.feature.OreConfiguredFeatures
 import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.PlacementModifier
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
-import org.teamvoided.dusk_autumn.DuskAutumns
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ACACIA_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ACACIA_BUSH_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_FARMLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_WETLANDS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_WOODS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.BLUE_PETALS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CASCADE_TREE
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CASCADE_TREE_BEES
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CASCADE_TREE_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.COBBLESTONE_ROCK
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CROPS_WILD_WHEAT
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DARK_OAK_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DARK_OAK_AUTUMN_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DISK_MUD
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DISK_PODZOL
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DISK_RED_SAND
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.FLOWER_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_TALL
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ORE_LAPIS_EXTRA
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_PUMPKIN_EXTRA
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_ROSEBUSH
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 
-@Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
-object DuskPlacedFeature {
-    val COBBLESTONE_ROCK = create("cobblestone_rock")
-    val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
-    val CASCADE_TREE = create("cascade_tree")
-    val CASCADE_TREE_BEES = create("cascade_tree_bees")
-    val CASCADE_TREE_WETLANDS = create("cascade_tree_wetlands")
-    val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
-    val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
-    val GOLDEN_BIRCH_TALL_WETLANDS = create("golden_birch_tall_wetlands")
-    val DARK_OAK_AUTUMN = create("dark_oak_autumn")
-    val DARK_OAK_AUTUMN_WETLANDS = create("dark_oak_autumn_wetlands")
-    val ACACIA_AUTUMN = create("acacia_autumn")
-    val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
-    val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
-    val DISK_PODZOL = create("disk_podzol")
-    val DISK_MUD = create("disk_mud")
-    val DISK_RED_SAND = create("disk_red_sand")
-    val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
-    val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
-    val AUTUMN_WETLANDS_VEGETATION = create("autumn_wetlands_vegetation")
-    val FLOWER_AUTUMN = create("flower_autumn")
-    val PATCH_ROSEBUSH = create("patch_rosebush")
-    val BLUE_PETALS = create("blue_petals")
-    val AUTUMN_FARMLANDS = create("autumn_farmlands")
-    val CROPS_WILD_WHEAT = create("crops/wild_wheat")
+@Suppress("MemberVisibilityCanBePrivate", "MagicNumber", "LongMethod")
+object PlacedFeatureCreator {
 
-
-    fun init() {}
-
-    fun orePlacementModifiers(
-        firstModifier: PlacementModifier, secondModifier: PlacementModifier
-    ): List<PlacementModifier> {
-        return listOf(
-            firstModifier, InSquarePlacementModifier.getInstance(),
-            secondModifier, BiomePlacementModifier.getInstance()
-        )
-    }
-
-    fun commonOrePlacementModifiers(count: Int, modifier: PlacementModifier): List<PlacementModifier> {
-        return orePlacementModifiers(CountPlacementModifier.create(count), modifier)
-    }
-
-    fun bootstrapPlacedFeatures(c: BootstrapContext<PlacedFeature>) {
+    fun bootstrap(c: BootstrapContext<PlacedFeature>) {
         val holderProvider = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
 
         val cascadeSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.CASCADE_SAPLING)
@@ -239,14 +223,25 @@ object DuskPlacedFeature {
 //        MiscPlacedFeatures.class
     }
 
+    fun orePlacementModifiers(
+        firstModifier: PlacementModifier, secondModifier: PlacementModifier
+    ): List<PlacementModifier> {
+        return listOf(
+            firstModifier, InSquarePlacementModifier.getInstance(),
+            secondModifier, BiomePlacementModifier.getInstance()
+        )
+    }
+
+    fun commonOrePlacementModifiers(count: Int, modifier: PlacementModifier): List<PlacementModifier> {
+        return orePlacementModifiers(CountPlacementModifier.create(count), modifier)
+    }
+
     private fun treePlacementModifiersBase(modifier: PlacementModifier): ImmutableList.Builder<PlacementModifier> {
         return ImmutableList.builder<PlacementModifier>().add(modifier).add(InSquarePlacementModifier.getInstance())
             .add(SurfaceWaterDepthFilterPlacementModifier.create(0)).add(PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP)
             .add(BiomePlacementModifier.getInstance())
     }
 
-//    PlacedFeatureUtil.register(
-//    c,
 
     fun BootstrapContext<PlacedFeature>.register(
         registryKey: RegistryKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
@@ -257,7 +252,4 @@ object DuskPlacedFeature {
         registryKey: RegistryKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
         placementModifiers: List<PlacementModifier>
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
-
-
-    fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumns.id(id))
 }

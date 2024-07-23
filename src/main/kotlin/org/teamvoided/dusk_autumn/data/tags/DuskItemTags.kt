@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.data
+package org.teamvoided.dusk_autumn.data.tags
 
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys

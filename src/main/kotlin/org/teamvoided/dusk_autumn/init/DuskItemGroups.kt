@@ -50,26 +50,13 @@ object DuskItemGroups {
                         ItemStack(DuskItems.MOONBERRY_VINELET),
                         ItemStack(DuskItems.MOONBERRY_VINE),
                         ItemStack(DuskItems.MOONBERRIES),
-
-                        ItemStack(DuskItems.VOLCANIC_SAND),
-                        ItemStack(DuskItems.SUSPICIOUS_VOLCANIC_SAND),
-                        ItemStack(DuskItems.VOLCANIC_SANDSTONE),
-                        ItemStack(DuskItems.VOLCANIC_SANDSTONE_STAIRS),
-                        ItemStack(DuskItems.VOLCANIC_SANDSTONE_SLAB),
-                        ItemStack(DuskItems.VOLCANIC_SANDSTONE_WALL),
-                        ItemStack(DuskItems.CUT_VOLCANIC_SANDSTONE),
-                        ItemStack(DuskItems.CUT_VOLCANIC_SANDSTONE_SLAB),
-                        ItemStack(DuskItems.CHISELED_VOLCANIC_SANDSTONE),
-                        ItemStack(DuskItems.SMOOTH_VOLCANIC_SANDSTONE),
-                        ItemStack(DuskItems.SMOOTH_VOLCANIC_SANDSTONE_STAIRS),
-                        ItemStack(DuskItems.SMOOTH_VOLCANIC_SANDSTONE_SLAB)
                     )
                 )
             }
             .build()
     )
 
-    fun init() {}
+    fun init() = Unit
     @Suppress("SameParameterValue")
     private fun register(name: String, itemGroup: ItemGroup): ItemGroup {
         return Registry.register(Registries.ITEM_GROUP, id(name), itemGroup)

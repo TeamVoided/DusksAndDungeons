@@ -1,4 +1,4 @@
-package net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling
+package org.teamvoided.dusk_autumn.block.sapling
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -14,7 +14,7 @@ import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.BlockView
 import net.minecraft.world.gen.chunk.ChunkGenerator
 import net.minecraft.world.gen.feature.ConfiguredFeature
-import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
 
 
 class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Settings) : SaplingBlock(
@@ -99,7 +99,7 @@ class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Settings) : Sap
     fun getThreeWideTreeFeature(
         random: RandomGenerator,
         bees: Boolean
-    ): RegistryKey<ConfiguredFeature<*, *>?> {
+    ): RegistryKey<ConfiguredFeature<*, *>> {
         return if (bees) DuskConfiguredFeature.CASCADE_TREE_BEES else DuskConfiguredFeature.CASCADE_TREE
     }
 

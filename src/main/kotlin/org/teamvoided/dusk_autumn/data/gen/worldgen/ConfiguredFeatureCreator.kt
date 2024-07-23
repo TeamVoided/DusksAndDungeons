@@ -1,11 +1,10 @@
-package org.teamvoided.dusk_autumn.init.worldgen
+package org.teamvoided.dusk_autumn.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.block.*
 import net.minecraft.fluid.Fluids
 import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.HolderProvider
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.rule.TagMatchRuleTest
@@ -31,10 +30,41 @@ import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
-import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
-import org.teamvoided.dusk_autumn.data.DuskBlockTags
+import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.ACACIA_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.ACACIA_BUSH_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_FARMLAND
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_FARMLAND_CROPS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_PASTURES_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_WETLANDS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_WOODS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.BLUE_PETALS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CASCADE_TREE
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CASCADE_TREE_BEES
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CASCADE_TREE_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.COBBLESTONE_ROCK
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_BEETROOTS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_CARROTS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_GOLDEN_BEETROOTS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_POTATOES
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_PUMPKIN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_WHEAT
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_WILD_WHEAT
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DARK_OAK_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DARK_OAK_AUTUMN_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DISK_MUD
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DISK_PODZOL
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DISK_RED_SAND
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.FLOWER_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.GOLDEN_BIRCH_TALL
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.GOLDEN_BIRCH_TALL_BEES
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.PATCH_PUMPKIN_EXTRA
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.PATCH_ROSEBUSH
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
 import org.teamvoided.dusk_autumn.init.DuskBlocks
+import org.teamvoided.dusk_autumn.init.worldgen.DuskFeatures
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
@@ -44,43 +74,11 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
 
-@Suppress("MemberVisibilityCanBePrivate")
-object DuskConfiguredFeature {
-    val COBBLESTONE_ROCK = create("cobblestone_rock")
-    val CASCADE_TREE = create("cascade_tree")
-    val CASCADE_TREE_BEES = create("cascade_tree_bees")
-    val CASCADE_TREE_WETLANDS = create("cascade_tree_wetlands")
-    val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
-    val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
-    val GOLDEN_BIRCH_TALL_WETLANDS = create("golden_birch_tall_wetlands")
-    val DARK_OAK_AUTUMN = create("dark_oak_autumn")
-    val DARK_OAK_AUTUMN_WETLANDS = create("dark_oak_autumn_wetlands")
-    val ACACIA_AUTUMN = create("acacia_autumn")
-    val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
-    val DISK_PODZOL = create("disk_podzol")
-    val DISK_MUD = create("disk_mud")
-    val DISK_RED_SAND = create("disk_red_sand")
-    val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
-    val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
-    val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
-    val AUTUMN_WETLANDS_VEGETATION = create("autumn_wetlands_vegetation")
-    val FLOWER_AUTUMN = create("flower_autumn")
-    val PATCH_ROSEBUSH = create("patch_rosebush")
-    val BLUE_PETALS = create("blue_petals")
-    val AUTUMN_FARMLAND = create("autumn_farmland")
-    val AUTUMN_FARMLAND_CROPS = create("crops/autumn_farmland_crops")
-    val CROPS_WILD_WHEAT = create("crops/wild_wheat")
-    val CROPS_WHEAT = create("crops/wheat")
-    val CROPS_CARROTS = create("crops/carrots")
-    val CROPS_POTATOES = create("crops/potatoes")
-    val CROPS_PUMPKIN = create("crops/pumpkins")
-    val CROPS_BEETROOTS = create("crops/beetroots")
-    val CROPS_GOLDEN_BEETROOTS = create("crops/golden_beetroots")
+@Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
+object ConfiguredFeatureCreator {
 
-
-    fun init() {}
-
-    fun bootstrapConfiguredFeatures(c: BootstrapContext<ConfiguredFeature<*, *>>) {
+    @Suppress("LongMethod")
+    fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
         val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)
         val configuredFeatures = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
         val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
@@ -499,7 +497,7 @@ object DuskConfiguredFeature {
                 DuskBlockTags.FARMLAND_PLACES_UNDER,
                 BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
                 0.85f,
-                BiasedToBottomIntProvider.create(2, 16),
+                BiasedToBottomIntProvider.create(3, 16),
                 4,
                 BlockStateProvider.of(Blocks.DARK_OAK_FENCE),
                 0.9f,
@@ -670,8 +668,4 @@ object DuskConfiguredFeature {
             blockTags.getTagOrThrow(DuskBlockTags.LEAF_PILES_PLACE_ON)
         )
     }
-
-    fun create(id: String): RegistryKey<ConfiguredFeature<*, *>?> =
-        RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, DuskAutumns.id(id))
-
 }

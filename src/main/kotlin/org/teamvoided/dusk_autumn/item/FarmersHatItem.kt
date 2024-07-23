@@ -14,7 +14,7 @@ class FarmersHatItem(settings: Settings) : Item(settings), Equippable {
         return EquipmentSlot.HEAD
     }
 
-    override fun use(world: World?, user: PlayerEntity?, hand: Hand?): TypedActionResult<ItemStack> {
+    override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         return this.use(this, world, user, hand)
     }
 }

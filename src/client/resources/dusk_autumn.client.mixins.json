@@ -3,10 +3,10 @@
   "minVersion": "0.8",
   "package": "org.teamvoided.dusk_autumn.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "FoxEntityVariantMixin"
+  "mixins": [],
+  "client": [
+    "FoxEntityRendererMixin"
   ],
-  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

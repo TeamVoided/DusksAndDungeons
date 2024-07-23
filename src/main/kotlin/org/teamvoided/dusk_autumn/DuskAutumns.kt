@@ -12,7 +12,7 @@ object DuskAutumns {
     @JvmField
     val LOGGER = LoggerFactory.getLogger(DuskAutumns::class.java)
 
-    fun commonInit() {
+    fun init() {
         LOGGER.info("Hello from Common")
         DuskBlocks.init()
         DuskItems.init()
@@ -20,14 +20,14 @@ object DuskAutumns {
         DuskParticles.init()
         DuskItemGroups.init()
         SnifferInjection.init()
-    }
-
-    fun clientInit() {
-        LOGGER.info("Hello from Client")
-        DuskBlocks.initClient()
-        DuskItems.initClient()
-        DuskParticles.initClient()
+       /* CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
+            val test = literal("end").executes {
+                0
+            }.build()
+            dispatcher.root.addChild(test)
+        }*/
     }
 
     fun id(path: String) = Identifier.of(MODID, path)
+    fun mc(path: String) = Identifier.ofDefault(path)
 }

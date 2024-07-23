@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.dusk_autumn.data.DuskBiomeTags;
+import org.teamvoided.dusk_autumn.data.tags.DuskBiomeTags;
 
 import java.util.ArrayList;
 import java.util.Arrays;

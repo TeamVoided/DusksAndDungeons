@@ -9,7 +9,6 @@ import net.minecraft.data.client.model.*
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
@@ -39,30 +38,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         (DuskBlocks.CASCADE_LEAF_PILE to DuskBlocks.CASCADE_LEAVES),
         (DuskBlocks.GOLDEN_BIRCH_LEAF_PILE to DuskBlocks.GOLDEN_BIRCH_LEAVES)
     )
-    val blockFamily = listOf(
-        DuskBlockFamilies.VOLCANIC_SANDSTONE,
-        DuskBlockFamilies.CUT_VOLCANIC_SANDSTONE,
-        DuskBlockFamilies.SMOOTH_VOLCANIC_SANDSTONE
-    )
+//    val blockFamily = listOf(
+//    )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
-        gen.sandstoneModels = mapOf(
-            DuskBlocks.VOLCANIC_SANDSTONE to TexturedModel.SIDE_TOP_BOTTOM_WALL[DuskBlocks.VOLCANIC_SANDSTONE],
-            DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE to TexturedModel.getCubeAll(
-                Texture.getSubId(DuskBlocks.VOLCANIC_SANDSTONE, "_top")
-            ),
-            DuskBlocks.CUT_VOLCANIC_SANDSTONE to TexturedModel.CUBE_COLUMN[DuskBlocks.VOLCANIC_SANDSTONE].texture { texture: Texture ->
-                texture.put(
-                    TextureKey.SIDE,
-                    Texture.getId(DuskBlocks.CUT_VOLCANIC_SANDSTONE)
-                )
-            },
-            DuskBlocks.CHISELED_VOLCANIC_SANDSTONE to TexturedModel.CUBE_COLUMN[DuskBlocks.CHISELED_VOLCANIC_SANDSTONE].texture { texture: Texture ->
-                texture.put(TextureKey.END, Texture.getSubId(DuskBlocks.VOLCANIC_SANDSTONE, "_top"))
-                texture.put(TextureKey.SIDE, Texture.getId(DuskBlocks.CHISELED_VOLCANIC_SANDSTONE))
-            }
-        )
-
 
         gen.registerSingleton(DuskBlocks.CASCADE_LOG_STRAIGHT) {
             TexturedModel.CUBE_COLUMN.get(DuskBlocks.CASCADE_LOG_STRAIGHT)
@@ -88,14 +67,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 
-        gen.registerCubeAllModelTexturePool(DuskBlocks.VOLCANIC_SAND)
-        gen.registerDustable(DuskBlocks.SUSPICIOUS_VOLCANIC_SAND)
-        blockFamily.forEach {
-            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
-        }
-//        gen.registerSingleton(DuskBlocks.SMOOTH_VOLCANIC_SANDSTONE) {
-//            TexturedModel.getCubeAll(Texture.getSubId(DuskBlocks.VOLCANIC_SANDSTONE, "_top"))
+//        blockFamily.forEach {
+//            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
 //        }
+        
 
         leafPiles.forEach { (it, texture) ->
             val layer1 = gen.parentedModel(it, texture, leafPile())

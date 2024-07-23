@@ -1,8 +1,8 @@
-package net.minecraft.world.gen.foliage.org.teamvoided.dusk_autumn.block.sapling
+package org.teamvoided.dusk_autumn.block.sapling
 
 import net.minecraft.block.sapling.TreeGrower
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.init.worldgen.DuskConfiguredFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
 import java.util.*
 
 object SaplingGenerators {
