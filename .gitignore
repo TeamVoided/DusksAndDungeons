@@ -43,3 +43,4 @@ bin/
 src/main/generated/
 /run/
 .env
+.kotlin
