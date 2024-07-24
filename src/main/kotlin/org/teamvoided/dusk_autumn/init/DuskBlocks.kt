@@ -104,7 +104,6 @@ object DuskBlocks {
     )
     val CASCADE_SIGN = registerNoItem(
         "cascade_sign", VoidSignBlock(
-            id("cascade"),
             DuskWoodTypes.CASCADE,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
@@ -112,7 +111,6 @@ object DuskBlocks {
     )
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", VoidWallSignBlock(
-            id("cascade"),
             DuskWoodTypes.CASCADE,
             AbstractBlock.Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).dropsLike(CASCADE_SIGN)
@@ -121,7 +119,6 @@ object DuskBlocks {
     )
     val CASCADE_HANGING_SIGN = registerNoItem(
         "cascade_hanging_sign", VoidCeilingHangingSignBlock(
-            id("hanging/cascade"),
             DuskWoodTypes.CASCADE,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
@@ -129,7 +126,6 @@ object DuskBlocks {
     )
     val CASCADE_WALL_HANGING_SIGN = registerNoItem(
         "cascade_wall_hanging_sign", VoidWallHangingSignBlock(
-            id("hanging/cascade"),
             DuskWoodTypes.CASCADE,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable()
