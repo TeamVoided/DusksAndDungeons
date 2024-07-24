@@ -204,28 +204,32 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         world: StructureWorldAccess, config: FarmlandConfig, random: RandomGenerator, posIn: BlockPos
     ): BlockPos? {
         var pos = posIn
-        val maxVertical = 8
         var x = 0
 
-        while (!world.getBlockState(pos).isIn(BlockTags.REPLACEABLE)) {
+        while (!dropFence(world, pos)) {
             pos = pos.up()
             x++
-            if (x >= maxVertical) return null
+            if (x >= config.farmVerticalRange) return null
         }
         x = 0
 
         if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return null
 
-        while (world.getBlockState(pos.down()).isIn(BlockTags.REPLACEABLE)) {
+        while (dropFence(world, pos)) {
             pos = pos.down()
             if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return null
             x++
-            if (x >= maxVertical) return null
+            if (x >= config.farmVerticalRange) return null
         }
 
         val fenceBlock = config.fenceBlock.getBlockState(random, pos)
         world.setBlockState(pos, fenceBlock, Block.NOTIFY_ALL)
         return pos
+    }
+
+    fun dropFence(world: StructureWorldAccess, pos: BlockPos): Boolean {
+        val block = world.getBlockState(pos.down())
+        return (block.isIn(BlockTags.REPLACEABLE) || block.isIn(BlockTags.REPLACEABLE_BY_TREES))
     }
 
     private fun updateFence(pos: BlockPos, world: StructureWorldAccess) {

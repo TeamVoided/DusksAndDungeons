@@ -20,6 +20,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
+import org.teamvoided.dusk_autumn.init.DuskItems.BlockItem
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
 object DuskBlocks {
@@ -41,7 +42,7 @@ object DuskBlocks {
                 .offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-    val POTTED_VIOLET_DAISY = register("potted_violet_daisy", pottedVariant(VIOLET_DAISY))
+    val POTTED_VIOLET_DAISY = registerNoItem("potted_violet_daisy", pottedVariant(VIOLET_DAISY))
 
     val CASCADE_SAPLING = register(
         "cascade_sapling", ThreeWideTreeSaplingBlock(
@@ -51,12 +52,9 @@ object DuskBlocks {
                 .sounds(BlockSoundGroup.CHERRY_SAPLING).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-    val POTTED_CASCADE_SAPLING = register("potted_cascade_sapling", pottedVariant(CASCADE_SAPLING))
+    val POTTED_CASCADE_SAPLING = registerNoItem("potted_cascade_sapling", pottedVariant(CASCADE_SAPLING))
     val CASCADE_LOG = register(
         "cascade_log", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
-    )
-    val CASCADE_LOG_STRAIGHT = register(
-        "cascade_log_straight", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
     )
     val STRIPPED_CASCADE_LOG = register(
         "stripped_cascade_log", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
@@ -69,7 +67,7 @@ object DuskBlocks {
                 .lavaIgnitable()
         )
     )
-    val CASCADE_DOOR = register(
+    val CASCADE_DOOR = registerNoItem(
         "cascade_door", DoorBlock(
             BlockSetType.CHERRY,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
@@ -77,7 +75,7 @@ object DuskBlocks {
                 .pistonBehavior(PistonBehavior.DESTROY),
         )
     )
-    val BLUE_DOOR = register(
+    val BLUE_DOOR = registerNoItem(
         "blue_door", DoorBlock(
             BlockSetType.DARK_OAK,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
@@ -103,14 +101,14 @@ object DuskBlocks {
                 .mapColor(MapColor.RED), DuskParticles.CASCADE_LEAF_PARTICLE
         )
     )
-    val CASCADE_SIGN = register(
+    val CASCADE_SIGN = registerNoItem(
         "cascade_sign", SignBlock(
             WoodType.CHERRY,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
-    val CASCADE_WALL_SIGN = register(
+    val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", WallSignBlock(
             WoodType.CHERRY,
             AbstractBlock.Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
@@ -118,14 +116,14 @@ object DuskBlocks {
                 .lavaIgnitable(),
         )
     )
-    val CASCADE_HANGING_SIGN = register(
+    val CASCADE_HANGING_SIGN = registerNoItem(
         "cascade_hanging_sign", CeilingHangingSignBlock(
             WoodType.CHERRY,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
-    val CASCADE_WALL_HANGING_SIGN = register(
+    val CASCADE_WALL_HANGING_SIGN = registerNoItem(
         "cascade_wall_hanging_sign", WallHangingSignBlock(
             WoodType.CHERRY,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
@@ -153,7 +151,7 @@ object DuskBlocks {
         )
     )
     val POTTED_GOLDEN_BIRCH_SAPLING =
-        register("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING))
+        registerNoItem("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING))
 
     val OAK_LEAF_PILE = register("oak_leaf_pile", LeafPileBlock(leafPileSettings))
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", LeafPileBlock(leafPileSettings))
@@ -184,14 +182,14 @@ object DuskBlocks {
         "golden_birch_leaf_pile",
         LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.GRASS).mapColor(MapColor.YELLOW))
     )
-    val WILD_WHEAT = register(
+    val WILD_WHEAT = registerNoItem(
         "wild_wheat",
         TallPlantBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.PLANT).noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-    val GOLDEN_BEETROOTS = register(
+    val GOLDEN_BEETROOTS = registerNoItem(
         "golden_beetroots",
         GoldenBeetrootsBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.GOLD).noCollision().ticksRandomly().breakInstantly()
@@ -206,7 +204,7 @@ object DuskBlocks {
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-    val MOONBERRY_VINELET = register(
+    val MOONBERRY_VINELET = registerNoItem(
         "moonberry_vinelet", MoonberryVineletBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f).ticksRandomly()
                 .breakInstantly().sounds(BlockSoundGroup.CAVE_VINES).lavaIgnitable()
@@ -218,6 +216,12 @@ object DuskBlocks {
         DuskBlockFamilies.init()
     }
 
-    fun register(id: String, block: Block): Block = Registry.register(Registries.BLOCK, id(id), block)
+    fun register(id: String, block: Block): Block {
+        val regBlock = registerNoItem(id, block)
+        DuskItems.register(id, BlockItem(regBlock))
+        return regBlock
+    }
+
+    fun registerNoItem(id: String, block: Block): Block = Registry.register(Registries.BLOCK, id(id), block)
 
 }
