@@ -28,7 +28,7 @@ class CascadeFoliagePlacer(
         random: RandomGenerator,
         config: TreeFeatureConfig,
         i: Int, treeNode: TreeNode,
-        j: Int, k: Int, l: Int
+        j: Int, radius: Int, l: Int
     ) {
         val pos = treeNode.center
         val giantTrunk = treeNode.isGiantTrunk
@@ -93,27 +93,35 @@ class CascadeFoliagePlacer(
 
         // Variant 4
           if (giantTrunk) {
-              val height = 0
-              this.genSquareRounded(world, place, random, config, pos, false, 0 + height, k)
-              this.genSquareNoCorners(world, place, random, config, pos, false, 1 + height, k)
-              this.genSquareRounded(world, place, random, config, pos, false, 2 + height, k)
+              val height = -3
+              this.genSquareRounded(world, place, random, config, pos, false, -1 + height, radius)
+              this.genSquareNoCorners(world, place, random, config, pos, false, 0 + height, radius)
+              this.genSquareNoCorners(world, place, random, config, pos, false, 1 + height, radius)
+              this.genSquareRounded(world, place, random, config, pos, false, 2 + height, radius)
 
-              this.genSquareNoCorners(world, place, random, config, pos, false, 3 + height, k - 1)
-              this.genSquareNoCorners(world, place, random, config, pos, false, 4 + height, k - 1)
-              this.genSquare(world, place, random, config, pos, false, 5 + height, k - 2)
+              this.genSquareRandomNoCorners(world, place, random, config, pos, false, 3 + height, radius - 1)
+              this.genSquareNoCorners(world, place, random, config, pos, false, 4 + height, radius - 1)
+              this.genSquareNoCorners(world, place, random, config, pos, false, 5 + height, radius - 1)
 
-              this.genSquareNoCorners(world, place, random, config, pos, false, 6 + height, k - 2)
+              this.genSquare(world, place, random, config, pos, false, 6 + height, radius - 2)
+              this.genSquareRandomNoCorners(world, place, random, config, pos, false, 7 + height, radius - 2)
+              this.genSquareNoCorners(world, place, random, config, pos, false, 8 + height, radius - 2)
           } else {
               val pos2 = pos//.north().west()
-
               val isEven = false
-              this.genSquareRounded(world, place, random, config, pos2, isEven, -1, k - 1)
-              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 0, k - 1)
-              this.genSquareRounded(world, place, random, config, pos2, isEven, 1, k - 1)
-              this.genSquareRounded(world, place, random, config, pos2, isEven, 2, k - 1)
-              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 3, k - 2)
-              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 4, k - 2)
-              this.genSquare(world, place, random, config, pos2, isEven, 5, k - 3)
+
+//              this.genSquareRounded(world, place, random, config, pos2, isEven, -2, radius - 2)
+//              this.genSquareNoCorners(world, place, random, config, pos2, isEven, -1, radius- 1)
+//              this.genSquareRandomNoCorners(world, place, random, config, pos2, isEven, 0, radius- 1)
+//              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 1, radius - 2)
+
+              this.genSquareRounded(world, place, random, config, pos2, isEven, -1, radius - 1)
+              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 0, radius - 1)
+              this.genSquareRounded(world, place, random, config, pos2, isEven, 1, radius - 1)
+              this.genSquareRounded(world, place, random, config, pos2, isEven, 2, radius - 1)
+              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 3, radius - 2)
+              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 4, radius - 2)
+              this.genSquare(world, place, random, config, pos2, isEven, 5, radius - 3)
 
           }
     }

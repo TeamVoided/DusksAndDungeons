@@ -42,6 +42,7 @@ dependencies {
     modImplementation(fileTree("libs"))
     modImplementation(libs.modmenu)
     modImplementation(libs.biolith)
+    modImplementation("org.teamvoided:voidmill:1.0.0-SNAPSHOT")
 }
 
 loom {

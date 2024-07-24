@@ -28,8 +28,6 @@ object DuskBlocks {
         .pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid).noCollision().nonSolid()
         .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.PLANT)
 
-    const val CASCADE_LEAF_COLOR = 13846346
-
     val BLUE_PETALS = register(
         "blue_petals", PinkPetalsBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.PLANT)

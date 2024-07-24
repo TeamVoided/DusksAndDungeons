@@ -13,7 +13,6 @@ import net.minecraft.client.option.KeyBind
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
 import org.teamvoided.dusk_autumn.init.DuskBlocks
-import org.teamvoided.dusk_autumn.init.DuskBlocks.CASCADE_LEAF_COLOR
 import org.teamvoided.dusk_autumn.init.DuskItems
 import org.teamvoided.dusk_autumn.init.DuskParticles.CASCADE_LEAF_PARTICLE
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
@@ -22,6 +21,7 @@ import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.Falling
 class DuskAutumnsClient {
 
     val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
+    val CASCADE_LEAF_COLOR = 14701655
 
     var cooldown = 0
     fun init() {
