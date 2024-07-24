@@ -60,7 +60,7 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
-        items.forEach { gen.add(it.translationKey, genLang(it.id)) }
+//        items.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }
 
 
