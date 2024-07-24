@@ -40,7 +40,7 @@ object StructurePoolCreator {
     ) {
         val procDefault = procLists.getHolderOrThrow(DuskStructureProcessorLists.AUTUMN_RUINS_DEFAULT)
         val default = "autumn_ruins/"
-        val stone = default + "stone/"
+        val stone = default + "stone/stone_"
         c.register(
             DuskStructurePools.AUTUMN_RUINS_SINGLE,
             StructurePool(
@@ -48,17 +48,17 @@ object StructurePoolCreator {
                 listOf(
                     pairedLegacySingle(default + "well_1", procDefault, 10),
                     pairedLegacySingle(default + "well_2", procDefault, 10),
-                    pairedLegacySingle(stone + "stone_remain_1", procDefault, 4),
-                    pairedLegacySingle(stone + "stone_remain_2", procDefault, 4),
-                    pairedLegacySingle(stone + "stone_remain_3", procDefault, 4),
-                    pairedLegacySingle(stone + "stone_remain_4", procDefault, 4),
-                    pairedLegacySingle(stone + "stone_rubble_1", procDefault, 6),
-                    pairedLegacySingle(stone + "stone_rubble_2", procDefault, 6),
-                    pairedLegacySingle(stone + "stone_ruin_1", procDefault, 6),
-                    pairedLegacySingle(stone + "stone_ruin_2", procDefault, 6),
-                    pairedLegacySingle(stone + "stone_ruin_3", procDefault, 6),
-                    pairedLegacySingle(stone + "stone_watch_1", procDefault, 4),
-                    pairedLegacySingle(stone + "stone_watch_2", procDefault, 5),
+                    pairedLegacySingle(stone + "remain_1", procDefault, 4),
+                    pairedLegacySingle(stone + "remain_2", procDefault, 4),
+                    pairedLegacySingle(stone + "remain_3", procDefault, 4),
+                    pairedLegacySingle(stone + "remain_4", procDefault, 4),
+                    pairedLegacySingle(stone + "rubble_1", procDefault, 6),
+                    pairedLegacySingle(stone + "rubble_2", procDefault, 6),
+                    pairedLegacySingle(stone + "ruin_1", procDefault, 6),
+                    pairedLegacySingle(stone + "ruin_2", procDefault, 6),
+                    pairedLegacySingle(stone + "ruin_3", procDefault, 6),
+                    pairedLegacySingle(stone + "watch_1", procDefault, 4),
+                    pairedLegacySingle(stone + "watch_2", procDefault, 5),
                 ),
                 StructurePool.Projection.RIGID
             )

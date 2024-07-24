@@ -66,11 +66,6 @@ object StructureProcessorCreator {
             BlockRotStructureProcessor(0.95f),
             RuleStructureProcessor(
                 StructureProcessorRule(
-                    BlockMatchRuleTest(Blocks.CHEST),
-                    AlwaysTrueRuleTest.INSTANCE,
-                    Blocks.AIR.defaultState
-                ),
-                StructureProcessorRule(
                     RandomBlockMatchRuleTest(Blocks.VINE, 0.5f),
                     AlwaysTrueRuleTest.INSTANCE,
                     Blocks.AIR.defaultState

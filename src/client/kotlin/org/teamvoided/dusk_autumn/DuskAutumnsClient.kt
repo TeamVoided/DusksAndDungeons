@@ -94,23 +94,23 @@ class DuskAutumnsClient {
         )
 
 //    val GOLDEN_BIRCH_COLOR = 16761873
-//    val GOLDEN_BIRCH_COLOR = 16760872    }
+//    val GOLDEN_BIRCH_COLOR = 16760872
     }
 
     private fun initItems() {
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getDefaultColor() },
-            DuskItems.OAK_LEAF_PILE,
-            DuskItems.JUNGLE_LEAF_PILE,
-            DuskItems.ACACIA_LEAF_PILE,
-            DuskItems.DARK_OAK_LEAF_PILE,
-            DuskItems.MANGROVE_LEAF_PILE
+            DuskBlocks.OAK_LEAF_PILE.asItem(),
+            DuskBlocks.JUNGLE_LEAF_PILE.asItem(),
+            DuskBlocks.ACACIA_LEAF_PILE.asItem(),
+            DuskBlocks.DARK_OAK_LEAF_PILE.asItem(),
+            DuskBlocks.MANGROVE_LEAF_PILE.asItem()
         )
 
-        ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getSpruceColor() }, DuskItems.SPRUCE_LEAF_PILE)
-        ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getBirchColor() }, DuskItems.BIRCH_LEAF_PILE)
+        ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getSpruceColor() }, DuskBlocks.SPRUCE_LEAF_PILE.asItem())
+        ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getBirchColor() }, DuskBlocks.BIRCH_LEAF_PILE.asItem())
         ColorProviderRegistry.ITEM.register(
-            { _, _ -> CASCADE_LEAF_COLOR }, DuskItems.CASCADE_LEAVES, DuskItems.CASCADE_LEAF_PILE
+            { _, _ -> CASCADE_LEAF_COLOR }, DuskBlocks.CASCADE_LEAVES.asItem(), DuskBlocks.CASCADE_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) }, DuskItems.FARMERS_HAT

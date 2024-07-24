@@ -32,7 +32,7 @@ object StructureFeatureCreator {
                     TerrainAdjustment.STRUCTURE_WEIGHT_THIN
                 ),
                 structurePools.getHolderOrThrow(DuskStructurePools.AUTUMN_RUINS_SINGLE),
-                1,
+                7,
                 ConstantHeightProvider.create(YOffset.fixed(0)),
                 false,
                 Heightmap.Type.OCEAN_FLOOR_WG

@@ -16,14 +16,14 @@ import java.util.concurrent.CompletableFuture
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
     override fun generateRecipes(exporter: RecipeExporter) {
         ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, DuskBlocks.BLUE_DOOR, 3)
-            .ingredient('#', Ingredient.ofItems(DuskItems.CASCADE_PLANKS))
+            .ingredient('#', Ingredient.ofItems(DuskBlocks.CASCADE_PLANKS.asItem()))
             .ingredient('@', Ingredient.ofItems(Items.GOLD_NUGGET))
             .pattern("## ")
             .pattern("##@")
             .pattern("## ")
             .criterion(
                 "has_cascade_planks", conditionsFromItem(
-                    DuskItems.CASCADE_PLANKS
+                    DuskBlocks.CASCADE_PLANKS.asItem()
                 )
             ).offerTo(exporter)
         createLeafPilesRecipe(DuskBlocks.OAK_LEAF_PILE, Items.OAK_LEAVES, exporter)
@@ -36,8 +36,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         createLeafPilesRecipe(DuskBlocks.AZALEA_LEAF_PILE, Items.AZALEA_LEAVES, exporter)
         createLeafPilesRecipe(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE, Items.FLOWERING_AZALEA_LEAVES, exporter)
         createLeafPilesRecipe(DuskBlocks.CHERRY_LEAF_PILE, Items.CHERRY_LEAVES, exporter)
-        createLeafPilesRecipe(DuskBlocks.CASCADE_LEAF_PILE, DuskItems.CASCADE_LEAVES, exporter)
-        createLeafPilesRecipe(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, DuskItems.GOLDEN_BIRCH_LEAVES, exporter)
+        createLeafPilesRecipe(DuskBlocks.CASCADE_LEAF_PILE, DuskBlocks.CASCADE_LEAVES.asItem(), exporter)
+        createLeafPilesRecipe(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem(), exporter)
         ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DuskItems.FARMERS_HAT, 1)
             .ingredient('#', Ingredient.ofItems(Items.WHEAT))
             .ingredient('@', Ingredient.ofItems(Items.STRING))
