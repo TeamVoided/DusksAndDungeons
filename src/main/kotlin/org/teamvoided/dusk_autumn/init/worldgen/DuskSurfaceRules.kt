@@ -19,79 +19,76 @@ object DuskSurfaceRules {
             )
         )
     )
-    val mycelium = sequence(
-        condition(
-            water(-1, 0),
-            sequence(
-                condition(
-                    ON_FLOOR, block(Blocks.MYCELIUM)
-                ),
-                block(Blocks.DIRT)
-            )
-        )
+
+    val autumnBiomes = biome(
+        DuskBiomes.AUTUMN_WOODS,
+        DuskBiomes.AUTUMN_PASTURES,
+        DuskBiomes.AUTUMN_CASCADES,
+        DuskBiomes.AUTUMN_WETLANDS
     )
 
     fun overworld(): MaterialRule {
-        //Sorted like the vanilla surface rule locations https://minecraft.wiki/w/World_generation#Surface
-        //Surface rule sequence 1: Floor
-
-        val mushroomIslandSurface = condition(
-            biome(
-                DuskBiomes.AUTUMN_WOODS,
-                DuskBiomes.AUTUMN_PASTURES,
-                DuskBiomes.AUTUMN_CASCADES,
-                DuskBiomes.AUTUMN_WETLANDS
-            ), sequence(
+        val autumnMud = condition(
+            autumnBiomes, condition(
+                mudRegionThreshold(0.0),
                 condition(
-                    DEEP_UNDER_FLOOR, sequence(
+                    not(aboveY(YOffset.fixed(65), 0)),
+                    sequence(
+                        condition(
+                            UNDER_FLOOR,
+                            condition(
+                                mudThreshold(0.0),
+                                block(Blocks.MUD)
+                            )
+                        ),
+                        condition(
+                            ON_FLOOR,
+                            condition(
+                                not(aboveY(YOffset.fixed(63), 0)),
+                                block(Blocks.MUD)
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        val defaultAutumnPasturesSurface = condition(
+            biome(DuskBiomes.AUTUMN_PASTURES), sequence(
+                condition(
+                    ON_FLOOR, sequence(
                         condition(
                             surfaceNoiseThreshold(1.0),
-                            mycelium
+                            podzol
                         )
                     )
                 ),
                 condition(
                     UNDER_FLOOR, sequence(
                         condition(
-                            surfaceSecondaryNoiseThreshold(-0.75, 0.75),
+                            surfaceSecondaryNoiseThreshold(1.25),
                             block(Blocks.COARSE_DIRT)
                         )
                     )
-                ),
-                condition(
-                    stoneDepth(0, false, 2, VerticalSurfaceType.FLOOR), sequence(
-                        condition(
-                            surfaceSecondaryNoiseThreshold(-2.0, 2.0),
-                            podzol
-                        )
-                    )
-                ),
-                condition(
-                    UNDER_CEILING, sequence(
-                        condition(
-                            surfaceNoiseThreshold(0.75),
-                            block(Blocks.COARSE_DIRT)
-                        )
-                    )
-                ),
-                condition(
-                    stoneDepth(0, true, 6, VerticalSurfaceType.CEILING), sequence(
-                        condition(
-                            surfaceSecondaryNoiseThreshold(1.0),
-                            block(Blocks.COARSE_DIRT)
-                        )
-                    )
-                ),
-                condition(
-                    UNDER_FLOOR, mycelium
                 )
             )
         )
-        val onFloorInDeepWater = condition(
-            DEEP_UNDER_FLOOR, condition(
-                water(-6, 0),
-                sequence(
-                    mushroomIslandSurface
+        val defaultAutumnWoodsSurface = condition(
+            biome(DuskBiomes.AUTUMN_WOODS), sequence(
+                condition(
+                    UNDER_FLOOR, sequence(
+                        condition(
+                            surfaceNoiseThreshold(-0.75, 0.75),
+                            block(Blocks.COARSE_DIRT)
+                        )
+                    )
+                ),
+                condition(
+                    ON_FLOOR, sequence(
+                        condition(
+                            surfaceNoiseThreshold(-2.0, 2.0),
+                            podzol
+                        )
+                    )
                 )
             )
         )
@@ -99,16 +96,14 @@ object DuskSurfaceRules {
         val surface = condition(
             abovePreliminarySurface(),
             sequence(
-//                swampWater
-//                woodedBadlands,
-//                badlands,
-//                onFloorAndWater,
-                onFloorInDeepWater,
-//                snowyCherryGrove,
-//                stonyShore,
-//                deepSand,
-//                sandstoneDesert,
-//                sandOcean
+                autumnMud,
+                condition(
+                    water(-6, 0),
+                    sequence(
+                        defaultAutumnWoodsSurface,
+                        defaultAutumnPasturesSurface
+                    )
+                )
             )
         )
 
@@ -120,6 +115,13 @@ object DuskSurfaceRules {
     }
 
     private fun block(block: Block): MaterialRule = block(block.defaultState)
+    fun mudThreshold(min: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.SURFACE_SWAMP, min, Double.MAX_VALUE)
+    }
+
+    fun mudRegionThreshold(min: Double): MaterialCondition {
+        return noiseThreshold(NoiseParametersKeys.PACKED_ICE, min, Double.MAX_VALUE)
+    }
 
     private fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition =
         noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25)

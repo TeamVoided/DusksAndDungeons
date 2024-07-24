@@ -8,16 +8,14 @@ import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.Holder
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.int_provider.ClampedIntProvider
 import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
-import net.minecraft.world.gen.feature.ConfiguredFeature
-import net.minecraft.world.gen.feature.OreConfiguredFeatures
-import net.minecraft.world.gen.feature.PlacedFeature
-import net.minecraft.world.gen.feature.PlacementModifier
+import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ACACIA_AUTUMN
@@ -42,8 +40,10 @@ import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_T
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ORE_LAPIS_EXTRA
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_PUMPKIN_EXTRA
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_ROSEBUSH
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber", "LongMethod")
@@ -62,6 +62,7 @@ object PlacedFeatureCreator {
             RarityFilterPlacementModifier.create(5),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
+            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),
             BiomePlacementModifier.getInstance()
         )
         c.register(
@@ -113,6 +114,28 @@ object PlacedFeatureCreator {
             acaciaSapling
         )
         c.register(
+            PATCH_GRASS_AUTUMN_PLAIN, holderProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_GRASS),
+            NoiseThresholdCountPlacementModifier.create(-0.8, 5, 10),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
+            BlockPredicateFilterPlacementModifier.create(
+                BlockPredicate.matchingBlocks(BlockPos.ORIGIN.down(), *arrayOf(Blocks.GRASS_BLOCK))
+            ),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            PATCH_TALL_GRASS_AUTUMN_PLAIN,
+            holderProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_TALL_GRASS),
+            NoiseThresholdCountPlacementModifier.create(-0.8, 0, 7),
+            RarityFilterPlacementModifier.create(32),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+            BlockPredicateFilterPlacementModifier.create(
+                BlockPredicate.matchingBlocks(BlockPos.ORIGIN.down(), *arrayOf(Blocks.GRASS_BLOCK))
+            ),
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
             PATCH_PUMPKIN_EXTRA, holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_PUMPKIN_EXTRA),
             RarityFilterPlacementModifier.create(50),
             InSquarePlacementModifier.getInstance(),
@@ -121,7 +144,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DISK_PODZOL, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_PODZOL),
-            PlacedFeatureUtil.createCountExtraModifier(1, 0.025f, 0),
+            RarityFilterPlacementModifier.create(40),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
@@ -132,7 +155,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DISK_MUD, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_MUD),
-            RarityFilterPlacementModifier.create(3),
+            RarityFilterPlacementModifier.create(10),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
@@ -162,7 +185,7 @@ object PlacedFeatureCreator {
         c.register(
             AUTUMN_PASTURES_VEGETATION,
             holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
-            NoiseBasedCountPlacementModifier.create(20, 80.0, 0.0),
+            RarityFilterPlacementModifier.create(2),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
             PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
@@ -181,7 +204,7 @@ object PlacedFeatureCreator {
         c.register(
             FLOWER_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.FLOWER_AUTUMN),
             NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-            RarityFilterPlacementModifier.create(21),
+            RarityFilterPlacementModifier.create(14),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
@@ -189,7 +212,7 @@ object PlacedFeatureCreator {
         c.register(
             BLUE_PETALS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.BLUE_PETALS),
             NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-            RarityFilterPlacementModifier.create(14),
+            RarityFilterPlacementModifier.create(18),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()

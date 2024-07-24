@@ -25,6 +25,8 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DuskBiomes.AUTUMN_PASTURES)
             .add(DuskBiomes.AUTUMN_CASCADES)
             .add(DuskBiomes.AUTUMN_WETLANDS)
+        getOrCreateTagBuilder(DuskBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS)
+            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(DuskBiomeTags.SPAWNS_SILVER_FOXES)
             .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
     }

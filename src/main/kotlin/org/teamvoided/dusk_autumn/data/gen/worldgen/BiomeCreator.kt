@@ -37,15 +37,6 @@ object BiomeCreator {
         return MathHelper.hsvToRgb(0.62222224f - f * 0.05f, 0.5f + f * 0.1f, 1.0f)
     }
 
-    private fun addBasicFeatures(generationSettings: GenerationSettings.Builder) {
-        DefaultBiomeFeatures.addLandCarvers(generationSettings)
-        DefaultBiomeFeatures.addAmethystGeodes(generationSettings)
-        DefaultBiomeFeatures.addDungeons(generationSettings)
-        DefaultBiomeFeatures.addUndergroundVariety(generationSettings)
-        DefaultBiomeFeatures.addSprings(generationSettings)
-        DefaultBiomeFeatures.addFrozenTopLayer(generationSettings)
-    }
-
     private fun addAutumnAnimals(spawnSettings: SpawnSettings.Builder) {
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.SHEEP, 4, 4, 4))
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.COW, 2, 4, 4))
@@ -84,11 +75,9 @@ object BiomeCreator {
 
         val generationSettings = GenerationSettings
             .Builder(c.getRegistryLookup(RegistryKeys.PLACED_FEATURE), c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
-        addBasicFeatures(generationSettings)
+        OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
-        DefaultBiomeFeatures.addClayDisk(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_RED_SAND)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, MiscPlacedFeatures.DISK_GRAVEL)
+        DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_PODZOL)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
@@ -130,19 +119,20 @@ object BiomeCreator {
 
         val generationSettings = GenerationSettings
             .Builder(c.getRegistryLookup(RegistryKeys.PLACED_FEATURE), c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
-        addBasicFeatures(generationSettings)
+        OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
-        DefaultBiomeFeatures.addClayDisk(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_RED_SAND)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, MiscPlacedFeatures.DISK_GRAVEL)
+        DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
             DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
         )
-        DefaultBiomeFeatures.addPlainsTallGrass(generationSettings)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            VegetationPlacedFeatures.PATCH_GRASS_PLAIN
+            DuskPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            DuskPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN
         )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
@@ -171,11 +161,10 @@ object BiomeCreator {
 
         val generationSettings = GenerationSettings
             .Builder(context.getRegistryLookup(RegistryKeys.PLACED_FEATURE), context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
-        addBasicFeatures(generationSettings)
+        OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
-        DefaultBiomeFeatures.addClayDisk(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_RED_SAND)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, MiscPlacedFeatures.DISK_GRAVEL)
+        DefaultBiomeFeatures.addDefaultDisks(generationSettings)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_PODZOL)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
             DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
@@ -210,7 +199,7 @@ object BiomeCreator {
         val generationSettings = GenerationSettings
             .Builder(context.getRegistryLookup(RegistryKeys.PLACED_FEATURE),context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
         DefaultBiomeFeatures.addFossils(generationSettings)
-        addBasicFeatures(generationSettings)
+        OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
         addAutumnSwampFeatures(generationSettings)

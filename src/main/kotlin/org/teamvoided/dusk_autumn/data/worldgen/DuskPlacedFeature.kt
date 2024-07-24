@@ -18,6 +18,8 @@ object DuskPlacedFeature {
     val DARK_OAK_AUTUMN_WETLANDS = create("dark_oak_autumn_wetlands")
     val ACACIA_AUTUMN = create("acacia_autumn")
     val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
+    val PATCH_GRASS_AUTUMN_PLAIN = create("patch_grass_autumn_plain")
+    val PATCH_TALL_GRASS_AUTUMN_PLAIN = create("patch_tall_grass_autumn_plain")
     val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val DISK_PODZOL = create("disk_podzol")
     val DISK_MUD = create("disk_mud")

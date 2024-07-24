@@ -1,3 +1,4 @@
 accessWidener v2 named
 accessible field net/minecraft/data/server/loot_table/VanillaBlockLootTableGenerator JUNGLE_SAPLING_DROP_CHANCES [F
 accessible method net/minecraft/block/Blocks legacyStairsOf (Lnet/minecraft/block/Block;)Lnet/minecraft/block/Block;
+accessible method net/minecraft/world/biome/OverworldBiomeCreator addBasicFeatures (Lnet/minecraft/world/biome/GenerationSettings$Builder;)V

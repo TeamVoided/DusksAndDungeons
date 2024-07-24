@@ -431,9 +431,9 @@ object ConfiguredFeatureCreator {
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
                     WeightedPlacedFeature(
                         placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES),
-                        0.2f
+                        0.05f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.2f)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.01f)
                 ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_AUTUMN)
             )
         )
@@ -508,7 +508,7 @@ object ConfiguredFeatureCreator {
                     configuredFeatures.getHolderOrThrow(AUTUMN_FARMLAND_CROPS),
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
-                0.05f,
+                0.1f,
                 true,
                 listOf()
             )

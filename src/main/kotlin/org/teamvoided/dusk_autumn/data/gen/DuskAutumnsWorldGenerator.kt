@@ -15,5 +15,10 @@ class DuskAutumnsWorldGenerator(o: FabricDataOutput, r: CompletableFuture<Holder
         e.addAll(reg.getLookupOrThrow(RegistryKeys.BIOME))
         e.addAll(reg.getLookupOrThrow(RegistryKeys.PLACED_FEATURE))
         e.addAll(reg.getLookupOrThrow(RegistryKeys.CONFIGURED_FEATURE))
+
+        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_PROCESSOR_LIST))
+        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_POOL))
+        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_SET))
+        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_FEATURE))
     }
 }
