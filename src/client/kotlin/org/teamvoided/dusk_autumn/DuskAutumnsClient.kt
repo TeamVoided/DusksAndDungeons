@@ -63,6 +63,12 @@ class DuskAutumnsClient {
             DuskBlocks.AZALEA_LEAF_PILE,
             DuskBlocks.FLOWERING_AZALEA_LEAF_PILE,
             DuskBlocks.GOLDEN_BIRCH_LEAF_PILE,
+            DuskBlocks.ROCKY_GRASS,
+            DuskBlocks.ROCKY_PODZOL,
+            DuskBlocks.ROCKY_MYCELIUM,
+            DuskBlocks.ROCKY_DIRT_PATH,
+            DuskBlocks.ROCKY_DIRT,
+            DuskBlocks.ROCKY_COARSE_DIRT,
             DuskBlocks.WILD_WHEAT,
             DuskBlocks.GOLDEN_BEETROOTS,
             DuskBlocks.MOONBERRY_VINE,
@@ -74,8 +80,18 @@ class DuskAutumnsClient {
                 if (world != null && pos != null) BiomeColors.getFoliageColor(world, pos)
                 else FoliageColors.getColor(0.8, 0.4)
             },
-            DuskBlocks.OAK_LEAF_PILE, DuskBlocks.JUNGLE_LEAF_PILE,
-            DuskBlocks.ACACIA_LEAF_PILE, DuskBlocks.DARK_OAK_LEAF_PILE, DuskBlocks.MANGROVE_LEAF_PILE
+            DuskBlocks.OAK_LEAF_PILE,
+            DuskBlocks.JUNGLE_LEAF_PILE,
+            DuskBlocks.ACACIA_LEAF_PILE,
+            DuskBlocks.DARK_OAK_LEAF_PILE,
+            DuskBlocks.MANGROVE_LEAF_PILE
+        )
+        ColorProviderRegistry.BLOCK.register(
+            { _, world, pos, _ ->
+                if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
+                else GrassColors.getColor(0.8, 0.4)
+            },
+            DuskBlocks.ROCKY_GRASS
         )
         ColorProviderRegistry.BLOCK.register(
             { _, world, pos, _ ->
@@ -107,8 +123,14 @@ class DuskAutumnsClient {
             DuskBlocks.MANGROVE_LEAF_PILE.asItem()
         )
 
-        ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getSpruceColor() }, DuskBlocks.SPRUCE_LEAF_PILE.asItem())
-        ColorProviderRegistry.ITEM.register({ _, _ -> FoliageColors.getBirchColor() }, DuskBlocks.BIRCH_LEAF_PILE.asItem())
+        ColorProviderRegistry.ITEM.register(
+            { _, _ -> FoliageColors.getSpruceColor() },
+            DuskBlocks.SPRUCE_LEAF_PILE.asItem()
+        )
+        ColorProviderRegistry.ITEM.register(
+            { _, _ -> FoliageColors.getBirchColor() },
+            DuskBlocks.BIRCH_LEAF_PILE.asItem()
+        )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> CASCADE_LEAF_COLOR }, DuskBlocks.CASCADE_LEAVES.asItem(), DuskBlocks.CASCADE_LEAF_PILE.asItem()
         )

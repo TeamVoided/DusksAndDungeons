@@ -13,6 +13,10 @@ import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
+import org.teamvoided.dusk_autumn.util.cubeWithOverlay
+import org.teamvoided.dusk_autumn.util.pathWithOverlay
+import org.teamvoided.dusk_autumn.util.rockyTopSoilsOverlay
+import org.teamvoided.dusk_autumn.util.rotatableCubeWithOverlay
 import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
@@ -70,6 +74,21 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
         gen.registerSingleton(DuskBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
+
+        val stone = "cobbled/stone_overlay"
+        val deepslate = "cobbled/stone_overlay"
+        val blackstone = "cobbled/stone_overlay"
+        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_GRASS, Blocks.GRASS_BLOCK, stone)
+        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_PODZOL, Blocks.PODZOL, stone)
+        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, stone)
+        gen.pathWithOverlay(DuskBlocks.ROCKY_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
+        gen.rotatableCubeWithOverlay(DuskBlocks.ROCKY_SAND, Blocks.SAND, stone)
+        gen.rotatableCubeWithOverlay(DuskBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, stone)
+
         gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)

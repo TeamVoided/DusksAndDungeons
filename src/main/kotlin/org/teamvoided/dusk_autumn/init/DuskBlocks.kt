@@ -1,7 +1,8 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.minecraft.block.*
-import net.minecraft.block.AbstractBlock.OffsetType
+import net.minecraft.block.AbstractBlock.*
+import net.minecraft.block.AbstractBlock.Settings.variantOf
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
@@ -13,15 +14,15 @@ import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
-import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_WOOD_TYPE
 import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_BLOCK_SET_TYPE
+import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_WOOD_TYPE
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
+import org.teamvoided.dusk_autumn.init.DuskItems.BlockItem
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidSignBlock
 import org.teamvoided.voidmill.sign.VoidWallHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidWallSignBlock
-import org.teamvoided.dusk_autumn.init.DuskItems.BlockItem
 
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
@@ -230,10 +231,71 @@ object DuskBlocks {
         "golden_birch_leaf_pile",
         LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.GRASS).mapColor(MapColor.YELLOW))
     )
+
+
+    val ROCKY_GRASS = register(
+        "rocky_grass", GrassBlock(
+            variantOf(GRASS_BLOCK).mapColor(COBBLESTONE.defaultMapColor)
+        )
+    )
+    val ROCKY_PODZOL = register(
+        "rocky_podzol", SnowyBlock(
+            variantOf(PODZOL).mapColor(COBBLESTONE.defaultMapColor)
+        )
+    )
+    val ROCKY_MYCELIUM = register(
+        "rocky_mycelium", MyceliumBlock(
+            variantOf(MYCELIUM).mapColor(COBBLESTONE.defaultMapColor)
+        )
+    )
+    val ROCKY_DIRT = register(
+        "rocky_dirt", Block(
+            variantOf(DIRT).mapColor(COBBLESTONE.defaultMapColor)
+        )
+    )
+    val ROCKY_COARSE_DIRT = register(
+        "rocky_coarse_dirt", Block(
+            variantOf(COARSE_DIRT).mapColor(COBBLESTONE.defaultMapColor)
+        )
+    )
+    val ROCKY_DIRT_PATH = register(
+        "rocky_dirt_path", RockyDirtPathBlock(
+            ROCKY_DIRT,
+            variantOf(DIRT_PATH).mapColor(COBBLESTONE.defaultMapColor)
+        )
+    )
+    val ROCKY_SAND = register(
+        "rocky_sand",
+        GravelBlock(
+            net.minecraft.util.Color(14406560),
+            variantOf(SAND).mapColor(COBBLESTONE.defaultMapColor)
+
+        )
+    )
+    val ROCKY_RED_SAND = register(
+        "rocky_red_sand",
+        GravelBlock(
+            net.minecraft.util.Color(11098145),
+            variantOf(RED_SAND).mapColor(COBBLESTONE.defaultMapColor)
+
+        )
+    )
+    val ROCKY_SOUL_SAND = Blocks.register(
+        "soul_sand", SoulSandBlock(
+            variantOf(SOUL_SAND).mapColor(COBBLESTONE.defaultMapColor)
+        )
+    )
+
+    val ROCKY_SOUL_SOIL = register(
+        "rocky_soul_soil",
+        Block(variantOf(SOUL_SOIL).mapColor(COBBLESTONE.defaultMapColor))
+    )
+
+
     val WILD_WHEAT = registerNoItem(
         "wild_wheat",
         TallPlantBlock(
-            AbstractBlock.Settings.create().mapColor(MapColor.PLANT).noCollision().breakInstantly()
+            Settings.create().mapColor(MapColor.PLANT).noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
