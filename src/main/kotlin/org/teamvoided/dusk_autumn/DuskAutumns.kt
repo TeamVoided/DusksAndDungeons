@@ -14,8 +14,8 @@ object DuskAutumns {
 
     fun init() {
         LOGGER.info("Hello from Common")
-        DuskBlocks.init()
         DuskItems.init()
+        DuskBlocks.init()
         DuskWorldgen.init()
         DuskParticles.init()
         DuskItemGroups.init()

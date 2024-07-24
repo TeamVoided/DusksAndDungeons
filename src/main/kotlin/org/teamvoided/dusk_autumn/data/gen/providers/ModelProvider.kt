@@ -50,7 +50,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerSingleton(DuskBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
         gen.registerDoor(DuskBlocks.CASCADE_DOOR)
         gen.registerOrientableTrapdoor(DuskBlocks.CASCADE_TRAPDOOR)
-//        gen.registerDoor(DuskBlocks.BLUE_DOOR)
+        gen.registerDoor(DuskBlocks.BLUE_DOOR)
         gen.registerFlowerPotPlant(
             DuskBlocks.GOLDEN_BIRCH_SAPLING,
             DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
@@ -58,8 +58,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )
         gen.registerSingleton(DuskBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
         gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
-//        gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
-//        gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
+        gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
+        gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 
