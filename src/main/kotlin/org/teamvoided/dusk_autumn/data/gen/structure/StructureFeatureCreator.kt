@@ -38,7 +38,6 @@ object StructureFeatureCreator {
                 Heightmap.Type.OCEAN_FLOOR_WG
             )
         )
-
     }
 
     private fun structureSettings(

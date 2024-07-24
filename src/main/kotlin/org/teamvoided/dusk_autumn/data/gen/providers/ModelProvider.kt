@@ -9,6 +9,7 @@ import net.minecraft.data.client.model.*
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
@@ -42,14 +43,26 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //    )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
+        DuskBlockFamilies.allBlockFamilies.forEach {
+            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
+        }
         gen.registerFlowerPotPlant(
             DuskBlocks.CASCADE_SAPLING,
             DuskBlocks.POTTED_CASCADE_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
+        gen.registerLog(DuskBlocks.CASCADE_LOG)
+            .log(DuskBlocks.CASCADE_LOG)
+            .wood(DuskBlocks.CASCADE_WOOD)
+        gen.registerLog(DuskBlocks.STRIPPED_CASCADE_LOG)
+            .log(DuskBlocks.STRIPPED_CASCADE_LOG)
+            .wood(DuskBlocks.STRIPPED_CASCADE_WOOD)
+        gen.registerHangingSign(
+            DuskBlocks.STRIPPED_CASCADE_LOG,
+            DuskBlocks.CASCADE_HANGING_SIGN,
+            DuskBlocks.CASCADE_WALL_HANGING_SIGN
+        )
         gen.registerSingleton(DuskBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
-        gen.registerDoor(DuskBlocks.CASCADE_DOOR)
-        gen.registerOrientableTrapdoor(DuskBlocks.CASCADE_TRAPDOOR)
         gen.registerDoor(DuskBlocks.BLUE_DOOR)
         gen.registerFlowerPotPlant(
             DuskBlocks.GOLDEN_BIRCH_SAPLING,
@@ -66,7 +79,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //        blockFamily.forEach {
 //            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
 //        }
-        
+
 
         leafPiles.forEach { (it, texture) ->
             val layer1 = gen.parentedModel(it, texture, leafPile())

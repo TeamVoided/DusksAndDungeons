@@ -2,8 +2,7 @@ package org.teamvoided.dusk_autumn.init
 
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
-import net.minecraft.block.Blocks.logOf
-import net.minecraft.block.Blocks.pottedVariant
+import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
@@ -14,6 +13,8 @@ import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
+import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_WOOD_TYPE
+import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_BLOCK_SET_TYPE
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
@@ -57,20 +58,53 @@ object DuskBlocks {
     val CASCADE_LOG = register(
         "cascade_log", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
     )
+    val CASCADE_WOOD = register(
+        "cascade_wood", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
+    )
     val STRIPPED_CASCADE_LOG = register(
         "stripped_cascade_log", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
+    )
+    val STRIPPED_CASCADE_WOOD = register(
+        "stripped_cascade_wood", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
     )
     val CASCADE_PLANKS = register(
         "cascade_planks", Block(
             AbstractBlock.Settings.create()
-                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0F, 3.0F).sounds(BlockSoundGroup.CHERRY_WOOD)
-                .lavaIgnitable()
+                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
+                .sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
+        )
+    )
+    val CASCADE_STAIRS = register(
+        "cascade_stairs", legacyStairsOf(CASCADE_PLANKS)
+    )
+    val CASCADE_SLAB = register(
+        "cascade_slab",
+        SlabBlock(
+            AbstractBlock.Settings.create()
+                .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
+        )
+    )
+    val CASCADE_FENCE = register(
+        "cascade_fence",
+        FenceBlock(
+            AbstractBlock.Settings.create()
+                .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.CHERRY_WOOD).solid().lavaIgnitable()
+        )
+    )
+    val CASCADE_FENCE_GATE = register(
+        "cascade_fence_gate",
+        FenceGateBlock(
+            CASCADE_WOOD_TYPE,
+            AbstractBlock.Settings.create()
+                .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+                .strength(2.0f, 3.0f).solid().lavaIgnitable()
         )
     )
     val CASCADE_DOOR = registerNoItem(
         "cascade_door", DoorBlock(
-            BlockSetType.CHERRY,
+            CASCADE_BLOCK_SET_TYPE,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
@@ -86,12 +120,25 @@ object DuskBlocks {
     )
     val CASCADE_TRAPDOOR = register(
         "cascade_trapdoor", TrapdoorBlock(
-            BlockSetType.CHERRY,
-            AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).instrument(NoteBlockInstrument.BASS)
+            CASCADE_BLOCK_SET_TYPE,
+            AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
+                .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0f).nonOpaque()
                 .allowsSpawning(Blocks::nonSpawnable).lavaIgnitable(),
         )
     )
+    val CASCADE_PRESSURE_PLATE = register(
+        "cascade_pressure_plate",
+        PressurePlateBlock(
+            CASCADE_BLOCK_SET_TYPE,
+            AbstractBlock.Settings.create()
+                .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS).noCollision()
+                .strength(0.5f).solid().lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
+        )
+    )
+
+    val CASCADE_BUTTON = register("cascade_button", buttonOf(CASCADE_BLOCK_SET_TYPE))
+
     val CASCADE_LEAVES = register(
         "cascade_leaves", FallingLeavesBlock(
             AbstractBlock.Settings.create().strength(0.2f).ticksRandomly()
@@ -104,14 +151,14 @@ object DuskBlocks {
     )
     val CASCADE_SIGN = registerNoItem(
         "cascade_sign", VoidSignBlock(
-            DuskWoodTypes.CASCADE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             AbstractBlock.Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", VoidWallSignBlock(
-            DuskWoodTypes.CASCADE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             AbstractBlock.Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).dropsLike(CASCADE_SIGN)
                 .lavaIgnitable(),
@@ -119,14 +166,14 @@ object DuskBlocks {
     )
     val CASCADE_HANGING_SIGN = registerNoItem(
         "cascade_hanging_sign", VoidCeilingHangingSignBlock(
-            DuskWoodTypes.CASCADE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
     val CASCADE_WALL_HANGING_SIGN = registerNoItem(
         "cascade_wall_hanging_sign", VoidWallHangingSignBlock(
-            DuskWoodTypes.CASCADE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             AbstractBlock.Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable()
                 .dropsLike(CASCADE_HANGING_SIGN),
