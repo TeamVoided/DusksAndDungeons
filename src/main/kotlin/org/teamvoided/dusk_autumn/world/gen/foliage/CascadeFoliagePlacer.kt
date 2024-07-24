@@ -76,7 +76,7 @@ class CascadeFoliagePlacer(
         }*/
 
         // Variant 3
-        if (giantTrunk) {
+       /* if (giantTrunk) {
             val isEven = false
             this.genSquareRandomNoCorners(world, place, random, config, pos, isEven, -1, k )
             this.genSquareRandomNoCorners(world, place, random, config, pos, isEven, 0, k )
@@ -89,7 +89,33 @@ class CascadeFoliagePlacer(
             this.genSquareNoCorners(world, place, random, config, pos2, isEven, 0, k - 1)
             this.genSquareRandomNoCorners(world, place, random, config, pos2, isEven, 1, k - 2)
             this.genSquareNoCorners(world, place, random, config, pos2, isEven, 2, k - 2)
-        }
+        }*/
+
+        // Variant 4
+          if (giantTrunk) {
+              val height = 0
+              this.genSquareRounded(world, place, random, config, pos, false, 0 + height, k)
+              this.genSquareNoCorners(world, place, random, config, pos, false, 1 + height, k)
+              this.genSquareRounded(world, place, random, config, pos, false, 2 + height, k)
+
+              this.genSquareNoCorners(world, place, random, config, pos, false, 3 + height, k - 1)
+              this.genSquareNoCorners(world, place, random, config, pos, false, 4 + height, k - 1)
+              this.genSquare(world, place, random, config, pos, false, 5 + height, k - 2)
+
+              this.genSquareNoCorners(world, place, random, config, pos, false, 6 + height, k - 2)
+          } else {
+              val pos2 = pos//.north().west()
+
+              val isEven = false
+              this.genSquareRounded(world, place, random, config, pos2, isEven, -1, k - 1)
+              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 0, k - 1)
+              this.genSquareRounded(world, place, random, config, pos2, isEven, 1, k - 1)
+              this.genSquareRounded(world, place, random, config, pos2, isEven, 2, k - 1)
+              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 3, k - 2)
+              this.genSquareNoCorners(world, place, random, config, pos2, isEven, 4, k - 2)
+              this.genSquare(world, place, random, config, pos2, isEven, 5, k - 3)
+
+          }
     }
 
     override fun getRandomHeight(random: RandomGenerator, trunkHeight: Int, config: TreeFeatureConfig): Int {
