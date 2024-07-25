@@ -29,14 +29,14 @@ class DuskAutumnsClient {
         initItems()
         ParticleFactoryRegistry.getInstance().register(CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
 
-        ClientTickEvents.END_CLIENT_TICK.register {
-            if (key.isPressed && cooldown < 1) {
-                it.networkHandler?.sendCommand("place feature dusk_autumn:cascade_tree")
-                cooldown = 35
-            }
-
-            if (cooldown > 0) cooldown--
-        }
+//        ClientTickEvents.END_CLIENT_TICK.register {
+//            if (key.isPressed && cooldown < 1) {
+//                it.networkHandler?.sendCommand("place feature dusk_autumn:cascade_tree")
+//                cooldown = 35
+//            }
+//
+//            if (cooldown > 0) cooldown--
+//        }
     }
 
 
@@ -63,16 +63,50 @@ class DuskAutumnsClient {
             DuskBlocks.AZALEA_LEAF_PILE,
             DuskBlocks.FLOWERING_AZALEA_LEAF_PILE,
             DuskBlocks.GOLDEN_BIRCH_LEAF_PILE,
+            DuskBlocks.WILD_WHEAT,
+            DuskBlocks.GOLDEN_BEETROOTS,
+            DuskBlocks.MOONBERRY_VINE,
+            DuskBlocks.MOONBERRY_VINELET,
+
             DuskBlocks.ROCKY_GRASS,
             DuskBlocks.ROCKY_PODZOL,
             DuskBlocks.ROCKY_MYCELIUM,
             DuskBlocks.ROCKY_DIRT_PATH,
             DuskBlocks.ROCKY_DIRT,
             DuskBlocks.ROCKY_COARSE_DIRT,
-            DuskBlocks.WILD_WHEAT,
-            DuskBlocks.GOLDEN_BEETROOTS,
-            DuskBlocks.MOONBERRY_VINE,
-            DuskBlocks.MOONBERRY_VINELET
+            DuskBlocks.ROCKY_MUD,
+            DuskBlocks.ROCKY_SNOW,
+            DuskBlocks.ROCKY_GRAVEL,
+            DuskBlocks.ROCKY_SAND,
+            DuskBlocks.ROCKY_RED_SAND,
+            DuskBlocks.ROCKY_SOUL_SAND,
+            DuskBlocks.ROCKY_SOUL_SOIL,
+            DuskBlocks.SLATED_GRASS,
+            DuskBlocks.SLATED_PODZOL,
+            DuskBlocks.SLATED_MYCELIUM,
+            DuskBlocks.SLATED_DIRT_PATH,
+            DuskBlocks.SLATED_DIRT,
+            DuskBlocks.SLATED_COARSE_DIRT,
+            DuskBlocks.SLATED_MUD,
+            DuskBlocks.SLATED_SNOW,
+            DuskBlocks.SLATED_GRAVEL,
+            DuskBlocks.SLATED_SAND,
+            DuskBlocks.SLATED_RED_SAND,
+            DuskBlocks.SLATED_SOUL_SAND,
+            DuskBlocks.SLATED_SOUL_SOIL,
+            DuskBlocks.BLACKSTONE_GRASS,
+            DuskBlocks.BLACKSTONE_PODZOL,
+            DuskBlocks.BLACKSTONE_MYCELIUM,
+            DuskBlocks.BLACKSTONE_DIRT_PATH,
+            DuskBlocks.BLACKSTONE_DIRT,
+            DuskBlocks.BLACKSTONE_COARSE_DIRT,
+            DuskBlocks.BLACKSTONE_MUD,
+            DuskBlocks.BLACKSTONE_SNOW,
+            DuskBlocks.BLACKSTONE_GRAVEL,
+            DuskBlocks.BLACKSTONE_SAND,
+            DuskBlocks.BLACKSTONE_RED_SAND,
+            DuskBlocks.BLACKSTONE_SOUL_SAND,
+            DuskBlocks.BLACKSTONE_SOUL_SOIL
         ).forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
 
         ColorProviderRegistry.BLOCK.register(
@@ -90,14 +124,10 @@ class DuskAutumnsClient {
             { _, world, pos, _ ->
                 if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
                 else GrassColors.getColor(0.8, 0.4)
-            },
-            DuskBlocks.ROCKY_GRASS
-        )
-        ColorProviderRegistry.BLOCK.register(
-            { _, world, pos, _ ->
-                if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
-                else GrassColors.getColor(0.8, 0.4)
-            }, DuskBlocks.BLUE_PETALS
+            }, DuskBlocks.BLUE_PETALS,
+            DuskBlocks.ROCKY_GRASS,
+            DuskBlocks.SLATED_GRASS,
+            DuskBlocks.BLACKSTONE_GRASS
         )
         ColorProviderRegistry.BLOCK.register(
             { _, _, _, _ -> FoliageColors.getSpruceColor() }, DuskBlocks.SPRUCE_LEAF_PILE
@@ -115,6 +145,12 @@ class DuskAutumnsClient {
 
     private fun initItems() {
         ColorProviderRegistry.ITEM.register(
+            { _, _ -> GrassColors.getDefault() },
+            DuskBlocks.ROCKY_GRASS.asItem(),
+            DuskBlocks.SLATED_GRASS.asItem(),
+            DuskBlocks.BLACKSTONE_GRASS.asItem()
+        )
+        ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getDefaultColor() },
             DuskBlocks.OAK_LEAF_PILE.asItem(),
             DuskBlocks.JUNGLE_LEAF_PILE.asItem(),
@@ -122,7 +158,6 @@ class DuskAutumnsClient {
             DuskBlocks.DARK_OAK_LEAF_PILE.asItem(),
             DuskBlocks.MANGROVE_LEAF_PILE.asItem()
         )
-
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getSpruceColor() },
             DuskBlocks.SPRUCE_LEAF_PILE.asItem()

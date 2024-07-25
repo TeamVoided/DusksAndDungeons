@@ -13,10 +13,7 @@ import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
-import org.teamvoided.dusk_autumn.util.cubeWithOverlay
-import org.teamvoided.dusk_autumn.util.pathWithOverlay
-import org.teamvoided.dusk_autumn.util.rockyTopSoilsOverlay
-import org.teamvoided.dusk_autumn.util.rotatableCubeWithOverlay
+import org.teamvoided.dusk_autumn.util.*
 import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
@@ -74,30 +71,56 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
         gen.registerSingleton(DuskBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
-
-        val stone = "cobbled/stone_overlay"
-        val deepslate = "cobbled/stone_overlay"
-        val blackstone = "cobbled/stone_overlay"
-        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_GRASS, Blocks.GRASS_BLOCK, stone)
-        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_PODZOL, Blocks.PODZOL, stone)
-        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, stone)
-        gen.pathWithOverlay(DuskBlocks.ROCKY_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
-        gen.rotatableCubeWithOverlay(DuskBlocks.ROCKY_SAND, Blocks.SAND, stone)
-        gen.rotatableCubeWithOverlay(DuskBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, stone)
-
         gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 
-//        blockFamily.forEach {
-//            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
-//        }
+        val stone = "cobbled/stone_overlay"
+        val deepslate = "cobbled/deepslate_overlay"
+        val blackstone = "cobbled/blackstone_overlay"
+        gen.rockyGrassOverlay(DuskBlocks.ROCKY_GRASS, stone)
+        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_PODZOL, Blocks.PODZOL, DuskBlocks.ROCKY_GRASS, stone)
+        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, DuskBlocks.ROCKY_GRASS, stone)
+        gen.pathWithOverlay(DuskBlocks.ROCKY_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_MUD, Blocks.MUD, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_SNOW, Blocks.SNOW, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, stone)
+        gen.rotatableCubeWithOverlay(DuskBlocks.ROCKY_SAND, Blocks.SAND, stone)
+        gen.rotatableCubeWithOverlay(DuskBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
+        gen.cubeWithOverlay(DuskBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
+
+        gen.rockyGrassOverlay(DuskBlocks.SLATED_GRASS, deepslate)
+        gen.rockyTopSoilsOverlay(DuskBlocks.SLATED_PODZOL, Blocks.PODZOL, DuskBlocks.SLATED_GRASS, deepslate)
+        gen.rockyTopSoilsOverlay(DuskBlocks.SLATED_MYCELIUM, Blocks.MYCELIUM, DuskBlocks.SLATED_GRASS, deepslate)
+        gen.pathWithOverlay(DuskBlocks.SLATED_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, deepslate)
+        gen.cubeWithOverlay(DuskBlocks.SLATED_DIRT, Blocks.DIRT, deepslate)
+        gen.cubeWithOverlay(DuskBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, deepslate)
+        gen.cubeWithOverlay(DuskBlocks.SLATED_MUD, Blocks.MUD, deepslate)
+        gen.cubeWithOverlay(DuskBlocks.SLATED_SNOW, Blocks.SNOW, deepslate)
+        gen.cubeWithOverlay(DuskBlocks.SLATED_GRAVEL, Blocks.GRAVEL, deepslate)
+        gen.rotatableCubeWithOverlay(DuskBlocks.SLATED_SAND, Blocks.SAND, deepslate)
+        gen.rotatableCubeWithOverlay(DuskBlocks.SLATED_RED_SAND, Blocks.RED_SAND, deepslate)
+        gen.cubeWithOverlay(DuskBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, deepslate)
+        gen.cubeWithOverlay(DuskBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, deepslate)
+
+        gen.rockyGrassOverlay(DuskBlocks.BLACKSTONE_GRASS, blackstone)
+        gen.rockyTopSoilsOverlay(DuskBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, DuskBlocks.BLACKSTONE_GRASS, blackstone)
+        gen.rockyTopSoilsOverlay(DuskBlocks.BLACKSTONE_MYCELIUM, Blocks.MYCELIUM, DuskBlocks.BLACKSTONE_GRASS, blackstone)
+        gen.pathWithOverlay(DuskBlocks.BLACKSTONE_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, blackstone)
+        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_DIRT, Blocks.DIRT, blackstone)
+        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, blackstone)
+        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_MUD, Blocks.MUD, blackstone)
+        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_SNOW, Blocks.SNOW, blackstone)
+        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, blackstone)
+        gen.rotatableCubeWithOverlay(DuskBlocks.BLACKSTONE_SAND, Blocks.SAND, blackstone)
+        gen.rotatableCubeWithOverlay(DuskBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, blackstone)
+        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, blackstone)
+        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, blackstone)
 
 
         leafPiles.forEach { (it, texture) ->

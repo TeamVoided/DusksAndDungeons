@@ -47,6 +47,8 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
         DuskBlocks.CASCADE_LEAF_PILE.asItem(),
         DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.asItem(),
 
+        DuskBlocks.ROCKY_GRASS.asItem(),
+
         DuskItems.FARMERS_HAT,
         DuskItems.WILD_WHEAT,
         DuskItems.GOLDEN_BEETROOT,

@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumn.util
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.model.*
-import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
@@ -11,63 +10,82 @@ import java.util.*
 
 
 val ALL_KRY: TextureKey = TextureKey.of("all")
-fun BlockStateModelGenerator.rockyTopSoilsOverlay(block: Block, reference: Block, cobbleOverlay: String) {
+
+fun BlockStateModelGenerator.rockyGrassOverlay(block: Block, overlay: String) {
     val dirtTexture = Texture.getId(Blocks.DIRT)
-    val texture = Texture()
+    val grassTexture = Texture.getId(Blocks.GRASS_BLOCK)
+    val texture: Texture = Texture()
         .put(TextureKey.BOTTOM, dirtTexture).inherit(TextureKey.BOTTOM, TextureKey.PARTICLE)
-        .put(TextureKey.TOP, Texture.getSubId(reference, "_top"))
-        .put(TextureKey.SIDE, Texture.getSubId(reference, "_snow"))
-        .put(TextureKey.DIRT, id("block/$cobbleOverlay"))
+        .put(TextureKey.TOP, grassTexture.suffix("_top"))
+        .put(TextureKey.LAYER0, grassTexture.suffix("_side"))
+        .put(TextureKey.LAYER1, id("block/$overlay"))
+        .put(TextureKey.LAYER2, grassTexture.suffix("_side_overlay"))
+    val textureSnow = Texture()
+        .put(TextureKey.BOTTOM, dirtTexture).inherit(TextureKey.BOTTOM, TextureKey.PARTICLE)
+        .put(TextureKey.TOP, grassTexture.suffix("_top"))
+        .put(TextureKey.LAYER0, grassTexture.suffix("_snow"))
+        .put(TextureKey.LAYER1, id("block/$overlay"))
     val blockModel = block(
         "parent/top_soil_with_overlay",
         TextureKey.BOTTOM,
         TextureKey.TOP,
-        TextureKey.SIDE,
-        TextureKey.DIRT
+        TextureKey.LAYER0,
+        TextureKey.LAYER1
     )
+    var offsetInt = 0
+    var suffix = ""
+    repeat(4) {
+        BlockStateVariant.create().put(
+            VariantSettings.MODEL,
+            block(
+                "parent/top_soil_tinted_with_overlay$suffix",
+                TextureKey.BOTTOM,
+                TextureKey.TOP,
+                TextureKey.LAYER0,
+                TextureKey.LAYER1,
+                TextureKey.LAYER2
+            ).upload(block.modelSuffix(suffix), texture, this.modelCollector)
+        )
+        offsetInt += 90
+        suffix = "_$offsetInt"
+    }
     val snowModel = BlockStateVariant.create().put(
         VariantSettings.MODEL,
         blockModel.upload(
             block,
             "_snow",
-            texture,
+            textureSnow,
             this.modelCollector
         )
     )
-    BlockStateVariant.create().put(
-        VariantSettings.MODEL,
-        blockModel.upload(block, texture, this.modelCollector)
-    )
-    BlockStateVariant.create().put(
-        VariantSettings.MODEL,
-        block(
-            "parent/top_soil_with_overlay_90",
-            TextureKey.BOTTOM,
-            TextureKey.TOP,
-            TextureKey.SIDE,
-            TextureKey.DIRT
-        ).upload(block.modelSuffix("_90"), texture, this.modelCollector)
-    )
-    BlockStateVariant.create().put(
-        VariantSettings.MODEL,
-        block(
-            "parent/top_soil_with_overlay_180",
-            TextureKey.BOTTOM,
-            TextureKey.TOP,
-            TextureKey.SIDE,
-            TextureKey.DIRT
-        ).upload(block.modelSuffix("_180"), texture, this.modelCollector)
-    )
-    BlockStateVariant.create().put(
-        VariantSettings.MODEL,
-        block(
-            "parent/top_soil_with_overlay_270",
-            TextureKey.BOTTOM,
-            TextureKey.TOP,
-            TextureKey.SIDE,
-            TextureKey.DIRT
-        ).upload(block.modelSuffix("_270"), texture, this.modelCollector)
-    )
+    this.registerRockyTopSoil(block, ModelIds.getBlockModelId(block), snowModel)
+}
+
+fun BlockStateModelGenerator.rockyTopSoilsOverlay(block: Block, reference: Block, snowy: Block, overlay: String) {
+    val dirtTexture = Texture.getId(Blocks.DIRT)
+    val texture: Texture = Texture()
+        .put(TextureKey.BOTTOM, dirtTexture).inherit(TextureKey.BOTTOM, TextureKey.PARTICLE)
+        .put(TextureKey.TOP, Texture.getSubId(reference, "_top"))
+        .put(TextureKey.LAYER0, Texture.getSubId(reference, "_side"))
+        .put(TextureKey.LAYER1, id("block/$overlay"))
+    var offsetInt = 0
+    var suffix = ""
+    repeat(4) {
+        BlockStateVariant.create().put(
+            VariantSettings.MODEL,
+            block(
+                "parent/top_soil_with_overlay$suffix",
+                TextureKey.BOTTOM,
+                TextureKey.TOP,
+                TextureKey.LAYER0,
+                TextureKey.LAYER1
+            ).upload(block.modelSuffix(suffix), texture, this.modelCollector)
+        )
+        offsetInt += 90
+        suffix = "_$offsetInt"
+    }
+
+    val snowModel = BlockStateVariant().put(VariantSettings.MODEL, snowy.modelSuffix("_snow"))
     this.registerRockyTopSoil(block, ModelIds.getBlockModelId(block), snowModel)
 }
 
