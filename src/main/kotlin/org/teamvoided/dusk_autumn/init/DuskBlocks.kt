@@ -240,6 +240,23 @@ object DuskBlocks {
         LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.GRASS).mapColor(MapColor.YELLOW))
     )
 
+    val BIG_CHAIN = register(
+        "big_chain",
+        BigChainBlock(
+            Settings.create().strength(5.0f, 6.0f).toolRequired().nonOpaque().solid().sounds(
+                BlockSoundGroup(
+                    1f,
+                    0f,
+                    SoundEvents.BLOCK_CHAIN_BREAK,
+                    SoundEvents.BLOCK_CHAIN_STEP,
+                    SoundEvents.BLOCK_CHAIN_PLACE,
+                    SoundEvents.BLOCK_CHAIN_HIT,
+                    SoundEvents.BLOCK_CHAIN_FALL
+                )
+            )
+        )
+    )
+    val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)))
     val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(variantOf(NETHER_BRICKS)))
     val POLISHED_NETHER_BRICKS = register("polished_nether_bricks", Block(variantOf(NETHER_BRICKS)))
     val POLISHED_NETHER_BRICK_STAIRS =
@@ -256,24 +273,7 @@ object DuskBlocks {
         register("polished_red_nether_brick_slab", SlabBlock(variantOf(RED_NETHER_BRICK_SLAB)))
     val POLISHED_RED_NETHER_BRICK_WALL =
         register("polished_red_nether_brick_wall", WallBlock(variantOf(RED_NETHER_BRICK_WALL)))
-    val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)))
-    val BIG_CHAIN = register(
-        "big_chain",
-        BigChainBlock(
-            Settings.create().strength(5.0f, 6.0f).sounds(
-                BlockSoundGroup(
-                    1f,
-                    0f,
-                    SoundEvents.BLOCK_CHAIN_BREAK,
-                    SoundEvents.BLOCK_CHAIN_STEP,
-                    SoundEvents.BLOCK_CHAIN_PLACE,
-                    SoundEvents.BLOCK_CHAIN_HIT,
-                    SoundEvents.BLOCK_CHAIN_FALL
-                )
-            )
-                .toolRequired().nonOpaque().solid()
-        )
-    )
+
 
     val OVERGROWN_COBBLESTONE = register("overgrown_cobblestone", Block(variantOf(MOSSY_COBBLESTONE)))
     val OVERGROWN_COBBLESTONE_STAIRS = register("overgrown_cobblestone_stairs", legacyStairsOf(OVERGROWN_COBBLESTONE))

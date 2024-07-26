@@ -7,6 +7,7 @@ import net.minecraft.data.client.model.BlockStateModelGenerator.*
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import java.util.*
 
 
@@ -338,6 +339,45 @@ fun slabOrStairWithOverlayModel(parent: String): Model {
         TextureKey.UP
     )
 }
+
+fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
+    val layer1 = this.parentedModel(leafPile, leaves, leafPile())
+    val layer2 = this.parentedModel(leafPile.modelSuffix("_8"), leaves, leafPile("8"))
+    val layer3 = this.parentedModel(leafPile.modelSuffix("_12"), leaves, leafPile("12"))
+    val hanging1 = this.parentedModel(leafPile.modelSuffix("_hanging"), leaves, leafPileHanging())
+    val hanging2 = this.parentedModel(leafPile.modelSuffix("_hanging_8"), leaves, leafPileHanging("8"))
+    val hanging3 = this.parentedModel(leafPile.modelSuffix("_hanging_12"), leaves, leafPileHanging("12"))
+    val full = this.parentedModel(leafPile.modelSuffix("_full"), leaves, leafPile("full"))
+    this.blockStateCollector.accept(
+        MultipartBlockStateSupplier.create(leafPile)
+            .with(
+                When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, false),
+                BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
+            ).with(
+                When.create().set(LeafPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, false),
+                BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
+            ).with(
+                When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, false),
+                BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
+            ).with(
+                When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, true),
+                BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
+            ).with(
+                When.create().set(LeafPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, true),
+                BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
+            ).with(
+                When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, true),
+                BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
+            ).with(
+                When.create().set(LeafPileBlock.PILE_LAYERS, 4),
+                BlockStateVariant.create().put(VariantSettings.MODEL, full)
+            )
+    )
+}
+private fun leafPile(num: String? = null): Identifier =
+    id("block/parent/leaf_pile${if (num != null) "_$num" else ""}")
+private fun leafPileHanging(num: String? = null): Identifier =
+    id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
 
 fun parentedItemModel(id: Identifier) = Model(Optional.of(id.withPrefix("item/")), Optional.empty())
 fun BlockStateModelGenerator.registerParentedItemModel(block: Block) =

@@ -19,12 +19,6 @@ import java.util.*
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private val ALL_KRY: TextureKey = TextureKey.of("all")
-    private fun leafPile(num: String? = null): Identifier =
-        id("block/parent/leaf_pile${if (num != null) "_$num" else ""}")
-
-    private fun leafPileHanging(num: String? = null): Identifier =
-        id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
-
 
     val leafPiles = listOf(
         (DuskBlocks.OAK_LEAF_PILE to Blocks.OAK_LEAVES),
@@ -71,6 +65,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
 
+        gen.registerItemModel(DuskBlocks.BIG_CHAIN.asItem())
+        gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
         gen.registerSimpleCubeAll(DuskBlocks.MIXED_NETHER_BRICKS)
         gen.registerAxisRotated(
             DuskBlocks.NETHER_BRICK_PILLAR,
@@ -82,8 +78,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
-        gen.registerItemModel(DuskBlocks.BIG_CHAIN.asItem())
-        gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
 
         val mossyCobble = "overgrown/cobblestone_overlay"
         val mossyBrick = "overgrown/bricks_overlay"
@@ -96,7 +90,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.slabWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_SLAB, DuskBlocks.OVERGROWN_STONE_BRICKS.model(), Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.wallWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
-
+        leafPiles.forEach { (it, texture) ->
+            gen.createLeafPile(it, texture)
+        }
         gen.registerSingleton(DuskBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
         gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
@@ -153,42 +149,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.rotatableCubeWithOverlay(DuskBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, blackstone)
         gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, blackstone)
         gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, blackstone)
-
-
-        leafPiles.forEach { (it, texture) ->
-            val layer1 = gen.parentedModel(it, texture, leafPile())
-            val layer2 = gen.parentedModel(it.modelSuffix("_8"), texture, leafPile("8"))
-            val layer3 = gen.parentedModel(it.modelSuffix("_12"), texture, leafPile("12"))
-            val hanging1 = gen.parentedModel(it.modelSuffix("_hanging"), texture, leafPileHanging())
-            val hanging2 = gen.parentedModel(it.modelSuffix("_hanging_8"), texture, leafPileHanging("8"))
-            val hanging3 = gen.parentedModel(it.modelSuffix("_hanging_12"), texture, leafPileHanging("12"))
-            val full = gen.parentedModel(it.modelSuffix("_full"), texture, leafPile("full"))
-            gen.blockStateCollector.accept(
-                MultipartBlockStateSupplier.create(it)
-                    .with(
-                        When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, false),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
-                    ).with(
-                        When.create().set(LeafPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, false),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
-                    ).with(
-                        When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, false),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
-                    ).with(
-                        When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, true),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
-                    ).with(
-                        When.create().set(LeafPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, true),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
-                    ).with(
-                        When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, true),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
-                    ).with(
-                        When.create().set(LeafPileBlock.PILE_LAYERS, 4),
-                        BlockStateVariant.create().put(VariantSettings.MODEL, full)
-                    )
-            )
-        }
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),

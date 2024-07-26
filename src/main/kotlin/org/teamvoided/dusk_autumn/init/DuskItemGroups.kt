@@ -43,10 +43,12 @@ object DuskItemGroups {
 
                         ItemStack(DuskBlocks.BIG_CHAIN),
                         ItemStack(DuskBlocks.MIXED_NETHER_BRICKS),
+                        ItemStack(DuskBlocks.NETHER_BRICK_PILLAR),
                         ItemStack(DuskBlocks.POLISHED_NETHER_BRICKS),
                         ItemStack(DuskBlocks.POLISHED_NETHER_BRICK_STAIRS),
                         ItemStack(DuskBlocks.POLISHED_NETHER_BRICK_SLAB),
                         ItemStack(DuskBlocks.POLISHED_NETHER_BRICK_WALL),
+                        ItemStack(DuskBlocks.RED_NETHER_BRICK_PILLAR),
                         ItemStack(DuskBlocks.POLISHED_RED_NETHER_BRICKS),
                         ItemStack(DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS),
                         ItemStack(DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB),
