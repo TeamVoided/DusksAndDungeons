@@ -33,6 +33,11 @@ object DuskPlacedFeature {
     val AUTUMN_FARMLANDS = create("autumn_farmlands")
     val CROPS_WILD_WHEAT = create("crops/wild_wheat")
 
+    val ROCKY_ORE_UPPER = create("rocky_ore_upper")
+    val ROCKY_ORE_LOWER = create("rocky_ore_lower")
+    val SLATED_ORE = create("slated_ore")
+    val BLACKSTONED_ORE = create("blackstoned_ore")
+
 
 
 

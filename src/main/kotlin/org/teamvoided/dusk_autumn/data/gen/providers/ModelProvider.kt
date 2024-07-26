@@ -70,6 +70,33 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
+
+        gen.registerSimpleCubeAll(DuskBlocks.MIXED_NETHER_BRICKS)
+        gen.registerAxisRotated(
+            DuskBlocks.NETHER_BRICK_PILLAR,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+        )
+        gen.registerAxisRotated(
+            DuskBlocks.RED_NETHER_BRICK_PILLAR,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+        )
+        gen.registerItemModel(DuskBlocks.BIG_CHAIN.asItem())
+        gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
+
+        val mossyCobble = "overgrown/cobblestone_overlay"
+        val mossyBrick = "overgrown/bricks_overlay"
+        gen.cubeWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.stairsWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.slabWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_SLAB, DuskBlocks.OVERGROWN_COBBLESTONE.model(), Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.wallWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.cubeWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.stairsWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.slabWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_SLAB, DuskBlocks.OVERGROWN_STONE_BRICKS.model(), Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.wallWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+
+
         gen.registerSingleton(DuskBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
         gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
@@ -110,7 +137,12 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
         gen.rockyGrassOverlay(DuskBlocks.BLACKSTONE_GRASS, blackstone)
         gen.rockyTopSoilsOverlay(DuskBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, DuskBlocks.BLACKSTONE_GRASS, blackstone)
-        gen.rockyTopSoilsOverlay(DuskBlocks.BLACKSTONE_MYCELIUM, Blocks.MYCELIUM, DuskBlocks.BLACKSTONE_GRASS, blackstone)
+        gen.rockyTopSoilsOverlay(
+            DuskBlocks.BLACKSTONE_MYCELIUM,
+            Blocks.MYCELIUM,
+            DuskBlocks.BLACKSTONE_GRASS,
+            blackstone
+        )
         gen.pathWithOverlay(DuskBlocks.BLACKSTONE_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, blackstone)
         gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_DIRT, Blocks.DIRT, blackstone)
         gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, blackstone)
@@ -142,8 +174,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                     ).with(
                         When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, false),
                         BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
-                    )
-                    .with(
+                    ).with(
                         When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, true),
                         BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
                     ).with(
@@ -152,8 +183,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                     ).with(
                         When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, true),
                         BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
-                    )
-                    .with(
+                    ).with(
                         When.create().set(LeafPileBlock.PILE_LAYERS, 4),
                         BlockStateVariant.create().put(VariantSettings.MODEL, full)
                     )

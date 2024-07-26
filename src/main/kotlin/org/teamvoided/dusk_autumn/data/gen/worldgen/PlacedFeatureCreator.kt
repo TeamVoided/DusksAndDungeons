@@ -24,6 +24,7 @@ import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_FARMLAN
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_WETLANDS_VEGETATION
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_WOODS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.BLACKSTONED_ORE
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.BLUE_PETALS
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CASCADE_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CASCADE_TREE_BEES
@@ -44,6 +45,9 @@ import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_GRASS_AU
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_PUMPKIN_EXTRA
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_ROSEBUSH
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ROCKY_ORE_LOWER
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ROCKY_ORE_UPPER
+import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.SLATED_ORE
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber", "LongMethod")
@@ -240,6 +244,36 @@ object PlacedFeatureCreator {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
+        )
+
+
+        c.register(
+            ROCKY_ORE_UPPER, holderProvider.getHolderOrThrow(DuskConfiguredFeature.ROCKY_OVERWORLD_ORE),
+            OrePlacedFeatures.rareOrePlacementModifiers(
+                6,
+                HeightRangePlacementModifier.createUniform(YOffset.fixed(64), YOffset.fixed(128))
+            )
+        )
+        c.register(
+            ROCKY_ORE_LOWER, holderProvider.getHolderOrThrow(DuskConfiguredFeature.ROCKY_OVERWORLD_ORE),
+            OrePlacedFeatures.commonOrePlacementModifiers(
+                2,
+                HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.fixed(60))
+            )
+        )
+        c.register(
+            SLATED_ORE, holderProvider.getHolderOrThrow(DuskConfiguredFeature.SLATED_OVERWORLD_ORE),
+            OrePlacedFeatures.commonOrePlacementModifiers(
+                2,
+                HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(0))
+            )
+        )
+        c.register(
+            BLACKSTONED_ORE, holderProvider.getHolderOrThrow(DuskConfiguredFeature.BLACKSTONE_NETHER_ORE),
+            OrePlacedFeatures.commonOrePlacementModifiers(
+                6,
+                HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(128))
+            )
         )
 
 //        VegetationPlacedFeatures.class

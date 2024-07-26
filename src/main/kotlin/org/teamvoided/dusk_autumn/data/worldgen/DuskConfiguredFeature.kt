@@ -39,6 +39,11 @@ object DuskConfiguredFeature {
     val CROPS_GOLDEN_BEETROOTS = create("crops/golden_beetroots")
 
 
+    val ROCKY_OVERWORLD_ORE = create("rocky_overworld_ore")
+    val SLATED_OVERWORLD_ORE = create("slated_overworld_ore")
+    val BLACKSTONE_NETHER_ORE = create("blackstone_nether_ore")
+
+
     fun create(id: String): RegistryKey<ConfiguredFeature<*, *>> =
         RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id(id))
 

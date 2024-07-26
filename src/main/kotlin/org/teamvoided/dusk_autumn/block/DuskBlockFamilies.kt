@@ -20,7 +20,23 @@ object DuskBlockFamilies {
             .group("wooden")
             .unlockCriterionName("has_planks")
             .build()
-    val allBlockFamilies = listOf(CASCADE_FAMILY)
+    val POLISHED_NETHER_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.POLISHED_NETHER_BRICKS)
+            .stairs(DuskBlocks.POLISHED_NETHER_BRICK_STAIRS)
+            .slab(DuskBlocks.POLISHED_NETHER_BRICK_SLAB)
+            .wall(DuskBlocks.POLISHED_NETHER_BRICK_WALL)
+            .build()
+    val POLISHED_RED_NETHER_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.POLISHED_RED_NETHER_BRICKS)
+            .stairs(DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS)
+            .slab(DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB)
+            .wall(DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL)
+            .build()
+    val allBlockFamilies = listOf(
+        CASCADE_FAMILY,
+        POLISHED_NETHER_BRICKS_FAMILY,
+        POLISHED_RED_NETHER_BRICKS_FAMILY
+    )
 
     fun init() {}
 }
