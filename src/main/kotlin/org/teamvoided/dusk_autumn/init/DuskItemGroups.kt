@@ -1,137 +1,191 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
-import org.apache.commons.compress.compressors.lz77support.LZ77Compressor
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.init.DuskItemGroups.addItems
 import kotlin.jvm.optionals.getOrNull
 
 
 object DuskItemGroups {
+    val cascadeWood = listOf(
+        DuskBlocks.CASCADE_LOG.asItem(),
+        DuskBlocks.CASCADE_WOOD.asItem(),
+        DuskBlocks.STRIPPED_CASCADE_LOG.asItem(),
+        DuskBlocks.STRIPPED_CASCADE_WOOD.asItem(),
+        DuskBlocks.CASCADE_PLANKS.asItem(),
+        DuskBlocks.CASCADE_STAIRS.asItem(),
+        DuskBlocks.CASCADE_SLAB.asItem(),
+        DuskBlocks.CASCADE_FENCE.asItem(),
+        DuskBlocks.CASCADE_FENCE_GATE.asItem(),
+        DuskItems.CASCADE_DOOR,
+        DuskBlocks.CASCADE_TRAPDOOR.asItem(),
+        DuskBlocks.CASCADE_PRESSURE_PLATE.asItem(),
+        DuskBlocks.CASCADE_BUTTON.asItem()
+    )
+    val cascadeSigns = listOf(
+        DuskItems.CASCADE_SIGN,
+        DuskItems.CASCADE_HANGING_SIGN
+    )
+    val netherBrickStuff = listOf(
+        DuskBlocks.NETHER_BRICK_PILLAR.asItem(),
+        DuskBlocks.POLISHED_NETHER_BRICKS.asItem(),
+        DuskBlocks.POLISHED_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.POLISHED_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.POLISHED_NETHER_BRICK_WALL.asItem(),
+    )
+    val redNetherBrickStuff = listOf(
+        DuskBlocks.RED_NETHER_BRICK_PILLAR.asItem(),
+        DuskBlocks.POLISHED_RED_NETHER_BRICKS.asItem(),
+        DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL.asItem()
+    )
+    val overgrownCobblestone = listOf(
+        DuskBlocks.OVERGROWN_COBBLESTONE.asItem(),
+        DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS.asItem(),
+        DuskBlocks.OVERGROWN_COBBLESTONE_SLAB.asItem(),
+        DuskBlocks.OVERGROWN_COBBLESTONE_WALL.asItem(),
+    )
+    val overgrownStoneBricks = listOf(
+        DuskBlocks.OVERGROWN_STONE_BRICKS.asItem(),
+        DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS.asItem(),
+        DuskBlocks.OVERGROWN_STONE_BRICK_SLAB.asItem(),
+        DuskBlocks.OVERGROWN_STONE_BRICK_WALL.asItem(),
+    )
+    val leafPiles = listOf(
+        DuskBlocks.OAK_LEAF_PILE.asItem(),
+        DuskBlocks.SPRUCE_LEAF_PILE.asItem(),
+        DuskBlocks.BIRCH_LEAF_PILE.asItem(),
+        DuskBlocks.JUNGLE_LEAF_PILE.asItem(),
+        DuskBlocks.ACACIA_LEAF_PILE.asItem(),
+        DuskBlocks.DARK_OAK_LEAF_PILE.asItem(),
+        DuskBlocks.MANGROVE_LEAF_PILE.asItem(),
+        DuskBlocks.CHERRY_LEAF_PILE.asItem(),
+        DuskBlocks.AZALEA_LEAF_PILE.asItem(),
+        DuskBlocks.FLOWERING_AZALEA_LEAF_PILE.asItem(),
+        DuskBlocks.CASCADE_LEAF_PILE.asItem(),
+        DuskBlocks.GOLDEN_BIRCH_LEAF_PILE.asItem(),
+    )
+    val moonberry = listOf(
+        DuskItems.MOONBERRY_VINELET,
+        DuskBlocks.MOONBERRY_VINE.asItem(),
+        DuskItems.MOONBERRIES
+    )
+    val overlayBlocks = listOf(
+        DuskBlocks.ROCKY_GRASS.asItem(),
+        DuskBlocks.ROCKY_PODZOL.asItem(),
+        DuskBlocks.ROCKY_MYCELIUM.asItem(),
+        DuskBlocks.ROCKY_DIRT_PATH.asItem(),
+        DuskBlocks.ROCKY_DIRT.asItem(),
+        DuskBlocks.ROCKY_COARSE_DIRT.asItem(),
+        DuskBlocks.ROCKY_MUD.asItem(),
+        DuskBlocks.ROCKY_SNOW.asItem(),
+        DuskBlocks.ROCKY_GRAVEL.asItem(),
+        DuskBlocks.ROCKY_SAND.asItem(),
+        DuskBlocks.ROCKY_RED_SAND.asItem(),
+        DuskBlocks.ROCKY_SOUL_SAND.asItem(),
+        DuskBlocks.ROCKY_SOUL_SOIL.asItem(),
+
+        DuskBlocks.SLATED_GRASS.asItem(),
+        DuskBlocks.SLATED_PODZOL.asItem(),
+        DuskBlocks.SLATED_MYCELIUM.asItem(),
+        DuskBlocks.SLATED_DIRT_PATH.asItem(),
+        DuskBlocks.SLATED_DIRT.asItem(),
+        DuskBlocks.SLATED_COARSE_DIRT.asItem(),
+        DuskBlocks.SLATED_MUD.asItem(),
+        DuskBlocks.SLATED_SNOW.asItem(),
+        DuskBlocks.SLATED_GRAVEL.asItem(),
+        DuskBlocks.SLATED_SAND.asItem(),
+        DuskBlocks.SLATED_RED_SAND.asItem(),
+        DuskBlocks.SLATED_SOUL_SAND.asItem(),
+        DuskBlocks.SLATED_SOUL_SOIL.asItem(),
+
+        DuskBlocks.BLACKSTONE_GRASS.asItem(),
+        DuskBlocks.BLACKSTONE_PODZOL.asItem(),
+        DuskBlocks.BLACKSTONE_MYCELIUM.asItem(),
+        DuskBlocks.BLACKSTONE_DIRT_PATH.asItem(),
+        DuskBlocks.BLACKSTONE_DIRT.asItem(),
+        DuskBlocks.BLACKSTONE_COARSE_DIRT.asItem(),
+        DuskBlocks.BLACKSTONE_MUD.asItem(),
+        DuskBlocks.BLACKSTONE_SNOW.asItem(),
+        DuskBlocks.BLACKSTONE_GRAVEL.asItem(),
+        DuskBlocks.BLACKSTONE_SAND.asItem(),
+        DuskBlocks.BLACKSTONE_RED_SAND.asItem(),
+        DuskBlocks.BLACKSTONE_SOUL_SAND.asItem(),
+        DuskBlocks.BLACKSTONE_SOUL_SOIL.asItem()
+    )
     val DUSK_AUTUMN_TAB: ItemGroup = register("dusk_items",
         FabricItemGroup.builder()
             .icon { ItemStack(DuskBlocks.CASCADE_SAPLING.asItem()) }
             .name(Text.translatable("itemGroup.dusk_autumn.dusk_items"))
             .entries { _, entries ->
+                entries.addItems(cascadeWood + cascadeSigns)
                 entries.addStacks(
                     mutableSetOf(
+                        ItemStack(DuskBlocks.BLUE_PETALS),
                         ItemStack(DuskBlocks.CASCADE_SAPLING),
                         ItemStack(DuskBlocks.CASCADE_LEAVES),
-                        ItemStack(DuskBlocks.CASCADE_LOG),
-                        ItemStack(DuskBlocks.STRIPPED_CASCADE_LOG),
-                        ItemStack(DuskBlocks.CASCADE_PLANKS),
-                        ItemStack(DuskBlocks.CASCADE_STAIRS),
-                        ItemStack(DuskBlocks.CASCADE_SLAB),
-                        ItemStack(DuskBlocks.CASCADE_FENCE),
-                        ItemStack(DuskBlocks.CASCADE_FENCE_GATE),
-                        ItemStack(DuskItems.CASCADE_DOOR),
-                        ItemStack(DuskBlocks.CASCADE_TRAPDOOR),
-                        ItemStack(DuskItems.CASCADE_SIGN),
-                        ItemStack(DuskItems.CASCADE_HANGING_SIGN),
-                        ItemStack(DuskBlocks.CASCADE_PRESSURE_PLATE),
-                        ItemStack(DuskBlocks.CASCADE_BUTTON),
-                        ItemStack(DuskBlocks.BLUE_PETALS),
-                        ItemStack(DuskBlocks.GOLDEN_BIRCH_LEAVES),
                         ItemStack(DuskBlocks.GOLDEN_BIRCH_SAPLING),
-
-                        ItemStack(DuskBlocks.BIG_CHAIN),
-                        ItemStack(DuskBlocks.MIXED_NETHER_BRICKS),
-                        ItemStack(DuskBlocks.NETHER_BRICK_PILLAR),
-                        ItemStack(DuskBlocks.POLISHED_NETHER_BRICKS),
-                        ItemStack(DuskBlocks.POLISHED_NETHER_BRICK_STAIRS),
-                        ItemStack(DuskBlocks.POLISHED_NETHER_BRICK_SLAB),
-                        ItemStack(DuskBlocks.POLISHED_NETHER_BRICK_WALL),
-                        ItemStack(DuskBlocks.RED_NETHER_BRICK_PILLAR),
-                        ItemStack(DuskBlocks.POLISHED_RED_NETHER_BRICKS),
-                        ItemStack(DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS),
-                        ItemStack(DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB),
-                        ItemStack(DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL),
-
-                        ItemStack(DuskBlocks.OVERGROWN_COBBLESTONE),
-                        ItemStack(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS),
-                        ItemStack(DuskBlocks.OVERGROWN_COBBLESTONE_SLAB),
-                        ItemStack(DuskBlocks.OVERGROWN_COBBLESTONE_WALL),
-                        ItemStack(DuskBlocks.OVERGROWN_STONE_BRICKS),
-                        ItemStack(DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS),
-                        ItemStack(DuskBlocks.OVERGROWN_STONE_BRICK_SLAB),
-                        ItemStack(DuskBlocks.OVERGROWN_STONE_BRICK_WALL),
-
-                        ItemStack(DuskBlocks.OAK_LEAF_PILE),
-                        ItemStack(DuskBlocks.SPRUCE_LEAF_PILE),
-                        ItemStack(DuskBlocks.BIRCH_LEAF_PILE),
-                        ItemStack(DuskBlocks.JUNGLE_LEAF_PILE),
-                        ItemStack(DuskBlocks.ACACIA_LEAF_PILE),
-                        ItemStack(DuskBlocks.DARK_OAK_LEAF_PILE),
-                        ItemStack(DuskBlocks.MANGROVE_LEAF_PILE),
-                        ItemStack(DuskBlocks.CHERRY_LEAF_PILE),
-                        ItemStack(DuskBlocks.AZALEA_LEAF_PILE),
-                        ItemStack(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE),
-                        ItemStack(DuskBlocks.CASCADE_LEAF_PILE),
-                        ItemStack(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE),
-
+                        ItemStack(DuskBlocks.GOLDEN_BIRCH_LEAVES),
+                    )
+                )
+                entries.addItems(
+                    netherBrickStuff +
+                            redNetherBrickStuff +
+                            listOf(
+                                DuskBlocks.MIXED_NETHER_BRICKS.asItem(),
+                                DuskBlocks.BIG_CHAIN.asItem()
+                            ) +
+                            overgrownCobblestone +
+                            overgrownStoneBricks +
+                            leafPiles +
+                            moonberry
+                )
+                entries.addStacks(
+                    mutableSetOf(
                         ItemStack(DuskItems.FARMERS_HAT),
                         ItemStack(DuskItems.WILD_WHEAT),
                         ItemStack(DuskItems.GOLDEN_BEETROOT),
                         ItemStack(DuskItems.BLUE_DOOR),
-                        ItemStack(DuskItems.MOONBERRY_VINELET),
-                        ItemStack(DuskBlocks.MOONBERRY_VINE),
-                        ItemStack(DuskItems.MOONBERRIES),
-
-                        ItemStack(DuskBlocks.ROCKY_GRASS),
-                        ItemStack(DuskBlocks.ROCKY_PODZOL),
-                        ItemStack(DuskBlocks.ROCKY_MYCELIUM),
-                        ItemStack(DuskBlocks.ROCKY_DIRT_PATH),
-                        ItemStack(DuskBlocks.ROCKY_DIRT),
-                        ItemStack(DuskBlocks.ROCKY_COARSE_DIRT),
-                        ItemStack(DuskBlocks.ROCKY_MUD),
-                        ItemStack(DuskBlocks.ROCKY_SNOW),
-                        ItemStack(DuskBlocks.ROCKY_GRAVEL),
-                        ItemStack(DuskBlocks.ROCKY_SAND),
-                        ItemStack(DuskBlocks.ROCKY_RED_SAND),
-                        ItemStack(DuskBlocks.ROCKY_SOUL_SAND),
-                        ItemStack(DuskBlocks.ROCKY_SOUL_SOIL),
-
-                        ItemStack(DuskBlocks.SLATED_GRASS),
-                        ItemStack(DuskBlocks.SLATED_PODZOL),
-                        ItemStack(DuskBlocks.SLATED_MYCELIUM),
-                        ItemStack(DuskBlocks.SLATED_DIRT_PATH),
-                        ItemStack(DuskBlocks.SLATED_DIRT),
-                        ItemStack(DuskBlocks.SLATED_COARSE_DIRT),
-                        ItemStack(DuskBlocks.SLATED_MUD),
-                        ItemStack(DuskBlocks.SLATED_SNOW),
-                        ItemStack(DuskBlocks.SLATED_GRAVEL),
-                        ItemStack(DuskBlocks.SLATED_SAND),
-                        ItemStack(DuskBlocks.SLATED_RED_SAND),
-                        ItemStack(DuskBlocks.SLATED_SOUL_SAND),
-                        ItemStack(DuskBlocks.SLATED_SOUL_SOIL),
-
-                        ItemStack(DuskBlocks.BLACKSTONE_GRASS),
-                        ItemStack(DuskBlocks.BLACKSTONE_PODZOL),
-                        ItemStack(DuskBlocks.BLACKSTONE_MYCELIUM),
-                        ItemStack(DuskBlocks.BLACKSTONE_DIRT_PATH),
-                        ItemStack(DuskBlocks.BLACKSTONE_DIRT),
-                        ItemStack(DuskBlocks.BLACKSTONE_COARSE_DIRT),
-                        ItemStack(DuskBlocks.BLACKSTONE_MUD),
-                        ItemStack(DuskBlocks.BLACKSTONE_SNOW),
-                        ItemStack(DuskBlocks.BLACKSTONE_GRAVEL),
-                        ItemStack(DuskBlocks.BLACKSTONE_SAND),
-                        ItemStack(DuskBlocks.BLACKSTONE_RED_SAND),
-                        ItemStack(DuskBlocks.BLACKSTONE_SOUL_SAND),
-                        ItemStack(DuskBlocks.BLACKSTONE_SOUL_SOIL)
                     )
                 )
+                entries.addItems(overlayBlocks)
             }
             .build()
     )
 
-    fun init() = Unit
+    fun init() {
+        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON, cascadeWood)
+        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.MOSSY_COBBLESTONE_WALL, overgrownCobblestone)
+        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.MOSSY_STONE_BRICK_WALL, overgrownStoneBricks)
+        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_NETHER_BRICKS, netherBrickStuff)
+        registerInVanillaTag(
+            ItemGroups.BUILDING_BLOCKS,
+            Items.RED_NETHER_BRICK_WALL,
+            redNetherBrickStuff + DuskBlocks.MIXED_NETHER_BRICKS.asItem()
+        )
+        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DuskBlocks.BIG_CHAIN.asItem()))
+        registerInVanillaTag(
+            ItemGroups.NATURAL_BLOCKS, Items.FLOWERING_AZALEA_LEAVES, listOf(
+                DuskBlocks.CASCADE_LEAVES.asItem(),
+                DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem()
+            ) + leafPiles
+        )
+        registerInVanillaTag(
+            ItemGroups.NATURAL_BLOCKS, Items.FLOWERING_AZALEA, listOf(
+                DuskBlocks.CASCADE_SAPLING.asItem(),
+                DuskBlocks.GOLDEN_BIRCH_SAPLING.asItem()
+            )
+        )
+        registerInVanillaTag(ItemGroups.NATURAL_BLOCKS, Items.VINE, moonberry)
+    }
 
 
     @Suppress("SameParameterValue")
@@ -141,5 +195,23 @@ object DuskItemGroups {
 
     fun getKey(itemGroup: ItemGroup): RegistryKey<ItemGroup>? {
         return Registries.ITEM_GROUP.getKey(itemGroup)?.getOrNull()
+    }
+
+    fun ItemGroup.ItemStackCollector.addItems(list: Collection<Item>) {
+        this.addStacks(list.map(Item::getDefaultStack))
+    }
+
+    fun registerInVanillaTag(itemGroup: RegistryKey<ItemGroup>, itemBefore: Item, list: Collection<Item>) {
+        ItemGroupEvents.modifyEntriesEvent(itemGroup)
+            .register(ItemGroupEvents.ModifyEntries {
+                it.addAfter(
+                    itemBefore,
+                    addItems(list),
+                )
+            })
+    }
+
+    fun addItems(list: Collection<Item>): List<ItemStack> {
+        return list.map(Item::getDefaultStack)
     }
 }

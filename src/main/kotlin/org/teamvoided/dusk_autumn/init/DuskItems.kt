@@ -51,27 +51,7 @@ object DuskItems {
 //add void util compat
     //???
 
-    fun init() {
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL_BLOCKS)
-            .register(ModifyEntries {
-                it.addAfter(
-                    Items.FLOWERING_AZALEA_LEAVES,
-                    DuskBlocks.GOLDEN_BIRCH_LEAVES,
-                    DuskBlocks.OAK_LEAF_PILE,
-                    DuskBlocks.SPRUCE_LEAF_PILE,
-                    DuskBlocks.BIRCH_LEAF_PILE,
-                    DuskBlocks.JUNGLE_LEAF_PILE,
-                    DuskBlocks.ACACIA_LEAF_PILE,
-                    DuskBlocks.DARK_OAK_LEAF_PILE,
-                    DuskBlocks.MANGROVE_LEAF_PILE,
-                    DuskBlocks.CHERRY_LEAF_PILE,
-                    DuskBlocks.AZALEA_LEAF_PILE,
-                    DuskBlocks.FLOWERING_AZALEA_LEAF_PILE,
-                    DuskBlocks.GOLDEN_BIRCH_LEAF_PILE,
-                    DuskBlocks.GOLDEN_BIRCH_SAPLING
-                )
-            })
-    }
+    fun init() {}
 
     fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, id(id), item)
 
