@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.init
+package org.teamvoided.dusk_autumn.init.worldgen
 
 import net.fabricmc.fabric.api.biome.v1.*
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
@@ -9,7 +9,6 @@ import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.PlacedFeature
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
-import java.util.function.Predicate
 
 
 object DuskBiomeModifications {

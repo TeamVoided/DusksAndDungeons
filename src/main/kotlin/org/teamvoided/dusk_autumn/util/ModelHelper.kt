@@ -1,14 +1,20 @@
 package org.teamvoided.dusk_autumn.util
 
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
+import com.mojang.datafixers.util.Pair
+import net.minecraft.block.*
 import net.minecraft.data.client.model.*
 import net.minecraft.data.client.model.BlockStateModelGenerator.*
+import net.minecraft.data.client.model.When.PropertyCondition
+import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
+import net.minecraft.util.Util
+import net.minecraft.util.math.Direction
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
+import org.teamvoided.dusk_autumn.block.MoonberryVineBlock
 import java.util.*
+import java.util.function.Function
 
 
 val ALL_KRY: TextureKey = TextureKey.of("all")
@@ -374,10 +380,263 @@ fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
             )
     )
 }
+
 private fun leafPile(num: String? = null): Identifier =
     id("block/parent/leaf_pile${if (num != null) "_$num" else ""}")
+
 private fun leafPileHanging(num: String? = null): Identifier =
     id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
+
+fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
+    excludeFromSimpleItemModelGeneration(block)
+    val allDirectionFalse = When.create()
+        .set(AbstractLichenBlock.getProperty(Direction.NORTH), false)
+        .set(AbstractLichenBlock.getProperty(Direction.SOUTH), false)
+        .set(AbstractLichenBlock.getProperty(Direction.EAST), false)
+        .set(AbstractLichenBlock.getProperty(Direction.WEST), false)
+        .set(AbstractLichenBlock.getProperty(Direction.DOWN), false)
+        .set(AbstractLichenBlock.getProperty(Direction.UP), false)
+    val model = MultipartBlockStateSupplier.create(block)
+    val directions = listOf(
+        (Direction.NORTH to VariantSettings.Rotation.R0),
+        (Direction.EAST to VariantSettings.Rotation.R90),
+        (Direction.SOUTH to VariantSettings.Rotation.R180),
+        (Direction.WEST to VariantSettings.Rotation.R270),
+        (Direction.DOWN to VariantSettings.Rotation.R90),
+        (Direction.UP to VariantSettings.Rotation.R270)
+    )
+    var modelId: Identifier
+    var axis: VariantSetting<VariantSettings.Rotation>
+    var variantRotation: VariantSettings.Rotation
+
+    directions.forEach { (direction, rotation) ->
+        axis = VariantSettings.Y
+        for (berries in 0..2) {
+            modelId = id("block/parent/moonberry_vine_$berries")
+            variantRotation = rotation
+            if (direction == Direction.DOWN || direction == Direction.UP) {
+                if (berries == 2) {
+                    modelId = id("block/parent/moonberry_vine_3")
+                    variantRotation =
+                        if (direction == Direction.DOWN) {
+                            VariantSettings.Rotation.R0
+                        } else {
+                            VariantSettings.Rotation.R180
+                        }
+                }
+                axis = VariantSettings.X
+            }
+            model.with(
+                When.create().set(AbstractLichenBlock.getProperty(direction), true)
+                    .set(MoonberryVineBlock.BERRIES, berries),
+                BlockStateVariant.create()
+                    .put(
+                        VariantSettings.MODEL,
+                        modelId
+                    ).put(axis, variantRotation)
+            )
+        }
+        model.with(
+            allDirectionFalse,
+            BlockStateVariant.create()
+                .put(
+                    VariantSettings.MODEL,
+                    id("block/parent/moonberry_vine_0")
+                ).put(axis, rotation)
+        )
+    }
+    this.blockStateCollector.accept(model)
+//    this.blockStateCollector.accept(
+//        MultipartBlockStateSupplier.create(block)
+//            .with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
+//                    .set(MoonberryVineBlock.BERRIES, 0),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    )
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
+//                    .set(MoonberryVineBlock.BERRIES, 1),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries")
+//                    )
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
+//                    .set(MoonberryVineBlock.BERRIES, 2),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries_wall_extra")
+//                    )
+//            ).with(
+//                allDirectionFalse,
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    )
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
+//                    .set(MoonberryVineBlock.BERRIES, 0),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
+//                    .set(MoonberryVineBlock.BERRIES, 1),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
+//                    .set(MoonberryVineBlock.BERRIES, 2),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries_wall_extra")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
+//            ).with(
+//                allDirectionFalse,
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
+//                    .set(MoonberryVineBlock.BERRIES, 0),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
+//                    .set(MoonberryVineBlock.BERRIES, 1),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
+//                    .set(MoonberryVineBlock.BERRIES, 2),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries_wall_extra")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
+//            ).with(
+//                allDirectionFalse,
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
+//                    .set(MoonberryVineBlock.BERRIES, 0),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
+//                    .set(MoonberryVineBlock.BERRIES, 1),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
+//                    .set(MoonberryVineBlock.BERRIES, 2),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries_wall_extra")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
+//            ).with(
+//                allDirectionFalse,
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
+//                    .set(MoonberryVineBlock.BERRIES, 0),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.X, VariantSettings.Rotation.R270)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
+//                    .set(MoonberryVineBlock.BERRIES, 1),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries")
+//                    ).put(VariantSettings.X, VariantSettings.Rotation.R270)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
+//                    .set(MoonberryVineBlock.BERRIES, 2),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries_floor_extra")
+//                    ).put(VariantSettings.X, VariantSettings.Rotation.R180)
+//            ).with(
+//                allDirectionFalse,
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.X, VariantSettings.Rotation.R90)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
+//                    .set(MoonberryVineBlock.BERRIES, 0),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.X, VariantSettings.Rotation.R90)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
+//                    .set(MoonberryVineBlock.BERRIES, 1),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries")
+//                    ).put(VariantSettings.X, VariantSettings.Rotation.R90)
+//            ).with(
+//                When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
+//                    .set(MoonberryVineBlock.BERRIES, 2),
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine_berries_floor_extra")
+//                    )
+//            ).with(
+//                allDirectionFalse,
+//                BlockStateVariant.create()
+//                    .put(
+//                        VariantSettings.MODEL,
+//                        id("block/moonberry_vine")
+//                    ).put(VariantSettings.X, VariantSettings.Rotation.R90)
+//            )
+//    )
+}
 
 fun parentedItemModel(id: Identifier) = Model(Optional.of(id.withPrefix("item/")), Optional.empty())
 fun BlockStateModelGenerator.registerParentedItemModel(block: Block) =

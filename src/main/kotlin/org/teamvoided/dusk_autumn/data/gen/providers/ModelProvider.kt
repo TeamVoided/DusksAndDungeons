@@ -98,6 +98,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
+        gen.createMoonberryVine(DuskBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 
         val stone = "cobbled/stone_overlay"

@@ -5,6 +5,25 @@
         "model": "dusk_autumn:block/moonberry_vine"
       },
       "when": {
+        "berries": "0",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries"
+      },
+      "when": {
+        "berries": "1",
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries_wall_extra"
+      },
+      "when": {
+        "berries": "2",
         "north": "true"
       }
     },
@@ -24,17 +43,36 @@
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "y": 90
       },
       "when": {
+        "berries": "0",
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries",
+        "y": 90
+      },
+      "when": {
+        "berries": "1",
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries_wall_extra",
+        "y": 90
+      },
+      "when": {
+        "berries": "2",
         "east": "true"
       }
     },
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "y": 90
       },
       "when": {
@@ -49,17 +87,36 @@
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "y": 180
       },
       "when": {
+        "berries": "0",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries",
+        "y": 180
+      },
+      "when": {
+        "berries": "1",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries_wall_extra",
+        "y": 180
+      },
+      "when": {
+        "berries": "2",
         "south": "true"
       }
     },
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "y": 180
       },
       "when": {
@@ -74,17 +131,36 @@
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "y": 270
       },
       "when": {
+        "berries": "0",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries",
+        "y": 270
+      },
+      "when": {
+        "berries": "1",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries_wall_extra",
+        "y": 270
+      },
+      "when": {
+        "berries": "2",
         "west": "true"
       }
     },
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "y": 270
       },
       "when": {
@@ -99,18 +175,37 @@
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "x": 270
       },
       "when": {
+        "berries": "0",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries",
+        "x": 270
+      },
+      "when": {
+        "berries": "1",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries_floor_extra",
+        "x": 180
+      },
+      "when": {
+        "berries": "2",
         "up": "true"
       }
     },
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
-        "x": 270
+        "x": 90
       },
       "when": {
         "down": "false",
@@ -124,17 +219,35 @@
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "x": 90
       },
       "when": {
+        "berries": "0",
+        "down": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries",
+        "x": 90
+      },
+      "when": {
+        "berries": "1",
+        "down": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "dusk_autumn:block/moonberry_vine_berries_floor_extra"
+      },
+      "when": {
+        "berries": "2",
         "down": "true"
       }
     },
     {
       "apply": {
         "model": "dusk_autumn:block/moonberry_vine",
-        "uvlock": true,
         "x": 90
       },
       "when": {

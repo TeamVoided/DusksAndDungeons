@@ -243,10 +243,10 @@ object DuskBlocks {
     val BIG_CHAIN = register(
         "big_chain",
         BigChainBlock(
-            Settings.create().strength(5.0f, 6.0f).toolRequired().nonOpaque().solid().sounds(
+            variantOf(CHAIN).sounds(
                 BlockSoundGroup(
                     1f,
-                    0f,
+                    0.8f,
                     SoundEvents.BLOCK_CHAIN_BREAK,
                     SoundEvents.BLOCK_CHAIN_STEP,
                     SoundEvents.BLOCK_CHAIN_PLACE,
