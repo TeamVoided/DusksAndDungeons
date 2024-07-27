@@ -7,3 +7,5 @@ accessible method net/minecraft/block/SpreadableBlock canSurvive (Lnet/minecraft
 accessible method net/minecraft/block/SpreadableBlock canSpread (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z
 accessible method net/minecraft/world/gen/feature/OrePlacedFeatures commonOrePlacementModifiers (ILnet/minecraft/world/gen/feature/PlacementModifier;)Ljava/util/List;
 accessible method net/minecraft/world/gen/feature/OrePlacedFeatures rareOrePlacementModifiers (ILnet/minecraft/world/gen/feature/PlacementModifier;)Ljava/util/List;
+accessible field net/minecraft/data/client/model/BlockStateModelGenerator sandstoneModels Ljava/util/Map;
+mutable field net/minecraft/data/client/model/BlockStateModelGenerator sandstoneModels Ljava/util/Map;

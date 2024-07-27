@@ -40,7 +40,15 @@ object DuskItemGroups {
         DuskBlocks.POLISHED_NETHER_BRICK_SLAB.asItem(),
         DuskBlocks.POLISHED_NETHER_BRICK_WALL.asItem(),
     )
+    val mixedNetherBrickStuff = listOf(
+        DuskBlocks.MIXED_NETHER_BRICKS.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_WALL.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_PILLAR.asItem()
+    )
     val redNetherBrickStuff = listOf(
+        DuskBlocks.CHISELED_RED_NETHER_BRICKS.asItem(),
         DuskBlocks.RED_NETHER_BRICK_PILLAR.asItem(),
         DuskBlocks.POLISHED_RED_NETHER_BRICKS.asItem(),
         DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS.asItem(),
@@ -140,7 +148,7 @@ object DuskItemGroups {
                     listOf(DuskBlocks.BIG_CHAIN.asItem()) +
                             netherBrickStuff +
                             redNetherBrickStuff +
-                            listOf(DuskBlocks.MIXED_NETHER_BRICKS.asItem()) +
+                            mixedNetherBrickStuff +
                             overgrownCobblestone +
                             overgrownStoneBricks +
                             listOf(DuskBlocks.ROOT_BLOCK.asItem()) +
@@ -168,7 +176,7 @@ object DuskItemGroups {
         registerInVanillaTag(
             ItemGroups.BUILDING_BLOCKS,
             Items.RED_NETHER_BRICK_WALL,
-            redNetherBrickStuff + DuskBlocks.MIXED_NETHER_BRICKS.asItem()
+            redNetherBrickStuff + mixedNetherBrickStuff
         )
         registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DuskBlocks.BIG_CHAIN.asItem()))
         registerInVanillaTag(

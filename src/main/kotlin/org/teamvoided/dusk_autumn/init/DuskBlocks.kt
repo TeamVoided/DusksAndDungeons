@@ -244,8 +244,8 @@ object DuskBlocks {
         BigChainBlock(
             variantOf(CHAIN).sounds(
                 BlockSoundGroup(
-                    1f,
-                    0.8f,
+                    1.0F,
+                    0.8F,
                     SoundEvents.BLOCK_CHAIN_BREAK,
                     SoundEvents.BLOCK_CHAIN_STEP,
                     SoundEvents.BLOCK_CHAIN_PLACE,
@@ -256,6 +256,10 @@ object DuskBlocks {
         )
     )
     val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)))
+    val MIXED_NETHER_BRICK_STAIRS = register("mixed_nether_brick_stairs", legacyStairsOf(MIXED_NETHER_BRICKS))
+    val MIXED_NETHER_BRICK_SLAB = register("mixed_nether_brick_slab", SlabBlock(variantOf(NETHER_BRICK_SLAB)))
+    val MIXED_NETHER_BRICK_WALL = register("mixed_nether_brick_wall", WallBlock(variantOf(NETHER_BRICK_WALL)))
+    val MIXED_NETHER_BRICK_PILLAR = register("mixed_nether_brick_pillar", PillarBlock(variantOf(MIXED_NETHER_BRICKS)))
     val CHISELED_RED_NETHER_BRICKS = register("chiseled_red_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)))
     val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(variantOf(NETHER_BRICKS)))
     val POLISHED_NETHER_BRICKS = register("polished_nether_bricks", Block(variantOf(NETHER_BRICKS)))
@@ -292,8 +296,18 @@ object DuskBlocks {
         "root_block",
         MangroveRootsBlock(
             Settings.create().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS)
-                .strength(0.7f).sounds(BlockSoundGroup.MANGROVE_ROOTS).nonOpaque().suffocates(Blocks::nonSolid)
-                .blockVision(Blocks::nonSolid).nonOpaque().lavaIgnitable()
+                .strength(0.7f).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).nonOpaque()
+                .lavaIgnitable().sounds(
+                    BlockSoundGroup(
+                        1f,
+                        0.8f,
+                        SoundEvents.BLOCK_HANGING_ROOTS_BREAK,
+                        SoundEvents.BLOCK_HANGING_ROOTS_STEP,
+                        SoundEvents.BLOCK_HANGING_ROOTS_PLACE,
+                        SoundEvents.BLOCK_HANGING_ROOTS_HIT,
+                        SoundEvents.BLOCK_HANGING_ROOTS_FALL
+                    )
+                )
         )
     )
     val ROCKY_DIRT = register("dirty_rocks", Block(variantOf(DIRT).mapColor(COBBLESTONE.defaultMapColor)))

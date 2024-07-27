@@ -26,7 +26,6 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
         DuskBlocks.GOLDEN_BIRCH_SAPLING.asItem(),
         DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem(),
         DuskBlocks.BIG_CHAIN.asItem(),
-        DuskBlocks.MIXED_NETHER_BRICKS.asItem(),
         DuskBlocks.ROOT_BLOCK.asItem(),
         DuskItems.FARMERS_HAT,
         DuskItems.WILD_WHEAT,
@@ -36,6 +35,7 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
             DuskItemGroups.cascadeSigns +
             DuskItemGroups.netherBrickStuff +
             DuskItemGroups.redNetherBrickStuff +
+            DuskItemGroups.mixedNetherBrickStuff +
             DuskItemGroups.overgrownCobblestone +
             DuskItemGroups.overgrownStoneBricks +
             DuskItemGroups.leafPiles +

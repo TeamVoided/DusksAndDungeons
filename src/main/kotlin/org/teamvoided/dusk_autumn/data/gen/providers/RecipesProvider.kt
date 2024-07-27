@@ -7,7 +7,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
-import net.minecraft.data.server.recipe.SingleItemRecipeJsonFactory
 import net.minecraft.feature_flags.FeatureFlagBitSet
 import net.minecraft.feature_flags.FeatureFlags
 import net.minecraft.item.Item
@@ -17,7 +16,6 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.TagKey
-import org.apache.commons.compress.compressors.lz77support.LZ77Compressor
 import org.teamvoided.dusk_autumn.block.DuskBlockFamilies.allBlockFamilies
 import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
@@ -56,35 +54,48 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DuskBlocks.MIXED_NETHER_BRICKS, 4)
             .ingredient(Blocks.NETHER_BRICKS, 2)
             .ingredient(Blocks.RED_NETHER_BRICKS, 2)
-        e.createPillar(DuskBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
-        e.createPillar(DuskBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
+        e.createStackedCraft(DuskBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
+        e.createStackedCraft(DuskBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
+        e.createStackedCraft(DuskBlocks.MIXED_NETHER_BRICK_PILLAR, DuskBlocks.MIXED_NETHER_BRICKS)
         e.createStonecutted(
             listOf(Blocks.NETHER_BRICKS, DuskBlocks.POLISHED_NETHER_BRICKS),
             DuskBlocks.POLISHED_NETHER_BRICKS,
             DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
             DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
-            DuskBlocks.POLISHED_NETHER_BRICK_WALL
+            DuskBlocks.POLISHED_NETHER_BRICK_WALL,
+            DuskBlocks.NETHER_BRICK_PILLAR
         )
         e.createStonecutted(
             listOf(Blocks.RED_NETHER_BRICKS, DuskBlocks.POLISHED_RED_NETHER_BRICKS),
             DuskBlocks.POLISHED_NETHER_BRICKS,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
-            DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL
+            DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
+            DuskBlocks.RED_NETHER_BRICK_PILLAR
+        )
+        e.createStonecutted(
+            DuskBlocks.MIXED_NETHER_BRICKS,
+            null,
+            DuskBlocks.MIXED_NETHER_BRICK_STAIRS,
+            DuskBlocks.MIXED_NETHER_BRICK_SLAB,
+            DuskBlocks.MIXED_NETHER_BRICK_WALL,
+            DuskBlocks.MIXED_NETHER_BRICK_PILLAR
         )
         e.createStonecutted(
             DuskBlocks.OVERGROWN_COBBLESTONE,
             null,
             DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
             DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
-            DuskBlocks.OVERGROWN_COBBLESTONE_WALL
+            DuskBlocks.OVERGROWN_COBBLESTONE_WALL,
+            null
         )
         e.createStonecutted(
             DuskBlocks.OVERGROWN_STONE_BRICKS,
             null,
             DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
             DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
-            DuskBlocks.OVERGROWN_STONE_BRICK_WALL
+            DuskBlocks.OVERGROWN_STONE_BRICK_WALL,
+            null
         )
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DuskBlocks.ROOT_BLOCK, 1)
             .ingredient(Blocks.HANGING_ROOTS, 4)
@@ -125,9 +136,10 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         polish: ItemConvertible?,
         stair: ItemConvertible?,
         slab: ItemConvertible?,
-        wall: ItemConvertible?
+        wall: ItemConvertible?,
+        special: ItemConvertible?
     ) {
-        this.createStonecutted(listOf(input), polish, stair, slab, wall)
+        this.createStonecutted(listOf(input), polish, stair, slab, wall, special)
     }
 
     fun RecipeExporter.createStonecutted(
@@ -135,23 +147,41 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         polish: ItemConvertible?,
         stair: ItemConvertible?,
         slab: ItemConvertible?,
-        wall: ItemConvertible?
+        wall: ItemConvertible?,
+        special: ItemConvertible?
     ) {
         input.forEach {
-            if (polish != null && polish == it)
+            if (polish != null && polish != it)
                 createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, polish, it)
             if (stair != null) createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, stair, it)
             if (slab != null) createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, slab, it, 2)
             if (wall != null) createStonecuttingRecipe(this, RecipeCategory.DECORATIONS, wall, it)
+            if (special != null)
+                createStonecuttingRecipe(
+                    this,
+                    RecipeCategory.BUILDING_BLOCKS,
+                    special,
+                    it
+                )
         }
     }
 
-    fun RecipeExporter.createPillar(output: ItemConvertible, block: ItemConvertible, itemTag: TagKey<Item>) {
+    fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConvertible, itemTag: TagKey<Item>) {
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
             .ingredient('#', block)
             .pattern("#")
             .pattern("#")
             .criterion("has_" + itemTag.id.path, conditionsFromTag(itemTag)).offerTo(this)
+        println("has_" + itemTag.id.path)
+    }
+
+    fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConvertible) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+            .ingredient('#', block)
+            .pattern("#")
+            .pattern("#")
+            .criterion("has_$block", conditionsFromItem(block)).offerTo(this)
+        println("has_$block")
     }
 
     fun RecipeExporter.createCobblestoned(output: ItemConvertible, convert: ItemConvertible, cobble: ItemConvertible) {

@@ -21,11 +21,11 @@ import net.minecraft.util.math.Direction
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.MoonberryVineBlock
+import org.teamvoided.dusk_autumn.init.DuskBlocks
 import java.util.*
 
 
 val ALL_KRY: TextureKey = TextureKey.of("all")
-
 
 fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
     val texture = Texture().put(TextureKey.ALL, overlay)
@@ -91,6 +91,8 @@ fun BlockStateModelGenerator.tintedWallOverlay(overlay: Identifier) {
         .upload(overlay.suffix("_wall_post"), texture, this.modelCollector)
     block("parent/wall_side_with_tint", "_side", TextureKey.WALL)
         .upload(overlay.suffix("_wall_side"), texture, this.modelCollector)
+    block("parent/wall_side_tall_with_tint", "_side", TextureKey.WALL)
+        .upload(overlay.suffix("_wall_side_tall"), texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.registerTintedOverlay(overlay: Identifier) {
@@ -469,6 +471,16 @@ fun createWallBlockStateWithOverlay(
         )
     }
     return model
+}
+
+fun BlockStateModelGenerator.registerMixedNetherBrickPillar() {
+    val pillar = DuskBlocks.MIXED_NETHER_BRICK_PILLAR
+    val texture = Texture()
+        .put(TextureKey.SIDE, Texture.getId(pillar))
+        .put(TextureKey.TOP, Texture.getSubId(DuskBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(TextureKey.BOTTOM, Texture.getSubId(DuskBlocks.RED_NETHER_BRICK_PILLAR, "_top"))
+    val identifier = Models.CUBE_BOTTOM_TOP.upload(pillar, texture, this.modelCollector)
+    this.blockStateCollector.accept(createAxisRotatedBlockState(pillar, identifier))
 }
 
 fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {

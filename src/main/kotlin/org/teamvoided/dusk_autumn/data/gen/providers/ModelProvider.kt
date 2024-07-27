@@ -24,6 +24,17 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //    )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
+        gen.sandstoneModels = mapOf(
+//            DuskBlocks.MIXED_NETHER_BRICKS to TexturedModel.SIDE_TOP_BOTTOM_WALL[DuskBlocks.MIXED_NETHER_BRICKS].texture { texture: Texture ->
+//                texture.put(TextureKey.TOP, Texture.getId(Blocks.NETHER_BRICKS))
+//                texture.put(TextureKey.BOTTOM, Texture.getId(Blocks.RED_NETHER_BRICKS))
+//                texture.put(TextureKey.SIDE, Texture.getId(DuskBlocks.MIXED_NETHER_BRICKS))
+//            },
+            DuskBlocks.MIXED_NETHER_BRICK_PILLAR to TexturedModel.CUBE_COLUMN[DuskBlocks.MIXED_NETHER_BRICK_PILLAR].texture { texture: Texture ->
+                texture.put(TextureKey.TOP, Texture.getSubId(DuskBlocks.NETHER_BRICK_PILLAR, "_top"))
+                texture.put(TextureKey.BOTTOM, Texture.getSubId(DuskBlocks.RED_NETHER_BRICK_PILLAR, "_top"))
+            }
+        )
         DuskBlockFamilies.modelsBlockFamilies.forEach {
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
         }
@@ -53,7 +64,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
         gen.registerItemModel(DuskBlocks.BIG_CHAIN.asItem())
         gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
-        gen.registerSimpleCubeAll(DuskBlocks.MIXED_NETHER_BRICKS)
+        gen.registerSimpleCubeAll(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
+        gen.registerMixedNetherBrickPillar()
         gen.registerAxisRotated(
             DuskBlocks.NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
@@ -70,7 +82,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerTintedOverlay(mossyCobble)
         gen.registerTintedOverlay(mossyBrick)
         gen.cubeAllWithOverlay(DuskBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.stairsWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.stairsWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.slabWithTintedOverlay(
             DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
             Blocks.MOSSY_COBBLESTONE,
