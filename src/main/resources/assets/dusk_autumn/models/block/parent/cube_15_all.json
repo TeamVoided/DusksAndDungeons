@@ -1,0 +1,12 @@
+{
+  "parent": "dusk_autumn:block/parent/cube_15",
+  "textures": {
+    "particle": "#all",
+    "bottom": "#all",
+    "top": "#all",
+    "north": "#all",
+    "east": "#all",
+    "south": "#all",
+    "west": "#all"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "dusk_autumn:block/parent/cube_overlay_inventory",
+  "textures": {
+    "particle": "#all",
+    "down": "#all",
+    "up": "#all",
+    "north": "#side",
+    "east": "#side",
+    "south": "#side",
+    "west": "#side"
+  }
+}

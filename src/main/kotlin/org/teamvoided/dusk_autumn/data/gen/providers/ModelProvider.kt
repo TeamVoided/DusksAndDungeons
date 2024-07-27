@@ -10,7 +10,7 @@ import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
-import org.teamvoided.dusk_autumn.block.LeafPileBlock
+import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import org.teamvoided.dusk_autumn.util.*
@@ -20,25 +20,11 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private val ALL_KRY: TextureKey = TextureKey.of("all")
 
-    val leafPiles = listOf(
-        (DuskBlocks.OAK_LEAF_PILE to Blocks.OAK_LEAVES),
-        (DuskBlocks.SPRUCE_LEAF_PILE to Blocks.SPRUCE_LEAVES),
-        (DuskBlocks.BIRCH_LEAF_PILE to Blocks.BIRCH_LEAVES),
-        (DuskBlocks.JUNGLE_LEAF_PILE to Blocks.JUNGLE_LEAVES),
-        (DuskBlocks.ACACIA_LEAF_PILE to Blocks.ACACIA_LEAVES),
-        (DuskBlocks.DARK_OAK_LEAF_PILE to Blocks.DARK_OAK_LEAVES),
-        (DuskBlocks.MANGROVE_LEAF_PILE to Blocks.MANGROVE_LEAVES),
-        (DuskBlocks.CHERRY_LEAF_PILE to Blocks.CHERRY_LEAVES),
-        (DuskBlocks.AZALEA_LEAF_PILE to Blocks.AZALEA_LEAVES),
-        (DuskBlocks.FLOWERING_AZALEA_LEAF_PILE to Blocks.FLOWERING_AZALEA_LEAVES),
-        (DuskBlocks.CASCADE_LEAF_PILE to DuskBlocks.CASCADE_LEAVES),
-        (DuskBlocks.GOLDEN_BIRCH_LEAF_PILE to DuskBlocks.GOLDEN_BIRCH_LEAVES)
-    )
 //    val blockFamily = listOf(
 //    )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
-        DuskBlockFamilies.allBlockFamilies.forEach {
+        DuskBlockFamilies.modelsBlockFamilies.forEach {
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
         }
         gen.registerFlowerPotPlant(
@@ -79,16 +65,26 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
 
-        val mossyCobble = "overgrown/cobblestone_overlay"
-        val mossyBrick = "overgrown/bricks_overlay"
-        gen.cubeWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.stairsWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.slabWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_SLAB, DuskBlocks.OVERGROWN_COBBLESTONE.model(), Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.wallWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.cubeWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        val mossyCobble = id("block/overgrown/cobblestone_overlay")
+        val mossyBrick = id("block/overgrown/bricks_overlay")
+        gen.registerTintedOverlay(mossyCobble)
+        gen.registerTintedOverlay(mossyBrick)
+        gen.cubeAllWithOverlay(DuskBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.stairsWithTintedOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.slabWithTintedOverlay(
+            DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
+            Blocks.MOSSY_COBBLESTONE,
+            mossyCobble
+        )
+        gen.wallWithOverlay(DuskBlocks.OVERGROWN_COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.cubeAllWithOverlay(DuskBlocks.OVERGROWN_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.stairsWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
-        gen.slabWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_SLAB, DuskBlocks.OVERGROWN_STONE_BRICKS.model(), Blocks.MOSSY_STONE_BRICKS, mossyBrick)
-        gen.wallWithTintedOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.slabWithTintedOverlay(
+            DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
+            Blocks.MOSSY_STONE_BRICKS,
+            mossyBrick
+        )
+        gen.wallWithOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
         leafPiles.forEach { (it, texture) ->
             gen.createLeafPile(it, texture)
@@ -97,270 +93,73 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
-        gen.registerItemModel(DuskItems.MOONBERRY_VINELET)
+        gen.registerFloorPlant(DuskBlocks.MOONBERRY_VINELET, Properties.AGE_2, 0, 1, 2)
         gen.createMoonberryVine(DuskBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 
-        val stone = "cobbled/stone_overlay"
-        val deepslate = "cobbled/deepslate_overlay"
-        val blackstone = "cobbled/blackstone_overlay"
-        gen.rockyGrassOverlay(DuskBlocks.ROCKY_GRASS, stone)
-        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_PODZOL, Blocks.PODZOL, DuskBlocks.ROCKY_GRASS, stone)
-        gen.rockyTopSoilsOverlay(DuskBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, DuskBlocks.ROCKY_GRASS, stone)
-        gen.pathWithOverlay(DuskBlocks.ROCKY_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_MUD, Blocks.MUD, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_SNOW, Blocks.SNOW, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, stone)
-        gen.rotatableCubeWithOverlay(DuskBlocks.ROCKY_SAND, Blocks.SAND, stone)
-        gen.rotatableCubeWithOverlay(DuskBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
-        gen.cubeWithOverlay(DuskBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
+        gen.registerSingleton(DuskBlocks.ROOT_BLOCK, TexturedModel.CUBE_ALL_INNER_FACES)
 
-        gen.rockyGrassOverlay(DuskBlocks.SLATED_GRASS, deepslate)
-        gen.rockyTopSoilsOverlay(DuskBlocks.SLATED_PODZOL, Blocks.PODZOL, DuskBlocks.SLATED_GRASS, deepslate)
-        gen.rockyTopSoilsOverlay(DuskBlocks.SLATED_MYCELIUM, Blocks.MYCELIUM, DuskBlocks.SLATED_GRASS, deepslate)
-        gen.pathWithOverlay(DuskBlocks.SLATED_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, deepslate)
-        gen.cubeWithOverlay(DuskBlocks.SLATED_DIRT, Blocks.DIRT, deepslate)
-        gen.cubeWithOverlay(DuskBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, deepslate)
-        gen.cubeWithOverlay(DuskBlocks.SLATED_MUD, Blocks.MUD, deepslate)
-        gen.cubeWithOverlay(DuskBlocks.SLATED_SNOW, Blocks.SNOW, deepslate)
-        gen.cubeWithOverlay(DuskBlocks.SLATED_GRAVEL, Blocks.GRAVEL, deepslate)
-        gen.rotatableCubeWithOverlay(DuskBlocks.SLATED_SAND, Blocks.SAND, deepslate)
-        gen.rotatableCubeWithOverlay(DuskBlocks.SLATED_RED_SAND, Blocks.RED_SAND, deepslate)
-        gen.cubeWithOverlay(DuskBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, deepslate)
-        gen.cubeWithOverlay(DuskBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, deepslate)
+        val stone = id("block/cobbled/stone_overlay")
+        val deepslate = id("block/cobbled/deepslate_overlay")
+        val blackstone = id("block/cobbled/blackstone_overlay")
+        gen.cubeOverlay(stone)
+        gen.cubeOverlay(deepslate)
+        gen.cubeOverlay(blackstone)
+        gen.cube15Overlay(stone)
+        gen.cube15Overlay(deepslate)
+        gen.cube15Overlay(blackstone)
 
-        gen.rockyGrassOverlay(DuskBlocks.BLACKSTONE_GRASS, blackstone)
-        gen.rockyTopSoilsOverlay(DuskBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, DuskBlocks.BLACKSTONE_GRASS, blackstone)
-        gen.rockyTopSoilsOverlay(
-            DuskBlocks.BLACKSTONE_MYCELIUM,
-            Blocks.MYCELIUM,
-            DuskBlocks.BLACKSTONE_GRASS,
-            blackstone
-        )
-        gen.pathWithOverlay(DuskBlocks.BLACKSTONE_DIRT_PATH, Blocks.DIRT_PATH, Blocks.DIRT, blackstone)
-        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_DIRT, Blocks.DIRT, blackstone)
-        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, blackstone)
-        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_MUD, Blocks.MUD, blackstone)
-        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_SNOW, Blocks.SNOW, blackstone)
-        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, blackstone)
-        gen.rotatableCubeWithOverlay(DuskBlocks.BLACKSTONE_SAND, Blocks.SAND, blackstone)
-        gen.rotatableCubeWithOverlay(DuskBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, blackstone)
-        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, blackstone)
-        gen.cubeWithOverlay(DuskBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, blackstone)
+        gen.grassWithOverlay(DuskBlocks.ROCKY_GRASS, Blocks.GRASS_BLOCK, stone)
+        gen.cubeSnowableColumnWithOverlay(DuskBlocks.ROCKY_PODZOL, Blocks.PODZOL, stone)
+        gen.cubeSnowableColumnWithOverlay(DuskBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, stone)
+        gen.cube15WithOverlay(DuskBlocks.ROCKY_DIRT_PATH, Blocks.DIRT_PATH, stone)
+        gen.cubeAllWithOverlay(DuskBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
+        gen.cubeAllWithOverlay(DuskBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
+        gen.cubeAllWithOverlay(DuskBlocks.ROCKY_MUD, Blocks.MUD, stone)
+        gen.cubeAllWithOverlay(DuskBlocks.ROCKY_SNOW, Blocks.SNOW_BLOCK, stone)
+        gen.cubeAllWithOverlay(DuskBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, stone)
+        gen.rotatableCubeAllWithOverlay(DuskBlocks.ROCKY_SAND, Blocks.SAND, stone)
+        gen.rotatableCubeAllWithOverlay(DuskBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, stone)
+        gen.cubeAllWithOverlay(DuskBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
+        gen.cubeAllWithOverlay(DuskBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
+
+        gen.grassWithOverlay(DuskBlocks.SLATED_GRASS, Blocks.GRASS_BLOCK, deepslate)
+        gen.cubeSnowableColumnWithOverlay(DuskBlocks.SLATED_PODZOL, Blocks.PODZOL, deepslate)
+        gen.cubeSnowableColumnWithOverlay(DuskBlocks.SLATED_MYCELIUM, Blocks.MYCELIUM, deepslate)
+        gen.cube15WithOverlay(DuskBlocks.SLATED_DIRT_PATH, Blocks.DIRT_PATH, deepslate)
+        gen.cubeAllWithOverlay(DuskBlocks.SLATED_DIRT, Blocks.DIRT, deepslate)
+        gen.cubeAllWithOverlay(DuskBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, deepslate)
+        gen.cubeAllWithOverlay(DuskBlocks.SLATED_MUD, Blocks.MUD, deepslate)
+        gen.cubeAllWithOverlay(DuskBlocks.SLATED_SNOW, Blocks.SNOW_BLOCK, deepslate)
+        gen.cubeAllWithOverlay(DuskBlocks.SLATED_GRAVEL, Blocks.GRAVEL, deepslate)
+        gen.rotatableCubeAllWithOverlay(DuskBlocks.SLATED_SAND, Blocks.SAND, deepslate)
+        gen.rotatableCubeAllWithOverlay(DuskBlocks.SLATED_RED_SAND, Blocks.RED_SAND, deepslate)
+        gen.cubeAllWithOverlay(DuskBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, deepslate)
+        gen.cubeAllWithOverlay(DuskBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, deepslate)
+
+        gen.grassWithOverlay(DuskBlocks.BLACKSTONE_GRASS, Blocks.GRASS_BLOCK, blackstone)
+        gen.cubeSnowableColumnWithOverlay(DuskBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, blackstone)
+        gen.cubeSnowableColumnWithOverlay(DuskBlocks.BLACKSTONE_MYCELIUM, Blocks.MYCELIUM, blackstone)
+        gen.cube15WithOverlay(DuskBlocks.BLACKSTONE_DIRT_PATH, Blocks.DIRT_PATH, blackstone)
+        gen.cubeAllWithOverlay(DuskBlocks.BLACKSTONE_DIRT, Blocks.DIRT, blackstone)
+        gen.cubeAllWithOverlay(DuskBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, blackstone)
+        gen.cubeAllWithOverlay(DuskBlocks.BLACKSTONE_MUD, Blocks.MUD, blackstone)
+        gen.cubeAllWithOverlay(DuskBlocks.BLACKSTONE_SNOW, Blocks.SNOW_BLOCK, blackstone)
+        gen.cubeAllWithOverlay(DuskBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, blackstone)
+        gen.rotatableCubeAllWithOverlay(DuskBlocks.BLACKSTONE_SAND, Blocks.SAND, blackstone)
+        gen.rotatableCubeAllWithOverlay(DuskBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, blackstone)
+        gen.cubeAllWithOverlay(DuskBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, blackstone)
+        gen.cubeAllWithOverlay(DuskBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, blackstone)
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),
             BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
                 .put(VariantSettings.UVLOCK, true)
         )*/
-
-        /*val allDirectionFalse = When.create()
-            .set(AbstractLichenBlock.getProperty(Direction.NORTH), false)
-            .set(AbstractLichenBlock.getProperty(Direction.SOUTH), false)
-            .set(AbstractLichenBlock.getProperty(Direction.EAST), false)
-            .set(AbstractLichenBlock.getProperty(Direction.WEST), false)
-            .set(AbstractLichenBlock.getProperty(Direction.DOWN), false)
-            .set(AbstractLichenBlock.getProperty(Direction.UP), false)
-        gen.blockStateCollector.accept(
-            MultipartBlockStateSupplier.create(DuskBlocks.MOONBERRY_VINE)
-                .with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
-                        .set(MoonberryVineBlock.BERRIES, 0),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        )
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
-                        .set(MoonberryVineBlock.BERRIES, 1),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries")
-                        )
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
-                        .set(MoonberryVineBlock.BERRIES, 2),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries_wall_extra")
-                        )
-                ).with(
-                    allDirectionFalse,
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        )
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
-                        .set(MoonberryVineBlock.BERRIES, 0),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
-                        .set(MoonberryVineBlock.BERRIES, 1),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
-                        .set(MoonberryVineBlock.BERRIES, 2),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries_wall_extra")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                ).with(
-                    allDirectionFalse,
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
-                        .set(MoonberryVineBlock.BERRIES, 0),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
-                        .set(MoonberryVineBlock.BERRIES, 1),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
-                        .set(MoonberryVineBlock.BERRIES, 2),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries_wall_extra")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                ).with(
-                    allDirectionFalse,
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
-                        .set(MoonberryVineBlock.BERRIES, 0),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
-                        .set(MoonberryVineBlock.BERRIES, 1),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
-                        .set(MoonberryVineBlock.BERRIES, 2),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries_wall_extra")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                ).with(
-                    allDirectionFalse,
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
-                        .set(MoonberryVineBlock.BERRIES, 0),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.X, VariantSettings.Rotation.R270)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
-                        .set(MoonberryVineBlock.BERRIES, 1),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries")
-                        ).put(VariantSettings.X, VariantSettings.Rotation.R270)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
-                        .set(MoonberryVineBlock.BERRIES, 2),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries_floor_extra")
-                        ).put(VariantSettings.X, VariantSettings.Rotation.R180)
-                ).with(
-                    allDirectionFalse,
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.X, VariantSettings.Rotation.R90)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
-                        .set(MoonberryVineBlock.BERRIES, 0),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.X, VariantSettings.Rotation.R90)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
-                        .set(MoonberryVineBlock.BERRIES, 1),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries")
-                        ).put(VariantSettings.X, VariantSettings.Rotation.R90)
-                ).with(
-                    When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
-                        .set(MoonberryVineBlock.BERRIES, 2),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine_berries_floor_extra")
-                        )
-                ).with(
-                    allDirectionFalse,
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
-                            id("block/moonberry_vine")
-                        ).put(VariantSettings.X, VariantSettings.Rotation.R90)
-                )
-        )*/
     }
 
     override fun generateItemModels(gen: ItemModelGenerator) {
-//        gen.register(DuskItems.CRAB_SPAWN_EGG, Models.)
     }
-
-//    private fun BlockStateModelGenerator.parentedModel(block: Block, parent: Identifier): Identifier = this.parentedModel(block, block, parent)
 
     private fun BlockStateModelGenerator.parentedModel(
         block: Block, textBlock: Block, parent: Identifier
@@ -377,8 +176,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private
     val <T : Any?> T.myb get() = Optional.ofNullable(this)
-
-    private fun Block.modelSuffix(str: String) = this.model().suffix(str)
 
     private fun Identifier.suffix(str: String) = Identifier.of(this.namespace, "${this.path}$str")
     private fun Block.model(): Identifier = ModelIds.getBlockModelId(this)

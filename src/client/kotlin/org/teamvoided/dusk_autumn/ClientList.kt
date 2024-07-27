@@ -30,7 +30,9 @@ val cutoutList = listOf(
     DuskBlocks.MOONBERRY_VINE,
     DuskBlocks.MOONBERRY_VINELET,
 
+    DuskBlocks.ROOT_BLOCK,
     DuskBlocks.BIG_CHAIN,
+
 
     DuskBlocks.OVERGROWN_COBBLESTONE,
     DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,

@@ -137,14 +137,13 @@ object DuskItemGroups {
                     )
                 )
                 entries.addItems(
-                    netherBrickStuff +
+                    listOf(DuskBlocks.BIG_CHAIN.asItem()) +
+                            netherBrickStuff +
                             redNetherBrickStuff +
-                            listOf(
-                                DuskBlocks.MIXED_NETHER_BRICKS.asItem(),
-                                DuskBlocks.BIG_CHAIN.asItem()
-                            ) +
+                            listOf(DuskBlocks.MIXED_NETHER_BRICKS.asItem()) +
                             overgrownCobblestone +
                             overgrownStoneBricks +
+                            listOf(DuskBlocks.ROOT_BLOCK.asItem()) +
                             leafPiles +
                             moonberry
                 )

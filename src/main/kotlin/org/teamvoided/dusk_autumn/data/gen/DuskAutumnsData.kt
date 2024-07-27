@@ -32,9 +32,9 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         pack.addProvider(::RecipesProvider)
         pack.addProvider(::BlockLootTableProvider)
 
-        pack.addProvider(::ItemTagsProvider)
+        val blockTags = pack.addProvider(::BlockTagsProvider)
+        pack.addProvider { o, r -> ItemTagsProvider(o, r, blockTags) }
         pack.addProvider(::BiomeTagsProvider)
-        pack.addProvider(::BlockTagsProvider)
         pack.addProvider(::EntityTypeTagsProvider)
     }
 

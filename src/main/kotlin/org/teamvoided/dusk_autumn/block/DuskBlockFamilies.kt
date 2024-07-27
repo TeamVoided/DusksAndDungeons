@@ -32,10 +32,26 @@ object DuskBlockFamilies {
             .slab(DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB)
             .wall(DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL)
             .build()
-    val allBlockFamilies = listOf(
+    val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.OVERGROWN_COBBLESTONE)
+            .stairs(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS)
+            .slab(DuskBlocks.OVERGROWN_COBBLESTONE_SLAB)
+            .wall(DuskBlocks.OVERGROWN_COBBLESTONE_WALL)
+            .build()
+    val OVERGROWN_STONE_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.OVERGROWN_STONE_BRICKS)
+            .stairs(DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS)
+            .slab(DuskBlocks.OVERGROWN_STONE_BRICK_SLAB)
+            .wall(DuskBlocks.OVERGROWN_STONE_BRICK_WALL)
+            .build()
+    val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY
+    )
+    val allBlockFamilies = modelsBlockFamilies + listOf(
+        OVERGROWN_COBBLESTONE_FAMILY,
+        OVERGROWN_STONE_BRICKS_FAMILY
     )
 
     fun init() {}

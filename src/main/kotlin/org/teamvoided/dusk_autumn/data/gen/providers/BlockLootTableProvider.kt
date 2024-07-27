@@ -5,8 +5,9 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.BeetrootsBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.TallPlantBlock
+import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
-import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
@@ -14,13 +15,13 @@ import net.minecraft.loot.condition.BlockStatePropertyLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LootTableEntry
-import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
+import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
@@ -31,75 +32,106 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
 
 
     val dropsItSelf = listOf(
-        DuskBlocks.CASCADE_SAPLING,
         DuskBlocks.CASCADE_LOG,
+        DuskBlocks.CASCADE_WOOD,
         DuskBlocks.STRIPPED_CASCADE_LOG,
+        DuskBlocks.STRIPPED_CASCADE_WOOD,
         DuskBlocks.CASCADE_PLANKS,
+        DuskBlocks.CASCADE_SLAB,
+        DuskBlocks.CASCADE_FENCE,
+        DuskBlocks.CASCADE_FENCE_GATE,
         DuskBlocks.CASCADE_TRAPDOOR,
+        DuskBlocks.CASCADE_PRESSURE_PLATE,
+        DuskBlocks.CASCADE_BUTTON,
+        DuskBlocks.CASCADE_SAPLING,
         DuskBlocks.GOLDEN_BIRCH_SAPLING,
-        DuskBlocks.VIOLET_DAISY
+        DuskBlocks.NETHER_BRICK_PILLAR,
+        DuskBlocks.POLISHED_NETHER_BRICKS,
+        DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
+        DuskBlocks.POLISHED_NETHER_BRICK_WALL,
+        DuskBlocks.BIG_CHAIN,
+        DuskBlocks.RED_NETHER_BRICK_PILLAR,
+        DuskBlocks.POLISHED_RED_NETHER_BRICKS,
+        DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
+        DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
+        DuskBlocks.MIXED_NETHER_BRICKS,
+        DuskBlocks.OVERGROWN_COBBLESTONE,
+        DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
+        DuskBlocks.OVERGROWN_COBBLESTONE_WALL,
+        DuskBlocks.OVERGROWN_STONE_BRICKS,
+        DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
+        DuskBlocks.OVERGROWN_STONE_BRICK_WALL,
+        DuskBlocks.ROOT_BLOCK,
+
+        DuskBlocks.VIOLET_DAISY,
+        
+        DuskBlocks.ROCKY_GRASS,
+        DuskBlocks.ROCKY_PODZOL,
+        DuskBlocks.ROCKY_MYCELIUM,
+        DuskBlocks.ROCKY_DIRT_PATH,
+        DuskBlocks.ROCKY_DIRT,
+        DuskBlocks.ROCKY_COARSE_DIRT,
+        DuskBlocks.ROCKY_MUD,
+        DuskBlocks.ROCKY_SNOW,
+        DuskBlocks.ROCKY_GRAVEL,
+        DuskBlocks.ROCKY_SAND,
+        DuskBlocks.ROCKY_RED_SAND,
+        DuskBlocks.ROCKY_SOUL_SAND,
+        DuskBlocks.ROCKY_SOUL_SOIL,
+
+        DuskBlocks.SLATED_GRASS,
+        DuskBlocks.SLATED_PODZOL,
+        DuskBlocks.SLATED_MYCELIUM,
+        DuskBlocks.SLATED_DIRT_PATH,
+        DuskBlocks.SLATED_DIRT,
+        DuskBlocks.SLATED_COARSE_DIRT,
+        DuskBlocks.SLATED_MUD,
+        DuskBlocks.SLATED_SNOW,
+        DuskBlocks.SLATED_GRAVEL,
+        DuskBlocks.SLATED_SAND,
+        DuskBlocks.SLATED_RED_SAND,
+        DuskBlocks.SLATED_SOUL_SAND,
+        DuskBlocks.SLATED_SOUL_SOIL,
+
+        DuskBlocks.BLACKSTONE_GRASS,
+        DuskBlocks.BLACKSTONE_PODZOL,
+        DuskBlocks.BLACKSTONE_MYCELIUM,
+        DuskBlocks.BLACKSTONE_DIRT_PATH,
+        DuskBlocks.BLACKSTONE_DIRT,
+        DuskBlocks.BLACKSTONE_COARSE_DIRT,
+        DuskBlocks.BLACKSTONE_MUD,
+        DuskBlocks.BLACKSTONE_SNOW,
+        DuskBlocks.BLACKSTONE_GRAVEL,
+        DuskBlocks.BLACKSTONE_SAND,
+        DuskBlocks.BLACKSTONE_RED_SAND,
+        DuskBlocks.BLACKSTONE_SOUL_SAND,
+        DuskBlocks.BLACKSTONE_SOUL_SOIL
+    )
+    val slabs = listOf(
+        DuskBlocks.CASCADE_SLAB,
+        DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
+        DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
+        DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
+        DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
     )
 
     override fun generate() {
-        val enchants = field_51845.getLookupOrThrow(RegistryKeys.ENCHANTMENT)
         dropsItSelf.forEach(::addDrop)
-
+        slabs.forEach(::slabDrops)
         add(DuskBlocks.CASCADE_DOOR, ::doorDrops)
         add(DuskBlocks.BLUE_DOOR, ::doorDrops)
-
-        add(DuskBlocks.CASCADE_LEAVES) { oakLeavesDrops(it, DuskBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES) }
-        add(DuskBlocks.GOLDEN_BIRCH_LEAVES) {
-            leavesDrops(
-                it,
-                DuskBlocks.GOLDEN_BIRCH_SAPLING,
-                *LEAVES_SAPLING_DROP_CHANCES
-            )
-        }
-
-        add(DuskBlocks.OAK_LEAF_PILE) { leafPile(it, Blocks.OAK_LEAVES) }
-        add(DuskBlocks.SPRUCE_LEAF_PILE) { leafPile(it, Blocks.SPRUCE_LEAVES) }
-        add(DuskBlocks.BIRCH_LEAF_PILE) { leafPile(it, Blocks.BIRCH_LEAVES) }
-        add(DuskBlocks.JUNGLE_LEAF_PILE) { leafPile(it, Blocks.JUNGLE_LEAVES) }
-        add(DuskBlocks.ACACIA_LEAF_PILE) { leafPile(it, Blocks.ACACIA_LEAVES) }
-        add(DuskBlocks.DARK_OAK_LEAF_PILE) { leafPile(it, Blocks.DARK_OAK_LEAVES) }
-        add(DuskBlocks.MANGROVE_LEAF_PILE) { leafPile(it, Blocks.MANGROVE_LEAVES) }
-        add(DuskBlocks.AZALEA_LEAF_PILE) { leafPile(it, Blocks.AZALEA_LEAVES) }
-        add(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE) { leafPile(it, Blocks.FLOWERING_AZALEA_LEAVES) }
-        add(DuskBlocks.CHERRY_LEAF_PILE) { leafPile(it, Blocks.CHERRY_LEAVES) }
-        add(DuskBlocks.CASCADE_LEAF_PILE) { leafPile(it, DuskBlocks.CASCADE_LEAVES) }
-        add(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE) { leafPile(it, DuskBlocks.GOLDEN_BIRCH_LEAVES) }
-
         add(DuskBlocks.BLUE_PETALS, ::flowerbedDrops)
         add(DuskBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DuskBlocks.CASCADE_SAPLING) }
         add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DuskBlocks.GOLDEN_BIRCH_SAPLING) }
-        add(DuskBlocks.POTTED_VIOLET_DAISY) { pottedPlantDrops(DuskBlocks.VIOLET_DAISY) }
-
-        // why does this not use cropDrops?
-        add(
-            DuskBlocks.GOLDEN_BEETROOTS,
-            applyExplosionDecay(
-                DuskBlocks.GOLDEN_BEETROOTS,
-                LootTable.builder().pool(
-                    LootPool.builder().with(
-                        ItemEntry.builder(
-                            DuskItems.GOLDEN_BEETROOT
-                        )
-                    )
-                ).pool(
-                    LootPool.builder().conditionally(
-                        BlockStatePropertyLootCondition.builder(DuskBlocks.GOLDEN_BEETROOTS).properties(
-                            StatePredicate.Builder.create().exactMatch(BeetrootsBlock.AGE, 4)
-                        )
-                    ).with(
-                        ItemEntry.builder(DuskItems.GOLDEN_BEETROOT).apply(
-                            ApplyBonusLootFunction.method_463(
-                                enchants.getHolderOrThrow(Enchantments.FORTUNE), 0.5714286f, 3
-                            )
-                        )
-                    )
-                )
-            )
-        )
+        add(DuskBlocks.CASCADE_LEAVES) {
+            oakLeavesDrops(it, DuskBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES)
+        }
+        add(DuskBlocks.GOLDEN_BIRCH_LEAVES) {
+            leavesDrops(it, DuskBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
+        }
+        leafPiles.forEach { (pile, leaves) ->
+            add(pile) { leafPile(it, leaves) }
+        }
         add(
             DuskBlocks.MOONBERRY_VINELET,
             applyExplosionDecay(
@@ -108,6 +140,25 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 )
             )
         )
+        add(DuskBlocks.WILD_WHEAT) { block: Block ->
+            this.dropsWithPropertyValue(
+                block,
+                TallPlantBlock.HALF,
+                DoubleBlockHalf.LOWER
+            )
+        }
+        add(
+            DuskBlocks.GOLDEN_BEETROOTS,
+            this.cropDrops(
+                DuskBlocks.GOLDEN_BEETROOTS,
+                DuskItems.GOLDEN_BEETROOT,
+                DuskItems.GOLDEN_BEETROOT,
+                BlockStatePropertyLootCondition.builder(Blocks.BEETROOTS).properties(
+                    StatePredicate.Builder.create().exactMatch(BeetrootsBlock.AGE, 3)
+                )
+            )
+        )
+        add(DuskBlocks.POTTED_VIOLET_DAISY) { pottedPlantDrops(DuskBlocks.VIOLET_DAISY) }
     }
 
     private fun constantLootNumber(i: Number): ConstantLootNumberProvider =

@@ -6,6 +6,7 @@ import net.minecraft.registry.tag.TagKey
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 object DuskItemTags {
-
+    val LEAF_PILES = create("leaf_piles")
+    val NETHER_BRICKS = create("nether_bricks")
     fun create(id: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id(id))
 }

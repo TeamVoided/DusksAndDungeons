@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.data.gen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
@@ -40,6 +41,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
             .add(Blocks.COBBLESTONE)
             .add(Blocks.MOSSY_COBBLESTONE)
+            .add(DuskBlocks.OVERGROWN_COBBLESTONE)
             .forceAddTag(BlockTags.STONE_BRICKS)
             .forceAddTag(BlockTags.LOGS)
             .add(Blocks.MELON)
@@ -118,6 +120,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.ROCKY_PODZOL, DuskBlocks.SLATED_PODZOL, DuskBlocks.BLACKSTONE_PODZOL)
             .add(DuskBlocks.ROCKY_MYCELIUM, DuskBlocks.SLATED_MYCELIUM, DuskBlocks.BLACKSTONE_MYCELIUM)
             .forceAddTag(BlockTags.LOGS)
+
+        getOrCreateTagBuilder(BlockTags.STONE_BRICKS)
+            .add(DuskBlocks.OVERGROWN_STONE_BRICKS)
 
         getOrCreateTagBuilder(BlockTags.STAIRS)
             .add(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS)
@@ -244,5 +249,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.MOONBERRY_VINE)
     }
 
-    fun conventionTags() {}
+    fun conventionTags() {
+        getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES)
+            .add(DuskBlocks.OVERGROWN_COBBLESTONE)
+    }
 }

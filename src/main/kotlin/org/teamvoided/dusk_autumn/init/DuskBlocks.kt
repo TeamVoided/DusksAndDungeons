@@ -4,8 +4,7 @@ import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.block.*
-import net.minecraft.block.AbstractBlock.OffsetType
-import net.minecraft.block.AbstractBlock.Settings
+import net.minecraft.block.AbstractBlock.*
 import net.minecraft.block.AbstractBlock.Settings.variantOf
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
@@ -257,6 +256,7 @@ object DuskBlocks {
         )
     )
     val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)))
+    val CHISELED_RED_NETHER_BRICKS = register("chiseled_red_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)))
     val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(variantOf(NETHER_BRICKS)))
     val POLISHED_NETHER_BRICKS = register("polished_nether_bricks", Block(variantOf(NETHER_BRICKS)))
     val POLISHED_NETHER_BRICK_STAIRS =
@@ -288,6 +288,14 @@ object DuskBlocks {
     val OVERGROWN_STONE_BRICK_WALL =
         register("overgrown_stone_brick_wall", WallBlock(variantOf(MOSSY_STONE_BRICK_WALL)))
 
+    val ROOT_BLOCK = register(
+        "root_block",
+        MangroveRootsBlock(
+            Settings.create().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS)
+                .strength(0.7f).sounds(BlockSoundGroup.MANGROVE_ROOTS).nonOpaque().suffocates(Blocks::nonSolid)
+                .blockVision(Blocks::nonSolid).nonOpaque().lavaIgnitable()
+        )
+    )
     val ROCKY_DIRT = register("dirty_rocks", Block(variantOf(DIRT).mapColor(COBBLESTONE.defaultMapColor)))
     val ROCKY_GRASS = register(
         "grassy_rocks",
