@@ -63,6 +63,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )
         gen.registerItemModel(DuskBlocks.BIG_CHAIN.asItem())
         gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
+        gen.registerBigLantern(DuskBlocks.BIG_LANTERN)
+        gen.registerBigLantern(DuskBlocks.BIG_SOUL_LANTERN)
         gen.registerSimpleCubeAll(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
         gen.registerMixedNetherBrickPillar()
         gen.registerAxisRotated(

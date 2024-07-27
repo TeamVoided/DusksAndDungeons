@@ -25,8 +25,8 @@ class BigChainBlock(settings: Settings) : ChainBlock(settings) {
         }
     }
     companion object {
-        protected const val SHAPE_MIN = 3.5
-        protected const val SHAPE_MAX = 12.5
+        protected const val SHAPE_MIN = 4.5
+        protected const val SHAPE_MAX = 11.5
         val Y_SHAPE = Block.createCuboidShape(SHAPE_MIN, 0.0, SHAPE_MIN, SHAPE_MAX, 16.0, SHAPE_MAX);
         val Z_SHAPE = Block.createCuboidShape(SHAPE_MIN, SHAPE_MIN, 0.0, SHAPE_MAX, SHAPE_MAX, 16.0);
         val X_SHAPE = Block.createCuboidShape(0.0, SHAPE_MIN, SHAPE_MIN, 16.0, SHAPE_MAX, SHAPE_MAX);

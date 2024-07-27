@@ -46,6 +46,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("I")
             .criterion("has_iron_nugget", conditionsFromItem(Items.IRON_NUGGET))
             .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT)).offerTo(e)
+        e.createBigLantern(DuskBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
+        e.createBigLantern(DuskBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
         createChiseledBlockRecipe(
             RecipeCategory.BUILDING_BLOCKS,
             DuskBlocks.CHISELED_RED_NETHER_BRICKS,
@@ -131,6 +133,39 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.cobbled()
     }
 
+    fun RecipeExporter.createBigLantern(
+        block: ItemConvertible,
+        torch: ItemConvertible,
+        smallLantern: ItemConvertible?
+    ) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block, 1)
+            .ingredient('#', Ingredient.ofItems(torch))
+            .ingredient('O', Ingredient.ofItems(Items.IRON_INGOT))
+            .ingredient('X', Ingredient.ofItems(Items.IRON_NUGGET))
+            .pattern("XOX")
+            .pattern("O#O")
+            .pattern("XOX")
+            .criterion("has_lantern", conditionsFromItem(smallLantern ?: torch))
+            .offerTo(this)
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, Blocks.LANTERN)
+            .ingredient('#', Items.TORCH)
+            .ingredient('X', Items.IRON_NUGGET)
+            .pattern("XXX")
+            .pattern("X#X")
+            .pattern("XXX")
+            .criterion("has_iron_nugget", conditionsFromItem(Items.IRON_NUGGET))
+            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .offerTo(this)
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, Blocks.SOUL_LANTERN)
+            .ingredient('#', Items.SOUL_TORCH).ingredient('X', Items.IRON_NUGGET).pattern("XXX").pattern("X#X")
+            .pattern("XXX").criterion(
+                "has_soul_torch", conditionsFromItem(
+                    Items.SOUL_TORCH
+                )
+            ).offerTo(this)
+
+    }
+
     fun RecipeExporter.createStonecutted(
         input: Block,
         polish: ItemConvertible?,
@@ -180,8 +215,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .ingredient('#', block)
             .pattern("#")
             .pattern("#")
-            .criterion("has_$block", conditionsFromItem(block)).offerTo(this)
-        println("has_$block")
+            .criterion("has_item", conditionsFromItem(block))
+            .offerTo(this)
     }
 
     fun RecipeExporter.createCobblestoned(output: ItemConvertible, convert: ItemConvertible, cobble: ItemConvertible) {
@@ -194,11 +229,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 8)
             .ingredient('#', Ingredient.ofItems(input))
             .pattern("##")
-            .criterion(
-                hasItem(input), conditionsFromItem(
-                    input
-                )
-            ).offerTo(this)
+            .criterion(hasItem(input), conditionsFromItem(input)).offerTo(this)
     }
 
     fun RecipeExporter.cobbled() {

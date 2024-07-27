@@ -26,6 +26,8 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
         DuskBlocks.GOLDEN_BIRCH_SAPLING.asItem(),
         DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem(),
         DuskBlocks.BIG_CHAIN.asItem(),
+        DuskBlocks.BIG_LANTERN.asItem(),
+        DuskBlocks.BIG_SOUL_LANTERN.asItem(),
         DuskBlocks.ROOT_BLOCK.asItem(),
         DuskItems.FARMERS_HAT,
         DuskItems.WILD_WHEAT,

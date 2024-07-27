@@ -12,7 +12,9 @@ import net.minecraft.block.enums.SlabType
 import net.minecraft.block.enums.StairShape
 import net.minecraft.block.enums.WallShape
 import net.minecraft.data.client.model.*
-import net.minecraft.data.client.model.BlockStateModelGenerator.*
+import net.minecraft.data.client.model.BlockStateModelGenerator.createAxisRotatedBlockState
+import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
+import net.minecraft.data.client.model.TexturedModel.makeFactory
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.state.property.Properties
 import net.minecraft.state.property.Property
@@ -471,6 +473,21 @@ fun createWallBlockStateWithOverlay(
         )
     }
     return model
+}
+
+fun BlockStateModelGenerator.registerBigLantern(block: Block) {
+    this.excludeFromSimpleItemModelGeneration(block)
+    this.registerItemModel(block)
+    val texture = Texture()
+        .put(TextureKey.SIDE, Texture.getId(block))
+        .put(TextureKey.END, id("block/big_lantern_bottom"))
+    val model = block(
+        "cube_column",
+        TextureKey.END,
+        TextureKey.SIDE
+    )
+    this.registerSingleton(block, makeFactory(Texture::sideEnd, model))
+    model.upload(block, texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar() {

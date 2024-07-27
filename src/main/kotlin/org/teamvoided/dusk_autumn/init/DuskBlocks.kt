@@ -255,6 +255,26 @@ object DuskBlocks {
             )
         )
     )
+    val bigLanternSound = BlockSoundGroup(
+        1.0F,
+        0.8F,
+        SoundEvents.BLOCK_LANTERN_BREAK,
+        SoundEvents.BLOCK_LANTERN_STEP,
+        SoundEvents.BLOCK_LANTERN_PLACE,
+        SoundEvents.BLOCK_LANTERN_HIT,
+        SoundEvents.BLOCK_LANTERN_FALL
+    );
+    val BIG_LANTERN = register(
+        "big_lantern", LanternBlock(
+            variantOf(LANTERN).sounds(bigLanternSound)
+        )
+    )
+    val BIG_SOUL_LANTERN = register(
+        "big_soul_lantern",
+        LanternBlock(
+            variantOf(SOUL_LANTERN).sounds(bigLanternSound)
+        )
+    )
     val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)))
     val MIXED_NETHER_BRICK_STAIRS = register("mixed_nether_brick_stairs", legacyStairsOf(MIXED_NETHER_BRICKS))
     val MIXED_NETHER_BRICK_SLAB = register("mixed_nether_brick_slab", SlabBlock(variantOf(NETHER_BRICK_SLAB)))
