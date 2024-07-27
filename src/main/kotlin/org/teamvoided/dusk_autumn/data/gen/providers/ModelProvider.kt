@@ -61,7 +61,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
-
         gen.registerItemModel(DuskBlocks.BIG_CHAIN.asItem())
         gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
         gen.registerSimpleCubeAll(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
@@ -109,7 +108,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.createMoonberryVine(DuskBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 
-        gen.registerSingleton(DuskBlocks.ROOT_BLOCK, TexturedModel.CUBE_ALL_INNER_FACES)
+        gen.registerSingleton(DuskBlocks.ROOT_BLOCK, TexturedModel.LEAVES)
 
         val stone = id("block/cobbled/stone_overlay")
         val deepslate = id("block/cobbled/deepslate_overlay")
