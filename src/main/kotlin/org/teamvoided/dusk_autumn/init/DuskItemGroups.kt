@@ -2,14 +2,12 @@ package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.Block
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.init.DuskItemGroups.addItems
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -45,9 +43,11 @@ object DuskItemGroups {
         DuskBlocks.MIXED_NETHER_BRICK_STAIRS.asItem(),
         DuskBlocks.MIXED_NETHER_BRICK_SLAB.asItem(),
         DuskBlocks.MIXED_NETHER_BRICK_WALL.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_FENCE.asItem(),
         DuskBlocks.MIXED_NETHER_BRICK_PILLAR.asItem()
     )
     val redNetherBrickStuff = listOf(
+        DuskBlocks.RED_NETHER_BRICK_FENCE.asItem(),
         DuskBlocks.CHISELED_RED_NETHER_BRICKS.asItem(),
         DuskBlocks.RED_NETHER_BRICK_PILLAR.asItem(),
         DuskBlocks.POLISHED_RED_NETHER_BRICKS.asItem(),
@@ -134,18 +134,19 @@ object DuskItemGroups {
             .icon { ItemStack(DuskBlocks.CASCADE_SAPLING.asItem()) }
             .name(Text.translatable("itemGroup.dusk_autumn.dusk_items"))
             .entries { _, entries ->
-                entries.addItems(cascadeWood + cascadeSigns)
-                entries.addStacks(
-                    mutableSetOf(
-                        ItemStack(DuskBlocks.BLUE_PETALS),
-                        ItemStack(DuskBlocks.CASCADE_SAPLING),
-                        ItemStack(DuskBlocks.CASCADE_LEAVES),
-                        ItemStack(DuskBlocks.GOLDEN_BIRCH_SAPLING),
-                        ItemStack(DuskBlocks.GOLDEN_BIRCH_LEAVES),
-                    )
-                )
                 entries.addItems(
-                    listOf(DuskBlocks.BIG_CHAIN.asItem()) +
+                    cascadeWood +
+                            cascadeSigns +
+                            listOf(
+                                DuskBlocks.CASCADE_SAPLING.asItem(),
+                                DuskBlocks.CASCADE_LEAVES.asItem(),
+                                DuskBlocks.GOLDEN_BIRCH_SAPLING.asItem(),
+                                DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem(),
+                                DuskBlocks.BLUE_PETALS.asItem(),
+                                DuskBlocks.BIG_CHAIN.asItem(),
+                                DuskBlocks.BIG_LANTERN.asItem(),
+                                DuskBlocks.BIG_SOUL_LANTERN.asItem()
+                            ) +
                             netherBrickStuff +
                             redNetherBrickStuff +
                             mixedNetherBrickStuff +
@@ -153,45 +154,42 @@ object DuskItemGroups {
                             overgrownStoneBricks +
                             listOf(DuskBlocks.ROOT_BLOCK.asItem()) +
                             leafPiles +
-                            moonberry
+                            moonberry +
+                            listOf(
+                                DuskItems.FARMERS_HAT,
+                                DuskItems.WILD_WHEAT,
+                                DuskItems.GOLDEN_BEETROOT,
+                                DuskItems.BLUE_DOOR
+                            ) + overlayBlocks
                 )
-                entries.addStacks(
-                    mutableSetOf(
-                        ItemStack(DuskItems.FARMERS_HAT),
-                        ItemStack(DuskItems.WILD_WHEAT),
-                        ItemStack(DuskItems.GOLDEN_BEETROOT),
-                        ItemStack(DuskItems.BLUE_DOOR),
-                    )
-                )
-                entries.addItems(overlayBlocks)
             }
             .build()
     )
 
     fun init() {
-        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON, cascadeWood)
-        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.MOSSY_COBBLESTONE_WALL, overgrownCobblestone)
-        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.MOSSY_STONE_BRICK_WALL, overgrownStoneBricks)
-        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_NETHER_BRICKS, netherBrickStuff)
-        registerInVanillaTag(
+        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON, cascadeWood)
+        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.MOSSY_COBBLESTONE_WALL, overgrownCobblestone)
+        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.MOSSY_STONE_BRICK_WALL, overgrownStoneBricks)
+        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_NETHER_BRICKS, netherBrickStuff)
+        registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
             Items.RED_NETHER_BRICK_WALL,
             redNetherBrickStuff + mixedNetherBrickStuff
         )
-        registerInVanillaTag(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DuskBlocks.BIG_CHAIN.asItem()))
-        registerInVanillaTag(
+        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DuskBlocks.BIG_CHAIN.asItem()))
+        registerInVanillaTab(
             ItemGroups.NATURAL_BLOCKS, Items.FLOWERING_AZALEA_LEAVES, listOf(
                 DuskBlocks.CASCADE_LEAVES.asItem(),
                 DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem()
             ) + leafPiles
         )
-        registerInVanillaTag(
+        registerInVanillaTab(
             ItemGroups.NATURAL_BLOCKS, Items.FLOWERING_AZALEA, listOf(
                 DuskBlocks.CASCADE_SAPLING.asItem(),
                 DuskBlocks.GOLDEN_BIRCH_SAPLING.asItem()
             )
         )
-        registerInVanillaTag(ItemGroups.NATURAL_BLOCKS, Items.VINE, moonberry)
+        registerInVanillaTab(ItemGroups.NATURAL_BLOCKS, Items.VINE, moonberry)
     }
 
 
@@ -208,7 +206,7 @@ object DuskItemGroups {
         this.addStacks(list.map(Item::getDefaultStack))
     }
 
-    fun registerInVanillaTag(itemGroup: RegistryKey<ItemGroup>, itemBefore: Item, list: Collection<Item>) {
+    fun registerInVanillaTab(itemGroup: RegistryKey<ItemGroup>, itemBefore: Item, list: Collection<Item>) {
         ItemGroupEvents.modifyEntriesEvent(itemGroup)
             .register(ItemGroupEvents.ModifyEntries {
                 it.addAfter(

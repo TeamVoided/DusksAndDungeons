@@ -25,6 +25,7 @@ object DuskBlockFamilies {
             .stairs(DuskBlocks.MIXED_NETHER_BRICK_STAIRS)
             .slab(DuskBlocks.MIXED_NETHER_BRICK_SLAB)
             .wall(DuskBlocks.MIXED_NETHER_BRICK_WALL)
+            .fence(DuskBlocks.MIXED_NETHER_BRICK_FENCE)
             .build()
     val POLISHED_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DuskBlocks.POLISHED_NETHER_BRICKS)
@@ -56,7 +57,7 @@ object DuskBlockFamilies {
         POLISHED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY
     )
-    val allBlockFamilies = modelsBlockFamilies + listOf(
+    val recipesBlockFamilies = modelsBlockFamilies + listOf(
         OVERGROWN_COBBLESTONE_FAMILY,
         OVERGROWN_STONE_BRICKS_FAMILY
     )

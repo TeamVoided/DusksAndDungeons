@@ -1,0 +1,49 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "#side"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 2],
+			"to": [16, 4, 6],
+			"faces": {
+				"north": {"uv": [12, 0, 16, 16], "rotation": 90, "texture": "#side"},
+				"east": {"uv": [6, 6, 10, 10], "texture": "#end", "cullface": "east"},
+				"south": {"uv": [12, 0, 16, 16], "rotation": 270, "texture": "#side"},
+				"west": {"uv": [6, 6, 10, 10], "texture": "#end", "cullface": "west"},
+				"up": {"uv": [2, 0, 6, 16], "rotation": 90, "texture": "#side"},
+				"down": {"uv": [10, 0, 14, 16], "rotation": 90, "texture": "#side"}
+			}
+		},
+		{
+			"from": [0, 0, 10],
+			"to": [16, 4, 14],
+			"faces": {
+				"north": {"uv": [12, 0, 16, 16], "rotation": 90, "texture": "#side"},
+				"east": {"uv": [6, 6, 10, 10], "texture": "#end", "cullface": "east"},
+				"south": {"uv": [12, 0, 16, 16], "rotation": 270, "texture": "#side"},
+				"west": {"uv": [6, 6, 10, 10], "texture": "#end", "cullface": "west"},
+				"up": {"uv": [10, 0, 14, 16], "rotation": 90, "texture": "#side"},
+				"down": {"uv": [2, 0, 6, 16], "rotation": 90, "texture": "#side"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [ 75, 45, 0 ],
+			"translation": [ 0, 2.5, 2],
+			"scale": [ 0.375, 0.375, 0.375 ]
+		},
+		"firstperson_righthand": {
+			"rotation": [ 0, 45, 0 ],
+			"translation": [ 0, 4.2, 0 ],
+			"scale": [ 0.40, 0.40, 0.40 ]
+		},
+		"firstperson_lefthand": {
+			"rotation": [ 0, 225, 0 ],
+			"translation": [ 0, 4.2, 0 ],
+			"scale": [ 0.40, 0.40, 0.40 ]
+		}
+	}
+}

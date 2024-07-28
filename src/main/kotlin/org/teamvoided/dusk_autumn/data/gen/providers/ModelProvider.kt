@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
+import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import org.teamvoided.dusk_autumn.util.*
@@ -99,6 +100,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )
         gen.wallWithOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
+        logPiles.forEach { (it, texture) ->
+            gen.createLogPile(it, texture)
+        }
         leafPiles.forEach { (it, texture) ->
             gen.createLeafPile(it, texture)
         }
@@ -106,7 +110,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerFlowerbed(DuskBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DuskBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DuskBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
-        gen.registerFloorPlant(DuskBlocks.MOONBERRY_VINELET, Properties.AGE_2, 0, 1, 2)
+        gen.registerFloorCrop(DuskBlocks.MOONBERRY_VINELET, Properties.AGE_2, 0, 1, 2)
         gen.createMoonberryVine(DuskBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 

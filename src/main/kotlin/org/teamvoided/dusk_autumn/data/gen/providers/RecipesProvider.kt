@@ -15,8 +15,9 @@ import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
-import org.teamvoided.dusk_autumn.block.DuskBlockFamilies.allBlockFamilies
+import org.teamvoided.dusk_autumn.block.DuskBlockFamilies.recipesBlockFamilies
 import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
@@ -24,7 +25,7 @@ import java.util.concurrent.CompletableFuture
 
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
     override fun generateRecipes(e: RecipeExporter) {
-        allBlockFamilies.forEach { generateFamily(e, it, FeatureFlagBitSet.ofFlag(FeatureFlags.VANILLA)) }
+        recipesBlockFamilies.forEach { generateFamily(e, it, FeatureFlags.VANILLA_SET) }
         offerHangingSignRecipe(e, DuskItems.CASCADE_HANGING_SIGN, DuskBlocks.STRIPPED_CASCADE_LOG)
         ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, DuskBlocks.BLUE_DOOR, 3)
             .ingredient('#', Ingredient.ofItems(DuskBlocks.CASCADE_PLANKS.asItem()))
@@ -65,15 +66,15 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
             DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
             DuskBlocks.POLISHED_NETHER_BRICK_WALL,
-            DuskBlocks.NETHER_BRICK_PILLAR
+            listOf(DuskBlocks.NETHER_BRICK_PILLAR)
         )
         e.createStonecutted(
             listOf(Blocks.RED_NETHER_BRICKS, DuskBlocks.POLISHED_RED_NETHER_BRICKS),
-            DuskBlocks.POLISHED_NETHER_BRICKS,
+            DuskBlocks.POLISHED_RED_NETHER_BRICKS,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
-            DuskBlocks.RED_NETHER_BRICK_PILLAR
+            listOf(DuskBlocks.RED_NETHER_BRICK_PILLAR, DuskBlocks.CHISELED_RED_NETHER_BRICKS)
         )
         e.createStonecutted(
             DuskBlocks.MIXED_NETHER_BRICKS,
@@ -83,6 +84,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.MIXED_NETHER_BRICK_WALL,
             DuskBlocks.MIXED_NETHER_BRICK_PILLAR
         )
+        e.createOvergrown(DuskBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
+        e.createOvergrown(DuskBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
         e.createStonecutted(
             DuskBlocks.OVERGROWN_COBBLESTONE,
             null,
@@ -147,23 +150,17 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("XOX")
             .criterion("has_lantern", conditionsFromItem(smallLantern ?: torch))
             .offerTo(this)
-        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, Blocks.LANTERN)
-            .ingredient('#', Items.TORCH)
-            .ingredient('X', Items.IRON_NUGGET)
-            .pattern("XXX")
-            .pattern("X#X")
-            .pattern("XXX")
-            .criterion("has_iron_nugget", conditionsFromItem(Items.IRON_NUGGET))
-            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
-            .offerTo(this)
-        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, Blocks.SOUL_LANTERN)
-            .ingredient('#', Items.SOUL_TORCH).ingredient('X', Items.IRON_NUGGET).pattern("XXX").pattern("X#X")
-            .pattern("XXX").criterion(
-                "has_soul_torch", conditionsFromItem(
-                    Items.SOUL_TORCH
-                )
-            ).offerTo(this)
+    }
 
+    fun RecipeExporter.createOvergrown(
+        block: ItemConvertible,
+        stone: ItemConvertible
+    ) {
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block, 1)
+            .ingredient(Ingredient.ofItems(stone))
+            .ingredient(Ingredient.ofTag(ItemTags.LEAVES))
+            .criterion("has_stone", conditionsFromItem(stone))
+            .offerTo(this)
     }
 
     fun RecipeExporter.createStonecutted(
@@ -172,9 +169,16 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         stair: ItemConvertible?,
         slab: ItemConvertible?,
         wall: ItemConvertible?,
-        special: ItemConvertible?
+        extra: ItemConvertible?
     ) {
-        this.createStonecutted(listOf(input), polish, stair, slab, wall, special)
+        this.createStonecutted(listOf(input), polish, stair, slab, wall, null)
+        if (extra != null && extra != input)
+            createStonecuttingRecipe(
+                this,
+                RecipeCategory.BUILDING_BLOCKS,
+                extra,
+                input
+            )
     }
 
     fun RecipeExporter.createStonecutted(
@@ -183,21 +187,23 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         stair: ItemConvertible?,
         slab: ItemConvertible?,
         wall: ItemConvertible?,
-        special: ItemConvertible?
+        extra: List<ItemConvertible>?
     ) {
         input.forEach {
-            if (polish != null && polish != it)
+            if (polish != null && polish != input)
                 createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, polish, it)
             if (stair != null) createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, stair, it)
             if (slab != null) createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, slab, it, 2)
             if (wall != null) createStonecuttingRecipe(this, RecipeCategory.DECORATIONS, wall, it)
-            if (special != null)
-                createStonecuttingRecipe(
-                    this,
-                    RecipeCategory.BUILDING_BLOCKS,
-                    special,
-                    it
-                )
+            if (extra != null && extra != it)
+                extra.forEach { special ->
+                    createStonecuttingRecipe(
+                        this,
+                        RecipeCategory.BUILDING_BLOCKS,
+                        special,
+                        it
+                    )
+                }
         }
     }
 

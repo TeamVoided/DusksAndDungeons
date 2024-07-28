@@ -25,10 +25,9 @@ import kotlin.math.min
 
 
 @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
-open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
+open class LogPileBlock(settings: Settings) : Block(settings), Waterloggable {
     init {
         this.defaultState = stateManager.defaultState
-            .with(DISTANCE, 6)
             .with(HANGING, false)
             .with(PILE_LAYERS, 1)
             .with(WATERLOGGED, false)
@@ -42,37 +41,23 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
         } else false
     }
 
-
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
         val blockPos = ctx.blockPos
         val oldState = ctx.world.getBlockState(blockPos)
+        val fluidState = ctx.world.getFluidState(blockPos)
         if (oldState.isOf(this))
             return oldState.with(PILE_LAYERS, addLayer(oldState.get(PILE_LAYERS)))
-
-        val fluidState = ctx.world.getFluidState(blockPos)
-        val state = (defaultState.with(HANGING, false)).with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
+        val state = defaultState.with(HANGING, false).with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
         val direction = ctx.side
         if (direction != Direction.DOWN && (direction == Direction.UP || !(ctx.hitPos.y - blockPos.y.toDouble() > 0.5)))
             return state
-
         return state.with(HANGING, true)
-
     }
-
-    override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
-        return if (stateFrom.isOf(this) &&
-            state.get(HANGING) == stateFrom.get(HANGING) &&
-            state.get(PILE_LAYERS) < MAX_LAYERS &&
-            state.get(PILE_LAYERS) <= stateFrom.get(PILE_LAYERS)
-        ) true
-        else super.isSideInvisible(state, stateFrom, direction)
-    }
-
-   /* override fun canPathfindThrough(
-        state: BlockState, world: BlockView, pos: BlockPos, type: NavigationType
-    ): Boolean = true*/
 
     override fun getSidesShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape = VoxelShapes.empty()
+
+    override fun getCullingShape(state: BlockState?, world: BlockView?, pos: BlockPos?): VoxelShape =
+        VoxelShapes.empty()
 
     override fun getOutlineShape(
         state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
@@ -83,62 +68,21 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
             DEFAULT_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]
     }
 
-    override fun getCollisionShape(
-        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
-    ): VoxelShape = VoxelShapes.empty()
-
-
-    override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
-        world.setBlockState(pos, updateDistanceFromLogs(state, world, pos), NOTIFY_ALL)
-    }
-
-    override fun getOpacity(state: BlockState, world: BlockView, pos: BlockPos): Int = 1
-
     override fun getStateForNeighborUpdate(
         state: BlockState, direction: Direction, neighborState: BlockState,
         world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
         if (state.get(WATERLOGGED))
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
-
-        val i = getDistanceFromLog(neighborState) + 1
-        if (i != 1 || state.get(DISTANCE) as Int != i) {
-            world.scheduleBlockTick(pos, this, 1)
-        }
-
         return state
-    }
-
-    private fun updateDistanceFromLogs(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
-        var i = 7
-        val mutable = BlockPos.Mutable()
-
-        for (direction in Direction.entries) {
-            mutable[pos] = direction
-            i = min(i, (getDistanceFromLog(world.getBlockState(mutable)) + 1))
-            if (i == 1) break
-        }
-        return state.with(DISTANCE, i)
     }
 
     override fun getFluidState(state: BlockState): FluidState {
         return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
     }
 
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        if (world.hasRain(pos.up())) {
-            if (random.nextInt(15) == 1) {
-                val blockPos = pos.down()
-                val blockState = world.getBlockState(blockPos)
-                if (!blockState.isOpaque || !blockState.isSideSolidFullSquare(world, blockPos, Direction.UP)) {
-                    ParticleUtil.spawnParticle(world, pos, random, ParticleTypes.DRIPPING_WATER)
-                }
-            }
-        }
-    }
-
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(DISTANCE, HANGING, PILE_LAYERS, WATERLOGGED)
+        builder.add(HANGING, PILE_LAYERS, WATERLOGGED)
     }
 
 
@@ -147,7 +91,6 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
 
         val PILE_LAYERS: IntProperty = IntProperty.of("layers", 1, MAX_LAYERS)
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
-        val DISTANCE: IntProperty = Properties.DISTANCE_1_7
         val HANGING: BooleanProperty = Properties.HANGING
 
         val FULL_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
@@ -165,15 +108,6 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
             FULL_SHAPE,
         )
 
-
         fun addLayer(i: Int): Int = min(MAX_LAYERS, (i + 1))
-
-        private fun getDistanceFromLog(state: BlockState): Int = getOptionalDistanceFromLog(state).orElse(7)
-
-        private fun getOptionalDistanceFromLog(state: BlockState): OptionalInt {
-            return if (state.isIn(BlockTags.LOGS)) OptionalInt.of(0)
-            else if (state.contains(DISTANCE)) OptionalInt.of((state.get(DISTANCE)))
-            else OptionalInt.empty()
-        }
     }
 }

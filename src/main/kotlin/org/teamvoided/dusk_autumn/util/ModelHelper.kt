@@ -14,7 +14,6 @@ import net.minecraft.block.enums.WallShape
 import net.minecraft.data.client.model.*
 import net.minecraft.data.client.model.BlockStateModelGenerator.createAxisRotatedBlockState
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
-import net.minecraft.data.client.model.TexturedModel.makeFactory
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.state.property.Properties
 import net.minecraft.state.property.Property
@@ -22,6 +21,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
+import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.block.MoonberryVineBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import java.util.*
@@ -476,18 +476,18 @@ fun createWallBlockStateWithOverlay(
 }
 
 fun BlockStateModelGenerator.registerBigLantern(block: Block) {
-    this.excludeFromSimpleItemModelGeneration(block)
     this.registerItemModel(block)
     val texture = Texture()
+        .put(TextureKey.PARTICLE, Texture.getId(block))
         .put(TextureKey.SIDE, Texture.getId(block))
         .put(TextureKey.END, id("block/big_lantern_bottom"))
     val model = block(
-        "cube_column",
+        "parent/big_lantern",
+        TextureKey.PARTICLE,
         TextureKey.END,
         TextureKey.SIDE
     )
-    this.registerSingleton(block, makeFactory(Texture::sideEnd, model))
-    model.upload(block, texture, this.modelCollector)
+    this.registerSingleton(block, texture, model)
 }
 
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar() {
@@ -499,6 +499,61 @@ fun BlockStateModelGenerator.registerMixedNetherBrickPillar() {
     val identifier = Models.CUBE_BOTTOM_TOP.upload(pillar, texture, this.modelCollector)
     this.blockStateCollector.accept(createAxisRotatedBlockState(pillar, identifier))
 }
+
+fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
+    val layer1 = this.parentedLogPileModel(logPile.model("_1"), log, logPile("1"))
+    val layer2 = this.parentedLogPileModel(logPile.model("_2"), log, logPile("2"))
+    val layer3 = this.parentedLogPileModel(logPile.model("_3"), log, logPile("3"))
+    val hanging1 = this.parentedLogPileModel(logPile.model("_hanging_1"), log, logPileHanging("1"))
+    val hanging2 = this.parentedLogPileModel(logPile.model("_hanging_2"), log, logPileHanging("2"))
+    val hanging3 = this.parentedLogPileModel(logPile.model("_hanging_3"), log, logPileHanging("3"))
+    val full = this.parentedLogPileModel(logPile.model(), log, logPile())
+    this.registerParentedItemModel(logPile, layer1)
+    this.blockStateCollector.accept(
+        MultipartBlockStateSupplier.create(logPile)
+            .with(
+                When.create().set(LogPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, false),
+                BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
+            ).with(
+                When.create().set(LogPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, false),
+                BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
+            ).with(
+                When.create().set(LogPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, false),
+                BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
+            ).with(
+                When.create().set(LogPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, true),
+                BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
+            ).with(
+                When.create().set(LogPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, true),
+                BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
+            ).with(
+                When.create().set(LogPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, true),
+                BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
+            ).with(
+                When.create().set(LogPileBlock.PILE_LAYERS, 4),
+                BlockStateVariant.create().put(VariantSettings.MODEL, full)
+            )
+    )
+}
+
+fun BlockStateModelGenerator.parentedLogPileModel(
+    block: Identifier,
+    textBlock: Block,
+    parent: Identifier
+): Identifier =
+    Model(parent.myb, Optional.empty(), TextureKey.SIDE, TextureKey.END)
+        .upload(
+            block, Texture()
+                .put(TextureKey.SIDE, textBlock.model())
+                .put(TextureKey.END, textBlock.model("_top")),
+            this.modelCollector
+        )
+
+private fun logPile(num: String? = null): Identifier =
+    id("block/parent/log_pile${if (num != null) "_$num" else ""}")
+
+private fun logPileHanging(num: String? = null): Identifier =
+    id("block/parent/log_pile_hanging${if (num != null) "_$num" else ""}")
 
 fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
     val layer1 = this.parentedModel(leafPile, leaves, leafPile())
@@ -541,7 +596,7 @@ private fun leafPile(num: String? = null): Identifier =
 private fun leafPileHanging(num: String? = null): Identifier =
     id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
 
-fun BlockStateModelGenerator.registerFloorPlant(
+fun BlockStateModelGenerator.registerFloorCrop(
     crop: Block,
     ageProperty: Property<Int>,
     vararg ageTextureIndices: Int
@@ -556,11 +611,9 @@ fun BlockStateModelGenerator.registerFloorPlant(
                     this.createSubModel(
                         crop,
                         "_stage$i",
-                        Models.CARPET
+                        block("parent/floor_plant", TextureKey.TEXTURE)
                     ) { id: Identifier ->
-                        Texture.wool(
-                            id
-                        )
+                        Texture.of(TextureKey.TEXTURE, id)
                     }
                 })
         )
@@ -580,16 +633,16 @@ fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
         .set(AbstractLichenBlock.getProperty(Direction.UP), false)
     val model = MultipartBlockStateSupplier.create(block)
     val directions = listOf(
-        (Direction.NORTH to VariantSettings.Rotation.R0),
-        (Direction.EAST to VariantSettings.Rotation.R90),
-        (Direction.SOUTH to VariantSettings.Rotation.R180),
-        (Direction.WEST to VariantSettings.Rotation.R270),
-        (Direction.DOWN to VariantSettings.Rotation.R90),
-        (Direction.UP to VariantSettings.Rotation.R270)
+        (Direction.NORTH to Rotation.R0),
+        (Direction.EAST to Rotation.R90),
+        (Direction.SOUTH to Rotation.R180),
+        (Direction.WEST to Rotation.R270),
+        (Direction.DOWN to Rotation.R90),
+        (Direction.UP to Rotation.R270)
     )
     var modelId: Identifier
-    var axis: VariantSetting<VariantSettings.Rotation>
-    var variantRotation: VariantSettings.Rotation
+    var axis: VariantSetting<Rotation>
+    var variantRotation: Rotation
 
     directions.forEach { (direction, rotation) ->
         axis = VariantSettings.Y
@@ -601,9 +654,9 @@ fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
                     modelId = id("block/parent/moonberry_vine_3")
                     variantRotation =
                         if (direction == Direction.DOWN) {
-                            VariantSettings.Rotation.R0
+                            Rotation.R0
                         } else {
-                            VariantSettings.Rotation.R180
+                            Rotation.R180
                         }
                 }
                 axis = VariantSettings.X
@@ -628,196 +681,6 @@ fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
         )
     }
     this.blockStateCollector.accept(model)
-//    this.blockStateCollector.accept(
-//        MultipartBlockStateSupplier.create(block)
-//            .with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
-//                    .set(MoonberryVineBlock.BERRIES, 0),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    )
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
-//                    .set(MoonberryVineBlock.BERRIES, 1),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries")
-//                    )
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.NORTH), true)
-//                    .set(MoonberryVineBlock.BERRIES, 2),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries_wall_extra")
-//                    )
-//            ).with(
-//                allDirectionFalse,
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    )
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
-//                    .set(MoonberryVineBlock.BERRIES, 0),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
-//                    .set(MoonberryVineBlock.BERRIES, 1),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.EAST), true)
-//                    .set(MoonberryVineBlock.BERRIES, 2),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries_wall_extra")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
-//            ).with(
-//                allDirectionFalse,
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R90)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
-//                    .set(MoonberryVineBlock.BERRIES, 0),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
-//                    .set(MoonberryVineBlock.BERRIES, 1),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.SOUTH), true)
-//                    .set(MoonberryVineBlock.BERRIES, 2),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries_wall_extra")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
-//            ).with(
-//                allDirectionFalse,
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R180)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
-//                    .set(MoonberryVineBlock.BERRIES, 0),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
-//                    .set(MoonberryVineBlock.BERRIES, 1),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.WEST), true)
-//                    .set(MoonberryVineBlock.BERRIES, 2),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries_wall_extra")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
-//            ).with(
-//                allDirectionFalse,
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.Y, VariantSettings.Rotation.R270)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
-//                    .set(MoonberryVineBlock.BERRIES, 0),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.X, VariantSettings.Rotation.R270)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
-//                    .set(MoonberryVineBlock.BERRIES, 1),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries")
-//                    ).put(VariantSettings.X, VariantSettings.Rotation.R270)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.UP), true)
-//                    .set(MoonberryVineBlock.BERRIES, 2),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries_floor_extra")
-//                    ).put(VariantSettings.X, VariantSettings.Rotation.R180)
-//            ).with(
-//                allDirectionFalse,
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.X, VariantSettings.Rotation.R90)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
-//                    .set(MoonberryVineBlock.BERRIES, 0),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.X, VariantSettings.Rotation.R90)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
-//                    .set(MoonberryVineBlock.BERRIES, 1),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries")
-//                    ).put(VariantSettings.X, VariantSettings.Rotation.R90)
-//            ).with(
-//                When.create().set(AbstractLichenBlock.getProperty(Direction.DOWN), true)
-//                    .set(MoonberryVineBlock.BERRIES, 2),
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine_berries_floor_extra")
-//                    )
-//            ).with(
-//                allDirectionFalse,
-//                BlockStateVariant.create()
-//                    .put(
-//                        VariantSettings.MODEL,
-//                        id("block/moonberry_vine")
-//                    ).put(VariantSettings.X, VariantSettings.Rotation.R90)
-//            )
-//    )
 }
 
 fun parentedItemModel(id: Identifier) = Model(Optional.of(id.withPrefix("item/")), Optional.empty())

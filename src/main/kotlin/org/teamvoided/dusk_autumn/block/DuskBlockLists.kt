@@ -4,6 +4,9 @@ import net.minecraft.block.Blocks
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 object DuskBlockLists {
+    val logPiles = listOf(
+        (DuskBlocks.OAK_LOG_PILE to Blocks.OAK_LOG)
+    )
     val leafPiles = listOf(
         (DuskBlocks.OAK_LEAF_PILE to Blocks.OAK_LEAVES),
         (DuskBlocks.SPRUCE_LEAF_PILE to Blocks.SPRUCE_LEAVES),

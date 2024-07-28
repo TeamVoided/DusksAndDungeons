@@ -4,12 +4,14 @@ import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.block.*
-import net.minecraft.block.AbstractBlock.*
+import net.minecraft.block.AbstractBlock.OffsetType
+import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.variantOf
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
+import net.minecraft.entity.EntityType
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
@@ -19,6 +21,8 @@ import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Color
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.BlockView
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_BLOCK_SET_TYPE
@@ -35,9 +39,9 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
 object DuskBlocks {
     val leafPileSettings = Settings.create()
-        .strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).lavaIgnitable()
-        .pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid).noCollision().nonSolid()
-        .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.PLANT)
+        .mapColor(MapColor.PLANT).strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).lavaIgnitable()
+        .solidBlock(Blocks::nonSolid).noCollision().nonSolid()
+        .sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY)
 
     val BLUE_PETALS = register(
         "blue_petals", PinkPetalsBlock(
@@ -209,6 +213,8 @@ object DuskBlocks {
     val POTTED_GOLDEN_BIRCH_SAPLING =
         registerNoItem("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING))
 
+    //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
+    val OAK_LOG_PILE = register("oak_log_pile", LogPileBlock(variantOf(OAK_WOOD)))
     val OAK_LEAF_PILE = register("oak_leaf_pile", LeafPileBlock(leafPileSettings))
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", LeafPileBlock(leafPileSettings))
     val BIRCH_LEAF_PILE = register("birch_leaf_pile", LeafPileBlock(leafPileSettings))
@@ -265,34 +271,32 @@ object DuskBlocks {
         SoundEvents.BLOCK_LANTERN_FALL
     );
     val BIG_LANTERN = register(
-        "big_lantern", LanternBlock(
+        "big_lantern", BigLanternBlock(
             variantOf(LANTERN).sounds(bigLanternSound)
         )
     )
     val BIG_SOUL_LANTERN = register(
-        "big_soul_lantern",
-        LanternBlock(
+        "big_soul_lantern", BigLanternBlock(
             variantOf(SOUL_LANTERN).sounds(bigLanternSound)
         )
     )
     val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)))
-    val MIXED_NETHER_BRICK_STAIRS = register("mixed_nether_brick_stairs", legacyStairsOf(MIXED_NETHER_BRICKS))
+    val MIXED_NETHER_BRICK_STAIRS = register("mixed_nether_brick_stairs", legacyStairsOf(NETHER_BRICK_STAIRS))
     val MIXED_NETHER_BRICK_SLAB = register("mixed_nether_brick_slab", SlabBlock(variantOf(NETHER_BRICK_SLAB)))
     val MIXED_NETHER_BRICK_WALL = register("mixed_nether_brick_wall", WallBlock(variantOf(NETHER_BRICK_WALL)))
+    val MIXED_NETHER_BRICK_FENCE = register("mixed_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)))
     val MIXED_NETHER_BRICK_PILLAR = register("mixed_nether_brick_pillar", PillarBlock(variantOf(MIXED_NETHER_BRICKS)))
+    val RED_NETHER_BRICK_FENCE = register("red_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)))
     val CHISELED_RED_NETHER_BRICKS = register("chiseled_red_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)))
     val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(variantOf(NETHER_BRICKS)))
     val POLISHED_NETHER_BRICKS = register("polished_nether_bricks", Block(variantOf(NETHER_BRICKS)))
-    val POLISHED_NETHER_BRICK_STAIRS =
-        register("polished_nether_brick_stairs", legacyStairsOf(POLISHED_NETHER_BRICKS))
-    val POLISHED_NETHER_BRICK_SLAB =
-        register("polished_nether_brick_slab", SlabBlock(variantOf(NETHER_BRICK_SLAB)))
-    val POLISHED_NETHER_BRICK_WALL =
-        register("polished_nether_brick_wall", WallBlock(variantOf(NETHER_BRICK_WALL)))
+    val POLISHED_NETHER_BRICK_STAIRS = register("polished_nether_brick_stairs", legacyStairsOf(NETHER_BRICK_STAIRS))
+    val POLISHED_NETHER_BRICK_SLAB = register("polished_nether_brick_slab", SlabBlock(variantOf(NETHER_BRICK_SLAB)))
+    val POLISHED_NETHER_BRICK_WALL = register("polished_nether_brick_wall", WallBlock(variantOf(NETHER_BRICK_WALL)))
     val RED_NETHER_BRICK_PILLAR = register("red_nether_brick_pillar", PillarBlock(variantOf(RED_NETHER_BRICKS)))
     val POLISHED_RED_NETHER_BRICKS = register("polished_red_nether_bricks", Block(variantOf(RED_NETHER_BRICKS)))
     val POLISHED_RED_NETHER_BRICK_STAIRS =
-        register("polished_red_nether_brick_stairs", legacyStairsOf(POLISHED_RED_NETHER_BRICKS))
+        register("polished_red_nether_brick_stairs", legacyStairsOf(RED_NETHER_BRICK_STAIRS))
     val POLISHED_RED_NETHER_BRICK_SLAB =
         register("polished_red_nether_brick_slab", SlabBlock(variantOf(RED_NETHER_BRICK_SLAB)))
     val POLISHED_RED_NETHER_BRICK_WALL =
