@@ -58,7 +58,7 @@ open class LogPileBlock(settings: Settings) : TwoWayRotationalBlock(settings), W
     }
 
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
-        return if (stateFrom.isOf(this) &&
+        return if (stateFrom.block is LogPileBlock &&
             state.get(HANGING) == stateFrom.get(HANGING) &&
             state.get(PILE_LAYERS) <= stateFrom.get(PILE_LAYERS) &&
             state.get(AXIS) == stateFrom.get(AXIS)

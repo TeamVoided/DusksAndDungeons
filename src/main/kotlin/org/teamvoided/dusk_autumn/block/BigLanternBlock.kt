@@ -1,10 +1,10 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-package net.minecraft.block
+package org.teamvoided.dusk_autumn.block
 
 import com.mojang.serialization.MapCodec
+import net.minecraft.block.Block
+import net.minecraft.block.BlockState
+import net.minecraft.block.ShapeContext
+import net.minecraft.block.Waterloggable
 import net.minecraft.entity.ai.pathing.NavigationType
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
@@ -18,6 +18,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
+import net.minecraft.world.WorldView
 
 class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable {
     public override fun getCodec(): MapCodec<BigLanternBlock> {
@@ -27,6 +28,11 @@ class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable {
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
         val fluidState = ctx.world.getFluidState(ctx.blockPos)
         return defaultState.with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
+    }
+
+    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
+        return sideCoversSmallSquare(world, pos.offset(Direction.DOWN), Direction.UP) ||
+                sideCoversSmallSquare(world, pos.offset(Direction.UP), Direction.DOWN)
     }
 
     override fun getOutlineShape(

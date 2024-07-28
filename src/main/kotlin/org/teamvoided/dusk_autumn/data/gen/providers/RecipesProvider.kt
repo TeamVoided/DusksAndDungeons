@@ -18,6 +18,8 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import org.teamvoided.dusk_autumn.block.DuskBlockFamilies.recipesBlockFamilies
+import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
+import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
 import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
@@ -114,18 +116,9 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Blocks.HANGING_ROOTS, 4)
             .ingredient(DuskBlocks.ROOT_BLOCK, 1)
             .criterion("has_root_block", conditionsFromItem(DuskBlocks.ROOT_BLOCK)).offerTo(e)
-        e.createLeafPiles(DuskBlocks.OAK_LEAF_PILE, Items.OAK_LEAVES)
-        e.createLeafPiles(DuskBlocks.SPRUCE_LEAF_PILE, Items.SPRUCE_LEAVES)
-        e.createLeafPiles(DuskBlocks.BIRCH_LEAF_PILE, Items.BIRCH_LEAVES)
-        e.createLeafPiles(DuskBlocks.JUNGLE_LEAF_PILE, Items.JUNGLE_LEAVES)
-        e.createLeafPiles(DuskBlocks.ACACIA_LEAF_PILE, Items.ACACIA_LEAVES)
-        e.createLeafPiles(DuskBlocks.DARK_OAK_LEAF_PILE, Items.DARK_OAK_LEAVES)
-        e.createLeafPiles(DuskBlocks.MANGROVE_LEAF_PILE, Items.MANGROVE_LEAVES)
-        e.createLeafPiles(DuskBlocks.AZALEA_LEAF_PILE, Items.AZALEA_LEAVES)
-        e.createLeafPiles(DuskBlocks.FLOWERING_AZALEA_LEAF_PILE, Items.FLOWERING_AZALEA_LEAVES)
-        e.createLeafPiles(DuskBlocks.CHERRY_LEAF_PILE, Items.CHERRY_LEAVES)
-        e.createLeafPiles(DuskBlocks.CASCADE_LEAF_PILE, DuskBlocks.CASCADE_LEAVES.asItem())
-        e.createLeafPiles(DuskBlocks.GOLDEN_BIRCH_LEAF_PILE, DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem())
+        (leafPiles + logPiles).forEach { (pile, block) ->
+            e.createPiles(pile, block)
+        }
         ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DuskItems.FARMERS_HAT, 1)
             .ingredient('#', Ingredient.ofItems(Items.WHEAT))
             .ingredient('@', Ingredient.ofItems(Items.STRING))
@@ -147,6 +140,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         torch: ItemConvertible,
         smallLantern: ItemConvertible?
     ) {
+        val criteriaItem = smallLantern ?: torch
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block, 1)
             .ingredient('#', Ingredient.ofItems(torch))
             .ingredient('O', Ingredient.ofItems(Items.IRON_INGOT))
@@ -154,7 +148,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("XOX")
             .pattern("O#O")
             .pattern("XOX")
-            .criterion("has_lantern", conditionsFromItem(smallLantern ?: torch))
+            .criterion(hasItem(criteriaItem), conditionsFromItem(criteriaItem))
             .offerTo(this)
     }
 
@@ -165,7 +159,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         CookingRecipeJsonFactory.createSmelting(
             Ingredient.ofItems(input),
             RecipeCategory.BUILDING_BLOCKS, output.asItem(), 0.1f, 200
-        ).criterion("has_nether_bricks", conditionsFromItem(input)).offerTo(this)
+        ).criterion(hasItem(input), conditionsFromItem(input)).offerTo(this)
     }
 
     fun RecipeExporter.createOvergrown(
@@ -175,7 +169,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block, 1)
             .ingredient(Ingredient.ofItems(stone))
             .ingredient(Ingredient.ofTag(ItemTags.LEAVES))
-            .criterion("has_stone", conditionsFromItem(stone))
+            .criterion(hasItem(stone), conditionsFromItem(stone))
             .offerTo(this)
     }
 
@@ -236,7 +230,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .ingredient('#', block)
             .pattern("#")
             .pattern("#")
-            .criterion("has_item", conditionsFromItem(block))
+            .criterion(hasItem(block), conditionsFromItem(block))
             .offerTo(this)
     }
 
@@ -246,17 +240,16 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .ingredient('+', item)
             .pattern("#+#")
             .pattern("#+#")
-            .criterion("has_fence_requirement", conditionsFromItem(item)).offerTo(this)
-        println("has_" + item.asItem())
+            .criterion(hasItem(item), conditionsFromItem(item)).offerTo(this)
     }
 
     fun RecipeExporter.createCobblestoned(output: ItemConvertible, convert: ItemConvertible, cobble: ItemConvertible) {
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
             .ingredient(convert, 2).ingredient(cobble, 2)
-            .criterion("has_cobble", conditionsFromItem(cobble)).offerTo(this)
+            .criterion(hasItem(cobble), conditionsFromItem(cobble)).offerTo(this)
     }
 
-    fun RecipeExporter.createLeafPiles(output: ItemConvertible, input: ItemConvertible) {
+    fun RecipeExporter.createPiles(output: ItemConvertible, input: ItemConvertible) {
         ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 8)
             .ingredient('#', Ingredient.ofItems(input))
             .pattern("##")
