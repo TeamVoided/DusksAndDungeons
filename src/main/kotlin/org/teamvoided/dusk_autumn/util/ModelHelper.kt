@@ -501,68 +501,75 @@ fun BlockStateModelGenerator.registerMixedNetherBrickPillar() {
 }
 
 fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
-    val layer1 = this.parentedLogPileModel(logPile.model("_1"), log, logPile("1"))
-    val layer2 = this.parentedLogPileModel(logPile.model("_2"), log, logPile("2"))
-    val layer3 = this.parentedLogPileModel(logPile.model("_3"), log, logPile("3"))
-    val hanging1 = this.parentedLogPileModel(logPile.model("_hanging_1"), log, logPileHanging("1"))
-    val hanging2 = this.parentedLogPileModel(logPile.model("_hanging_2"), log, logPileHanging("2"))
-    val hanging3 = this.parentedLogPileModel(logPile.model("_hanging_3"), log, logPileHanging("3"))
-    val full = this.parentedLogPileModel(logPile.model(), log, logPile())
+    val layer1 = this.parentedLogPileModel(logPile, log, "_1")
+    val layer2 = this.parentedLogPileModel(logPile, log, "_2")
+    val layer3 = this.parentedLogPileModel(logPile, log, "_3")
+    val hanging1 = this.parentedLogPileModel(logPile, log, "_hanging_1")
+    val hanging2 = this.parentedLogPileModel(logPile, log, "_hanging_2")
+    val hanging3 = this.parentedLogPileModel(logPile, log, "_hanging_3")
+    val full = this.parentedLogPileModel(logPile, log)
     this.registerParentedItemModel(logPile, layer1)
     this.blockStateCollector.accept(
-        MultipartBlockStateSupplier.create(logPile)
-            .with(
-                When.create().set(LogPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, false),
-                BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
-            ).with(
-                When.create().set(LogPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, false),
-                BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
-            ).with(
-                When.create().set(LogPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, false),
-                BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
-            ).with(
-                When.create().set(LogPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, true),
-                BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
-            ).with(
-                When.create().set(LogPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, true),
-                BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
-            ).with(
-                When.create().set(LogPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, true),
-                BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
-            ).with(
-                When.create().set(LogPileBlock.PILE_LAYERS, 4),
-                BlockStateVariant.create().put(VariantSettings.MODEL, full)
-            )
+        VariantsBlockStateSupplier.create(logPile)
+            .coordinate(
+                BlockStateVariantMap.create(
+                    LogPileBlock.PILE_LAYERS,
+                    Properties.HANGING
+                ).register(
+                    1, false,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
+                ).register(
+                    2, false,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
+                ).register(
+                    3, false,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
+                ).register(
+                        1, true,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
+                ).register(
+                    2, true,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
+                ).register(
+                    3, true,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
+                ).register(
+                    4, false,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, full)
+                ).register(
+                    4, true,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, full)
+                )
+            ).coordinate(BlockStateVariantMap.create(Properties.HORIZONTAL_AXIS)
+                .register(Direction.Axis.X, BlockStateVariant.create())
+                .register(Direction.Axis.Z, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90)))
     )
 }
 
 fun BlockStateModelGenerator.parentedLogPileModel(
-    block: Identifier,
+    block: Block,
     textBlock: Block,
-    parent: Identifier
-): Identifier =
-    Model(parent.myb, Optional.empty(), TextureKey.SIDE, TextureKey.END)
+    parent: String = ""
+): Identifier {
+    val pileModel = id("block/parent/log_pile")
+    return Model(pileModel.suffix(parent).myb, Optional.empty(), TextureKey.SIDE, TextureKey.END)
         .upload(
-            block, Texture()
+            block.model(parent), Texture()
                 .put(TextureKey.SIDE, textBlock.model())
                 .put(TextureKey.END, textBlock.model("_top")),
             this.modelCollector
         )
-
-private fun logPile(num: String? = null): Identifier =
-    id("block/parent/log_pile${if (num != null) "_$num" else ""}")
-
-private fun logPileHanging(num: String? = null): Identifier =
-    id("block/parent/log_pile_hanging${if (num != null) "_$num" else ""}")
+}
 
 fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
-    val layer1 = this.parentedModel(leafPile, leaves, leafPile())
-    val layer2 = this.parentedModel(leafPile.model("_8"), leaves, leafPile("8"))
-    val layer3 = this.parentedModel(leafPile.model("_12"), leaves, leafPile("12"))
-    val hanging1 = this.parentedModel(leafPile.model("_hanging"), leaves, leafPileHanging())
-    val hanging2 = this.parentedModel(leafPile.model("_hanging_8"), leaves, leafPileHanging("8"))
-    val hanging3 = this.parentedModel(leafPile.model("_hanging_12"), leaves, leafPileHanging("12"))
-    val full = this.parentedModel(leafPile.model("_full"), leaves, leafPile("full"))
+    val pileModel = id("block/parent/leaf_pile")
+    val layer1 = this.parentedModel(leafPile, leaves, pileModel)
+    val layer2 = this.parentedModel(leafPile.model("_8"), leaves, pileModel.suffix("_8"))
+    val layer3 = this.parentedModel(leafPile.model("_12"), leaves, pileModel.suffix("_12"))
+    val hanging1 = this.parentedModel(leafPile.model("_hanging"), leaves, pileModel.suffix("_hanging"))
+    val hanging2 = this.parentedModel(leafPile.model("_hanging_8"), leaves, pileModel.suffix("_hanging_8"))
+    val hanging3 = this.parentedModel(leafPile.model("_hanging_12"), leaves, pileModel.suffix("_hanging_12"))
+    val full = this.parentedModel(leafPile.model("_full"), leaves, pileModel.suffix("_full"))
     this.blockStateCollector.accept(
         MultipartBlockStateSupplier.create(leafPile)
             .with(
@@ -590,11 +597,9 @@ fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
     )
 }
 
-private fun leafPile(num: String? = null): Identifier =
-    id("block/parent/leaf_pile${if (num != null) "_$num" else ""}")
-
-private fun leafPileHanging(num: String? = null): Identifier =
-    id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
+//for future reference since i still havent watched tutorials
+//private fun leafPileHanging(num: String? = null): Identifier =
+//    id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
 
 fun BlockStateModelGenerator.registerFloorCrop(
     crop: Block,

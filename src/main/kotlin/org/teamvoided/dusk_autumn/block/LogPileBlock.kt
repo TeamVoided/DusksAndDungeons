@@ -25,11 +25,12 @@ import kotlin.math.min
 
 
 @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
-open class LogPileBlock(settings: Settings) : Block(settings), Waterloggable {
+open class LogPileBlock(settings: Settings) : TwoWayRotationalBlock(settings), Waterloggable {
     init {
         this.defaultState = stateManager.defaultState
             .with(HANGING, false)
             .with(PILE_LAYERS, 1)
+            .with(AXIS, Direction.Axis.X)
             .with(WATERLOGGED, false)
     }
 
@@ -47,17 +48,23 @@ open class LogPileBlock(settings: Settings) : Block(settings), Waterloggable {
         val fluidState = ctx.world.getFluidState(blockPos)
         if (oldState.isOf(this))
             return oldState.with(PILE_LAYERS, addLayer(oldState.get(PILE_LAYERS)))
-        val state = defaultState.with(HANGING, false).with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
+        val state = super.getPlacementState(ctx)
+            .with(HANGING, false)
+            .with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
         val direction = ctx.side
         if (direction != Direction.DOWN && (direction == Direction.UP || !(ctx.hitPos.y - blockPos.y.toDouble() > 0.5)))
             return state
         return state.with(HANGING, true)
     }
 
-    override fun getSidesShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape = VoxelShapes.empty()
-
-    override fun getCullingShape(state: BlockState?, world: BlockView?, pos: BlockPos?): VoxelShape =
-        VoxelShapes.empty()
+    override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
+        return if (stateFrom.isOf(this) &&
+            state.get(HANGING) == stateFrom.get(HANGING) &&
+            state.get(PILE_LAYERS) <= stateFrom.get(PILE_LAYERS) &&
+            state.get(AXIS) == stateFrom.get(AXIS)
+        ) true
+        else super.isSideInvisible(state, stateFrom, direction)
+    }
 
     override fun getOutlineShape(
         state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
@@ -82,7 +89,7 @@ open class LogPileBlock(settings: Settings) : Block(settings), Waterloggable {
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(HANGING, PILE_LAYERS, WATERLOGGED)
+        builder.add(PILE_LAYERS, HANGING, AXIS, WATERLOGGED)
     }
 
 
@@ -90,8 +97,9 @@ open class LogPileBlock(settings: Settings) : Block(settings), Waterloggable {
         val MAX_LAYERS = 4
 
         val PILE_LAYERS: IntProperty = IntProperty.of("layers", 1, MAX_LAYERS)
-        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val HANGING: BooleanProperty = Properties.HANGING
+        val AXIS = Properties.HORIZONTAL_AXIS
+        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
 
         val FULL_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 

@@ -4,15 +4,14 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.block.Block
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.init.DuskBlocks
-import org.teamvoided.dusk_autumn.init.DuskItemGroups
 import org.teamvoided.dusk_autumn.init.DuskItemGroups.DUSK_AUTUMN_TAB
 import org.teamvoided.dusk_autumn.init.DuskItemGroups.getKey
 import org.teamvoided.dusk_autumn.init.DuskItems
+import org.teamvoided.dusk_autumn.item.DuskItemLists
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -33,16 +32,17 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
         DuskItems.WILD_WHEAT,
         DuskItems.GOLDEN_BEETROOT,
         DuskItems.BLUE_DOOR,
-    ) + DuskItemGroups.cascadeWood +
-            DuskItemGroups.cascadeSigns +
-            DuskItemGroups.netherBrickStuff +
-            DuskItemGroups.redNetherBrickStuff +
-            DuskItemGroups.mixedNetherBrickStuff +
-            DuskItemGroups.overgrownCobblestone +
-            DuskItemGroups.overgrownStoneBricks +
-            DuskItemGroups.leafPiles +
-            DuskItemGroups.moonberry+ 
-            DuskItemGroups.overlayBlocks
+    ) + DuskItemLists.cascadeWood +
+            DuskItemLists.cascadeSigns +
+            DuskItemLists.netherBrickStuff +
+            DuskItemLists.redNetherBrickStuff +
+            DuskItemLists.mixedNetherBrickStuff +
+            DuskItemLists.overgrownCobblestone +
+            DuskItemLists.overgrownStoneBricks +
+            DuskItemLists.logPiles +
+            DuskItemLists.leafPiles +
+            DuskItemLists.moonberry+
+            DuskItemLists.overlayBlocks
     val blocks = listOf(
         DuskBlocks.GOLDEN_BEETROOTS
     )

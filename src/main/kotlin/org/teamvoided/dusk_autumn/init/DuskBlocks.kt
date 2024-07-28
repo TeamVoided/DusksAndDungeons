@@ -11,7 +11,6 @@ import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
-import net.minecraft.entity.EntityType
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
@@ -21,8 +20,6 @@ import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Color
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.BlockView
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_BLOCK_SET_TYPE
@@ -39,7 +36,8 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
 object DuskBlocks {
     val leafPileSettings = Settings.create()
-        .mapColor(MapColor.PLANT).strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).lavaIgnitable()
+        .mapColor(MapColor.PLANT).strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid)
+        .lavaIgnitable()
         .solidBlock(Blocks::nonSolid).noCollision().nonSolid()
         .sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY)
 
@@ -71,13 +69,20 @@ object DuskBlocks {
         "cascade_log", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
     )
     val CASCADE_WOOD = register(
-        "cascade_wood", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD),
+        "cascade_wood", PillarBlock(
+            Settings.create().mapColor(MapColor.BROWN).instrument(NoteBlockInstrument.BASS).strength(2.0f)
+                .sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
+        )
     )
+
     val STRIPPED_CASCADE_LOG = register(
         "stripped_cascade_log", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
     )
     val STRIPPED_CASCADE_WOOD = register(
-        "stripped_cascade_wood", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
+        "stripped_cascade_wood", PillarBlock(
+            Settings.create().mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0f)
+                .sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
+        )
     )
     val CASCADE_PLANKS = register(
         "cascade_planks", Block(
@@ -148,9 +153,7 @@ object DuskBlocks {
                 .strength(0.5f).solid().lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-
     val CASCADE_BUTTON = register("cascade_button", buttonOf(CASCADE_BLOCK_SET_TYPE))
-
     val CASCADE_LEAVES = register(
         "cascade_leaves", FallingLeavesBlock(
             Settings.create().strength(0.2f).ticksRandomly()
@@ -214,7 +217,15 @@ object DuskBlocks {
         registerNoItem("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING))
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
-    val OAK_LOG_PILE = register("oak_log_pile", LogPileBlock(variantOf(OAK_WOOD)))
+    val OAK_LOG_PILE = register("oak_log_pile", LogPileBlock(variantOf(OAK_WOOD).nonOpaque()))
+    val SPRUCE_LOG_PILE = register("spruce_log_pile", LogPileBlock(variantOf(SPRUCE_WOOD).nonOpaque()))
+    val BIRCH_LOG_PILE = register("birch_log_pile", LogPileBlock(variantOf(BIRCH_WOOD).nonOpaque()))
+    val JUNGLE_LOG_PILE = register("jungle_log_pile", LogPileBlock(variantOf(JUNGLE_WOOD).nonOpaque()))
+    val ACACIA_LOG_PILE = register("acacia_log_pile", LogPileBlock(variantOf(ACACIA_WOOD).nonOpaque()))
+    val DARK_OAK_LOG_PILE = register("dark_oak_log_pile", LogPileBlock(variantOf(DARK_OAK_WOOD).nonOpaque()))
+    val MANGROVE_LOG_PILE = register("mangrove_log_pile", LogPileBlock(variantOf(MANGROVE_WOOD).nonOpaque()))
+    val CASCADE_LOG_PILE = register("cascade_log_pile", LogPileBlock(variantOf(CASCADE_WOOD).nonOpaque()))
+    val CHERRY_LOG_PILE = register("cherry_log_pile", LogPileBlock(variantOf(CHERRY_WOOD).nonOpaque()))
     val OAK_LEAF_PILE = register("oak_leaf_pile", LeafPileBlock(leafPileSettings))
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", LeafPileBlock(leafPileSettings))
     val BIRCH_LEAF_PILE = register("birch_leaf_pile", LeafPileBlock(leafPileSettings))

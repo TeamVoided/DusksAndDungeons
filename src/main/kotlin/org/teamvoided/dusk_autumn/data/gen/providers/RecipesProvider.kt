@@ -91,16 +91,14 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             null,
             DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
             DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
-            DuskBlocks.OVERGROWN_COBBLESTONE_WALL,
-            null
+            DuskBlocks.OVERGROWN_COBBLESTONE_WALL
         )
         e.createStonecutted(
             DuskBlocks.OVERGROWN_STONE_BRICKS,
             null,
             DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
             DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
-            DuskBlocks.OVERGROWN_STONE_BRICK_WALL,
-            null
+            DuskBlocks.OVERGROWN_STONE_BRICK_WALL
         )
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DuskBlocks.ROOT_BLOCK, 1)
             .ingredient(Blocks.HANGING_ROOTS, 4)
@@ -169,7 +167,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         stair: ItemConvertible?,
         slab: ItemConvertible?,
         wall: ItemConvertible?,
-        extra: ItemConvertible?
+        extra: ItemConvertible? = null
     ) {
         this.createStonecutted(listOf(input), polish, stair, slab, wall, null)
         if (extra != null && extra != input)
@@ -187,7 +185,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         stair: ItemConvertible?,
         slab: ItemConvertible?,
         wall: ItemConvertible?,
-        extra: List<ItemConvertible>?
+        extra: List<ItemConvertible>? = null
     ) {
         input.forEach {
             if (polish != null && polish != input)

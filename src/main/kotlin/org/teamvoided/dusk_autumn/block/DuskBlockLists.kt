@@ -5,7 +5,15 @@ import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 object DuskBlockLists {
     val logPiles = listOf(
-        (DuskBlocks.OAK_LOG_PILE to Blocks.OAK_LOG)
+        (DuskBlocks.OAK_LOG_PILE to Blocks.OAK_LOG),
+        (DuskBlocks.SPRUCE_LOG_PILE to Blocks.SPRUCE_LOG),
+        (DuskBlocks.BIRCH_LOG_PILE to Blocks.BIRCH_LOG),
+        (DuskBlocks.JUNGLE_LOG_PILE to Blocks.JUNGLE_LOG),
+        (DuskBlocks.ACACIA_LOG_PILE to Blocks.ACACIA_LOG),
+        (DuskBlocks.DARK_OAK_LOG_PILE to Blocks.DARK_OAK_LOG),
+        (DuskBlocks.MANGROVE_LOG_PILE to Blocks.MANGROVE_LOG),
+        (DuskBlocks.CHERRY_LOG_PILE to Blocks.CHERRY_LOG),
+        (DuskBlocks.CASCADE_LOG_PILE to DuskBlocks.CASCADE_LOG)
     )
     val leafPiles = listOf(
         (DuskBlocks.OAK_LEAF_PILE to Blocks.OAK_LEAVES),
