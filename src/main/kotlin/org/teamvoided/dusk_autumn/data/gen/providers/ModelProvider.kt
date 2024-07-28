@@ -66,7 +66,12 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
         gen.registerBigLantern(DuskBlocks.BIG_LANTERN)
         gen.registerBigLantern(DuskBlocks.BIG_SOUL_LANTERN)
+        gen.registerFence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
+        gen.registerSimpleCubeAll(DuskBlocks.CRACKED_RED_NETHER_BRICKS)
         gen.registerSimpleCubeAll(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
+        gen.registerFence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS)
+        gen.registerSimpleCubeAll(DuskBlocks.CRACKED_MIXED_NETHER_BRICKS)
+        gen.registerSimpleCubeAll(DuskBlocks.CHISELED_MIXED_NETHER_BRICKS)
         gen.registerMixedNetherBrickPillar()
         gen.registerAxisRotated(
             DuskBlocks.NETHER_BRICK_PILLAR,
@@ -114,7 +119,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.createMoonberryVine(DuskBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 
-        gen.registerSingleton(DuskBlocks.ROOT_BLOCK, TexturedModel.LEAVES)
+        gen.registerSingleton(DuskBlocks.ROOT_BLOCK, TexturedModel.CUBE_ALL_INNER_FACES)
 
         val stone = id("block/cobbled/stone_overlay")
         val deepslate = id("block/cobbled/deepslate_overlay")

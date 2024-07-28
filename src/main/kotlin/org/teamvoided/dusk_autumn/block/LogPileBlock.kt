@@ -54,7 +54,7 @@ open class LogPileBlock(settings: Settings) : TwoWayRotationalBlock(settings), W
         val direction = ctx.side
         if (direction != Direction.DOWN && (direction == Direction.UP || !(ctx.hitPos.y - blockPos.y.toDouble() > 0.5)))
             return state
-        return state.with(HANGING, true)
+        return InvertAxis(state.with(HANGING, true), getPlayerHorizontalFacingAxis(ctx))
     }
 
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {

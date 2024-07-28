@@ -63,5 +63,12 @@ open class TwoWayRotationalBlock(settings: Settings) : Block(settings) {
                 else -> state
             }
         }
+        fun InvertAxis(state: BlockState, axis: Direction.Axis?): BlockState {
+            return when (axis) {
+                Direction.Axis.Z -> state.with(AXIS, Direction.Axis.X)
+                Direction.Axis.X -> state.with(AXIS, Direction.Axis.Z)
+                else -> state
+            }
+        }
     }
 }

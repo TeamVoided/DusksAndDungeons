@@ -4,10 +4,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.data.server.recipe.CookingRecipeJsonFactory
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
-import net.minecraft.feature_flags.FeatureFlagBitSet
 import net.minecraft.feature_flags.FeatureFlags
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -49,14 +49,22 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT)).offerTo(e)
         e.createBigLantern(DuskBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DuskBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
+        e.smeltDefault(DuskBlocks.CRACKED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
+        e.createFence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS, Items.NETHER_BRICK)
         createChiseledBlockRecipe(
             RecipeCategory.BUILDING_BLOCKS,
             DuskBlocks.CHISELED_RED_NETHER_BRICKS,
             Ingredient.ofItems(Blocks.RED_NETHER_BRICK_SLAB)
         ).criterion("has_nether_bricks", conditionsFromItem(Blocks.RED_NETHER_BRICKS)).offerTo(e)
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DuskBlocks.MIXED_NETHER_BRICKS, 4)
-            .ingredient(Blocks.NETHER_BRICKS, 2)
-            .ingredient(Blocks.RED_NETHER_BRICKS, 2)
+            .ingredient(Blocks.NETHER_BRICKS, 2).ingredient(Blocks.RED_NETHER_BRICKS, 2)
+        e.smeltDefault(DuskBlocks.CRACKED_MIXED_NETHER_BRICKS, DuskBlocks.MIXED_NETHER_BRICKS)
+        e.createFence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS, Items.NETHER_BRICK)
+        createChiseledBlockRecipe(
+            RecipeCategory.BUILDING_BLOCKS,
+            DuskBlocks.CHISELED_MIXED_NETHER_BRICKS,
+            Ingredient.ofItems(DuskBlocks.MIXED_NETHER_BRICK_SLAB)
+        ).criterion("has_nether_bricks", conditionsFromItem(DuskBlocks.MIXED_NETHER_BRICKS)).offerTo(e)
         e.createStackedCraft(DuskBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
         e.createStackedCraft(DuskBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
         e.createStackedCraft(DuskBlocks.MIXED_NETHER_BRICK_PILLAR, DuskBlocks.MIXED_NETHER_BRICKS)
@@ -150,6 +158,16 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .offerTo(this)
     }
 
+    fun RecipeExporter.smeltDefault(
+        output: ItemConvertible,
+        input: ItemConvertible
+    ) {
+        CookingRecipeJsonFactory.createSmelting(
+            Ingredient.ofItems(input),
+            RecipeCategory.BUILDING_BLOCKS, output.asItem(), 0.1f, 200
+        ).criterion("has_nether_bricks", conditionsFromItem(input)).offerTo(this)
+    }
+
     fun RecipeExporter.createOvergrown(
         block: ItemConvertible,
         stone: ItemConvertible
@@ -211,7 +229,6 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("#")
             .pattern("#")
             .criterion("has_" + itemTag.id.path, conditionsFromTag(itemTag)).offerTo(this)
-        println("has_" + itemTag.id.path)
     }
 
     fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConvertible) {
@@ -221,6 +238,16 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("#")
             .criterion("has_item", conditionsFromItem(block))
             .offerTo(this)
+    }
+
+    fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+            .ingredient('#', block)
+            .ingredient('+', item)
+            .pattern("#+#")
+            .pattern("#+#")
+            .criterion("has_fence_requirement", conditionsFromItem(item)).offerTo(this)
+        println("has_" + item.asItem())
     }
 
     fun RecipeExporter.createCobblestoned(output: ItemConvertible, convert: ItemConvertible, cobble: ItemConvertible) {

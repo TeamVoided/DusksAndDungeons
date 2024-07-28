@@ -32,6 +32,7 @@ object DuskItemGroups {
                                 DuskBlocks.BIG_SOUL_LANTERN.asItem()
                             ) +
                             DuskItemLists.netherBrickStuff +
+                            listOf(DuskBlocks.CRACKED_RED_NETHER_BRICKS.asItem()) +
                             DuskItemLists.redNetherBrickStuff +
                             DuskItemLists.mixedNetherBrickStuff +
                             DuskItemLists.overgrownCobblestone +
@@ -65,6 +66,11 @@ object DuskItemGroups {
             DuskItemLists.overgrownStoneBricks
         )
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_NETHER_BRICKS, DuskItemLists.netherBrickStuff)
+        registerInVanillaTab(
+            ItemGroups.BUILDING_BLOCKS,
+            Items.RED_NETHER_BRICKS,
+            listOf(DuskBlocks.CRACKED_RED_NETHER_BRICKS.asItem())
+        )
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
             Items.RED_NETHER_BRICK_WALL,

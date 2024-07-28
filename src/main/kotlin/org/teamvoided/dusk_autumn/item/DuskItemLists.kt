@@ -30,14 +30,6 @@ object DuskItemLists {
         DuskBlocks.POLISHED_NETHER_BRICK_SLAB.asItem(),
         DuskBlocks.POLISHED_NETHER_BRICK_WALL.asItem(),
     )
-    val mixedNetherBrickStuff = listOf(
-        DuskBlocks.MIXED_NETHER_BRICKS.asItem(),
-        DuskBlocks.MIXED_NETHER_BRICK_STAIRS.asItem(),
-        DuskBlocks.MIXED_NETHER_BRICK_SLAB.asItem(),
-        DuskBlocks.MIXED_NETHER_BRICK_WALL.asItem(),
-        DuskBlocks.MIXED_NETHER_BRICK_FENCE.asItem(),
-        DuskBlocks.MIXED_NETHER_BRICK_PILLAR.asItem()
-    )
     val redNetherBrickStuff = listOf(
         DuskBlocks.RED_NETHER_BRICK_FENCE.asItem(),
         DuskBlocks.CHISELED_RED_NETHER_BRICKS.asItem(),
@@ -46,6 +38,16 @@ object DuskItemLists {
         DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS.asItem(),
         DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB.asItem(),
         DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL.asItem()
+    )
+    val mixedNetherBrickStuff = listOf(
+        DuskBlocks.MIXED_NETHER_BRICKS.asItem(),
+        DuskBlocks.CRACKED_MIXED_NETHER_BRICKS.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_WALL.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_FENCE.asItem(),
+        DuskBlocks.CHISELED_MIXED_NETHER_BRICKS.asItem(),
+        DuskBlocks.MIXED_NETHER_BRICK_PILLAR.asItem()
     )
     val overgrownCobblestone = listOf(
         DuskBlocks.OVERGROWN_COBBLESTONE.asItem(),

@@ -500,6 +500,16 @@ fun BlockStateModelGenerator.registerMixedNetherBrickPillar() {
     this.blockStateCollector.accept(createAxisRotatedBlockState(pillar, identifier))
 }
 
+//shamelessley stolen from voidUtils :)
+fun BlockStateModelGenerator.registerFence(fenceBlock: Block, reference: Block) {
+    val texture = Texture.texture(reference)
+    val id = Models.FENCE_POST.upload(fenceBlock, texture, this.modelCollector)
+    val id2 = Models.FENCE_SIDE.upload(fenceBlock, texture, this.modelCollector)
+    val id3 = Models.FENCE_INVENTORY.upload(fenceBlock, texture, this.modelCollector)
+    this.blockStateCollector.accept(BlockStateModelGenerator.createFenceBlockState(fenceBlock, id, id2))
+    this.registerParentedItemModel(fenceBlock, id3)
+}
+
 fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
     val layer1 = this.parentedLogPileModel(logPile, log, "_1")
     val layer2 = this.parentedLogPileModel(logPile, log, "_2")
