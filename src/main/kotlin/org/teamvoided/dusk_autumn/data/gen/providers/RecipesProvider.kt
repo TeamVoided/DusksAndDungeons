@@ -54,16 +54,15 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT)).offerTo(e)
         e.createBigLantern(DuskBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DuskBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
-        e.smeltDefault(DuskBlocks.CRACKED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
+        offerCrackingRecipe(e, DuskBlocks.CRACKED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
         e.createFence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS, Items.NETHER_BRICK)
         createChiseledBlockRecipe(
             RecipeCategory.BUILDING_BLOCKS,
             DuskBlocks.CHISELED_RED_NETHER_BRICKS,
             Ingredient.ofItems(Blocks.RED_NETHER_BRICK_SLAB)
         ).criterion("has_nether_bricks", conditionsFromItem(Blocks.RED_NETHER_BRICKS)).offerTo(e)
-        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DuskBlocks.MIXED_NETHER_BRICKS, 4)
-            .ingredient(Blocks.NETHER_BRICKS, 2).ingredient(Blocks.RED_NETHER_BRICKS, 2)
-        e.smeltDefault(DuskBlocks.CRACKED_MIXED_NETHER_BRICKS, DuskBlocks.MIXED_NETHER_BRICKS)
+        e.createDiagonalRecipe(DuskBlocks.MIXED_NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
+        offerCrackingRecipe(e, DuskBlocks.CRACKED_MIXED_NETHER_BRICKS, DuskBlocks.MIXED_NETHER_BRICKS)
         e.createFence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS, Items.NETHER_BRICK)
         createChiseledBlockRecipe(
             RecipeCategory.BUILDING_BLOCKS,
@@ -234,8 +233,11 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             if (stair != null) createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, stair, it)
             if (slab != null) createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, slab, it, 2)
             if (wall != null) createStonecuttingRecipe(this, RecipeCategory.DECORATIONS, wall, it)
-            if (extra != null && extra != it)
-                extra.forEach { special ->
+            extra?.forEach { special ->
+                println(special.asItem().name.string)
+                println(it.asItem().name.string)
+                println(special.asItem().name.string != it.asItem().name.string)
+                if (special.asItem().name.string != it.asItem().name.string) {
                     createStonecuttingRecipe(
                         this,
                         RecipeCategory.BUILDING_BLOCKS,
@@ -243,6 +245,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
                         it
                     )
                 }
+            }
         }
     }
 
@@ -272,10 +275,17 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .criterion(hasItem(item), conditionsFromItem(item)).offerTo(this)
     }
 
-    fun RecipeExporter.createCobblestoned(output: ItemConvertible, convert: ItemConvertible, cobble: ItemConvertible) {
-        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
-            .ingredient(convert, 2).ingredient(cobble, 2)
-            .criterion(hasItem(cobble), conditionsFromItem(cobble)).offerTo(this)
+    fun RecipeExporter.createDiagonalRecipe(
+        output: ItemConvertible,
+        primary: ItemConvertible,
+        secondary: ItemConvertible
+    ) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+            .ingredient('#', primary)
+            .ingredient('R', secondary)
+            .pattern("#R")
+            .pattern("R#")
+            .criterion(hasItem(primary), conditionsFromItem(primary)).offerTo(this)
     }
 
     fun RecipeExporter.createPiles(output: ItemConvertible, input: ItemConvertible) {
@@ -287,43 +297,43 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
 
     fun RecipeExporter.cobbled() {
         var cobble = Blocks.COBBLESTONE
-        this.createCobblestoned(DuskBlocks.ROCKY_GRASS, Blocks.GRASS_BLOCK, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_PODZOL, Blocks.PODZOL, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_DIRT, Blocks.DIRT, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_MUD, Blocks.MUD, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_SNOW, Blocks.SNOW_BLOCK, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_SAND, Blocks.SAND, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, cobble)
-        this.createCobblestoned(DuskBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_GRASS, Blocks.GRASS_BLOCK, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_PODZOL, Blocks.PODZOL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_DIRT, Blocks.DIRT, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_MUD, Blocks.MUD, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_SNOW, Blocks.SNOW_BLOCK, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_SAND, Blocks.SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, cobble)
         cobble = Blocks.COBBLED_DEEPSLATE
-        this.createCobblestoned(DuskBlocks.SLATED_GRASS, Blocks.GRASS_BLOCK, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_PODZOL, Blocks.PODZOL, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_MYCELIUM, Blocks.MYCELIUM, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_DIRT, Blocks.DIRT, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_MUD, Blocks.MUD, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_SNOW, Blocks.SNOW_BLOCK, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_GRAVEL, Blocks.GRAVEL, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_SAND, Blocks.SAND, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_RED_SAND, Blocks.RED_SAND, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, cobble)
-        this.createCobblestoned(DuskBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_GRASS, Blocks.GRASS_BLOCK, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_PODZOL, Blocks.PODZOL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_MYCELIUM, Blocks.MYCELIUM, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_DIRT, Blocks.DIRT, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_MUD, Blocks.MUD, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_SNOW, Blocks.SNOW_BLOCK, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_GRAVEL, Blocks.GRAVEL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_SAND, Blocks.SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_RED_SAND, Blocks.RED_SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, cobble)
         cobble = Blocks.BLACKSTONE
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_GRASS, Blocks.GRASS_BLOCK, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_MYCELIUM, Blocks.MYCELIUM, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_DIRT, Blocks.DIRT, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_MUD, Blocks.MUD, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_SNOW, Blocks.SNOW_BLOCK, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_SAND, Blocks.SAND, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, cobble)
-        this.createCobblestoned(DuskBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_GRASS, Blocks.GRASS_BLOCK, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_MYCELIUM, Blocks.MYCELIUM, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_DIRT, Blocks.DIRT, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_MUD, Blocks.MUD, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_SNOW, Blocks.SNOW_BLOCK, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_SAND, Blocks.SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, cobble)
+        this.createDiagonalRecipe(DuskBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, cobble)
     }
 }

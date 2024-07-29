@@ -1,7 +1,5 @@
 package org.teamvoided.dusk_autumn.init
 
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents.ModifyEntries
 import net.minecraft.block.Block
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.DyedColorComponent
@@ -17,6 +15,8 @@ import org.teamvoided.dusk_autumn.item.FarmersHatItem
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object DuskItems {
+    val ITEMS = mutableListOf<Item>()
+
     val CASCADE_DOOR = register("cascade_door", TallBlockItem(DuskBlocks.CASCADE_DOOR, Item.Settings()))
     val BLUE_DOOR = register("blue_door", TallBlockItem(DuskBlocks.BLUE_DOOR, Item.Settings()))
     val CASCADE_SIGN = register(
@@ -117,7 +117,11 @@ object DuskItems {
 
     fun init() {}
 
-    fun register(id: String, item: Item): Item = Registry.register(Registries.ITEM, id(id), item)
+    fun register(id: String, item: Item): Item {
+        val regItem = Registry.register(Registries.ITEM, id(id), item)
+        ITEMS.add(regItem)
+        return regItem
+    }
 
     fun BlockItem(block: Block) = BlockItem(block, Item.Settings())
     private fun createRegistryKey(name: String): RegistryKey<ItemGroup> {

@@ -25,33 +25,6 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
         DuskItemTags.LEAF_PILES,
         DuskItemTags.NETHER_BRICKS
     )
-    val items = listOf(
-        DuskBlocks.BLUE_PETALS.asItem(),
-        DuskBlocks.CASCADE_SAPLING.asItem(),
-        DuskBlocks.CASCADE_LEAVES.asItem(),
-        DuskBlocks.GOLDEN_BIRCH_SAPLING.asItem(),
-        DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem(),
-        DuskBlocks.BIG_CHAIN.asItem(),
-        DuskBlocks.BIG_LANTERN.asItem(),
-        DuskBlocks.BIG_SOUL_LANTERN.asItem(),
-        DuskBlocks.ROOT_BLOCK.asItem(),
-        DuskItems.FARMERS_HAT,
-        DuskItems.WILD_WHEAT,
-        DuskItems.GOLDEN_BEETROOT,
-        DuskItems.BLUE_DOOR,
-    ) + DuskItemLists.cascadeWood +
-            DuskItemLists.cascadeSigns +
-//            DuskItemLists.pineWood +
-            DuskItemLists.netherBrickStuff +
-            DuskItemLists.redNetherBrickStuff +
-            DuskItemLists.mixedNetherBrickStuff +
-            DuskItemLists.blackstoneTools +
-            DuskItemLists.overgrownCobblestone +
-            DuskItemLists.overgrownStoneBricks +
-            DuskItemLists.logPiles +
-            DuskItemLists.leafPiles +
-            DuskItemLists.moonberry +
-            DuskItemLists.overlayBlocks
     val blocks = listOf(
         DuskBlocks.GOLDEN_BEETROOTS
     )
@@ -59,7 +32,7 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         getKey(DUSK_AUTUMN_TAB)?.let { gen.add(it, "Dusk Items") }
         itemTags.forEach { gen.add(it.translationKey, genLang(it.id)) }
-        items.forEach { gen.add(it.translationKey, genLang(it.id)) }
+        DuskItems.ITEMS.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }
     }
 
