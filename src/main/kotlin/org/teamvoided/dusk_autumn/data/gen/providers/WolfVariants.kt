@@ -13,8 +13,6 @@ import org.teamvoided.dusk_autumn.data.tags.DuskBiomeTags
 
 object WolfVariants {
     fun bootstrap(c: BootstrapContext<WolfVariant>) {
-
-        println("wolf autumn")
         c.registerWolfVariant(DuskWolfVariants.AUTUMN, "wolf_autumn", DuskBiomeTags.SPAWNS_AUTUMN_WOLVES)
     }
 

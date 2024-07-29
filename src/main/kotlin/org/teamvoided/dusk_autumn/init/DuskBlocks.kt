@@ -217,39 +217,39 @@ object DuskBlocks {
     val POTTED_GOLDEN_BIRCH_SAPLING =
         registerNoItem("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING))
 
-    val PINE_PLANKS = register(
-        "pine_planks", Block(
-            Settings.create()
-                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
-                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
-        )
-    )
-    val PINE_STAIRS = register(
-        "pine_stairs", legacyStairsOf(PINE_PLANKS)
-    )
-    val PINE_SLAB = register(
-        "pine_slab",
-        SlabBlock(
-            variantOf(PINE_PLANKS)
-        )
-    )
-    val PINE_FENCE = register(
-        "pine_fence",
-        FenceBlock(
-            Settings.create()
-                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).solid().lavaIgnitable()
-        )
-    )
-    val PINE_FENCE_GATE = register(
-        "pine_fence_gate",
-        FenceGateBlock(
-            PINE_WOOD_TYPE,
-            Settings.create()
-                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0f, 3.0f).solid().lavaIgnitable()
-        )
-    )
+//    val PINE_PLANKS = register(
+//        "pine_planks", Block(
+//            Settings.create()
+//                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
+//                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
+//        )
+//    )
+//    val PINE_STAIRS = register(
+//        "pine_stairs", legacyStairsOf(PINE_PLANKS)
+//    )
+//    val PINE_SLAB = register(
+//        "pine_slab",
+//        SlabBlock(
+//            variantOf(PINE_PLANKS)
+//        )
+//    )
+//    val PINE_FENCE = register(
+//        "pine_fence",
+//        FenceBlock(
+//            Settings.create()
+//                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+//                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).solid().lavaIgnitable()
+//        )
+//    )
+//    val PINE_FENCE_GATE = register(
+//        "pine_fence_gate",
+//        FenceGateBlock(
+//            PINE_WOOD_TYPE,
+//            Settings.create()
+//                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+//                .strength(2.0f, 3.0f).solid().lavaIgnitable()
+//        )
+//    )
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
     val OAK_LOG_PILE = register("oak_log_pile", LogPileBlock(variantOf(OAK_WOOD).nonOpaque()))
@@ -315,7 +315,7 @@ object DuskBlocks {
         SoundEvents.BLOCK_LANTERN_PLACE,
         SoundEvents.BLOCK_LANTERN_HIT,
         SoundEvents.BLOCK_LANTERN_FALL
-    );
+    )
     val BIG_LANTERN = register(
         "big_lantern", BigLanternBlock(
             variantOf(LANTERN).sounds(bigLanternSound)

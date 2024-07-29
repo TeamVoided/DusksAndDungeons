@@ -29,6 +29,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
     override fun generateRecipes(e: RecipeExporter) {
         recipesBlockFamilies.forEach { generateFamily(e, it, FeatureFlags.VANILLA_SET) }
         offerPlanksRecipe(e, DuskBlocks.CASCADE_PLANKS, DuskItemTags.CASCADE_LOGS, 4)
+        offerBarkBlockRecipe(e, DuskBlocks.CASCADE_WOOD, DuskBlocks.CASCADE_LOG)
+        offerBarkBlockRecipe(e, DuskBlocks.STRIPPED_CASCADE_WOOD, DuskBlocks.STRIPPED_CASCADE_LOG)
         offerHangingSignRecipe(e, DuskItems.CASCADE_HANGING_SIGN, DuskBlocks.STRIPPED_CASCADE_LOG)
         ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, DuskBlocks.BLUE_DOOR, 3)
             .ingredient('#', Ingredient.ofItems(DuskBlocks.CASCADE_PLANKS.asItem()))
@@ -68,6 +70,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.CHISELED_MIXED_NETHER_BRICKS,
             Ingredient.ofItems(DuskBlocks.MIXED_NETHER_BRICK_SLAB)
         ).criterion("has_nether_bricks", conditionsFromItem(DuskBlocks.MIXED_NETHER_BRICKS)).offerTo(e)
+        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICK_FENCE)
         e.createStackedCraft(DuskBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
         e.createStackedCraft(DuskBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
         e.createStackedCraft(
@@ -75,7 +78,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.MIXED_NETHER_BRICKS,
             DuskItemTags.NETHER_BRICKS
         )
-        e.createStonecutted(
+        e.createStonecuttedSet(
             listOf(Blocks.NETHER_BRICKS, DuskBlocks.POLISHED_NETHER_BRICKS),
             DuskBlocks.POLISHED_NETHER_BRICKS,
             DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
@@ -83,7 +86,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.POLISHED_NETHER_BRICK_WALL,
             listOf(DuskBlocks.NETHER_BRICK_PILLAR)
         )
-        e.createStonecutted(
+        e.createStonecuttedSet(
             listOf(Blocks.RED_NETHER_BRICKS, DuskBlocks.POLISHED_RED_NETHER_BRICKS),
             DuskBlocks.POLISHED_RED_NETHER_BRICKS,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
@@ -91,7 +94,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
             listOf(DuskBlocks.RED_NETHER_BRICK_PILLAR, DuskBlocks.CHISELED_RED_NETHER_BRICKS)
         )
-        e.createStonecutted(
+        e.createStonecuttedSet(
             DuskBlocks.MIXED_NETHER_BRICKS,
             null,
             DuskBlocks.MIXED_NETHER_BRICK_STAIRS,
@@ -136,14 +139,14 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
 
         e.createOvergrown(DuskBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
         e.createOvergrown(DuskBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
-        e.createStonecutted(
+        e.createStonecuttedSet(
             DuskBlocks.OVERGROWN_COBBLESTONE,
             null,
             DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
             DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
             DuskBlocks.OVERGROWN_COBBLESTONE_WALL
         )
-        e.createStonecutted(
+        e.createStonecuttedSet(
             DuskBlocks.OVERGROWN_STONE_BRICKS,
             null,
             DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
@@ -213,7 +216,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .offerTo(this)
     }
 
-    fun RecipeExporter.createStonecutted(
+    fun RecipeExporter.createStonecuttedSet(
         input: Block,
         polish: ItemConvertible?,
         stair: ItemConvertible?,
@@ -221,7 +224,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         wall: ItemConvertible?,
         extra: ItemConvertible? = null
     ) {
-        this.createStonecutted(listOf(input), polish, stair, slab, wall, null)
+        this.createStonecuttedSet(listOf(input), polish, stair, slab, wall, null)
         if (extra != null && extra != input)
             createStonecuttingRecipe(
                 this,
@@ -231,7 +234,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             )
     }
 
-    fun RecipeExporter.createStonecutted(
+    fun RecipeExporter.createStonecuttedSet(
         input: List<Block>,
         polish: ItemConvertible?,
         stair: ItemConvertible?,

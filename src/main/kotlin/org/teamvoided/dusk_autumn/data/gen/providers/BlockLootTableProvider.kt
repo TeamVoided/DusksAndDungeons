@@ -52,7 +52,6 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         DuskBlocks.NETHER_BRICK_PILLAR,
         DuskBlocks.POLISHED_NETHER_BRICKS,
         DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
-        DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
         DuskBlocks.POLISHED_NETHER_BRICK_WALL,
 
         DuskBlocks.CRACKED_RED_NETHER_BRICKS,
@@ -61,13 +60,11 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         DuskBlocks.RED_NETHER_BRICK_PILLAR,
         DuskBlocks.POLISHED_RED_NETHER_BRICKS,
         DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
-        DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
         DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
 
         DuskBlocks.MIXED_NETHER_BRICKS,
         DuskBlocks.CRACKED_MIXED_NETHER_BRICKS,
         DuskBlocks.MIXED_NETHER_BRICK_STAIRS,
-        DuskBlocks.MIXED_NETHER_BRICK_SLAB,
         DuskBlocks.MIXED_NETHER_BRICK_WALL,
         DuskBlocks.MIXED_NETHER_BRICK_FENCE,
         DuskBlocks.CHISELED_MIXED_NETHER_BRICKS,

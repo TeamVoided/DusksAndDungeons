@@ -41,7 +41,7 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
         DuskItems.BLUE_DOOR,
     ) + DuskItemLists.cascadeWood +
             DuskItemLists.cascadeSigns +
-            DuskItemLists.pineWood +
+//            DuskItemLists.pineWood +
             DuskItemLists.netherBrickStuff +
             DuskItemLists.redNetherBrickStuff +
             DuskItemLists.mixedNetherBrickStuff +
