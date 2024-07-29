@@ -62,6 +62,17 @@ class ItemTagsProvider(
         copy(BlockTags.SOUL_FIRE_BASE_BLOCKS, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         copy(BlockTags.DIRT, ItemTags.DIRT)
+
+        getOrCreateTagBuilder(ItemTags.SWORDS)
+            .add(DuskItems.BLACKSTONE_SWORD)
+        getOrCreateTagBuilder(ItemTags.PICKAXES)
+            .add(DuskItems.BLACKSTONE_PICKAXE)
+        getOrCreateTagBuilder(ItemTags.AXES)
+            .add(DuskItems.BLACKSTONE_AXE)
+        getOrCreateTagBuilder(ItemTags.SHOVELS)
+            .add(DuskItems.BLACKSTONE_SHOVEL)
+        getOrCreateTagBuilder(ItemTags.HOES)
+            .add(DuskItems.BLACKSTONE_HOE)
     }
 
     fun conventionTags() {}

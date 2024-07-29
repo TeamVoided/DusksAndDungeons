@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.BeetrootsBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.DoorBlock
+import net.minecraft.block.SlabBlock
 import net.minecraft.block.TallPlantBlock
 import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
@@ -30,129 +32,40 @@ import java.util.concurrent.CompletableFuture
 
 class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricBlockLootTableProvider(o, r) {
-
-
-    val dropsItSelf = listOf(
-        DuskBlocks.CASCADE_LOG,
-        DuskBlocks.CASCADE_WOOD,
-        DuskBlocks.STRIPPED_CASCADE_LOG,
-        DuskBlocks.STRIPPED_CASCADE_WOOD,
-        DuskBlocks.CASCADE_PLANKS,
-        DuskBlocks.CASCADE_SLAB,
-        DuskBlocks.CASCADE_FENCE,
-        DuskBlocks.CASCADE_FENCE_GATE,
-        DuskBlocks.CASCADE_TRAPDOOR,
-        DuskBlocks.CASCADE_PRESSURE_PLATE,
-        DuskBlocks.CASCADE_BUTTON,
-        DuskBlocks.CASCADE_SAPLING,
-        DuskBlocks.GOLDEN_BIRCH_SAPLING,
-
-        DuskBlocks.BIG_CHAIN,
-        DuskBlocks.BIG_LANTERN,
-        DuskBlocks.BIG_SOUL_LANTERN,
-
-        DuskBlocks.NETHER_BRICK_PILLAR,
-        DuskBlocks.POLISHED_NETHER_BRICKS,
-        DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
-        DuskBlocks.POLISHED_NETHER_BRICK_WALL,
-
-        DuskBlocks.CRACKED_RED_NETHER_BRICKS,
-        DuskBlocks.RED_NETHER_BRICK_FENCE,
-        DuskBlocks.CHISELED_RED_NETHER_BRICKS,
-        DuskBlocks.RED_NETHER_BRICK_PILLAR,
-        DuskBlocks.POLISHED_RED_NETHER_BRICKS,
-        DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
-        DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
-
-        DuskBlocks.MIXED_NETHER_BRICKS,
-        DuskBlocks.CRACKED_MIXED_NETHER_BRICKS,
-        DuskBlocks.MIXED_NETHER_BRICK_STAIRS,
-        DuskBlocks.MIXED_NETHER_BRICK_WALL,
-        DuskBlocks.MIXED_NETHER_BRICK_FENCE,
-        DuskBlocks.CHISELED_MIXED_NETHER_BRICKS,
-        DuskBlocks.MIXED_NETHER_BRICK_PILLAR,
-
-        DuskBlocks.OVERGROWN_COBBLESTONE,
-        DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-        DuskBlocks.OVERGROWN_COBBLESTONE_WALL,
-        DuskBlocks.OVERGROWN_STONE_BRICKS,
-        DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-        DuskBlocks.OVERGROWN_STONE_BRICK_WALL,
-        DuskBlocks.ROOT_BLOCK,
-
-        DuskBlocks.VIOLET_DAISY,
-
-        DuskBlocks.ROCKY_GRASS,
-        DuskBlocks.ROCKY_PODZOL,
-        DuskBlocks.ROCKY_MYCELIUM,
-        DuskBlocks.ROCKY_DIRT_PATH,
-        DuskBlocks.ROCKY_DIRT,
-        DuskBlocks.ROCKY_COARSE_DIRT,
-        DuskBlocks.ROCKY_MUD,
-        DuskBlocks.ROCKY_SNOW,
-        DuskBlocks.ROCKY_GRAVEL,
-        DuskBlocks.ROCKY_SAND,
-        DuskBlocks.ROCKY_RED_SAND,
-        DuskBlocks.ROCKY_SOUL_SAND,
-        DuskBlocks.ROCKY_SOUL_SOIL,
-
-        DuskBlocks.SLATED_GRASS,
-        DuskBlocks.SLATED_PODZOL,
-        DuskBlocks.SLATED_MYCELIUM,
-        DuskBlocks.SLATED_DIRT_PATH,
-        DuskBlocks.SLATED_DIRT,
-        DuskBlocks.SLATED_COARSE_DIRT,
-        DuskBlocks.SLATED_MUD,
-        DuskBlocks.SLATED_SNOW,
-        DuskBlocks.SLATED_GRAVEL,
-        DuskBlocks.SLATED_SAND,
-        DuskBlocks.SLATED_RED_SAND,
-        DuskBlocks.SLATED_SOUL_SAND,
-        DuskBlocks.SLATED_SOUL_SOIL,
-
-        DuskBlocks.BLACKSTONE_GRASS,
-        DuskBlocks.BLACKSTONE_PODZOL,
-        DuskBlocks.BLACKSTONE_MYCELIUM,
-        DuskBlocks.BLACKSTONE_DIRT_PATH,
-        DuskBlocks.BLACKSTONE_DIRT,
-        DuskBlocks.BLACKSTONE_COARSE_DIRT,
-        DuskBlocks.BLACKSTONE_MUD,
-        DuskBlocks.BLACKSTONE_SNOW,
-        DuskBlocks.BLACKSTONE_GRAVEL,
-        DuskBlocks.BLACKSTONE_SAND,
-        DuskBlocks.BLACKSTONE_RED_SAND,
-        DuskBlocks.BLACKSTONE_SOUL_SAND,
-        DuskBlocks.BLACKSTONE_SOUL_SOIL
-    )
-    val slabs = listOf(
-        DuskBlocks.CASCADE_SLAB,
-        DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
-        DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
-        DuskBlocks.MIXED_NETHER_BRICK_SLAB,
-        DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
-        DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
-    )
-
-    private val excludeList = slabs +
-            listOf(
-                DuskBlocks.CASCADE_DOOR,
-                DuskBlocks.BLUE_DOOR,
-                DuskBlocks.BLUE_PETALS,
-                DuskBlocks.POTTED_CASCADE_SAPLING,
-                DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
-                DuskBlocks.CASCADE_LEAVES,
-            )
+    private val excludeList =
+        listOf(
+            DuskBlocks.BLUE_PETALS,
+            DuskBlocks.POTTED_CASCADE_SAPLING,
+            DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
+            DuskBlocks.CASCADE_LEAVES,
+            DuskBlocks.GOLDEN_BIRCH_LEAVES,
+            DuskBlocks.WILD_WHEAT,
+            DuskBlocks.GOLDEN_BEETROOTS,
+            DuskBlocks.POTTED_VIOLET_DAISY,
+            DuskBlocks.MOONBERRY_VINE
+        )
 
     override fun generate() {
 
 //        dropsItSelf.forEach(::addDrop)
+        DuskBlocks.BLOCKS.filter {
+            (
+                    it !is SlabBlock &&
+                    it !is DoorBlock &&
+                    it !is LogPileBlock &&
+                    it !is LeafPileBlock) &&
+                    it !in excludeList
+        }
+            .forEach(::addDrop)
+        DuskBlocks.BLOCKS.filter { it is SlabBlock && it !in excludeList }.forEach{add(it, ::slabDrops)}
+        DuskBlocks.BLOCKS.filter { it is DoorBlock && it !in excludeList }.forEach{add(it, ::doorDrops)}
+        logPiles.forEach { (pile, _) ->
+            add(pile) { logPile(pile) }
+        }
+        leafPiles.forEach { (pile, leaves) ->
+            add(pile) { leafPile(it, leaves) }
+        }
 
-
-        DuskBlocks.BLOCKS.filter { it !in excludeList }.forEach(::addDrop)
-
-        slabs.forEach(::slabDrops)
-        add(DuskBlocks.CASCADE_DOOR, ::doorDrops)
-        add(DuskBlocks.BLUE_DOOR, ::doorDrops)
         add(DuskBlocks.BLUE_PETALS, ::flowerbedDrops)
         add(DuskBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DuskBlocks.CASCADE_SAPLING) }
         add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DuskBlocks.GOLDEN_BIRCH_SAPLING) }
@@ -162,20 +75,6 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DuskBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DuskBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
-        logPiles.forEach { (pile, _) ->
-            add(pile) { logPile(it) }
-        }
-        leafPiles.forEach { (pile, leaves) ->
-            add(pile) { leafPile(it, leaves) }
-        }
-        add(
-            DuskBlocks.MOONBERRY_VINELET,
-            applyExplosionDecay(
-                DuskBlocks.MOONBERRY_VINELET, LootTable.builder().pool(
-                    LootPool.builder().with(ItemEntry.builder(DuskItems.MOONBERRY_VINELET))
-                )
-            )
-        )
         add(DuskBlocks.WILD_WHEAT) { block: Block ->
             this.dropsWithPropertyValue(
                 block,

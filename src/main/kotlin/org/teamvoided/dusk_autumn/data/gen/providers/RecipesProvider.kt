@@ -84,7 +84,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
             DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
             DuskBlocks.POLISHED_NETHER_BRICK_WALL,
-            listOf(DuskBlocks.NETHER_BRICK_PILLAR)
+            listOf(Blocks.NETHER_BRICK_FENCE, DuskBlocks.NETHER_BRICK_PILLAR)
         )
         e.createStonecuttedSet(
             listOf(Blocks.RED_NETHER_BRICKS, DuskBlocks.POLISHED_RED_NETHER_BRICKS),
@@ -92,15 +92,19 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
-            listOf(DuskBlocks.RED_NETHER_BRICK_PILLAR, DuskBlocks.CHISELED_RED_NETHER_BRICKS)
+            listOf(
+                DuskBlocks.RED_NETHER_BRICK_FENCE,
+                DuskBlocks.RED_NETHER_BRICK_PILLAR,
+                DuskBlocks.CHISELED_RED_NETHER_BRICKS
+            )
         )
         e.createStonecuttedSet(
-            DuskBlocks.MIXED_NETHER_BRICKS,
+            listOf(DuskBlocks.MIXED_NETHER_BRICKS),
             null,
             DuskBlocks.MIXED_NETHER_BRICK_STAIRS,
             DuskBlocks.MIXED_NETHER_BRICK_SLAB,
             DuskBlocks.MIXED_NETHER_BRICK_WALL,
-            DuskBlocks.MIXED_NETHER_BRICK_PILLAR
+            listOf(DuskBlocks.MIXED_NETHER_BRICK_PILLAR, DuskBlocks.RED_NETHER_BRICK_FENCE)
         )
         ShapedRecipeJsonFactory.create(RecipeCategory.COMBAT, DuskItems.BLACKSTONE_SWORD)
             .ingredient('#', Items.STICK)
@@ -140,14 +144,14 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.createOvergrown(DuskBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
         e.createOvergrown(DuskBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
         e.createStonecuttedSet(
-            DuskBlocks.OVERGROWN_COBBLESTONE,
+            listOf(DuskBlocks.OVERGROWN_COBBLESTONE),
             null,
             DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
             DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
             DuskBlocks.OVERGROWN_COBBLESTONE_WALL
         )
         e.createStonecuttedSet(
-            DuskBlocks.OVERGROWN_STONE_BRICKS,
+            listOf(DuskBlocks.OVERGROWN_STONE_BRICKS),
             null,
             DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
             DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
@@ -214,24 +218,6 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .ingredient(Ingredient.ofTag(ItemTags.LEAVES))
             .criterion(hasItem(stone), conditionsFromItem(stone))
             .offerTo(this)
-    }
-
-    fun RecipeExporter.createStonecuttedSet(
-        input: Block,
-        polish: ItemConvertible?,
-        stair: ItemConvertible?,
-        slab: ItemConvertible?,
-        wall: ItemConvertible?,
-        extra: ItemConvertible? = null
-    ) {
-        this.createStonecuttedSet(listOf(input), polish, stair, slab, wall, null)
-        if (extra != null && extra != input)
-            createStonecuttingRecipe(
-                this,
-                RecipeCategory.BUILDING_BLOCKS,
-                extra,
-                input
-            )
     }
 
     fun RecipeExporter.createStonecuttedSet(
