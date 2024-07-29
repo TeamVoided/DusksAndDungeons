@@ -6,6 +6,7 @@ import net.minecraft.block.BeetrootsBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.DoorBlock
+import net.minecraft.block.FlowerPotBlock
 import net.minecraft.block.SlabBlock
 import net.minecraft.block.TallPlantBlock
 import net.minecraft.block.enums.DoubleBlockHalf
@@ -35,37 +36,31 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     private val excludeList =
         listOf(
             DuskBlocks.BLUE_PETALS,
-            DuskBlocks.POTTED_CASCADE_SAPLING,
-            DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
             DuskBlocks.CASCADE_LEAVES,
             DuskBlocks.GOLDEN_BIRCH_LEAVES,
             DuskBlocks.WILD_WHEAT,
             DuskBlocks.GOLDEN_BEETROOTS,
-            DuskBlocks.POTTED_VIOLET_DAISY,
             DuskBlocks.MOONBERRY_VINE
         )
 
     override fun generate() {
-
-//        dropsItSelf.forEach(::addDrop)
         DuskBlocks.BLOCKS.filter {
             (
                     it !is SlabBlock &&
-                    it !is DoorBlock &&
-                    it !is LogPileBlock &&
-                    it !is LeafPileBlock) &&
+                            it !is DoorBlock &&
+                            it !is FlowerPotBlock &&
+                            it !is LogPileBlock &&
+                            it !is LeafPileBlock) &&
                     it !in excludeList
-        }
-            .forEach(::addDrop)
-        DuskBlocks.BLOCKS.filter { it is SlabBlock && it !in excludeList }.forEach{add(it, ::slabDrops)}
-        DuskBlocks.BLOCKS.filter { it is DoorBlock && it !in excludeList }.forEach{add(it, ::doorDrops)}
+        }.forEach(::addDrop)
+        DuskBlocks.BLOCKS.filter { it is SlabBlock && it !in excludeList }.forEach { add(it, ::slabDrops) }
+        DuskBlocks.BLOCKS.filter { it is DoorBlock && it !in excludeList }.forEach { add(it, ::doorDrops) }
         logPiles.forEach { (pile, _) ->
             add(pile) { logPile(pile) }
         }
         leafPiles.forEach { (pile, leaves) ->
             add(pile) { leafPile(it, leaves) }
         }
-
         add(DuskBlocks.BLUE_PETALS, ::flowerbedDrops)
         add(DuskBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DuskBlocks.CASCADE_SAPLING) }
         add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DuskBlocks.GOLDEN_BIRCH_SAPLING) }
