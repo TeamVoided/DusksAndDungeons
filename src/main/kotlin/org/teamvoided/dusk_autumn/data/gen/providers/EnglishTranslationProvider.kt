@@ -7,6 +7,7 @@ import net.minecraft.item.Item
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
+import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItemGroups.DUSK_AUTUMN_TAB
 import org.teamvoided.dusk_autumn.init.DuskItemGroups.getKey
@@ -41,15 +42,21 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
             DuskItemLists.overgrownStoneBricks +
             DuskItemLists.logPiles +
             DuskItemLists.leafPiles +
-            DuskItemLists.moonberry+
+            DuskItemLists.moonberry +
             DuskItemLists.overlayBlocks
     val blocks = listOf(
         DuskBlocks.GOLDEN_BEETROOTS
+    )
+    val itemTags = listOf(
+        DuskItemTags.CASCADE_LOGS,
+        DuskItemTags.LEAF_PILES,
+        DuskItemTags.NETHER_BRICKS
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         items.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }
+        itemTags.forEach { gen.add(it.translationKey, genLang(it.id)) }
 
 
         getKey(DUSK_AUTUMN_TAB)?.let { gen.add(it, "Dusk Items") }

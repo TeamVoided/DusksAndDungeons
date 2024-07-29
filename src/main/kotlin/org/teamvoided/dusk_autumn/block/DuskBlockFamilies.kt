@@ -11,9 +11,9 @@ object DuskBlockFamilies {
             .stairs(DuskBlocks.CASCADE_STAIRS)
             .slab(DuskBlocks.CASCADE_SLAB)
             .fence(DuskBlocks.CASCADE_FENCE)
+            .fenceGate(DuskBlocks.CASCADE_FENCE_GATE)
             .door(DuskBlocks.CASCADE_DOOR)
             .trapdoor(DuskBlocks.CASCADE_TRAPDOOR)
-            .fenceGate(DuskBlocks.CASCADE_FENCE_GATE)
             .button(DuskBlocks.CASCADE_BUTTON)
             .pressurePlate(DuskBlocks.CASCADE_PRESSURE_PLATE)
             .sign(DuskBlocks.CASCADE_SIGN, DuskBlocks.CASCADE_WALL_SIGN)
@@ -52,6 +52,7 @@ object DuskBlockFamilies {
             .build()
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
+//        PINE_FAMILY,
         MIXED_NETHER_BRICKS_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY

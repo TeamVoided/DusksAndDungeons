@@ -28,6 +28,7 @@ import java.util.concurrent.CompletableFuture
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
     override fun generateRecipes(e: RecipeExporter) {
         recipesBlockFamilies.forEach { generateFamily(e, it, FeatureFlags.VANILLA_SET) }
+        offerPlanksRecipe(e, DuskBlocks.CASCADE_PLANKS, DuskItemTags.CASCADE_LOGS, 4)
         offerHangingSignRecipe(e, DuskItems.CASCADE_HANGING_SIGN, DuskBlocks.STRIPPED_CASCADE_LOG)
         ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, DuskBlocks.BLUE_DOOR, 3)
             .ingredient('#', Ingredient.ofItems(DuskBlocks.CASCADE_PLANKS.asItem()))
@@ -69,7 +70,11 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         ).criterion("has_nether_bricks", conditionsFromItem(DuskBlocks.MIXED_NETHER_BRICKS)).offerTo(e)
         e.createStackedCraft(DuskBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
         e.createStackedCraft(DuskBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
-        e.createStackedCraft(DuskBlocks.MIXED_NETHER_BRICK_PILLAR, DuskBlocks.MIXED_NETHER_BRICKS)
+        e.createStackedCraft(
+            DuskBlocks.MIXED_NETHER_BRICK_PILLAR,
+            DuskBlocks.MIXED_NETHER_BRICKS,
+            DuskItemTags.NETHER_BRICKS
+        )
         e.createStonecutted(
             listOf(Blocks.NETHER_BRICKS, DuskBlocks.POLISHED_NETHER_BRICKS),
             DuskBlocks.POLISHED_NETHER_BRICKS,
