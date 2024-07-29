@@ -24,7 +24,6 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_BLOCK_SET_TYPE
 import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_WOOD_TYPE
-import org.teamvoided.dusk_autumn.block.DuskWoodTypes.PINE_WOOD_TYPE
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.init.DuskItems.BlockItem
@@ -36,6 +35,8 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
 object DuskBlocks {
+    val BLOCKS = mutableListOf<Block>()
+
     val leafPileSettings = Settings.create()
         .mapColor(MapColor.PLANT).strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid)
         .lavaIgnitable()
@@ -605,6 +606,10 @@ object DuskBlocks {
         return regBlock
     }
 
-    fun registerNoItem(id: String, block: Block): Block = Registry.register(Registries.BLOCK, id(id), block)
+    fun registerNoItem(id: String, block: Block): Block {
+        val regBlock = Registry.register(Registries.BLOCK, id(id), block)
+        BLOCKS.add(regBlock)
+        return regBlock
+    }
 
 }

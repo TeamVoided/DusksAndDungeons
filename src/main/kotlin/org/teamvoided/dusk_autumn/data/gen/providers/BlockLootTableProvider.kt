@@ -2,7 +2,10 @@ package org.teamvoided.dusk_autumn.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
-import net.minecraft.block.*
+import net.minecraft.block.BeetrootsBlock
+import net.minecraft.block.Block
+import net.minecraft.block.Blocks
+import net.minecraft.block.TallPlantBlock
 import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
 import net.minecraft.item.Items
@@ -11,7 +14,6 @@ import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
-import net.minecraft.loot.entry.LootPoolEntry
 import net.minecraft.loot.entry.LootTableEntry
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
@@ -131,8 +133,23 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
     )
 
+    private val excludeList = slabs +
+            listOf(
+                DuskBlocks.CASCADE_DOOR,
+                DuskBlocks.BLUE_DOOR,
+                DuskBlocks.BLUE_PETALS,
+                DuskBlocks.POTTED_CASCADE_SAPLING,
+                DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
+                DuskBlocks.CASCADE_LEAVES,
+            )
+
     override fun generate() {
-        dropsItSelf.forEach(::addDrop)
+
+//        dropsItSelf.forEach(::addDrop)
+
+
+        DuskBlocks.BLOCKS.filter { it !in excludeList }.forEach(::addDrop)
+
         slabs.forEach(::slabDrops)
         add(DuskBlocks.CASCADE_DOOR, ::doorDrops)
         add(DuskBlocks.BLUE_DOOR, ::doorDrops)
