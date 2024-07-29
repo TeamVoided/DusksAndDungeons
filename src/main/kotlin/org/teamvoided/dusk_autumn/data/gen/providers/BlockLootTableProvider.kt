@@ -2,10 +2,7 @@ package org.teamvoided.dusk_autumn.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
-import net.minecraft.block.BeetrootsBlock
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.TallPlantBlock
+import net.minecraft.block.*
 import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
 import net.minecraft.item.Items
@@ -14,15 +11,17 @@ import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
+import net.minecraft.loot.entry.LootPoolEntry
 import net.minecraft.loot.entry.LootTableEntry
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
+import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
+import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import java.util.concurrent.CompletableFuture
@@ -45,22 +44,35 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         DuskBlocks.CASCADE_BUTTON,
         DuskBlocks.CASCADE_SAPLING,
         DuskBlocks.GOLDEN_BIRCH_SAPLING,
+
         DuskBlocks.BIG_CHAIN,
         DuskBlocks.BIG_LANTERN,
         DuskBlocks.BIG_SOUL_LANTERN,
+
         DuskBlocks.NETHER_BRICK_PILLAR,
         DuskBlocks.POLISHED_NETHER_BRICKS,
         DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
+        DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
         DuskBlocks.POLISHED_NETHER_BRICK_WALL,
+
+        DuskBlocks.CRACKED_RED_NETHER_BRICKS,
+        DuskBlocks.RED_NETHER_BRICK_FENCE,
         DuskBlocks.CHISELED_RED_NETHER_BRICKS,
         DuskBlocks.RED_NETHER_BRICK_PILLAR,
         DuskBlocks.POLISHED_RED_NETHER_BRICKS,
         DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
+        DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
         DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
+
         DuskBlocks.MIXED_NETHER_BRICKS,
+        DuskBlocks.CRACKED_MIXED_NETHER_BRICKS,
         DuskBlocks.MIXED_NETHER_BRICK_STAIRS,
+        DuskBlocks.MIXED_NETHER_BRICK_SLAB,
         DuskBlocks.MIXED_NETHER_BRICK_WALL,
+        DuskBlocks.MIXED_NETHER_BRICK_FENCE,
+        DuskBlocks.CHISELED_MIXED_NETHER_BRICKS,
         DuskBlocks.MIXED_NETHER_BRICK_PILLAR,
+
         DuskBlocks.OVERGROWN_COBBLESTONE,
         DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
         DuskBlocks.OVERGROWN_COBBLESTONE_WALL,
@@ -70,7 +82,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         DuskBlocks.ROOT_BLOCK,
 
         DuskBlocks.VIOLET_DAISY,
-        
+
         DuskBlocks.ROCKY_GRASS,
         DuskBlocks.ROCKY_PODZOL,
         DuskBlocks.ROCKY_MYCELIUM,
@@ -136,6 +148,9 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DuskBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DuskBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
+        logPiles.forEach { (pile, _) ->
+            add(pile) { logPile(it) }
+        }
         leafPiles.forEach { (pile, leaves) ->
             add(pile) { leafPile(it, leaves) }
         }
@@ -170,6 +185,24 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
 
     private fun constantLootNumber(i: Number): ConstantLootNumberProvider =
         ConstantLootNumberProvider.create(i.toFloat())
+
+    fun logPile(drop: Block): LootTable.Builder {
+        return LootTable.builder().pool(
+            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
+                applyExplosionDecay(drop, ItemEntry.builder(drop).apply(
+                    listOf(2, 3, 4)
+                ) { count: Int ->
+                    SetCountLootFunction.builder(
+                        ConstantLootNumberProvider.create(count.toFloat())
+                    ).conditionally(
+                        BlockStatePropertyLootCondition.builder(drop).properties(
+                            StatePredicate.Builder.create().exactMatch(LogPileBlock.PILE_LAYERS, count)
+                        )
+                    )
+                })
+            )
+        )
+    }
 
     fun leafPile(pile: Block, leaves: Block): LootTable.Builder {
         return LootTable.builder().pool(

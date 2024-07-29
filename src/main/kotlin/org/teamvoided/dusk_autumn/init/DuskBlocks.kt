@@ -24,6 +24,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_BLOCK_SET_TYPE
 import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_WOOD_TYPE
+import org.teamvoided.dusk_autumn.block.DuskWoodTypes.PINE_WOOD_TYPE
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.init.DuskItems.BlockItem
@@ -216,6 +217,40 @@ object DuskBlocks {
     val POTTED_GOLDEN_BIRCH_SAPLING =
         registerNoItem("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING))
 
+    val PINE_PLANKS = register(
+        "pine_planks", Block(
+            Settings.create()
+                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
+                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
+        )
+    )
+    val PINE_STAIRS = register(
+        "pine_stairs", legacyStairsOf(PINE_PLANKS)
+    )
+    val PINE_SLAB = register(
+        "pine_slab",
+        SlabBlock(
+            variantOf(PINE_PLANKS)
+        )
+    )
+    val PINE_FENCE = register(
+        "pine_fence",
+        FenceBlock(
+            Settings.create()
+                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).solid().lavaIgnitable()
+        )
+    )
+    val PINE_FENCE_GATE = register(
+        "pine_fence_gate",
+        FenceGateBlock(
+            PINE_WOOD_TYPE,
+            Settings.create()
+                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+                .strength(2.0f, 3.0f).solid().lavaIgnitable()
+        )
+    )
+
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
     val OAK_LOG_PILE = register("oak_log_pile", LogPileBlock(variantOf(OAK_WOOD).nonOpaque()))
     val SPRUCE_LOG_PILE = register("spruce_log_pile", LogPileBlock(variantOf(SPRUCE_WOOD).nonOpaque()))
@@ -297,7 +332,8 @@ object DuskBlocks {
     val MIXED_NETHER_BRICK_SLAB = register("mixed_nether_brick_slab", SlabBlock(variantOf(NETHER_BRICK_SLAB)))
     val MIXED_NETHER_BRICK_WALL = register("mixed_nether_brick_wall", WallBlock(variantOf(NETHER_BRICK_WALL)))
     val MIXED_NETHER_BRICK_FENCE = register("mixed_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)))
-    val CHISELED_MIXED_NETHER_BRICKS = register("chiseled_mixed_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)))
+    val CHISELED_MIXED_NETHER_BRICKS =
+        register("chiseled_mixed_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)))
     val MIXED_NETHER_BRICK_PILLAR = register("mixed_nether_brick_pillar", PillarBlock(variantOf(MIXED_NETHER_BRICKS)))
     val CRACKED_RED_NETHER_BRICKS = register("cracked_red_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)))
     val RED_NETHER_BRICK_FENCE = register("red_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)))
@@ -367,7 +403,7 @@ object DuskBlocks {
     val ROCKY_MUD = register("muddy_rocks", MudBlock(variantOf(MUD).mapColor(COBBLESTONE.defaultMapColor)))
     val ROCKY_SNOW = register("snowy_rocks", Block(variantOf(SNOW_BLOCK).mapColor(COBBLESTONE.defaultMapColor)))
     val ROCKY_GRAVEL =
-        register("rocky_rocks", GravelBlock(Color(-8356741), variantOf(DIRT).mapColor(COBBLESTONE.defaultMapColor)))
+        register("rocky_rocks", GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLESTONE.defaultMapColor)))
     val ROCKY_SAND =
         register("sandy_rocks", GravelBlock(Color(14406560), variantOf(SAND).mapColor(COBBLESTONE.defaultMapColor)))
     val ROCKY_RED_SAND = register(
@@ -399,7 +435,7 @@ object DuskBlocks {
     val SLATED_SNOW = register("snowy_slate", Block(variantOf(SNOW_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
     val SLATED_GRAVEL = register(
         "slated_slate",
-        GravelBlock(Color(-8356741), variantOf(DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
+        GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
     )
     val SLATED_SAND = register(
         "sandy_slate",
@@ -438,7 +474,7 @@ object DuskBlocks {
         register("snowy_blackstone", Block(variantOf(SNOW_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
     val BLACKSTONE_GRAVEL = register(
         "blackstoned_blackstone",
-        GravelBlock(Color(-8356741), variantOf(DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
+        GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
     )
     val BLACKSTONE_SAND = register(
         "sandy_blackstone",

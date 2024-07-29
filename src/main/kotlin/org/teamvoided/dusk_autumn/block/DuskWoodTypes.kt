@@ -29,6 +29,8 @@ object DuskWoodTypes {
             .register(id("cascade"))
     val CASCADE_WOOD_TYPE = registerWoodType("cascade", WoodType.CHERRY, CASCADE_BLOCK_SET_TYPE)
 
+    val PINE_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder().register(id("pine"))
+    val PINE_WOOD_TYPE = registerWoodType("pine", WoodType.SPRUCE, PINE_BLOCK_SET_TYPE)
 
     private fun registerWoodType(id: String, woodType: WoodType, blockSet: BlockSetType): WoodType =
         WoodTypeBuilder.copyOf(woodType).register(id(id), blockSet)

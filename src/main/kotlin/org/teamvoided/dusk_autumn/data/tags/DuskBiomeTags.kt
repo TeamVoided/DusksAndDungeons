@@ -10,6 +10,7 @@ object DuskBiomeTags {
     val HAS_STRUCTURE_AUTUMN_RUINS = create("has_structure/autumn_ruins")
     @JvmField
     val SPAWNS_SILVER_FOXES = create("spawns_silver_foxes")
+    val SPAWNS_AUTUMN_WOLVES = create("spawns_autumn_wolves")
 
     fun create(id: String): TagKey<Biome> = TagKey.of(RegistryKeys.BIOME, id(id))
 }

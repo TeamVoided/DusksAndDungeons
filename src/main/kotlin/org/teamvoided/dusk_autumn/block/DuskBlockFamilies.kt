@@ -20,6 +20,20 @@ object DuskBlockFamilies {
             .group("wooden")
             .unlockCriterionName("has_planks")
             .build()
+        val PINE_FAMILY: BlockFamily =
+            BlockFamilies.register(DuskBlocks.PINE_PLANKS)
+                .stairs(DuskBlocks.PINE_STAIRS)
+                .slab(DuskBlocks.PINE_SLAB)
+                .fence(DuskBlocks.PINE_FENCE)
+                .fenceGate(DuskBlocks.PINE_FENCE_GATE)
+//            .door(DuskBlocks.PINE_DOOR)
+//            .trapdoor(DuskBlocks.PINE_TRAPDOOR)
+//            .button(DuskBlocks.PINE_BUTTON)
+//            .pressurePlate(DuskBlocks.PINE_PRESSURE_PLATE)
+//            .sign(DuskBlocks.PINE_SIGN, DuskBlocks.PINE_WALL_SIGN)
+                .group("wooden")
+                .unlockCriterionName("has_planks")
+                .build()
     val MIXED_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DuskBlocks.MIXED_NETHER_BRICKS)
             .stairs(DuskBlocks.MIXED_NETHER_BRICK_STAIRS)
@@ -52,7 +66,7 @@ object DuskBlockFamilies {
             .build()
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
-//        PINE_FAMILY,
+        PINE_FAMILY,
         MIXED_NETHER_BRICKS_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY

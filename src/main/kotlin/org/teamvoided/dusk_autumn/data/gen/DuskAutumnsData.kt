@@ -5,10 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistrySetBuilder
 import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
-import org.teamvoided.dusk_autumn.data.gen.providers.BlockLootTableProvider
-import org.teamvoided.dusk_autumn.data.gen.providers.EnglishTranslationProvider
-import org.teamvoided.dusk_autumn.data.gen.providers.ModelProvider
-import org.teamvoided.dusk_autumn.data.gen.providers.RecipesProvider
+import org.teamvoided.dusk_autumn.data.gen.providers.*
 import org.teamvoided.dusk_autumn.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusk_autumn.data.gen.structure.StructurePoolCreator
 import org.teamvoided.dusk_autumn.data.gen.structure.StructureProcessorCreator
@@ -31,7 +28,6 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         pack.addProvider(::EnglishTranslationProvider)
         pack.addProvider(::RecipesProvider)
         pack.addProvider(::BlockLootTableProvider)
-
         val blockTags = pack.addProvider(::BlockTagsProvider)
         pack.addProvider { o, r -> ItemTagsProvider(o, r, blockTags) }
         pack.addProvider(::BiomeTagsProvider)
@@ -46,5 +42,6 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         gen.add(RegistryKeys.STRUCTURE_POOL, StructurePoolCreator::bootstrap)
         gen.add(RegistryKeys.STRUCTURE_SET, StructureSetCreator::bootstrap)
         gen.add(RegistryKeys.STRUCTURE_FEATURE, StructureFeatureCreator::bootstrap)
+        gen.add(RegistryKeys.WOLF_VARIANT, WolfVariants::bootstrap)
     }
 }

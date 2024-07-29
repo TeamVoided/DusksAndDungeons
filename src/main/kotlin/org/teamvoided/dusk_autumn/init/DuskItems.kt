@@ -48,6 +48,70 @@ object DuskItems {
         register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRIES)))
 
+    @JvmField
+    val BLACKSTONE_SWORD = register(
+        "blackstone_sword", (SwordItem(
+            ToolMaterials.STONE,
+            (Item.Settings()).attributeModifiersComponent(
+                SwordItem.createAttributes(
+                    ToolMaterials.STONE,
+                    3,
+                    -2.4f
+                )
+            )
+        ))
+    )
+    val BLACKSTONE_PICKAXE = register(
+        "blackstone_pickaxe", (PickaxeItem(
+            ToolMaterials.STONE,
+            (Item.Settings()).attributeModifiersComponent(
+                PickaxeItem.createAttributes(
+                    ToolMaterials.STONE,
+                    1.0f,
+                    -2.8f
+                )
+            )
+        ))
+    )
+
+    @JvmField
+    val BLACKSTONE_AXE = register(
+        "blackstone_axe", (AxeItem(
+            ToolMaterials.STONE,
+            (Item.Settings()).attributeModifiersComponent(
+                AxeItem.createAttributes(
+                    ToolMaterials.STONE,
+                    7.0f,
+                    -3.2f
+                )
+            )
+        ))
+    )
+    val BLACKSTONE_SHOVEL = register(
+        "blackstone_shovel", (ShovelItem(
+            ToolMaterials.STONE,
+            (Item.Settings()).attributeModifiersComponent(
+                ShovelItem.createAttributes(
+                    ToolMaterials.STONE,
+                    1.5f,
+                    -3.0f
+                )
+            )
+        ))
+    )
+    val BLACKSTONE_HOE = register(
+        "blackstone_hoe", (HoeItem(
+            ToolMaterials.STONE,
+            (Item.Settings()).attributeModifiersComponent(
+                HoeItem.createAttributes(
+                    ToolMaterials.STONE,
+                    -1.0f,
+                    -2.0f
+                )
+            )
+        ))
+    )
+
 //add void util compat
     //???
 

@@ -14,6 +14,7 @@ import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
+import org.teamvoided.dusk_autumn.item.DuskItemLists
 import org.teamvoided.dusk_autumn.util.*
 import java.util.*
 
@@ -83,6 +84,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
+        DuskItemLists.blackstoneTools.forEach {
+            gen.registerHandheldItem(it)
+        }
 
         val mossyCobble = id("block/overgrown/cobblestone_overlay")
         val mossyBrick = id("block/overgrown/bricks_overlay")

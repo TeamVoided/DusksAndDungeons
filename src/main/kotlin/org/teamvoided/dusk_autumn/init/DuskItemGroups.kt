@@ -21,6 +21,7 @@ object DuskItemGroups {
                 entries.addItems(
                     DuskItemLists.cascadeWood +
                             DuskItemLists.cascadeSigns +
+//                            DuskItemLists.pineWood +
                             listOf(
                                 DuskBlocks.CASCADE_SAPLING.asItem(),
                                 DuskBlocks.CASCADE_LEAVES.asItem(),
@@ -35,6 +36,7 @@ object DuskItemGroups {
                             listOf(DuskBlocks.CRACKED_RED_NETHER_BRICKS.asItem()) +
                             DuskItemLists.redNetherBrickStuff +
                             DuskItemLists.mixedNetherBrickStuff +
+                            DuskItemLists.blackstoneTools +
                             DuskItemLists.overgrownCobblestone +
                             DuskItemLists.overgrownStoneBricks +
                             listOf(DuskBlocks.ROOT_BLOCK.asItem()) +
@@ -69,7 +71,7 @@ object DuskItemGroups {
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
             Items.RED_NETHER_BRICKS,
-            listOf(DuskBlocks.CRACKED_RED_NETHER_BRICKS.asItem())
+            DuskBlocks.CRACKED_RED_NETHER_BRICKS.asItem()
         )
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
@@ -90,6 +92,18 @@ object DuskItemGroups {
             )
         )
         registerInVanillaTab(ItemGroups.NATURAL_BLOCKS, Items.VINE, DuskItemLists.moonberry)
+        registerInVanillaTab(ItemGroups.COMBAT, Items.STONE_SWORD, DuskItems.BLACKSTONE_SWORD)
+        registerInVanillaTab(ItemGroups.COMBAT, Items.STONE_AXE, DuskItems.BLACKSTONE_AXE)
+        registerInVanillaTab(
+            ItemGroups.COMBAT,
+            Items.STONE_AXE,
+            listOf(
+                DuskItems.BLACKSTONE_SHOVEL,
+                DuskItems.BLACKSTONE_PICKAXE,
+                DuskItems.BLACKSTONE_AXE,
+                DuskItems.BLACKSTONE_HOE,
+            )
+        )
     }
 
 
@@ -104,6 +118,16 @@ object DuskItemGroups {
 
     fun ItemGroup.ItemStackCollector.addItems(list: Collection<Item>) {
         this.addStacks(list.map(Item::getDefaultStack))
+    }
+
+    fun registerInVanillaTab(itemGroup: RegistryKey<ItemGroup>, itemBefore: Item, item: Item) {
+        ItemGroupEvents.modifyEntriesEvent(itemGroup)
+            .register(ItemGroupEvents.ModifyEntries {
+                it.addAfter(
+                    itemBefore,
+                    item,
+                )
+            })
     }
 
     fun registerInVanillaTab(itemGroup: RegistryKey<ItemGroup>, itemBefore: Item, list: Collection<Item>) {

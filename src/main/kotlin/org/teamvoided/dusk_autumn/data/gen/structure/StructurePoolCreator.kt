@@ -66,7 +66,7 @@ object StructurePoolCreator {
     }
 
 
-    fun id(str: String) = "$MODID:$str"
+    private fun id(str: String) = "$MODID:$str"
 
     fun pairedSingle(
         str: String, processors: Holder<StructureProcessorList>, weight: Int = 1

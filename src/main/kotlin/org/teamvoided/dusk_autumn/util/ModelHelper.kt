@@ -15,6 +15,7 @@ import net.minecraft.data.client.model.*
 import net.minecraft.data.client.model.BlockStateModelGenerator.createAxisRotatedBlockState
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
+import net.minecraft.item.Item
 import net.minecraft.state.property.Properties
 import net.minecraft.state.property.Property
 import net.minecraft.util.Identifier
@@ -508,6 +509,13 @@ fun BlockStateModelGenerator.registerFence(fenceBlock: Block, reference: Block) 
     val id3 = Models.FENCE_INVENTORY.upload(fenceBlock, texture, this.modelCollector)
     this.blockStateCollector.accept(BlockStateModelGenerator.createFenceBlockState(fenceBlock, id, id2))
     this.registerParentedItemModel(fenceBlock, id3)
+}
+fun BlockStateModelGenerator.registerHandheldItem(item: Item) {
+    Models.HANDHELD.upload(
+        ModelIds.getItemModelId(item),
+        Texture.layer0(item),
+        this.modelCollector
+    )
 }
 
 fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
