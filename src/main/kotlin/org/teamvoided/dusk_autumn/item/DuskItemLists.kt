@@ -19,21 +19,21 @@ object DuskItemLists {
         DuskBlocks.CASCADE_PRESSURE_PLATE.asItem(),
         DuskBlocks.CASCADE_BUTTON.asItem()
     )
-//    val pineWood = listOf(
-////        DuskBlocks.PINE_LOG.asItem(),
-////        DuskBlocks.PINE_WOOD.asItem(),
-////        DuskBlocks.STRIPPED_PINE_LOG.asItem(),
-////        DuskBlocks.STRIPPED_PINE_WOOD.asItem(),
-//        DuskBlocks.PINE_PLANKS.asItem(),
-//        DuskBlocks.PINE_STAIRS.asItem(),
-//        DuskBlocks.PINE_SLAB.asItem(),
-//        DuskBlocks.PINE_FENCE.asItem(),
-//        DuskBlocks.PINE_FENCE_GATE.asItem(),
-////        DuskItems.PINE_DOOR,
-////        DuskBlocks.PINE_TRAPDOOR.asItem(),
-////        DuskBlocks.PINE_PRESSURE_PLATE.asItem(),
-////        DuskBlocks.PINE_BUTTON.asItem()
-//    )
+    val pineWood = listOf(
+//        DuskBlocks.PINE_LOG.asItem(),
+//        DuskBlocks.PINE_WOOD.asItem(),
+//        DuskBlocks.STRIPPED_PINE_LOG.asItem(),
+//        DuskBlocks.STRIPPED_PINE_WOOD.asItem(),
+        DuskBlocks.PINE_PLANKS.asItem(),
+        DuskBlocks.PINE_STAIRS.asItem(),
+        DuskBlocks.PINE_SLAB.asItem(),
+        DuskBlocks.PINE_FENCE.asItem(),
+        DuskBlocks.PINE_FENCE_GATE.asItem(),
+//        DuskItems.PINE_DOOR,
+//        DuskBlocks.PINE_TRAPDOOR.asItem(),
+//        DuskBlocks.PINE_PRESSURE_PLATE.asItem(),
+//        DuskBlocks.PINE_BUTTON.asItem()
+    )
     val cascadeSigns = listOf(
         DuskItems.CASCADE_SIGN,
         DuskItems.CASCADE_HANGING_SIGN

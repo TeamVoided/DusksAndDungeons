@@ -22,6 +22,7 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import java.util.*
 import kotlin.math.min
+import org.teamvoided.dusk_autumn.util.rotate
 
 
 @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
@@ -69,10 +70,11 @@ open class LogPileBlock(settings: Settings) : TwoWayRotationalBlock(settings), W
     override fun getOutlineShape(
         state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
-        return if (state.get(HANGING))
+        val rotations = if (state.get(AXIS) == Direction.Axis.Z) 1 else 0
+        return (if (state.get(HANGING))
             HANGING_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]
         else
-            DEFAULT_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]
+            DEFAULT_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]).rotate(rotations)
     }
 
     override fun getStateForNeighborUpdate(
@@ -101,20 +103,34 @@ open class LogPileBlock(settings: Settings) : TwoWayRotationalBlock(settings), W
         val AXIS = Properties.HORIZONTAL_AXIS
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
 
-        val FULL_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+        val FULL_SHAPE: VoxelShape = twoBoxShapeBottom(16.0)
 
         val DEFAULT_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
+            createCuboidShape(0.0, 0.0, 2.0, 16.0, 4.0, 14.0),
+            twoBoxShapeBottom(8.0),
+            twoBoxShapeBottom(12.0),
             FULL_SHAPE,
         )
         val HANGING_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            createCuboidShape(0.0, 12.0, 0.0, 16.0, 16.0, 16.0),
-            createCuboidShape(0.0, 8.0, 0.0, 16.0, 16.0, 16.0),
-            createCuboidShape(0.0, 4.0, 0.0, 16.0, 16.0, 16.0),
+            createCuboidShape(0.0, 12.0, 2.0, 16.0, 16.0, 14.0),
+            twoBoxShapeTop(8.0),
+            twoBoxShapeTop(4.0),
             FULL_SHAPE,
         )
+
+        fun twoBoxShapeBottom(height: Double): VoxelShape {
+            return VoxelShapes.union(
+                createCuboidShape(0.0, 0.0, 2.0, 16.0, height, 14.0),
+                createCuboidShape(2.0, 0.0, 0.0, 14.0, height, 16.0)
+            )
+        }
+
+        fun twoBoxShapeTop(height: Double): VoxelShape {
+            return VoxelShapes.union(
+                createCuboidShape(2.0, height, 0.0, 14.0, 16.0, 16.0),
+                createCuboidShape(0.0, height, 2.0, 16.0, 16.0, 14.0)
+            )
+        }
 
         fun addLayer(i: Int): Int = min(MAX_LAYERS, (i + 1))
     }

@@ -13,7 +13,6 @@ import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.HoeItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
@@ -23,8 +22,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Color
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
-import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_BLOCK_SET_TYPE
-import org.teamvoided.dusk_autumn.block.DuskWoodTypes.CASCADE_WOOD_TYPE
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.init.DuskItems.BlockItem
@@ -116,7 +113,7 @@ object DuskBlocks {
     val CASCADE_FENCE_GATE = register(
         "cascade_fence_gate",
         FenceGateBlock(
-            CASCADE_WOOD_TYPE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
                 .strength(2.0f, 3.0f).solid().lavaIgnitable()
@@ -124,7 +121,7 @@ object DuskBlocks {
     )
     val CASCADE_DOOR = registerNoItem(
         "cascade_door", DoorBlock(
-            CASCADE_BLOCK_SET_TYPE,
+            DuskWoodTypes.CASCADE_BLOCK_SET_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
@@ -140,7 +137,7 @@ object DuskBlocks {
     )
     val CASCADE_TRAPDOOR = register(
         "cascade_trapdoor", TrapdoorBlock(
-            CASCADE_BLOCK_SET_TYPE,
+            DuskWoodTypes.CASCADE_BLOCK_SET_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0f).nonOpaque()
@@ -150,13 +147,13 @@ object DuskBlocks {
     val CASCADE_PRESSURE_PLATE = register(
         "cascade_pressure_plate",
         PressurePlateBlock(
-            CASCADE_BLOCK_SET_TYPE,
+            DuskWoodTypes.CASCADE_BLOCK_SET_TYPE,
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS).noCollision()
                 .strength(0.5f).solid().lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-    val CASCADE_BUTTON = register("cascade_button", buttonOf(CASCADE_BLOCK_SET_TYPE))
+    val CASCADE_BUTTON = register("cascade_button", buttonOf(DuskWoodTypes.CASCADE_BLOCK_SET_TYPE))
     val CASCADE_LEAVES = register(
         "cascade_leaves", FallingLeavesBlock(
             Settings.create().strength(0.2f).ticksRandomly()
@@ -169,14 +166,14 @@ object DuskBlocks {
     )
     val CASCADE_SIGN = registerNoItem(
         "cascade_sign", VoidSignBlock(
-            CASCADE_WOOD_TYPE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", VoidWallSignBlock(
-            CASCADE_WOOD_TYPE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).dropsLike(CASCADE_SIGN)
                 .lavaIgnitable(),
@@ -184,14 +181,14 @@ object DuskBlocks {
     )
     val CASCADE_HANGING_SIGN = registerNoItem(
         "cascade_hanging_sign", VoidCeilingHangingSignBlock(
-            CASCADE_WOOD_TYPE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         )
     )
     val CASCADE_WALL_HANGING_SIGN = registerNoItem(
         "cascade_wall_hanging_sign", VoidWallHangingSignBlock(
-            CASCADE_WOOD_TYPE,
+            DuskWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable()
                 .dropsLike(CASCADE_HANGING_SIGN),
@@ -219,39 +216,39 @@ object DuskBlocks {
     val POTTED_GOLDEN_BIRCH_SAPLING =
         registerNoItem("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING))
 
-//    val PINE_PLANKS = register(
-//        "pine_planks", Block(
-//            Settings.create()
-//                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
-//                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
-//        )
-//    )
-//    val PINE_STAIRS = register(
-//        "pine_stairs", legacyStairsOf(PINE_PLANKS)
-//    )
-//    val PINE_SLAB = register(
-//        "pine_slab",
-//        SlabBlock(
-//            variantOf(PINE_PLANKS)
-//        )
-//    )
-//    val PINE_FENCE = register(
-//        "pine_fence",
-//        FenceBlock(
-//            Settings.create()
-//                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-//                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).solid().lavaIgnitable()
-//        )
-//    )
-//    val PINE_FENCE_GATE = register(
-//        "pine_fence_gate",
-//        FenceGateBlock(
-//            PINE_WOOD_TYPE,
-//            Settings.create()
-//                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-//                .strength(2.0f, 3.0f).solid().lavaIgnitable()
-//        )
-//    )
+    val PINE_PLANKS = register(
+        "pine_planks", Block(
+            Settings.create()
+                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
+                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
+        )
+    )
+    val PINE_STAIRS = register(
+        "pine_stairs", legacyStairsOf(PINE_PLANKS)
+    )
+    val PINE_SLAB = register(
+        "pine_slab",
+        SlabBlock(
+            variantOf(PINE_PLANKS)
+        )
+    )
+    val PINE_FENCE = register(
+        "pine_fence",
+        FenceBlock(
+            Settings.create()
+                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).solid().lavaIgnitable()
+        )
+    )
+    val PINE_FENCE_GATE = register(
+        "pine_fence_gate",
+        FenceGateBlock(
+            DuskWoodTypes.PINE_WOOD_TYPE,
+            Settings.create()
+                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
+                .strength(2.0f, 3.0f).solid().lavaIgnitable()
+        )
+    )
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
     val OAK_LOG_PILE = register("oak_log_pile", LogPileBlock(variantOf(OAK_WOOD).nonOpaque()))

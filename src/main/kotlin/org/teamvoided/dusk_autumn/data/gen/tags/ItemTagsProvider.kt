@@ -2,6 +2,8 @@ package org.teamvoided.dusk_autumn.data.gen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.item.Items
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
@@ -75,5 +77,17 @@ class ItemTagsProvider(
             .add(DuskItems.BLACKSTONE_HOE)
     }
 
-    fun conventionTags() {}
+    fun conventionTags() {
+        copy(ConventionalBlockTags.COBBLESTONES, ConventionalItemTags.COBBLESTONES)
+        copy(ConventionalBlockTags.CHAINS, ConventionalItemTags.CHAINS)
+
+        getOrCreateTagBuilder(ConventionalItemTags.BERRY_FOODS)
+            .add(DuskItems.MOONBERRIES)
+
+        getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
+            .add(DuskItems.BLACKSTONE_PICKAXE)
+        getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
+            .add(DuskItems.BLACKSTONE_SWORD)
+            .add(DuskItems.BLACKSTONE_AXE)
+    }
 }

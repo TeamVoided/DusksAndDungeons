@@ -3,8 +3,10 @@ package org.teamvoided.dusk_autumn.data.gen.tags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
+import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
@@ -24,6 +26,16 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.CASCADE_WOOD)
             .add(DuskBlocks.STRIPPED_CASCADE_LOG)
             .add(DuskBlocks.STRIPPED_CASCADE_WOOD)
+        getOrCreateTagBuilder(DuskBlockTags.LOG_PILES)
+            .add(DuskBlocks.OAK_LOG_PILE)
+            .add(DuskBlocks.SPRUCE_LOG_PILE)
+            .add(DuskBlocks.BIRCH_LOG_PILE)
+            .add(DuskBlocks.JUNGLE_LOG_PILE)
+            .add(DuskBlocks.ACACIA_LOG_PILE)
+            .add(DuskBlocks.DARK_OAK_LOG_PILE)
+            .add(DuskBlocks.MANGROVE_LOG_PILE)
+            .add(DuskBlocks.CHERRY_LOG_PILE)
+            .add(DuskBlocks.CASCADE_LOG_PILE)
         getOrCreateTagBuilder(DuskBlockTags.LEAF_PILES)
             .add(DuskBlocks.OAK_LEAF_PILE)
             .add(DuskBlocks.SPRUCE_LEAF_PILE)
@@ -219,18 +231,15 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.BIG_CHAIN)
             .add(DuskBlocks.BIG_LANTERN)
             .add(DuskBlocks.BIG_SOUL_LANTERN)
-
             .add(DuskBlocks.NETHER_BRICK_PILLAR)
             .add(DuskBlocks.POLISHED_NETHER_BRICKS)
             .add(DuskBlocks.POLISHED_NETHER_BRICK_STAIRS)
             .add(DuskBlocks.POLISHED_NETHER_BRICK_SLAB)
             .add(DuskBlocks.POLISHED_NETHER_BRICK_WALL)
-
             .add(DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS)
             .add(DuskBlocks.POLISHED_RED_NETHER_BRICKS)
             .add(DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB)
             .add(DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL)
-
             .add(DuskBlocks.MIXED_NETHER_BRICKS)
             .add(DuskBlocks.CRACKED_MIXED_NETHER_BRICKS)
             .add(DuskBlocks.MIXED_NETHER_BRICK_STAIRS)
@@ -239,12 +248,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.MIXED_NETHER_BRICK_FENCE)
             .add(DuskBlocks.CHISELED_MIXED_NETHER_BRICKS)
             .add(DuskBlocks.MIXED_NETHER_BRICK_PILLAR)
-
             .add(DuskBlocks.CRACKED_RED_NETHER_BRICKS)
             .add(DuskBlocks.RED_NETHER_BRICK_FENCE)
             .add(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
             .add(DuskBlocks.RED_NETHER_BRICK_PILLAR)
-
             .add(DuskBlocks.OVERGROWN_COBBLESTONE)
             .add(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS)
             .add(DuskBlocks.OVERGROWN_COBBLESTONE_WALL)
@@ -268,6 +275,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DuskBlocks.ROCKY_SOUL_SOIL, DuskBlocks.SLATED_SOUL_SOIL, DuskBlocks.BLACKSTONE_SOUL_SOIL)
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
             .forceAddTag(DuskBlockTags.CASCADE_LOGS)
+            .forceAddTag(DuskBlockTags.LOG_PILES)
             .add(DuskBlocks.CASCADE_PLANKS)
             .add(DuskBlocks.CASCADE_STAIRS)
             .add(DuskBlocks.CASCADE_SLAB)
@@ -306,5 +314,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     fun conventionTags() {
         getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES)
             .add(DuskBlocks.OVERGROWN_COBBLESTONE)
+        getOrCreateTagBuilder(ConventionalBlockTags.CHAINS)
     }
 }

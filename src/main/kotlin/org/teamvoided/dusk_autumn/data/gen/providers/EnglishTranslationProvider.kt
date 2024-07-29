@@ -32,8 +32,8 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         getKey(DUSK_AUTUMN_TAB)?.let { gen.add(it, "Dusk Items") }
         itemTags.forEach { gen.add(it.translationKey, genLang(it.id)) }
-        DuskItems.ITEMS.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }
+        DuskItems.ITEMS.forEach { gen.add(it.translationKey, genLang(it.id)) }
     }
 
     private fun genLang(identifier: Identifier): String =

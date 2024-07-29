@@ -82,9 +82,9 @@ class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable {
         }
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val minSize = 2.5
-        val maxSize = 16 - minSize
-        val minSizeTop = 2 + minSize
-        val maxSizeTop = 16 - minSizeTop
+        val maxSize = 13.5
+        val minSizeTop = 4.5
+        val maxSizeTop = 11.5
         protected val SHAPE: VoxelShape =
             VoxelShapes.union(
                 createCuboidShape(minSize, 0.0, minSize, maxSize, 13.0, maxSize),

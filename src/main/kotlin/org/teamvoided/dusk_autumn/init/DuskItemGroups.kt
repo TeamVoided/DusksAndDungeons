@@ -21,7 +21,7 @@ object DuskItemGroups {
                 entries.addItems(
                     DuskItemLists.cascadeWood +
                             DuskItemLists.cascadeSigns +
-//                            DuskItemLists.pineWood +
+                            DuskItemLists.pineWood +
                             listOf(
                                 DuskBlocks.CASCADE_SAPLING.asItem(),
                                 DuskBlocks.CASCADE_LEAVES.asItem(),
@@ -51,8 +51,7 @@ object DuskItemGroups {
                             ) +
                             DuskItemLists.overlayBlocks
                 )
-            }
-            .build()
+            }.build()
     )
 
     fun init() {

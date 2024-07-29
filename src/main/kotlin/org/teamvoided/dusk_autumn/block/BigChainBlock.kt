@@ -18,10 +18,10 @@ class BigChainBlock(settings: Settings) : ChainBlock(settings) {
         context: ShapeContext
     ): VoxelShape {
         return when (state.get(AXIS) as Direction.Axis) {
-            Direction.Axis.X -> X_SHAPE
-            Direction.Axis.Z -> Z_SHAPE
             Direction.Axis.Y -> Y_SHAPE
-            else -> ChainBlock.X_SHAPE
+            Direction.Axis.Z -> Z_SHAPE
+            Direction.Axis.X -> X_SHAPE
+            else -> X_SHAPE
         }
     }
     companion object {
