@@ -33,28 +33,18 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
 object DuskBlocks {
-    val BLOCKS = mutableListOf<Block>()
+    val BLOCKS = mutableSetOf<Block>()
+    val SWORDABLE = mutableSetOf<Block>()
+    val PICKAXABLE = mutableSetOf<Block>()
+    val AXABLE = mutableSetOf<Block>()
+    val SHOVELABLE = mutableSetOf<Block>()
+    val HOEABLE = mutableSetOf<Block>()
 
     val leafPileSettings = Settings.create()
         .mapColor(MapColor.PLANT).strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid)
         .lavaIgnitable()
         .solidBlock(Blocks::nonSolid).noCollision().nonSolid()
         .sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY)
-
-    val BLUE_PETALS = register(
-        "blue_petals", PinkPetalsBlock(
-            Settings.create().mapColor(MapColor.PLANT)
-                .noCollision().sounds(BlockSoundGroup.PINK_PETALS).pistonBehavior(PistonBehavior.DESTROY)
-        )
-    )
-    val VIOLET_DAISY = register(
-        "violet_daisy", FlowerBlock(
-            StatusEffects.HASTE, 10f, Settings.create()
-                .mapColor(MapColor.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)
-                .offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
-        )
-    )
-    val POTTED_VIOLET_DAISY = registerNoItem("potted_violet_daisy", pottedVariant(VIOLET_DAISY))
 
     val CASCADE_SAPLING = register(
         "cascade_sapling", ThreeWideTreeSaplingBlock(
@@ -92,7 +82,7 @@ object DuskBlocks {
         )
     )
     val CASCADE_STAIRS = register(
-        "cascade_stairs", legacyStairsOf(CASCADE_PLANKS)
+        "cascade_stairs", legacyStairsOf(CASCADE_PLANKS).axe()
     )
     val CASCADE_SLAB = register(
         "cascade_slab",
@@ -100,7 +90,7 @@ object DuskBlocks {
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
                 .strength(2.0f, 3.0f).sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
-        )
+        ).axe()
     )
     val CASCADE_FENCE = register(
         "cascade_fence",
@@ -108,7 +98,7 @@ object DuskBlocks {
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
                 .strength(2.0f, 3.0f).sounds(BlockSoundGroup.CHERRY_WOOD).solid().lavaIgnitable()
-        )
+        ).axe()
     )
     val CASCADE_FENCE_GATE = register(
         "cascade_fence_gate",
@@ -117,7 +107,7 @@ object DuskBlocks {
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
                 .strength(2.0f, 3.0f).solid().lavaIgnitable()
-        )
+        ).axe()
     )
     val CASCADE_DOOR = registerNoItem(
         "cascade_door", DoorBlock(
@@ -125,7 +115,7 @@ object DuskBlocks {
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
-        )
+        ).axe()
     )
     val BLUE_DOOR = registerNoItem(
         "blue_door", DoorBlock(
@@ -133,7 +123,7 @@ object DuskBlocks {
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
-        )
+        ).axe()
     )
     val CASCADE_TRAPDOOR = register(
         "cascade_trapdoor", TrapdoorBlock(
@@ -142,7 +132,7 @@ object DuskBlocks {
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0f).nonOpaque()
                 .allowsSpawning(Blocks::nonSpawnable).lavaIgnitable(),
-        )
+        ).axe()
     )
     val CASCADE_PRESSURE_PLATE = register(
         "cascade_pressure_plate",
@@ -151,9 +141,9 @@ object DuskBlocks {
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS).noCollision()
                 .strength(0.5f).solid().lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
-        )
+        ).axe()
     )
-    val CASCADE_BUTTON = register("cascade_button", buttonOf(DuskWoodTypes.CASCADE_BLOCK_SET_TYPE))
+    val CASCADE_BUTTON = register("cascade_button", buttonOf(DuskWoodTypes.CASCADE_BLOCK_SET_TYPE).axe())
     val CASCADE_LEAVES = register(
         "cascade_leaves", FallingLeavesBlock(
             Settings.create().strength(0.2f).ticksRandomly()
@@ -162,14 +152,14 @@ object DuskBlocks {
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
                 .sounds(BlockSoundGroup.CHERRY_LEAVES)
                 .mapColor(MapColor.RED), DuskParticles.CASCADE_LEAF_PARTICLE
-        )
+        ).axe()
     )
     val CASCADE_SIGN = registerNoItem(
         "cascade_sign", VoidSignBlock(
             DuskWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
-        )
+        ).axe()
     )
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", VoidWallSignBlock(
@@ -177,14 +167,14 @@ object DuskBlocks {
             Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).dropsLike(CASCADE_SIGN)
                 .lavaIgnitable(),
-        )
+        ).axe()
     )
     val CASCADE_HANGING_SIGN = registerNoItem(
         "cascade_hanging_sign", VoidCeilingHangingSignBlock(
             DuskWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
-        )
+        ).axe()
     )
     val CASCADE_WALL_HANGING_SIGN = registerNoItem(
         "cascade_wall_hanging_sign", VoidWallHangingSignBlock(
@@ -192,7 +182,7 @@ object DuskBlocks {
             Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable()
                 .dropsLike(CASCADE_HANGING_SIGN),
-        )
+        ).axe()
     )
 
     val GOLDEN_BIRCH_LEAVES = register(
@@ -221,25 +211,11 @@ object DuskBlocks {
             Settings.create()
                 .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
                 .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
-        )
+        ).axe()
     )
-    val PINE_STAIRS = register(
-        "pine_stairs", legacyStairsOf(PINE_PLANKS)
-    )
-    val PINE_SLAB = register(
-        "pine_slab",
-        SlabBlock(
-            variantOf(PINE_PLANKS)
-        )
-    )
-    val PINE_FENCE = register(
-        "pine_fence",
-        FenceBlock(
-            Settings.create()
-                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).solid().lavaIgnitable()
-        )
-    )
+    val PINE_STAIRS = register("pine_stairs", stairsOf(PINE_PLANKS).axe())
+    val PINE_SLAB = register("pine_slab", slabOf(PINE_PLANKS).axe())
+    val PINE_FENCE = register("pine_fence", fenceOf(PINE_PLANKS))
     val PINE_FENCE_GATE = register(
         "pine_fence_gate",
         FenceGateBlock(
@@ -247,7 +223,7 @@ object DuskBlocks {
             Settings.create()
                 .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
                 .strength(2.0f, 3.0f).solid().lavaIgnitable()
-        )
+        ).axe()
     )
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
@@ -317,11 +293,11 @@ object DuskBlocks {
         SoundEvents.BLOCK_CANDLE_HIT,
         SoundEvents.BLOCK_CANDLE_FALL
     )
-    val BIG_CHAIN = register("big_chain", BigChainBlock(variantOf(CHAIN).sounds(bigChainSound)))
+    val BIG_CHAIN = register("big_chain", BigChainBlock(variantOf(CHAIN).sounds(bigChainSound)).pickaxe())
     val BIG_LANTERN =
-        register("big_lantern", BigLanternBlock(variantOf(LANTERN).sounds(bigLanternSound)))
+        register("big_lantern", BigLanternBlock(variantOf(LANTERN).sounds(bigLanternSound)).pickaxe())
     val BIG_SOUL_LANTERN =
-        register("big_soul_lantern", BigLanternBlock(variantOf(SOUL_LANTERN).sounds(bigLanternSound)))
+        register("big_soul_lantern", BigLanternBlock(variantOf(SOUL_LANTERN).sounds(bigLanternSound)).pickaxe())
     val BIG_CANDLE = register("big_candle", bigCandleOf(MapColor.SAND))
     val BIG_WHITE_CANDLE = register("big_white_candle", bigCandleOf(MapColor.WOOL))
     val BIG_LIGHT_GRAY_CANDLE = register("big_light_gray_candle", bigCandleOf(MapColor.LIGHT_GRAY))
@@ -340,45 +316,54 @@ object DuskBlocks {
     val BIG_MAGENTA_CANDLE = register("big_magenta_candle", bigCandleOf(MapColor.MAGENTA))
     val BIG_PINK_CANDLE = register("big_pink_candle", bigCandleOf(MapColor.PINK))
 
-    val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)))
-    val CRACKED_MIXED_NETHER_BRICKS = register("cracked_mixed_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)))
-    val MIXED_NETHER_BRICK_STAIRS = register("mixed_nether_brick_stairs", legacyStairsOf(NETHER_BRICK_STAIRS))
-    val MIXED_NETHER_BRICK_SLAB = register("mixed_nether_brick_slab", SlabBlock(variantOf(NETHER_BRICK_SLAB)))
-    val MIXED_NETHER_BRICK_WALL = register("mixed_nether_brick_wall", WallBlock(variantOf(NETHER_BRICK_WALL)))
-    val MIXED_NETHER_BRICK_FENCE = register("mixed_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)))
+    val BRICK_FENCE = register("brick_fence", fenceOf(BRICKS).pickaxe())
+
+    val NETHERRACK_STAIRS = register("netherrack_stairs", stairsOf(NETHERRACK).pickaxe())
+    val NETHERRACK_SLAB = register("netherrack_slab", slabOf(NETHERRACK).pickaxe())
+    val NETHERRACK_WALL = register("netherrack_wall", wallOf(NETHERRACK).pickaxe())
+    val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)).pickaxe())
+    val CRACKED_MIXED_NETHER_BRICKS =
+        register("cracked_mixed_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)).pickaxe())
+    val MIXED_NETHER_BRICK_STAIRS = register("mixed_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
+    val MIXED_NETHER_BRICK_SLAB = register("mixed_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
+    val MIXED_NETHER_BRICK_WALL = register("mixed_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
+    val MIXED_NETHER_BRICK_FENCE =
+        register("mixed_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_MIXED_NETHER_BRICKS =
-        register("chiseled_mixed_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)))
-    val MIXED_NETHER_BRICK_PILLAR = register("mixed_nether_brick_pillar", PillarBlock(variantOf(MIXED_NETHER_BRICKS)))
-    val CRACKED_RED_NETHER_BRICKS = register("cracked_red_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)))
-    val RED_NETHER_BRICK_FENCE = register("red_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)))
-    val CHISELED_RED_NETHER_BRICKS = register("chiseled_red_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)))
-    val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(variantOf(NETHER_BRICKS)))
-    val POLISHED_NETHER_BRICKS = register("polished_nether_bricks", Block(variantOf(NETHER_BRICKS)))
-    val POLISHED_NETHER_BRICK_STAIRS = register("polished_nether_brick_stairs", legacyStairsOf(NETHER_BRICK_STAIRS))
-    val POLISHED_NETHER_BRICK_SLAB = register("polished_nether_brick_slab", SlabBlock(variantOf(NETHER_BRICK_SLAB)))
-    val POLISHED_NETHER_BRICK_WALL = register("polished_nether_brick_wall", WallBlock(variantOf(NETHER_BRICK_WALL)))
-    val RED_NETHER_BRICK_PILLAR = register("red_nether_brick_pillar", PillarBlock(variantOf(RED_NETHER_BRICKS)))
-    val POLISHED_RED_NETHER_BRICKS = register("polished_red_nether_bricks", Block(variantOf(RED_NETHER_BRICKS)))
+        register("chiseled_mixed_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)).pickaxe())
+    val MIXED_NETHER_BRICK_PILLAR =
+        register("mixed_nether_brick_pillar", PillarBlock(variantOf(MIXED_NETHER_BRICKS)).pickaxe())
+    val CRACKED_RED_NETHER_BRICKS =
+        register("cracked_red_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)).pickaxe())
+    val RED_NETHER_BRICK_FENCE = register("red_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)).pickaxe())
+    val CHISELED_RED_NETHER_BRICKS =
+        register("chiseled_red_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)).pickaxe())
+    val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(variantOf(NETHER_BRICKS)).pickaxe())
+    val POLISHED_NETHER_BRICKS = register("polished_nether_bricks", Block(variantOf(NETHER_BRICKS)).pickaxe())
+    val POLISHED_NETHER_BRICK_STAIRS = register("polished_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
+    val POLISHED_NETHER_BRICK_SLAB = register("polished_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
+    val POLISHED_NETHER_BRICK_WALL = register("polished_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
+    val RED_NETHER_BRICK_PILLAR =
+        register("red_nether_brick_pillar", PillarBlock(variantOf(RED_NETHER_BRICKS)).pickaxe())
+    val POLISHED_RED_NETHER_BRICKS =
+        register("polished_red_nether_bricks", Block(variantOf(RED_NETHER_BRICKS)).pickaxe())
     val POLISHED_RED_NETHER_BRICK_STAIRS =
-        register("polished_red_nether_brick_stairs", legacyStairsOf(RED_NETHER_BRICK_STAIRS))
+        register("polished_red_nether_brick_stairs", stairsOf(RED_NETHER_BRICK_STAIRS).pickaxe())
     val POLISHED_RED_NETHER_BRICK_SLAB =
-        register("polished_red_nether_brick_slab", SlabBlock(variantOf(RED_NETHER_BRICK_SLAB)))
+        register("polished_red_nether_brick_slab", slabOf(RED_NETHER_BRICK_SLAB).pickaxe())
     val POLISHED_RED_NETHER_BRICK_WALL =
-        register("polished_red_nether_brick_wall", WallBlock(variantOf(RED_NETHER_BRICK_WALL)))
+        register("polished_red_nether_brick_wall", wallOf(RED_NETHER_BRICK_WALL).pickaxe())
 
 
-    val OVERGROWN_COBBLESTONE = register("overgrown_cobblestone", Block(variantOf(MOSSY_COBBLESTONE)))
-    val OVERGROWN_COBBLESTONE_STAIRS = register("overgrown_cobblestone_stairs", legacyStairsOf(OVERGROWN_COBBLESTONE))
-    val OVERGROWN_COBBLESTONE_SLAB =
-        register("overgrown_cobblestone_slab", SlabBlock(variantOf(MOSSY_COBBLESTONE_SLAB)))
-    val OVERGROWN_COBBLESTONE_WALL =
-        register("overgrown_cobblestone_wall", WallBlock(variantOf(MOSSY_COBBLESTONE_WALL)))
-    val OVERGROWN_STONE_BRICKS = register("overgrown_stone_bricks", Block(variantOf(MOSSY_STONE_BRICKS)))
-    val OVERGROWN_STONE_BRICK_STAIRS = register("overgrown_stone_brick_stairs", legacyStairsOf(MOSSY_STONE_BRICKS))
-    val OVERGROWN_STONE_BRICK_SLAB =
-        register("overgrown_stone_brick_slab", SlabBlock(variantOf(MOSSY_STONE_BRICK_SLAB)))
-    val OVERGROWN_STONE_BRICK_WALL =
-        register("overgrown_stone_brick_wall", WallBlock(variantOf(MOSSY_STONE_BRICK_WALL)))
+    val OVERGROWN_COBBLESTONE = register("overgrown_cobblestone", Block(variantOf(MOSSY_COBBLESTONE)).pickaxe())
+    val OVERGROWN_COBBLESTONE_STAIRS =
+        register("overgrown_cobblestone_stairs", stairsOf(OVERGROWN_COBBLESTONE).pickaxe())
+    val OVERGROWN_COBBLESTONE_SLAB = register("overgrown_cobblestone_slab", slabOf(MOSSY_COBBLESTONE_SLAB).pickaxe())
+    val OVERGROWN_COBBLESTONE_WALL = register("overgrown_cobblestone_wall", wallOf(MOSSY_COBBLESTONE_WALL).pickaxe())
+    val OVERGROWN_STONE_BRICKS = register("overgrown_stone_bricks", Block(variantOf(MOSSY_STONE_BRICKS)).pickaxe())
+    val OVERGROWN_STONE_BRICK_STAIRS = register("overgrown_stone_brick_stairs", stairsOf(MOSSY_STONE_BRICKS).pickaxe())
+    val OVERGROWN_STONE_BRICK_SLAB = register("overgrown_stone_brick_slab", slabOf(MOSSY_STONE_BRICK_SLAB).pickaxe())
+    val OVERGROWN_STONE_BRICK_WALL = register("overgrown_stone_brick_wall", wallOf(MOSSY_STONE_BRICK_WALL).pickaxe())
 
     val ROOT_BLOCK = register(
         "root_block",
@@ -396,129 +381,36 @@ object DuskBlocks {
                         SoundEvents.BLOCK_HANGING_ROOTS_FALL
                     )
                 )
+        ).sword().axe()
+    )
+
+    val BLUE_PETALS = register(
+        "blue_petals", PinkPetalsBlock(
+            Settings.create().mapColor(MapColor.PLANT)
+                .noCollision().sounds(BlockSoundGroup.PINK_PETALS).pistonBehavior(PistonBehavior.DESTROY)
+        ).sword().hoe()
+    )
+    val VIOLET_DAISY = register(
+        "violet_daisy", FlowerBlock(
+            StatusEffects.HASTE, 10f, Settings.create()
+                .mapColor(MapColor.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)
+                .offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         )
     )
-    val ROCKY_DIRT = register("dirty_rocks", Block(variantOf(DIRT).mapColor(COBBLESTONE.defaultMapColor)))
-    val ROCKY_GRASS = register(
-        "grassy_rocks",
-        RockyGrassBlock(ROCKY_DIRT, variantOf(GRASS_BLOCK).mapColor(COBBLESTONE.defaultMapColor))
-    )
-    val ROCKY_PODZOL = register("podzol_rocks", SnowyBlock(variantOf(PODZOL).mapColor(COBBLESTONE.defaultMapColor)))
-    val ROCKY_MYCELIUM = register(
-        "mycelium_rocks",
-        RockyMyceliumBlock(ROCKY_DIRT, variantOf(MYCELIUM).mapColor(COBBLESTONE.defaultMapColor))
-    )
-    val ROCKY_COARSE_DIRT =
-        register("coarsely_dirty_rocks", Block(variantOf(COARSE_DIRT).mapColor(COBBLESTONE.defaultMapColor)))
-    val ROCKY_DIRT_PATH = register(
-        "rocky_path",
-        RockyDirtPathBlock(ROCKY_DIRT, variantOf(DIRT_PATH).mapColor(COBBLESTONE.defaultMapColor))
-    )
-    val ROCKY_MUD = register("muddy_rocks", MudBlock(variantOf(MUD).mapColor(COBBLESTONE.defaultMapColor)))
-    val ROCKY_SNOW = register("snowy_rocks", Block(variantOf(SNOW_BLOCK).mapColor(COBBLESTONE.defaultMapColor)))
-    val ROCKY_GRAVEL =
-        register("rocky_rocks", GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLESTONE.defaultMapColor)))
-    val ROCKY_SAND =
-        register("sandy_rocks", GravelBlock(Color(14406560), variantOf(SAND).mapColor(COBBLESTONE.defaultMapColor)))
-    val ROCKY_RED_SAND = register(
-        "red_sandy_rocks",
-        GravelBlock(Color(11098145), variantOf(RED_SAND).mapColor(COBBLESTONE.defaultMapColor))
-    )
-    val ROCKY_SOUL_SAND =
-        register("rocky_soul_sand", SoulSandBlock(variantOf(SOUL_SAND).mapColor(COBBLESTONE.defaultMapColor)))
-    val ROCKY_SOUL_SOIL = register("rocky_soul_soil", Block(variantOf(SOUL_SOIL).mapColor(COBBLESTONE.defaultMapColor)))
-
-    val SLATED_DIRT = register("dirty_slate", Block(variantOf(DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val SLATED_GRASS = register(
-        "grassy_slate",
-        RockyGrassBlock(SLATED_DIRT, variantOf(GRASS_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val SLATED_PODZOL =
-        register("podzol_slate", SnowyBlock(variantOf(PODZOL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val SLATED_MYCELIUM = register(
-        "mycelium_slate",
-        RockyMyceliumBlock(SLATED_DIRT, variantOf(MYCELIUM).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val SLATED_COARSE_DIRT =
-        register("coarsely_dirty_slate", Block(variantOf(COARSE_DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val SLATED_DIRT_PATH = register(
-        "slated_path",
-        RockyDirtPathBlock(SLATED_DIRT, variantOf(DIRT_PATH).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val SLATED_MUD = register("muddy_slate", MudBlock(variantOf(MUD).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val SLATED_SNOW = register("snowy_slate", Block(variantOf(SNOW_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val SLATED_GRAVEL = register(
-        "slated_slate",
-        GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val SLATED_SAND = register(
-        "sandy_slate",
-        GravelBlock(Color(14406560), variantOf(SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val SLATED_RED_SAND = register(
-        "red_sandy_slate",
-        GravelBlock(Color(11098145), variantOf(RED_SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val SLATED_SOUL_SAND =
-        register("slated_soul_sand", SoulSandBlock(variantOf(SOUL_SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val SLATED_SOUL_SOIL =
-        register("slated_soul_soil", Block(variantOf(SOUL_SOIL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-
-    val BLACKSTONE_DIRT =
-        register("dirty_blackstone", Block(variantOf(DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val BLACKSTONE_GRASS = register(
-        "grassy_blackstone",
-        RockyGrassBlock(BLACKSTONE_DIRT, variantOf(GRASS_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val BLACKSTONE_PODZOL =
-        register("podzol_blackstone", SnowyBlock(variantOf(PODZOL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val BLACKSTONE_MYCELIUM = register(
-        "mycelium_blackstone",
-        RockyMyceliumBlock(BLACKSTONE_DIRT, variantOf(MYCELIUM).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val BLACKSTONE_COARSE_DIRT =
-        register("coarsely_dirty_blackstone", Block(variantOf(COARSE_DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val BLACKSTONE_DIRT_PATH = register(
-        "blackstoned_path",
-        RockyDirtPathBlock(BLACKSTONE_DIRT, variantOf(DIRT_PATH).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val BLACKSTONE_MUD =
-        register("muddy_blackstone", MudBlock(variantOf(MUD).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val BLACKSTONE_SNOW =
-        register("snowy_blackstone", Block(variantOf(SNOW_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-    val BLACKSTONE_GRAVEL = register(
-        "blackstoned_blackstone",
-        GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val BLACKSTONE_SAND = register(
-        "sandy_blackstone",
-        GravelBlock(Color(14406560), variantOf(SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val BLACKSTONE_RED_SAND = register(
-        "red_sandy_blackstone",
-        GravelBlock(Color(11098145), variantOf(RED_SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val BLACKSTONE_SOUL_SAND = register(
-        "blackstoned_soul_sand",
-        SoulSandBlock(variantOf(SOUL_SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-    )
-    val BLACKSTONE_SOUL_SOIL =
-        register("blackstoned_soul_soil", Block(variantOf(SOUL_SOIL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)))
-
-
+    val POTTED_VIOLET_DAISY = registerNoItem("potted_violet_daisy", pottedVariant(VIOLET_DAISY))
     val WILD_WHEAT = registerNoItem(
         "wild_wheat",
         TallPlantBlock(
             Settings.create().mapColor(MapColor.PLANT).noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
-        )
+        ).axe()
     )
     val GOLDEN_BEETROOTS = registerNoItem(
         "golden_beetroots",
         GoldenBeetrootsBlock(
             Settings.create().mapColor(MapColor.GOLD).noCollision().ticksRandomly().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
-        )
+        ).axe()
     )
     val MOONBERRY_VINE = register(
         "moonberry_vine",
@@ -526,15 +418,177 @@ object DuskBlocks {
             Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f)
                 .sounds(BlockSoundGroup.CAVE_VINES).luminance(MoonberryVineBlock.getLuminanceSupplier(8, 11))
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
-        )
+        ).axe().sword()
     )
     val MOONBERRY_VINELET = registerNoItem(
         "moonberry_vinelet", MoonberryVineletBlock(
             Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f).ticksRandomly()
                 .breakInstantly().sounds(BlockSoundGroup.CAVE_VINES).lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY)
-        )
+        ).axe().sword()
     )
+
+    val ROCKY_DIRT =
+        register("dirty_rocks", Block(variantOf(DIRT).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel())
+    val ROCKY_GRASS = register(
+        "grassy_rocks",
+        RockyGrassBlock(ROCKY_DIRT, variantOf(GRASS_BLOCK).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel()
+    )
+    val ROCKY_PODZOL =
+        register("podzol_rocks", SnowyBlock(variantOf(PODZOL).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel())
+    val ROCKY_MYCELIUM = register(
+        "mycelium_rocks",
+        RockyMyceliumBlock(ROCKY_DIRT, variantOf(MYCELIUM).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel()
+    )
+    val ROCKY_COARSE_DIRT = register(
+        "coarsely_dirty_rocks",
+        Block(variantOf(COARSE_DIRT).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel()
+    )
+    val ROCKY_DIRT_PATH = register(
+        "rocky_path",
+        RockyDirtPathBlock(ROCKY_DIRT, variantOf(DIRT_PATH).mapColor(COBBLESTONE.defaultMapColor))
+    )
+    val ROCKY_MUD = register("muddy_rocks", MudBlock(variantOf(MUD).mapColor(COBBLESTONE.defaultMapColor)))
+    val ROCKY_SNOW = register("snowy_rocks", Block(variantOf(SNOW_BLOCK).mapColor(COBBLESTONE.defaultMapColor)))
+    val ROCKY_GRAVEL = register(
+        "rocky_rocks",
+        GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel()
+    )
+    val ROCKY_SAND = register(
+        "sandy_rocks",
+        GravelBlock(Color(14406560), variantOf(SAND).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel()
+    )
+    val ROCKY_RED_SAND = register(
+        "red_sandy_rocks",
+        GravelBlock(Color(11098145), variantOf(RED_SAND).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel()
+    )
+    val ROCKY_SOUL_SAND =
+        register(
+            "rocky_soul_sand",
+            SoulSandBlock(variantOf(SOUL_SAND).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel()
+        )
+    val ROCKY_SOUL_SOIL = register(
+        "rocky_soul_soil",
+        Block(variantOf(SOUL_SOIL).mapColor(COBBLESTONE.defaultMapColor)).pickaxe().shovel()
+    )
+
+    val SLATED_DIRT =
+        register("dirty_slate", Block(variantOf(DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel())
+    val SLATED_GRASS = register(
+        "grassy_slate",
+        RockyGrassBlock(SLATED_DIRT, variantOf(GRASS_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe()
+            .shovel()
+    )
+    val SLATED_PODZOL =
+        register(
+            "podzol_slate",
+            SnowyBlock(variantOf(PODZOL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+    val SLATED_MYCELIUM = register(
+        "mycelium_slate",
+        RockyMyceliumBlock(SLATED_DIRT, variantOf(MYCELIUM).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe()
+            .shovel()
+    )
+    val SLATED_COARSE_DIRT =
+        register(
+            "coarsely_dirty_slate",
+            Block(variantOf(COARSE_DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+    val SLATED_DIRT_PATH = register(
+        "slated_path",
+        RockyDirtPathBlock(SLATED_DIRT, variantOf(DIRT_PATH).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe()
+            .shovel()
+    )
+    val SLATED_MUD =
+        register("muddy_slate", MudBlock(variantOf(MUD).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel())
+    val SLATED_SNOW = register(
+        "snowy_slate",
+        Block(variantOf(SNOW_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+    )
+    val SLATED_GRAVEL = register(
+        "slated_slate",
+        GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+    )
+    val SLATED_SAND = register(
+        "sandy_slate",
+        GravelBlock(Color(14406560), variantOf(SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+    )
+    val SLATED_RED_SAND = register(
+        "red_sandy_slate",
+        GravelBlock(Color(11098145), variantOf(RED_SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+    )
+    val SLATED_SOUL_SAND =
+        register(
+            "slated_soul_sand",
+            SoulSandBlock(variantOf(SOUL_SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+    val SLATED_SOUL_SOIL =
+        register(
+            "slated_soul_soil",
+            Block(variantOf(SOUL_SOIL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+
+    val BLACKSTONE_DIRT =
+        register(
+            "dirty_blackstone",
+            Block(variantOf(DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+    val BLACKSTONE_GRASS = register(
+        "grassy_blackstone",
+        RockyGrassBlock(BLACKSTONE_DIRT, variantOf(GRASS_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe()
+            .shovel()
+    )
+    val BLACKSTONE_PODZOL =
+        register(
+            "podzol_blackstone",
+            SnowyBlock(variantOf(PODZOL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+    val BLACKSTONE_MYCELIUM = register(
+        "mycelium_blackstone",
+        RockyMyceliumBlock(BLACKSTONE_DIRT, variantOf(MYCELIUM).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe()
+            .shovel()
+    )
+    val BLACKSTONE_COARSE_DIRT =
+        register(
+            "coarsely_dirty_blackstone",
+            Block(variantOf(COARSE_DIRT).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+    val BLACKSTONE_DIRT_PATH = register(
+        "blackstoned_path",
+        RockyDirtPathBlock(BLACKSTONE_DIRT, variantOf(DIRT_PATH).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe()
+            .shovel()
+    )
+    val BLACKSTONE_MUD =
+        register(
+            "muddy_blackstone",
+            MudBlock(variantOf(MUD).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+    val BLACKSTONE_SNOW =
+        register(
+            "snowy_blackstone",
+            Block(variantOf(SNOW_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
+    val BLACKSTONE_GRAVEL = register(
+        "blackstoned_blackstone",
+        GravelBlock(Color(-8356741), variantOf(GRAVEL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+    )
+    val BLACKSTONE_SAND = register(
+        "sandy_blackstone",
+        GravelBlock(Color(14406560), variantOf(SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+    )
+    val BLACKSTONE_RED_SAND = register(
+        "red_sandy_blackstone",
+        GravelBlock(Color(11098145), variantOf(RED_SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+    )
+    val BLACKSTONE_SOUL_SAND = register(
+        "blackstoned_soul_sand",
+        SoulSandBlock(variantOf(SOUL_SAND).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+    )
+    val BLACKSTONE_SOUL_SOIL =
+        register(
+            "blackstoned_soul_soil",
+            Block(variantOf(SOUL_SOIL).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).pickaxe().shovel()
+        )
 
     fun init() {
         DuskBlockFamilies.init()
@@ -600,6 +654,48 @@ object DuskBlocks {
         removeRocks(BLACKSTONE_RED_SAND, RED_SAND, BLACKSTONE)
         removeRocks(BLACKSTONE_SOUL_SAND, SOUL_SAND, BLACKSTONE)
         removeRocks(BLACKSTONE_SOUL_SOIL, SOUL_SOIL, BLACKSTONE)
+    }
+
+    fun Block.sword(): Block {
+        SWORDABLE.add(this)
+        return this
+    }
+
+    fun Block.pickaxe(): Block {
+        PICKAXABLE.add(this)
+        return this
+    }
+
+    fun Block.axe(): Block {
+        AXABLE.add(this)
+        return this
+    }
+
+    fun Block.shovel(): Block {
+        SHOVELABLE.add(this)
+        return this
+    }
+
+    fun Block.hoe(): Block {
+        HOEABLE.add(this)
+        return this
+    }
+
+
+    fun stairsOf(block: Block): Block {
+        return StairsBlock(block.defaultState, variantOf(block))
+    }
+
+    fun slabOf(block: Block): Block {
+        return SlabBlock(variantOf(block))
+    }
+
+    fun wallOf(block: Block): Block {
+        return WallBlock(variantOf(block).solid())
+    }
+
+    fun fenceOf(block: Block): Block {
+        return FenceBlock(variantOf(block).solid())
     }
 
     fun bigCandleOf(color: MapColor): Block {

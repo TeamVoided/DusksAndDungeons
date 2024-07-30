@@ -30,6 +30,8 @@ object DuskItemGroups {
                                 DuskBlocks.BLUE_PETALS.asItem(),
                             ) +
                             DuskItemLists.bigItems +
+                            listOf(DuskBlocks.BRICK_FENCE.asItem()) +
+                            DuskItemLists.netherrackStuff +
                             DuskItemLists.netherBrickStuff +
                             listOf(DuskBlocks.CRACKED_RED_NETHER_BRICKS.asItem()) +
                             DuskItemLists.redNetherBrickStuff +
@@ -38,8 +40,6 @@ object DuskItemGroups {
                             DuskItemLists.overgrownCobblestone +
                             DuskItemLists.overgrownStoneBricks +
                             listOf(DuskBlocks.ROOT_BLOCK.asItem()) +
-                            DuskItemLists.logPiles +
-                            DuskItemLists.leafPiles +
                             DuskItemLists.moonberry +
                             listOf(
                                 DuskItems.FARMERS_HAT,
@@ -47,6 +47,8 @@ object DuskItemGroups {
                                 DuskItems.GOLDEN_BEETROOT,
                                 DuskItems.BLUE_DOOR
                             ) +
+                            DuskItemLists.logPiles +
+                            DuskItemLists.leafPiles +
                             DuskItemLists.overlayBlocks
                 )
             }.build()
@@ -54,16 +56,11 @@ object DuskItemGroups {
 
     fun init() {
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON, DuskItemLists.cascadeWood)
-        registerInVanillaTab(
-            ItemGroups.BUILDING_BLOCKS,
-            Items.MOSSY_COBBLESTONE_WALL,
-            DuskItemLists.overgrownCobblestone
-        )
-        registerInVanillaTab(
-            ItemGroups.BUILDING_BLOCKS,
-            Items.MOSSY_STONE_BRICK_WALL,
-            DuskItemLists.overgrownStoneBricks
-        )
+        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DuskBlocks.BIG_CHAIN.asItem()))
+        registerInVanillaTab(ItemGroups.COLORED_BLOCKS, Items.PINK_CANDLE, DuskItemLists.bigCandles)
+        registerInVanillaTab(ItemGroups.FUNCTIONAL_BLOCKS, Items.PINK_CANDLE, DuskItemLists.bigCandles)
+        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.BRICK_WALL, DuskBlocks.BRICK_FENCE.asItem())
+        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.NETHERRACK, DuskItemLists.netherrackStuff)
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_NETHER_BRICKS, DuskItemLists.netherBrickStuff)
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
@@ -75,13 +72,20 @@ object DuskItemGroups {
             Items.RED_NETHER_BRICK_WALL,
             DuskItemLists.redNetherBrickStuff + DuskItemLists.mixedNetherBrickStuff
         )
-        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DuskBlocks.BIG_CHAIN.asItem()))
-        registerInVanillaTab(ItemGroups.COLORED_BLOCKS, Items.PINK_CANDLE, DuskItemLists.bigCandles)
-        registerInVanillaTab(ItemGroups.FUNCTIONAL_BLOCKS, Items.PINK_CANDLE, DuskItemLists.bigCandles)
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
             Items.SOUL_LANTERN,
             listOf(DuskBlocks.BIG_LANTERN.asItem(), DuskBlocks.BIG_SOUL_LANTERN.asItem())
+        )
+        registerInVanillaTab(
+            ItemGroups.BUILDING_BLOCKS,
+            Items.MOSSY_COBBLESTONE_WALL,
+            DuskItemLists.overgrownCobblestone
+        )
+        registerInVanillaTab(
+            ItemGroups.BUILDING_BLOCKS,
+            Items.MOSSY_STONE_BRICK_WALL,
+            DuskItemLists.overgrownStoneBricks
         )
         registerInVanillaTab(
             ItemGroups.NATURAL_BLOCKS, Items.FLOWERING_AZALEA_LEAVES, listOf(

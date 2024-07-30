@@ -2,13 +2,7 @@ package org.teamvoided.dusk_autumn.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
-import net.minecraft.block.BeetrootsBlock
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.DoorBlock
-import net.minecraft.block.FlowerPotBlock
-import net.minecraft.block.SlabBlock
-import net.minecraft.block.TallPlantBlock
+import net.minecraft.block.*
 import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
 import net.minecraft.item.Items
@@ -42,24 +36,17 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             DuskBlocks.WILD_WHEAT,
             DuskBlocks.GOLDEN_BEETROOTS,
             DuskBlocks.MOONBERRY_VINE
-        )
+        ) + logPiles.map { it.first } + leafPiles.map { it.first }
 
     override fun generate() {
-        DuskBlocks.BLOCKS.filter {
-            (
-                    it !is SlabBlock &&
-                            it !is DoorBlock &&
-                            it !is BigCandleBlock &&
-                            it !is FlowerPotBlock &&
-                            it !is LogPileBlock &&
-                            it !is LeafPileBlock) &&
-                    it !in excludeList
-        }.forEach(::addDrop)
-        DuskBlocks.BLOCKS.filter { it is SlabBlock && it !in excludeList }.forEach { add(it, ::slabDrops) }
-        DuskBlocks.BLOCKS.filter { it is DoorBlock && it !in excludeList }.forEach { add(it, ::doorDrops) }
-        DuskBlocks.BLOCKS.filter { it is BigCandleBlock && it !in excludeList }.forEach { add(it, ::candleDrops) }
-        logPiles.forEach { (pile, _) ->
-            add(pile) { logPile(pile) }
+        DuskBlocks.BLOCKS.filter { (it !in excludeList && it !is FlowerPotBlock) }.forEach {
+            when (it) {
+                is SlabBlock -> add(it, ::slabDrops)
+                is DoorBlock -> add(it, ::doorDrops)
+                is CandleBlock -> add(it, ::candleDrops)
+                is LogPileBlock -> add(it, ::logPile)
+                else -> addDrop(it)
+            }
         }
         leafPiles.forEach { (pile, leaves) ->
             add(pile) { leafPile(it, leaves) }

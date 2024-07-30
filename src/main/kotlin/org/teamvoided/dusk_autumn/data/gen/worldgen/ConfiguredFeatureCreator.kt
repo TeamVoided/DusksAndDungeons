@@ -164,7 +164,11 @@ object ConfiguredFeatureCreator {
         c.registerConfiguredFeature(
             COBBLESTONE_ROCK,
             Feature.ORE,
-            OreFeatureConfig(TagMatchRuleTest(DuskBlockTags.REPLACEABLE_OR_DIRT), Blocks.COBBLESTONE.defaultState, 33)
+            OreFeatureConfig(
+                TagMatchRuleTest(DuskBlockTags.REPLACEABLE_OR_DIRT),
+                DuskBlocks.OVERGROWN_COBBLESTONE.defaultState,
+                33
+            )
         )
 
         c.registerConfiguredFeature(

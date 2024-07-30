@@ -62,6 +62,11 @@ object DuskItemLists {
         DuskBlocks.BIG_LANTERN.asItem(),
         DuskBlocks.BIG_SOUL_LANTERN.asItem()
     ) + bigCandles
+    val netherrackStuff = listOf(
+        DuskBlocks.NETHERRACK_STAIRS.asItem(),
+        DuskBlocks.NETHERRACK_SLAB.asItem(),
+        DuskBlocks.NETHERRACK_WALL.asItem()
+    )
     val netherBrickStuff = listOf(
         DuskBlocks.NETHER_BRICK_PILLAR.asItem(),
         DuskBlocks.POLISHED_NETHER_BRICKS.asItem(),

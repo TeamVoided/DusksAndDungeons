@@ -55,6 +55,17 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT)).offerTo(e)
         e.createBigLantern(DuskBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DuskBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
+        e.createFence(DuskBlocks.BRICK_FENCE, Blocks.BRICKS, Items.BRICK)
+        e.createStair(DuskBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
+        e.createSlab(DuskBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
+        e.createwall(DuskBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)
+        e.createStonecuttedSet(
+            listOf(Blocks.NETHERRACK),
+            null,
+            DuskBlocks.NETHERRACK_STAIRS,
+            DuskBlocks.NETHERRACK_SLAB,
+            DuskBlocks.NETHERRACK_WALL
+        )
         offerCrackingRecipe(e, DuskBlocks.CRACKED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
         e.createFence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS, Items.NETHER_BRICK)
         createChiseledBlockRecipe(

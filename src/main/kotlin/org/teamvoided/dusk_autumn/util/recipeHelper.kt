@@ -109,6 +109,46 @@ fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConver
         .offerTo(this)
 }
 
+fun RecipeExporter.createStair(output: ItemConvertible, block: ItemConvertible) {
+    createStair(output, block, block)
+}
+
+fun RecipeExporter.createSlab(output: ItemConvertible, block: ItemConvertible) {
+    createSlab(output, block, block)
+}
+
+fun RecipeExporter.createwall(output: ItemConvertible, block: ItemConvertible) {
+    createwall(output, block, block)
+}
+
+fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible) {
+    createFence(output, block, block)
+}
+
+fun RecipeExporter.createStair(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+        .ingredient('#', block)
+        .pattern("#  ")
+        .pattern("## ")
+        .pattern("###")
+        .criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item)).offerTo(this)
+}
+
+fun RecipeExporter.createSlab(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .ingredient('#', block)
+        .pattern("###")
+        .criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item)).offerTo(this)
+}
+
+fun RecipeExporter.createwall(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
+        .ingredient('#', block)
+        .pattern("###")
+        .pattern("###")
+        .criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item)).offerTo(this)
+}
+
 fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
     ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
         .ingredient('#', block)
@@ -128,7 +168,8 @@ fun RecipeExporter.createDiagonalRecipe(
         .ingredient('%', secondary)
         .pattern("#%")
         .pattern("%#")
-        .criterion(FabricRecipeProvider.hasItem(primary), FabricRecipeProvider.conditionsFromItem(primary)).offerTo(this)
+        .criterion(FabricRecipeProvider.hasItem(primary), FabricRecipeProvider.conditionsFromItem(primary))
+        .offerTo(this)
 }
 
 fun RecipeExporter.createPiles(output: ItemConvertible, input: ItemConvertible) {

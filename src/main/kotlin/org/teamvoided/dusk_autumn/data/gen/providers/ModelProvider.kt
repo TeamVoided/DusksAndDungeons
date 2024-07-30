@@ -71,10 +71,15 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.registerBigCandle(candle, cake)
         }
 
-        gen.registerFence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
+        gen.fence(DuskBlocks.BRICK_FENCE, Blocks.BRICKS)
+
+        gen.stairs(DuskBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
+        gen.slab(DuskBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
+        gen.wall(DuskBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)
+        gen.fence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
         gen.registerSimpleCubeAll(DuskBlocks.CRACKED_RED_NETHER_BRICKS)
         gen.registerSimpleCubeAll(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
-        gen.registerFence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS)
+        gen.fence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS)
         gen.registerSimpleCubeAll(DuskBlocks.CRACKED_MIXED_NETHER_BRICKS)
         gen.registerSimpleCubeAll(DuskBlocks.CHISELED_MIXED_NETHER_BRICKS)
         gen.registerMixedNetherBrickPillar()
