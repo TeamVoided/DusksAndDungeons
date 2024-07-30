@@ -25,7 +25,7 @@ import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.Falling
 @Suppress("unused")
 class DuskAutumnsClient {
 
-    val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
+//    val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
     val CASCADE_LEAF_COLOR = 14701655
 
     var cooldown = 0
@@ -93,7 +93,7 @@ class DuskAutumnsClient {
 //    val GOLDEN_BIRCH_COLOR = 16761873
 //    val GOLDEN_BIRCH_COLOR = 16760872
 
-        cutoutList.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
+        DuskBlocks.CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
     }
 
     private fun initItems() {

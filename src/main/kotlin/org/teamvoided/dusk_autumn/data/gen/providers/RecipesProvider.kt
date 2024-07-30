@@ -59,12 +59,25 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.createStair(DuskBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         e.createSlab(DuskBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
         e.createwall(DuskBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)
+        e.createStackedCraft(DuskBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
         e.createStonecuttedSet(
             listOf(Blocks.NETHERRACK),
             null,
             DuskBlocks.NETHERRACK_STAIRS,
             DuskBlocks.NETHERRACK_SLAB,
             DuskBlocks.NETHERRACK_WALL
+        )
+        e.createStonecuttedSet(
+            listOf(Blocks.NETHER_BRICKS, DuskBlocks.POLISHED_NETHER_BRICKS),
+            DuskBlocks.POLISHED_NETHER_BRICKS,
+            DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
+            DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
+            DuskBlocks.POLISHED_NETHER_BRICK_WALL,
+        )
+        e.createStonecuttedSet(
+            listOf(Blocks.NETHER_BRICKS),
+            DuskBlocks.NETHER_BRICK_PILLAR, null, null,
+            Blocks.NETHER_BRICK_FENCE
         )
         offerCrackingRecipe(e, DuskBlocks.CRACKED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
         e.createFence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS, Items.NETHER_BRICK)
@@ -73,41 +86,26 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.CHISELED_RED_NETHER_BRICKS,
             Ingredient.ofItems(Blocks.RED_NETHER_BRICK_SLAB)
         ).criterion("has_nether_bricks", conditionsFromItem(Blocks.RED_NETHER_BRICKS)).offerTo(e)
-        e.createDiagonalRecipe(DuskBlocks.MIXED_NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
-        offerCrackingRecipe(e, DuskBlocks.CRACKED_MIXED_NETHER_BRICKS, DuskBlocks.MIXED_NETHER_BRICKS)
-        e.createFence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS, Items.NETHER_BRICK)
-        createChiseledBlockRecipe(
-            RecipeCategory.BUILDING_BLOCKS,
-            DuskBlocks.CHISELED_MIXED_NETHER_BRICKS,
-            Ingredient.ofItems(DuskBlocks.MIXED_NETHER_BRICK_SLAB)
-        ).criterion("has_nether_bricks", conditionsFromItem(DuskBlocks.MIXED_NETHER_BRICKS)).offerTo(e)
-        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICK_FENCE)
-        e.createStackedCraft(DuskBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
         e.createStackedCraft(DuskBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
+        e.createStonecuttedSet(
+            listOf(Blocks.RED_NETHER_BRICKS),
+            DuskBlocks.RED_NETHER_BRICK_PILLAR,
+            DuskBlocks.CHISELED_RED_NETHER_BRICKS, null,
+            DuskBlocks.RED_NETHER_BRICK_FENCE
+        )
+        e.createDiagonalRecipe(DuskBlocks.MIXED_NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
+        e.createFence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
             DuskBlocks.MIXED_NETHER_BRICK_PILLAR,
             DuskBlocks.MIXED_NETHER_BRICKS,
             DuskItemTags.NETHER_BRICKS
         )
         e.createStonecuttedSet(
-            listOf(Blocks.NETHER_BRICKS, DuskBlocks.POLISHED_NETHER_BRICKS),
-            DuskBlocks.POLISHED_NETHER_BRICKS,
-            DuskBlocks.POLISHED_NETHER_BRICK_STAIRS,
-            DuskBlocks.POLISHED_NETHER_BRICK_SLAB,
-            DuskBlocks.POLISHED_NETHER_BRICK_WALL,
-            listOf(Blocks.NETHER_BRICK_FENCE, DuskBlocks.NETHER_BRICK_PILLAR)
-        )
-        e.createStonecuttedSet(
             listOf(Blocks.RED_NETHER_BRICKS, DuskBlocks.POLISHED_RED_NETHER_BRICKS),
             DuskBlocks.POLISHED_RED_NETHER_BRICKS,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
             DuskBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
-            DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL,
-            listOf(
-                DuskBlocks.RED_NETHER_BRICK_FENCE,
-                DuskBlocks.RED_NETHER_BRICK_PILLAR,
-                DuskBlocks.CHISELED_RED_NETHER_BRICKS
-            )
+            DuskBlocks.POLISHED_RED_NETHER_BRICK_WALL
         )
         e.createStonecuttedSet(
             listOf(DuskBlocks.MIXED_NETHER_BRICKS),
@@ -115,8 +113,37 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DuskBlocks.MIXED_NETHER_BRICK_STAIRS,
             DuskBlocks.MIXED_NETHER_BRICK_SLAB,
             DuskBlocks.MIXED_NETHER_BRICK_WALL,
-            listOf(DuskBlocks.MIXED_NETHER_BRICK_PILLAR, DuskBlocks.RED_NETHER_BRICK_FENCE)
+            listOf(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICK_PILLAR)
         )
+        e.createFence(DuskBlocks.BLUE_NETHER_BRICK_FENCE, DuskBlocks.BLUE_NETHER_BRICKS, Items.NETHER_BRICK)
+        e.createStackedCraft(DuskBlocks.BLUE_NETHER_BRICK_PILLAR, DuskBlocks.BLUE_NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
+        e.createStonecuttedSet(
+            listOf(DuskBlocks.BLUE_NETHER_BRICKS),
+            null,
+            DuskBlocks.BLUE_NETHER_BRICK_STAIRS,
+            DuskBlocks.BLUE_NETHER_BRICK_SLAB,
+            DuskBlocks.BLUE_NETHER_BRICK_WALL,
+            listOf(DuskBlocks.BLUE_NETHER_BRICK_FENCE, DuskBlocks.BLUE_NETHER_BRICK_PILLAR)
+        )
+        e.createStonecuttedSet(
+            listOf(DuskBlocks.BLUE_NETHER_BRICKS, DuskBlocks.POLISHED_BLUE_NETHER_BRICKS),
+            DuskBlocks.POLISHED_BLUE_NETHER_BRICKS,
+            DuskBlocks.POLISHED_BLUE_NETHER_BRICK_STAIRS,
+            DuskBlocks.POLISHED_BLUE_NETHER_BRICK_SLAB,
+            DuskBlocks.POLISHED_BLUE_NETHER_BRICK_WALL
+        )
+        e.createDiagonalRecipe(DuskBlocks.MIXED_BLUE_NETHER_BRICKS, Blocks.NETHER_BRICKS, DuskBlocks.BLUE_NETHER_BRICKS)
+        e.createFence(DuskBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DuskBlocks.MIXED_BLUE_NETHER_BRICKS, Items.NETHER_BRICK)
+        e.createStackedCraft(DuskBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR, DuskBlocks.MIXED_BLUE_NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
+        e.createStonecuttedSet(
+            listOf(DuskBlocks.MIXED_BLUE_NETHER_BRICKS),
+            null,
+            DuskBlocks.MIXED_BLUE_NETHER_BRICK_STAIRS,
+            DuskBlocks.MIXED_BLUE_NETHER_BRICK_SLAB,
+            DuskBlocks.MIXED_BLUE_NETHER_BRICK_WALL,
+            listOf(DuskBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DuskBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR)
+        )
+
         ShapedRecipeJsonFactory.create(RecipeCategory.COMBAT, DuskItems.BLACKSTONE_SWORD)
             .ingredient('#', Items.STICK)
             .ingredient('X', Items.BLACKSTONE)

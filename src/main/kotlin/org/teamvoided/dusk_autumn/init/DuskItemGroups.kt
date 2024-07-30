@@ -36,6 +36,8 @@ object DuskItemGroups {
                             listOf(DuskBlocks.CRACKED_RED_NETHER_BRICKS.asItem()) +
                             DuskItemLists.redNetherBrickStuff +
                             DuskItemLists.mixedNetherBrickStuff +
+                            DuskItemLists.blueNetherBrickStuff +
+                            DuskItemLists.mixedBlueNetherBrickStuff +
                             DuskItemLists.blackstoneTools +
                             DuskItemLists.overgrownCobblestone +
                             DuskItemLists.overgrownStoneBricks +
@@ -70,7 +72,7 @@ object DuskItemGroups {
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
             Items.RED_NETHER_BRICK_WALL,
-            DuskItemLists.redNetherBrickStuff + DuskItemLists.mixedNetherBrickStuff
+            DuskItemLists.redNetherBrickStuff + DuskItemLists.mixedNetherBrickStuff + DuskItemLists.blueNetherBrickStuff + DuskItemLists.mixedBlueNetherBrickStuff
         )
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,

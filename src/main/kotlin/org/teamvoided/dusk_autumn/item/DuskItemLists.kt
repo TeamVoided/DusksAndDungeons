@@ -132,6 +132,30 @@ object DuskItemLists {
         DuskBlocks.CHISELED_MIXED_NETHER_BRICKS.asItem(),
         DuskBlocks.MIXED_NETHER_BRICK_PILLAR.asItem()
     )
+    val blueNetherBrickStuff = listOf(
+        DuskBlocks.BLUE_NETHER_BRICKS.asItem(),
+        DuskBlocks.CRACKED_BLUE_NETHER_BRICKS.asItem(),
+        DuskBlocks.BLUE_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.BLUE_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.BLUE_NETHER_BRICK_WALL.asItem(),
+        DuskBlocks.BLUE_NETHER_BRICK_FENCE.asItem(),
+        DuskBlocks.CHISELED_BLUE_NETHER_BRICKS.asItem(),
+        DuskBlocks.BLUE_NETHER_BRICK_PILLAR.asItem(),
+        DuskBlocks.POLISHED_BLUE_NETHER_BRICKS.asItem(),
+        DuskBlocks.POLISHED_BLUE_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.POLISHED_BLUE_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.POLISHED_BLUE_NETHER_BRICK_WALL.asItem()
+    )
+    val mixedBlueNetherBrickStuff = listOf(
+        DuskBlocks.MIXED_BLUE_NETHER_BRICKS.asItem(),
+        DuskBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS.asItem(),
+        DuskBlocks.MIXED_BLUE_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.MIXED_BLUE_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.MIXED_BLUE_NETHER_BRICK_WALL.asItem(),
+        DuskBlocks.MIXED_BLUE_NETHER_BRICK_FENCE.asItem(),
+        DuskBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS.asItem(),
+        DuskBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR.asItem()
+    )
     val blackstoneTools = listOf(
         DuskItems.BLACKSTONE_SWORD,
         DuskItems.BLACKSTONE_PICKAXE,

@@ -22,11 +22,11 @@ open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
         context: ShapeContext
     ): VoxelShape {
         return when (state.get(CANDLES)) {
-            1 -> ONE_CANDLE_SHAPE
-            2 -> TWO_CANDLES_SHAPE
-            3 -> THREE_CANDLES_SHAPE
-            4 -> FOUR_CANDLES_SHAPE
-            else -> ONE_CANDLE_SHAPE
+            1 -> ONE_BIG_CANDLE_SHAPE
+            2 -> TWO_BIG_CANDLES_SHAPE
+            3 -> THREE_BIG_CANDLES_SHAPE
+            4 -> FOUR_BIG_CANDLES_SHAPE
+            else -> ONE_BIG_CANDLE_SHAPE
         }
     }
 
@@ -35,18 +35,18 @@ open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
     }
 
     companion object {
-        val ONE_CANDLE_SHAPE: VoxelShape =
+        val ONE_BIG_CANDLE_SHAPE: VoxelShape =
             candle(6.0, 6.0, 12.0)
-        val TWO_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
+        val TWO_BIG_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
             candle(9.0, 6.0, 12.0),
             candle(3.0, 7.0, 10.0)
         )
-        val THREE_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
+        val THREE_BIG_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
             candle(8.0, 4.0, 12.0),
             candle(3.0, 5.0, 10.0),
             candle(7.0, 9.0, 6.0)
         )
-        val FOUR_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
+        val FOUR_BIG_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
             candle(8.0, 3.0, 12.0),
             candle(3.0, 3.0, 10.0),
             candle(4.0, 8.0, 6.0),

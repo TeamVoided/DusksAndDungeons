@@ -588,14 +588,13 @@ fun candleModel(suffix: String): Model {
     return block("parent/big_candle$variant", TextureKey.ALL, TextureKey.PARTICLE)
 }
 
-fun BlockStateModelGenerator.registerMixedNetherBrickPillar() {
-    val pillar = DuskBlocks.MIXED_NETHER_BRICK_PILLAR
+fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block:Block, mix: Block) {
     val texture = Texture()
-        .put(TextureKey.SIDE, Texture.getId(pillar))
+        .put(TextureKey.SIDE, Texture.getId(block))
         .put(TextureKey.TOP, Texture.getSubId(DuskBlocks.NETHER_BRICK_PILLAR, "_top"))
-        .put(TextureKey.BOTTOM, Texture.getSubId(DuskBlocks.RED_NETHER_BRICK_PILLAR, "_top"))
-    val identifier = Models.CUBE_BOTTOM_TOP.upload(pillar, texture, this.modelCollector)
-    this.blockStateCollector.accept(createAxisRotatedBlockState(pillar, identifier))
+        .put(TextureKey.BOTTOM, Texture.getSubId(mix, "_top"))
+    val identifier = Models.CUBE_BOTTOM_TOP.upload(block, texture, this.modelCollector)
+    this.blockStateCollector.accept(createAxisRotatedBlockState(block, identifier))
 }
 
 //shamelessley stolen from voidUtils :)

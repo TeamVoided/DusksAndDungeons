@@ -82,23 +82,33 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.stairs(DuskBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         gen.slab(DuskBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
         gen.wall(DuskBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)
-        gen.fence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
-        gen.registerSimpleCubeAll(DuskBlocks.CRACKED_RED_NETHER_BRICKS)
-        gen.registerSimpleCubeAll(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
-        gen.fence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS)
-        gen.registerSimpleCubeAll(DuskBlocks.CRACKED_MIXED_NETHER_BRICKS)
-        gen.registerSimpleCubeAll(DuskBlocks.CHISELED_MIXED_NETHER_BRICKS)
-        gen.registerMixedNetherBrickPillar()
         gen.registerAxisRotated(
             DuskBlocks.NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
+        gen.registerSimpleCubeAll(DuskBlocks.CRACKED_RED_NETHER_BRICKS)
+        gen.registerSimpleCubeAll(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
+        gen.fence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
+        gen.fence(DuskBlocks.MIXED_NETHER_BRICK_FENCE, DuskBlocks.MIXED_NETHER_BRICKS)
+        gen.registerMixedNetherBrickPillar(DuskBlocks.MIXED_NETHER_BRICK_PILLAR, DuskBlocks.RED_NETHER_BRICK_PILLAR)
         gen.registerAxisRotated(
             DuskBlocks.RED_NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
+        gen.fence(DuskBlocks.BLUE_NETHER_BRICK_FENCE, DuskBlocks.BLUE_NETHER_BRICKS)
+        gen.registerAxisRotated(
+            DuskBlocks.BLUE_NETHER_BRICK_PILLAR,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+        )
+        gen.fence(DuskBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DuskBlocks.MIXED_BLUE_NETHER_BRICKS)
+        gen.registerMixedNetherBrickPillar(
+            DuskBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
+            DuskBlocks.BLUE_NETHER_BRICK_PILLAR
+        )
+
         DuskItemLists.blackstoneTools.forEach {
             gen.registerHandheldItem(it)
         }

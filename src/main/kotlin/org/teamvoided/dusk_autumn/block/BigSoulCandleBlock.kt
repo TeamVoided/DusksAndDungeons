@@ -1,29 +1,19 @@
 package org.teamvoided.dusk_autumn.block
 
-import com.google.common.collect.ImmutableList
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap
-import it.unimi.dsi.fastutil.ints.Int2ObjectMaps
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import net.minecraft.block.AbstractCandleBlock
 import net.minecraft.block.BlockState
-import net.minecraft.block.CandleBlock
-import net.minecraft.block.ShapeContext
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.random.RandomGenerator
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.util.shape.VoxelShapes
-import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import java.util.function.Consumer
 
 class BigSoulCandleBlock(settings: Settings) : BigCandleBlock(settings) {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        if (state.get(AbstractCandleBlock.LIT) as Boolean) {
+        if (state.get(AbstractCandleBlock.LIT)) {
             getParticleOffsets(state).forEach(Consumer { offset: Vec3d ->
                 spawnCandleParticles(
                     world,

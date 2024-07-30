@@ -33,6 +33,8 @@ class ItemTagsProvider(
             .add(Items.NETHER_BRICKS)
             .add(DuskBlocks.MIXED_NETHER_BRICKS.asItem())
             .add(Items.RED_NETHER_BRICKS)
+            .add(DuskBlocks.BLUE_NETHER_BRICKS.asItem())
+            .add(DuskBlocks.MIXED_BLUE_NETHER_BRICKS.asItem())
     }
 
     fun vanillaTags() {
@@ -60,6 +62,8 @@ class ItemTagsProvider(
         copy(BlockTags.SLABS, ItemTags.SLABS)
         copy(BlockTags.WALLS, ItemTags.WALLS)
         copy(BlockTags.STAIRS, ItemTags.STAIRS)
+
+        copy(BlockTags.CANDLES, ItemTags.CANDLES)
 
         copy(BlockTags.SOUL_FIRE_BASE_BLOCKS, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 

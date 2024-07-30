@@ -13,9 +13,8 @@ import net.minecraft.world.World
 import java.util.function.Consumer
 
 class SoulCandleBlock(settings: Settings) : CandleBlock(settings) {
-
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        if (state.get(AbstractCandleBlock.LIT) as Boolean) {
+        if (state.get(AbstractCandleBlock.LIT)) {
             getParticleOffsets(state).forEach(Consumer { offset: Vec3d ->
                 spawnCandleParticles(
                     world,

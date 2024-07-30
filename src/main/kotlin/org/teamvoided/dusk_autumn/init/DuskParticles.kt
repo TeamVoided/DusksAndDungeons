@@ -10,6 +10,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 object DuskParticles {
     val AUTUMN_BIOME_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
     val CASCADE_LEAF_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
+    val SMALL_SOUL_FLAME_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
 
     fun init() {
         Registry.register(Registries.PARTICLE_TYPE, id("cascade_leaf_particle"), CASCADE_LEAF_PARTICLE)
