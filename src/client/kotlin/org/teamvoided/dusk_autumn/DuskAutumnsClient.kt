@@ -1,38 +1,49 @@
 package org.teamvoided.dusk_autumn
 
-import com.mojang.blaze3d.platform.InputUtil
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
+import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.client.color.block.BlockColorProvider
 import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.client.color.world.GrassColors
-import net.minecraft.client.option.KeyBind
+import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
-import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import org.teamvoided.dusk_autumn.init.DuskParticles.CASCADE_LEAF_PARTICLE
+import org.teamvoided.dusk_autumn.init.DuskParticles.SMALL_SOUL_FLAME_PARTICLE
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
 
 @Suppress("unused")
-class DuskAutumnsClient {
+object DuskAutumnsClient {
 
-//    val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
-    val CASCADE_LEAF_COLOR = 14701655
+    //    val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
+    const val CASCADE_LEAF_COLOR = 14701655
 
     var cooldown = 0
+    private val coloredBlocks = listOf(
+        DuskBlocks.OVERGROWN_COBBLESTONE,
+        DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
+        DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
+        DuskBlocks.OVERGROWN_COBBLESTONE_WALL,
+        DuskBlocks.OVERGROWN_STONE_BRICKS,
+        DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
+        DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
+        DuskBlocks.OVERGROWN_STONE_BRICK_WALL,
+        DuskBlocks.ROCKY_GRASS,
+        DuskBlocks.SLATED_GRASS,
+        DuskBlocks.BLACKSTONE_GRASS
+    )
+
     fun init() {
         initBlocks()
         initItems()
         ParticleFactoryRegistry.getInstance().register(CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
+        ParticleFactoryRegistry.getInstance().register(SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
 
 //        ClientTickEvents.END_CLIENT_TICK.register {
 //            if (key.isPressed && cooldown < 1) {
@@ -42,6 +53,10 @@ class DuskAutumnsClient {
 //
 //            if (cooldown > 0) cooldown--
 //        }
+
+        ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT.register { blockState, _, _ ->
+            blockState.block !in coloredBlocks
+        }
     }
 
 
@@ -65,20 +80,8 @@ class DuskAutumnsClient {
             DuskBlocks.BLUE_PETALS
         )
         ColorProviderRegistry.BLOCK.register(
-            { _, world, pos, _ ->
-                grassColorOrDefault(world, pos)
-            },
-            DuskBlocks.OVERGROWN_COBBLESTONE,
-            DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-            DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
-            DuskBlocks.OVERGROWN_COBBLESTONE_WALL,
-            DuskBlocks.OVERGROWN_STONE_BRICKS,
-            DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-            DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
-            DuskBlocks.OVERGROWN_STONE_BRICK_WALL,
-            DuskBlocks.ROCKY_GRASS,
-            DuskBlocks.SLATED_GRASS,
-            DuskBlocks.BLACKSTONE_GRASS
+            { _, world, pos, _ -> grassColorOrDefault(world, pos) },
+            *coloredBlocks.toTypedArray()
         )
         ColorProviderRegistry.BLOCK.register(
             { _, _, _, _ -> FoliageColors.getSpruceColor() }, DuskBlocks.SPRUCE_LEAF_PILE
@@ -99,17 +102,7 @@ class DuskAutumnsClient {
     private fun initItems() {
         ColorProviderRegistry.ITEM.register(
             { _, _ -> GrassColors.getDefault() },
-            DuskBlocks.OVERGROWN_COBBLESTONE.asItem(),
-            DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS.asItem(),
-            DuskBlocks.OVERGROWN_COBBLESTONE_SLAB.asItem(),
-            DuskBlocks.OVERGROWN_COBBLESTONE_WALL.asItem(),
-            DuskBlocks.OVERGROWN_STONE_BRICKS.asItem(),
-            DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS.asItem(),
-            DuskBlocks.OVERGROWN_STONE_BRICK_SLAB.asItem(),
-            DuskBlocks.OVERGROWN_STONE_BRICK_WALL.asItem(),
-            DuskBlocks.ROCKY_GRASS.asItem(),
-            DuskBlocks.SLATED_GRASS.asItem(),
-            DuskBlocks.BLACKSTONE_GRASS.asItem()
+            *coloredBlocks.map { it.asItem() }.toTypedArray()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getDefaultColor() },
