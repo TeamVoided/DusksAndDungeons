@@ -57,11 +57,50 @@ object DuskItemLists {
         DuskBlocks.BIG_MAGENTA_CANDLE.asItem(),
         DuskBlocks.BIG_PINK_CANDLE.asItem()
     )
+    val soulCandles = listOf(
+        DuskBlocks.SOUL_CANDLE.asItem(),
+        DuskBlocks.WHITE_SOUL_CANDLE.asItem(),
+        DuskBlocks.LIGHT_GRAY_SOUL_CANDLE.asItem(),
+        DuskBlocks.GRAY_SOUL_CANDLE.asItem(),
+        DuskBlocks.BLACK_SOUL_CANDLE.asItem(),
+        DuskBlocks.BROWN_SOUL_CANDLE.asItem(),
+        DuskBlocks.RED_SOUL_CANDLE.asItem(),
+        DuskBlocks.ORANGE_SOUL_CANDLE.asItem(),
+        DuskBlocks.YELLOW_SOUL_CANDLE.asItem(),
+        DuskBlocks.LIME_SOUL_CANDLE.asItem(),
+        DuskBlocks.GREEN_SOUL_CANDLE.asItem(),
+        DuskBlocks.CYAN_SOUL_CANDLE.asItem(),
+        DuskBlocks.BLUE_SOUL_CANDLE.asItem(),
+        DuskBlocks.LIGHT_BLUE_SOUL_CANDLE.asItem(),
+        DuskBlocks.PURPLE_SOUL_CANDLE.asItem(),
+        DuskBlocks.MAGENTA_SOUL_CANDLE.asItem(),
+        DuskBlocks.PINK_SOUL_CANDLE.asItem()
+    )
+    val bigSoulCandles = listOf(
+        DuskBlocks.BIG_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_WHITE_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_LIGHT_GRAY_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_GRAY_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_BLACK_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_BROWN_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_RED_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_ORANGE_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_YELLOW_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_LIME_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_GREEN_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_CYAN_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_BLUE_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_LIGHT_BLUE_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_PURPLE_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_MAGENTA_SOUL_CANDLE.asItem(),
+        DuskBlocks.BIG_PINK_SOUL_CANDLE.asItem()
+    )
+    val candles = bigCandles + soulCandles + bigSoulCandles
     val bigItems =listOf(
         DuskBlocks.BIG_CHAIN.asItem(),
         DuskBlocks.BIG_LANTERN.asItem(),
         DuskBlocks.BIG_SOUL_LANTERN.asItem()
-    ) + bigCandles
+    ) + candles
     val netherrackStuff = listOf(
         DuskBlocks.NETHERRACK_STAIRS.asItem(),
         DuskBlocks.NETHERRACK_SLAB.asItem(),

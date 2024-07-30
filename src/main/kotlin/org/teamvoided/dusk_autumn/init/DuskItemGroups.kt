@@ -57,8 +57,8 @@ object DuskItemGroups {
     fun init() {
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON, DuskItemLists.cascadeWood)
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DuskBlocks.BIG_CHAIN.asItem()))
-        registerInVanillaTab(ItemGroups.COLORED_BLOCKS, Items.PINK_CANDLE, DuskItemLists.bigCandles)
-        registerInVanillaTab(ItemGroups.FUNCTIONAL_BLOCKS, Items.PINK_CANDLE, DuskItemLists.bigCandles)
+        registerInVanillaTab(ItemGroups.COLORED_BLOCKS, Items.PINK_CANDLE, DuskItemLists.candles)
+        registerInVanillaTab(ItemGroups.FUNCTIONAL_BLOCKS, Items.PINK_CANDLE, DuskItemLists.candles)
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.BRICK_WALL, DuskBlocks.BRICK_FENCE.asItem())
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.NETHERRACK, DuskItemLists.netherrackStuff)
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_NETHER_BRICKS, DuskItemLists.netherBrickStuff)
