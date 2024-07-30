@@ -732,19 +732,19 @@ object DuskBlocks {
         return FenceBlock(variantOf(block).solid())
     }
 
-    val candleSettings = Settings.create().nonOpaque().strength(0.1f)
+    fun candleSettings() = Settings.create().nonOpaque().strength(0.1f)
         .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
 
     fun soulCandleOf(color: MapColor): Block {
-        return SoulCandleBlock(candleSettings.mapColor(color).sounds(BlockSoundGroup.CANDLE))
+        return SoulCandleBlock(candleSettings().mapColor(color).sounds(BlockSoundGroup.CANDLE))
     }
 
     fun bigCandleOf(color: MapColor): Block {
-        return BigCandleBlock(candleSettings.mapColor(color).sounds(bigCandleSound))
+        return BigCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
     }
 
     fun bigSoulCandleOf(color: MapColor): Block {
-        return BigSoulCandleBlock(candleSettings.mapColor(color).sounds(bigCandleSound))
+        return BigSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
     }
 
     fun dirtPath(input: Block, output: Block) {

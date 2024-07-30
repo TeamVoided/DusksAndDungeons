@@ -40,7 +40,7 @@ public abstract class WitherSkeletonEntityMixin extends AbstractSkeletonEntity {
 
     @Inject(at = @At("HEAD"), method = "initEquipment", cancellable = true)
     protected void initEquipment(RandomGenerator random, LocalDifficulty difficulty, CallbackInfo ci) {
-        if (random.nextFloat() > 0.8f) {
+        if (random.nextFloat() > 0.7f) {
             if (random.nextInt(3) < 2) {
                 this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(DuskItems.BLACKSTONE_AXE));
             } else {

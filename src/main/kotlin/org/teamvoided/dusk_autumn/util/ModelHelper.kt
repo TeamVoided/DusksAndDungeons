@@ -490,7 +490,51 @@ fun BlockStateModelGenerator.registerBigLantern(block: Block) {
     )
     this.registerSingleton(block, texture, model)
 }
-
+fun BlockStateModelGenerator.registerCandle(candle: Block) {
+    this.registerItemModel(candle.asItem())
+    val texture = Texture.all(Texture.getId(candle))
+    val textureLit = Texture.all(Texture.getSubId(candle, "_lit"))
+    val oneCandle = Models.TEMPLATE_CANDLE.upload(candle, "_one_candle", texture, this.modelCollector)
+    val twoCandle = Models.TEMPLATE_TWO_CANDLES.upload(candle, "_two_candles", texture, this.modelCollector)
+    val threeCandle = Models.TEMPLATE_THREE_CANDLES.upload(candle, "_three_candles", texture, this.modelCollector)
+    val fourCandle = Models.TEMPLATE_FOUR_CANDLES.upload(candle, "_four_candles", texture, this.modelCollector)
+    val oneCandleLit = Models.TEMPLATE_CANDLE.upload(candle, "_one_candle_lit", textureLit, this.modelCollector)
+    val twoCandleLit = Models.TEMPLATE_TWO_CANDLES.upload(candle, "_two_candles_lit", textureLit, this.modelCollector)
+    val threeCandleLit = Models.TEMPLATE_THREE_CANDLES.upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
+    val fourCandleLit = Models.TEMPLATE_FOUR_CANDLES.upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(candle).coordinate(
+            BlockStateVariantMap.create(
+                Properties.CANDLES, Properties.LIT
+            )
+                .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
+                .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
+                .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
+                .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
+                .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
+                .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
+                .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
+                .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
+        )
+    )
+//    if (cake != null) {
+//        val candleCake = candleModel("cake").upload(
+//            cake, Texture.candleCake(candle, false),
+//            this.modelCollector
+//        )
+//        val candleCakeLit = candleModel("cake").upload(
+//            cake, "_lit", Texture.candleCake(candle, true),
+//            this.modelCollector
+//        )
+//        this.blockStateCollector.accept(
+//            VariantsBlockStateSupplier.create(cake).coordinate(
+//                BlockStateModelGenerator.createBooleanModelMap(
+//                    Properties.LIT, candleCakeLit, candleCake
+//                )
+//            )
+//        )
+//    }
+}
 fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
     this.registerItemModel(candle.asItem())
     val texture = Texture.all(Texture.getId(candle))

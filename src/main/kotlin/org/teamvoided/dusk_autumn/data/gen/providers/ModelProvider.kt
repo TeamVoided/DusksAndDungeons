@@ -71,7 +71,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.registerBigCandle(candle, cake)
         }
         DuskBlockLists.soulCandles.forEach { (candle, cake) ->
-            gen.registerCandle(candle, cake)
+            gen.registerCandle(candle)
         }
         DuskBlockLists.bigSoulCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
