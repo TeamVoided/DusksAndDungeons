@@ -67,7 +67,13 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
         gen.registerBigLantern(DuskBlocks.BIG_LANTERN)
         gen.registerBigLantern(DuskBlocks.BIG_SOUL_LANTERN)
-        DuskBlockLists.candles.forEach { (candle, cake) ->
+        DuskBlockLists.bigCandles.forEach { (candle, cake) ->
+            gen.registerBigCandle(candle, cake)
+        }
+        DuskBlockLists.soulCandles.forEach { (candle, cake) ->
+            gen.registerCandle(candle, cake)
+        }
+        DuskBlockLists.bigSoulCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
         }
 

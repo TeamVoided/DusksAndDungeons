@@ -4,7 +4,7 @@ import net.minecraft.block.Blocks
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 object DuskBlockLists {
-    val candles = listOf(
+    val bigCandles = listOf(
         (DuskBlocks.BIG_CANDLE to null),
         (DuskBlocks.BIG_WHITE_CANDLE to null),
         (DuskBlocks.BIG_LIGHT_GRAY_CANDLE to null),
@@ -22,6 +22,44 @@ object DuskBlockLists {
         (DuskBlocks.BIG_PURPLE_CANDLE to null),
         (DuskBlocks.BIG_MAGENTA_CANDLE to null),
         (DuskBlocks.BIG_PINK_CANDLE to null),
+    )
+    val soulCandles = listOf(
+        (DuskBlocks.SOUL_CANDLE to null),
+        (DuskBlocks.WHITE_SOUL_CANDLE to null),
+        (DuskBlocks.LIGHT_GRAY_SOUL_CANDLE to null),
+        (DuskBlocks.GRAY_SOUL_CANDLE to null),
+        (DuskBlocks.BLACK_SOUL_CANDLE to null),
+        (DuskBlocks.BROWN_SOUL_CANDLE to null),
+        (DuskBlocks.RED_SOUL_CANDLE to null),
+        (DuskBlocks.ORANGE_SOUL_CANDLE to null),
+        (DuskBlocks.YELLOW_SOUL_CANDLE to null),
+        (DuskBlocks.LIME_SOUL_CANDLE to null),
+        (DuskBlocks.GREEN_SOUL_CANDLE to null),
+        (DuskBlocks.CYAN_SOUL_CANDLE to null),
+        (DuskBlocks.LIGHT_BLUE_SOUL_CANDLE to null),
+        (DuskBlocks.BLUE_SOUL_CANDLE to null),
+        (DuskBlocks.PURPLE_SOUL_CANDLE to null),
+        (DuskBlocks.MAGENTA_SOUL_CANDLE to null),
+        (DuskBlocks.PINK_SOUL_CANDLE to null),
+    )
+    val bigSoulCandles = listOf(
+        (DuskBlocks.BIG_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_WHITE_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_LIGHT_GRAY_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_GRAY_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_BLACK_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_BROWN_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_RED_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_ORANGE_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_YELLOW_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_LIME_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_GREEN_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_CYAN_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_LIGHT_BLUE_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_BLUE_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_PURPLE_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_MAGENTA_SOUL_CANDLE to null),
+        (DuskBlocks.BIG_PINK_SOUL_CANDLE to null),
     )
     val logPiles = listOf(
         (DuskBlocks.OAK_LOG_PILE to Blocks.OAK_LOG),

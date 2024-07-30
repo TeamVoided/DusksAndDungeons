@@ -11,6 +11,8 @@ object DuskBlockTags {
     val LEAF_PILES = create("leaf_piles")
     val LEAF_PILES_PLACE_ON = create("leaf_piles_place_on")
     val BIG_CANDLES = create("big_candles")
+    val SOUL_CANDLES = create("soul_candles")
+    val BIG_SOUL_CANDLES = create("big_soul_candles")
     val FARMLAND_PLACES_UNDER = create("farmland_places_under")
     val MOONBERRY_CAN_PLACE_ON = create("moonberry_can_place_on")
     val REPLACEABLE_OR_DIRT = create("replaceable_or_dirt")
