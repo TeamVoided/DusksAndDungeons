@@ -38,6 +38,30 @@ object DuskItemLists {
         DuskItems.CASCADE_SIGN,
         DuskItems.CASCADE_HANGING_SIGN
     )
+    val bigCandles = listOf(
+        DuskBlocks.BIG_CANDLE.asItem(),
+        DuskBlocks.BIG_WHITE_CANDLE.asItem(),
+        DuskBlocks.BIG_LIGHT_GRAY_CANDLE.asItem(),
+        DuskBlocks.BIG_GRAY_CANDLE.asItem(),
+        DuskBlocks.BIG_BLACK_CANDLE.asItem(),
+        DuskBlocks.BIG_BROWN_CANDLE.asItem(),
+        DuskBlocks.BIG_RED_CANDLE.asItem(),
+        DuskBlocks.BIG_ORANGE_CANDLE.asItem(),
+        DuskBlocks.BIG_YELLOW_CANDLE.asItem(),
+        DuskBlocks.BIG_LIME_CANDLE.asItem(),
+        DuskBlocks.BIG_GREEN_CANDLE.asItem(),
+        DuskBlocks.BIG_CYAN_CANDLE.asItem(),
+        DuskBlocks.BIG_BLUE_CANDLE.asItem(),
+        DuskBlocks.BIG_LIGHT_BLUE_CANDLE.asItem(),
+        DuskBlocks.BIG_PURPLE_CANDLE.asItem(),
+        DuskBlocks.BIG_MAGENTA_CANDLE.asItem(),
+        DuskBlocks.BIG_PINK_CANDLE.asItem()
+    )
+    val bigItems =listOf(
+        DuskBlocks.BIG_CHAIN.asItem(),
+        DuskBlocks.BIG_LANTERN.asItem(),
+        DuskBlocks.BIG_SOUL_LANTERN.asItem()
+    ) + bigCandles
     val netherBrickStuff = listOf(
         DuskBlocks.NETHER_BRICK_PILLAR.asItem(),
         DuskBlocks.POLISHED_NETHER_BRICKS.asItem(),

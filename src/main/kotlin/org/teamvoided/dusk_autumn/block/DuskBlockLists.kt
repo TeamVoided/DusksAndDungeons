@@ -4,6 +4,25 @@ import net.minecraft.block.Blocks
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 object DuskBlockLists {
+    val candles = listOf(
+        (DuskBlocks.BIG_CANDLE to null),
+        (DuskBlocks.BIG_WHITE_CANDLE to null),
+        (DuskBlocks.BIG_LIGHT_GRAY_CANDLE to null),
+        (DuskBlocks.BIG_GRAY_CANDLE to null),
+        (DuskBlocks.BIG_BLACK_CANDLE to null),
+        (DuskBlocks.BIG_BROWN_CANDLE to null),
+        (DuskBlocks.BIG_RED_CANDLE to null),
+        (DuskBlocks.BIG_ORANGE_CANDLE to null),
+        (DuskBlocks.BIG_YELLOW_CANDLE to null),
+        (DuskBlocks.BIG_LIME_CANDLE to null),
+        (DuskBlocks.BIG_GREEN_CANDLE to null),
+        (DuskBlocks.BIG_CYAN_CANDLE to null),
+        (DuskBlocks.BIG_LIGHT_BLUE_CANDLE to null),
+        (DuskBlocks.BIG_BLUE_CANDLE to null),
+        (DuskBlocks.BIG_PURPLE_CANDLE to null),
+        (DuskBlocks.BIG_MAGENTA_CANDLE to null),
+        (DuskBlocks.BIG_PINK_CANDLE to null),
+    )
     val logPiles = listOf(
         (DuskBlocks.OAK_LOG_PILE to Blocks.OAK_LOG),
         (DuskBlocks.SPRUCE_LOG_PILE to Blocks.SPRUCE_LOG),

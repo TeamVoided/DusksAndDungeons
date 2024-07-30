@@ -491,6 +491,59 @@ fun BlockStateModelGenerator.registerBigLantern(block: Block) {
     this.registerSingleton(block, texture, model)
 }
 
+fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
+    this.registerItemModel(candle.asItem())
+    val texture = Texture.all(Texture.getId(candle))
+    val textureLit = Texture.all(Texture.getSubId(candle, "_lit"))
+    val oneCandle = candleModel("1").upload(candle, "_one_candle", texture, this.modelCollector)
+    val twoCandle = candleModel("2").upload(candle, "_two_candles", texture, this.modelCollector)
+    val threeCandle = candleModel("3").upload(candle, "_three_candles", texture, this.modelCollector)
+    val fourCandle = candleModel("4").upload(candle, "_four_candles", texture, this.modelCollector)
+    val oneCandleLit = candleModel("1").upload(candle, "_one_candle_lit", textureLit, this.modelCollector)
+    val twoCandleLit = candleModel("2").upload(candle, "_two_candles_lit", textureLit, this.modelCollector)
+    val threeCandleLit = candleModel("3").upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
+    val fourCandleLit = candleModel("4").upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(candle).coordinate(
+            BlockStateVariantMap.create(
+                Properties.CANDLES, Properties.LIT
+            )
+                .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
+                .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
+                .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
+                .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
+                .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
+                .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
+                .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
+                .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
+        )
+    )
+    if (cake != null) {
+        val candleCake = candleModel("cake").upload(
+            cake, Texture.candleCake(candle, false),
+            this.modelCollector
+        )
+        val candleCakeLit = candleModel("cake").upload(
+            cake, "_lit", Texture.candleCake(candle, true),
+            this.modelCollector
+        )
+        this.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(cake).coordinate(
+                BlockStateModelGenerator.createBooleanModelMap(
+                    Properties.LIT, candleCakeLit, candleCake
+                )
+            )
+        )
+    }
+}
+
+fun candleModel(suffix: String): Model {
+    val variant = if (suffix == "1") {
+        ""
+    } else "_$suffix"
+    return block("parent/big_candle$variant", TextureKey.ALL, TextureKey.PARTICLE)
+}
+
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar() {
     val pillar = DuskBlocks.MIXED_NETHER_BRICK_PILLAR
     val texture = Texture()
@@ -510,6 +563,7 @@ fun BlockStateModelGenerator.registerFence(fenceBlock: Block, reference: Block) 
     this.blockStateCollector.accept(BlockStateModelGenerator.createFenceBlockState(fenceBlock, id, id2))
     this.registerParentedItemModel(fenceBlock, id3)
 }
+
 fun BlockStateModelGenerator.registerHandheldItem(item: Item) {
     Models.HANDHELD.upload(
         ModelIds.getItemModelId(item),
@@ -543,7 +597,7 @@ fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
                     3, false,
                     BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
                 ).register(
-                        1, true,
+                    1, true,
                     BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
                 ).register(
                     2, true,
@@ -558,9 +612,11 @@ fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
                     4, true,
                     BlockStateVariant.create().put(VariantSettings.MODEL, full)
                 )
-            ).coordinate(BlockStateVariantMap.create(Properties.HORIZONTAL_AXIS)
-                .register(Direction.Axis.X, BlockStateVariant.create())
-                .register(Direction.Axis.Z, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90)))
+            ).coordinate(
+                BlockStateVariantMap.create(Properties.HORIZONTAL_AXIS)
+                    .register(Direction.Axis.X, BlockStateVariant.create())
+                    .register(Direction.Axis.Z, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90))
+            )
     )
 }
 

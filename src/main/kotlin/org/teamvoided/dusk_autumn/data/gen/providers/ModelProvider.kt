@@ -10,8 +10,7 @@ import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.DuskBlockFamilies
-import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
-import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
+import org.teamvoided.dusk_autumn.block.DuskBlockLists
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import org.teamvoided.dusk_autumn.item.DuskItemLists
@@ -63,10 +62,15 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
+
         gen.registerItemModel(DuskBlocks.BIG_CHAIN.asItem())
         gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
         gen.registerBigLantern(DuskBlocks.BIG_LANTERN)
         gen.registerBigLantern(DuskBlocks.BIG_SOUL_LANTERN)
+        DuskBlockLists.candles.forEach { (candle, cake) ->
+            gen.registerBigCandle(candle, cake)
+        }
+
         gen.registerFence(DuskBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
         gen.registerSimpleCubeAll(DuskBlocks.CRACKED_RED_NETHER_BRICKS)
         gen.registerSimpleCubeAll(DuskBlocks.CHISELED_RED_NETHER_BRICKS)
@@ -109,10 +113,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )
         gen.wallWithOverlay(DuskBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
-        logPiles.forEach { (it, texture) ->
+        DuskBlockLists.logPiles.forEach { (it, texture) ->
             gen.createLogPile(it, texture)
         }
-        leafPiles.forEach { (it, texture) ->
+        DuskBlockLists.leafPiles.forEach { (it, texture) ->
             gen.createLeafPile(it, texture)
         }
         gen.registerSingleton(DuskBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
@@ -123,7 +127,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.createMoonberryVine(DuskBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DuskItems.MOONBERRIES)
 
-        gen.registerSingleton(DuskBlocks.ROOT_BLOCK, TexturedModel.CUBE_ALL_INNER_FACES)
+        gen.registerSingleton(
+            DuskBlocks.ROOT_BLOCK,
+            TexturedModel.makeFactory(Texture::all, block("parent/cube_in_eighths", TextureKey.ALL))
+        )
 
         val stone = id("block/cobbled/stone_overlay")
         val deepslate = id("block/cobbled/deepslate_overlay")

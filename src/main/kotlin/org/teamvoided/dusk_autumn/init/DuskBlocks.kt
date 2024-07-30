@@ -290,21 +290,14 @@ object DuskBlocks {
         LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.GRASS).mapColor(MapColor.YELLOW))
     )
 
-    val BIG_CHAIN = register(
-        "big_chain",
-        BigChainBlock(
-            variantOf(CHAIN).sounds(
-                BlockSoundGroup(
-                    1.0F,
-                    0.8F,
-                    SoundEvents.BLOCK_CHAIN_BREAK,
-                    SoundEvents.BLOCK_CHAIN_STEP,
-                    SoundEvents.BLOCK_CHAIN_PLACE,
-                    SoundEvents.BLOCK_CHAIN_HIT,
-                    SoundEvents.BLOCK_CHAIN_FALL
-                )
-            )
-        )
+    val bigChainSound = BlockSoundGroup(
+        1.0F,
+        0.8F,
+        SoundEvents.BLOCK_CHAIN_BREAK,
+        SoundEvents.BLOCK_CHAIN_STEP,
+        SoundEvents.BLOCK_CHAIN_PLACE,
+        SoundEvents.BLOCK_CHAIN_HIT,
+        SoundEvents.BLOCK_CHAIN_FALL
     )
     val bigLanternSound = BlockSoundGroup(
         1.0F,
@@ -315,16 +308,38 @@ object DuskBlocks {
         SoundEvents.BLOCK_LANTERN_HIT,
         SoundEvents.BLOCK_LANTERN_FALL
     )
-    val BIG_LANTERN = register(
-        "big_lantern", BigLanternBlock(
-            variantOf(LANTERN).sounds(bigLanternSound)
-        )
+    val bigCandleSound = BlockSoundGroup(
+        1.0F,
+        0.8F,
+        SoundEvents.BLOCK_CANDLE_BREAK,
+        SoundEvents.BLOCK_CANDLE_STEP,
+        SoundEvents.BLOCK_CANDLE_PLACE,
+        SoundEvents.BLOCK_CANDLE_HIT,
+        SoundEvents.BLOCK_CANDLE_FALL
     )
-    val BIG_SOUL_LANTERN = register(
-        "big_soul_lantern", BigLanternBlock(
-            variantOf(SOUL_LANTERN).sounds(bigLanternSound)
-        )
-    )
+    val BIG_CHAIN = register("big_chain", BigChainBlock(variantOf(CHAIN).sounds(bigChainSound)))
+    val BIG_LANTERN =
+        register("big_lantern", BigLanternBlock(variantOf(LANTERN).sounds(bigLanternSound)))
+    val BIG_SOUL_LANTERN =
+        register("big_soul_lantern", BigLanternBlock(variantOf(SOUL_LANTERN).sounds(bigLanternSound)))
+    val BIG_CANDLE = register("big_candle", bigCandleOf(MapColor.SAND))
+    val BIG_WHITE_CANDLE = register("big_white_candle", bigCandleOf(MapColor.WOOL))
+    val BIG_LIGHT_GRAY_CANDLE = register("big_light_gray_candle", bigCandleOf(MapColor.LIGHT_GRAY))
+    val BIG_GRAY_CANDLE = register("big_gray_candle", bigCandleOf(MapColor.GRAY))
+    val BIG_BLACK_CANDLE = register("big_black_candle", bigCandleOf(MapColor.BLACK))
+    val BIG_BROWN_CANDLE = register("big_brown_candle", bigCandleOf(MapColor.BROWN))
+    val BIG_RED_CANDLE = register("big_red_candle", bigCandleOf(MapColor.RED))
+    val BIG_ORANGE_CANDLE = register("big_orange_candle", bigCandleOf(MapColor.ORANGE))
+    val BIG_YELLOW_CANDLE = register("big_yellow_candle", bigCandleOf(MapColor.YELLOW))
+    val BIG_LIME_CANDLE = register("big_lime_candle", bigCandleOf(MapColor.LIME))
+    val BIG_GREEN_CANDLE = register("big_green_candle", bigCandleOf(MapColor.GREEN))
+    val BIG_CYAN_CANDLE = register("big_cyan_candle", bigCandleOf(MapColor.CYAN))
+    val BIG_LIGHT_BLUE_CANDLE = register("big_light_blue_candle", bigCandleOf(MapColor.LIGHT_BLUE))
+    val BIG_BLUE_CANDLE = register("big_blue_candle", bigCandleOf(MapColor.BLUE))
+    val BIG_PURPLE_CANDLE = register("big_purple_candle", bigCandleOf(MapColor.PURPLE))
+    val BIG_MAGENTA_CANDLE = register("big_magenta_candle", bigCandleOf(MapColor.MAGENTA))
+    val BIG_PINK_CANDLE = register("big_pink_candle", bigCandleOf(MapColor.PINK))
+
     val MIXED_NETHER_BRICKS = register("mixed_nether_bricks", Block(variantOf(NETHER_BRICKS)))
     val CRACKED_MIXED_NETHER_BRICKS = register("cracked_mixed_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)))
     val MIXED_NETHER_BRICK_STAIRS = register("mixed_nether_brick_stairs", legacyStairsOf(NETHER_BRICK_STAIRS))
@@ -585,6 +600,13 @@ object DuskBlocks {
         removeRocks(BLACKSTONE_RED_SAND, RED_SAND, BLACKSTONE)
         removeRocks(BLACKSTONE_SOUL_SAND, SOUL_SAND, BLACKSTONE)
         removeRocks(BLACKSTONE_SOUL_SOIL, SOUL_SOIL, BLACKSTONE)
+    }
+
+    fun bigCandleOf(color: MapColor): Block {
+        return BigCandleBlock(
+            Settings.create().mapColor(color).nonOpaque().strength(0.1f).sounds(bigCandleSound)
+                .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
+        )
     }
 
     fun dirtPath(input: Block, output: Block) {

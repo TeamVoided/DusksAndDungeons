@@ -28,10 +28,8 @@ object DuskItemGroups {
                                 DuskBlocks.GOLDEN_BIRCH_SAPLING.asItem(),
                                 DuskBlocks.GOLDEN_BIRCH_LEAVES.asItem(),
                                 DuskBlocks.BLUE_PETALS.asItem(),
-                                DuskBlocks.BIG_CHAIN.asItem(),
-                                DuskBlocks.BIG_LANTERN.asItem(),
-                                DuskBlocks.BIG_SOUL_LANTERN.asItem()
                             ) +
+                            DuskItemLists.bigItems +
                             DuskItemLists.netherBrickStuff +
                             listOf(DuskBlocks.CRACKED_RED_NETHER_BRICKS.asItem()) +
                             DuskItemLists.redNetherBrickStuff +
@@ -78,6 +76,13 @@ object DuskItemGroups {
             DuskItemLists.redNetherBrickStuff + DuskItemLists.mixedNetherBrickStuff
         )
         registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DuskBlocks.BIG_CHAIN.asItem()))
+        registerInVanillaTab(ItemGroups.COLORED_BLOCKS, Items.PINK_CANDLE, DuskItemLists.bigCandles)
+        registerInVanillaTab(ItemGroups.FUNCTIONAL_BLOCKS, Items.PINK_CANDLE, DuskItemLists.bigCandles)
+        registerInVanillaTab(
+            ItemGroups.BUILDING_BLOCKS,
+            Items.SOUL_LANTERN,
+            listOf(DuskBlocks.BIG_LANTERN.asItem(), DuskBlocks.BIG_SOUL_LANTERN.asItem())
+        )
         registerInVanillaTab(
             ItemGroups.NATURAL_BLOCKS, Items.FLOWERING_AZALEA_LEAVES, listOf(
                 DuskBlocks.CASCADE_LEAVES.asItem(),

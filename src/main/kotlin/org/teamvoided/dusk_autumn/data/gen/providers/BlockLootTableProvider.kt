@@ -23,6 +23,7 @@ import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
+import org.teamvoided.dusk_autumn.block.BigCandleBlock
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
@@ -48,6 +49,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             (
                     it !is SlabBlock &&
                             it !is DoorBlock &&
+                            it !is BigCandleBlock &&
                             it !is FlowerPotBlock &&
                             it !is LogPileBlock &&
                             it !is LeafPileBlock) &&
@@ -55,6 +57,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         }.forEach(::addDrop)
         DuskBlocks.BLOCKS.filter { it is SlabBlock && it !in excludeList }.forEach { add(it, ::slabDrops) }
         DuskBlocks.BLOCKS.filter { it is DoorBlock && it !in excludeList }.forEach { add(it, ::doorDrops) }
+        DuskBlocks.BLOCKS.filter { it is BigCandleBlock && it !in excludeList }.forEach { add(it, ::candleDrops) }
         logPiles.forEach { (pile, _) ->
             add(pile) { logPile(pile) }
         }
