@@ -315,6 +315,23 @@ object DuskBlocks {
     val BIG_PURPLE_CANDLE = register("big_purple_candle", bigCandleOf(MapColor.PURPLE))
     val BIG_MAGENTA_CANDLE = register("big_magenta_candle", bigCandleOf(MapColor.MAGENTA))
     val BIG_PINK_CANDLE = register("big_pink_candle", bigCandleOf(MapColor.PINK))
+    val BIG_SOUL_CANDLE = register("big_soul_candle", bigCandleOf(MapColor.SAND))
+    val BIG_WHITE_SOUL_CANDLE = register("big_white_soul_candle", bigCandleOf(MapColor.WOOL))
+    val BIG_LIGHT_GRAY_SOUL_CANDLE = register("big_light_gray_soul_candle", bigCandleOf(MapColor.LIGHT_GRAY))
+    val BIG_GRAY_SOUL_CANDLE = register("big_gray_soul_candle", bigCandleOf(MapColor.GRAY))
+    val BIG_BLACK_SOUL_CANDLE = register("big_black_soul_candle", bigCandleOf(MapColor.BLACK))
+    val BIG_BROWN_SOUL_CANDLE = register("big_brown_soul_candle", bigCandleOf(MapColor.BROWN))
+    val BIG_RED_SOUL_CANDLE = register("big_red_soul_candle", bigCandleOf(MapColor.RED))
+    val BIG_ORANGE_SOUL_CANDLE = register("big_orange_soul_candle", bigCandleOf(MapColor.ORANGE))
+    val BIG_YELLOW_SOUL_CANDLE = register("big_yellow_soul_candle", bigCandleOf(MapColor.YELLOW))
+    val BIG_LIME_SOUL_CANDLE = register("big_lime_soul_candle", bigCandleOf(MapColor.LIME))
+    val BIG_GREEN_SOUL_CANDLE = register("big_green_soul_candle", bigCandleOf(MapColor.GREEN))
+    val BIG_CYAN_SOUL_CANDLE = register("big_cyan_soul_candle", bigCandleOf(MapColor.CYAN))
+    val BIG_LIGHT_BLUE_SOUL_CANDLE = register("big_light_blue_soul_candle", bigCandleOf(MapColor.LIGHT_BLUE))
+    val BIG_BLUE_SOUL_CANDLE = register("big_blue_soul_candle", bigCandleOf(MapColor.BLUE))
+    val BIG_PURPLE_SOUL_CANDLE = register("big_purple_soul_candle", bigCandleOf(MapColor.PURPLE))
+    val BIG_MAGENTA_SOUL_CANDLE = register("big_magenta_soul_candle", bigCandleOf(MapColor.MAGENTA))
+    val BIG_PINK_SOUL_CANDLE = register("big_pink_soul_candle", bigCandleOf(MapColor.PINK))
 
     val BRICK_FENCE = register("brick_fence", fenceOf(BRICKS).pickaxe())
 
@@ -698,11 +715,19 @@ object DuskBlocks {
         return FenceBlock(variantOf(block).solid())
     }
 
+    val candleSettings = Settings.create().nonOpaque().strength(0.1f)
+        .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
+
+    fun soulCandleOf(color: MapColor): Block {
+        return SoulCandleBlock(candleSettings.mapColor(color).sounds(BlockSoundGroup.CANDLE))
+    }
+
     fun bigCandleOf(color: MapColor): Block {
-        return BigCandleBlock(
-            Settings.create().mapColor(color).nonOpaque().strength(0.1f).sounds(bigCandleSound)
-                .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
-        )
+        return BigCandleBlock(candleSettings.mapColor(color).sounds(bigCandleSound))
+    }
+
+    fun bigSoulCandleOf(color: MapColor): Block {
+        return BigSoulCandleBlock(candleSettings.mapColor(color).sounds(bigCandleSound))
     }
 
     fun dirtPath(input: Block, output: Block) {

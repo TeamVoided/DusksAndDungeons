@@ -14,7 +14,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
-class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
+open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
     override fun getOutlineShape(
         state: BlockState,
         world: BlockView,
