@@ -12,10 +12,10 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
-import org.teamvoided.dusk_autumn.init.DuskBlocks
-import org.teamvoided.dusk_autumn.init.DuskItems
-import org.teamvoided.dusk_autumn.init.DuskParticles.CASCADE_LEAF_PARTICLE
-import org.teamvoided.dusk_autumn.init.DuskParticles.SMALL_SOUL_FLAME_PARTICLE
+import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.DnDParticles.CASCADE_LEAF_PARTICLE
+import org.teamvoided.dusk_autumn.init.DnDParticles.SMALL_SOUL_FLAME_PARTICLE
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
 
 @Suppress("unused")
@@ -26,17 +26,17 @@ object DuskAutumnsClient {
 
     var cooldown = 0
     private val coloredBlocks = listOf(
-        DuskBlocks.OVERGROWN_COBBLESTONE,
-        DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-        DuskBlocks.OVERGROWN_COBBLESTONE_SLAB,
-        DuskBlocks.OVERGROWN_COBBLESTONE_WALL,
-        DuskBlocks.OVERGROWN_STONE_BRICKS,
-        DuskBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-        DuskBlocks.OVERGROWN_STONE_BRICK_SLAB,
-        DuskBlocks.OVERGROWN_STONE_BRICK_WALL,
-        DuskBlocks.ROCKY_GRASS,
-        DuskBlocks.SLATED_GRASS,
-        DuskBlocks.BLACKSTONE_GRASS
+        DnDBlocks.OVERGROWN_COBBLESTONE,
+        DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
+        DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
+        DnDBlocks.OVERGROWN_COBBLESTONE_WALL,
+        DnDBlocks.OVERGROWN_STONE_BRICKS,
+        DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS,
+        DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
+        DnDBlocks.OVERGROWN_STONE_BRICK_WALL,
+        DnDBlocks.ROCKY_GRASS,
+        DnDBlocks.SLATED_GRASS,
+        DnDBlocks.BLACKSTONE_GRASS
     )
 
     fun init() {
@@ -65,11 +65,11 @@ object DuskAutumnsClient {
             { _, world, pos, _ ->
                 foliageColorOrDefault(world, pos)
             },
-            DuskBlocks.OAK_LEAF_PILE,
-            DuskBlocks.JUNGLE_LEAF_PILE,
-            DuskBlocks.ACACIA_LEAF_PILE,
-            DuskBlocks.DARK_OAK_LEAF_PILE,
-            DuskBlocks.MANGROVE_LEAF_PILE
+            DnDBlocks.OAK_LEAF_PILE,
+            DnDBlocks.JUNGLE_LEAF_PILE,
+            DnDBlocks.ACACIA_LEAF_PILE,
+            DnDBlocks.DARK_OAK_LEAF_PILE,
+            DnDBlocks.MANGROVE_LEAF_PILE
         )
         ColorProviderRegistry.BLOCK.register(
             { _, world, pos, tintIndex ->
@@ -77,26 +77,26 @@ object DuskAutumnsClient {
                     grassColorOrDefault(world, pos)
                 } else -1
             },
-            DuskBlocks.BLUE_PETALS
+            DnDBlocks.BLUE_PETALS
         )
         ColorProviderRegistry.BLOCK.register(
             { _, world, pos, _ -> grassColorOrDefault(world, pos) },
             *coloredBlocks.toTypedArray()
         )
         ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> FoliageColors.getSpruceColor() }, DuskBlocks.SPRUCE_LEAF_PILE
+            { _, _, _, _ -> FoliageColors.getSpruceColor() }, DnDBlocks.SPRUCE_LEAF_PILE
         )
         ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> FoliageColors.getBirchColor() }, DuskBlocks.BIRCH_LEAF_PILE
+            { _, _, _, _ -> FoliageColors.getBirchColor() }, DnDBlocks.BIRCH_LEAF_PILE
         )
         ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> CASCADE_LEAF_COLOR }, DuskBlocks.CASCADE_LEAVES, DuskBlocks.CASCADE_LEAF_PILE
+            { _, _, _, _ -> CASCADE_LEAF_COLOR }, DnDBlocks.CASCADE_LEAVES, DnDBlocks.CASCADE_LEAF_PILE
         )
 
 //    val GOLDEN_BIRCH_COLOR = 16761873
 //    val GOLDEN_BIRCH_COLOR = 16760872
 
-        DuskBlocks.CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
+        DnDBlocks.CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
     }
 
     private fun initItems() {
@@ -106,25 +106,25 @@ object DuskAutumnsClient {
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getDefaultColor() },
-            DuskBlocks.OAK_LEAF_PILE.asItem(),
-            DuskBlocks.JUNGLE_LEAF_PILE.asItem(),
-            DuskBlocks.ACACIA_LEAF_PILE.asItem(),
-            DuskBlocks.DARK_OAK_LEAF_PILE.asItem(),
-            DuskBlocks.MANGROVE_LEAF_PILE.asItem()
+            DnDBlocks.OAK_LEAF_PILE.asItem(),
+            DnDBlocks.JUNGLE_LEAF_PILE.asItem(),
+            DnDBlocks.ACACIA_LEAF_PILE.asItem(),
+            DnDBlocks.DARK_OAK_LEAF_PILE.asItem(),
+            DnDBlocks.MANGROVE_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getSpruceColor() },
-            DuskBlocks.SPRUCE_LEAF_PILE.asItem()
+            DnDBlocks.SPRUCE_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getBirchColor() },
-            DuskBlocks.BIRCH_LEAF_PILE.asItem()
+            DnDBlocks.BIRCH_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
-            { _, _ -> CASCADE_LEAF_COLOR }, DuskBlocks.CASCADE_LEAVES.asItem(), DuskBlocks.CASCADE_LEAF_PILE.asItem()
+            { _, _ -> CASCADE_LEAF_COLOR }, DnDBlocks.CASCADE_LEAVES.asItem(), DnDBlocks.CASCADE_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
-            { stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) }, DuskItems.FARMERS_HAT
+            { stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) }, DnDItems.FARMERS_HAT
         )
     }
 

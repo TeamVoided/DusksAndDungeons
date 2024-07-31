@@ -12,8 +12,8 @@ import net.minecraft.world.gen.treedecorator.TreeDecoratorType
 import net.minecraft.world.gen.trunk.TrunkPlacer
 import net.minecraft.world.gen.trunk.TrunkPlacerType
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomes
-import org.teamvoided.dusk_autumn.init.worldgen.DuskFeatures
+import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomes
+import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.foliage.ManhattanFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootPlacer
@@ -24,7 +24,7 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 
 
-object DuskWorldgen {
+object DnDWorldgen {
 
     val ALTER_GROUND_RADIUS = registerTreeDecorator("alter_ground_radius", AlterGroundRadiusTreeDecorator.CODEC)
     val ALTER_ON_GROUND = registerTreeDecorator("alter_on_ground", AlterOnGroundTreeDecorator.CODEC)
@@ -41,8 +41,8 @@ object DuskWorldgen {
 
 
     fun init() {
-        DuskBiomes.init()
-        DuskFeatures.init()
+        DnDBiomes.init()
+        DnDFeatures.init()
     }
 
     private fun <P : TreeDecorator> registerTreeDecorator(id: String, codec: MapCodec<P>): TreeDecoratorType<P> {

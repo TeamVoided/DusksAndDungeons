@@ -8,7 +8,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.FarmlandFeature
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 
-object DuskFeatures {
+object DnDFeatures {
 
     val FARMLAND = register("farmland_feature", FarmlandFeature(FarmlandConfig.CODEC))
 

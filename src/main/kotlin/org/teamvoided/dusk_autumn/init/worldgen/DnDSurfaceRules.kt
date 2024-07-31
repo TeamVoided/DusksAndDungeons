@@ -2,12 +2,11 @@ package org.teamvoided.dusk_autumn.init.worldgen
 
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.util.math.VerticalSurfaceType
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.noise.NoiseParametersKeys
 import net.minecraft.world.gen.surfacebuilder.SurfaceRules.*
 
-object DuskSurfaceRules {
+object DnDSurfaceRules {
     val podzol = sequence(
         condition(
             water(-1, 0),
@@ -21,10 +20,10 @@ object DuskSurfaceRules {
     )
 
     val autumnBiomes = biome(
-        DuskBiomes.AUTUMN_WOODS,
-        DuskBiomes.AUTUMN_PASTURES,
-        DuskBiomes.AUTUMN_CASCADES,
-        DuskBiomes.AUTUMN_WETLANDS
+        DnDBiomes.AUTUMN_WOODS,
+        DnDBiomes.AUTUMN_PASTURES,
+        DnDBiomes.AUTUMN_CASCADES,
+        DnDBiomes.AUTUMN_WETLANDS
     )
 
     fun overworld(): MaterialRule {
@@ -53,7 +52,7 @@ object DuskSurfaceRules {
             )
         )
         val defaultAutumnPasturesSurface = condition(
-            biome(DuskBiomes.AUTUMN_PASTURES), sequence(
+            biome(DnDBiomes.AUTUMN_PASTURES), sequence(
                 condition(
                     ON_FLOOR, sequence(
                         condition(
@@ -73,7 +72,7 @@ object DuskSurfaceRules {
             )
         )
         val defaultAutumnWoodsSurface = condition(
-            biome(DuskBiomes.AUTUMN_WOODS), sequence(
+            biome(DnDBiomes.AUTUMN_WOODS), sequence(
                 condition(
                     UNDER_FLOOR, sequence(
                         condition(

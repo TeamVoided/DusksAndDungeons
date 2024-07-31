@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.dusk_autumn.data.tags.DuskBiomeTags;
+import org.teamvoided.dusk_autumn.data.tags.DnDBiomeTags;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +39,7 @@ public class FoxEntityVariantMixin {
     private static void fixBiomeSpawning(Holder<Biome> biome, CallbackInfoReturnable<FoxEntity.Variant> cir) {
         int x = 0;
         if (biome.isIn(BiomeTags.SPAWNS_SNOW_FOXES)) x = 1;
-        else if (biome.isIn(DuskBiomeTags.SPAWNS_SILVER_FOXES)) x = 2;
+        else if (biome.isIn(DnDBiomeTags.SPAWNS_SILVER_FOXES)) x = 2;
 
         cir.setReturnValue(FoxEntity.Variant.get(x));
     }

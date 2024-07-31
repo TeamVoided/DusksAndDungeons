@@ -14,7 +14,7 @@ import net.minecraft.world.gen.heightprovider.ConstantHeightProvider
 import net.minecraft.world.gen.structure.TerrainAdjustment
 import org.teamvoided.dusk_autumn.data.structure.DuskStructureFeatures
 import org.teamvoided.dusk_autumn.data.structure.DuskStructurePools
-import org.teamvoided.dusk_autumn.data.tags.DuskBiomeTags
+import org.teamvoided.dusk_autumn.data.tags.DnDBiomeTags
 
 @Suppress("MagicNumber")
 object StructureFeatureCreator {
@@ -27,7 +27,7 @@ object StructureFeatureCreator {
             DuskStructureFeatures.AUTUMN_RUINS,
             JigsawFeature(
                 structureSettings(
-                    biomeTags.getTagOrThrow(DuskBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS),
+                    biomeTags.getTagOrThrow(DnDBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS),
                     GenerationStep.Feature.SURFACE_STRUCTURES,
                     TerrainAdjustment.STRUCTURE_WEIGHT_THIN
                 ),

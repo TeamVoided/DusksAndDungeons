@@ -9,24 +9,24 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.item.DuskFoodComponents
+import org.teamvoided.dusk_autumn.item.DnDFoodComponents
 import org.teamvoided.dusk_autumn.item.FarmersHatItem
 
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-object DuskItems {
+object DnDItems {
     val ITEMS = mutableListOf<Item>()
 
-    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DuskBlocks.CASCADE_DOOR, Item.Settings()))
-    val BLUE_DOOR = register("blue_door", TallBlockItem(DuskBlocks.BLUE_DOOR, Item.Settings()))
+    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDBlocks.CASCADE_DOOR, Item.Settings()))
+    val BLUE_DOOR = register("blue_door", TallBlockItem(DnDBlocks.BLUE_DOOR, Item.Settings()))
     val CASCADE_SIGN = register(
         "cascade_sign",
-        SignItem(Item.Settings().maxCount(16), DuskBlocks.CASCADE_SIGN, DuskBlocks.CASCADE_WALL_SIGN)
+        SignItem(Item.Settings().maxCount(16), DnDBlocks.CASCADE_SIGN, DnDBlocks.CASCADE_WALL_SIGN)
     )
     val CASCADE_HANGING_SIGN = register(
         "cascade_hanging_sign",
         HangingSignItem(
-            DuskBlocks.CASCADE_HANGING_SIGN, DuskBlocks.CASCADE_WALL_HANGING_SIGN,
+            DnDBlocks.CASCADE_HANGING_SIGN, DnDBlocks.CASCADE_WALL_HANGING_SIGN,
             Item.Settings().maxCount(16)
         )
     )
@@ -37,16 +37,16 @@ object DuskItems {
             Item.Settings().maxCount(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
-    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DuskBlocks.WILD_WHEAT, Item.Settings()))
+    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, Item.Settings()))
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
         AliasedBlockItem(
-            DuskBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DuskFoodComponents.GOLDEN_BEETROOT)
+            DnDBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT)
         )
     )
     val MOONBERRY_VINELET =
-        register("moonberry_vinelet", AliasedBlockItem(DuskBlocks.MOONBERRY_VINELET, Item.Settings()))
-    val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DuskFoodComponents.MOONBERRIES)))
+        register("moonberry_vinelet", AliasedBlockItem(DnDBlocks.MOONBERRY_VINELET, Item.Settings()))
+    val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DnDFoodComponents.MOONBERRIES)))
 
     @JvmField
     val BLACKSTONE_SWORD = register(

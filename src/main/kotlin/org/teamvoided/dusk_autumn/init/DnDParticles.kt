@@ -8,7 +8,7 @@ import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 
-object DuskParticles {
+object DnDParticles {
     val AUTUMN_LEAF_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
     val CASCADE_LEAF_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
     val SMALL_SOUL_FLAME_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()

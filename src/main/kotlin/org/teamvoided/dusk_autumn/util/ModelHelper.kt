@@ -24,7 +24,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.block.MoonberryVineBlock
-import org.teamvoided.dusk_autumn.init.DuskBlocks
+import org.teamvoided.dusk_autumn.init.DnDBlocks
 import java.util.*
 
 
@@ -594,12 +594,12 @@ fun candleModel(suffix: String): Model {
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {
     val texture1 = Texture()
         .put(TextureKey.SIDE, Texture.getId(block))
-        .put(TextureKey.TOP, Texture.getSubId(DuskBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(TextureKey.TOP, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
         .put(TextureKey.BOTTOM, Texture.getSubId(mix, "_top"))
     val texture2 = Texture()
         .put(TextureKey.SIDE, Texture.getSubId(block, "_inverse"))
         .put(TextureKey.TOP, Texture.getSubId(mix, "_top"))
-        .put(TextureKey.BOTTOM, Texture.getSubId(DuskBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(TextureKey.BOTTOM, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
     val model1 = Models.CUBE_BOTTOM_TOP.upload(block, texture1, this.modelCollector)
     val model2 = Models.CUBE_BOTTOM_TOP.upload(block, "_inverse", texture2, this.modelCollector)
     this.blockStateCollector.accept(

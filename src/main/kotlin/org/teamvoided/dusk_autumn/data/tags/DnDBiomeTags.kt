@@ -5,7 +5,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.world.biome.Biome
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
-object DuskBiomeTags {
+object DnDBiomeTags {
     val IS_AUTUMN = create("is_autumn")
     val HAS_STRUCTURE_AUTUMN_RUINS = create("has_structure/autumn_ruins")
     @JvmField

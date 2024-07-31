@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
+import org.teamvoided.dusk_autumn.init.DnDWorldgen
 import kotlin.math.abs
 
 
@@ -23,7 +23,7 @@ class AlterGroundRadiusTreeDecorator(
     val canReplace: HolderSet<Block>
 ) : TreeDecorator() {
     override fun getType(): TreeDecoratorType<*> {
-        return DuskWorldgen.ALTER_GROUND_RADIUS
+        return DnDWorldgen.ALTER_GROUND_RADIUS
     }
 
     override fun generate(generator: Placer) {

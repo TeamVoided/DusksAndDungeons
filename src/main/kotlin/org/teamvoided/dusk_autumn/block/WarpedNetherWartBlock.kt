@@ -1,19 +1,18 @@
 package org.teamvoided.dusk_autumn.block
 
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.block.NetherWartBlock
 import net.minecraft.block.ShapeContext
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldView
-import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
+import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 
 class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
         val blockPos = pos.up()
-        return world.getBlockState(blockPos).isIn(DuskBlockTags.WARPED_NETHER_WART_PLACEABLE)
+        return world.getBlockState(blockPos).isIn(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
     }
     override fun getOutlineShape(
         state: BlockState,

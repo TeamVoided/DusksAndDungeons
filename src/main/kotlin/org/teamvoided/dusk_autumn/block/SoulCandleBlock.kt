@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
-import org.teamvoided.dusk_autumn.init.DuskParticles
+import org.teamvoided.dusk_autumn.init.DnDParticles
 import java.util.function.Consumer
 
 class SoulCandleBlock(settings: Settings) : CandleBlock(settings) {
@@ -42,6 +42,6 @@ class SoulCandleBlock(settings: Settings) : CandleBlock(settings) {
                 )
             }
         }
-        world.addParticle(DuskParticles.SMALL_SOUL_FLAME_PARTICLE, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
+        world.addParticle(DnDParticles.SMALL_SOUL_FLAME_PARTICLE, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
     }
 }

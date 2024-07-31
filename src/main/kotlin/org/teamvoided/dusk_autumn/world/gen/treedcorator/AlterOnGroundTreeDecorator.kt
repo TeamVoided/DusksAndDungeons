@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
+import org.teamvoided.dusk_autumn.init.DnDWorldgen
 import kotlin.math.abs
 
 
@@ -24,7 +24,7 @@ class AlterOnGroundTreeDecorator(
     val canBePlacedOn: HolderSet<Block>
 ) : TreeDecorator() {
     override fun getType(): TreeDecoratorType<*> {
-        return DuskWorldgen.ALTER_ON_GROUND
+        return DnDWorldgen.ALTER_ON_GROUND
     }
 
     override fun generate(generator: Placer) {

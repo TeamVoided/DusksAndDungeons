@@ -9,7 +9,7 @@ import net.minecraft.sound.SoundEvents
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 
-object DuskWoodTypes {
+object DnDWoodTypes {
     fun init() = Unit
     val CASCADE_BLOCK_SET_TYPE: BlockSetType =
         BlockSetTypeBuilder()

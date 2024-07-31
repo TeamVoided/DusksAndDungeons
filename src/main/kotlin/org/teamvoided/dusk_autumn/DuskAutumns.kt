@@ -4,7 +4,7 @@ import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumn.event.AddWanderingTrades
 import org.teamvoided.dusk_autumn.init.*
-import org.teamvoided.dusk_autumn.init.worldgen.DuskBiomeModifications
+import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
 import org.teamvoided.dusk_autumn.modules.SnifferInjection
 
 @Suppress("unused")
@@ -16,12 +16,12 @@ object DuskAutumns {
 
     fun init() {
         LOGGER.info("Hello from Common")
-        DuskItems.init()
-        DuskBlocks.init()
-        DuskWorldgen.init()
-        DuskBiomeModifications.init()
-        DuskParticles.init()
-        DuskItemGroups.init()
+        DnDItems.init()
+        DnDBlocks.init()
+        DnDWorldgen.init()
+        DnDBiomeModifications.init()
+        DnDParticles.init()
+        DnDItemGroups.init()
         SnifferInjection.init()
         AddWanderingTrades.init()
        /* CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->

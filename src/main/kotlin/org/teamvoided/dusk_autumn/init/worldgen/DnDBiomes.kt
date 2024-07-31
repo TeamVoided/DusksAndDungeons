@@ -12,7 +12,7 @@ import net.minecraft.world.biome.Biomes
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
-object DuskBiomes {
+object DnDBiomes {
     val AUTUMN_WOODS = create("autumn_woods")
     val AUTUMN_PASTURES = create("autumn_pastures")
     val AUTUMN_CASCADES = create("autumn_cascades")
@@ -49,7 +49,7 @@ object DuskBiomes {
 //            CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1f, -0.35f),
 //        )
 //
-        SurfaceGeneration.addOverworldSurfaceRules(id("rules/overworld"), DuskSurfaceRules.overworld())
+        SurfaceGeneration.addOverworldSurfaceRules(id("rules/overworld"), DnDSurfaceRules.overworld())
     }
 
     fun createAutumnWoodsPlacement(biome: RegistryKey<Biome>) {

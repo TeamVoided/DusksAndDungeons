@@ -14,7 +14,7 @@ import net.minecraft.world.gen.root.AboveRootPlacement
 import net.minecraft.world.gen.root.RootPlacer
 import net.minecraft.world.gen.root.RootPlacerType
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
+import org.teamvoided.dusk_autumn.init.DnDWorldgen
 import java.util.*
 import java.util.function.BiConsumer
 
@@ -159,7 +159,7 @@ class CascadeRootPlacer(
     }
 
     override fun getType(): RootPlacerType<*> {
-        return DuskWorldgen.CASCADE_ROOT_PLACER
+        return DnDWorldgen.CASCADE_ROOT_PLACER
     }
 
 

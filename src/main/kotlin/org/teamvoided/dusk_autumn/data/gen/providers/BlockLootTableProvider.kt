@@ -17,28 +17,28 @@ import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
-import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
-import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
+import org.teamvoided.dusk_autumn.block.DnDLists.leafPiles
+import org.teamvoided.dusk_autumn.block.DnDLists.logPiles
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.LogPileBlock
-import org.teamvoided.dusk_autumn.init.DuskBlocks
-import org.teamvoided.dusk_autumn.init.DuskItems
+import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.DnDItems
 import java.util.concurrent.CompletableFuture
 
 class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricBlockLootTableProvider(o, r) {
     private val excludeList =
         listOf(
-            DuskBlocks.BLUE_PETALS,
-            DuskBlocks.CASCADE_LEAVES,
-            DuskBlocks.GOLDEN_BIRCH_LEAVES,
-            DuskBlocks.WILD_WHEAT,
-            DuskBlocks.GOLDEN_BEETROOTS,
-            DuskBlocks.MOONBERRY_VINE
+            DnDBlocks.BLUE_PETALS,
+            DnDBlocks.CASCADE_LEAVES,
+            DnDBlocks.GOLDEN_BIRCH_LEAVES,
+            DnDBlocks.WILD_WHEAT,
+            DnDBlocks.GOLDEN_BEETROOTS,
+            DnDBlocks.MOONBERRY_VINE
         ) + logPiles.map { it.first } + leafPiles.map { it.first }
 
     override fun generate() {
-        DuskBlocks.BLOCKS.filter { (it !in excludeList && it !is FlowerPotBlock) }.forEach {
+        DnDBlocks.BLOCKS.filter { (it !in excludeList && it !is FlowerPotBlock) }.forEach {
             when (it) {
                 is SlabBlock -> add(it, ::slabDrops)
                 is DoorBlock -> add(it, ::doorDrops)
@@ -50,16 +50,16 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         leafPiles.forEach { (pile, leaves) ->
             add(pile) { leafPile(it, leaves) }
         }
-        add(DuskBlocks.BLUE_PETALS, ::flowerbedDrops)
-        add(DuskBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DuskBlocks.CASCADE_SAPLING) }
-        add(DuskBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DuskBlocks.GOLDEN_BIRCH_SAPLING) }
-        add(DuskBlocks.CASCADE_LEAVES) {
-            oakLeavesDrops(it, DuskBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES)
+        add(DnDBlocks.BLUE_PETALS, ::flowerbedDrops)
+        add(DnDBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDBlocks.CASCADE_SAPLING) }
+        add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
+        add(DnDBlocks.CASCADE_LEAVES) {
+            oakLeavesDrops(it, DnDBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES)
         }
-        add(DuskBlocks.GOLDEN_BIRCH_LEAVES) {
-            leavesDrops(it, DuskBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
+        add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
+            leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
-        add(DuskBlocks.WILD_WHEAT) { block: Block ->
+        add(DnDBlocks.WILD_WHEAT) { block: Block ->
             this.dropsWithPropertyValue(
                 block,
                 TallPlantBlock.HALF,
@@ -67,17 +67,17 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             )
         }
         add(
-            DuskBlocks.GOLDEN_BEETROOTS,
+            DnDBlocks.GOLDEN_BEETROOTS,
             this.cropDrops(
-                DuskBlocks.GOLDEN_BEETROOTS,
-                DuskItems.GOLDEN_BEETROOT,
-                DuskItems.GOLDEN_BEETROOT,
+                DnDBlocks.GOLDEN_BEETROOTS,
+                DnDItems.GOLDEN_BEETROOT,
+                DnDItems.GOLDEN_BEETROOT,
                 BlockStatePropertyLootCondition.builder(Blocks.BEETROOTS).properties(
                     StatePredicate.Builder.create().exactMatch(BeetrootsBlock.AGE, 3)
                 )
             )
         )
-        add(DuskBlocks.POTTED_VIOLET_DAISY) { pottedPlantDrops(DuskBlocks.VIOLET_DAISY) }
+        add(DnDBlocks.POTTED_VIOLET_DAISY) { pottedPlantDrops(DnDBlocks.VIOLET_DAISY) }
     }
 
     private fun constantLootNumber(i: Number): ConstantLootNumberProvider =

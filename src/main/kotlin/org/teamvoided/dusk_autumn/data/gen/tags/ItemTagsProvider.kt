@@ -9,9 +9,9 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
-import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
-import org.teamvoided.dusk_autumn.init.DuskItems
+import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
+import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
+import org.teamvoided.dusk_autumn.init.DnDItems
 import java.util.concurrent.CompletableFuture
 
 class ItemTagsProvider(
@@ -27,23 +27,23 @@ class ItemTagsProvider(
     }
 
     fun duskTags() {
-        copy(DuskBlockTags.CASCADE_LOGS, DuskItemTags.CASCADE_LOGS)
-        copy(DuskBlockTags.BIG_CANDLES, DuskItemTags.BIG_CANDLES)
-        copy(DuskBlockTags.SOUL_CANDLES, DuskItemTags.SOUL_CANDLES)
-        copy(DuskBlockTags.BIG_SOUL_CANDLES, DuskItemTags.BIG_SOUL_CANDLES)
-        copy(DuskBlockTags.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
-        copy(DuskBlockTags.CRACKED_NETHER_BRICKS, DuskItemTags.CRACKED_NETHER_BRICKS)
-        copy(DuskBlockTags.POLISHED_NETHER_BRICKS, DuskItemTags.POLISHED_NETHER_BRICKS)
-        getOrCreateTagBuilder(DuskItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
+        copy(DnDBlockTags.CASCADE_LOGS, DnDItemTags.CASCADE_LOGS)
+        copy(DnDBlockTags.BIG_CANDLES, DnDItemTags.BIG_CANDLES)
+        copy(DnDBlockTags.SOUL_CANDLES, DnDItemTags.SOUL_CANDLES)
+        copy(DnDBlockTags.BIG_SOUL_CANDLES, DnDItemTags.BIG_SOUL_CANDLES)
+        copy(DnDBlockTags.NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
+        copy(DnDBlockTags.CRACKED_NETHER_BRICKS, DnDItemTags.CRACKED_NETHER_BRICKS)
+        copy(DnDBlockTags.POLISHED_NETHER_BRICKS, DnDItemTags.POLISHED_NETHER_BRICKS)
+        getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
             .addOptional(id("supplementaries","ash_pile"))
             .add(Items.BASALT)
-        copy(DuskBlockTags.LEAF_PILES, DuskItemTags.LEAF_PILES)
+        copy(DnDBlockTags.LEAF_PILES, DnDItemTags.LEAF_PILES)
 
     }
 
     fun vanillaTags() {
         getOrCreateTagBuilder(ItemTags.DYEABLE)
-            .add(DuskItems.FARMERS_HAT)
+            .add(DnDItems.FARMERS_HAT)
 
         copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN)
         copy(BlockTags.PLANKS, ItemTags.PLANKS)
@@ -74,15 +74,15 @@ class ItemTagsProvider(
         copy(BlockTags.DIRT, ItemTags.DIRT)
 
         getOrCreateTagBuilder(ItemTags.SWORDS)
-            .add(DuskItems.BLACKSTONE_SWORD)
+            .add(DnDItems.BLACKSTONE_SWORD)
         getOrCreateTagBuilder(ItemTags.PICKAXES)
-            .add(DuskItems.BLACKSTONE_PICKAXE)
+            .add(DnDItems.BLACKSTONE_PICKAXE)
         getOrCreateTagBuilder(ItemTags.AXES)
-            .add(DuskItems.BLACKSTONE_AXE)
+            .add(DnDItems.BLACKSTONE_AXE)
         getOrCreateTagBuilder(ItemTags.SHOVELS)
-            .add(DuskItems.BLACKSTONE_SHOVEL)
+            .add(DnDItems.BLACKSTONE_SHOVEL)
         getOrCreateTagBuilder(ItemTags.HOES)
-            .add(DuskItems.BLACKSTONE_HOE)
+            .add(DnDItems.BLACKSTONE_HOE)
     }
 
     fun conventionTags() {
@@ -90,12 +90,12 @@ class ItemTagsProvider(
         copy(ConventionalBlockTags.CHAINS, ConventionalItemTags.CHAINS)
 
         getOrCreateTagBuilder(ConventionalItemTags.BERRY_FOODS)
-            .add(DuskItems.MOONBERRIES)
+            .add(DnDItems.MOONBERRIES)
 
         getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
-            .add(DuskItems.BLACKSTONE_PICKAXE)
+            .add(DnDItems.BLACKSTONE_PICKAXE)
         getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
-            .add(DuskItems.BLACKSTONE_SWORD)
-            .add(DuskItems.BLACKSTONE_AXE)
+            .add(DnDItems.BLACKSTONE_SWORD)
+            .add(DnDItems.BLACKSTONE_AXE)
     }
 }

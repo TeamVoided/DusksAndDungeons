@@ -48,7 +48,7 @@ import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_TALL_GRA
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ROCKY_ORE_LOWER
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ROCKY_ORE_UPPER
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.SLATED_ORE
-import org.teamvoided.dusk_autumn.init.DuskBlocks
+import org.teamvoided.dusk_autumn.init.DnDBlocks
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber", "LongMethod")
 object PlacedFeatureCreator {
@@ -56,8 +56,8 @@ object PlacedFeatureCreator {
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
         val holderProvider = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
 
-        val cascadeSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.CASCADE_SAPLING)
-        val goldenBirchSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(DuskBlocks.GOLDEN_BIRCH_SAPLING)
+        val cascadeSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(DnDBlocks.CASCADE_SAPLING)
+        val goldenBirchSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(DnDBlocks.GOLDEN_BIRCH_SAPLING)
         val darkOakSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
         val acaciaSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.ACACIA_SAPLING)
 

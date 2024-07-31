@@ -12,13 +12,13 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig
 import net.minecraft.world.gen.foliage.FoliagePlacer
 import net.minecraft.world.gen.trunk.TrunkPlacer
 import net.minecraft.world.gen.trunk.TrunkPlacerType
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
+import org.teamvoided.dusk_autumn.init.DnDWorldgen
 import java.util.function.BiConsumer
 import java.util.function.Function
 
 class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
     override fun getType(): TrunkPlacerType<*> {
-        return DuskWorldgen.THREE_WIDE_TRUNK_PLACER
+        return DnDWorldgen.THREE_WIDE_TRUNK_PLACER
     }
 
     override fun generate(

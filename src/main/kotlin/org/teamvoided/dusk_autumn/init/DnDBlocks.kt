@@ -31,7 +31,7 @@ import org.teamvoided.dusk_autumn.block.rocky.RockyGrassBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyMyceliumBlock
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
-import org.teamvoided.dusk_autumn.init.DuskItems.BlockItem
+import org.teamvoided.dusk_autumn.init.DnDItems.BlockItem
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidSignBlock
 import org.teamvoided.voidmill.sign.VoidWallHangingSignBlock
@@ -39,7 +39,7 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused", "DEPRECATION")
-object DuskBlocks {
+object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
     val CUTOUT_BLOCKS = mutableSetOf<Block>()
     val SWORDABLE = mutableSetOf<Block>()
@@ -111,7 +111,7 @@ object DuskBlocks {
     val CASCADE_FENCE_GATE = register(
         "cascade_fence_gate",
         FenceGateBlock(
-            DuskWoodTypes.CASCADE_WOOD_TYPE,
+            DnDWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
                 .strength(2.0f, 3.0f).solid().lavaIgnitable()
@@ -119,7 +119,7 @@ object DuskBlocks {
     )
     val CASCADE_DOOR = registerNoItem(
         "cascade_door", DoorBlock(
-            DuskWoodTypes.CASCADE_BLOCK_SET_TYPE,
+            DnDWoodTypes.CASCADE_BLOCK_SET_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
@@ -135,7 +135,7 @@ object DuskBlocks {
     )
     val CASCADE_TRAPDOOR = register(
         "cascade_trapdoor", TrapdoorBlock(
-            DuskWoodTypes.CASCADE_BLOCK_SET_TYPE,
+            DnDWoodTypes.CASCADE_BLOCK_SET_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0f).nonOpaque()
@@ -145,13 +145,13 @@ object DuskBlocks {
     val CASCADE_PRESSURE_PLATE = register(
         "cascade_pressure_plate",
         PressurePlateBlock(
-            DuskWoodTypes.CASCADE_BLOCK_SET_TYPE,
+            DnDWoodTypes.CASCADE_BLOCK_SET_TYPE,
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS).noCollision()
                 .strength(0.5f).solid().lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
         ).axe()
     )
-    val CASCADE_BUTTON = register("cascade_button", buttonOf(DuskWoodTypes.CASCADE_BLOCK_SET_TYPE).axe())
+    val CASCADE_BUTTON = register("cascade_button", buttonOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE).axe())
     val CASCADE_LEAVES = register(
         "cascade_leaves", FallingLeavesBlock(
             Settings.create().strength(0.2f).ticksRandomly()
@@ -159,19 +159,19 @@ object DuskBlocks {
                 .blockVision(Blocks::nonSolid)
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
                 .sounds(BlockSoundGroup.CHERRY_LEAVES)
-                .mapColor(MapColor.RED), DuskParticles.CASCADE_LEAF_PARTICLE
+                .mapColor(MapColor.RED), DnDParticles.CASCADE_LEAF_PARTICLE
         ).cutout().axe()
     )
     val CASCADE_SIGN = registerNoItem(
         "cascade_sign", VoidSignBlock(
-            DuskWoodTypes.CASCADE_WOOD_TYPE,
+            DnDWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         ).axe()
     )
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", VoidWallSignBlock(
-            DuskWoodTypes.CASCADE_WOOD_TYPE,
+            DnDWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).dropsLike(CASCADE_SIGN)
                 .lavaIgnitable(),
@@ -179,14 +179,14 @@ object DuskBlocks {
     )
     val CASCADE_HANGING_SIGN = registerNoItem(
         "cascade_hanging_sign", VoidCeilingHangingSignBlock(
-            DuskWoodTypes.CASCADE_WOOD_TYPE,
+            DnDWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
         ).axe()
     )
     val CASCADE_WALL_HANGING_SIGN = registerNoItem(
         "cascade_wall_hanging_sign", VoidWallHangingSignBlock(
-            DuskWoodTypes.CASCADE_WOOD_TYPE,
+            DnDWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable()
                 .dropsLike(CASCADE_HANGING_SIGN),
@@ -227,7 +227,7 @@ object DuskBlocks {
     val PINE_FENCE_GATE = register(
         "pine_fence_gate",
         FenceGateBlock(
-            DuskWoodTypes.PINE_WOOD_TYPE,
+            DnDWoodTypes.PINE_WOOD_TYPE,
             Settings.create()
                 .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
                 .strength(2.0f, 3.0f).solid().lavaIgnitable()
@@ -254,7 +254,7 @@ object DuskBlocks {
     val CASCADE_LEAF_PILE = register(
         "cascade_leaf_pile", FallingLeafPileBlock(
             leafPileSettings.sounds(BlockSoundGroup.CHERRY_LEAVES).mapColor(MapColor.RED),
-            DuskParticles.CASCADE_LEAF_PARTICLE
+            DnDParticles.CASCADE_LEAF_PARTICLE
         ).cutout()
     )
     val CHERRY_LEAF_PILE = register(
@@ -731,7 +731,7 @@ object DuskBlocks {
         )
 
     fun init() {
-        DuskBlockFamilies.init()
+        DnDFamilies.init()
         StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
         StrippableBlockRegistry.register(CASCADE_WOOD, STRIPPED_CASCADE_WOOD)
 
@@ -871,7 +871,7 @@ object DuskBlocks {
 
     fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
-        DuskItems.register(id, BlockItem(regBlock))
+        DnDItems.register(id, BlockItem(regBlock))
         return regBlock
     }
 

@@ -26,8 +26,8 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import net.minecraft.world.event.GameEvent
-import org.teamvoided.dusk_autumn.init.DuskBlocks
-import org.teamvoided.dusk_autumn.init.DuskItems
+import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.DnDItems
 
 class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Waterloggable, Fertilizable {
 
@@ -50,7 +50,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
     }
 
     override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean =
-        context.stack.isOf(DuskBlocks.MOONBERRY_VINE.asItem())
+        context.stack.isOf(DnDBlocks.MOONBERRY_VINE.asItem())
 
     override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState): Boolean = state.get(BERRIES) < 2
 
@@ -83,7 +83,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         val bl = i == 3
         if (i > 1) {
             val j = 1 + world.random.nextInt(2)
-            dropStack(world, pos, ItemStack(DuskItems.MOONBERRIES, j + (if (bl) 1 else 0)))
+            dropStack(world, pos, ItemStack(DnDItems.MOONBERRIES, j + (if (bl) 1 else 0)))
             world.playSound(
                 null,
                 pos,

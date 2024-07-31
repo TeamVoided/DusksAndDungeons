@@ -10,7 +10,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
+import org.teamvoided.dusk_autumn.init.DnDWorldgen
 
 class AttachedToTrunkTreeDecorator(
     val probability: Float,
@@ -69,7 +69,7 @@ class AttachedToTrunkTreeDecorator(
     }
 
     override fun getType(): TreeDecoratorType<*> {
-        return DuskWorldgen.ATTACHED_TO_TRUNK
+        return DnDWorldgen.ATTACHED_TO_TRUNK
     }
 
     companion object {

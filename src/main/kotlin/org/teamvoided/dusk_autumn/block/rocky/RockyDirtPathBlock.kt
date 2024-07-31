@@ -6,7 +6,6 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.event.GameEvent
-import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 class RockyDirtPathBlock(private val dirtAfter: Block, settings: Settings) : DirtPathBlock(settings) {
 

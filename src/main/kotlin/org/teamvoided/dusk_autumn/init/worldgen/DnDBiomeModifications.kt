@@ -11,7 +11,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
 
 
-object DuskBiomeModifications {
+object DnDBiomeModifications {
     fun init() {
         addFeature(
             "add_shallow_stoney_ore",

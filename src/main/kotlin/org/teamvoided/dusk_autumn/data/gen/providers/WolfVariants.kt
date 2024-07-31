@@ -8,12 +8,12 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.world.biome.Biome
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.data.DuskWolfVariants
-import org.teamvoided.dusk_autumn.data.tags.DuskBiomeTags
+import org.teamvoided.dusk_autumn.data.DnDWolfVariants
+import org.teamvoided.dusk_autumn.data.tags.DnDBiomeTags
 
 object WolfVariants {
     fun bootstrap(c: BootstrapContext<WolfVariant>) {
-        c.registerWolfVariant(DuskWolfVariants.AUTUMN, "wolf_autumn", DuskBiomeTags.SPAWNS_AUTUMN_WOLVES)
+        c.registerWolfVariant(DnDWolfVariants.AUTUMN, "wolf_autumn", DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)
     }
 
     fun BootstrapContext<WolfVariant>.registerWolfVariant(

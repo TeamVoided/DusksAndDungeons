@@ -1,17 +1,14 @@
 package org.teamvoided.dusk_autumn.data.gen.structure
 
-import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.registry.BootstrapContext
-import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.processor.*
 import net.minecraft.structure.rule.*
 import org.teamvoided.dusk_autumn.data.structure.DuskStructureProcessorLists
-import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
-import org.teamvoided.dusk_autumn.init.DuskBlocks
+import org.teamvoided.dusk_autumn.init.DnDBlocks
 
 
 @Suppress("MagicNumber")
@@ -41,7 +38,7 @@ object StructureProcessorCreator {
         StructureProcessorRule(
             RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
             AlwaysTrueRuleTest.INSTANCE,
-            DuskBlocks.POTTED_CASCADE_SAPLING.defaultState
+            DnDBlocks.POTTED_CASCADE_SAPLING.defaultState
         ),
         StructureProcessorRule(
             RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),

@@ -8,13 +8,13 @@ import net.minecraft.world.TestableWorld
 import net.minecraft.world.gen.feature.TreeFeatureConfig
 import net.minecraft.world.gen.foliage.FoliagePlacer
 import net.minecraft.world.gen.foliage.FoliagePlacerType
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
+import org.teamvoided.dusk_autumn.init.DnDWorldgen
 import kotlin.math.max
 
 class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) :
     FoliagePlacer(radius, offset) {
     override fun getType(): FoliagePlacerType<*> {
-        return DuskWorldgen.MANHATTAN_FOLIAGE_PLACER
+        return DnDWorldgen.MANHATTAN_FOLIAGE_PLACER
     }
 
     override fun method_23448(

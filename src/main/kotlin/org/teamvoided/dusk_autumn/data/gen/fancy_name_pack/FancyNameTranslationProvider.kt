@@ -7,7 +7,7 @@ import net.minecraft.item.Item
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
-import org.teamvoided.dusk_autumn.init.DuskBlocks
+import org.teamvoided.dusk_autumn.init.DnDBlocks
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -15,18 +15,18 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
     FabricLanguageProvider(o, r) {
 
     val ashenBricks = listOf(
-        DuskBlocks.GRAY_NETHER_BRICKS,
-        DuskBlocks.CRACKED_GRAY_NETHER_BRICKS,
-        DuskBlocks.GRAY_NETHER_BRICK_STAIRS,
-        DuskBlocks.GRAY_NETHER_BRICK_SLAB,
-        DuskBlocks.GRAY_NETHER_BRICK_WALL,
-        DuskBlocks.GRAY_NETHER_BRICK_FENCE,
-        DuskBlocks.CHISELED_GRAY_NETHER_BRICKS,
-        DuskBlocks.GRAY_NETHER_BRICK_PILLAR,
-        DuskBlocks.POLISHED_GRAY_NETHER_BRICKS,
-        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS,
-        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB,
-        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_WALL,
+        DnDBlocks.GRAY_NETHER_BRICKS,
+        DnDBlocks.CRACKED_GRAY_NETHER_BRICKS,
+        DnDBlocks.GRAY_NETHER_BRICK_STAIRS,
+        DnDBlocks.GRAY_NETHER_BRICK_SLAB,
+        DnDBlocks.GRAY_NETHER_BRICK_WALL,
+        DnDBlocks.GRAY_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_GRAY_NETHER_BRICKS,
+        DnDBlocks.GRAY_NETHER_BRICK_PILLAR,
+        DnDBlocks.POLISHED_GRAY_NETHER_BRICKS,
+        DnDBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS,
+        DnDBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB,
+        DnDBlocks.POLISHED_GRAY_NETHER_BRICK_WALL,
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {

@@ -8,7 +8,7 @@ import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.TestableWorld
 import net.minecraft.world.gen.feature.TreeFeatureConfig
 import net.minecraft.world.gen.foliage.FoliagePlacerType
-import org.teamvoided.dusk_autumn.init.DuskWorldgen
+import org.teamvoided.dusk_autumn.init.DnDWorldgen
 import org.teamvoided.dusk_autumn.util.FoliageHelper
 import org.teamvoided.dusk_autumn.util.FoliageSetter
 
@@ -20,7 +20,7 @@ class CascadeFoliagePlacer(
     private val leafPlacementAttempts: Int
 ) : FoliageHelper(radius, offset) {
 
-    override fun getType(): FoliagePlacerType<CascadeFoliagePlacer> = DuskWorldgen.CASCADE_FOLIAGE_PLACER
+    override fun getType(): FoliagePlacerType<CascadeFoliagePlacer> = DnDWorldgen.CASCADE_FOLIAGE_PLACER
 
     override fun method_23448(
         world: TestableWorld,

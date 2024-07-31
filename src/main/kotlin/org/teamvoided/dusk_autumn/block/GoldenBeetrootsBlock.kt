@@ -6,11 +6,11 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.random.RandomGenerator
-import org.teamvoided.dusk_autumn.init.DuskItems
+import org.teamvoided.dusk_autumn.init.DnDItems
 
 class GoldenBeetrootsBlock(settings: Settings) : BeetrootsBlock(settings) {
     override fun getSeedsItem(): ItemConvertible {
-        return DuskItems.GOLDEN_BEETROOT
+        return DnDItems.GOLDEN_BEETROOT
     }
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
