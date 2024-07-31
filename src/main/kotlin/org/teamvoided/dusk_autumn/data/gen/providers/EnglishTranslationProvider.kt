@@ -18,20 +18,13 @@ import java.util.concurrent.CompletableFuture
 @Suppress("MemberVisibilityCanBePrivate")
 class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricLanguageProvider(o, r) {
-
-
-    val itemTags = listOf(
-        DuskItemTags.CASCADE_LOGS,
-        DuskItemTags.LEAF_PILES,
-        DuskItemTags.NETHER_BRICKS
-    )
     val blocks = listOf(
         DuskBlocks.GOLDEN_BEETROOTS
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         getKey(DUSK_AUTUMN_TAB)?.let { gen.add(it, "Dusk Items") }
-        itemTags.forEach { gen.add(it.translationKey, genLang(it.id)) }
+        DuskItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }
         DuskItems.ITEMS.forEach { gen.add(it.translationKey, genLang(it.id)) }
     }

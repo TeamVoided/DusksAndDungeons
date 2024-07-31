@@ -1,9 +1,28 @@
 package org.teamvoided.dusk_autumn.block
 
 import net.minecraft.block.Blocks
+import net.minecraft.item.Items
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 
 object DuskBlockLists {
+    val dye = listOf(
+        Items.WHITE_DYE,
+        Items.LIGHT_GRAY_DYE,
+        Items.GRAY_DYE,
+        Items.BLACK_DYE,
+        Items.BROWN_DYE,
+        Items.RED_DYE,
+        Items.ORANGE_DYE,
+        Items.YELLOW_DYE,
+        Items.LIME_DYE,
+        Items.GREEN_DYE,
+        Items.CYAN_DYE,
+        Items.LIGHT_BLUE_DYE,
+        Items.BLUE_DYE,
+        Items.PURPLE_DYE,
+        Items.MAGENTA_DYE,
+        Items.PINK_DYE
+    )
     val bigCandles = listOf(
         (DuskBlocks.BIG_CANDLE to null),
         (DuskBlocks.BIG_WHITE_CANDLE to null),

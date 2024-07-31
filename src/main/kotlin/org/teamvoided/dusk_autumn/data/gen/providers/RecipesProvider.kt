@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
@@ -11,7 +12,9 @@ import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.block.DuskBlockFamilies.recipesBlockFamilies
+import org.teamvoided.dusk_autumn.block.DuskBlockLists
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
 import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
@@ -39,6 +42,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
                 )
             ).offerTo(e)
         offerShapelessRecipe(e, Items.BLUE_DYE, DuskBlocks.BLUE_PETALS, "blue_dye")
+
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DuskBlocks.BIG_CHAIN, 1)
             .ingredient('I', Ingredient.ofItems(Items.IRON_INGOT))
             .ingredient('N', Ingredient.ofItems(Items.IRON_NUGGET))
@@ -49,6 +53,15 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT)).offerTo(e)
         e.createBigLantern(DuskBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DuskBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
+        e.createCandle(DuskBlocks.BIG_CANDLE)
+        e.createCandle(DuskBlocks.SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
+        e.createCandle(DuskBlocks.BIG_SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
+        DuskBlockLists.dye.forEachIndexed{ idx, dye ->
+            e.createDyed(DuskBlockLists.bigCandles[idx+1].first, dye)
+            e.createDyed(DuskBlockLists.soulCandles[idx+1].first, dye)
+            e.createDyed(DuskBlockLists.bigSoulCandles[idx+1].first, dye)
+        }
+
         e.createFence(DuskBlocks.BRICK_FENCE, Blocks.BRICKS, Items.BRICK)
         e.createStair(DuskBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         e.createSlab(DuskBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
@@ -148,7 +161,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.createDiagonalRecipe(
             DuskBlocks.GRAY_NETHER_BRICKS,
             Blocks.NETHER_BRICKS,
-            DuskItemTags.CRAFTS_GREY_NETHER_BRICKS
+            DuskItemTags.CRAFTS_ASHEN_NETHER_BRICKS
         )
         e.createFence(DuskBlocks.GRAY_NETHER_BRICK_FENCE, DuskBlocks.GRAY_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(

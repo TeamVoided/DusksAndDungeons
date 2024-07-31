@@ -11,7 +11,6 @@ import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
 import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
-import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
 import java.util.concurrent.CompletableFuture
 
@@ -35,9 +34,8 @@ class ItemTagsProvider(
         copy(DuskBlockTags.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
         copy(DuskBlockTags.CRACKED_NETHER_BRICKS, DuskItemTags.CRACKED_NETHER_BRICKS)
         copy(DuskBlockTags.POLISHED_NETHER_BRICKS, DuskItemTags.POLISHED_NETHER_BRICKS)
-        getOrCreateTagBuilder(DuskItemTags.CRAFTS_GREY_NETHER_BRICKS)
-            .addOptional(id("twigs","silt_ball"))
-//            .addOptional(id("supplementaries","ash_pile")) what mod adds them?
+        getOrCreateTagBuilder(DuskItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
+            .addOptional(id("supplementaries","ash_pile"))
             .add(Items.BASALT)
         copy(DuskBlockTags.LEAF_PILES, DuskItemTags.LEAF_PILES)
 
