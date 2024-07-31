@@ -17,7 +17,6 @@ import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
-import org.teamvoided.dusk_autumn.block.BigCandleBlock
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
 import org.teamvoided.dusk_autumn.block.LeafPileBlock

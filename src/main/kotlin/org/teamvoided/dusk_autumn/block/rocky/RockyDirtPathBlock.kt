@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.block
+package org.teamvoided.dusk_autumn.block.rocky
 
 import net.minecraft.block.*
 import net.minecraft.item.ItemPlacementContext

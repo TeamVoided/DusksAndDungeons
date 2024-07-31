@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.block
+package org.teamvoided.dusk_autumn.block.rocky
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.Block

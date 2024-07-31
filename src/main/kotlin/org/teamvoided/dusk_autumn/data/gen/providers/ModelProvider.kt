@@ -63,6 +63,12 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
 
+        gen.registerAxisRotated(
+            DuskBlocks.STONE_PILLAR,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+        )
+
         gen.registerItemModel(DuskBlocks.BIG_CHAIN.asItem())
         gen.registerAxisRotated(DuskBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DuskBlocks.BIG_CHAIN))
         gen.registerBigLantern(DuskBlocks.BIG_LANTERN)
@@ -107,6 +113,17 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerMixedNetherBrickPillar(
             DuskBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
             DuskBlocks.BLUE_NETHER_BRICK_PILLAR
+        )
+        gen.fence(DuskBlocks.GREY_NETHER_BRICK_FENCE, DuskBlocks.GREY_NETHER_BRICKS)
+        gen.registerAxisRotated(
+            DuskBlocks.GREY_NETHER_BRICK_PILLAR,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+        )
+        gen.fence(DuskBlocks.MIXED_GREY_NETHER_BRICK_FENCE, DuskBlocks.MIXED_GREY_NETHER_BRICKS)
+        gen.registerMixedNetherBrickPillar(
+            DuskBlocks.MIXED_GREY_NETHER_BRICK_PILLAR,
+            DuskBlocks.GREY_NETHER_BRICK_PILLAR
         )
 
         DuskItemLists.blackstoneTools.forEach {

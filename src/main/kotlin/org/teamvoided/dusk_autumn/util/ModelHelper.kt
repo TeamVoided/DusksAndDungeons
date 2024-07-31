@@ -490,6 +490,7 @@ fun BlockStateModelGenerator.registerBigLantern(block: Block) {
     )
     this.registerSingleton(block, texture, model)
 }
+
 fun BlockStateModelGenerator.registerCandle(candle: Block) {
     this.registerItemModel(candle.asItem())
     val texture = Texture.all(Texture.getId(candle))
@@ -500,8 +501,10 @@ fun BlockStateModelGenerator.registerCandle(candle: Block) {
     val fourCandle = Models.TEMPLATE_FOUR_CANDLES.upload(candle, "_four_candles", texture, this.modelCollector)
     val oneCandleLit = Models.TEMPLATE_CANDLE.upload(candle, "_one_candle_lit", textureLit, this.modelCollector)
     val twoCandleLit = Models.TEMPLATE_TWO_CANDLES.upload(candle, "_two_candles_lit", textureLit, this.modelCollector)
-    val threeCandleLit = Models.TEMPLATE_THREE_CANDLES.upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
-    val fourCandleLit = Models.TEMPLATE_FOUR_CANDLES.upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
+    val threeCandleLit =
+        Models.TEMPLATE_THREE_CANDLES.upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
+    val fourCandleLit =
+        Models.TEMPLATE_FOUR_CANDLES.upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
     this.blockStateCollector.accept(
         VariantsBlockStateSupplier.create(candle).coordinate(
             BlockStateVariantMap.create(
@@ -535,6 +538,7 @@ fun BlockStateModelGenerator.registerCandle(candle: Block) {
 //        )
 //    }
 }
+
 fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
     this.registerItemModel(candle.asItem())
     val texture = Texture.all(Texture.getId(candle))
@@ -548,19 +552,18 @@ fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
     val threeCandleLit = candleModel("3").upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
     val fourCandleLit = candleModel("4").upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
     this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(candle).coordinate(
-            BlockStateVariantMap.create(
-                Properties.CANDLES, Properties.LIT
+        VariantsBlockStateSupplier.create(candle)
+            .coordinate(
+                BlockStateVariantMap.create(Properties.CANDLES, Properties.LIT)
+                    .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
+                    .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
+                    .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
+                    .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
+                    .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
+                    .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
+                    .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
+                    .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
             )
-                .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
-                .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
-                .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
-                .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
-                .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
-                .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
-                .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
-                .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
-        )
     )
     if (cake != null) {
         val candleCake = candleModel("cake").upload(
@@ -588,13 +591,66 @@ fun candleModel(suffix: String): Model {
     return block("parent/big_candle$variant", TextureKey.ALL, TextureKey.PARTICLE)
 }
 
-fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block:Block, mix: Block) {
-    val texture = Texture()
+fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {
+    val texture1 = Texture()
         .put(TextureKey.SIDE, Texture.getId(block))
         .put(TextureKey.TOP, Texture.getSubId(DuskBlocks.NETHER_BRICK_PILLAR, "_top"))
         .put(TextureKey.BOTTOM, Texture.getSubId(mix, "_top"))
-    val identifier = Models.CUBE_BOTTOM_TOP.upload(block, texture, this.modelCollector)
-    this.blockStateCollector.accept(createAxisRotatedBlockState(block, identifier))
+    val texture2 = Texture()
+        .put(TextureKey.SIDE, Texture.getSubId(block, "_inverse"))
+        .put(TextureKey.TOP, Texture.getSubId(mix, "_top"))
+        .put(TextureKey.BOTTOM, Texture.getSubId(DuskBlocks.NETHER_BRICK_PILLAR, "_top"))
+    val model1 = Models.CUBE_BOTTOM_TOP.upload(block, texture1, this.modelCollector)
+    val model2 = Models.CUBE_BOTTOM_TOP.upload(block, "_inverse", texture2, this.modelCollector)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(block).coordinate(
+            BlockStateVariantMap.create(Properties.FACING)
+                .register(
+                    Direction.UP, BlockStateVariant.create()
+                        .put(VariantSettings.MODEL, model1)
+                )
+                .register(
+                    Direction.DOWN, BlockStateVariant.create()
+                        .put(VariantSettings.MODEL, model2)
+                )
+                .register(
+                    Direction.NORTH,
+                    BlockStateVariant.create()
+                        .put(VariantSettings.X, Rotation.R90)
+                        .put(VariantSettings.MODEL, model1)
+                )
+                .register(
+                    Direction.SOUTH, BlockStateVariant.create()
+                        .put(VariantSettings.X, Rotation.R90)
+                        .put(VariantSettings.MODEL, model2)
+                )
+                .register(
+                    Direction.EAST,
+                    BlockStateVariant.create()
+                        .put(VariantSettings.X, Rotation.R90)
+                        .put(VariantSettings.Y, Rotation.R90)
+                        .put(VariantSettings.MODEL, model1)
+                )
+                .register(
+                    Direction.WEST,
+                    BlockStateVariant.create()
+                        .put(VariantSettings.X, Rotation.R90)
+                        .put(VariantSettings.Y, Rotation.R90)
+                        .put(VariantSettings.MODEL, model2)
+                )
+        )
+    )
+}
+
+fun createAxisRotatedVariantMap(): BlockStateVariantMap {
+    return BlockStateVariantMap.create(Properties.FACING)
+        .register(Direction.UP, BlockStateVariant.create())
+        .register(Direction.DOWN, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90))
+        .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.X, Rotation.R90))
+        .register(
+            Direction.EAST,
+            BlockStateVariant.create().put(VariantSettings.X, Rotation.R90).put(VariantSettings.Y, Rotation.R90)
+        )
 }
 
 //shamelessley stolen from voidUtils :)

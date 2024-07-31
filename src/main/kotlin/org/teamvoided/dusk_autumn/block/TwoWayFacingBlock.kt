@@ -8,11 +8,10 @@ import net.minecraft.state.StateManager
 import net.minecraft.state.property.EnumProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.BlockRotation
-import net.minecraft.util.math.Axis
 import net.minecraft.util.math.Direction
 
-open class TwoWayRotationalBlock(settings: Settings) : Block(settings) {
-    public override fun getCodec(): MapCodec<out TwoWayRotationalBlock> {
+open class TwoWayFacingBlock(settings: Settings) : Block(settings) {
+    public override fun getCodec(): MapCodec<out TwoWayFacingBlock> {
         return CODEC
     }
 
@@ -45,8 +44,8 @@ open class TwoWayRotationalBlock(settings: Settings) : Block(settings) {
     }
 
     companion object {
-        val CODEC: MapCodec<TwoWayRotationalBlock> = createCodec { settings: Settings ->
-            TwoWayRotationalBlock(
+        val CODEC: MapCodec<TwoWayFacingBlock> = createCodec { settings: Settings ->
+            TwoWayFacingBlock(
                 settings
             )
         }

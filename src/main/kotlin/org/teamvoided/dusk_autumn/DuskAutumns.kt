@@ -34,4 +34,5 @@ object DuskAutumns {
 
     fun id(path: String) = Identifier.of(MODID, path)
     fun mc(path: String) = Identifier.ofDefault(path)
+    fun id(modId: String, path: String) = Identifier.of(modId, path)
 }

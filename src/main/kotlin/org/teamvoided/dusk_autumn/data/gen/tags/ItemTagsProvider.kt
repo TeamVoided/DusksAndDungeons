@@ -8,6 +8,7 @@ import net.minecraft.item.Items
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.ItemTags
+import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
 import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
@@ -28,13 +29,18 @@ class ItemTagsProvider(
 
     fun duskTags() {
         copy(DuskBlockTags.CASCADE_LOGS, DuskItemTags.CASCADE_LOGS)
+        copy(DuskBlockTags.BIG_CANDLES, DuskItemTags.BIG_CANDLES)
+        copy(DuskBlockTags.SOUL_CANDLES, DuskItemTags.SOUL_CANDLES)
+        copy(DuskBlockTags.BIG_SOUL_CANDLES, DuskItemTags.BIG_SOUL_CANDLES)
+        copy(DuskBlockTags.NETHER_BRICKS, DuskItemTags.NETHER_BRICKS)
+        copy(DuskBlockTags.CRACKED_NETHER_BRICKS, DuskItemTags.CRACKED_NETHER_BRICKS)
+        copy(DuskBlockTags.POLISHED_NETHER_BRICKS, DuskItemTags.POLISHED_NETHER_BRICKS)
+        getOrCreateTagBuilder(DuskItemTags.CRAFTS_GREY_NETHER_BRICKS)
+            .addOptional(id("twigs","silt_ball"))
+//            .addOptional(id("supplementaries","ash_pile")) what mod adds them?
+            .add(Items.BASALT)
         copy(DuskBlockTags.LEAF_PILES, DuskItemTags.LEAF_PILES)
-        getOrCreateTagBuilder(DuskItemTags.NETHER_BRICKS)
-            .add(Items.NETHER_BRICKS)
-            .add(DuskBlocks.MIXED_NETHER_BRICKS.asItem())
-            .add(Items.RED_NETHER_BRICKS)
-            .add(DuskBlocks.BLUE_NETHER_BRICKS.asItem())
-            .add(DuskBlocks.MIXED_BLUE_NETHER_BRICKS.asItem())
+
     }
 
     fun vanillaTags() {

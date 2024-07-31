@@ -161,7 +161,20 @@ fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible, 
 fun RecipeExporter.createDiagonalRecipe(
     output: ItemConvertible,
     primary: ItemConvertible,
-    secondary: ItemConvertible
+    secondary: ItemConvertible,
+) {
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .ingredient('#', primary)
+        .ingredient('%', secondary)
+        .pattern("#%")
+        .pattern("%#")
+        .criterion(FabricRecipeProvider.hasItem(primary), FabricRecipeProvider.conditionsFromItem(primary))
+        .offerTo(this)
+}
+fun RecipeExporter.createDiagonalRecipe(
+    output: ItemConvertible,
+    primary: ItemConvertible,
+    secondary: TagKey<Item>
 ) {
     ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
         .ingredient('#', primary)

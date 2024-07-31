@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.block
+package org.teamvoided.dusk_autumn.block.big
 
 import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap

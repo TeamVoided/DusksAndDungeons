@@ -77,6 +77,30 @@ object DuskBlockFamilies {
             .wall(DuskBlocks.MIXED_BLUE_NETHER_BRICK_WALL)
             .chiseled(DuskBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS)
             .build()
+    val GREY_NETHER_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.GREY_NETHER_BRICKS)
+            .cracked(DuskBlocks.CRACKED_GREY_NETHER_BRICKS)
+            .stairs(DuskBlocks.GREY_NETHER_BRICK_STAIRS)
+            .slab(DuskBlocks.GREY_NETHER_BRICK_SLAB)
+            .wall(DuskBlocks.GREY_NETHER_BRICK_WALL)
+            .polished(DuskBlocks.POLISHED_GREY_NETHER_BRICKS)
+            .chiseled(DuskBlocks.CHISELED_GREY_NETHER_BRICKS)
+            .build()
+    val POLISHED_GREY_NETHER_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.POLISHED_GREY_NETHER_BRICKS)
+            .stairs(DuskBlocks.POLISHED_GREY_NETHER_BRICK_STAIRS)
+            .slab(DuskBlocks.POLISHED_GREY_NETHER_BRICK_SLAB)
+            .wall(DuskBlocks.POLISHED_GREY_NETHER_BRICK_WALL)
+            .build()
+    val MIXED_GREY_NETHER_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.MIXED_GREY_NETHER_BRICKS)
+            .cracked(DuskBlocks.CRACKED_MIXED_GREY_NETHER_BRICKS)
+            .stairs(DuskBlocks.MIXED_GREY_NETHER_BRICK_STAIRS)
+            .slab(DuskBlocks.MIXED_GREY_NETHER_BRICK_SLAB)
+            .wall(DuskBlocks.MIXED_GREY_NETHER_BRICK_WALL)
+            .chiseled(DuskBlocks.CHISELED_MIXED_GREY_NETHER_BRICKS)
+            .build()
+
     val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
         BlockFamilies.register(DuskBlocks.OVERGROWN_COBBLESTONE)
             .stairs(DuskBlocks.OVERGROWN_COBBLESTONE_STAIRS)
@@ -97,7 +121,10 @@ object DuskBlockFamilies {
         MIXED_RED_NETHER_BRICKS_FAMILY,
         BLUE_NETHER_BRICKS_FAMILY,
         POLISHED_BLUE_NETHER_BRICKS_FAMILY,
-        MIXED_BLUE_NETHER_BRICKS_FAMILY
+        MIXED_BLUE_NETHER_BRICKS_FAMILY,
+        GREY_NETHER_BRICKS_FAMILY,
+        POLISHED_GREY_NETHER_BRICKS_FAMILY,
+        MIXED_GREY_NETHER_BRICKS_FAMILY
     )
     val recipesBlockFamilies = modelsBlockFamilies + listOf(
         OVERGROWN_COBBLESTONE_FAMILY,
