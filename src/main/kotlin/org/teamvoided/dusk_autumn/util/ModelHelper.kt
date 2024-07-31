@@ -15,6 +15,7 @@ import net.minecraft.data.client.model.*
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
+import net.minecraft.registry.Registries
 import net.minecraft.state.property.Properties
 import net.minecraft.state.property.Property
 import net.minecraft.util.Identifier
@@ -491,9 +492,9 @@ fun BlockStateModelGenerator.registerBigLantern(block: Block) {
 }
 
 fun BlockStateModelGenerator.registerCandle2(candle: Block) {
-    this.registerItemModel(candle.asItem())
-    val texture = Texture.all(Texture.getId(candle))
-    val textureLit = Texture.all(Texture.getSubId(candle, "_lit"))
+    this.registerPrefixedItemModel(candle, "candle/")
+    val texture = Texture.all(candle.prefixed("candle/"))
+    val textureLit = Texture.all(candle.prefixed("candle/").suffix("_lit"))
     val oneCandle = Models.TEMPLATE_CANDLE.upload(candle, "_one_candle", texture, this.modelCollector)
     val twoCandle = Models.TEMPLATE_TWO_CANDLES.upload(candle, "_two_candles", texture, this.modelCollector)
     val threeCandle = Models.TEMPLATE_THREE_CANDLES.upload(candle, "_three_candles", texture, this.modelCollector)
@@ -539,9 +540,9 @@ fun BlockStateModelGenerator.registerCandle2(candle: Block) {
 }
 
 fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
-    this.registerItemModel(candle.asItem())
-    val texture = Texture.all(Texture.getId(candle))
-    val textureLit = Texture.all(Texture.getSubId(candle, "_lit"))
+    this.registerPrefixedItemModel(candle, "candle/")
+    val texture = Texture.all(candle.prefixed("candle/"))
+    val textureLit = Texture.all(candle.prefixed("candle/").suffix("_lit"))
     val oneCandle = candleModel("1").upload(candle, "_one_candle", texture, this.modelCollector)
     val twoCandle = candleModel("2").upload(candle, "_two_candles", texture, this.modelCollector)
     val threeCandle = candleModel("3").upload(candle, "_three_candles", texture, this.modelCollector)
@@ -640,6 +641,7 @@ fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: B
         )
     )
 }
+
 //shamelessley stolen from voidUtils :)
 fun BlockStateModelGenerator.stairs(block: Block) =
     stairs(block, block, block, block, block)
@@ -947,12 +949,31 @@ fun BlockStateModelGenerator.parentedModel(
     Model(parent.myb, Optional.empty(), ALL_KRY)
         .upload(block, Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
 
+fun BlockStateModelGenerator.registerPrefixedItemModel(block: Block, prefix: String) {
+    val item = block.asItem()
+    Models.SINGLE_LAYER_ITEM.upload(
+        ModelIds.getItemModelId(item), Texture.layer0(item.prefixed(prefix)),
+        this.modelCollector
+    )
+}
+
 
 private
 val <T : Any?> T.myb get() = Optional.ofNullable(this)
+
 fun Block.model(): Identifier = ModelIds.getBlockModelId(this)
 fun Block.model(str: String) = this.model().suffix(str)
+
+fun Block.prefixed(str: String): Identifier = this.id.withPrefix("block/$str")
+
+
 fun Item.model(): Identifier = ModelIds.getItemModelId(this)
 fun Item.model(str: String) = this.model().suffix(str)
+fun Item.prefixed(str: String): Identifier = this.id.withPrefix("item/$str")
+
 
 fun Identifier.suffix(str: String) = Identifier(this.namespace, "${this.path}$str")
+
+
+val Item.id get() = Registries.ITEM.getId(this)
+val Block.id get() = Registries.BLOCK.getId(this)
