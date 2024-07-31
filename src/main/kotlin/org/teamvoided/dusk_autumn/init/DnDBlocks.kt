@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
 import net.minecraft.block.AbstractBlock.Settings
+import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.AbstractBlock.Settings.variantOf
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
@@ -22,10 +23,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Color
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
-import org.teamvoided.dusk_autumn.block.big.BigCandleBlock
-import org.teamvoided.dusk_autumn.block.big.BigChainBlock
-import org.teamvoided.dusk_autumn.block.big.BigLanternBlock
-import org.teamvoided.dusk_autumn.block.big.BigSoulCandleBlock
+import org.teamvoided.dusk_autumn.block.big.*
 import org.teamvoided.dusk_autumn.block.rocky.RockyDirtPathBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyGrassBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyMyceliumBlock
@@ -89,34 +87,11 @@ object DnDBlocks {
                 .sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
         )
     )
-    val CASCADE_STAIRS = register(
-        "cascade_stairs", legacyStairsOf(CASCADE_PLANKS).axe()
-    )
-    val CASCADE_SLAB = register(
-        "cascade_slab",
-        SlabBlock(
-            Settings.create()
-                .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
-        ).axe()
-    )
-    val CASCADE_FENCE = register(
-        "cascade_fence",
-        FenceBlock(
-            Settings.create()
-                .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0f, 3.0f).sounds(BlockSoundGroup.CHERRY_WOOD).solid().lavaIgnitable()
-        ).axe()
-    )
-    val CASCADE_FENCE_GATE = register(
-        "cascade_fence_gate",
-        FenceGateBlock(
-            DnDWoodTypes.CASCADE_WOOD_TYPE,
-            Settings.create()
-                .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0f, 3.0f).solid().lavaIgnitable()
-        ).axe()
-    )
+    val CASCADE_STAIRS = register("cascade_stairs", legacyStairsOf(CASCADE_PLANKS).axe())
+    val CASCADE_SLAB = register("cascade_slab", slabOf(CASCADE_PLANKS).axe())
+    val CASCADE_FENCE = register("cascade_fence", fenceOf(CASCADE_PLANKS).axe())
+    val CASCADE_FENCE_GATE =
+        register("cascade_fence_gate", fenceGateOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).axe())
     val CASCADE_DOOR = registerNoItem(
         "cascade_door", DoorBlock(
             DnDWoodTypes.CASCADE_BLOCK_SET_TYPE,
@@ -360,11 +335,91 @@ object DnDBlocks {
     val BIG_MAGENTA_SOUL_CANDLE = register("big_magenta_soul_candle", bigSoulCandleOf(MapColor.MAGENTA))
     val BIG_PINK_SOUL_CANDLE = register("big_pink_soul_candle", bigSoulCandleOf(MapColor.PINK))
 
+    val BIG_CANDLE_CAKE = registerNoItem("big_candle_cake", bigCandleCakeOf(BIG_CANDLE, CANDLE_CAKE))
+    val BIG_WHITE_CANDLE_CAKE = registerNoItem("big_white_candle_cake", bigCandleCakeOf(BIG_WHITE_CANDLE))
+    val BIG_LIGHT_GRAY_CANDLE_CAKE =
+        registerNoItem("big_light_gray_candle_cake", bigCandleCakeOf(BIG_LIGHT_GRAY_CANDLE))
+    val BIG_GRAY_CANDLE_CAKE = registerNoItem("big_gray_candle_cake", bigCandleCakeOf(BIG_GRAY_CANDLE))
+    val BIG_BLACK_CANDLE_CAKE = registerNoItem("big_black_candle_cake", bigCandleCakeOf(BIG_BLACK_CANDLE))
+    val BIG_BROWN_CANDLE_CAKE = registerNoItem("big_brown_candle_cake", bigCandleCakeOf(BIG_BROWN_CANDLE))
+    val BIG_RED_CANDLE_CAKE = registerNoItem("big_red_candle_cake", bigCandleCakeOf(BIG_RED_CANDLE))
+    val BIG_ORANGE_CANDLE_CAKE = registerNoItem("big_orange_candle_cake", bigCandleCakeOf(BIG_ORANGE_CANDLE))
+    val BIG_YELLOW_CANDLE_CAKE = registerNoItem("big_yellow_candle_cake", bigCandleCakeOf(BIG_YELLOW_CANDLE))
+    val BIG_LIME_CANDLE_CAKE = registerNoItem("big_lime_candle_cake", bigCandleCakeOf(BIG_LIME_CANDLE))
+    val BIG_GREEN_CANDLE_CAKE = registerNoItem("big_green_candle_cake", bigCandleCakeOf(BIG_GREEN_CANDLE))
+    val BIG_CYAN_CANDLE_CAKE = registerNoItem("big_cyan_candle_cake", bigCandleCakeOf(BIG_CYAN_CANDLE))
+    val BIG_LIGHT_BLUE_CANDLE_CAKE =
+        registerNoItem("big_light_blue_candle_cake", bigCandleCakeOf(BIG_LIGHT_BLUE_CANDLE))
+    val BIG_BLUE_CANDLE_CAKE = registerNoItem("big_blue_candle_cake", bigCandleCakeOf(BIG_BLUE_CANDLE))
+    val BIG_PURPLE_CANDLE_CAKE = registerNoItem("big_purple_candle_cake", bigCandleCakeOf(BIG_PURPLE_CANDLE))
+    val BIG_MAGENTA_CANDLE_CAKE = registerNoItem("big_magenta_candle_cake", bigCandleCakeOf(BIG_MAGENTA_CANDLE))
+    val BIG_PINK_CANDLE_CAKE = registerNoItem("big_pink_candle_cake", bigCandleCakeOf(BIG_PINK_CANDLE))
+    val SOUL_CANDLE_CAKE = registerNoItem("soul_candle_cake", soulCandleCakeOf(SOUL_CANDLE, CANDLE_CAKE))
+    val WHITE_SOUL_CANDLE_CAKE = registerNoItem("white_soul_candle_cake", soulCandleCakeOf(WHITE_SOUL_CANDLE))
+    val LIGHT_GRAY_SOUL_CANDLE_CAKE =
+        registerNoItem("light_gray_soul_candle_cake", soulCandleCakeOf(LIGHT_GRAY_SOUL_CANDLE))
+    val GRAY_SOUL_CANDLE_CAKE = registerNoItem("gray_soul_candle_cake", soulCandleCakeOf(GRAY_SOUL_CANDLE))
+    val BLACK_SOUL_CANDLE_CAKE = registerNoItem("black_soul_candle_cake", soulCandleCakeOf(BLACK_SOUL_CANDLE))
+    val BROWN_SOUL_CANDLE_CAKE = registerNoItem("brown_soul_candle_cake", soulCandleCakeOf(BROWN_SOUL_CANDLE))
+    val RED_SOUL_CANDLE_CAKE = registerNoItem("red_soul_candle_cake", soulCandleCakeOf(RED_SOUL_CANDLE))
+    val ORANGE_SOUL_CANDLE_CAKE = registerNoItem("orange_soul_candle_cake", soulCandleCakeOf(ORANGE_SOUL_CANDLE))
+    val YELLOW_SOUL_CANDLE_CAKE = registerNoItem("yellow_soul_candle_cake", soulCandleCakeOf(YELLOW_SOUL_CANDLE))
+    val LIME_SOUL_CANDLE_CAKE = registerNoItem("lime_soul_candle_cake", soulCandleCakeOf(LIME_SOUL_CANDLE))
+    val GREEN_SOUL_CANDLE_CAKE = registerNoItem("green_soul_candle_cake", soulCandleCakeOf(GREEN_SOUL_CANDLE))
+    val CYAN_SOUL_CANDLE_CAKE = registerNoItem("cyan_soul_candle_cake", soulCandleCakeOf(CYAN_SOUL_CANDLE))
+    val LIGHT_BLUE_SOUL_CANDLE_CAKE =
+        registerNoItem("light_blue_soul_candle_cake", soulCandleCakeOf(LIGHT_BLUE_SOUL_CANDLE))
+    val BLUE_SOUL_CANDLE_CAKE = registerNoItem("blue_soul_candle_cake", soulCandleCakeOf(BLUE_SOUL_CANDLE))
+    val PURPLE_SOUL_CANDLE_CAKE = registerNoItem("purple_soul_candle_cake", soulCandleCakeOf(PURPLE_SOUL_CANDLE))
+    val MAGENTA_SOUL_CANDLE_CAKE = registerNoItem("magenta_soul_candle_cake", soulCandleCakeOf(MAGENTA_SOUL_CANDLE))
+    val PINK_SOUL_CANDLE_CAKE = registerNoItem("pink_soul_candle_cake", soulCandleCakeOf(PINK_SOUL_CANDLE))
+    val BIG_SOUL_CANDLE_CAKE =
+        registerNoItem("big_soul_candle_cake", bigSoulCandleCakeOf(BIG_SOUL_CANDLE, SOUL_CANDLE_CAKE))
+    val BIG_WHITE_SOUL_CANDLE_CAKE =
+        registerNoItem("big_white_soul_candle_cake", bigSoulCandleCakeOf(BIG_WHITE_SOUL_CANDLE))
+    val BIG_LIGHT_GRAY_SOUL_CANDLE_CAKE =
+        registerNoItem("big_light_gray_soul_candle_cake", bigSoulCandleCakeOf(BIG_LIGHT_GRAY_SOUL_CANDLE))
+    val BIG_GRAY_SOUL_CANDLE_CAKE =
+        registerNoItem("big_gray_soul_candle_cake", bigSoulCandleCakeOf(BIG_GRAY_SOUL_CANDLE))
+    val BIG_BLACK_SOUL_CANDLE_CAKE =
+        registerNoItem("big_black_soul_candle_cake", bigSoulCandleCakeOf(BIG_BLACK_SOUL_CANDLE))
+    val BIG_BROWN_SOUL_CANDLE_CAKE =
+        registerNoItem("big_brown_soul_candle_cake", bigSoulCandleCakeOf(BIG_BROWN_SOUL_CANDLE))
+    val BIG_RED_SOUL_CANDLE_CAKE =
+        registerNoItem("big_red_soul_candle_cake", bigSoulCandleCakeOf(BIG_RED_SOUL_CANDLE))
+    val BIG_ORANGE_SOUL_CANDLE_CAKE =
+        registerNoItem("big_orange_soul_candle_cake", bigSoulCandleCakeOf(BIG_ORANGE_SOUL_CANDLE))
+    val BIG_YELLOW_SOUL_CANDLE_CAKE =
+        registerNoItem("big_yellow_soul_candle_cake", bigSoulCandleCakeOf(BIG_YELLOW_SOUL_CANDLE))
+    val BIG_LIME_SOUL_CANDLE_CAKE =
+        registerNoItem("big_lime_soul_candle_cake", bigSoulCandleCakeOf(BIG_LIME_SOUL_CANDLE))
+    val BIG_GREEN_SOUL_CANDLE_CAKE =
+        registerNoItem("big_green_soul_candle_cake", bigSoulCandleCakeOf(BIG_GREEN_SOUL_CANDLE))
+    val BIG_CYAN_SOUL_CANDLE_CAKE =
+        registerNoItem("big_cyan_soul_candle_cake", bigSoulCandleCakeOf(BIG_CYAN_SOUL_CANDLE))
+    val BIG_LIGHT_BLUE_SOUL_CANDLE_CAKE =
+        registerNoItem("big_light_blue_soul_candle_cake", bigSoulCandleCakeOf(BIG_LIGHT_BLUE_SOUL_CANDLE))
+    val BIG_BLUE_SOUL_CANDLE_CAKE =
+        registerNoItem("big_blue_soul_candle_cake", bigSoulCandleCakeOf(BIG_BLUE_SOUL_CANDLE))
+    val BIG_PURPLE_SOUL_CANDLE_CAKE =
+        registerNoItem("big_purple_soul_candle_cake", bigSoulCandleCakeOf(BIG_PURPLE_SOUL_CANDLE))
+    val BIG_MAGENTA_SOUL_CANDLE_CAKE =
+        registerNoItem("big_magenta_soul_candle_cake", bigSoulCandleCakeOf(BIG_MAGENTA_SOUL_CANDLE))
+    val BIG_PINK_SOUL_CANDLE_CAKE =
+        registerNoItem("big_pink_soul_candle_cake", bigSoulCandleCakeOf(BIG_PINK_SOUL_CANDLE))
+
     val BRICK_FENCE = register("brick_fence", fenceOf(BRICKS).pickaxe())
 
     val NETHERRACK_STAIRS = register("netherrack_stairs", stairsOf(NETHERRACK).pickaxe())
     val NETHERRACK_SLAB = register("netherrack_slab", slabOf(NETHERRACK).pickaxe())
     val NETHERRACK_WALL = register("netherrack_wall", wallOf(NETHERRACK).pickaxe())
+    val WARPED_WART = register(
+        "warped_wart",
+        WarpedNetherWartBlock(
+            Settings.create().mapColor(MapColor.WARPED_STEM).noCollision().ticksRandomly()
+                .sounds(BlockSoundGroup.NETHER_WART).pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout().sword().axe()
+    )
     val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(variantOf(NETHER_BRICKS)).pickaxe())
     val POLISHED_NETHER_BRICKS = register("polished_nether_bricks", Block(variantOf(NETHER_BRICKS)).pickaxe())
     val POLISHED_NETHER_BRICK_STAIRS = register("polished_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
@@ -843,6 +898,10 @@ object DnDBlocks {
         return FenceBlock(variantOf(block).solid())
     }
 
+    fun fenceGateOf(woodType: WoodType, block: Block): Block {
+        return FenceGateBlock(woodType, variantOf(block).solid())
+    }
+
     fun candleSettings() = Settings.create().nonOpaque().strength(0.1f)
         .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
 
@@ -856,6 +915,30 @@ object DnDBlocks {
 
     fun bigSoulCandleOf(color: MapColor): Block {
         return BigSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+    }
+
+    fun bigCandleCakeOf(block: Block): Block {
+        return BigCandleCakeBlock(block, copy(BIG_CANDLE_CAKE))
+    }
+
+    fun bigCandleCakeOf(block: Block, candleCake: Block): Block {
+        return BigCandleCakeBlock(block, copy(candleCake))
+    }
+
+    fun soulCandleCakeOf(block: Block): Block {
+        return soulCandleCakeOf(block, SOUL_CANDLE_CAKE)
+    }
+
+    fun soulCandleCakeOf(block: Block, candleCake: Block): Block {
+        return SoulCandleCakeBlock(block, copy(candleCake))
+    }
+
+    fun bigSoulCandleCakeOf(block: Block): Block {
+        return bigSoulCandleCakeOf(block, BIG_SOUL_CANDLE_CAKE)
+    }
+
+    fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block {
+        return BigSoulCandleCakeBlock(block, copy(candleCake))
     }
 
     fun dirtPath(input: Block, output: Block) {

@@ -12,8 +12,8 @@ import net.minecraft.structure.processor.StructureProcessorList
 import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.world.gen.feature.PlacedFeature
 import org.teamvoided.dusk_autumn.DuskAutumns.MODID
-import org.teamvoided.dusk_autumn.data.structure.DuskStructurePools
-import org.teamvoided.dusk_autumn.data.structure.DuskStructureProcessorLists
+import org.teamvoided.dusk_autumn.data.structure.DnDStructurePools
+import org.teamvoided.dusk_autumn.data.structure.DnDStructureProcessorLists
 import java.util.function.Function
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
@@ -38,11 +38,11 @@ object StructurePoolCreator {
         placedFeatures: HolderProvider<PlacedFeature>
 
     ) {
-        val procDefault = procLists.getHolderOrThrow(DuskStructureProcessorLists.AUTUMN_RUINS_DEFAULT)
+        val procDefault = procLists.getHolderOrThrow(DnDStructureProcessorLists.AUTUMN_RUINS_DEFAULT)
         val default = "autumn_ruins/"
         val stone = default + "stone/stone_"
         c.register(
-            DuskStructurePools.AUTUMN_RUINS_SINGLE,
+            DnDStructurePools.AUTUMN_RUINS_SINGLE,
             StructurePool(
                 poolEmpty,
                 listOf(

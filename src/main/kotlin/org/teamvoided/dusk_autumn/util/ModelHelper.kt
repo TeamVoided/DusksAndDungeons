@@ -491,7 +491,52 @@ fun BlockStateModelGenerator.registerBigLantern(block: Block) {
     this.registerSingleton(block, texture, model)
 }
 
-fun BlockStateModelGenerator.registerCandle2(candle: Block) {
+fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
+    this.registerPrefixedItemModel(candle, "candle/")
+    val texture = Texture.all(candle.prefixed("candle/"))
+    val textureLit = Texture.all(candle.prefixed("candle/").suffix("_lit"))
+    val oneCandle = bigCandleModel("1").upload(candle, "_one_candle", texture, this.modelCollector)
+    val twoCandle = bigCandleModel("2").upload(candle, "_two_candles", texture, this.modelCollector)
+    val threeCandle = bigCandleModel("3").upload(candle, "_three_candles", texture, this.modelCollector)
+    val fourCandle = bigCandleModel("4").upload(candle, "_four_candles", texture, this.modelCollector)
+    val oneCandleLit = bigCandleModel("1").upload(candle, "_one_candle_lit", textureLit, this.modelCollector)
+    val twoCandleLit = bigCandleModel("2").upload(candle, "_two_candles_lit", textureLit, this.modelCollector)
+    val threeCandleLit = bigCandleModel("3").upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
+    val fourCandleLit = bigCandleModel("4").upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(candle)
+            .coordinate(
+                BlockStateVariantMap.create(Properties.CANDLES, Properties.LIT)
+                    .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
+                    .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
+                    .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
+                    .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
+                    .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
+                    .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
+                    .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
+                    .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
+            )
+    )
+    if (cake != null) {
+        val candleCake = bigCandleCakeModel().upload(
+            cake, candleCake(candle, false),
+            this.modelCollector
+        )
+        val candleCakeLit = bigCandleCakeModel().upload(
+            cake, "_lit", candleCake(candle, true),
+            this.modelCollector
+        )
+        this.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(cake).coordinate(
+                BlockStateModelGenerator.createBooleanModelMap(
+                    Properties.LIT, candleCakeLit, candleCake
+                )
+            )
+        )
+    }
+}
+
+fun BlockStateModelGenerator.registerCandle2(candle: Block, cake: Block?) {
     this.registerPrefixedItemModel(candle, "candle/")
     val texture = Texture.all(candle.prefixed("candle/"))
     val textureLit = Texture.all(candle.prefixed("candle/").suffix("_lit"))
@@ -520,58 +565,13 @@ fun BlockStateModelGenerator.registerCandle2(candle: Block) {
                 .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
         )
     )
-//    if (cake != null) {
-//        val candleCake = candleModel("cake").upload(
-//            cake, Texture.candleCake(candle, false),
-//            this.modelCollector
-//        )
-//        val candleCakeLit = candleModel("cake").upload(
-//            cake, "_lit", Texture.candleCake(candle, true),
-//            this.modelCollector
-//        )
-//        this.blockStateCollector.accept(
-//            VariantsBlockStateSupplier.create(cake).coordinate(
-//                BlockStateModelGenerator.createBooleanModelMap(
-//                    Properties.LIT, candleCakeLit, candleCake
-//                )
-//            )
-//        )
-//    }
-}
-
-fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
-    this.registerPrefixedItemModel(candle, "candle/")
-    val texture = Texture.all(candle.prefixed("candle/"))
-    val textureLit = Texture.all(candle.prefixed("candle/").suffix("_lit"))
-    val oneCandle = candleModel("1").upload(candle, "_one_candle", texture, this.modelCollector)
-    val twoCandle = candleModel("2").upload(candle, "_two_candles", texture, this.modelCollector)
-    val threeCandle = candleModel("3").upload(candle, "_three_candles", texture, this.modelCollector)
-    val fourCandle = candleModel("4").upload(candle, "_four_candles", texture, this.modelCollector)
-    val oneCandleLit = candleModel("1").upload(candle, "_one_candle_lit", textureLit, this.modelCollector)
-    val twoCandleLit = candleModel("2").upload(candle, "_two_candles_lit", textureLit, this.modelCollector)
-    val threeCandleLit = candleModel("3").upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
-    val fourCandleLit = candleModel("4").upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(candle)
-            .coordinate(
-                BlockStateVariantMap.create(Properties.CANDLES, Properties.LIT)
-                    .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
-                    .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
-                    .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
-                    .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
-                    .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
-                    .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
-                    .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
-                    .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
-            )
-    )
     if (cake != null) {
-        val candleCake = candleModel("cake").upload(
-            cake, Texture.candleCake(candle, false),
+        val candleCake = Models.TEMPLATE_CAKE_WITH_CANDLE.upload(
+            cake, candleCake(candle, false),
             this.modelCollector
         )
-        val candleCakeLit = candleModel("cake").upload(
-            cake, "_lit", Texture.candleCake(candle, true),
+        val candleCakeLit = Models.TEMPLATE_CAKE_WITH_CANDLE.upload(
+            cake, "_lit", candleCake(candle, true),
             this.modelCollector
         )
         this.blockStateCollector.accept(
@@ -583,12 +583,22 @@ fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
         )
     }
 }
+fun candleCake(block: Block, lit: Boolean): Texture {
+    return Texture()
+        .put(TextureKey.PARTICLE, Texture.getSubId(Blocks.CAKE, "_side"))
+        .put(TextureKey.BOTTOM, Texture.getSubId(Blocks.CAKE, "_bottom"))
+        .put(TextureKey.TOP, Texture.getSubId(Blocks.CAKE, "_top"))
+        .put(TextureKey.SIDE, Texture.getSubId(Blocks.CAKE, "_side"))
+        .put(TextureKey.CANDLE, block.prefixed("candle/").suffix(if (lit) "_lit" else ""))
+}
 
-fun candleModel(suffix: String): Model {
-    val variant = if (suffix == "1") {
-        ""
-    } else "_$suffix"
+fun bigCandleModel(suffix: String): Model {
+    val variant = if (suffix == "1") "" else "_$suffix"
     return block("parent/big_candle$variant", TextureKey.ALL, TextureKey.PARTICLE)
+}
+
+fun bigCandleCakeModel(): Model {
+    return block("parent/cake_with_big_candle", TextureKey.CANDLE, TextureKey.PARTICLE)
 }
 
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {
@@ -825,28 +835,29 @@ fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
 //for future reference since i still havent watched tutorials
 //private fun leafPileHanging(num: String? = null): Identifier =
 //    id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
-
-fun BlockStateModelGenerator.registerFloorCrop(
+fun BlockStateModelGenerator.registerCropWithParent(
     crop: Block,
+    model: Identifier,
     ageProperty: Property<Int>,
     vararg ageTextureIndices: Int
 ) {
     require(ageProperty.values.size == ageTextureIndices.size)
     val int2ObjectMap: Int2ObjectMap<Identifier> = Int2ObjectOpenHashMap()
     val blockStateVariantMap = BlockStateVariantMap.create(ageProperty).register { age: Int ->
-        val i = ageTextureIndices[age]
-        BlockStateVariant.create().put(
-            VariantSettings.MODEL, int2ObjectMap.computeIfAbsent(i,
-                Int2ObjectFunction { _: Int ->
-                    this.createSubModel(
-                        crop,
-                        "_stage$i",
-                        block("parent/floor_plant", TextureKey.TEXTURE)
-                    ) { id: Identifier ->
-                        Texture.of(TextureKey.TEXTURE, id)
-                    }
-                })
-        )
+        val stage = ageTextureIndices[age]
+        val identifier = int2ObjectMap.computeIfAbsent(stage,
+            Int2ObjectFunction { _: Int ->
+                this.createSubModel(
+                    crop,
+                    "_stage$stage",
+                    block(model, TextureKey.CROP)
+                ) { id: Identifier ->
+                    Texture.crop(
+                        id
+                    )
+                }
+            })
+        BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
     }
     this.registerItemModel(crop.asItem())
     this.blockStateCollector.accept(VariantsBlockStateSupplier.create(crop).coordinate(blockStateVariantMap))
@@ -916,6 +927,22 @@ fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
 fun parentedItemModel(id: Identifier) = Model(Optional.of(id.withPrefix("item/")), Optional.empty())
 fun BlockStateModelGenerator.registerParentedItemModel(block: Block) =
     this.registerParentedItemModel(block, block.model())
+
+fun block(model: Identifier, vararg requiredTextures: TextureKey): Model {
+    return Model(
+        Optional.of(
+            model
+        ), Optional.empty(), *requiredTextures
+    )
+}
+
+fun block(model: Identifier, variant: String, vararg requiredTextures: TextureKey): Model {
+    return Model(
+        Optional.of(
+            model
+        ), Optional.of(variant), *requiredTextures
+    )
+}
 
 fun block(parent: String, vararg requiredTextures: TextureKey): Model {
     return Model(

@@ -15,6 +15,7 @@ object DnDItemTags {
     val NETHER_BRICKS = create("nether_bricks")
     val POLISHED_NETHER_BRICKS = create("polished_nether_bricks")
     val CRACKED_NETHER_BRICKS = create("cracked_nether_bricks")
+    val CRAFTS_WARPED_NETHER_BRICKS = create("crafts_warped_nether_bricks")
     val CRAFTS_ASHEN_NETHER_BRICKS = create("crafts_ashen_nether_bricks")
     val LEAF_PILES = create("leaf_piles")
 

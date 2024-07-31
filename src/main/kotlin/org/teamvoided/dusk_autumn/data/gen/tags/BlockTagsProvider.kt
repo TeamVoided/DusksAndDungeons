@@ -140,7 +140,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.POLISHED_GRAY_NETHER_BRICKS)
         getOrCreateTagBuilder(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
             .addOptionalTag(id("nullium","nether_wart_placeable"))
-            .add(Blocks.SOUL_SOIL)
+            .add(Blocks.SOUL_SAND)
         getOrCreateTagBuilder(DnDBlockTags.MOONBERRY_CAN_PLACE_ON)
             .add(Blocks.FARMLAND)
         getOrCreateTagBuilder(DnDBlockTags.FARMLAND_PLACES_UNDER)

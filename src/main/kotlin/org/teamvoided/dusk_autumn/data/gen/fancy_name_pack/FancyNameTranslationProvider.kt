@@ -59,6 +59,7 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
+        Blocks.NETHER_WART.let { gen.add(it.translationKey, genLang(it.id).replace("Nether", "Crimson")) }
         crimsonBricks.forEach { gen.add(it.translationKey, genLang(it.id).replace("Red", "Crimson")) }
         warpedBricks.forEach { gen.add(it.translationKey, genLang(it.id).replace("Blue", "Warped")) }
         ashenBricks.forEach { gen.add(it.translationKey, genLang(it.id).replace("Gray", "Ashen")) }

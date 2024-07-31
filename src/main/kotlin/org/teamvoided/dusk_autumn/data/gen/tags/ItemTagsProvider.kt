@@ -11,6 +11,7 @@ import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
+import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import java.util.concurrent.CompletableFuture
 
@@ -34,6 +35,8 @@ class ItemTagsProvider(
         copy(DnDBlockTags.NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
         copy(DnDBlockTags.CRACKED_NETHER_BRICKS, DnDItemTags.CRACKED_NETHER_BRICKS)
         copy(DnDBlockTags.POLISHED_NETHER_BRICKS, DnDItemTags.POLISHED_NETHER_BRICKS)
+        getOrCreateTagBuilder(DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS)
+            .add(DnDBlocks.WARPED_WART.asItem())
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
             .addOptional(id("supplementaries","ash_pile"))
             .add(Items.BASALT)
@@ -63,9 +66,10 @@ class ItemTagsProvider(
         copy(BlockTags.LEAVES, ItemTags.LEAVES)
         copy(BlockTags.FLOWERS, ItemTags.FLOWERS)
 
+        copy(BlockTags.STAIRS, ItemTags.STAIRS)
         copy(BlockTags.SLABS, ItemTags.SLABS)
         copy(BlockTags.WALLS, ItemTags.WALLS)
-        copy(BlockTags.STAIRS, ItemTags.STAIRS)
+        copy(BlockTags.FENCES, ItemTags.FENCES)
 
         copy(BlockTags.CANDLES, ItemTags.CANDLES)
 

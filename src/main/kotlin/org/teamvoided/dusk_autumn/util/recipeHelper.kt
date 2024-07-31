@@ -211,15 +211,15 @@ fun RecipeExporter.createDiagonalRecipe(
 
 fun RecipeExporter.createDiagonalRecipe(
     output: ItemConvertible,
-    primary: ItemConvertible,
-    secondary: TagKey<Item>
+    primary: TagKey<Item>,
+    secondary: ItemConvertible
 ) {
     ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
         .ingredient('#', primary)
         .ingredient('%', secondary)
         .pattern("#%")
         .pattern("%#")
-        .criterion(FabricRecipeProvider.hasItem(primary), FabricRecipeProvider.conditionsFromItem(primary))
+        .criterion("has_" + primary.id.path, FabricRecipeProvider.conditionsFromTag(primary))
         .offerTo(this)
 }
 

@@ -77,7 +77,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.registerBigCandle(candle, cake)
         }
         DnDLists.soulCandles.forEach { (candle, cake) ->
-            gen.registerCandle2(candle)
+            gen.registerCandle2(candle, cake)
         }
         DnDLists.bigSoulCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
@@ -88,6 +88,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.stairs(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         gen.slab(DnDBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
         gen.wall(DnDBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)
+        gen.registerCropWithParent(DnDBlocks.WARPED_WART, id("block/parent/crop"), Properties.AGE_3, 0, 1, 1, 2)
         gen.registerAxisRotated(
             DnDBlocks.NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
@@ -161,7 +162,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerFlowerbed(DnDBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DnDBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DnDBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
-        gen.registerFloorCrop(DnDBlocks.MOONBERRY_VINELET, Properties.AGE_2, 0, 1, 2)
+        gen.registerCropWithParent(
+            DnDBlocks.MOONBERRY_VINELET, id("block/parent/floor_plant"),
+            Properties.AGE_2, 0, 1, 2
+        )
         gen.createMoonberryVine(DnDBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DnDItems.MOONBERRIES)
 

@@ -5,7 +5,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.processor.StructureProcessorList
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
-object DuskStructureProcessorLists {
+object DnDStructureProcessorLists {
 
     val AUTUMN_RUINS_DEFAULT= create("autumn_ruins/default")
 

@@ -5,7 +5,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.pool.StructurePool
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 
-object DuskStructurePools {
+object DnDStructurePools {
 
     val AUTUMN_RUINS_SINGLE = create("autumn_ruins/single")
 

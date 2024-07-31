@@ -55,10 +55,10 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.createCandle(DnDBlocks.BIG_CANDLE)
         e.createCandle(DnDBlocks.SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
         e.createCandle(DnDBlocks.BIG_SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
-        DnDLists.dye.forEachIndexed{ idx, dye ->
-            e.createDyed(DnDLists.bigCandles[idx+1].first, dye)
-            e.createDyed(DnDLists.soulCandles[idx+1].first, dye)
-            e.createDyed(DnDLists.bigSoulCandles[idx+1].first, dye)
+        DnDLists.dye.forEachIndexed { idx, dye ->
+            e.createDyed(DnDLists.bigCandles[idx + 1].first, dye)
+            e.createDyed(DnDLists.soulCandles[idx + 1].first, dye)
+            e.createDyed(DnDLists.bigSoulCandles[idx + 1].first, dye)
         }
 
         e.createFence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS, Items.BRICK)
@@ -121,6 +121,11 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DnDBlocks.MIXED_NETHER_BRICK_WALL,
             listOf(DnDBlocks.MIXED_NETHER_BRICK_FENCE, DnDBlocks.MIXED_NETHER_BRICK_PILLAR)
         )
+        e.createDiagonalRecipe(
+            DnDBlocks.BLUE_NETHER_BRICKS,
+            DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS,
+            Blocks.NETHER_BRICKS
+        )
         e.createFence(DnDBlocks.BLUE_NETHER_BRICK_FENCE, DnDBlocks.BLUE_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
             DnDBlocks.BLUE_NETHER_BRICK_PILLAR,
@@ -142,7 +147,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DnDBlocks.POLISHED_BLUE_NETHER_BRICK_SLAB,
             DnDBlocks.POLISHED_BLUE_NETHER_BRICK_WALL
         )
-        e.createDiagonalRecipe(DnDBlocks.MIXED_BLUE_NETHER_BRICKS, Blocks.NETHER_BRICKS, DnDBlocks.BLUE_NETHER_BRICKS)
+        e.createDiagonalRecipe(DnDBlocks.MIXED_BLUE_NETHER_BRICKS, DnDBlocks.BLUE_NETHER_BRICKS, Blocks.NETHER_BRICKS)
         e.createFence(DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DnDBlocks.MIXED_BLUE_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
             DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
@@ -159,8 +164,9 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         )
         e.createDiagonalRecipe(
             DnDBlocks.GRAY_NETHER_BRICKS,
-            Blocks.NETHER_BRICKS,
-            DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS
+            DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS,
+            Blocks.NETHER_BRICKS
+
         )
         e.createFence(DnDBlocks.GRAY_NETHER_BRICK_FENCE, DnDBlocks.GRAY_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(

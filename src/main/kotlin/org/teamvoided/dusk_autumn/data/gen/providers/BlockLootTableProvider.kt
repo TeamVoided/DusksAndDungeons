@@ -17,8 +17,11 @@ import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
+import org.teamvoided.dusk_autumn.block.DnDLists.bigCandles
+import org.teamvoided.dusk_autumn.block.DnDLists.bigSoulCandles
 import org.teamvoided.dusk_autumn.block.DnDLists.leafPiles
 import org.teamvoided.dusk_autumn.block.DnDLists.logPiles
+import org.teamvoided.dusk_autumn.block.DnDLists.soulCandles
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
@@ -35,17 +38,31 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             DnDBlocks.WILD_WHEAT,
             DnDBlocks.GOLDEN_BEETROOTS,
             DnDBlocks.MOONBERRY_VINE
-        ) + logPiles.map { it.first } + leafPiles.map { it.first }
+        ) +
+                bigCandles.map { it.second } +
+                soulCandles.map { it.second } +
+                bigSoulCandles.map { it.second } +
+                logPiles.map { it.first } +
+                leafPiles.map { it.first }
 
     override fun generate() {
         DnDBlocks.BLOCKS.filter { (it !in excludeList && it !is FlowerPotBlock) }.forEach {
             when (it) {
                 is SlabBlock -> add(it, ::slabDrops)
                 is DoorBlock -> add(it, ::doorDrops)
-                is CandleBlock -> add(it, ::candleDrops)
                 is LogPileBlock -> add(it, ::logPile)
+                is CandleBlock -> add(it, ::candleDrops)
                 else -> addDrop(it)
             }
+        }
+        bigCandles.forEach { (candle, cake) ->
+            add(cake) { candleCakeDrops(candle) }
+        }
+        soulCandles.forEach { (candle, cake) ->
+            add(cake) { candleCakeDrops(candle) }
+        }
+        bigSoulCandles.forEach { (candle, cake) ->
+            add(cake) { candleCakeDrops(candle) }
         }
         leafPiles.forEach { (pile, leaves) ->
             add(pile) { leafPile(it, leaves) }

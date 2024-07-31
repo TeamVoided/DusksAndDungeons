@@ -7,7 +7,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.processor.*
 import net.minecraft.structure.rule.*
-import org.teamvoided.dusk_autumn.data.structure.DuskStructureProcessorLists
+import org.teamvoided.dusk_autumn.data.structure.DnDStructureProcessorLists
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 
 
@@ -59,7 +59,7 @@ object StructureProcessorCreator {
 
     fun autumnRuinsProcessorLists(c: BootstrapContext<StructureProcessorList>) {
         c.register(
-            DuskStructureProcessorLists.AUTUMN_RUINS_DEFAULT,
+            DnDStructureProcessorLists.AUTUMN_RUINS_DEFAULT,
             BlockRotStructureProcessor(0.95f),
             RuleStructureProcessor(
                 StructureProcessorRule(

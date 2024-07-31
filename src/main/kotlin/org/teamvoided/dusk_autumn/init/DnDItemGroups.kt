@@ -132,6 +132,10 @@ object DnDItemGroups {
         this.addStacks(list.map(Item::getDefaultStack))
     }
 
+    fun addItems(list: Collection<Item>): List<ItemStack> {
+        return list.map(Item::getDefaultStack)
+    }
+
     fun registerInVanillaTab(itemGroup: RegistryKey<ItemGroup>, itemBefore: Item, item: Item) {
         ItemGroupEvents.modifyEntriesEvent(itemGroup)
             .register(ItemGroupEvents.ModifyEntries {
@@ -150,9 +154,5 @@ object DnDItemGroups {
                     addItems(list),
                 )
             })
-    }
-
-    fun addItems(list: Collection<Item>): List<ItemStack> {
-        return list.map(Item::getDefaultStack)
     }
 }
