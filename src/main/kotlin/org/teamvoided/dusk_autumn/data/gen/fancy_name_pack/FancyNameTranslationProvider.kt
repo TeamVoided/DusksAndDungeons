@@ -15,18 +15,18 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
     FabricLanguageProvider(o, r) {
 
     val ashenBricks = listOf(
-        DuskBlocks.GREY_NETHER_BRICKS,
-        DuskBlocks.CRACKED_GREY_NETHER_BRICKS,
-        DuskBlocks.GREY_NETHER_BRICK_STAIRS,
-        DuskBlocks.GREY_NETHER_BRICK_SLAB,
-        DuskBlocks.GREY_NETHER_BRICK_WALL,
-        DuskBlocks.GREY_NETHER_BRICK_FENCE,
-        DuskBlocks.CHISELED_GREY_NETHER_BRICKS,
-        DuskBlocks.GREY_NETHER_BRICK_PILLAR,
-        DuskBlocks.POLISHED_GREY_NETHER_BRICKS,
-        DuskBlocks.POLISHED_GREY_NETHER_BRICK_STAIRS,
-        DuskBlocks.POLISHED_GREY_NETHER_BRICK_SLAB,
-        DuskBlocks.POLISHED_GREY_NETHER_BRICK_WALL,
+        DuskBlocks.GRAY_NETHER_BRICKS,
+        DuskBlocks.CRACKED_GRAY_NETHER_BRICKS,
+        DuskBlocks.GRAY_NETHER_BRICK_STAIRS,
+        DuskBlocks.GRAY_NETHER_BRICK_SLAB,
+        DuskBlocks.GRAY_NETHER_BRICK_WALL,
+        DuskBlocks.GRAY_NETHER_BRICK_FENCE,
+        DuskBlocks.CHISELED_GRAY_NETHER_BRICKS,
+        DuskBlocks.GRAY_NETHER_BRICK_PILLAR,
+        DuskBlocks.POLISHED_GRAY_NETHER_BRICKS,
+        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS,
+        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB,
+        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_WALL,
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {

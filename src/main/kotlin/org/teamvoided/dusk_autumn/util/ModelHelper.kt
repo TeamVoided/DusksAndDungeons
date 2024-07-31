@@ -12,7 +12,6 @@ import net.minecraft.block.enums.SlabType
 import net.minecraft.block.enums.StairShape
 import net.minecraft.block.enums.WallShape
 import net.minecraft.data.client.model.*
-import net.minecraft.data.client.model.BlockStateModelGenerator.createAxisRotatedBlockState
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
@@ -491,7 +490,7 @@ fun BlockStateModelGenerator.registerBigLantern(block: Block) {
     this.registerSingleton(block, texture, model)
 }
 
-fun BlockStateModelGenerator.registerCandle(candle: Block) {
+fun BlockStateModelGenerator.registerCandle2(candle: Block) {
     this.registerItemModel(candle.asItem())
     val texture = Texture.all(Texture.getId(candle))
     val textureLit = Texture.all(Texture.getSubId(candle, "_lit"))
@@ -641,18 +640,6 @@ fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: B
         )
     )
 }
-
-fun createAxisRotatedVariantMap(): BlockStateVariantMap {
-    return BlockStateVariantMap.create(Properties.FACING)
-        .register(Direction.UP, BlockStateVariant.create())
-        .register(Direction.DOWN, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90))
-        .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.X, Rotation.R90))
-        .register(
-            Direction.EAST,
-            BlockStateVariant.create().put(VariantSettings.X, Rotation.R90).put(VariantSettings.Y, Rotation.R90)
-        )
-}
-
 //shamelessley stolen from voidUtils :)
 fun BlockStateModelGenerator.stairs(block: Block) =
     stairs(block, block, block, block, block)
@@ -965,5 +952,7 @@ private
 val <T : Any?> T.myb get() = Optional.ofNullable(this)
 fun Block.model(): Identifier = ModelIds.getBlockModelId(this)
 fun Block.model(str: String) = this.model().suffix(str)
+fun Item.model(): Identifier = ModelIds.getItemModelId(this)
+fun Item.model(str: String) = this.model().suffix(str)
 
 fun Identifier.suffix(str: String) = Identifier(this.namespace, "${this.path}$str")

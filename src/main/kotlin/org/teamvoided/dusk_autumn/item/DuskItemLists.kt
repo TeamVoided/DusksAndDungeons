@@ -156,29 +156,29 @@ object DuskItemLists {
         DuskBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS.asItem(),
         DuskBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR.asItem()
     )
-    val greyNetherBrickStuff = listOf(
-        DuskBlocks.GREY_NETHER_BRICKS.asItem(),
-        DuskBlocks.CRACKED_GREY_NETHER_BRICKS.asItem(),
-        DuskBlocks.GREY_NETHER_BRICK_STAIRS.asItem(),
-        DuskBlocks.GREY_NETHER_BRICK_SLAB.asItem(),
-        DuskBlocks.GREY_NETHER_BRICK_WALL.asItem(),
-        DuskBlocks.GREY_NETHER_BRICK_FENCE.asItem(),
-        DuskBlocks.CHISELED_GREY_NETHER_BRICKS.asItem(),
-        DuskBlocks.GREY_NETHER_BRICK_PILLAR.asItem(),
-        DuskBlocks.POLISHED_GREY_NETHER_BRICKS.asItem(),
-        DuskBlocks.POLISHED_GREY_NETHER_BRICK_STAIRS.asItem(),
-        DuskBlocks.POLISHED_GREY_NETHER_BRICK_SLAB.asItem(),
-        DuskBlocks.POLISHED_GREY_NETHER_BRICK_WALL.asItem()
+    val grayNetherBrickStuff = listOf(
+        DuskBlocks.GRAY_NETHER_BRICKS.asItem(),
+        DuskBlocks.CRACKED_GRAY_NETHER_BRICKS.asItem(),
+        DuskBlocks.GRAY_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.GRAY_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.GRAY_NETHER_BRICK_WALL.asItem(),
+        DuskBlocks.GRAY_NETHER_BRICK_FENCE.asItem(),
+        DuskBlocks.CHISELED_GRAY_NETHER_BRICKS.asItem(),
+        DuskBlocks.GRAY_NETHER_BRICK_PILLAR.asItem(),
+        DuskBlocks.POLISHED_GRAY_NETHER_BRICKS.asItem(),
+        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.POLISHED_GRAY_NETHER_BRICK_WALL.asItem()
     )
-    val mixedGreyNetherBrickStuff = listOf(
-        DuskBlocks.MIXED_GREY_NETHER_BRICKS.asItem(),
-        DuskBlocks.CRACKED_MIXED_GREY_NETHER_BRICKS.asItem(),
-        DuskBlocks.MIXED_GREY_NETHER_BRICK_STAIRS.asItem(),
-        DuskBlocks.MIXED_GREY_NETHER_BRICK_SLAB.asItem(),
-        DuskBlocks.MIXED_GREY_NETHER_BRICK_WALL.asItem(),
-        DuskBlocks.MIXED_GREY_NETHER_BRICK_FENCE.asItem(),
-        DuskBlocks.CHISELED_MIXED_GREY_NETHER_BRICKS.asItem(),
-        DuskBlocks.MIXED_GREY_NETHER_BRICK_PILLAR.asItem()
+    val mixedGrayNetherBrickStuff = listOf(
+        DuskBlocks.MIXED_GRAY_NETHER_BRICKS.asItem(),
+        DuskBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS.asItem(),
+        DuskBlocks.MIXED_GRAY_NETHER_BRICK_STAIRS.asItem(),
+        DuskBlocks.MIXED_GRAY_NETHER_BRICK_SLAB.asItem(),
+        DuskBlocks.MIXED_GRAY_NETHER_BRICK_WALL.asItem(),
+        DuskBlocks.MIXED_GRAY_NETHER_BRICK_FENCE.asItem(),
+        DuskBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS.asItem(),
+        DuskBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR.asItem()
     )
     val blackstoneTools = listOf(
         DuskItems.BLACKSTONE_SWORD,

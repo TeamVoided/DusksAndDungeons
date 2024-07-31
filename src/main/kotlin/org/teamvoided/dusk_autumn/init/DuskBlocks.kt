@@ -430,39 +430,39 @@ object DuskBlocks {
         register("polished_blue_nether_brick_slab", slabOf(BLUE_NETHER_BRICK_SLAB).pickaxe())
     val POLISHED_BLUE_NETHER_BRICK_WALL =
         register("polished_blue_nether_brick_wall", wallOf(BLUE_NETHER_BRICK_WALL).pickaxe())
-    val MIXED_GREY_NETHER_BRICKS = register("mixed_grey_nether_bricks", Block(variantOf(NETHER_BRICKS)).pickaxe())
-    val CRACKED_MIXED_GREY_NETHER_BRICKS =
-        register("cracked_mixed_grey_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)).pickaxe())
-    val MIXED_GREY_NETHER_BRICK_STAIRS =
-        register("mixed_grey_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
-    val MIXED_GREY_NETHER_BRICK_SLAB = register("mixed_grey_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
-    val MIXED_GREY_NETHER_BRICK_WALL = register("mixed_grey_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
-    val MIXED_GREY_NETHER_BRICK_FENCE =
-        register("mixed_grey_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)).pickaxe())
-    val CHISELED_MIXED_GREY_NETHER_BRICKS =
-        register("chiseled_mixed_grey_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)).pickaxe())
-    val MIXED_GREY_NETHER_BRICK_PILLAR =
-        register("mixed_grey_nether_brick_pillar", SixWayFacingBlock(variantOf(MIXED_GREY_NETHER_BRICKS)).pickaxe())
-    val GREY_NETHER_BRICKS = register("grey_nether_bricks", Block(variantOf(NETHER_BRICKS)).pickaxe())
-    val CRACKED_GREY_NETHER_BRICKS =
-        register("cracked_grey_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)).pickaxe())
-    val GREY_NETHER_BRICK_STAIRS = register("grey_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
-    val GREY_NETHER_BRICK_SLAB = register("grey_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
-    val GREY_NETHER_BRICK_WALL = register("grey_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
-    val GREY_NETHER_BRICK_FENCE =
-        register("grey_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)).pickaxe())
-    val CHISELED_GREY_NETHER_BRICKS =
-        register("chiseled_grey_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)).pickaxe())
-    val GREY_NETHER_BRICK_PILLAR =
-        register("grey_nether_brick_pillar", PillarBlock(variantOf(GREY_NETHER_BRICKS)).pickaxe())
-    val POLISHED_GREY_NETHER_BRICKS =
-        register("polished_grey_nether_bricks", Block(variantOf(GREY_NETHER_BRICKS)).pickaxe())
-    val POLISHED_GREY_NETHER_BRICK_STAIRS =
-        register("polished_grey_nether_brick_stairs", stairsOf(GREY_NETHER_BRICK_STAIRS).pickaxe())
-    val POLISHED_GREY_NETHER_BRICK_SLAB =
-        register("polished_grey_nether_brick_slab", slabOf(GREY_NETHER_BRICK_SLAB).pickaxe())
-    val POLISHED_GREY_NETHER_BRICK_WALL =
-        register("polished_grey_nether_brick_wall", wallOf(GREY_NETHER_BRICK_WALL).pickaxe())
+    val MIXED_GRAY_NETHER_BRICKS = register("mixed_gray_nether_bricks", Block(variantOf(NETHER_BRICKS)).pickaxe())
+    val CRACKED_MIXED_GRAY_NETHER_BRICKS =
+        register("cracked_mixed_gray_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)).pickaxe())
+    val MIXED_GRAY_NETHER_BRICK_STAIRS =
+        register("mixed_gray_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
+    val MIXED_GRAY_NETHER_BRICK_SLAB = register("mixed_gray_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
+    val MIXED_GRAY_NETHER_BRICK_WALL = register("mixed_gray_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
+    val MIXED_GRAY_NETHER_BRICK_FENCE =
+        register("mixed_gray_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)).pickaxe())
+    val CHISELED_MIXED_GRAY_NETHER_BRICKS =
+        register("chiseled_mixed_gray_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)).pickaxe())
+    val MIXED_GRAY_NETHER_BRICK_PILLAR =
+        register("mixed_gray_nether_brick_pillar", SixWayFacingBlock(variantOf(MIXED_GRAY_NETHER_BRICKS)).pickaxe())
+    val GRAY_NETHER_BRICKS = register("gray_nether_bricks", Block(variantOf(NETHER_BRICKS)).pickaxe())
+    val CRACKED_GRAY_NETHER_BRICKS =
+        register("cracked_gray_nether_bricks", Block(variantOf(CRACKED_NETHER_BRICKS)).pickaxe())
+    val GRAY_NETHER_BRICK_STAIRS = register("gray_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
+    val GRAY_NETHER_BRICK_SLAB = register("gray_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
+    val GRAY_NETHER_BRICK_WALL = register("gray_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
+    val GRAY_NETHER_BRICK_FENCE =
+        register("gray_nether_brick_fence", FenceBlock(variantOf(NETHER_BRICK_FENCE)).pickaxe())
+    val CHISELED_GRAY_NETHER_BRICKS =
+        register("chiseled_gray_nether_bricks", Block(variantOf(CHISELED_NETHER_BRICKS)).pickaxe())
+    val GRAY_NETHER_BRICK_PILLAR =
+        register("gray_nether_brick_pillar", PillarBlock(variantOf(GRAY_NETHER_BRICKS)).pickaxe())
+    val POLISHED_GRAY_NETHER_BRICKS =
+        register("polished_gray_nether_bricks", Block(variantOf(GRAY_NETHER_BRICKS)).pickaxe())
+    val POLISHED_GRAY_NETHER_BRICK_STAIRS =
+        register("polished_gray_nether_brick_stairs", stairsOf(GRAY_NETHER_BRICK_STAIRS).pickaxe())
+    val POLISHED_GRAY_NETHER_BRICK_SLAB =
+        register("polished_gray_nether_brick_slab", slabOf(GRAY_NETHER_BRICK_SLAB).pickaxe())
+    val POLISHED_GRAY_NETHER_BRICK_WALL =
+        register("polished_gray_nether_brick_wall", wallOf(GRAY_NETHER_BRICK_WALL).pickaxe())
 
 
     val OVERGROWN_COBBLESTONE =

@@ -77,7 +77,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.registerBigCandle(candle, cake)
         }
         DuskBlockLists.soulCandles.forEach { (candle, cake) ->
-            gen.registerCandle(candle)
+            gen.registerCandle2(candle)
         }
         DuskBlockLists.bigSoulCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
@@ -114,16 +114,16 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DuskBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
             DuskBlocks.BLUE_NETHER_BRICK_PILLAR
         )
-        gen.fence(DuskBlocks.GREY_NETHER_BRICK_FENCE, DuskBlocks.GREY_NETHER_BRICKS)
+        gen.fence(DuskBlocks.GRAY_NETHER_BRICK_FENCE, DuskBlocks.GRAY_NETHER_BRICKS)
         gen.registerAxisRotated(
-            DuskBlocks.GREY_NETHER_BRICK_PILLAR,
+            DuskBlocks.GRAY_NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
-        gen.fence(DuskBlocks.MIXED_GREY_NETHER_BRICK_FENCE, DuskBlocks.MIXED_GREY_NETHER_BRICKS)
+        gen.fence(DuskBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DuskBlocks.MIXED_GRAY_NETHER_BRICKS)
         gen.registerMixedNetherBrickPillar(
-            DuskBlocks.MIXED_GREY_NETHER_BRICK_PILLAR,
-            DuskBlocks.GREY_NETHER_BRICK_PILLAR
+            DuskBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR,
+            DuskBlocks.GRAY_NETHER_BRICK_PILLAR
         )
 
         DuskItemLists.blackstoneTools.forEach {

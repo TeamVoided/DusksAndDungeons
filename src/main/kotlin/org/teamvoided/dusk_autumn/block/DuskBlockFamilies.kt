@@ -77,28 +77,28 @@ object DuskBlockFamilies {
             .wall(DuskBlocks.MIXED_BLUE_NETHER_BRICK_WALL)
             .chiseled(DuskBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS)
             .build()
-    val GREY_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DuskBlocks.GREY_NETHER_BRICKS)
-            .cracked(DuskBlocks.CRACKED_GREY_NETHER_BRICKS)
-            .stairs(DuskBlocks.GREY_NETHER_BRICK_STAIRS)
-            .slab(DuskBlocks.GREY_NETHER_BRICK_SLAB)
-            .wall(DuskBlocks.GREY_NETHER_BRICK_WALL)
-            .polished(DuskBlocks.POLISHED_GREY_NETHER_BRICKS)
-            .chiseled(DuskBlocks.CHISELED_GREY_NETHER_BRICKS)
+    val GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.GRAY_NETHER_BRICKS)
+            .cracked(DuskBlocks.CRACKED_GRAY_NETHER_BRICKS)
+            .stairs(DuskBlocks.GRAY_NETHER_BRICK_STAIRS)
+            .slab(DuskBlocks.GRAY_NETHER_BRICK_SLAB)
+            .wall(DuskBlocks.GRAY_NETHER_BRICK_WALL)
+            .polished(DuskBlocks.POLISHED_GRAY_NETHER_BRICKS)
+            .chiseled(DuskBlocks.CHISELED_GRAY_NETHER_BRICKS)
             .build()
-    val POLISHED_GREY_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DuskBlocks.POLISHED_GREY_NETHER_BRICKS)
-            .stairs(DuskBlocks.POLISHED_GREY_NETHER_BRICK_STAIRS)
-            .slab(DuskBlocks.POLISHED_GREY_NETHER_BRICK_SLAB)
-            .wall(DuskBlocks.POLISHED_GREY_NETHER_BRICK_WALL)
+    val POLISHED_GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.POLISHED_GRAY_NETHER_BRICKS)
+            .stairs(DuskBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS)
+            .slab(DuskBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB)
+            .wall(DuskBlocks.POLISHED_GRAY_NETHER_BRICK_WALL)
             .build()
-    val MIXED_GREY_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DuskBlocks.MIXED_GREY_NETHER_BRICKS)
-            .cracked(DuskBlocks.CRACKED_MIXED_GREY_NETHER_BRICKS)
-            .stairs(DuskBlocks.MIXED_GREY_NETHER_BRICK_STAIRS)
-            .slab(DuskBlocks.MIXED_GREY_NETHER_BRICK_SLAB)
-            .wall(DuskBlocks.MIXED_GREY_NETHER_BRICK_WALL)
-            .chiseled(DuskBlocks.CHISELED_MIXED_GREY_NETHER_BRICKS)
+    val MIXED_GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DuskBlocks.MIXED_GRAY_NETHER_BRICKS)
+            .cracked(DuskBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS)
+            .stairs(DuskBlocks.MIXED_GRAY_NETHER_BRICK_STAIRS)
+            .slab(DuskBlocks.MIXED_GRAY_NETHER_BRICK_SLAB)
+            .wall(DuskBlocks.MIXED_GRAY_NETHER_BRICK_WALL)
+            .chiseled(DuskBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS)
             .build()
 
     val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
@@ -122,9 +122,9 @@ object DuskBlockFamilies {
         BLUE_NETHER_BRICKS_FAMILY,
         POLISHED_BLUE_NETHER_BRICKS_FAMILY,
         MIXED_BLUE_NETHER_BRICKS_FAMILY,
-        GREY_NETHER_BRICKS_FAMILY,
-        POLISHED_GREY_NETHER_BRICKS_FAMILY,
-        MIXED_GREY_NETHER_BRICKS_FAMILY
+        GRAY_NETHER_BRICKS_FAMILY,
+        POLISHED_GRAY_NETHER_BRICKS_FAMILY,
+        MIXED_GRAY_NETHER_BRICKS_FAMILY
     )
     val recipesBlockFamilies = modelsBlockFamilies + listOf(
         OVERGROWN_COBBLESTONE_FAMILY,

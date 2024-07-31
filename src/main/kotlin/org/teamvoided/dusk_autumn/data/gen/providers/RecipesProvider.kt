@@ -14,7 +14,6 @@ import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusk_autumn.block.DuskBlockFamilies.recipesBlockFamilies
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.leafPiles
 import org.teamvoided.dusk_autumn.block.DuskBlockLists.logPiles
-import org.teamvoided.dusk_autumn.data.tags.DuskBlockTags
 import org.teamvoided.dusk_autumn.data.tags.DuskItemTags
 import org.teamvoided.dusk_autumn.init.DuskBlocks
 import org.teamvoided.dusk_autumn.init.DuskItems
@@ -147,45 +146,45 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             listOf(DuskBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DuskBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR)
         )
         e.createDiagonalRecipe(
-            DuskBlocks.GREY_NETHER_BRICKS,
+            DuskBlocks.GRAY_NETHER_BRICKS,
             Blocks.NETHER_BRICKS,
             DuskItemTags.CRAFTS_GREY_NETHER_BRICKS
         )
-        e.createFence(DuskBlocks.GREY_NETHER_BRICK_FENCE, DuskBlocks.GREY_NETHER_BRICKS, Items.NETHER_BRICK)
+        e.createFence(DuskBlocks.GRAY_NETHER_BRICK_FENCE, DuskBlocks.GRAY_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
-            DuskBlocks.GREY_NETHER_BRICK_PILLAR,
-            DuskBlocks.GREY_NETHER_BRICKS,
+            DuskBlocks.GRAY_NETHER_BRICK_PILLAR,
+            DuskBlocks.GRAY_NETHER_BRICKS,
             DuskItemTags.NETHER_BRICKS
         )
         e.createStonecuttedSet(
-            listOf(DuskBlocks.GREY_NETHER_BRICKS),
+            listOf(DuskBlocks.GRAY_NETHER_BRICKS),
             null,
-            DuskBlocks.GREY_NETHER_BRICK_STAIRS,
-            DuskBlocks.GREY_NETHER_BRICK_SLAB,
-            DuskBlocks.GREY_NETHER_BRICK_WALL,
-            listOf(DuskBlocks.GREY_NETHER_BRICK_FENCE, DuskBlocks.GREY_NETHER_BRICK_PILLAR)
+            DuskBlocks.GRAY_NETHER_BRICK_STAIRS,
+            DuskBlocks.GRAY_NETHER_BRICK_SLAB,
+            DuskBlocks.GRAY_NETHER_BRICK_WALL,
+            listOf(DuskBlocks.GRAY_NETHER_BRICK_FENCE, DuskBlocks.GRAY_NETHER_BRICK_PILLAR)
         )
         e.createStonecuttedSet(
-            listOf(DuskBlocks.GREY_NETHER_BRICKS, DuskBlocks.POLISHED_GREY_NETHER_BRICKS),
-            DuskBlocks.POLISHED_GREY_NETHER_BRICKS,
-            DuskBlocks.POLISHED_GREY_NETHER_BRICK_STAIRS,
-            DuskBlocks.POLISHED_GREY_NETHER_BRICK_SLAB,
-            DuskBlocks.POLISHED_GREY_NETHER_BRICK_WALL
+            listOf(DuskBlocks.GRAY_NETHER_BRICKS, DuskBlocks.POLISHED_GRAY_NETHER_BRICKS),
+            DuskBlocks.POLISHED_GRAY_NETHER_BRICKS,
+            DuskBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS,
+            DuskBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB,
+            DuskBlocks.POLISHED_GRAY_NETHER_BRICK_WALL
         )
-        e.createDiagonalRecipe(DuskBlocks.MIXED_GREY_NETHER_BRICKS, Blocks.NETHER_BRICKS, DuskBlocks.GREY_NETHER_BRICKS)
-        e.createFence(DuskBlocks.MIXED_GREY_NETHER_BRICK_FENCE, DuskBlocks.MIXED_GREY_NETHER_BRICKS, Items.NETHER_BRICK)
+        e.createDiagonalRecipe(DuskBlocks.MIXED_GRAY_NETHER_BRICKS, Blocks.NETHER_BRICKS, DuskBlocks.GRAY_NETHER_BRICKS)
+        e.createFence(DuskBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DuskBlocks.MIXED_GRAY_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
-            DuskBlocks.MIXED_GREY_NETHER_BRICK_PILLAR,
-            DuskBlocks.MIXED_GREY_NETHER_BRICKS,
+            DuskBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR,
+            DuskBlocks.MIXED_GRAY_NETHER_BRICKS,
             DuskItemTags.NETHER_BRICKS
         )
         e.createStonecuttedSet(
-            listOf(DuskBlocks.MIXED_GREY_NETHER_BRICKS),
+            listOf(DuskBlocks.MIXED_GRAY_NETHER_BRICKS),
             null,
-            DuskBlocks.MIXED_GREY_NETHER_BRICK_STAIRS,
-            DuskBlocks.MIXED_GREY_NETHER_BRICK_SLAB,
-            DuskBlocks.MIXED_GREY_NETHER_BRICK_WALL,
-            listOf(DuskBlocks.MIXED_GREY_NETHER_BRICK_FENCE, DuskBlocks.MIXED_GREY_NETHER_BRICK_PILLAR)
+            DuskBlocks.MIXED_GRAY_NETHER_BRICK_STAIRS,
+            DuskBlocks.MIXED_GRAY_NETHER_BRICK_SLAB,
+            DuskBlocks.MIXED_GRAY_NETHER_BRICK_WALL,
+            listOf(DuskBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DuskBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR)
         )
 
         ShapedRecipeJsonFactory.create(RecipeCategory.COMBAT, DuskItems.BLACKSTONE_SWORD)

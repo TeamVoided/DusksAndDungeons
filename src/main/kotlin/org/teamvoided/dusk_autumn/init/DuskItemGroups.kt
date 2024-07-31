@@ -38,8 +38,8 @@ object DuskItemGroups {
                             DuskItemLists.mixedNetherBrickStuff +
                             DuskItemLists.blueNetherBrickStuff +
                             DuskItemLists.mixedBlueNetherBrickStuff +
-                            DuskItemLists.greyNetherBrickStuff +
-                            DuskItemLists.mixedGreyNetherBrickStuff +
+                            DuskItemLists.grayNetherBrickStuff +
+                            DuskItemLists.mixedGrayNetherBrickStuff +
                             DuskItemLists.blackstoneTools +
                             DuskItemLists.overgrownCobblestone +
                             DuskItemLists.overgrownStoneBricks +
@@ -74,7 +74,7 @@ object DuskItemGroups {
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
             Items.RED_NETHER_BRICK_WALL,
-            DuskItemLists.redNetherBrickStuff + DuskItemLists.mixedNetherBrickStuff + DuskItemLists.blueNetherBrickStuff + DuskItemLists.mixedBlueNetherBrickStuff + DuskItemLists.greyNetherBrickStuff + DuskItemLists.mixedGreyNetherBrickStuff
+            DuskItemLists.redNetherBrickStuff + DuskItemLists.mixedNetherBrickStuff + DuskItemLists.blueNetherBrickStuff + DuskItemLists.mixedBlueNetherBrickStuff + DuskItemLists.grayNetherBrickStuff + DuskItemLists.mixedGrayNetherBrickStuff
         )
         registerInVanillaTab(
             ItemGroups.BUILDING_BLOCKS,
