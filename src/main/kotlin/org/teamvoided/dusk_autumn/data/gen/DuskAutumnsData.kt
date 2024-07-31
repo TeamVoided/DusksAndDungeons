@@ -2,9 +2,17 @@ package org.teamvoided.dusk_autumn.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import net.minecraft.MinecraftVersion
+import net.minecraft.data.DataPackOutput
+import net.minecraft.data.PackMetadataProvider
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistrySetBuilder
+import net.minecraft.resource.ResourceType
+import net.minecraft.resource.pack.metadata.PackResourceMetadataSection
+import net.minecraft.text.Text
 import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
+import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusk_autumn.data.gen.providers.*
 import org.teamvoided.dusk_autumn.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusk_autumn.data.gen.structure.StructurePoolCreator
@@ -17,7 +25,9 @@ import org.teamvoided.dusk_autumn.data.gen.tags.ItemTagsProvider
 import org.teamvoided.dusk_autumn.data.gen.worldgen.BiomeCreator
 import org.teamvoided.dusk_autumn.data.gen.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusk_autumn.data.gen.worldgen.PlacedFeatureCreator
+import java.util.*
 
+@Suppress("unused")
 class DuskAutumnsData : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
         LOGGER.info("Hello from DataGen")
@@ -32,6 +42,11 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         pack.addProvider { o, r -> ItemTagsProvider(o, r, blockTags) }
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::EntityTypeTagsProvider)
+
+
+        val fancyNamePack = gen.createBuiltinResourcePack(id("fancy_names"))
+        fancyNamePack.addProvider(::FancyNameTranslationProvider)
+        fancyNamePack.addProvider { o -> createResource(o, Text.literal("Better Nether Brick Names")) }
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
@@ -43,5 +58,14 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         gen.add(RegistryKeys.STRUCTURE_SET, StructureSetCreator::bootstrap)
         gen.add(RegistryKeys.STRUCTURE_FEATURE, StructureFeatureCreator::bootstrap)
         gen.add(RegistryKeys.WOLF_VARIANT, WolfVariants::bootstrap)
+    }
+
+    private fun createResource(o: DataPackOutput, description: Text): PackMetadataProvider {
+        return PackMetadataProvider(o).add(
+            PackResourceMetadataSection.TYPE, PackResourceMetadataSection(
+                description,
+                MinecraftVersion.GAME_VERSION.getResourceVersion(ResourceType.CLIENT_RESOURCES), Optional.empty()
+            )
+        )
     }
 }
