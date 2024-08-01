@@ -28,6 +28,14 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         DnDBlocks.POLISHED_RED_NETHER_BRICK_STAIRS,
         DnDBlocks.POLISHED_RED_NETHER_BRICK_SLAB,
         DnDBlocks.POLISHED_RED_NETHER_BRICK_WALL,
+        DnDBlocks.MIXED_NETHER_BRICKS,
+        DnDBlocks.CRACKED_MIXED_NETHER_BRICKS,
+        DnDBlocks.MIXED_NETHER_BRICK_STAIRS,
+        DnDBlocks.MIXED_NETHER_BRICK_SLAB,
+        DnDBlocks.MIXED_NETHER_BRICK_WALL,
+        DnDBlocks.MIXED_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_NETHER_BRICKS,
+        DnDBlocks.MIXED_NETHER_BRICK_PILLAR,
     )
     val warpedBricks = listOf(
         DnDBlocks.BLUE_NETHER_BRICKS,
@@ -42,6 +50,14 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         DnDBlocks.POLISHED_BLUE_NETHER_BRICK_STAIRS,
         DnDBlocks.POLISHED_BLUE_NETHER_BRICK_SLAB,
         DnDBlocks.POLISHED_BLUE_NETHER_BRICK_WALL,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICKS,
+        DnDBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_STAIRS,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_SLAB,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_WALL,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
     )
     val ashenBricks = listOf(
         DnDBlocks.GRAY_NETHER_BRICKS,
@@ -56,6 +72,14 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         DnDBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS,
         DnDBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB,
         DnDBlocks.POLISHED_GRAY_NETHER_BRICK_WALL,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICKS,
+        DnDBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_STAIRS,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_SLAB,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_WALL,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR,
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
