@@ -35,11 +35,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("## ")
             .pattern("##@")
             .pattern("## ")
-            .criterion(
-                "has_cascade_planks", conditionsFromItem(
-                    DnDBlocks.CASCADE_PLANKS.asItem()
-                )
-            ).offerTo(e)
+            .criterion(DnDBlocks.CASCADE_PLANKS.asItem())
+            .offerTo(e)
         offerShapelessRecipe(e, Items.BLUE_DYE, DnDBlocks.BLUE_PETALS, "blue_dye")
 
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.BIG_CHAIN, 1)
@@ -48,8 +45,9 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("I")
             .pattern("N")
             .pattern("I")
-            .criterion("has_iron_nugget", conditionsFromItem(Items.IRON_NUGGET))
-            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT)).offerTo(e)
+            .criterion(Items.IRON_NUGGET)
+            .criterion(Items.IRON_INGOT)
+            .offerTo(e)
         e.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
         e.createCandle(DnDBlocks.BIG_CANDLE)
@@ -60,7 +58,6 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             e.createDyed(DnDLists.soulCandles[idx + 1].first, dye)
             e.createDyed(DnDLists.bigSoulCandles[idx + 1].first, dye)
         }
-
         e.createFence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS, Items.BRICK)
         e.createStair(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         e.createSlab(DnDBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
@@ -91,7 +88,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             RecipeCategory.BUILDING_BLOCKS,
             DnDBlocks.CHISELED_RED_NETHER_BRICKS,
             Ingredient.ofItems(Blocks.RED_NETHER_BRICK_SLAB)
-        ).criterion("has_nether_bricks", conditionsFromItem(Blocks.RED_NETHER_BRICKS)).offerTo(e)
+        ).criterion(Blocks.RED_NETHER_BRICKS).offerTo(e)
         e.createStackedCraft(DnDBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
         e.createStonecuttedSet(
             listOf(Blocks.RED_NETHER_BRICKS),
@@ -211,34 +208,34 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("X")
             .pattern("X")
             .pattern("#")
-            .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE)).offerTo(e)
+            .criterion(Items.BLACKSTONE).offerTo(e)
         ShapedRecipeJsonFactory.create(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_PICKAXE)
             .ingredient('#', Items.STICK)
             .ingredient('X', Items.BLACKSTONE)
             .pattern("XXX")
             .pattern(" # ")
             .pattern(" # ")
-            .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE)).offerTo(e)
+            .criterion(Items.BLACKSTONE).offerTo(e)
         ShapedRecipeJsonFactory.create(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_AXE)
             .ingredient('#', Items.STICK)
             .ingredient('X', Items.BLACKSTONE)
             .pattern("XX")
             .pattern("X#")
             .pattern(" #")
-            .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE)).offerTo(e)
+            .criterion(Items.BLACKSTONE).offerTo(e)
         ShapedRecipeJsonFactory.create(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_SHOVEL)
             .ingredient('#', Items.STICK)
             .ingredient('X', Items.BLACKSTONE)
             .pattern("X")
             .pattern("#").pattern("#")
-            .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE)).offerTo(e)
+            .criterion(Items.BLACKSTONE).offerTo(e)
         ShapedRecipeJsonFactory.create(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_HOE)
             .ingredient('#', Items.STICK)
             .ingredient('X', Items.BLACKSTONE)
             .pattern("XX")
             .pattern(" #")
             .pattern(" #")
-            .criterion("has_blackstone", conditionsFromItem(Items.BLACKSTONE)).offerTo(e)
+            .criterion(Items.BLACKSTONE).offerTo(e)
 
         e.createOvergrown(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
         e.createOvergrown(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
@@ -258,10 +255,10 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         )
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.ROOT_BLOCK, 1)
             .ingredient(Blocks.HANGING_ROOTS, 4)
-            .criterion("has_roots", conditionsFromItem(Blocks.HANGING_ROOTS)).offerTo(e)
+            .criterion(Blocks.HANGING_ROOTS).offerTo(e)
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Blocks.HANGING_ROOTS, 4)
             .ingredient(DnDBlocks.ROOT_BLOCK, 1)
-            .criterion("has_root_block", conditionsFromItem(DnDBlocks.ROOT_BLOCK)).offerTo(e)
+            .criterion(DnDBlocks.ROOT_BLOCK).offerTo(e)
         (leafPiles + logPiles).forEach { (pile, block) ->
             e.createPiles(pile, block)
         }
@@ -272,11 +269,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("###")
             .pattern("@%@")
             .pattern("# #")
-            .criterion(
-                "has_farmers_hat", conditionsFromItem(
-                    DnDItems.FARMERS_HAT
-                )
-            ).offerTo(e)
+            .criterion(DnDItems.FARMERS_HAT).offerTo(e)
         offerShapelessRecipe(e, Items.PURPLE_DYE, DnDItems.MOONBERRIES, "purple_dye")
         e.cobbled()
     }

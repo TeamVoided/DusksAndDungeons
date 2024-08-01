@@ -3,10 +3,8 @@ package org.teamvoided.dusk_autumn.util
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.data.server.recipe.CookingRecipeJsonFactory
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
+import net.minecraft.data.server.RecipesProvider.*
+import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
@@ -16,10 +14,16 @@ import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 
+fun RecipeJsonFactory.criterion(item: ItemConvertible): RecipeJsonFactory =
+    this.criterion(hasItem(item), conditionsFromItem(item))
+
+fun RecipeJsonFactory.criterion(tag: TagKey<Item>): RecipeJsonFactory =
+    this.criterion("has_${tag.id.path}", conditionsFromTag(tag))
+
 fun RecipeExporter.createBigLantern(
     block: ItemConvertible,
     torch: ItemConvertible,
-    smallLantern: ItemConvertible?
+    smallLantern: ItemConvertible? = null
 ) {
     val criteriaItem = smallLantern ?: torch
     ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block)
@@ -29,7 +33,7 @@ fun RecipeExporter.createBigLantern(
         .pattern("XOX")
         .pattern("O#O")
         .pattern("XOX")
-        .criterion(FabricRecipeProvider.hasItem(criteriaItem), FabricRecipeProvider.conditionsFromItem(criteriaItem))
+        .criterion(criteriaItem)
         .offerTo(this)
 }
 
@@ -43,8 +47,8 @@ fun RecipeExporter.createCandle(
             .ingredient('H', Ingredient.ofItems(Items.HONEYCOMB_BLOCK))
             .pattern("S")
             .pattern("H")
-            .criterion("has_string", FabricRecipeProvider.conditionsFromItem(Items.STRING))
-            .criterion("has_honeycomb", FabricRecipeProvider.conditionsFromItem(Items.HONEYCOMB_BLOCK))
+            .criterion(Items.STRING)
+            .criterion(Items.HONEYCOMB_BLOCK)
             .offerTo(this)
     } else {
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, candle, 1)
@@ -54,7 +58,7 @@ fun RecipeExporter.createCandle(
             .pattern("S")
             .pattern("H")
             .pattern("#")
-            .criterion("has_soul", FabricRecipeProvider.conditionsFromTag(soul))
+            .criterion(soul)
             .offerTo(this)
     }
 }
@@ -66,7 +70,7 @@ fun RecipeExporter.createDyed(
     ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block)
         .ingredient(Ingredient.ofItems(block))
         .ingredient(Ingredient.ofItems(dye))
-        .criterion(FabricRecipeProvider.hasItem(dye), FabricRecipeProvider.conditionsFromItem(dye))
+        .criterion(dye)
         .offerTo(this)
 }
 
@@ -77,7 +81,9 @@ fun RecipeExporter.smeltDefault(
     CookingRecipeJsonFactory.createSmelting(
         Ingredient.ofItems(input),
         RecipeCategory.BUILDING_BLOCKS, output.asItem(), 0.1f, 200
-    ).criterion(FabricRecipeProvider.hasItem(input), FabricRecipeProvider.conditionsFromItem(input)).offerTo(this)
+    )
+        .criterion(input)
+        .offerTo(this)
 }
 
 fun RecipeExporter.createOvergrown(
@@ -87,7 +93,7 @@ fun RecipeExporter.createOvergrown(
     ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block)
         .ingredient(Ingredient.ofItems(stone))
         .ingredient(Ingredient.ofTag(ItemTags.LEAVES))
-        .criterion(FabricRecipeProvider.hasItem(stone), FabricRecipeProvider.conditionsFromItem(stone))
+        .criterion(stone)
         .offerTo(this)
 }
 
@@ -134,7 +140,8 @@ fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConver
         .ingredient('#', block)
         .pattern("#")
         .pattern("#")
-        .criterion("has_" + itemTag.id.path, FabricRecipeProvider.conditionsFromTag(itemTag)).offerTo(this)
+        .criterion(itemTag)
+        .offerTo(this)
 }
 
 fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConvertible) {
@@ -142,7 +149,7 @@ fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConver
         .ingredient('#', block)
         .pattern("#")
         .pattern("#")
-        .criterion(FabricRecipeProvider.hasItem(block), FabricRecipeProvider.conditionsFromItem(block))
+        .criterion(block)
         .offerTo(this)
 }
 
@@ -168,14 +175,16 @@ fun RecipeExporter.createStair(output: ItemConvertible, block: ItemConvertible, 
         .pattern("#  ")
         .pattern("## ")
         .pattern("###")
-        .criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item)).offerTo(this)
+        .criterion(item)
+        .offerTo(this)
 }
 
 fun RecipeExporter.createSlab(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
     ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
         .ingredient('#', block)
         .pattern("###")
-        .criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item)).offerTo(this)
+        .criterion(item)
+        .offerTo(this)
 }
 
 fun RecipeExporter.createwall(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
@@ -183,7 +192,8 @@ fun RecipeExporter.createwall(output: ItemConvertible, block: ItemConvertible, i
         .ingredient('#', block)
         .pattern("###")
         .pattern("###")
-        .criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item)).offerTo(this)
+        .criterion(item)
+        .offerTo(this)
 }
 
 fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
@@ -192,7 +202,8 @@ fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible, 
         .ingredient('+', item)
         .pattern("#+#")
         .pattern("#+#")
-        .criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item)).offerTo(this)
+        .criterion(item)
+        .offerTo(this)
 }
 
 fun RecipeExporter.createDiagonalRecipe(
@@ -205,7 +216,7 @@ fun RecipeExporter.createDiagonalRecipe(
         .ingredient('%', secondary)
         .pattern("#%")
         .pattern("%#")
-        .criterion(FabricRecipeProvider.hasItem(primary), FabricRecipeProvider.conditionsFromItem(primary))
+        .criterion(primary)
         .offerTo(this)
 }
 
@@ -219,7 +230,7 @@ fun RecipeExporter.createDiagonalRecipe(
         .ingredient('%', secondary)
         .pattern("#%")
         .pattern("%#")
-        .criterion("has_" + primary.id.path, FabricRecipeProvider.conditionsFromTag(primary))
+        .criterion(primary)
         .offerTo(this)
 }
 
@@ -227,7 +238,8 @@ fun RecipeExporter.createPiles(output: ItemConvertible, input: ItemConvertible) 
     ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 8)
         .ingredient('#', Ingredient.ofItems(input))
         .pattern("##")
-        .criterion(FabricRecipeProvider.hasItem(input), FabricRecipeProvider.conditionsFromItem(input)).offerTo(this)
+        .criterion(input)
+        .offerTo(this)
 }
 
 fun RecipeExporter.cobbled() {

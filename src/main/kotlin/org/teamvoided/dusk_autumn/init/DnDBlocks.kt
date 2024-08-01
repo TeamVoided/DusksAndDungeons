@@ -12,8 +12,6 @@ import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.item.HoeItem
-import net.minecraft.item.ItemConvertible
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -29,6 +27,7 @@ import org.teamvoided.dusk_autumn.block.rocky.RockyMyceliumBlock
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusk_autumn.init.DnDItems.BlockItem
+import org.teamvoided.dusk_autumn.util.*
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidSignBlock
 import org.teamvoided.voidmill.sign.VoidWallHangingSignBlock
@@ -249,34 +248,6 @@ object DnDBlocks {
     )
 
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
-
-    val bigChainSound = BlockSoundGroup(
-        1.0F,
-        0.8F,
-        SoundEvents.BLOCK_CHAIN_BREAK,
-        SoundEvents.BLOCK_CHAIN_STEP,
-        SoundEvents.BLOCK_CHAIN_PLACE,
-        SoundEvents.BLOCK_CHAIN_HIT,
-        SoundEvents.BLOCK_CHAIN_FALL
-    )
-    val bigLanternSound = BlockSoundGroup(
-        1.0F,
-        0.8F,
-        SoundEvents.BLOCK_LANTERN_BREAK,
-        SoundEvents.BLOCK_LANTERN_STEP,
-        SoundEvents.BLOCK_LANTERN_PLACE,
-        SoundEvents.BLOCK_LANTERN_HIT,
-        SoundEvents.BLOCK_LANTERN_FALL
-    )
-    val bigCandleSound = BlockSoundGroup(
-        1.0F,
-        0.8F,
-        SoundEvents.BLOCK_CANDLE_BREAK,
-        SoundEvents.BLOCK_CANDLE_STEP,
-        SoundEvents.BLOCK_CANDLE_PLACE,
-        SoundEvents.BLOCK_CANDLE_HIT,
-        SoundEvents.BLOCK_CANDLE_FALL
-    )
     val BIG_CHAIN = register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
     val BIG_LANTERN =
         register("big_lantern", BigLanternBlock(copy(LANTERN).sounds(bigLanternSound)).pickaxe())
@@ -880,77 +851,6 @@ object DnDBlocks {
     fun Block.hoe(): Block {
         HOEABLE.add(this)
         return this
-    }
-
-
-    fun stairsOf(block: Block): Block {
-        return StairsBlock(block.defaultState, copy(block))
-    }
-
-    fun slabOf(block: Block): Block {
-        return SlabBlock(copy(block))
-    }
-
-    fun wallOf(block: Block): Block {
-        return WallBlock(copy(block).solid())
-    }
-
-    fun fenceOf(block: Block): Block {
-        return FenceBlock(copy(block).solid())
-    }
-
-    fun fenceGateOf(woodType: WoodType, block: Block): Block {
-        return FenceGateBlock(woodType, copy(block).solid())
-    }
-
-    fun candleSettings(): Settings = Settings.create().nonOpaque().strength(0.1f)
-        .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
-
-    fun bigCandleOf(color: MapColor): Block {
-        return BigCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
-    }
-
-    fun soulCandleOf(color: MapColor): Block {
-        return SoulCandleBlock(candleSettings().mapColor(color).sounds(BlockSoundGroup.CANDLE))
-    }
-
-    fun bigSoulCandleOf(color: MapColor): Block {
-        return BigSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
-    }
-
-    fun bigCandleCakeOf(block: Block): Block {
-        return BigCandleCakeBlock(block, copy(BIG_CANDLE_CAKE))
-    }
-
-    fun bigCandleCakeOf(block: Block, candleCake: Block): Block {
-        return BigCandleCakeBlock(block, copy(candleCake))
-    }
-
-    fun soulCandleCakeOf(block: Block): Block {
-        return soulCandleCakeOf(block, SOUL_CANDLE_CAKE)
-    }
-
-    fun soulCandleCakeOf(block: Block, candleCake: Block): Block {
-        return SoulCandleCakeBlock(block, copy(candleCake))
-    }
-
-    fun bigSoulCandleCakeOf(block: Block): Block {
-        return bigSoulCandleCakeOf(block, BIG_SOUL_CANDLE_CAKE)
-    }
-
-    fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block {
-        return BigSoulCandleCakeBlock(block, copy(candleCake))
-    }
-
-    fun dirtPath(input: Block, output: Block) {
-        FlattenableBlockRegistry.register(input, output.defaultState)
-    }
-
-    fun removeRocks(input: Block, output: Block, craftingIngredient: ItemConvertible) {
-        TillableBlockRegistry.register(
-            input, { true },
-            HoeItem.createTillAndDropAction(output.defaultState, craftingIngredient)
-        )
     }
 
     fun register(id: String, block: Block): Block {
