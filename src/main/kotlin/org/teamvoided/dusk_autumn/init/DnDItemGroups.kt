@@ -1,14 +1,18 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.item.*
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
+import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemGroups
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.item.DnDItemLists
+import org.teamvoided.dusk_autumn.util.*
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -18,106 +22,109 @@ object DnDItemGroups {
             .icon { ItemStack(DnDBlocks.CASCADE_SAPLING.asItem()) }
             .name(Text.translatable("itemGroup.dusk_autumn.dusk_items"))
             .entries { _, entries ->
-                entries.addItems(
-                    DnDItemLists.cascadeWood +
-                            DnDItemLists.cascadeSigns +
-                            DnDItemLists.pineWood +
-                            listOf(
-                                DnDBlocks.CASCADE_SAPLING.asItem(),
-                                DnDBlocks.CASCADE_LEAVES.asItem(),
-                                DnDBlocks.GOLDEN_BIRCH_SAPLING.asItem(),
-                                DnDBlocks.GOLDEN_BIRCH_LEAVES.asItem(),
-                                DnDBlocks.BLUE_PETALS.asItem(),
-                            ) +
-                            DnDItemLists.bigItems +
-                            listOf(DnDBlocks.BRICK_FENCE.asItem()) +
-                            DnDItemLists.netherrackStuff +
-                            DnDItemLists.netherBrickStuff +
-                            listOf(DnDBlocks.CRACKED_RED_NETHER_BRICKS.asItem()) +
-                            DnDItemLists.redNetherBrickStuff +
-                            DnDItemLists.mixedNetherBrickStuff +
-                            DnDItemLists.blueNetherBrickStuff +
-                            DnDItemLists.mixedBlueNetherBrickStuff +
-                            DnDItemLists.grayNetherBrickStuff +
-                            DnDItemLists.mixedGrayNetherBrickStuff +
-                            DnDItemLists.blackstoneTools +
-                            DnDItemLists.overgrownCobblestone +
-                            DnDItemLists.overgrownStoneBricks +
-                            listOf(DnDBlocks.ROOT_BLOCK.asItem()) +
-                            DnDItemLists.moonberry +
-                            listOf(
-                                DnDItems.FARMERS_HAT,
-                                DnDItems.WILD_WHEAT,
-                                DnDItems.GOLDEN_BEETROOT,
-                                DnDItems.BLUE_DOOR
-                            ) +
-                            DnDItemLists.logPiles +
-                            DnDItemLists.leafPiles +
-                            DnDItemLists.overlayBlocks
+                entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns, DnDItemLists.pineWood)
+                entries.addItem(
+                    DnDBlocks.CASCADE_SAPLING,
+                    DnDBlocks.CASCADE_LEAVES,
+                    DnDBlocks.GOLDEN_BIRCH_SAPLING,
+                    DnDBlocks.GOLDEN_BIRCH_LEAVES,
+                    DnDBlocks.BLUE_PETALS,
+                )
+                entries.addItem(
+                    // big items but not candles
+                    DnDBlocks.BIG_CHAIN,
+                    DnDBlocks.BIG_LANTERN,
+                    DnDBlocks.BIG_SOUL_LANTERN,
+                )
+                entries.addItems( // This add the candles in a nice way
+                    DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
+                        listOf(item, DnDItemLists.soulCandles[idx], DnDItemLists.bigSoulCandles[idx])
+                    }
+                )
+                entries.addItem(DnDBlocks.BRICK_FENCE) //  Will be removed
+                entries.addLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
+                entries.addItem(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
+                entries.addLists(
+                    DnDItemLists.redNetherBrickStuff,
+                    DnDItemLists.mixedNetherBrickStuff,
+                    DnDItemLists.blueNetherBrickStuff,
+                    DnDItemLists.mixedBlueNetherBrickStuff,
+                    DnDItemLists.grayNetherBrickStuff,
+                    DnDItemLists.mixedGrayNetherBrickStuff,
+                    DnDItemLists.blackstoneTools,
+                    DnDItemLists.overgrownCobblestone,
+                    DnDItemLists.overgrownStoneBricks,
+                )
+                entries.addItem(DnDBlocks.ROOT_BLOCK.asItem())
+                entries.addItems(DnDItemLists.moonberry)
+                entries.addItem(
+                    DnDItems.FARMERS_HAT,
+                    DnDItems.WILD_WHEAT,
+                    DnDItems.GOLDEN_BEETROOT,
+                    DnDItems.BLUE_DOOR
+                )
+                entries.addLists(
+                    DnDItemLists.logPiles,
+                    DnDItemLists.leafPiles,
+                    DnDItemLists.overlayBlocks
                 )
             }.build()
     )
 
     fun init() {
-        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
-        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHAIN, listOf(DnDBlocks.BIG_CHAIN.asItem()))
-        registerInVanillaTab(ItemGroups.COLORED_BLOCKS, Items.PINK_CANDLE, DnDItemLists.candles)
-        registerInVanillaTab(ItemGroups.FUNCTIONAL_BLOCKS, Items.PINK_CANDLE, DnDItemLists.candles)
-        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.BRICK_WALL, DnDBlocks.BRICK_FENCE.asItem())
-        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.NETHERRACK, DnDItemLists.netherrackStuff)
-        registerInVanillaTab(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
-        registerInVanillaTab(
-            ItemGroups.BUILDING_BLOCKS,
-            Items.RED_NETHER_BRICKS,
-            DnDBlocks.CRACKED_RED_NETHER_BRICKS.asItem()
-        )
-        registerInVanillaTab(
-            ItemGroups.BUILDING_BLOCKS,
-            Items.RED_NETHER_BRICK_WALL,
-            DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff + DnDItemLists.mixedBlueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
-        )
-        registerInVanillaTab(
-            ItemGroups.BUILDING_BLOCKS,
-            Items.SOUL_LANTERN,
-            listOf(DnDBlocks.BIG_LANTERN.asItem(), DnDBlocks.BIG_SOUL_LANTERN.asItem())
-        )
-        registerInVanillaTab(
-            ItemGroups.BUILDING_BLOCKS,
-            Items.MOSSY_COBBLESTONE_WALL,
-            DnDItemLists.overgrownCobblestone
-        )
-        registerInVanillaTab(
-            ItemGroups.BUILDING_BLOCKS,
-            Items.MOSSY_STONE_BRICK_WALL,
-            DnDItemLists.overgrownStoneBricks
-        )
-        registerInVanillaTab(
-            ItemGroups.NATURAL_BLOCKS, Items.FLOWERING_AZALEA_LEAVES, listOf(
-                DnDBlocks.CASCADE_LEAVES.asItem(),
-                DnDBlocks.GOLDEN_BIRCH_LEAVES.asItem()
-            ) + DnDItemLists.leafPiles
-        )
-        registerInVanillaTab(
-            ItemGroups.NATURAL_BLOCKS, Items.FLOWERING_AZALEA, listOf(
-                DnDBlocks.CASCADE_SAPLING.asItem(),
-                DnDBlocks.GOLDEN_BIRCH_SAPLING.asItem()
-            )
-        )
-        registerInVanillaTab(ItemGroups.NATURAL_BLOCKS, Items.VINE, DnDItemLists.moonberry)
-        registerInVanillaTab(ItemGroups.COMBAT, Items.STONE_SWORD, DnDItems.BLACKSTONE_SWORD)
-        registerInVanillaTab(ItemGroups.COMBAT, Items.STONE_AXE, DnDItems.BLACKSTONE_AXE)
-        registerInVanillaTab(
-            ItemGroups.COMBAT,
-            Items.STONE_AXE,
-            listOf(
-                DnDItems.BLACKSTONE_SHOVEL,
-                DnDItems.BLACKSTONE_PICKAXE,
-                DnDItems.BLACKSTONE_AXE,
-                DnDItems.BLACKSTONE_HOE,
-            )
-        )
-    }
 
+        addToTab(ItemGroups.BUILDING_BLOCKS) {
+            it.addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
+            it.addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
+//            it.addAfter(Items.BRICK_WALL, DnDBlocks.BRICK_FENCE)
+            it.addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
+            it.addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
+            it.addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
+            it.addAfter(
+                Items.RED_NETHER_BRICK_WALL,
+                DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff +
+                        DnDItemLists.mixedBlueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
+            )
+            it.addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
+            it.addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks)
+        }
+
+        addToTab(ItemGroups.COLORED_BLOCKS) { it.addCandles() }
+
+        addToTab(ItemGroups.FUNCTIONAL_BLOCKS) {
+            it.addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
+            it.addAfter(Items.LANTERN, DnDBlocks.BIG_LANTERN)
+            it.addAfter(Items.SOUL_LANTERN, DnDBlocks.BIG_SOUL_LANTERN)
+
+            it.addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
+
+            it.addCandles()
+        }
+
+        addToTab(ItemGroups.NATURAL_BLOCKS) {
+            it.addAfter(Items.CHERRY_LOG, DnDBlocks.CASCADE_LOG)
+
+            it.addAfter(
+                Items.FLOWERING_AZALEA_LEAVES,
+                listOf(DnDBlocks.CASCADE_LEAVES, DnDBlocks.GOLDEN_BIRCH_LEAVES) + DnDItemLists.leafPiles
+            )
+            it.addAfter(Items.FLOWERING_AZALEA, DnDBlocks.CASCADE_SAPLING, DnDBlocks.GOLDEN_BIRCH_SAPLING)
+            it.addAfter(Items.VINE, DnDItemLists.moonberry)
+        }
+
+        addToTab(ItemGroups.COMBAT) {
+            it.addAfter(Items.STONE_SWORD, DnDItems.BLACKSTONE_SWORD)
+            it.addAfter(Items.STONE_AXE, DnDItems.BLACKSTONE_AXE)
+        }
+
+        addToTab(ItemGroups.TOOLS_AND_UTILITIES) {
+            it.addAfter( // this is what you should have done dusk >:(
+                Items.STONE_HOE,
+                DnDItems.BLACKSTONE_SHOVEL, DnDItems.BLACKSTONE_PICKAXE,
+                DnDItems.BLACKSTONE_AXE, DnDItems.BLACKSTONE_HOE
+            )
+        }
+    }
 
     @Suppress("SameParameterValue")
     private fun register(name: String, itemGroup: ItemGroup): ItemGroup {
@@ -128,31 +135,63 @@ object DnDItemGroups {
         return Registries.ITEM_GROUP.getKey(itemGroup)?.getOrNull()
     }
 
-    fun ItemGroup.ItemStackCollector.addItems(list: Collection<Item>) {
-        this.addStacks(list.map(Item::getDefaultStack))
-    }
-
-    fun addItems(list: Collection<Item>): List<ItemStack> {
-        return list.map(Item::getDefaultStack)
-    }
-
-    fun registerInVanillaTab(itemGroup: RegistryKey<ItemGroup>, itemBefore: Item, item: Item) {
-        ItemGroupEvents.modifyEntriesEvent(itemGroup)
-            .register(ItemGroupEvents.ModifyEntries {
-                it.addAfter(
-                    itemBefore,
-                    item,
-                )
-            })
-    }
-
-    fun registerInVanillaTab(itemGroup: RegistryKey<ItemGroup>, itemBefore: Item, list: Collection<Item>) {
-        ItemGroupEvents.modifyEntriesEvent(itemGroup)
-            .register(ItemGroupEvents.ModifyEntries {
-                it.addAfter(
-                    itemBefore,
-                    addItems(list),
-                )
-            })
+    private fun FabricItemGroupEntries.addCandles() {
+        this.addAfter(Items.CANDLE, DnDBlocks.BIG_CANDLE, DnDBlocks.SOUL_CANDLE, DnDBlocks.BIG_SOUL_CANDLE)
+        this.addAfter(
+            Items.WHITE_CANDLE, DnDBlocks.BIG_WHITE_CANDLE, DnDBlocks.WHITE_SOUL_CANDLE, DnDBlocks.BIG_WHITE_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.LIGHT_GRAY_CANDLE,
+            DnDBlocks.BIG_LIGHT_GRAY_CANDLE, DnDBlocks.LIGHT_GRAY_SOUL_CANDLE, DnDBlocks.BIG_LIGHT_GRAY_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.GRAY_CANDLE, DnDBlocks.BIG_GRAY_CANDLE, DnDBlocks.GRAY_SOUL_CANDLE, DnDBlocks.BIG_GRAY_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.BLACK_CANDLE, DnDBlocks.BIG_BLACK_CANDLE, DnDBlocks.BLACK_SOUL_CANDLE, DnDBlocks.BIG_BLACK_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.BROWN_CANDLE, DnDBlocks.BIG_BROWN_CANDLE, DnDBlocks.BROWN_SOUL_CANDLE, DnDBlocks.BIG_BROWN_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.RED_CANDLE, DnDBlocks.BIG_RED_CANDLE, DnDBlocks.RED_SOUL_CANDLE, DnDBlocks.BIG_RED_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.ORANGE_CANDLE,
+            DnDBlocks.BIG_ORANGE_CANDLE, DnDBlocks.ORANGE_SOUL_CANDLE, DnDBlocks.BIG_ORANGE_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.YELLOW_CANDLE,
+            DnDBlocks.BIG_YELLOW_CANDLE, DnDBlocks.YELLOW_SOUL_CANDLE, DnDBlocks.BIG_YELLOW_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.LIME_CANDLE, DnDBlocks.BIG_LIME_CANDLE, DnDBlocks.LIME_SOUL_CANDLE, DnDBlocks.BIG_LIME_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.GREEN_CANDLE, DnDBlocks.BIG_GREEN_CANDLE, DnDBlocks.GREEN_SOUL_CANDLE, DnDBlocks.BIG_GREEN_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.CYAN_CANDLE, DnDBlocks.BIG_CYAN_CANDLE, DnDBlocks.CYAN_SOUL_CANDLE, DnDBlocks.BIG_CYAN_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.BLUE_CANDLE, DnDBlocks.BIG_BLUE_CANDLE, DnDBlocks.BLUE_SOUL_CANDLE, DnDBlocks.BIG_BLUE_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.LIGHT_BLUE_CANDLE,
+            DnDBlocks.BIG_LIGHT_BLUE_CANDLE, DnDBlocks.LIGHT_BLUE_SOUL_CANDLE, DnDBlocks.BIG_LIGHT_BLUE_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.PURPLE_CANDLE,
+            DnDBlocks.BIG_PURPLE_CANDLE, DnDBlocks.PURPLE_SOUL_CANDLE, DnDBlocks.BIG_PURPLE_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.MAGENTA_CANDLE,
+            DnDBlocks.BIG_MAGENTA_CANDLE, DnDBlocks.MAGENTA_SOUL_CANDLE, DnDBlocks.BIG_MAGENTA_SOUL_CANDLE
+        )
+        this.addAfter(
+            Items.PINK_CANDLE, DnDBlocks.BIG_PINK_CANDLE, DnDBlocks.PINK_SOUL_CANDLE, DnDBlocks.BIG_PINK_SOUL_CANDLE
+        )
     }
 }
+
+

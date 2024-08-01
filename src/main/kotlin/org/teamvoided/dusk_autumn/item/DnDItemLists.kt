@@ -2,23 +2,25 @@ package org.teamvoided.dusk_autumn.item
 
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.util.toItems
 
 object DnDItemLists {
     val cascadeWood = listOf(
-        DnDBlocks.CASCADE_LOG.asItem(),
-        DnDBlocks.CASCADE_WOOD.asItem(),
-        DnDBlocks.STRIPPED_CASCADE_LOG.asItem(),
-        DnDBlocks.STRIPPED_CASCADE_WOOD.asItem(),
-        DnDBlocks.CASCADE_PLANKS.asItem(),
-        DnDBlocks.CASCADE_STAIRS.asItem(),
-        DnDBlocks.CASCADE_SLAB.asItem(),
-        DnDBlocks.CASCADE_FENCE.asItem(),
-        DnDBlocks.CASCADE_FENCE_GATE.asItem(),
+        DnDBlocks.CASCADE_LOG,
+        DnDBlocks.CASCADE_WOOD,
+        DnDBlocks.STRIPPED_CASCADE_LOG,
+        DnDBlocks.STRIPPED_CASCADE_WOOD,
+        DnDBlocks.CASCADE_PLANKS,
+        DnDBlocks.CASCADE_STAIRS,
+        DnDBlocks.CASCADE_SLAB,
+        DnDBlocks.CASCADE_FENCE,
+        DnDBlocks.CASCADE_FENCE_GATE,
         DnDItems.CASCADE_DOOR,
-        DnDBlocks.CASCADE_TRAPDOOR.asItem(),
-        DnDBlocks.CASCADE_PRESSURE_PLATE.asItem(),
-        DnDBlocks.CASCADE_BUTTON.asItem()
-    )
+        DnDBlocks.CASCADE_TRAPDOOR,
+        DnDBlocks.CASCADE_PRESSURE_PLATE,
+        DnDBlocks.CASCADE_BUTTON
+    ).toItems()
+
     val pineWood = listOf(
 //        DuskBlocks.PINE_LOG.asItem(),
 //        DuskBlocks.PINE_WOOD.asItem(),
@@ -96,7 +98,7 @@ object DnDItemLists {
         DnDBlocks.BIG_PINK_SOUL_CANDLE.asItem()
     )
     val candles = bigCandles + soulCandles + bigSoulCandles
-    val bigItems =listOf(
+    val bigItems = listOf(
         DnDBlocks.BIG_CHAIN.asItem(),
         DnDBlocks.BIG_LANTERN.asItem(),
         DnDBlocks.BIG_SOUL_LANTERN.asItem()
@@ -230,46 +232,46 @@ object DnDItemLists {
         DnDItems.MOONBERRIES
     )
     val overlayBlocks = listOf(
-        DnDBlocks.ROCKY_GRASS.asItem(),
-        DnDBlocks.ROCKY_PODZOL.asItem(),
-        DnDBlocks.ROCKY_MYCELIUM.asItem(),
-        DnDBlocks.ROCKY_DIRT_PATH.asItem(),
-        DnDBlocks.ROCKY_DIRT.asItem(),
-        DnDBlocks.ROCKY_COARSE_DIRT.asItem(),
-        DnDBlocks.ROCKY_MUD.asItem(),
-        DnDBlocks.ROCKY_SNOW.asItem(),
-        DnDBlocks.ROCKY_GRAVEL.asItem(),
-        DnDBlocks.ROCKY_SAND.asItem(),
-        DnDBlocks.ROCKY_RED_SAND.asItem(),
-        DnDBlocks.ROCKY_SOUL_SAND.asItem(),
-        DnDBlocks.ROCKY_SOUL_SOIL.asItem(),
+        DnDBlocks.ROCKY_GRASS,
+        DnDBlocks.ROCKY_PODZOL,
+        DnDBlocks.ROCKY_MYCELIUM,
+        DnDBlocks.ROCKY_DIRT_PATH,
+        DnDBlocks.ROCKY_DIRT,
+        DnDBlocks.ROCKY_COARSE_DIRT,
+        DnDBlocks.ROCKY_MUD,
+        DnDBlocks.ROCKY_SNOW,
+        DnDBlocks.ROCKY_GRAVEL,
+        DnDBlocks.ROCKY_SAND,
+        DnDBlocks.ROCKY_RED_SAND,
+        DnDBlocks.ROCKY_SOUL_SAND,
+        DnDBlocks.ROCKY_SOUL_SOIL,
 
-        DnDBlocks.SLATED_GRASS.asItem(),
-        DnDBlocks.SLATED_PODZOL.asItem(),
-        DnDBlocks.SLATED_MYCELIUM.asItem(),
-        DnDBlocks.SLATED_DIRT_PATH.asItem(),
-        DnDBlocks.SLATED_DIRT.asItem(),
-        DnDBlocks.SLATED_COARSE_DIRT.asItem(),
-        DnDBlocks.SLATED_MUD.asItem(),
-        DnDBlocks.SLATED_SNOW.asItem(),
-        DnDBlocks.SLATED_GRAVEL.asItem(),
-        DnDBlocks.SLATED_SAND.asItem(),
-        DnDBlocks.SLATED_RED_SAND.asItem(),
-        DnDBlocks.SLATED_SOUL_SAND.asItem(),
-        DnDBlocks.SLATED_SOUL_SOIL.asItem(),
+        DnDBlocks.SLATED_GRASS,
+        DnDBlocks.SLATED_PODZOL,
+        DnDBlocks.SLATED_MYCELIUM,
+        DnDBlocks.SLATED_DIRT_PATH,
+        DnDBlocks.SLATED_DIRT,
+        DnDBlocks.SLATED_COARSE_DIRT,
+        DnDBlocks.SLATED_MUD,
+        DnDBlocks.SLATED_SNOW,
+        DnDBlocks.SLATED_GRAVEL,
+        DnDBlocks.SLATED_SAND,
+        DnDBlocks.SLATED_RED_SAND,
+        DnDBlocks.SLATED_SOUL_SAND,
+        DnDBlocks.SLATED_SOUL_SOIL,
 
-        DnDBlocks.BLACKSTONE_GRASS.asItem(),
-        DnDBlocks.BLACKSTONE_PODZOL.asItem(),
-        DnDBlocks.BLACKSTONE_MYCELIUM.asItem(),
-        DnDBlocks.BLACKSTONE_DIRT_PATH.asItem(),
-        DnDBlocks.BLACKSTONE_DIRT.asItem(),
-        DnDBlocks.BLACKSTONE_COARSE_DIRT.asItem(),
-        DnDBlocks.BLACKSTONE_MUD.asItem(),
-        DnDBlocks.BLACKSTONE_SNOW.asItem(),
-        DnDBlocks.BLACKSTONE_GRAVEL.asItem(),
-        DnDBlocks.BLACKSTONE_SAND.asItem(),
-        DnDBlocks.BLACKSTONE_RED_SAND.asItem(),
-        DnDBlocks.BLACKSTONE_SOUL_SAND.asItem(),
-        DnDBlocks.BLACKSTONE_SOUL_SOIL.asItem()
-    )
+        DnDBlocks.BLACKSTONE_GRASS,
+        DnDBlocks.BLACKSTONE_PODZOL,
+        DnDBlocks.BLACKSTONE_MYCELIUM,
+        DnDBlocks.BLACKSTONE_DIRT_PATH,
+        DnDBlocks.BLACKSTONE_DIRT,
+        DnDBlocks.BLACKSTONE_COARSE_DIRT,
+        DnDBlocks.BLACKSTONE_MUD,
+        DnDBlocks.BLACKSTONE_SNOW,
+        DnDBlocks.BLACKSTONE_GRAVEL,
+        DnDBlocks.BLACKSTONE_SAND,
+        DnDBlocks.BLACKSTONE_RED_SAND,
+        DnDBlocks.BLACKSTONE_SOUL_SAND,
+        DnDBlocks.BLACKSTONE_SOUL_SOIL
+    ).toItems()
 }
