@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.*
 import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
@@ -12,11 +13,13 @@ import net.minecraft.loot.condition.BlockStatePropertyLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LootTableEntry
+import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
+import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumn.block.DnDLists.bigCandles
 import org.teamvoided.dusk_autumn.block.DnDLists.bigSoulCandles
 import org.teamvoided.dusk_autumn.block.DnDLists.leafPiles
@@ -35,8 +38,9 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             DnDBlocks.BLUE_PETALS,
             DnDBlocks.CASCADE_LEAVES,
             DnDBlocks.GOLDEN_BIRCH_LEAVES,
-            DnDBlocks.WILD_WHEAT,
+            DnDBlocks.WARPED_WART,
             DnDBlocks.GOLDEN_BEETROOTS,
+            DnDBlocks.WILD_WHEAT,
             DnDBlocks.MOONBERRY_VINE
         ) +
                 bigCandles.map { it.second } +
@@ -46,6 +50,8 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 leafPiles.map { it.first }
 
     override fun generate() {
+        val enchantmentLookup = field_51845.getLookupOrThrow(RegistryKeys.ENCHANTMENT)
+
         DnDBlocks.BLOCKS.filter { (it !in excludeList && it !is FlowerPotBlock) }.forEach {
             when (it) {
                 is SlabBlock -> add(it, ::slabDrops)
@@ -76,11 +82,30 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
-        add(DnDBlocks.WILD_WHEAT) { block: Block ->
-            this.dropsWithPropertyValue(
-                block,
-                TallPlantBlock.HALF,
-                DoubleBlockHalf.LOWER
+        add(DnDBlocks.WARPED_WART) { block: Block ->
+            LootTable.builder().pool(
+                applyExplosionDecay(
+                    block,
+                    LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
+                        ItemEntry.builder(DnDBlocks.WARPED_WART)
+                            .apply(
+                                SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))
+                                    .conditionally(
+                                        BlockStatePropertyLootCondition.builder(block).properties(
+                                            StatePredicate.Builder.create().exactMatch(NetherWartBlock.AGE, 3)
+                                        )
+                                    )
+                            )
+                            .apply(
+                                ApplyBonusLootFunction.method_456(enchantmentLookup.getHolderOrThrow(Enchantments.FORTUNE))
+                                    .conditionally(
+                                        BlockStatePropertyLootCondition.builder(block).properties(
+                                            StatePredicate.Builder.create().exactMatch(NetherWartBlock.AGE, 3)
+                                        )
+                                    )
+                            )
+                    )
+                )
             )
         }
         add(
@@ -94,6 +119,13 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 )
             )
         )
+        add(DnDBlocks.WILD_WHEAT) { block: Block ->
+            this.dropsWithPropertyValue(
+                block,
+                TallPlantBlock.HALF,
+                DoubleBlockHalf.LOWER
+            )
+        }
         add(DnDBlocks.POTTED_VIOLET_DAISY) { pottedPlantDrops(DnDBlocks.VIOLET_DAISY) }
     }
 

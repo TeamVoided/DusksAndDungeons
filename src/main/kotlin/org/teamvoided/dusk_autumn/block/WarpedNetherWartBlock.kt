@@ -3,11 +3,14 @@ package org.teamvoided.dusk_autumn.block
 import net.minecraft.block.BlockState
 import net.minecraft.block.NetherWartBlock
 import net.minecraft.block.ShapeContext
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldView
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
+import org.teamvoided.dusk_autumn.init.DnDBlocks
 
 class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
@@ -21,6 +24,10 @@ class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
         context: ShapeContext
     ): VoxelShape {
         return AGE_TO_SHAPE[(state.get(AGE))]
+    }
+
+    override fun getPickStack(world: WorldView, pos: BlockPos, state: BlockState): ItemStack {
+        return ItemStack(DnDBlocks.WARPED_WART)
     }
 
     companion object {

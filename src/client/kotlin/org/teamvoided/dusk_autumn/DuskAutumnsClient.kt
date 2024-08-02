@@ -16,7 +16,9 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.DnDParticles.CASCADE_LEAF_PARTICLE
 import org.teamvoided.dusk_autumn.init.DnDParticles.SMALL_SOUL_FLAME_PARTICLE
+import org.teamvoided.dusk_autumn.init.DnDParticles.SNOWFLAKE
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
+import org.teamvoided.dusk_autumn.particle.SnowflakeParticle
 
 @Suppress("unused")
 object DuskAutumnsClient {
@@ -44,6 +46,7 @@ object DuskAutumnsClient {
         initItems()
         ParticleFactoryRegistry.getInstance().register(CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
         ParticleFactoryRegistry.getInstance().register(SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
+        ParticleFactoryRegistry.getInstance().register(SNOWFLAKE, SnowflakeParticle::Factory)
 
 //        ClientTickEvents.END_CLIENT_TICK.register {
 //            if (key.isPressed && cooldown < 1) {

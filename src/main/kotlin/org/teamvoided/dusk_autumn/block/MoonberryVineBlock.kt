@@ -22,10 +22,12 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
+import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import net.minecraft.world.event.GameEvent
+import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 
@@ -34,19 +36,14 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
     public override fun getCodec(): MapCodec<MoonberryVineBlock> = CODEC
 
 
+    init {
+        this.defaultState = defaultState.with(WATERLOGGED, false).with(BERRIES, 0)
+    }
+
+
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         super.appendProperties(builder)
         builder.add(WATERLOGGED, BERRIES)
-    }
-
-    override fun getStateForNeighborUpdate(
-        state: BlockState, direction: Direction, neighborState: BlockState,
-        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
-    ): BlockState {
-        if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
-        }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
     override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean =
@@ -63,13 +60,70 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         world.setBlockState(pos, state.with(BERRIES, state.get(BERRIES) + 1), 2)
     }
 
+    override fun getStateForNeighborUpdate(
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
+    ): BlockState {
+        if (state.get(WATERLOGGED)) {
+            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        }
+        return if (!hasAnyDirection(state)) {
+            Blocks.AIR.defaultState
+        } else {
+            if (hasDirection(state, direction) &&
+                !canGrowOnOrOveride(world, direction, neighborPos, neighborState)
+            ) disableDirection(state, getProperty(direction)) else state
+        }
+    }
+
+    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
+        var bl = false
+        val var5 = DIRECTIONS
+        val var6 = var5.size
+
+        for (var7 in 0 until var6) {
+            val direction = var5[var7]
+            if (hasDirection(state, direction)) {
+                val blockPos = pos.offset(direction)
+                if (!canGrowOnOrOveride(world, direction, blockPos, world.getBlockState(blockPos))
+                ) {
+                    return false
+                }
+
+                bl = true
+            }
+        }
+
+        return bl
+    }
+
+    override fun canPlace(view: BlockView, state: BlockState, pos: BlockPos, dir: Direction): Boolean {
+        if (this.canHaveDirection(dir) && (!state.isOf(this) || !hasDirection(state, dir))) {
+            val blockPos = pos.offset(dir)
+            return canGrowOnOrOveride(view, dir, blockPos, view.getBlockState(blockPos))
+        } else {
+            return false
+        }
+    }
+
+    private fun canGrowOnOrOveride(world: BlockView, direction: Direction, pos: BlockPos, state: BlockState): Boolean {
+        return (isFaceFullSquare(state.getSidesShape(world, pos), direction.opposite)
+                || isFaceFullSquare(state.getCollisionShape(world, pos), direction.opposite)
+                || world.getBlockState(pos).isIn(DnDBlockTags.MOONBERRY_CAN_PLACE_ON))
+    }
+
     override fun getFluidState(state: BlockState): FluidState =
         if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
 
 
     override fun onInteract(
-        stack: ItemStack, state: BlockState, world: World,
-        pos: BlockPos, entity: PlayerEntity, hand: Hand, hitResult: BlockHitResult
+        stack: ItemStack,
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        entity: PlayerEntity,
+        hand: Hand,
+        hitResult: BlockHitResult
     ): ItemInteractionResult {
         val bl = state.get(BERRIES) == 2
         return if (!bl && stack.isOf(Items.BONE_MEAL)) ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
@@ -116,11 +170,6 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
 
     override fun getLichenSpreadBehavior(): LichenSpreadBehavior {
         return LichenSpreadBehavior(this)
-    }
-
-
-    init {
-        this.defaultState = defaultState.with(WATERLOGGED, false).with(BERRIES, 0)
     }
 
     companion object {

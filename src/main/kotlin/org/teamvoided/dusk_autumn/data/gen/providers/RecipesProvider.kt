@@ -48,6 +48,14 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .criterion(Items.IRON_NUGGET)
             .criterion(Items.IRON_INGOT)
             .offerTo(e)
+
+        e.createStackedCraft(DnDBlocks.STONE_PILLAR, Blocks.STONE_BRICKS, ItemTags.STONE_BRICKS)
+        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.STONE_PILLAR, Blocks.STONE)
+        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.STONE_PILLAR, Blocks.STONE_BRICKS)
+        e.createStackedCraft(DnDBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
+        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.DEEPSLATE_PILLAR, Blocks.COBBLED_DEEPSLATE)
+        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
+
         e.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
         e.createCandle(DnDBlocks.BIG_CANDLE)

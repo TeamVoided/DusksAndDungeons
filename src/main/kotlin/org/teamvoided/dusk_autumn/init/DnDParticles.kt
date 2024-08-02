@@ -9,16 +9,17 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 
 object DnDParticles {
-    val AUTUMN_LEAF_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
+//    val AUTUMN_LEAF_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
     val CASCADE_LEAF_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
     val SMALL_SOUL_FLAME_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
+    val SNOWFLAKE: DefaultParticleType = FabricParticleTypes.simple()
 
     fun init() {
-        register("autumn_leaf", AUTUMN_LEAF_PARTICLE)
+//        register("autumn_leaf", AUTUMN_LEAF_PARTICLE)
         register("cascade_leaf", CASCADE_LEAF_PARTICLE)
         register("small_soul_flame", SMALL_SOUL_FLAME_PARTICLE)
+        register("snowflake", SNOWFLAKE)
     }
-
 
     fun register(id: String, particleType: ParticleType<*>) =
         Registry.register(Registries.PARTICLE_TYPE, id(id), particleType)

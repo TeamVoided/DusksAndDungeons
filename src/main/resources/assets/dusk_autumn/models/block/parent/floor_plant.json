@@ -1,7 +1,7 @@
 {
 	"parent": "block/block",
 	"textures": {
-		"particle": "#texture"
+		"particle": "#crop"
 	},
 	"elements": [
 		{
@@ -9,8 +9,8 @@
 			"to": [16, 1, 16],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
 			"faces": {
-				"up": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"down": {"uv": [16, 0, 0, 16], "texture": "#texture", "rotation": 180}
+				"up": {"uv": [0, 0, 16, 16], "texture": "#crop"},
+				"down": {"uv": [16, 0, 0, 16], "texture": "#crop", "rotation": 180}
 			}
 		}
 	]

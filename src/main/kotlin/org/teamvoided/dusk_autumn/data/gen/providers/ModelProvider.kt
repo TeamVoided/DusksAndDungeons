@@ -30,11 +30,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //                texture.put(TextureKey.TOP, Texture.getId(Blocks.NETHER_BRICKS))
 //                texture.put(TextureKey.BOTTOM, Texture.getId(Blocks.RED_NETHER_BRICKS))
 //                texture.put(TextureKey.SIDE, Texture.getId(DuskBlocks.MIXED_NETHER_BRICKS))
-//            },
-            DnDBlocks.MIXED_NETHER_BRICK_PILLAR to TexturedModel.CUBE_COLUMN[DnDBlocks.MIXED_NETHER_BRICK_PILLAR].texture { texture: Texture ->
-                texture.put(TextureKey.TOP, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
-                texture.put(TextureKey.BOTTOM, Texture.getSubId(DnDBlocks.RED_NETHER_BRICK_PILLAR, "_top"))
-            }
+//            }
         )
         DnDFamilies.modelsBlockFamilies.forEach {
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
@@ -65,6 +61,11 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
         gen.registerAxisRotated(
             DnDBlocks.STONE_PILLAR,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+        )
+        gen.registerAxisRotated(
+            DnDBlocks.DEEPSLATE_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
@@ -135,22 +136,22 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         val mossyBrick = id("block/overgrown/bricks_overlay")
         gen.registerTintedOverlay(mossyCobble)
         gen.registerTintedOverlay(mossyBrick)
-        gen.cubeAllWithOverlay(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.stairsWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.slabWithTintedOverlay(
             DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
             Blocks.MOSSY_COBBLESTONE,
             mossyCobble
         )
-        gen.wallWithOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.cubeAllWithOverlay(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.stairsWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.slabWithTintedOverlay(
             DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
             Blocks.MOSSY_STONE_BRICKS,
             mossyBrick
         )
-        gen.wallWithOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
         DnDLists.logPiles.forEach { (it, texture) ->
             gen.createLogPile(it, texture)
@@ -188,43 +189,43 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.cubeSnowableColumnWithOverlay(DnDBlocks.ROCKY_PODZOL, Blocks.PODZOL, stone)
         gen.cubeSnowableColumnWithOverlay(DnDBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, stone)
         gen.cube15WithOverlay(DnDBlocks.ROCKY_DIRT_PATH, Blocks.DIRT_PATH, stone)
-        gen.cubeAllWithOverlay(DnDBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
-        gen.cubeAllWithOverlay(DnDBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
-        gen.cubeAllWithOverlay(DnDBlocks.ROCKY_MUD, Blocks.MUD, stone)
-        gen.cubeAllWithOverlay(DnDBlocks.ROCKY_SNOW, Blocks.SNOW_BLOCK, stone)
-        gen.cubeAllWithOverlay(DnDBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, stone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_MUD, Blocks.MUD, stone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_SNOW, Blocks.SNOW_BLOCK, stone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, stone)
         gen.rotatableCubeAllWithOverlay(DnDBlocks.ROCKY_SAND, Blocks.SAND, stone)
         gen.rotatableCubeAllWithOverlay(DnDBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, stone)
-        gen.cubeAllWithOverlay(DnDBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
-        gen.cubeAllWithOverlay(DnDBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
 
         gen.grassWithOverlay(DnDBlocks.SLATED_GRASS, Blocks.GRASS_BLOCK, deepslate)
         gen.cubeSnowableColumnWithOverlay(DnDBlocks.SLATED_PODZOL, Blocks.PODZOL, deepslate)
         gen.cubeSnowableColumnWithOverlay(DnDBlocks.SLATED_MYCELIUM, Blocks.MYCELIUM, deepslate)
         gen.cube15WithOverlay(DnDBlocks.SLATED_DIRT_PATH, Blocks.DIRT_PATH, deepslate)
-        gen.cubeAllWithOverlay(DnDBlocks.SLATED_DIRT, Blocks.DIRT, deepslate)
-        gen.cubeAllWithOverlay(DnDBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, deepslate)
-        gen.cubeAllWithOverlay(DnDBlocks.SLATED_MUD, Blocks.MUD, deepslate)
-        gen.cubeAllWithOverlay(DnDBlocks.SLATED_SNOW, Blocks.SNOW_BLOCK, deepslate)
-        gen.cubeAllWithOverlay(DnDBlocks.SLATED_GRAVEL, Blocks.GRAVEL, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_DIRT, Blocks.DIRT, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_MUD, Blocks.MUD, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_SNOW, Blocks.SNOW_BLOCK, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_GRAVEL, Blocks.GRAVEL, deepslate)
         gen.rotatableCubeAllWithOverlay(DnDBlocks.SLATED_SAND, Blocks.SAND, deepslate)
         gen.rotatableCubeAllWithOverlay(DnDBlocks.SLATED_RED_SAND, Blocks.RED_SAND, deepslate)
-        gen.cubeAllWithOverlay(DnDBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, deepslate)
-        gen.cubeAllWithOverlay(DnDBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, deepslate)
 
         gen.grassWithOverlay(DnDBlocks.BLACKSTONE_GRASS, Blocks.GRASS_BLOCK, blackstone)
         gen.cubeSnowableColumnWithOverlay(DnDBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, blackstone)
         gen.cubeSnowableColumnWithOverlay(DnDBlocks.BLACKSTONE_MYCELIUM, Blocks.MYCELIUM, blackstone)
         gen.cube15WithOverlay(DnDBlocks.BLACKSTONE_DIRT_PATH, Blocks.DIRT_PATH, blackstone)
-        gen.cubeAllWithOverlay(DnDBlocks.BLACKSTONE_DIRT, Blocks.DIRT, blackstone)
-        gen.cubeAllWithOverlay(DnDBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, blackstone)
-        gen.cubeAllWithOverlay(DnDBlocks.BLACKSTONE_MUD, Blocks.MUD, blackstone)
-        gen.cubeAllWithOverlay(DnDBlocks.BLACKSTONE_SNOW, Blocks.SNOW_BLOCK, blackstone)
-        gen.cubeAllWithOverlay(DnDBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_DIRT, Blocks.DIRT, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_MUD, Blocks.MUD, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_SNOW, Blocks.SNOW_BLOCK, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, blackstone)
         gen.rotatableCubeAllWithOverlay(DnDBlocks.BLACKSTONE_SAND, Blocks.SAND, blackstone)
         gen.rotatableCubeAllWithOverlay(DnDBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, blackstone)
-        gen.cubeAllWithOverlay(DnDBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, blackstone)
-        gen.cubeAllWithOverlay(DnDBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, blackstone)
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),

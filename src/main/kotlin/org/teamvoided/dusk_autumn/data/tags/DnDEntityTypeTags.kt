@@ -7,5 +7,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 object DnDEntityTypeTags {
 
+    val CHILL_CHARGE_GOES_THROUGH = create("chill_charge_goes_through")
+
     fun create(id: String): TagKey<EntityType<*>> = TagKey.of(RegistryKeys.ENTITY_TYPE, id(id))
 }

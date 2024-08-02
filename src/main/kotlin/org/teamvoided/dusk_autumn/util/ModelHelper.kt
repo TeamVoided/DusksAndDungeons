@@ -105,7 +105,7 @@ fun BlockStateModelGenerator.registerTintedOverlay(overlay: Identifier) {
     this.tintedWallOverlay(overlay)
 }
 
-fun BlockStateModelGenerator.cubeAllWithOverlay(block: Block, reference: Block, overlay: Identifier) {
+fun BlockStateModelGenerator.cubeAllWithTintedOverlay(block: Block, reference: Block, overlay: Identifier) {
     this.cubeWithOverlay(block, reference, overlay)
     this.cubeItemAllWithOverlay(block, reference, overlay)
 }
@@ -396,7 +396,7 @@ fun slabOrStairWithOverlayModel(parent: String): Model {
     )
 }
 
-fun BlockStateModelGenerator.wallWithOverlay(wall: Block, baseBlock: Block, overlay: Identifier) {
+fun BlockStateModelGenerator.wallWithTintedOverlay(wall: Block, baseBlock: Block, overlay: Identifier) {
     val wallOf = Identifier.of(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
     this.blockStateCollector.accept(
         createWallBlockStateWithOverlay(
@@ -515,7 +515,7 @@ fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
                     .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
                     .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
                     .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
-            )
+            ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates())
     )
     if (cake != null) {
         val candleCake = bigCandleCakeModel().upload(

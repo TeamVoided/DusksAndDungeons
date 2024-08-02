@@ -4,6 +4,8 @@
 //
 package net.minecraft.entity.projectile
 
+import com.google.common.collect.Lists
+import net.minecraft.block.Blocks
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -12,21 +14,25 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleEffect
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.registry.tag.EntityTypeTags
 import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundEvents
+import net.minecraft.state.property.Properties
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.hit.HitResult
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import net.minecraft.world.explosion.ExplosionBehavior
 import net.minecraft.world.explosion.SimpleExplosionBehavior
+import org.teamvoided.dusk_autumn.data.tags.DnDEntityTypeTags
 import java.util.*
 import java.util.function.Function
+import kotlin.math.max
 
 class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
     constructor(entityType: EntityType<out ChillCharge>, world: World) : super(entityType, world) {
@@ -75,7 +81,7 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
     }
 
     override fun canHit(entity: Entity): Boolean {
-        return if (entity is ChillCharge || entity.type === EntityType.END_CRYSTAL) false
+        return if (entity.type.isIn(DnDEntityTypeTags.CHILL_CHARGE_GOES_THROUGH)) false
         else super.canHit(entity)
     }
 
@@ -94,36 +100,61 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
             if (entity.damage(damageSource, 1.0f) && entity is LivingEntity) {
                 EnchantmentHelper.onEntityDamaged(world as ServerWorld, entity, damageSource)
             }
-            this.createExplosion(this.pos)
+            this.freeze(world, 5)
+        }
+    }
+
+    private fun freeze(world: World, radius: Int) {
+        var posListLight: MutableList<BlockPos> = Lists.newArrayList<BlockPos>()
+        var posListIce: MutableList<BlockPos> = Lists.newArrayList<BlockPos>()
+        for (x in -radius..radius) {
+            for (y in -radius..radius) {
+                for (z in -radius..radius) {
+                    val block = blockPos
+                        .offset(Direction.Axis.X, x)
+                        .offset(Direction.Axis.Y, y)
+                        .offset(Direction.Axis.Z, z)
+                    val blockstate = world.getBlockState(block)
+                    if ((blockstate.isOf(Blocks.WATER) && blockstate.get(Properties.LEVEL_15) == 0) &&
+                        (world.height > block.y + 1 || world.getBlockState(block.up()).isIn(BlockTags.AIR))
+                    ) posListIce.add(block)
+                    else if (world.getBlockState(block).contains(Properties.LIT))
+                        posListLight.add(block)
+                }
+            }
+        }
+        posListIce.forEach {
+            world.setBlockState(it, Blocks.FROSTED_ICE.defaultState)
+        }
+        posListLight.forEach {
+            world.setBlockState(it, world.getBlockState(it).with(Properties.LIT, false))
+        }
+        freezeEntities(world, radius)
+    }
+    fun freezeEntities(world: World, radius: Int) {
+        val entitiesNearby = world.getOtherEntities(
+            this, Box(
+                this.x - radius,
+                this.y - radius,
+                this.z - radius,
+                this.x + radius,
+                this.y + radius,
+                this.z + radius
+            )
+        ) { obj: Entity -> obj.isAlive && !obj.type.isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES) }
+
+        return entitiesNearby.forEach {
+            it.damage(this.damageSources.freeze(), 4f)
+            it.frozenTicks = max(it.frozenTicks, random.rangeInclusive(350, 500))
         }
     }
 
     override fun addVelocity(deltaX: Double, deltaY: Double, deltaZ: Double) {}
 
-    private fun createExplosion(vec3d: Vec3d) {
-        world.createExplosion(
-            this,
-            null as DamageSource?,
-            chillExplosionBehavior,
-            vec3d.getX(),
-            vec3d.getY(),
-            vec3d.getZ(),
-            3.0f,
-            false,
-            World.ExplosionSourceType.TRIGGER,
-            ParticleTypes.GUST_EMITTER_SMALL,
-            ParticleTypes.GUST_EMITTER_LARGE,
-            SoundEvents.ENTITY_BREEZE_WIND_BURST
-        )
-    }
-
     override fun onBlockHit(blockHitResult: BlockHitResult) {
         super.onBlockHit(blockHitResult)
         if (!world.isClient) {
-            val vec3i = blockHitResult.side.vector
-            val vec3d = Vec3d.of(vec3i).multiply(explosionOffsetMult, explosionOffsetMult, explosionOffsetMult)
-            val vec3d2 = blockHitResult.pos.add(vec3d)
-            this.createExplosion(vec3d2)
+            this.freeze(world, 5)
             this.discard()
         }
     }
@@ -157,7 +188,7 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
 
     override fun tick() {
         if (!world.isClient && this.blockY > world.topY + 30) {
-            this.createExplosion(this.pos)
+            this.freeze(world, 5)
             this.discard()
         } else {
             super.tick()

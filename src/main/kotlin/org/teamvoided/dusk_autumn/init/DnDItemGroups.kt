@@ -31,6 +31,10 @@ object DnDItemGroups {
                     DnDBlocks.BLUE_PETALS,
                 )
                 entries.addItem(
+                    DnDBlocks.STONE_PILLAR,
+                    DnDBlocks.DEEPSLATE_PILLAR,
+                )
+                entries.addItem(
                     // big items but not candles
                     DnDBlocks.BIG_CHAIN,
                     DnDBlocks.BIG_LANTERN,

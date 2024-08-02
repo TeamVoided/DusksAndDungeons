@@ -9,3 +9,4 @@ accessible method net/minecraft/world/gen/feature/OrePlacedFeatures commonOrePla
 accessible method net/minecraft/world/gen/feature/OrePlacedFeatures rareOrePlacementModifiers (ILnet/minecraft/world/gen/feature/PlacementModifier;)Ljava/util/List;
 accessible field net/minecraft/data/client/model/BlockStateModelGenerator sandstoneModels Ljava/util/Map;
 mutable field net/minecraft/data/client/model/BlockStateModelGenerator sandstoneModels Ljava/util/Map;
+accessible method net/minecraft/block/AbstractLichenBlock disableDirection (Lnet/minecraft/block/BlockState;Lnet/minecraft/state/property/BooleanProperty;)Lnet/minecraft/block/BlockState;

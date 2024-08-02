@@ -8,6 +8,8 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.StructureWorldAccess
 
+val pi = 3.1415927f
+
 fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, y))
 
 fun uniformNum(x: Number, y: Number): UniformLootNumberProvider =

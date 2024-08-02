@@ -17,6 +17,7 @@ object DnDBlockTags {
     val POLISHED_NETHER_BRICKS = create("polished_nether_bricks")
     val CRACKED_NETHER_BRICKS = create("cracked_nether_bricks")
     val WARPED_NETHER_WART_PLACEABLE = create("warped_nether_wart_placeable")
+    val CHILL_CHARGE_AFFECTS = create("chill_charge_affects")
     val FARMLAND_PLACES_UNDER = create("farmland_places_under")
     val MOONBERRY_CAN_PLACE_ON = create("moonberry_can_place_on")
     val REPLACEABLE_OR_DIRT = create("replaceable_or_dirt")
