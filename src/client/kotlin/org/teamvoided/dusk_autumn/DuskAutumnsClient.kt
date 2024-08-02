@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.client.color.world.GrassColors
@@ -12,7 +13,10 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
+import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
+import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.DnDEntities
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.DnDParticles.CASCADE_LEAF_PARTICLE
 import org.teamvoided.dusk_autumn.init.DnDParticles.SMALL_SOUL_FLAME_PARTICLE
@@ -26,7 +30,7 @@ object DuskAutumnsClient {
     //    val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
     const val CASCADE_LEAF_COLOR = 14701655
 
-    var cooldown = 0
+//    var cooldown = 0
     private val coloredBlocks = listOf(
         DnDBlocks.OVERGROWN_COBBLESTONE,
         DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
@@ -42,11 +46,15 @@ object DuskAutumnsClient {
     )
 
     fun init() {
+        DnDEntityModelLayers.init()
         initBlocks()
         initItems()
         ParticleFactoryRegistry.getInstance().register(CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
         ParticleFactoryRegistry.getInstance().register(SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
         ParticleFactoryRegistry.getInstance().register(SNOWFLAKE, SnowflakeParticle::Factory)
+
+
+        EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
 
 //        ClientTickEvents.END_CLIENT_TICK.register {
 //            if (key.isPressed && cooldown < 1) {

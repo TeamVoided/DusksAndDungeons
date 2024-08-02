@@ -29,18 +29,20 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import net.minecraft.world.explosion.ExplosionBehavior
 import net.minecraft.world.explosion.SimpleExplosionBehavior
+import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.data.tags.DnDEntityTypeTags
+import org.teamvoided.dusk_autumn.init.DnDParticles
 import java.util.*
 import java.util.function.Function
 import kotlin.math.max
 
-class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
-    constructor(entityType: EntityType<out ChillCharge>, world: World) : super(entityType, world) {
+class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
+    constructor(entityType: EntityType<out ChillChargeEntity>, world: World) : super(entityType, world) {
         this.field_51893 = 0.0
     }
 
     constructor(
-        type: EntityType<out ChillCharge>,
+        type: EntityType<out ChillChargeEntity>,
         world: World,
         entity: Entity,
         x: Double,
@@ -52,7 +54,7 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
     }
 
     internal constructor(
-        entityType: EntityType<out ChillCharge>,
+        entityType: EntityType<out ChillChargeEntity>,
         d: Double,
         e: Double,
         f: Double,
@@ -60,6 +62,24 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
         world: World
     ) : super(entityType, d, e, f, vec3d, world) {
         this.field_51893 = 0.0
+    }
+
+    override fun tick() {
+        if (!world.isClient && this.blockY > world.topY + 30 || isOnFire) {
+            this.freeze(world, 5)
+            this.discard()
+        } else {
+            super.tick()
+            if (world.isChunkLoaded(this.blockPos)) {
+                world.addParticle(
+                    DnDParticles.SNOWFLAKE,
+                    this.x,
+                    this.y,
+                    this.z,
+                    0.0, 0.0, 0.0
+                )
+            }
+        }
     }
 
     override fun calculateBoundingBox(): Box {
@@ -77,7 +97,7 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
     }
 
     override fun collidesWith(other: Entity): Boolean {
-        return if (other is ChillCharge) false else super.collidesWith(other)
+        return if (other is ChillChargeEntity) false else super.collidesWith(other)
     }
 
     override fun canHit(entity: Entity): Boolean {
@@ -105,33 +125,6 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
     }
 
     private fun freeze(world: World, radius: Int) {
-        var posListLight: MutableList<BlockPos> = Lists.newArrayList<BlockPos>()
-        var posListIce: MutableList<BlockPos> = Lists.newArrayList<BlockPos>()
-        for (x in -radius..radius) {
-            for (y in -radius..radius) {
-                for (z in -radius..radius) {
-                    val block = blockPos
-                        .offset(Direction.Axis.X, x)
-                        .offset(Direction.Axis.Y, y)
-                        .offset(Direction.Axis.Z, z)
-                    val blockstate = world.getBlockState(block)
-                    if ((blockstate.isOf(Blocks.WATER) && blockstate.get(Properties.LEVEL_15) == 0) &&
-                        (world.height > block.y + 1 || world.getBlockState(block.up()).isIn(BlockTags.AIR))
-                    ) posListIce.add(block)
-                    else if (world.getBlockState(block).contains(Properties.LIT))
-                        posListLight.add(block)
-                }
-            }
-        }
-        posListIce.forEach {
-            world.setBlockState(it, Blocks.FROSTED_ICE.defaultState)
-        }
-        posListLight.forEach {
-            world.setBlockState(it, world.getBlockState(it).with(Properties.LIT, false))
-        }
-        freezeEntities(world, radius)
-    }
-    fun freezeEntities(world: World, radius: Int) {
         val entitiesNearby = world.getOtherEntities(
             this, Box(
                 this.x - radius,
@@ -142,10 +135,27 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
                 this.z + radius
             )
         ) { obj: Entity -> obj.isAlive && !obj.type.isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES) }
-
-        return entitiesNearby.forEach {
+        entitiesNearby.forEach {
             it.damage(this.damageSources.freeze(), 4f)
-            it.frozenTicks = max(it.frozenTicks, random.rangeInclusive(350, 500))
+            it.frozenTicks = max(it.frozenTicks, random.rangeInclusive(450, 500))
+        }
+        for (x in -radius..radius) {
+            for (y in -radius..radius) {
+                for (z in -radius..radius) {
+                    val blockPos = blockPos
+                        .offset(Direction.Axis.X, x)
+                        .offset(Direction.Axis.Y, y)
+                        .offset(Direction.Axis.Z, z)
+                    val blockstate = world.getBlockState(blockPos)
+                    if ((blockstate.isOf(Blocks.WATER) && blockstate.get(Properties.LEVEL_15) == 0) &&
+                        (world.height < blockPos.y + 1 || world.getBlockState(blockPos.up()).isIn(BlockTags.AIR))
+                    ) {
+                        world.setBlockState(blockPos, Blocks.FROSTED_ICE.defaultState)
+                    } else if (blockstate.isIn(DnDBlockTags.CHILL_CHARGE_AFFECTS) && blockstate.contains(Properties.LIT)) {
+                        world.setBlockState(blockPos, blockstate.with(Properties.LIT, false))
+                    }
+                }
+            }
         }
     }
 
@@ -183,16 +193,8 @@ class ChillCharge : ExplosiveProjectileEntity, FlyingItemEntity {
     }
 
     override fun getParticleType(): ParticleEffect? {
+        //this places the particle half a block above the entity
         return null
-    }
-
-    override fun tick() {
-        if (!world.isClient && this.blockY > world.topY + 30) {
-            this.freeze(world, 5)
-            this.discard()
-        } else {
-            super.tick()
-        }
     }
 
     override fun damage(source: DamageSource, amount: Float): Boolean {
