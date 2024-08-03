@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.NetherWartBlock
 import net.minecraft.block.ShapeContext
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView

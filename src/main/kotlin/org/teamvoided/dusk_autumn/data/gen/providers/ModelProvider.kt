@@ -6,14 +6,14 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.DnDFamilies
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
 import org.teamvoided.dusk_autumn.util.*
 import java.util.*
 

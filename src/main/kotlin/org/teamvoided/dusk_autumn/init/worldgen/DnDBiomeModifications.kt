@@ -1,6 +1,9 @@
 package org.teamvoided.dusk_autumn.init.worldgen
 
-import net.fabricmc.fabric.api.biome.v1.*
+import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey

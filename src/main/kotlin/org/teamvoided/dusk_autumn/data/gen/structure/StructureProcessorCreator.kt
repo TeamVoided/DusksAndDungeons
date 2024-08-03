@@ -6,7 +6,8 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.structure.processor.*
-import net.minecraft.structure.rule.*
+import net.minecraft.structure.rule.AlwaysTrueRuleTest
+import net.minecraft.structure.rule.RandomBlockMatchRuleTest
 import org.teamvoided.dusk_autumn.data.structure.DnDStructureProcessorLists
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 

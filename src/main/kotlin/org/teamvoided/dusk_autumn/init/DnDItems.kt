@@ -4,7 +4,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.dispenser.DispenserBlock
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.DyedColorComponent
-import net.minecraft.component.type.ToolComponent
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry

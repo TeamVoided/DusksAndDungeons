@@ -6,6 +6,11 @@ import net.minecraft.block.*
 import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
 import net.minecraft.enchantment.Enchantments
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
@@ -20,11 +25,6 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks

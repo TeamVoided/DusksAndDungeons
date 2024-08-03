@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.ItemStack
@@ -11,8 +12,10 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
-import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.addAfter
+import org.teamvoided.dusk_autumn.util.addItem
+import org.teamvoided.dusk_autumn.util.addLists
+import org.teamvoided.dusk_autumn.util.addToTab
 import kotlin.jvm.optionals.getOrNull
 
 

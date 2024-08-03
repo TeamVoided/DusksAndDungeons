@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumn.block.big
 import net.minecraft.block.AbstractCandleBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.CandleCakeBlock
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents

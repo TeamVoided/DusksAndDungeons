@@ -2,14 +2,16 @@ package org.teamvoided.dusk_autumn.particle
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.client.particle.*
-import kotlin.math.cos
-import kotlin.math.min
-import kotlin.math.sin
+import net.minecraft.client.particle.ParticleTextureSheet
+import net.minecraft.client.particle.SpriteBillboardParticle
+import net.minecraft.client.particle.SpriteProvider
 import net.minecraft.client.world.ClientWorld
 import org.joml.Vector3f
 import java.awt.Color
+import kotlin.math.cos
+import kotlin.math.min
 import kotlin.math.pow
+import kotlin.math.sin
 
 @Environment(EnvType.CLIENT)
 open class AutumnLeafParticle protected constructor(

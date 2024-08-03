@@ -1,8 +1,6 @@
 package org.teamvoided.dusk_autumn.init
 
-import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
-import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
 import net.minecraft.block.AbstractBlock.Settings
@@ -20,7 +18,8 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Color
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
-import org.teamvoided.dusk_autumn.block.big.*
+import org.teamvoided.dusk_autumn.block.big.BigChainBlock
+import org.teamvoided.dusk_autumn.block.big.BigLanternBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyDirtPathBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyGrassBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyMyceliumBlock

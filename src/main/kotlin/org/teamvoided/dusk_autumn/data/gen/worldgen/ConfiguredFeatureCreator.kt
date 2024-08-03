@@ -41,6 +41,7 @@ import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_FAR
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_PASTURES_VEGETATION
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_WETLANDS_VEGETATION
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_WOODS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.BLACKSTONE_NETHER_ORE
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.BLUE_PETALS
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CASCADE_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CASCADE_TREE_BEES
@@ -64,7 +65,6 @@ import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.GOLDEN_BIR
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.PATCH_PUMPKIN_EXTRA
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.PATCH_ROSEBUSH
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.BLACKSTONE_NETHER_ORE
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.ROCKY_OVERWORLD_ORE
 import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.SLATED_OVERWORLD_ORE
 import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
@@ -78,8 +78,6 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDeco
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
 import java.util.*
-import kotlin.collections.forEach
-import kotlin.collections.listOf
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
 object ConfiguredFeatureCreator {
