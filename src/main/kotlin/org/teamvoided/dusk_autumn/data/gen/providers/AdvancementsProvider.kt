@@ -36,6 +36,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
         DnDBiomes.AUTUMN_WOODS,
         DnDBiomes.AUTUMN_PASTURES,
         DnDBiomes.AUTUMN_CASCADES,
+//        DnDBiomes.AUTUMN_WETLANDS,
     )
     private val theWholePack = AdvancementHolder(mc("husbandry/whole_pack"), null)
     override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>?) {
@@ -60,7 +61,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
 //            AdvancementType.CHALLENGE,
 //            true,
 //            true,
-//            false
+//            true
 //        ).putCriteria(
 //            "get_big", InventoryChangedCriterionTrigger.Conditions.create(
 //                arrayOf<ItemPredicate.Builder>(
@@ -108,7 +109,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
                 true,
                 true,
                 false
-            ).rewards(AdvancementRewards.Builder.experience(50)).parent(theWholePack)
+            ).rewards(AdvancementRewards.Builder.experience(5)).parent(theWholePack)
             .build(c, id("husbandry/woof").toString())
     }
 

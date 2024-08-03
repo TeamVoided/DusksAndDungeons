@@ -18,6 +18,18 @@ import org.teamvoided.dusk_autumn.init.DnDItems
 
 class FunnyIceSword(settings: Settings) : Item(settings) {
 
+//    main click - normal attack
+//    hold secondary click, then release - spin-around attack
+//    hold secondary click, then main click - projectile slash attack
+            //lmao clownpierce scythe
+
+//    dash attack?
+//    groundslam slash? - hit ground, projectile runs forward emitted from ground
+//    snowgrave? - imprison in ice
+//    HELICOPTER HELICOPTER - spin attack
+//    throw sword and it returns? - idea already implemented with the trident and loyalty
+//    lifesteal? - no not the other survival server type, life leach
+
     override fun canMine(state: BlockState, world: World, pos: BlockPos, miner: PlayerEntity): Boolean {
         return !miner.isCreative
     }
