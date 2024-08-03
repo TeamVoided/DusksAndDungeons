@@ -3,10 +3,10 @@ package org.teamvoided.dusk_autumn.init
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
-import net.minecraft.entity.projectile.ChillChargeEntity
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.entity.ChillChargeEntity
 
 object DnDEntities {
 

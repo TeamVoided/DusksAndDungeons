@@ -1,10 +1,23 @@
-package org.teamvoided.dusk_autumn.block
+package net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.Blocks
 import net.minecraft.item.Items
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 
-object DnDLists {
+object DnDBlockLists {
+    val coloredBlocks = listOf(
+        DnDBlocks.OVERGROWN_COBBLESTONE,
+        DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
+        DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
+        DnDBlocks.OVERGROWN_COBBLESTONE_WALL,
+        DnDBlocks.OVERGROWN_STONE_BRICKS,
+        DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS,
+        DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
+        DnDBlocks.OVERGROWN_STONE_BRICK_WALL,
+        DnDBlocks.ROCKY_GRASS,
+        DnDBlocks.SLATED_GRASS,
+        DnDBlocks.BLACKSTONE_GRASS
+    )
     val dye = listOf(
         Items.WHITE_DYE,
         Items.LIGHT_GRAY_DYE,

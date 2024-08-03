@@ -10,3 +10,4 @@ accessible method net/minecraft/world/gen/feature/OrePlacedFeatures rareOrePlace
 accessible field net/minecraft/data/client/model/BlockStateModelGenerator sandstoneModels Ljava/util/Map;
 mutable field net/minecraft/data/client/model/BlockStateModelGenerator sandstoneModels Ljava/util/Map;
 accessible method net/minecraft/block/AbstractLichenBlock disableDirection (Lnet/minecraft/block/BlockState;Lnet/minecraft/state/property/BooleanProperty;)Lnet/minecraft/block/BlockState;
+accessible method net/minecraft/data/server/advancement/AdventureAdvancementTabGenerator appendEnterAllBiomesCriterion (Lnet/minecraft/advancement/Advancement$Builder;Lnet/minecraft/registry/HolderLookup$Provider;Ljava/util/List;)Lnet/minecraft/advancement/Advancement$Builder;

@@ -33,6 +33,8 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         LOGGER.info("Hello from DataGen")
         val pack = gen.createPack()
 
+        pack.addProvider(::AdvancementsProvider)
+
         pack.addProvider(::DuskAutumnsWorldGenerator)
         pack.addProvider(::ModelProvider)
         pack.addProvider(::EnglishTranslationProvider)

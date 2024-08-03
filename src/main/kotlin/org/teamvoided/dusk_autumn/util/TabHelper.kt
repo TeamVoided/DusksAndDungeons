@@ -6,8 +6,8 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemGroup
 import net.minecraft.registry.RegistryKey
 
-fun ItemGroup.ItemStackCollector.addItem(vararg list: ItemConvertible) = this.addItems(list.toList())
-fun ItemGroup.ItemStackCollector.addItems(list: Collection<ItemConvertible>) = this.addStacks(list.toStacks())
+fun ItemGroup.ItemStackCollector.addItem(vararg list: ItemConvertible) = this.addItem(list.toList())
+fun ItemGroup.ItemStackCollector.addItem(list: Collection<ItemConvertible>) = this.addStacks(list.toStacks())
 fun ItemGroup.ItemStackCollector.addLists(vararg lists: Collection<ItemConvertible>) =
     this.addStacks(lists.flatMap { it.toStacks() })
 

@@ -10,10 +10,10 @@ import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.DnDFamilies
-import org.teamvoided.dusk_autumn.block.DnDLists
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
-import org.teamvoided.dusk_autumn.item.DnDItemLists
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
 import org.teamvoided.dusk_autumn.util.*
 import java.util.*
 
@@ -74,13 +74,13 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerAxisRotated(DnDBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DnDBlocks.BIG_CHAIN))
         gen.registerBigLantern(DnDBlocks.BIG_LANTERN)
         gen.registerBigLantern(DnDBlocks.BIG_SOUL_LANTERN)
-        DnDLists.bigCandles.forEach { (candle, cake) ->
+        DnDBlockLists.bigCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
         }
-        DnDLists.soulCandles.forEach { (candle, cake) ->
+        DnDBlockLists.soulCandles.forEach { (candle, cake) ->
             gen.registerCandle2(candle, cake)
         }
-        DnDLists.bigSoulCandles.forEach { (candle, cake) ->
+        DnDBlockLists.bigSoulCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
         }
 
@@ -132,6 +132,11 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.registerHandheldItem(it)
         }
 
+        gen.registerItemModel(DnDItems.CHILL_CHARGE)
+        gen.registerHandheldItem(DnDItems.FREEZE_ROD)
+        gen.registerHandheldItem(DnDItems.ICE_SWORD)
+
+
         val mossyCobble = id("block/overgrown/cobblestone_overlay")
         val mossyBrick = id("block/overgrown/bricks_overlay")
         gen.registerTintedOverlay(mossyCobble)
@@ -153,10 +158,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )
         gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
-        DnDLists.logPiles.forEach { (it, texture) ->
+        DnDBlockLists.logPiles.forEach { (it, texture) ->
             gen.createLogPile(it, texture)
         }
-        DnDLists.leafPiles.forEach { (it, texture) ->
+        DnDBlockLists.leafPiles.forEach { (it, texture) ->
             gen.createLeafPile(it, texture)
         }
         gen.registerSingleton(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)

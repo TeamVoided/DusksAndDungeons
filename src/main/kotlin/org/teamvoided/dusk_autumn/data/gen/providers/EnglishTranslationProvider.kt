@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItemGroups.DUSK_AUTUMN_TAB
+import org.teamvoided.dusk_autumn.init.DnDItemGroups.OVERLAY_BLOCKS_TAB
 import org.teamvoided.dusk_autumn.init.DnDItemGroups.getKey
 import org.teamvoided.dusk_autumn.init.DnDItems
 import java.util.concurrent.CompletableFuture
@@ -23,6 +24,7 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         getKey(DUSK_AUTUMN_TAB)?.let { gen.add(it, "Dusk Items") }
+        getKey(OVERLAY_BLOCKS_TAB)?.let { gen.add(it, "Overlay Blocks") }
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }
         DnDItems.ITEMS.forEach { gen.add(it.translationKey, genLang(it.id)) }

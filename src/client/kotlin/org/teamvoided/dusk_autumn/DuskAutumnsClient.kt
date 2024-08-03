@@ -13,6 +13,7 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.coloredBlocks
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
 import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.init.DnDBlocks
@@ -31,19 +32,6 @@ object DuskAutumnsClient {
     const val CASCADE_LEAF_COLOR = 14701655
 
 //    var cooldown = 0
-    private val coloredBlocks = listOf(
-        DnDBlocks.OVERGROWN_COBBLESTONE,
-        DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-        DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
-        DnDBlocks.OVERGROWN_COBBLESTONE_WALL,
-        DnDBlocks.OVERGROWN_STONE_BRICKS,
-        DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-        DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
-        DnDBlocks.OVERGROWN_STONE_BRICK_WALL,
-        DnDBlocks.ROCKY_GRASS,
-        DnDBlocks.SLATED_GRASS,
-        DnDBlocks.BLACKSTONE_GRASS
-    )
 
     fun init() {
         DnDEntityModelLayers.init()
@@ -120,8 +108,7 @@ object DuskAutumnsClient {
             DnDBlocks.OAK_LEAF_PILE.asItem(),
             DnDBlocks.JUNGLE_LEAF_PILE.asItem(),
             DnDBlocks.ACACIA_LEAF_PILE.asItem(),
-            DnDBlocks.DARK_OAK_LEAF_PILE.asItem(),
-            DnDBlocks.MANGROVE_LEAF_PILE.asItem()
+            DnDBlocks.DARK_OAK_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getSpruceColor() },
@@ -130,6 +117,10 @@ object DuskAutumnsClient {
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getBirchColor() },
             DnDBlocks.BIRCH_LEAF_PILE.asItem()
+        )
+        ColorProviderRegistry.ITEM.register(
+            { _, _ -> FoliageColors.getMangroveColor() },
+            DnDBlocks.MANGROVE_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> CASCADE_LEAF_COLOR }, DnDBlocks.CASCADE_LEAVES.asItem(), DnDBlocks.CASCADE_LEAF_PILE.asItem()

@@ -13,9 +13,9 @@ import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.block.DnDFamilies.recipesBlockFamilies
-import org.teamvoided.dusk_autumn.block.DnDLists
-import org.teamvoided.dusk_autumn.block.DnDLists.leafPiles
-import org.teamvoided.dusk_autumn.block.DnDLists.logPiles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
@@ -61,10 +61,10 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.createCandle(DnDBlocks.BIG_CANDLE)
         e.createCandle(DnDBlocks.SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
         e.createCandle(DnDBlocks.BIG_SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
-        DnDLists.dye.forEachIndexed { idx, dye ->
-            e.createDyed(DnDLists.bigCandles[idx + 1].first, dye)
-            e.createDyed(DnDLists.soulCandles[idx + 1].first, dye)
-            e.createDyed(DnDLists.bigSoulCandles[idx + 1].first, dye)
+        DnDBlockLists.dye.forEachIndexed { idx, dye ->
+            e.createDyed(DnDBlockLists.bigCandles[idx + 1].first, dye)
+            e.createDyed(DnDBlockLists.soulCandles[idx + 1].first, dye)
+            e.createDyed(DnDBlockLists.bigSoulCandles[idx + 1].first, dye)
         }
         e.createFence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS, Items.BRICK)
         e.createStair(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)

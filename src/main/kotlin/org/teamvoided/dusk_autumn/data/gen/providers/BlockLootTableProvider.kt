@@ -20,11 +20,11 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
-import org.teamvoided.dusk_autumn.block.DnDLists.bigCandles
-import org.teamvoided.dusk_autumn.block.DnDLists.bigSoulCandles
-import org.teamvoided.dusk_autumn.block.DnDLists.leafPiles
-import org.teamvoided.dusk_autumn.block.DnDLists.logPiles
-import org.teamvoided.dusk_autumn.block.DnDLists.soulCandles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks

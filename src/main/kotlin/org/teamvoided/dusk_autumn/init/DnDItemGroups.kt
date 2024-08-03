@@ -11,7 +11,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.item.DnDItemLists
+import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
 import org.teamvoided.dusk_autumn.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -24,11 +24,21 @@ object DnDItemGroups {
             .entries { _, entries ->
                 entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns, DnDItemLists.pineWood)
                 entries.addItem(
+                    DnDItems.BLUE_DOOR,
                     DnDBlocks.CASCADE_SAPLING,
                     DnDBlocks.CASCADE_LEAVES,
                     DnDBlocks.GOLDEN_BIRCH_SAPLING,
                     DnDBlocks.GOLDEN_BIRCH_LEAVES,
                     DnDBlocks.BLUE_PETALS,
+                    DnDBlocks.ROOT_BLOCK,
+                    DnDItems.FARMERS_HAT,
+                    DnDItems.WILD_WHEAT,
+                    DnDItems.GOLDEN_BEETROOT,
+                )
+                entries.addLists(
+                    DnDItemLists.moonberry,
+                    DnDItemLists.logPiles,
+                    DnDItemLists.leafPiles
                 )
                 entries.addItem(
                     DnDBlocks.STONE_PILLAR,
@@ -40,7 +50,7 @@ object DnDItemGroups {
                     DnDBlocks.BIG_LANTERN,
                     DnDBlocks.BIG_SOUL_LANTERN,
                 )
-                entries.addItems( // This add the candles in a nice way
+                entries.addItem( // This add the candles in a nice way
                     DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
                         listOf(item, DnDItemLists.soulCandles[idx], DnDItemLists.bigSoulCandles[idx])
                     }
@@ -59,17 +69,19 @@ object DnDItemGroups {
                     DnDItemLists.overgrownCobblestone,
                     DnDItemLists.overgrownStoneBricks,
                 )
-                entries.addItem(DnDBlocks.ROOT_BLOCK.asItem())
-                entries.addItems(DnDItemLists.moonberry)
                 entries.addItem(
-                    DnDItems.FARMERS_HAT,
-                    DnDItems.WILD_WHEAT,
-                    DnDItems.GOLDEN_BEETROOT,
-                    DnDItems.BLUE_DOOR
+                    DnDItems.CHILL_CHARGE,
+                    DnDItems.FREEZE_ROD,
+                    DnDItems.ICE_SWORD
                 )
+            }.build()
+    )
+    val OVERLAY_BLOCKS_TAB: ItemGroup = register("overlay_blocks",
+        FabricItemGroup.builder()
+            .icon { ItemStack(DnDBlocks.ROCKY_GRASS.asItem()) }
+            .name(Text.translatable("itemGroup.dusk_autumn.overlay_blocks"))
+            .entries { _, entries ->
                 entries.addLists(
-                    DnDItemLists.logPiles,
-                    DnDItemLists.leafPiles,
                     DnDItemLists.overlayBlocks
                 )
             }.build()

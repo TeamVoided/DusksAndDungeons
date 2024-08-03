@@ -3,8 +3,8 @@ package org.teamvoided.dusk_autumn.entity.chill_charge.render
 import net.minecraft.client.model.*
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.entity.model.SinglePartEntityModel
-import net.minecraft.entity.projectile.ChillChargeEntity
 import net.minecraft.util.Identifier
+import org.teamvoided.dusk_autumn.entity.ChillChargeEntity
 import java.util.function.Function
 
 class ChillChargeEntityModel(root: ModelPart) :

@@ -5,6 +5,7 @@ import net.minecraft.client.world.ClientWorld
 import net.minecraft.particle.DefaultParticleType
 import net.minecraft.util.math.MathHelper.lerp
 import org.teamvoided.dusk_autumn.util.pi
+import java.util.*
 import kotlin.math.max
 
 class SnowflakeParticle(
@@ -13,33 +14,40 @@ class SnowflakeParticle(
     velX: Double, velY: Double, velZ: Double
 ) : SpriteBillboardParticle(world, x, y, z, velX, velY, velZ) {
 
-//    constructor(
-//        world: ClientWorld, x: Double, y: Double, z: Double
-//    ) : this(
-//        world,
-//        x,
-//        y,
-//        z,
-//        (Math.random() * 2.0 - 1.0) * 0.05,
-//        (Math.random() * 2.0 - 1.0) * 0.05,
-//        (Math.random() * 2.0 - 1.0) * 0.05
-//    )
+    constructor(
+        world: ClientWorld, x: Double, y: Double, z: Double
+    ) : this(
+        world,
+        x,
+        y,
+        z,
+        (Math.random() * 2.0 - 1.0) * 0.05,
+        (Math.random() * 2.0 - 1.0) * 0.05,
+        (Math.random() * 2.0 - 1.0) * 0.05
+    )
 
     private val rotationSpeed1: Float
     private val rotationSpeed2: Float
+    private var lerp: Float
+    private var lerpSpeed: Float
 
     init {
         this.velocityMultiplier = 1.0f
-        this.velocityX = (Math.random() * 2.0 - 1.0) * 0.05
-        this.velocityY = (Math.random() * 2.0 - 1.0) * 0.05
-        this.velocityZ = (Math.random() * 2.0 - 1.0) * 0.05
+        this.velocityX = velX
+        this.velocityY = velY
+        this.velocityZ = velZ
         this.scale = 0.1f * (this.random.nextFloat() * this.random.nextFloat() * 1.0f + 1.0f)
-        this.rotationSpeed1 = (Math.random().toFloat() - 0.5f) * 0.15f
-        this.rotationSpeed2 = (Math.random().toFloat() - 0.5f) * 0.15f
-        this.maxAge = (this.random.nextFloat() * 300).toInt() + 200
+        this.rotationSpeed1 = (Math.random().toFloat() - 0.5f) * 0.1f
+        this.rotationSpeed2 = (Math.random().toFloat() - 0.5f) * 0.1f
+        this.lerp = Math.random().toFloat()
+        this.lerpSpeed = -0.01f
+        this.maxAge = (this.random.nextFloat() * 900).toInt() + 600
     }
 
     override fun getType(): ParticleTextureSheet = ParticleTextureSheet.PARTICLE_SHEET_OPAQUE
+    override fun getGroup(): Optional<ParticleGroup> {
+        return Optional.of(SNOWFLAKE_PARTICLE_GROUP)
+    }
 
     //    override fun tick() {
 //        super.tick()
@@ -48,6 +56,7 @@ class SnowflakeParticle(
 //        this.velocityY *= 0.9
 //        this.velocityZ *= 0.95
 //    }
+
     override fun tick() {
         this.prevPosX = this.x
         this.prevPosY = this.y
@@ -60,13 +69,18 @@ class SnowflakeParticle(
                 age += 4
             } else {
                 this.prevAngle = this.angle
-                this.angle += pi * lerp((this.age / this.maxAge.toFloat()), rotationSpeed1, rotationSpeed2) * 2.0f
+                if (this.lerp >= 1) {
+                    this.lerpSpeed = -0.05f * Math.random().toFloat()
+                } else if (this.lerp <= 0) {
+                    this.lerpSpeed = 0.05f * Math.random().toFloat()
+                }
+                lerp += lerpSpeed
+                this.angle += pi * lerp(lerp, rotationSpeed1, rotationSpeed2) * 2.0f
             }
             this.move(this.velocityX, this.velocityY, this.velocityZ)
-            this.velocityX *= 0.995
-            this.velocityY -= 0.002
-            this.velocityZ *= 0.995
-            this.velocityY = max(this.velocityY, -0.04)
+            this.velocityX *= 0.9
+            this.velocityZ *= 0.9
+            this.velocityY = max((this.velocityY - 0.002) * 0.9, -0.04)
         }
     }
 
@@ -89,5 +103,9 @@ class SnowflakeParticle(
             snowflakeParticle.setSprite(spriteProvider)
             return snowflakeParticle
         }
+    }
+
+    companion object {
+        val SNOWFLAKE_PARTICLE_GROUP: ParticleGroup = ParticleGroup(32768)
     }
 }
