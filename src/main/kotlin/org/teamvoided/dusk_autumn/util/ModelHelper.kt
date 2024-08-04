@@ -515,7 +515,7 @@ fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
                     .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
                     .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
                     .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
-            ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates())
+            )//.coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates())
     )
     if (cake != null) {
         val candleCake = bigCandleCakeModel().upload(
@@ -741,7 +741,7 @@ fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
     val hanging2 = this.parentedLogPileModel(logPile, log, "_hanging_2")
     val hanging3 = this.parentedLogPileModel(logPile, log, "_hanging_3")
     val full = this.parentedLogPileModel(logPile, log)
-    this.registerParentedItemModel(logPile, layer1)
+    this.registerParentedItemModel(logPile, layer2)
     this.blockStateCollector.accept(
         VariantsBlockStateSupplier.create(logPile)
             .coordinate(

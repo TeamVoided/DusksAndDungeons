@@ -64,11 +64,12 @@ fun RecipeExporter.createCandle(
 }
 
 fun RecipeExporter.createDyed(
-    block: ItemConvertible,
+    dyedBlock: ItemConvertible,
+    input: ItemConvertible,
     dye: ItemConvertible
 ) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block)
-        .ingredient(Ingredient.ofItems(block))
+    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, dyedBlock)
+        .ingredient(Ingredient.ofItems(input))
         .ingredient(Ingredient.ofItems(dye))
         .criterion(dye)
         .offerTo(this)

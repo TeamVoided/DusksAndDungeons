@@ -9,7 +9,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
-class FarmersHatItem(settings: Settings) : Item(settings), Equippable {
+class HeadDecorationItem(settings: Settings) : Item(settings), Equippable {
     override fun getPreferredSlot(): EquipmentSlot {
         return EquipmentSlot.HEAD
     }

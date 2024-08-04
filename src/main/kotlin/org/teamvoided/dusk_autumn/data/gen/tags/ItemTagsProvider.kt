@@ -41,6 +41,7 @@ class ItemTagsProvider(
             .addOptional(id("supplementaries","ash_pile"))
             .add(Items.BASALT)
         copy(DnDBlockTags.LEAF_PILES, DnDItemTags.LEAF_PILES)
+        copy(DnDBlockTags.LOG_PILES, DnDItemTags.LOG_PILES)
 
     }
 
@@ -98,7 +99,7 @@ class ItemTagsProvider(
 
         getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
             .add(DnDItems.BLACKSTONE_PICKAXE)
-        getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
+        getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS)
             .add(DnDItems.BLACKSTONE_SWORD)
             .add(DnDItems.BLACKSTONE_AXE)
     }

@@ -25,7 +25,7 @@ object DnDItemGroups {
             .icon { ItemStack(DnDBlocks.CASCADE_SAPLING.asItem()) }
             .name(Text.translatable("itemGroup.dusk_autumn.dusk_items"))
             .entries { _, entries ->
-                entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns, DnDItemLists.pineWood)
+                entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns)
                 entries.addItem(
                     DnDItems.BLUE_DOOR,
                     DnDBlocks.CASCADE_SAPLING,
@@ -40,6 +40,8 @@ object DnDItemGroups {
                 )
                 entries.addLists(
                     DnDItemLists.moonberry,
+                    DnDItemLists.pineWood,
+                    DnDItemLists.bonewoodWood,
                     DnDItemLists.logPiles,
                     DnDItemLists.leafPiles
                 )
@@ -58,12 +60,11 @@ object DnDItemGroups {
                         listOf(item, DnDItemLists.soulCandles[idx], DnDItemLists.bigSoulCandles[idx])
                     }
                 )
-                entries.addItem(DnDBlocks.BRICK_FENCE) //  Will be removed
                 entries.addLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
                 entries.addItem(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
                 entries.addLists(
                     DnDItemLists.redNetherBrickStuff,
-                    DnDItemLists.mixedNetherBrickStuff,
+                    DnDItemLists.mixedRedNetherBrickStuff,
                     DnDItemLists.blueNetherBrickStuff,
                     DnDItemLists.mixedBlueNetherBrickStuff,
                     DnDItemLists.grayNetherBrickStuff,
@@ -95,13 +96,12 @@ object DnDItemGroups {
         addToTab(ItemGroups.BUILDING_BLOCKS) {
             it.addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
             it.addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
-//            it.addAfter(Items.BRICK_WALL, DnDBlocks.BRICK_FENCE)
             it.addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
             it.addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
             it.addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
             it.addAfter(
                 Items.RED_NETHER_BRICK_WALL,
-                DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff +
+                DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedRedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff +
                         DnDItemLists.mixedBlueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
             )
             it.addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)

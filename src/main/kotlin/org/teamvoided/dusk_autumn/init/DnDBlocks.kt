@@ -43,11 +43,6 @@ object DnDBlocks {
     val SHOVELABLE = mutableSetOf<Block>()
     val HOEABLE = mutableSetOf<Block>()
 
-    val leafPileSettings: Settings = Settings.create()
-        .mapColor(MapColor.PLANT).strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid)
-        .lavaIgnitable()
-        .solidBlock(Blocks::nonSolid).noCollision().nonSolid()
-        .sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY)
 
     val CASCADE_SAPLING = register(
         "cascade_sapling", ThreeWideTreeSaplingBlock(
@@ -202,48 +197,85 @@ object DnDBlocks {
             DnDWoodTypes.PINE_WOOD_TYPE,
             Settings.create()
                 .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-                .strength(2.0f, 3.0f).solid().lavaIgnitable()
+                .strength(2.0f, 3.0f).solid()
+        ).axe()
+    )
+
+    val BONEWOOD_PLANKS = register(
+        "bonewood_planks", Block(
+            Settings.create()
+                .mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.XYLOPHONE).strength(2.0F, 3.0F)
+                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
+        ).axe()
+    )
+    val BONEWOOD_STAIRS = register("bonewood_stairs", stairsOf(BONEWOOD_PLANKS).axe())
+    val BONEWOOD_SLAB = register("bonewood_slab", slabOf(BONEWOOD_PLANKS).axe())
+    val BONEWOOD_FENCE = register("bonewood_fence", fenceOf(BONEWOOD_PLANKS))
+    val BONEWOOD_FENCE_GATE = register(
+        "bonewood_fence_gate",
+        FenceGateBlock(
+            DnDWoodTypes.BONEWOOD_WOOD_TYPE,
+            copy(BONEWOOD_PLANKS).solid()
+
+        ).axe()
+    )
+    val WITHERING_BONEWOOD_PLANKS = register(
+        "withering_bonewood_planks", Block(
+            copy(BONEWOOD_PLANKS).mapColor(MapColor.BLACK)
+        ).axe()
+    )
+    val WITHERING_BONEWOOD_STAIRS = register("withering_bonewood_stairs", stairsOf(WITHERING_BONEWOOD_PLANKS).axe())
+    val WITHERING_BONEWOOD_SLAB = register("withering_bonewood_slab", slabOf(WITHERING_BONEWOOD_PLANKS).axe())
+    val WITHERING_BONEWOOD_FENCE = register("withering_bonewood_fence", fenceOf(WITHERING_BONEWOOD_PLANKS))
+    val WITHERING_BONEWOOD_FENCE_GATE = register(
+        "withering_bonewood_fence_gate",
+        FenceGateBlock(
+            DnDWoodTypes.WITHERING_BONEWOOD_WOOD_TYPE,
+            copy(WITHERING_BONEWOOD_PLANKS).solid()
         ).axe()
     )
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
-    val OAK_LOG_PILE = register("oak_log_pile", LogPileBlock(copy(OAK_WOOD).nonOpaque()))
-    val SPRUCE_LOG_PILE = register("spruce_log_pile", LogPileBlock(copy(SPRUCE_WOOD).nonOpaque()))
-    val BIRCH_LOG_PILE = register("birch_log_pile", LogPileBlock(copy(BIRCH_WOOD).nonOpaque()))
-    val JUNGLE_LOG_PILE = register("jungle_log_pile", LogPileBlock(copy(JUNGLE_WOOD).nonOpaque()))
-    val ACACIA_LOG_PILE = register("acacia_log_pile", LogPileBlock(copy(ACACIA_WOOD).nonOpaque()))
-    val DARK_OAK_LOG_PILE = register("dark_oak_log_pile", LogPileBlock(copy(DARK_OAK_WOOD).nonOpaque()))
-    val MANGROVE_LOG_PILE = register("mangrove_log_pile", LogPileBlock(copy(MANGROVE_WOOD).nonOpaque()))
-    val CASCADE_LOG_PILE = register("cascade_log_pile", LogPileBlock(copy(CASCADE_WOOD).nonOpaque()))
-    val CHERRY_LOG_PILE = register("cherry_log_pile", LogPileBlock(copy(CHERRY_WOOD).nonOpaque()))
-    val OAK_LEAF_PILE = register("oak_leaf_pile", LeafPileBlock(leafPileSettings).cutout())
-    val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", LeafPileBlock(leafPileSettings).cutout())
-    val BIRCH_LEAF_PILE = register("birch_leaf_pile", LeafPileBlock(leafPileSettings).cutout())
-    val JUNGLE_LEAF_PILE = register("jungle_leaf_pile", LeafPileBlock(leafPileSettings).cutout())
-    val ACACIA_LEAF_PILE = register("acacia_leaf_pile", LeafPileBlock(leafPileSettings).cutout())
-    val DARK_OAK_LEAF_PILE = register("dark_oak_leaf_pile", LeafPileBlock(leafPileSettings).cutout())
-    val MANGROVE_LEAF_PILE = register("mangrove_leaf_pile", LeafPileBlock(leafPileSettings).cutout())
+    val OAK_LOG_PILE = register("oak_log_pile", logPile(OAK_WOOD))
+    val SPRUCE_LOG_PILE = register("spruce_log_pile", logPile(SPRUCE_WOOD))
+    val BIRCH_LOG_PILE = register("birch_log_pile", logPile(BIRCH_WOOD))
+    val JUNGLE_LOG_PILE = register("jungle_log_pile", logPile(JUNGLE_WOOD))
+    val ACACIA_LOG_PILE = register("acacia_log_pile", logPile(ACACIA_WOOD))
+    val DARK_OAK_LOG_PILE = register("dark_oak_log_pile", logPile(DARK_OAK_WOOD))
+    val MANGROVE_LOG_PILE = register("mangrove_log_pile", logPile(MANGROVE_WOOD))
+    val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD))
+    val CHERRY_LOG_PILE = register("cherry_log_pile", logPile(CHERRY_WOOD))
+    val OAK_LEAF_PILE = register("oak_leaf_pile", leafPile().cutout())
+    val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", leafPile().cutout())
+    val BIRCH_LEAF_PILE = register("birch_leaf_pile", leafPile().cutout())
+    val JUNGLE_LEAF_PILE = register("jungle_leaf_pile", leafPile().cutout())
+    val ACACIA_LEAF_PILE = register("acacia_leaf_pile", leafPile().cutout())
+    val DARK_OAK_LEAF_PILE = register("dark_oak_leaf_pile", leafPile().cutout())
+    val MANGROVE_LEAF_PILE = register("mangrove_leaf_pile", leafPile().cutout())
     val CASCADE_LEAF_PILE = register(
         "cascade_leaf_pile", FallingLeafPileBlock(
-            leafPileSettings.sounds(BlockSoundGroup.CHERRY_LEAVES).mapColor(MapColor.RED),
+            fallingLeafPile(MapColor.RED, BlockSoundGroup.CHERRY_LEAVES),
             DnDParticles.CASCADE_LEAF_PARTICLE
         ).cutout()
     )
     val CHERRY_LEAF_PILE = register(
         "cherry_leaf_pile",
-        FallingLeafPileBlock(leafPileSettings.mapColor(MapColor.PINK), ParticleTypes.CHERRY_LEAVES).cutout()
+        FallingLeafPileBlock(
+            fallingLeafPile(MapColor.PINK, BlockSoundGroup.CHERRY_LEAVES),
+            ParticleTypes.CHERRY_LEAVES
+        ).cutout()
     )
     val AZALEA_LEAF_PILE = register(
         "azalea_leaf_pile",
-        LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.AZALEA_LEAVES).mapColor(MapColor.PLANT)).cutout()
+        leafPile(BlockSoundGroup.AZALEA_LEAVES).cutout()
     )
     val FLOWERING_AZALEA_LEAF_PILE = register(
         "flowering_azalea_leaf_pile",
-        LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.AZALEA_LEAVES).mapColor(MapColor.PLANT)).cutout()
+        leafPile(BlockSoundGroup.AZALEA_LEAVES).cutout()
     )
     val GOLDEN_BIRCH_LEAF_PILE = register(
         "golden_birch_leaf_pile",
-        LeafPileBlock(leafPileSettings.sounds(BlockSoundGroup.GRASS).mapColor(MapColor.YELLOW)).cutout()
+        leafPile(MapColor.YELLOW).cutout()
     )
 
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
@@ -380,8 +412,6 @@ object DnDBlocks {
         registerNoItem("big_magenta_soul_candle_cake", bigSoulCandleCakeOf(BIG_MAGENTA_SOUL_CANDLE))
     val BIG_PINK_SOUL_CANDLE_CAKE =
         registerNoItem("big_pink_soul_candle_cake", bigSoulCandleCakeOf(BIG_PINK_SOUL_CANDLE))
-
-    val BRICK_FENCE = register("brick_fence", fenceOf(BRICKS).pickaxe())
 
     val NETHERRACK_STAIRS = register("netherrack_stairs", stairsOf(NETHERRACK).pickaxe())
     val NETHERRACK_SLAB = register("netherrack_slab", slabOf(NETHERRACK).pickaxe())

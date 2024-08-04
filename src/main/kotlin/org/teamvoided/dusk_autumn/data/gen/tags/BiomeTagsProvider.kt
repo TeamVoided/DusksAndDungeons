@@ -28,14 +28,14 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(DnDBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS)
 //            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_SILVER_FOXES)
-            .addOptionalTag(DnDBiomeTags.IS_AUTUMN)
+            .forceAddTag(DnDBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)
-            .addOptionalTag(DnDBiomeTags.IS_AUTUMN)
+            .forceAddTag(DnDBiomeTags.IS_AUTUMN)
     }
 
     fun vanillaTags() {
         getOrCreateTagBuilder(BiomeTags.OVERWORLD)
-            .addOptionalTag(DnDBiomeTags.IS_AUTUMN)
+            .forceAddTag(DnDBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(BiomeTags.FOREST)
             .add(DnDBiomes.AUTUMN_WOODS)
         getOrCreateTagBuilder(BiomeTags.RIVER)
@@ -51,7 +51,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(BiomeTags.TRAIL_RUINS_HAS_STRUCTURE)
             .add(DnDBiomes.AUTUMN_WOODS)
         getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT_STRUCTURE)
-            .addOptionalTag(DnDBiomeTags.IS_AUTUMN)
+            .forceAddTag(DnDBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(BiomeTags.HAS_VILLAGE_TAIGA_STRUCTURE)
             .add(DnDBiomes.AUTUMN_PASTURES)
         getOrCreateTagBuilder(BiomeTags.HAS_PILLAGER_OUTPOST_STRUCTURE)
@@ -66,12 +66,12 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DnDBiomes.AUTUMN_WOODS)
             .add(DnDBiomes.AUTUMN_PASTURES)
         getOrCreateTagBuilder(BiomeTags.SPAWNS_COLD_TYPED_FROGS)
-            .addOptionalTag(DnDBiomeTags.IS_AUTUMN)
+            .forceAddTag(DnDBiomeTags.IS_AUTUMN)
     }
 
     fun conventionTags() {
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_COLD_OVERWORLD)
-            .addOptionalTag(DnDBiomeTags.IS_AUTUMN)
+            .forceAddTag(DnDBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_DECIDUOUS_TREE)
             .add(DnDBiomes.AUTUMN_WOODS)
             .add(DnDBiomes.AUTUMN_WETLANDS)

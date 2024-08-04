@@ -13,7 +13,7 @@ import net.minecraft.util.Rarity
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.item.ChillChargeItem
 import org.teamvoided.dusk_autumn.item.DnDFoodComponents
-import org.teamvoided.dusk_autumn.item.FarmersHatItem
+import org.teamvoided.dusk_autumn.item.HeadDecorationItem
 import org.teamvoided.dusk_autumn.item.FunnyIceSword
 
 
@@ -37,7 +37,7 @@ object DnDItems {
 
     val FARMERS_HAT = register(
         "farmers_hat",
-        FarmersHatItem(
+        HeadDecorationItem(
             Item.Settings().maxCount(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )

@@ -25,6 +25,25 @@ import java.util.concurrent.CompletableFuture
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
     override fun generateRecipes(e: RecipeExporter) {
         recipesBlockFamilies.forEach { generateFamily(e, it, FeatureFlags.VANILLA_SET) }
+
+        generateWoodRecipes(e)
+        generateBigRecipes(e)
+        generateOtherStoneRecipes(e)
+        generateNetherRecipes(e)
+        generateAutumnRecipes(e)
+
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.ROOT_BLOCK, 1)
+            .ingredient('#', Blocks.HANGING_ROOTS)
+            .pattern("##")
+            .pattern("##")
+            .criterion(Blocks.HANGING_ROOTS).offerTo(e)
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Blocks.HANGING_ROOTS, 4)
+            .ingredient(DnDBlocks.ROOT_BLOCK, 1)
+            .criterion(DnDBlocks.ROOT_BLOCK).offerTo(e)
+        e.cobbled()
+    }
+
+    private fun generateWoodRecipes(e: RecipeExporter) {
         offerPlanksRecipe(e, DnDBlocks.CASCADE_PLANKS, DnDItemTags.CASCADE_LOGS, 4)
         offerBarkBlockRecipe(e, DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
         offerBarkBlockRecipe(e, DnDBlocks.STRIPPED_CASCADE_WOOD, DnDBlocks.STRIPPED_CASCADE_LOG)
@@ -37,8 +56,9 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("## ")
             .criterion(DnDBlocks.CASCADE_PLANKS.asItem())
             .offerTo(e)
-        offerShapelessRecipe(e, Items.BLUE_DYE, DnDBlocks.BLUE_PETALS, "blue_dye")
+    }
 
+    private fun generateBigRecipes(e: RecipeExporter) {
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.BIG_CHAIN, 1)
             .ingredient('I', Ingredient.ofItems(Items.IRON_INGOT))
             .ingredient('N', Ingredient.ofItems(Items.IRON_NUGGET))
@@ -48,25 +68,72 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .criterion(Items.IRON_NUGGET)
             .criterion(Items.IRON_INGOT)
             .offerTo(e)
-
-        e.createStackedCraft(DnDBlocks.STONE_PILLAR, Blocks.STONE_BRICKS, ItemTags.STONE_BRICKS)
-        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.STONE_PILLAR, Blocks.STONE)
-        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.STONE_PILLAR, Blocks.STONE_BRICKS)
-        e.createStackedCraft(DnDBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
-        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.DEEPSLATE_PILLAR, Blocks.COBBLED_DEEPSLATE)
-        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
-
         e.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
         e.createCandle(DnDBlocks.BIG_CANDLE)
         e.createCandle(DnDBlocks.SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
         e.createCandle(DnDBlocks.BIG_SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
         DnDBlockLists.dye.forEachIndexed { idx, dye ->
-            e.createDyed(DnDBlockLists.bigCandles[idx + 1].first, dye)
-            e.createDyed(DnDBlockLists.soulCandles[idx + 1].first, dye)
-            e.createDyed(DnDBlockLists.bigSoulCandles[idx + 1].first, dye)
+            e.createDyed(DnDBlockLists.bigCandles[idx + 1].first, DnDBlocks.BIG_CANDLE, dye)
+            e.createDyed(DnDBlockLists.soulCandles[idx + 1].first, DnDBlocks.SOUL_CANDLE, dye)
+            e.createDyed(DnDBlockLists.bigSoulCandles[idx + 1].first, DnDBlocks.BIG_SOUL_CANDLE, dye)
         }
-        e.createFence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS, Items.BRICK)
+    }
+
+    private fun generateOtherStoneRecipes(e: RecipeExporter) {
+        e.createStackedCraft(DnDBlocks.STONE_PILLAR, Blocks.STONE_BRICKS, ItemTags.STONE_BRICKS)
+        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.STONE_PILLAR, Blocks.STONE)
+        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.STONE_PILLAR, Blocks.STONE_BRICKS)
+        e.createStackedCraft(DnDBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
+        createStonecuttingRecipe(
+            e,
+            RecipeCategory.BUILDING_BLOCKS,
+            DnDBlocks.DEEPSLATE_PILLAR,
+            Blocks.COBBLED_DEEPSLATE
+        )
+        createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
+
+        e.createOvergrown(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
+        e.createOvergrown(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
+        e.createStonecuttedSet(
+            listOf(DnDBlocks.OVERGROWN_COBBLESTONE),
+            null,
+            DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
+            DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
+            DnDBlocks.OVERGROWN_COBBLESTONE_WALL
+        )
+        e.createStonecuttedSet(
+            listOf(DnDBlocks.OVERGROWN_STONE_BRICKS),
+            null,
+            DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS,
+            DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
+            DnDBlocks.OVERGROWN_STONE_BRICK_WALL
+        )
+    }
+
+    private fun generateAutumnRecipes(e: RecipeExporter) {
+        (leafPiles + logPiles).forEach { (pile, block) ->
+            e.createPiles(pile, block)
+        }
+        offerShapelessRecipe(e, Items.BLUE_DYE, DnDBlocks.BLUE_PETALS, "blue_dye")
+        ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DnDItems.FARMERS_HAT, 1)
+            .ingredient('#', Ingredient.ofItems(Items.WHEAT))
+            .ingredient('@', Ingredient.ofItems(Items.STRING))
+            .ingredient('%', Ingredient.ofItems(Items.LEATHER))
+            .pattern("###")
+            .pattern("@%@")
+            .pattern("# #")
+            .criterion(DnDItems.FARMERS_HAT).offerTo(e)
+        offerShapelessRecipe(e, Items.PURPLE_DYE, DnDItems.MOONBERRIES, "purple_dye")
+    }
+
+    private fun generateWinterRecipes(e: RecipeExporter) {
+        ShapelessRecipeJsonFactory.create(RecipeCategory.MISC, DnDItems.CHILL_CHARGE, 4)
+            .ingredient(DnDItems.FREEZE_ROD)
+            .criterion(DnDItems.FREEZE_ROD).offerTo(e)
+    }
+
+    private fun generateNetherRecipes(e: RecipeExporter) {
         e.createStair(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         e.createSlab(DnDBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
         e.createwall(DnDBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)
@@ -209,7 +276,6 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             DnDBlocks.MIXED_GRAY_NETHER_BRICK_WALL,
             listOf(DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR)
         )
-
         ShapedRecipeJsonFactory.create(RecipeCategory.COMBAT, DnDItems.BLACKSTONE_SWORD)
             .ingredient('#', Items.STICK)
             .ingredient('X', Items.BLACKSTONE)
@@ -244,41 +310,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern(" #")
             .pattern(" #")
             .criterion(Items.BLACKSTONE).offerTo(e)
-
-        e.createOvergrown(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
-        e.createOvergrown(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
-        e.createStonecuttedSet(
-            listOf(DnDBlocks.OVERGROWN_COBBLESTONE),
-            null,
-            DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-            DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
-            DnDBlocks.OVERGROWN_COBBLESTONE_WALL
-        )
-        e.createStonecuttedSet(
-            listOf(DnDBlocks.OVERGROWN_STONE_BRICKS),
-            null,
-            DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-            DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
-            DnDBlocks.OVERGROWN_STONE_BRICK_WALL
-        )
-        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.ROOT_BLOCK, 1)
-            .ingredient(Blocks.HANGING_ROOTS, 4)
-            .criterion(Blocks.HANGING_ROOTS).offerTo(e)
-        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Blocks.HANGING_ROOTS, 4)
-            .ingredient(DnDBlocks.ROOT_BLOCK, 1)
-            .criterion(DnDBlocks.ROOT_BLOCK).offerTo(e)
-        (leafPiles + logPiles).forEach { (pile, block) ->
-            e.createPiles(pile, block)
-        }
-        ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DnDItems.FARMERS_HAT, 1)
-            .ingredient('#', Ingredient.ofItems(Items.WHEAT))
-            .ingredient('@', Ingredient.ofItems(Items.STRING))
-            .ingredient('%', Ingredient.ofItems(Items.LEATHER))
-            .pattern("###")
-            .pattern("@%@")
-            .pattern("# #")
-            .criterion(DnDItems.FARMERS_HAT).offerTo(e)
-        offerShapelessRecipe(e, Items.PURPLE_DYE, DnDItems.MOONBERRIES, "purple_dye")
-        e.cobbled()
     }
+
+//    private fun generateRecipes(e: RecipeExporter) {}
 }

@@ -19,18 +19,18 @@ import org.teamvoided.dusk_autumn.util.rotate
 
 open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
 
-    init {
-        this.defaultState =
-            (stateManager.defaultState)
-                .with(CANDLES, 1)
-                .with(LIT, false)
-                .with(FACING, Direction.NORTH)
-                .with(WATERLOGGED, false)
-    }
-
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
-        return super.getPlacementState(ctx)?.with(FACING, ctx.playerFacing)
-    }
+//    init {
+//        this.defaultState =
+//            (stateManager.defaultState)
+//                .with(CANDLES, 1)
+//                .with(LIT, false)
+//                .with(FACING, Direction.NORTH)
+//                .with(WATERLOGGED, false)
+//    }
+//
+//    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
+//        return super.getPlacementState(ctx)?.with(FACING, ctx.playerFacing)
+//    }
 
     override fun getOutlineShape(
         state: BlockState,
@@ -38,32 +38,33 @@ open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
         pos: BlockPos,
         context: ShapeContext
     ): VoxelShape {
-        val rotations = when (state.get(FACING)) {
-            Direction.NORTH -> 0
-            Direction.SOUTH -> 2
-            Direction.WEST -> 3
-            Direction.EAST -> 1
-            else -> 0
-        }
+//        val rotations = when (state.get(FACING)) {
+//            Direction.NORTH -> 0
+//            Direction.SOUTH -> 2
+//            Direction.WEST -> 3
+//            Direction.EAST -> 1
+//            else -> 0
+//        }
         return (when (state.get(CANDLES)) {
             1 -> ONE_BIG_CANDLE_SHAPE
             2 -> TWO_BIG_CANDLES_SHAPE
             3 -> THREE_BIG_CANDLES_SHAPE
             4 -> FOUR_BIG_CANDLES_SHAPE
             else -> ONE_BIG_CANDLE_SHAPE
-        }).rotate(rotations)
+        })
+//            .rotate(rotations)
     }
 
     override fun getParticleOffsets(state: BlockState): Iterable<Vec3d> {
         return BIG_CANDLES_TO_PARTICLE_OFFSETS[state.get(CANDLES)]
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(LIT, CANDLES, FACING, WATERLOGGED)
-    }
+//    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+//        builder.add(LIT, CANDLES, FACING, WATERLOGGED)
+//    }
 
     companion object {
-        val FACING: DirectionProperty = HorizontalFacingBlock.FACING
+//        val FACING: DirectionProperty = HorizontalFacingBlock.FACING
 
         val ONE_BIG_CANDLE_SHAPE: VoxelShape =
             candle(6.0, 6.0, 12.0)

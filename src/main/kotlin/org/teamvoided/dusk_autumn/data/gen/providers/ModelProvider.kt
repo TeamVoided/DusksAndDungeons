@@ -84,8 +84,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.registerBigCandle(candle, cake)
         }
 
-        gen.fence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS)
-
         gen.stairs(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         gen.slab(DnDBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
         gen.wall(DnDBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)

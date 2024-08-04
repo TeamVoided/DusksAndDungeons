@@ -8,6 +8,8 @@ import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
+import org.teamvoided.dusk_autumn.block.LeafPileBlock
+import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.block.SoulCandleBlock
 import org.teamvoided.dusk_autumn.block.SoulCandleCakeBlock
 import org.teamvoided.dusk_autumn.block.big.BigCandleBlock
@@ -51,28 +53,57 @@ fun slabOf(block: Block): Block = SlabBlock(AbstractBlock.Settings.copy(block))
 fun wallOf(block: Block): Block = WallBlock(AbstractBlock.Settings.copy(block).solid())
 fun fenceOf(block: Block): Block = FenceBlock(AbstractBlock.Settings.copy(block).solid())
 
-fun fenceGateOf(woodType: WoodType, block: Block): Block = FenceGateBlock(woodType, AbstractBlock.Settings.copy(block).solid())
+fun fenceGateOf(woodType: WoodType, block: Block): Block =
+    FenceGateBlock(woodType, AbstractBlock.Settings.copy(block).solid())
 
 fun candleSettings(): AbstractBlock.Settings = AbstractBlock.Settings.create().nonOpaque().strength(0.1f)
     .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
 
 fun bigCandleOf(color: MapColor): Block = BigCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
 
-fun soulCandleOf(color: MapColor): Block = SoulCandleBlock(candleSettings().mapColor(color).sounds(BlockSoundGroup.CANDLE))
+fun soulCandleOf(color: MapColor): Block =
+    SoulCandleBlock(candleSettings().mapColor(color).sounds(BlockSoundGroup.CANDLE))
 
-fun bigSoulCandleOf(color: MapColor): Block = BigSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+fun bigSoulCandleOf(color: MapColor): Block =
+    BigSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
 
-fun bigCandleCakeOf(block: Block): Block = BigCandleCakeBlock(block, AbstractBlock.Settings.copy(DnDBlocks.BIG_CANDLE_CAKE))
+fun bigCandleCakeOf(block: Block): Block =
+    BigCandleCakeBlock(block, AbstractBlock.Settings.copy(DnDBlocks.BIG_CANDLE_CAKE))
 
-fun bigCandleCakeOf(block: Block, candleCake: Block): Block = BigCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
+fun bigCandleCakeOf(block: Block, candleCake: Block): Block =
+    BigCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
 
 fun soulCandleCakeOf(block: Block): Block = soulCandleCakeOf(block, DnDBlocks.SOUL_CANDLE_CAKE)
 
-fun soulCandleCakeOf(block: Block, candleCake: Block): Block = SoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
+fun soulCandleCakeOf(block: Block, candleCake: Block): Block =
+    SoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
 
 fun bigSoulCandleCakeOf(block: Block): Block = bigSoulCandleCakeOf(block, DnDBlocks.BIG_SOUL_CANDLE_CAKE)
 
-fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block = BigSoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
+fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block =
+    BigSoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
+
+
+fun logPile(log:Block): Block = LogPileBlock(AbstractBlock.Settings.copy(log).nonOpaque())
+fun leafPile(): Block = leafPile(MapColor.PLANT, BlockSoundGroup.GRASS)
+fun leafPile(soundGroup: BlockSoundGroup): Block = leafPile(MapColor.PLANT, soundGroup)
+fun leafPile(mapColor: MapColor): Block = leafPile(mapColor, BlockSoundGroup.GRASS)
+
+fun leafPile(mapColor: MapColor, soundGroup: BlockSoundGroup): Block {
+    return LeafPileBlock(
+        AbstractBlock.Settings.create()
+            .mapColor(mapColor).sounds(soundGroup).strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid)
+            .blockVision(Blocks::nonSolid).solidBlock(Blocks::nonSolid).lavaIgnitable().noCollision().nonSolid()
+            .pistonBehavior(PistonBehavior.DESTROY)
+    )
+}
+
+fun fallingLeafPile(mapColor: MapColor, soundGroup: BlockSoundGroup): AbstractBlock.Settings {
+    return AbstractBlock.Settings.create()
+        .mapColor(mapColor).sounds(soundGroup).strength(0.2F).nonOpaque().suffocates(Blocks::nonSolid)
+        .blockVision(Blocks::nonSolid).solidBlock(Blocks::nonSolid).lavaIgnitable().noCollision().nonSolid()
+        .pistonBehavior(PistonBehavior.DESTROY)
+}
 
 fun dirtPath(input: Block, output: Block) {
     FlattenableBlockRegistry.register(input, output.defaultState)
