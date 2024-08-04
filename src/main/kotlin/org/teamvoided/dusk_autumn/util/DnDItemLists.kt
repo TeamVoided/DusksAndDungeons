@@ -223,6 +223,8 @@ object DnDItemLists {
         DnDBlocks.MANGROVE_LOG_PILE,
         DnDBlocks.CHERRY_LOG_PILE,
         DnDBlocks.CASCADE_LOG_PILE,
+        DnDBlocks.CRIMSON_STEM_PILE,
+        DnDBlocks.WARPED_STEM_PILE,
     ).toItems()
     val leafPiles = listOf(
         DnDBlocks.OAK_LEAF_PILE,

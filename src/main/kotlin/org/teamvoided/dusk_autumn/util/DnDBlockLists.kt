@@ -102,7 +102,9 @@ object DnDBlockLists {
         (DnDBlocks.DARK_OAK_LOG_PILE to Blocks.DARK_OAK_LOG),
         (DnDBlocks.MANGROVE_LOG_PILE to Blocks.MANGROVE_LOG),
         (DnDBlocks.CHERRY_LOG_PILE to Blocks.CHERRY_LOG),
-        (DnDBlocks.CASCADE_LOG_PILE to DnDBlocks.CASCADE_LOG)
+        (DnDBlocks.CASCADE_LOG_PILE to DnDBlocks.CASCADE_LOG),
+        (DnDBlocks.CRIMSON_STEM_PILE to Blocks.CRIMSON_STEM),
+        (DnDBlocks.WARPED_STEM_PILE to Blocks.WARPED_STEM)
     )
     val leafPiles = listOf(
         (DnDBlocks.OAK_LEAF_PILE to Blocks.OAK_LEAVES),

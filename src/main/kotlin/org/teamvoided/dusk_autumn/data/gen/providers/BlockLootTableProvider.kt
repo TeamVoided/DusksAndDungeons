@@ -11,9 +11,12 @@ import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockL
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
+import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
+import net.minecraft.loot.condition.LootCondition
+import net.minecraft.loot.condition.MatchToolLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LootTableEntry
@@ -21,13 +24,22 @@ import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
+import net.minecraft.predicate.NumberRange
 import net.minecraft.predicate.StatePredicate
+import net.minecraft.predicate.item.EnchantmentPredicate
+import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.state.property.Property
+import net.minecraft.unmapped.C_idgyzprx
+import net.minecraft.unmapped.C_loxplxmp
+import net.minecraft.util.StringIdentifiable
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.LogPileBlock
+import org.teamvoided.dusk_autumn.block.TallCrystalBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import java.util.List
 import java.util.concurrent.CompletableFuture
 
 class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
@@ -37,6 +49,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             DnDBlocks.BLUE_PETALS,
             DnDBlocks.CASCADE_LEAVES,
             DnDBlocks.GOLDEN_BIRCH_LEAVES,
+            DnDBlocks.TALL_REDSTONE_CRYSTAL,
             DnDBlocks.WARPED_WART,
             DnDBlocks.GOLDEN_BEETROOTS,
             DnDBlocks.WILD_WHEAT,
@@ -81,6 +94,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
+        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
         add(DnDBlocks.WARPED_WART) { block: Block ->
             LootTable.builder().pool(
                 applyExplosionDecay(
@@ -129,6 +143,43 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
 
     private fun constantLootNumber(i: Number): ConstantLootNumberProvider =
         ConstantLootNumberProvider.create(i.toFloat())
+
+    override fun <T> dropsWithPropertyValue(
+        drop: Block,
+        property: Property<T>,
+        value: T
+    ): LootTable.Builder where T : Comparable<T>, T : StringIdentifiable? {
+        return LootTable.builder().pool(
+            applySurvivesExplosionCondition(
+                drop, LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
+                    ItemEntry.builder(drop).conditionally(
+                        BlockStatePropertyLootCondition.builder(drop)
+                            .properties(StatePredicate.Builder.create().exactMatch(property, value))
+                    )
+                )
+            )
+        )
+    }
+
+    fun redstoneCrystalDrops(fullBlock: Block): LootTable.Builder {
+        val registryLookup = field_51845.getLookupOrThrow(RegistryKeys.ENCHANTMENT)
+        val blockstateCondition = BlockStatePropertyLootCondition.builder(fullBlock)
+            .properties(
+                StatePredicate.Builder.create()
+                    .exactMatch(TallCrystalBlock.CRYSTAL_HALF, DoubleBlockHalf.LOWER)
+            )
+        return dropsConditionally(
+            fullBlock,
+            this.method_60390().and(blockstateCondition),
+            applyExplosionDecay(
+                fullBlock,
+                ItemEntry.builder(Items.REDSTONE)
+                    .conditionally(blockstateCondition)
+                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4.0f, 5.0f)))
+                    .apply(ApplyBonusLootFunction.method_456(registryLookup.getHolderOrThrow(Enchantments.FORTUNE)))
+            )
+        )
+    }
 
     fun logPile(drop: Block): LootTable.Builder {
         return LootTable.builder().pool(

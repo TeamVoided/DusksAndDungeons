@@ -61,6 +61,7 @@ object DnDItemGroups {
                         listOf(item, DnDItemLists.soulCandles[idx], DnDItemLists.bigSoulCandles[idx])
                     }
                 )
+                entries.addItem(DnDBlocks.WARPED_WART)
                 entries.addLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
                 entries.addItem(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
                 entries.addLists(

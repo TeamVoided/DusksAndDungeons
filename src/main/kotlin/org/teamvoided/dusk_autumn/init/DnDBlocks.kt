@@ -7,6 +7,7 @@ import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
+import net.minecraft.block.org.teamvoided.dusk_autumn.block.TallRedstoneCrystalBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.particle.ParticleTypes
@@ -242,8 +243,10 @@ object DnDBlocks {
     val ACACIA_LOG_PILE = register("acacia_log_pile", logPile(ACACIA_WOOD))
     val DARK_OAK_LOG_PILE = register("dark_oak_log_pile", logPile(DARK_OAK_WOOD))
     val MANGROVE_LOG_PILE = register("mangrove_log_pile", logPile(MANGROVE_WOOD))
-    val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD))
     val CHERRY_LOG_PILE = register("cherry_log_pile", logPile(CHERRY_WOOD))
+    val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD))
+    val CRIMSON_STEM_PILE = register("crimson_stem_pile", logPile(CRIMSON_HYPHAE))
+    val WARPED_STEM_PILE = register("warped_stem_pile", logPile(WARPED_HYPHAE))
     val OAK_LEAF_PILE = register("oak_leaf_pile", leafPile().cutout())
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", leafPile().cutout())
     val BIRCH_LEAF_PILE = register("birch_leaf_pile", leafPile().cutout())
@@ -251,17 +254,17 @@ object DnDBlocks {
     val ACACIA_LEAF_PILE = register("acacia_leaf_pile", leafPile().cutout())
     val DARK_OAK_LEAF_PILE = register("dark_oak_leaf_pile", leafPile().cutout())
     val MANGROVE_LEAF_PILE = register("mangrove_leaf_pile", leafPile().cutout())
-    val CASCADE_LEAF_PILE = register(
-        "cascade_leaf_pile", FallingLeafPileBlock(
-            fallingLeafPile(MapColor.RED, BlockSoundGroup.CHERRY_LEAVES),
-            DnDParticles.CASCADE_LEAF_PARTICLE
-        ).cutout()
-    )
     val CHERRY_LEAF_PILE = register(
         "cherry_leaf_pile",
         FallingLeafPileBlock(
             fallingLeafPile(MapColor.PINK, BlockSoundGroup.CHERRY_LEAVES),
             ParticleTypes.CHERRY_LEAVES
+        ).cutout()
+    )
+    val CASCADE_LEAF_PILE = register(
+        "cascade_leaf_pile", FallingLeafPileBlock(
+            fallingLeafPile(MapColor.RED, BlockSoundGroup.CHERRY_LEAVES),
+            DnDParticles.CASCADE_LEAF_PARTICLE
         ).cutout()
     )
     val AZALEA_LEAF_PILE = register(
@@ -279,9 +282,9 @@ object DnDBlocks {
 
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
-    val TALL_REDSTONE_CRYSTAL = register("tall_redstone_crystal", TallCrystalBlock(
-        Settings.create().mapColor(MapColor.PURPLE).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
-            .strength(1.5f).luminance { state: BlockState -> 5 }
+    val TALL_REDSTONE_CRYSTAL = register("tall_redstone_crystal", TallRedstoneCrystalBlock(
+        Settings.create().mapColor(MapColor.RED).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
+            .strength(1.5f).ticksRandomly().luminance(luminanceOf(9))
             .pistonBehavior(PistonBehavior.DESTROY)))
 
     val BIG_CHAIN = register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())

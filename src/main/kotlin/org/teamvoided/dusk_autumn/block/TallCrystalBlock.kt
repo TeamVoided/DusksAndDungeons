@@ -24,8 +24,20 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
-class TallCrystalBlock(settings: Settings) :
+open class TallCrystalBlock(settings: Settings) :
     Block(settings), Waterloggable {
+
+    init {
+        this.defaultState =
+            defaultState
+                .with(FACING, Direction.UP)
+                .with(CRYSTAL_HALF, DoubleBlockHalf.LOWER)
+                .with(WATERLOGGED, false)
+    }
+
+    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+        builder.add(FACING, CRYSTAL_HALF, WATERLOGGED)
+    }
 
     override fun getOutlineShape(
         state: BlockState,
@@ -42,21 +54,15 @@ class TallCrystalBlock(settings: Settings) :
         }
     }
 
-//    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
-//        val direction = state.get(FACING)
-//        val blockPos = pos.offset(direction.opposite)
-//        return world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, direction)
-//    }
-
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
         val direction = state.get(FACING)
         val blockPos = pos.offset(direction.opposite)
-        if (state.get(CRYSTAL_HALF) != DoubleBlockHalf.UPPER) {
-            return  world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, direction)
+        val blockState = world.getBlockState(blockPos)
+
+        return if (state.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER) {
+            blockState.isSideSolidFullSquare(world, blockPos, direction)
         } else {
-            val blockState =
-                world.getBlockState(pos.offset(getDirectionTowardsOtherPart(state.get(CRYSTAL_HALF), direction)))
-            return blockState.isOf(this) && blockState.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER
+            blockState.isOf(this) && blockState.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER
         }
     }
 
@@ -71,26 +77,18 @@ class TallCrystalBlock(settings: Settings) :
         if (state.get(WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
         }
-        val doubleBlockHalf = state.get(CRYSTAL_HALF)
-        return if ((direction === getDirectionTowardsOtherPart(doubleBlockHalf, direction)) &&
-            (doubleBlockHalf == DoubleBlockHalf.LOWER) == (direction == getDirectionTowardsOtherPart(doubleBlockHalf, direction)) &&
-            (!neighborState.isOf(this) && neighborState.get(CRYSTAL_HALF) == doubleBlockHalf)
+        val blockstate = state.get(FACING)
+        val blockstateOther =
+            world.getBlockState(pos.offset(getDirectionTowardsOtherPart(state.get(CRYSTAL_HALF), blockstate)))
+        return if (
+            blockstateOther.isOf(this) &&
+            state.canPlaceAt(world, pos)
         ) {
-            Blocks.AIR.defaultState
-        } else {
-            if (doubleBlockHalf == DoubleBlockHalf.LOWER &&
-                direction == getDirectionTowardsOtherPart(doubleBlockHalf, direction) &&
-                !state.canPlaceAt(world, pos)
-            ) Blocks.AIR.defaultState
-            else super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
-        }
+            state
+        } else Blocks.AIR.defaultState
     }
 
     override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity): BlockState {
-//        test to see if this is needed
-//        if (state.get(WATERLOGGED)) {
-//            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
-//        }
         if (!world.isClient && player.isCreative) {
             val crystalHalf = state.get(CRYSTAL_HALF)
             if (crystalHalf == DoubleBlockHalf.LOWER) {
@@ -109,13 +107,16 @@ class TallCrystalBlock(settings: Settings) :
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
         val direction = ctx.side
-        val worldAccess: WorldAccess = ctx.world
+        val world: WorldAccess = ctx.world
         val blockPos = ctx.blockPos
         val blockPos2 = blockPos.offset(direction)
-        return if (worldAccess.getBlockState(blockPos2).canReplace(ctx) && worldAccess.worldBorder.contains(blockPos2))
-            defaultState
-                .with(FACING, direction)
-                .with(WATERLOGGED, worldAccess.getFluidState(blockPos).fluid === Fluids.WATER)
+        return if (world.getBlockState(blockPos2).canReplace(ctx) &&
+            blockPos.y < world.topY && blockPos2.y < world.topY &&
+            blockPos.y > world.bottomY && blockPos2.y > world.bottomY &&
+            world.worldBorder.contains(blockPos2)
+        ) defaultState
+            .with(FACING, direction)
+            .with(WATERLOGGED, world.getFluidState(blockPos).fluid == Fluids.WATER)
         else null
     }
 
@@ -123,7 +124,13 @@ class TallCrystalBlock(settings: Settings) :
         super.onPlaced(world, pos, state, placer, itemStack)
         if (!world.isClient) {
             val blockPos = pos.offset(state.get(FACING))
-            world.setBlockState(blockPos, state.with(CRYSTAL_HALF, DoubleBlockHalf.UPPER), 3)
+            world.setBlockState(
+                blockPos,
+                state
+                    .with(CRYSTAL_HALF, DoubleBlockHalf.UPPER)
+                    .with(WATERLOGGED, world.getFluidState(blockPos).fluid == Fluids.WATER),
+                3
+            )
             world.updateNeighbors(pos, Blocks.AIR)
             state.updateNeighbors(world, pos, 3)
         }
@@ -139,18 +146,6 @@ class TallCrystalBlock(settings: Settings) :
 
     override fun getFluidState(state: BlockState): FluidState {
         return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
-    }
-
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(FACING, CRYSTAL_HALF, WATERLOGGED)
-    }
-
-    init {
-        this.defaultState =
-            defaultState
-                .with(FACING, Direction.UP)
-                .with(CRYSTAL_HALF, DoubleBlockHalf.LOWER)
-                .with(WATERLOGGED, false)
     }
 
     companion object {
@@ -171,8 +166,12 @@ class TallCrystalBlock(settings: Settings) :
             14.0, 14.0, 16.0
         )
 
-        private fun getDirectionTowardsOtherPart(part: DoubleBlockHalf, direction: Direction): Direction {
+        fun getDirectionTowardsOtherPart(part: DoubleBlockHalf, direction: Direction): Direction {
             return if (part == DoubleBlockHalf.LOWER) direction else direction.opposite
+        }
+
+        fun getOppositeCrystalState(part: BlockState): DoubleBlockHalf {
+            return if (part.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER) DoubleBlockHalf.UPPER else DoubleBlockHalf.LOWER
         }
     }
 }
