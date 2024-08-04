@@ -280,6 +280,10 @@ object DnDBlocks {
 
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
+    val TALL_REDSTONE_CRYSTAL = register("tall_redstone_crystal", TallCrystalBlock(
+        Settings.create().mapColor(MapColor.PURPLE).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
+            .strength(1.5f).luminance { state: BlockState -> 5 }
+            .pistonBehavior(PistonBehavior.DESTROY)))
 
     val BIG_CHAIN = register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
     val BIG_LANTERN =

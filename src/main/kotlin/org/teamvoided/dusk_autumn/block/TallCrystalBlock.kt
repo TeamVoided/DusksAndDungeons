@@ -42,29 +42,23 @@ class TallCrystalBlock(settings: Settings) :
         }
     }
 
+//    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
+//        val direction = state.get(FACING)
+//        val blockPos = pos.offset(direction.opposite)
+//        return world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, direction)
+//    }
+
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
         val direction = state.get(FACING)
         val blockPos = pos.offset(direction.opposite)
-        val blockPos2 = blockPos.offset(direction)
-        return world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, direction) &&
-                world.getBlockState(blockPos2).materialReplaceable()
+        if (state.get(CRYSTAL_HALF) != DoubleBlockHalf.UPPER) {
+            return  world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, direction)
+        } else {
+            val blockState =
+                world.getBlockState(pos.offset(getDirectionTowardsOtherPart(state.get(CRYSTAL_HALF), direction)))
+            return blockState.isOf(this) && blockState.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER
+        }
     }
-
-    //this is here for reference incase it doesn't work
-//    override fun getStateForNeighborUpdate(
-//        state: BlockState,
-//        direction: Direction,
-//        neighborState: BlockState,
-//        world: WorldAccess,
-//        pos: BlockPos,
-//        neighborPos: BlockPos
-//    ): BlockState {
-//        if (state.get(WATERLOGGED)) {
-//            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
-//        }
-//        return if (direction == state.get(FACING).opposite && !state.canPlaceAt(world, pos)) Blocks.AIR.defaultState
-//        else super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
-//    }
 
     override fun getStateForNeighborUpdate(
         state: BlockState,
@@ -77,15 +71,19 @@ class TallCrystalBlock(settings: Settings) :
         if (state.get(WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
         }
-        return if (direction == getDirectionTowardsOtherPart(state.get(CRYSTAL_HALF), state.get(FACING))) {
-            if (neighborState.isOf(this) &&
-                neighborState.get(CRYSTAL_HALF) != state.get(CRYSTAL_HALF) &&
-                (state.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER &&
-                        direction == state.get(FACING).opposite &&
-                        state.canPlaceAt(world, pos))
-            ) state
-            else Blocks.AIR.defaultState
-        } else super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+        val doubleBlockHalf = state.get(CRYSTAL_HALF)
+        return if ((direction === getDirectionTowardsOtherPart(doubleBlockHalf, direction)) &&
+            (doubleBlockHalf == DoubleBlockHalf.LOWER) == (direction == getDirectionTowardsOtherPart(doubleBlockHalf, direction)) &&
+            (!neighborState.isOf(this) && neighborState.get(CRYSTAL_HALF) == doubleBlockHalf)
+        ) {
+            Blocks.AIR.defaultState
+        } else {
+            if (doubleBlockHalf == DoubleBlockHalf.LOWER &&
+                direction == getDirectionTowardsOtherPart(doubleBlockHalf, direction) &&
+                !state.canPlaceAt(world, pos)
+            ) Blocks.AIR.defaultState
+            else super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+        }
     }
 
     override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity): BlockState {
@@ -106,7 +104,6 @@ class TallCrystalBlock(settings: Settings) :
                 }
             }
         }
-
         return super.onBreak(world, pos, state, player)
     }
 

@@ -7,11 +7,9 @@ import net.minecraft.block.AbstractLichenBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.SnowyBlock
-import net.minecraft.block.enums.BlockHalf
-import net.minecraft.block.enums.SlabType
-import net.minecraft.block.enums.StairShape
-import net.minecraft.block.enums.WallShape
+import net.minecraft.block.enums.*
 import net.minecraft.data.client.model.*
+import net.minecraft.data.client.model.BlockStateModelGenerator.TintType
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
@@ -476,6 +474,26 @@ fun createWallBlockStateWithOverlay(
     return model
 }
 
+fun BlockStateModelGenerator.registerTallCrystal(block: Block) {
+    this.registerItemModel(block, "_top")
+    val model = Models.CROSS
+    val lowerHalfModelId: Identifier = this.createSubModel(block, "_top", model, Texture::cross)
+    val upperHalfModelId: Identifier = this.createSubModel(block, "_bottom", model, Texture::cross)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(block).coordinate(
+            BlockStateVariantMap.create(Properties.DOUBLE_BLOCK_HALF)
+                .register(
+                    DoubleBlockHalf.LOWER,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, lowerHalfModelId)
+                )
+                .register(
+                    DoubleBlockHalf.UPPER,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, upperHalfModelId)
+                )
+        ).coordinate(this.createUpDefaultFacingVariantMap())
+    )
+}
+
 fun BlockStateModelGenerator.registerBigLantern(block: Block) {
     this.registerItemModel(block)
     val texture = Texture()
@@ -583,6 +601,7 @@ fun BlockStateModelGenerator.registerCandle2(candle: Block, cake: Block?) {
         )
     }
 }
+
 fun candleCake(block: Block, lit: Boolean): Texture {
     return Texture()
         .put(TextureKey.PARTICLE, Texture.getSubId(Blocks.CAKE, "_side"))

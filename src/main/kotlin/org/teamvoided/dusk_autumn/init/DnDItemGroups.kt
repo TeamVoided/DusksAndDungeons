@@ -48,6 +48,7 @@ object DnDItemGroups {
                 entries.addItem(
                     DnDBlocks.STONE_PILLAR,
                     DnDBlocks.DEEPSLATE_PILLAR,
+                    DnDBlocks.TALL_REDSTONE_CRYSTAL,
                 )
                 entries.addItem(
                     // big items but not candles
