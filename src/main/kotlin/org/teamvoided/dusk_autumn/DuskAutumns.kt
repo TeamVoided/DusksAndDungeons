@@ -15,7 +15,7 @@ object DuskAutumns {
     val LOGGER = LoggerFactory.getLogger(DuskAutumns::class.java)
 
     fun init() {
-        LOGGER.info("Hello from Common")
+        LOGGER.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()
         DnDWorldgen.init()

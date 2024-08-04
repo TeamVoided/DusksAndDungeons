@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumn.data.gen.fancy_name_pack
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.item.Item
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
@@ -16,11 +15,7 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
     FabricLanguageProvider(o, r) {
 
     val crimsonBricks = listOf(
-        Blocks.RED_NETHER_BRICKS,
         DnDBlocks.CRACKED_RED_NETHER_BRICKS,
-        Blocks.RED_NETHER_BRICK_STAIRS,
-        Blocks.RED_NETHER_BRICK_SLAB,
-        Blocks.RED_NETHER_BRICK_WALL,
         DnDBlocks.RED_NETHER_BRICK_FENCE,
         DnDBlocks.CHISELED_RED_NETHER_BRICKS,
         DnDBlocks.RED_NETHER_BRICK_PILLAR,
@@ -83,7 +78,6 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
-        Blocks.NETHER_WART.let { gen.add(it.translationKey, genLang(it.id).replace("Nether", "Crimson")) }
         crimsonBricks.forEach { gen.add(it.translationKey, genLang(it.id).replace("Red", "Crimson")) }
         warpedBricks.forEach { gen.add(it.translationKey, genLang(it.id).replace("Blue", "Warped")) }
         ashenBricks.forEach { gen.add(it.translationKey, genLang(it.id).replace("Gray", "Ashen")) }

@@ -5,6 +5,9 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.client.color.world.GrassColors
@@ -14,6 +17,8 @@ import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.coloredBlocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
+import org.teamvoided.dusk_autumn.DuskAutumns.MODID
+import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
 import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.init.DnDBlocks
@@ -55,6 +60,10 @@ object DuskAutumnsClient {
 
         ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT.register { blockState, _, _ ->
             blockState.block !in coloredBlocks
+        }
+
+        FabricLoader.getInstance().getModContainer(MODID).ifPresent {
+            ResourceManagerHelper.registerBuiltinResourcePack(id("fancy_names"), it, ResourcePackActivationType.NORMAL)
         }
     }
 

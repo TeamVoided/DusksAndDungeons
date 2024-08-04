@@ -49,6 +49,8 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
         val fancyNamePack = gen.createBuiltinResourcePack(id("fancy_names"))
         fancyNamePack.addProvider(::FancyNameTranslationProvider)
         fancyNamePack.addProvider { o -> createResource(o, Text.literal("Better Nether Brick Names")) }
+//        val fancyNamePackVanilla = gen.createBuiltinResourcePack(mc("fancy_names"))
+//        fancyNamePackVanilla.addProvider(::FancyNameVanillaTranslationProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
