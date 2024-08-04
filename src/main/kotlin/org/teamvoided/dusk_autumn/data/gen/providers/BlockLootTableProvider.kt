@@ -11,7 +11,6 @@ import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockL
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
-import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
@@ -153,40 +152,16 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     fun leafPile(pile: Block, leaves: Block): LootTable.Builder {
         return LootTable.builder().pool(
             LootPool.builder().with(
-                AlternativeEntry.builder(
-                    AlternativeEntry.builder(LeafPileBlock.PILE_LAYERS.values) { layers ->
-                        if (layers == 4) LootTableEntry.method_428(leaves.lootTableId)
-                        else
-                            applyExplosionDecay(
-                                leaves,
-                                ItemEntry.builder(Items.STICK)
-                                    .apply(
-                                        SetCountLootFunction.builder(
-                                            UniformLootNumberProvider.create(
-                                                0.0f,
-                                                layers * (2.0f / 3.0f)
-                                            )
-                                        )
-                                    )
-                            ).conditionally(
-                                BlockStatePropertyLootCondition.builder(pile).properties(
-                                    StatePredicate.Builder.create().exactMatch(LeafPileBlock.PILE_LAYERS, layers)
-                                )
+                AlternativeEntry.builder(LeafPileBlock.PILE_LAYERS.values) { layers ->
+                    if (layers == 4) LootTableEntry.method_428(leaves.lootTableId)
+                    else ItemEntry.builder(pile)
+                        .apply(SetCountLootFunction.builder(constantLootNumber(layers)))
+                        .conditionally(
+                            BlockStatePropertyLootCondition.builder(pile).properties(
+                                StatePredicate.Builder.create().exactMatch(LeafPileBlock.PILE_LAYERS, layers)
                             )
-                    },
-                    AlternativeEntry.builder(LeafPileBlock.PILE_LAYERS.values) { layers ->
-                        if (layers == 4) LootTableEntry.method_428(leaves.lootTableId)
-                        else
-                            ItemEntry.builder(pile)
-                                .apply(SetCountLootFunction.builder(constantLootNumber(layers)))
-                                .conditionally(
-                                    BlockStatePropertyLootCondition.builder(pile).properties(
-                                        StatePredicate.Builder.create().exactMatch(LeafPileBlock.PILE_LAYERS, layers)
-                                    )
-                                )
-                    }
-                        .conditionally(this.method_60392())
-                )
+                        ).conditionally(this.method_60392())
+                }
             )
         )
     }
