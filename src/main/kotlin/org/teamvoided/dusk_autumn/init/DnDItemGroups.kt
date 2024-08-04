@@ -40,8 +40,8 @@ object DnDItemGroups {
                 )
                 entries.addLists(
                     DnDItemLists.moonberry,
-                    DnDItemLists.pineWood,
-                    DnDItemLists.bonewoodWood,
+//                    DnDItemLists.pineWood,
+//                    DnDItemLists.bonewoodWood,
                     DnDItemLists.logPiles,
                     DnDItemLists.leafPiles
                 )

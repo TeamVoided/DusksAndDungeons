@@ -25,33 +25,33 @@ object DnDItemLists {
         DnDItems.CASCADE_HANGING_SIGN
     )
 
-    val pineWood = listOf(
-//        DuskBlocks.PINE_LOG,
-//        DuskBlocks.PINE_WOOD,
-//        DuskBlocks.STRIPPED_PINE_LOG,
-//        DuskBlocks.STRIPPED_PINE_WOOD,
-        DnDBlocks.PINE_PLANKS,
-        DnDBlocks.PINE_STAIRS,
-        DnDBlocks.PINE_SLAB,
-        DnDBlocks.PINE_FENCE,
-        DnDBlocks.PINE_FENCE_GATE,
-//        DuskItems.PINE_DOOR,
-//        DuskBlocks.PINE_TRAPDOOR,
-//        DuskBlocks.PINE_PRESSURE_PLATE,
-//        DuskBlocks.PINE_BUTTON
-    ).toItems()
-    val bonewoodWood = listOf(
-        DnDBlocks.BONEWOOD_PLANKS,
-        DnDBlocks.BONEWOOD_STAIRS,
-        DnDBlocks.BONEWOOD_SLAB,
-        DnDBlocks.BONEWOOD_FENCE,
-        DnDBlocks.BONEWOOD_FENCE_GATE,
-        DnDBlocks.WITHERING_BONEWOOD_PLANKS,
-        DnDBlocks.WITHERING_BONEWOOD_STAIRS,
-        DnDBlocks.WITHERING_BONEWOOD_SLAB,
-        DnDBlocks.WITHERING_BONEWOOD_FENCE,
-        DnDBlocks.WITHERING_BONEWOOD_FENCE_GATE
-    ).toItems()
+//    val pineWood = listOf(
+////        DuskBlocks.PINE_LOG,
+////        DuskBlocks.PINE_WOOD,
+////        DuskBlocks.STRIPPED_PINE_LOG,
+////        DuskBlocks.STRIPPED_PINE_WOOD,
+//        DnDBlocks.PINE_PLANKS,
+//        DnDBlocks.PINE_STAIRS,
+//        DnDBlocks.PINE_SLAB,
+//        DnDBlocks.PINE_FENCE,
+//        DnDBlocks.PINE_FENCE_GATE,
+////        DuskItems.PINE_DOOR,
+////        DuskBlocks.PINE_TRAPDOOR,
+////        DuskBlocks.PINE_PRESSURE_PLATE,
+////        DuskBlocks.PINE_BUTTON
+//    ).toItems()
+//    val bonewoodWood = listOf(
+//        DnDBlocks.BONEWOOD_PLANKS,
+//        DnDBlocks.BONEWOOD_STAIRS,
+//        DnDBlocks.BONEWOOD_SLAB,
+//        DnDBlocks.BONEWOOD_FENCE,
+//        DnDBlocks.BONEWOOD_FENCE_GATE,
+//        DnDBlocks.WITHERING_BONEWOOD_PLANKS,
+//        DnDBlocks.WITHERING_BONEWOOD_STAIRS,
+//        DnDBlocks.WITHERING_BONEWOOD_SLAB,
+//        DnDBlocks.WITHERING_BONEWOOD_FENCE,
+//        DnDBlocks.WITHERING_BONEWOOD_FENCE_GATE
+//    ).toItems()
     val bigCandles = listOf(
         DnDBlocks.BIG_CANDLE,
         DnDBlocks.BIG_WHITE_CANDLE,
