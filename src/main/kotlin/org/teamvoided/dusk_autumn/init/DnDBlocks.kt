@@ -9,7 +9,6 @@ import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
-import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -569,14 +568,7 @@ object DnDBlocks {
                 .noCollision().sounds(BlockSoundGroup.PINK_PETALS).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout().sword().hoe()
     )
-    val VIOLET_DAISY = register(
-        "violet_daisy", FlowerBlock(
-            StatusEffects.HASTE, 10f, Settings.create()
-                .mapColor(MapColor.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)
-                .offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
-        ).cutout()
-    )
-    val POTTED_VIOLET_DAISY = registerNoItem("potted_violet_daisy", pottedVariant(VIOLET_DAISY).cutout())
+
     val WILD_WHEAT = registerNoItem(
         "wild_wheat",
         TallPlantBlock(

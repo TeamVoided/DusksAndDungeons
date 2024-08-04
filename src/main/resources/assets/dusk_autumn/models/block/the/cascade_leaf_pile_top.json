@@ -1,6 +1,0 @@
-{
-    "parent": "dusk_autumn:block/leaf_pile_top",
-    "textures": {
-        "all": "minecraft:block/red_wool"
-    }
-}

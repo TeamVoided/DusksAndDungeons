@@ -125,7 +125,6 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 DoubleBlockHalf.LOWER
             )
         }
-        add(DnDBlocks.POTTED_VIOLET_DAISY) { pottedPlantDrops(DnDBlocks.VIOLET_DAISY) }
     }
 
     private fun constantLootNumber(i: Number): ConstantLootNumberProvider =
