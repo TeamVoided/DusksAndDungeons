@@ -87,6 +87,8 @@ class TallRedstoneCrystalBlock(settings: Settings) : TallCrystalBlock(settings) 
     }
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
+        println("randomTick")
+        println(state.get(LIT))
         if (state.get(LIT)) {
             dark(state, world, pos)
         }

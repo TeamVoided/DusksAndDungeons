@@ -35,6 +35,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.MANGROVE_LOG_PILE)
             .add(DnDBlocks.CHERRY_LOG_PILE)
             .add(DnDBlocks.CASCADE_LOG_PILE)
+            .add(DnDBlocks.CRIMSON_STEM_PILE)
+            .add(DnDBlocks.WARPED_STEM_PILE)
         getOrCreateTagBuilder(DnDBlockTags.LEAF_PILES)
             .add(DnDBlocks.OAK_LEAF_PILE)
             .add(DnDBlocks.SPRUCE_LEAF_PILE)

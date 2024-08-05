@@ -11,7 +11,6 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Rarity
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.item.ChillChargeItem
 import org.teamvoided.dusk_autumn.item.DnDFoodComponents
 import org.teamvoided.dusk_autumn.item.HeadDecorationItem
 import org.teamvoided.dusk_autumn.item.FunnyIceSword
@@ -116,18 +115,18 @@ object DnDItems {
         ))
     )
 
-    val FREEZE_ROD = register("freeze_rod", Item(Item.Settings()))
-    val CHILL_CHARGE = register("chill_charge", ChillChargeItem(Item.Settings()))
-    val ICE_SWORD = register(
-        "ice_sword", FunnyIceSword(
-            Item.Settings().rarity(Rarity.EPIC)
-                .component(DataComponentTypes.TOOL, FunnyIceSword.createToolComponent())
-                .attributeModifiersComponent(FunnyIceSword.createAttributes())
-        )
-    )
+//    val FREEZE_ROD = register("freeze_rod", Item(Item.Settings()))
+//    val CHILL_CHARGE = register("chill_charge", ChillChargeItem(Item.Settings()))
+//    val ICE_SWORD = register(
+//        "ice_sword", FunnyIceSword(
+//            Item.Settings().rarity(Rarity.EPIC)
+//                .component(DataComponentTypes.TOOL, FunnyIceSword.createToolComponent())
+//                .attributeModifiersComponent(FunnyIceSword.createAttributes())
+//        )
+//    )
 
     fun init() {
-        DispenserBlock.registerBehavior(CHILL_CHARGE)
+//        DispenserBlock.registerBehavior(CHILL_CHARGE)
     }
 
     fun register(id: String, item: Item): Item {

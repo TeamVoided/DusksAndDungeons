@@ -49,7 +49,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             DnDBlocks.BLUE_PETALS,
             DnDBlocks.CASCADE_LEAVES,
             DnDBlocks.GOLDEN_BIRCH_LEAVES,
-            DnDBlocks.TALL_REDSTONE_CRYSTAL,
+//            DnDBlocks.TALL_REDSTONE_CRYSTAL,
             DnDBlocks.WARPED_WART,
             DnDBlocks.GOLDEN_BEETROOTS,
             DnDBlocks.WILD_WHEAT,
@@ -94,7 +94,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
-        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
+//        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
         add(DnDBlocks.WARPED_WART) { block: Block ->
             LootTable.builder().pool(
                 applyExplosionDecay(

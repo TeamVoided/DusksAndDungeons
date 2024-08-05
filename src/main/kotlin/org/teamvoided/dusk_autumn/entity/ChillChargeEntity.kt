@@ -10,6 +10,7 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.BlockTags
@@ -207,7 +208,8 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
     }
 
     override fun getStack(): ItemStack {
-        return DnDItems.CHILL_CHARGE.defaultStack
+//        return DnDItems.CHILL_CHARGE.defaultStack
+        return Items.WIND_CHARGE.defaultStack
     }
 
     override fun getDrag(): Float {

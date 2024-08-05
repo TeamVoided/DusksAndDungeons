@@ -43,12 +43,14 @@ object DnDItemGroups {
 //                    DnDItemLists.pineWood,
 //                    DnDItemLists.bonewoodWood,
                     DnDItemLists.logPiles,
-                    DnDItemLists.leafPiles
+                    DnDItemLists.leafPiles,
+                    DnDItemLists.overgrownCobblestone,
+                    DnDItemLists.overgrownStoneBricks,
                 )
                 entries.addItem(
                     DnDBlocks.STONE_PILLAR,
                     DnDBlocks.DEEPSLATE_PILLAR,
-                    DnDBlocks.TALL_REDSTONE_CRYSTAL,
+//                    DnDBlocks.TALL_REDSTONE_CRYSTAL,
                 )
                 entries.addItem(
                     // big items but not candles
@@ -72,14 +74,12 @@ object DnDItemGroups {
                     DnDItemLists.grayNetherBrickStuff,
                     DnDItemLists.mixedGrayNetherBrickStuff,
                     DnDItemLists.blackstoneTools,
-                    DnDItemLists.overgrownCobblestone,
-                    DnDItemLists.overgrownStoneBricks,
                 )
-                entries.addItem(
-                    DnDItems.CHILL_CHARGE,
-                    DnDItems.FREEZE_ROD,
-                    DnDItems.ICE_SWORD
-                )
+//                entries.addItem(
+//                    DnDItems.CHILL_CHARGE,
+//                    DnDItems.FREEZE_ROD,
+//                    DnDItems.ICE_SWORD
+//                )
             }.build()
     )
     val OVERLAY_BLOCKS_TAB: ItemGroup = register("overlay_blocks",

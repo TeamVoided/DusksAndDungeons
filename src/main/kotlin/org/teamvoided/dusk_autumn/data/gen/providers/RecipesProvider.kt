@@ -127,11 +127,11 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         offerShapelessRecipe(e, Items.PURPLE_DYE, DnDItems.MOONBERRIES, "purple_dye")
     }
 
-    private fun generateWinterRecipes(e: RecipeExporter) {
-        ShapelessRecipeJsonFactory.create(RecipeCategory.MISC, DnDItems.CHILL_CHARGE, 4)
-            .ingredient(DnDItems.FREEZE_ROD)
-            .criterion(DnDItems.FREEZE_ROD).offerTo(e)
-    }
+//    private fun generateWinterRecipes(e: RecipeExporter) {
+//        ShapelessRecipeJsonFactory.create(RecipeCategory.MISC, DnDItems.CHILL_CHARGE, 4)
+//            .ingredient(DnDItems.FREEZE_ROD)
+//            .criterion(DnDItems.FREEZE_ROD).offerTo(e)
+//    }
 
     private fun generateNetherRecipes(e: RecipeExporter) {
         e.createStair(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)

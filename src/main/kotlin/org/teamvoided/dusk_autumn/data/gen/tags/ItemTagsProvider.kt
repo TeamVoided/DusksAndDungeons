@@ -64,7 +64,9 @@ class ItemTagsProvider(
         copy(BlockTags.CEILING_HANGING_SIGNS, ItemTags.HANGING_SIGNS)
 
         copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS)
-        copy(BlockTags.LEAVES, ItemTags.LEAVES)
+        getOrCreateTagBuilder(ItemTags.LEAVES)
+            .add(DnDBlocks.CASCADE_LEAVES.asItem())
+            .add(DnDBlocks.GOLDEN_BIRCH_LEAVES.asItem())
         copy(BlockTags.FLOWERS, ItemTags.FLOWERS)
 
         copy(BlockTags.STAIRS, ItemTags.STAIRS)

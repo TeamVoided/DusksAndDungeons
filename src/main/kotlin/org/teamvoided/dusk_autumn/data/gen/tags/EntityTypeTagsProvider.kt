@@ -19,16 +19,16 @@ class EntityTypeTagsProvider(output: FabricDataOutput, registriesFuture: Complet
     }
 
     private fun duskTags() {
-        getOrCreateTagBuilder(DnDEntityTypeTags.CHILL_CHARGE_GOES_THROUGH)
-            .add(DnDEntities.CHILL_CHARGE)
-            .add(EntityType.END_CRYSTAL)
+//        getOrCreateTagBuilder(DnDEntityTypeTags.CHILL_CHARGE_GOES_THROUGH)
+//            .add(DnDEntities.CHILL_CHARGE)
+//            .add(EntityType.END_CRYSTAL)
     }
 
     private fun vanillaTags() {
-        getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES)
-            .add(DnDEntities.CHILL_CHARGE)
-        getOrCreateTagBuilder(EntityTypeTags.REDIRECTABLE_PROJECTILE)
-            .add(DnDEntities.CHILL_CHARGE)
+//        getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES)
+//            .add(DnDEntities.CHILL_CHARGE)
+//        getOrCreateTagBuilder(EntityTypeTags.REDIRECTABLE_PROJECTILE)
+//            .add(DnDEntities.CHILL_CHARGE)
     }
 
     private fun conventionTags() {}

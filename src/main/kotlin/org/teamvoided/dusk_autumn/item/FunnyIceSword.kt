@@ -47,7 +47,7 @@ class FunnyIceSword(settings: Settings) : Item(settings) {
     }
 
     override fun canRepair(stack: ItemStack, ingredient: ItemStack): Boolean {
-        return ingredient.isOf(DnDItems.FREEZE_ROD)
+        return false//ingredient.isOf(DnDItems.FREEZE_ROD)
     }
 
 
