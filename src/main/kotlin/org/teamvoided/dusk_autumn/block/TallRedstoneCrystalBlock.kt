@@ -83,7 +83,7 @@ class TallRedstoneCrystalBlock(settings: Settings) : TallCrystalBlock(settings) 
     }
 
     override fun getRandomTicks(state: BlockState): Boolean {
-        return (state.get(LIT) && state.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER)
+        return (state.get(LIT))
     }
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
@@ -106,27 +106,27 @@ class TallRedstoneCrystalBlock(settings: Settings) : TallCrystalBlock(settings) 
         }
 
         private fun dark(state: BlockState, world: World, pos: BlockPos) {
+            println("dark trigger?")
+            println(pos)
             changeLitState(state, world, pos, false)
         }
 
         private fun changeLitState(state: BlockState, world: World, pos: BlockPos, light: Boolean) {
             spawnParticles(world, pos)
-            if (!state.get(LIT)) {
-                world.setBlockState(
-                    pos,
-                    state
-                        .with(CRYSTAL_HALF, state.get(CRYSTAL_HALF))
-                        .with(LIT, light),
-                    3
-                )
-                world.setBlockState(
-                    pos.offset(getDirectionTowardsOtherPart(state.get(CRYSTAL_HALF), state.get(FACING))),
-                    state
-                        .with(CRYSTAL_HALF, getOppositeCrystalState(state))
-                        .with(LIT, light),
-                    3
-                )
-            }
+            world.setBlockState(
+                pos,
+                state
+                    .with(CRYSTAL_HALF, state.get(CRYSTAL_HALF))
+                    .with(LIT, light),
+                3
+            )
+            world.setBlockState(
+                pos.offset(getDirectionTowardsOtherPart(state.get(CRYSTAL_HALF), state.get(FACING))),
+                state
+                    .with(CRYSTAL_HALF, getOppositeCrystalState(state))
+                    .with(LIT, light),
+                3
+            )
         }
 
         private fun spawnParticles(world: World, pos: BlockPos) {

@@ -2,8 +2,7 @@ package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
-import net.minecraft.block.AbstractBlock.OffsetType
-import net.minecraft.block.AbstractBlock.Settings
+import net.minecraft.block.AbstractBlock.*
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
@@ -282,10 +281,21 @@ object DnDBlocks {
 
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
-    val TALL_REDSTONE_CRYSTAL = register("tall_redstone_crystal", TallRedstoneCrystalBlock(
-        Settings.create().mapColor(MapColor.RED).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
-            .strength(1.5f).ticksRandomly().luminance(luminanceOf(9))
-            .pistonBehavior(PistonBehavior.DESTROY)))
+    val MOONCORE = register(
+        "mooncore", CrytalClusterWithParticlesBlock(
+            12.0f, 2.0f,
+            Settings.create().mapColor(MapColor.LIGHT_BLUE).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
+                .strength(1.5f).ticksRandomly().luminance { _: BlockState -> 15 }
+                .pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    )
+    val TALL_REDSTONE_CRYSTAL = register(
+        "tall_redstone_crystal", TallRedstoneCrystalBlock(
+            Settings.create().mapColor(MapColor.RED).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
+                .strength(1.5f).ticksRandomly().luminance(luminanceOf(9))
+                .pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    )
 
     val BIG_CHAIN = register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
     val BIG_LANTERN =

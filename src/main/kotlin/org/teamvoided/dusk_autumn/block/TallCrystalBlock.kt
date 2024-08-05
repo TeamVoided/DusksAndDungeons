@@ -111,8 +111,7 @@ open class TallCrystalBlock(settings: Settings) :
         val blockPos = ctx.blockPos
         val blockPos2 = blockPos.offset(direction)
         return if (world.getBlockState(blockPos2).canReplace(ctx) &&
-            blockPos.y < world.topY && blockPos2.y < world.topY &&
-            blockPos.y > world.bottomY && blockPos2.y > world.bottomY &&
+            blockPos2.y < world.topY && blockPos2.y > world.bottomY &&
             world.worldBorder.contains(blockPos2)
         ) defaultState
             .with(FACING, direction)

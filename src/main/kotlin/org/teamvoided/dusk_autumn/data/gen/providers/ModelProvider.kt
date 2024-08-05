@@ -69,6 +69,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
+        gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
 
         gen.registerItemModel(DnDBlocks.BIG_CHAIN.asItem())
