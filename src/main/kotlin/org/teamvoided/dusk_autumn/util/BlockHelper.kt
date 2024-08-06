@@ -63,6 +63,15 @@ val bigCandleSound = BlockSoundGroup(
     SoundEvents.BLOCK_CANDLE_HIT,
     SoundEvents.BLOCK_CANDLE_FALL
 )
+val rootBlockSound = BlockSoundGroup(
+    1f,
+    0.8f,
+    SoundEvents.BLOCK_HANGING_ROOTS_BREAK,
+    SoundEvents.BLOCK_HANGING_ROOTS_STEP,
+    SoundEvents.BLOCK_HANGING_ROOTS_PLACE,
+    SoundEvents.BLOCK_HANGING_ROOTS_HIT,
+    SoundEvents.BLOCK_HANGING_ROOTS_FALL
+)
 
 fun stairsOf(block: Block): Block = StairsBlock(block.defaultState, AbstractBlock.Settings.copy(block))
 

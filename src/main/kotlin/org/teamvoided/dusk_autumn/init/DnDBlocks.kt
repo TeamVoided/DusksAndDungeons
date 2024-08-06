@@ -585,17 +585,7 @@ object DnDBlocks {
         MangroveRootsBlock(
             Settings.create().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS)
                 .strength(0.7f).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).nonOpaque()
-                .lavaIgnitable().sounds(
-                    BlockSoundGroup(
-                        1f,
-                        0.8f,
-                        SoundEvents.BLOCK_HANGING_ROOTS_BREAK,
-                        SoundEvents.BLOCK_HANGING_ROOTS_STEP,
-                        SoundEvents.BLOCK_HANGING_ROOTS_PLACE,
-                        SoundEvents.BLOCK_HANGING_ROOTS_HIT,
-                        SoundEvents.BLOCK_HANGING_ROOTS_FALL
-                    )
-                )
+                .lavaIgnitable().sounds(rootBlockSound)
         ).cutout().sword().axe()
     )
 
