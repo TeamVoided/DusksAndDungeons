@@ -108,7 +108,7 @@ open class LogPileBlock(settings: Settings) : TwoWayFacingBlock(settings), Water
             FULL_SHAPE,
         )
         val HANGING_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            createCuboidShape(0.0, 12.0, 2.0, 16.0, 16.0, 14.0),
+            createCuboidShape(2.0, 12.0, 0.0, 14.0, 16.0, 16.0),
             twoBoxShapeTop(8.0),
             twoBoxShapeTop(4.0),
             FULL_SHAPE,

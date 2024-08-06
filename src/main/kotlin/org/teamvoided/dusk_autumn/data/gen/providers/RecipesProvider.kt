@@ -70,9 +70,9 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .offerTo(e)
         e.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
-        e.createCandle(DnDBlocks.BIG_CANDLE)
-        e.createCandle(DnDBlocks.SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
-        e.createCandle(DnDBlocks.BIG_SOUL_CANDLE, ItemTags.SOUL_FIRE_BASE_BLOCKS)
+        e.createCandle(DnDBlocks.BIG_CANDLE, Items.HONEYCOMB_BLOCK)
+        e.createCandle(DnDBlocks.SOUL_CANDLE, Items.HONEYCOMB, ItemTags.SOUL_FIRE_BASE_BLOCKS)
+        e.createCandle(DnDBlocks.BIG_SOUL_CANDLE, Items.HONEYCOMB_BLOCK, ItemTags.SOUL_FIRE_BASE_BLOCKS)
         DnDBlockLists.dye.forEachIndexed { idx, dye ->
             e.createDyed(DnDBlockLists.bigCandles[idx + 1].first, DnDBlocks.BIG_CANDLE, dye)
             e.createDyed(DnDBlockLists.soulCandles[idx + 1].first, DnDBlocks.SOUL_CANDLE, dye)

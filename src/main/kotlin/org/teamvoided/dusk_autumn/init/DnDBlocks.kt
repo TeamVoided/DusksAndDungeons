@@ -180,13 +180,13 @@ object DnDBlocks {
     val POTTED_GOLDEN_BIRCH_SAPLING =
         registerNoItem("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING).cutout())
 
-    val PINE_PLANKS = register(
-        "pine_planks", Block(
-            Settings.create()
-                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
-                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
-        ).axe()
-    )
+//    val PINE_PLANKS = register(
+//        "pine_planks", Block(
+//            Settings.create()
+//                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
+//                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
+//        ).axe()
+//    )
 //    val PINE_STAIRS = register("pine_stairs", stairsOf(PINE_PLANKS).axe())
 //    val PINE_SLAB = register("pine_slab", slabOf(PINE_PLANKS).axe())
 //    val PINE_FENCE = register("pine_fence", fenceOf(PINE_PLANKS))
@@ -199,40 +199,64 @@ object DnDBlocks {
 //                .strength(2.0f, 3.0f).solid()
 //        ).axe()
 //    )
-//
-//    val BONEWOOD_PLANKS = register(
-//        "bonewood_planks", Block(
-//            Settings.create()
-//                .mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.XYLOPHONE).strength(2.0F, 3.0F)
-//                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
-//        ).axe()
-//    )
-//    val BONEWOOD_STAIRS = register("bonewood_stairs", stairsOf(BONEWOOD_PLANKS).axe())
-//    val BONEWOOD_SLAB = register("bonewood_slab", slabOf(BONEWOOD_PLANKS).axe())
-//    val BONEWOOD_FENCE = register("bonewood_fence", fenceOf(BONEWOOD_PLANKS))
-//    val BONEWOOD_FENCE_GATE = register(
-//        "bonewood_fence_gate",
-//        FenceGateBlock(
-//            DnDWoodTypes.BONEWOOD_WOOD_TYPE,
-//            copy(BONEWOOD_PLANKS).solid()
-//
-//        ).axe()
-//    )
-//    val WITHERING_BONEWOOD_PLANKS = register(
-//        "withering_bonewood_planks", Block(
-//            copy(BONEWOOD_PLANKS).mapColor(MapColor.BLACK)
-//        ).axe()
-//    )
-//    val WITHERING_BONEWOOD_STAIRS = register("withering_bonewood_stairs", stairsOf(WITHERING_BONEWOOD_PLANKS).axe())
-//    val WITHERING_BONEWOOD_SLAB = register("withering_bonewood_slab", slabOf(WITHERING_BONEWOOD_PLANKS).axe())
-//    val WITHERING_BONEWOOD_FENCE = register("withering_bonewood_fence", fenceOf(WITHERING_BONEWOOD_PLANKS))
-//    val WITHERING_BONEWOOD_FENCE_GATE = register(
-//        "withering_bonewood_fence_gate",
-//        FenceGateBlock(
-//            DnDWoodTypes.WITHERING_BONEWOOD_WOOD_TYPE,
-//            copy(WITHERING_BONEWOOD_PLANKS).solid()
-//        ).axe()
-//    )
+
+    val BONEWOOD_PLANKS = register(
+        "bonewood_planks", Block(
+            Settings.create()
+                .mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.XYLOPHONE).strength(2.0F, 3.0F)
+                .sounds(bonewoodSound)
+        ).axe()
+    )
+    val BONEWOOD_STAIRS = register("bonewood_stairs", stairsOf(BONEWOOD_PLANKS).axe())
+    val BONEWOOD_SLAB = register("bonewood_slab", slabOf(BONEWOOD_PLANKS).axe())
+    val BONEWOOD_FENCE = register("bonewood_fence", fenceOf(BONEWOOD_PLANKS).axe())
+    val BONEWOOD_FENCE_GATE = register(
+        "bonewood_fence_gate",
+        FenceGateBlock(
+            DnDWoodTypes.BONEWOOD_WOOD_TYPE,
+            copy(BONEWOOD_PLANKS).solid()
+
+        ).axe()
+    )
+    val BONEWOOD_DOOR = registerNoItem(
+        "bonewood_door", DoorBlock(
+            DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
+            copy(BONEWOOD_PLANKS).strength(3.0f).nonOpaque(),
+        ).cutout().axe()
+    )
+    val BONEWOOD_TRAPDOOR = register(
+        "bonewood_trapdoor", TrapdoorBlock(
+            DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
+            copy(BONEWOOD_DOOR).allowsSpawning(Blocks::nonSpawnable),
+        ).cutout().axe()
+    )
+    val WITHERING_BONEWOOD_PLANKS = register(
+        "withering_bonewood_planks", Block(
+            copy(BONEWOOD_PLANKS).mapColor(MapColor.BLACK).sounds(witheringBonewoodSound)
+        ).axe()
+    )
+    val WITHERING_BONEWOOD_STAIRS = register("withering_bonewood_stairs", stairsOf(WITHERING_BONEWOOD_PLANKS).axe())
+    val WITHERING_BONEWOOD_SLAB = register("withering_bonewood_slab", slabOf(WITHERING_BONEWOOD_PLANKS).axe())
+    val WITHERING_BONEWOOD_FENCE = register("withering_bonewood_fence", fenceOf(WITHERING_BONEWOOD_PLANKS).axe())
+    val WITHERING_BONEWOOD_FENCE_GATE = register(
+        "withering_bonewood_fence_gate",
+        FenceGateBlock(
+            DnDWoodTypes.WITHERING_BONEWOOD_WOOD_TYPE,
+            copy(WITHERING_BONEWOOD_PLANKS).solid()
+        ).axe()
+    )
+    val WITHERING_BONEWOOD_DOOR = registerNoItem(
+        "withering_bonewood_door", DoorBlock(
+            DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
+            copy(WITHERING_BONEWOOD_PLANKS).strength(3.0f).nonOpaque(),
+        ).cutout().axe()
+    )
+    val WITHERING_BONEWOOD_TRAPDOOR = register(
+        "withering_bonewood_trapdoor", TrapdoorBlock(
+            DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
+            copy(WITHERING_BONEWOOD_DOOR).allowsSpawning(Blocks::nonSpawnable),
+        ).cutout().axe()
+    )
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
     val OAK_LOG_PILE = register("oak_log_pile", logPile(OAK_WOOD))
@@ -281,21 +305,21 @@ object DnDBlocks {
 
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
-//    val MOONCORE = register(
-//        "mooncore", CrytalClusterWithParticlesBlock(
-//            12.0f, 2.0f,
-//            Settings.create().mapColor(MapColor.LIGHT_BLUE).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
-//                .strength(1.5f).ticksRandomly().luminance { _: BlockState -> 15 }
-//                .pistonBehavior(PistonBehavior.DESTROY)
-//        ).cutout()
-//    )
-//    val TALL_REDSTONE_CRYSTAL = register(
-//        "tall_redstone_crystal", TallRedstoneCrystalBlock(
-//            Settings.create().mapColor(MapColor.RED).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
-//                .strength(1.5f).ticksRandomly().luminance(luminanceOf(9))
-//                .pistonBehavior(PistonBehavior.DESTROY)
-//        ).cutout()
-//    )
+    val MOONCORE = register(
+        "mooncore", CrytalClusterWithParticlesBlock(
+            12.0f, 2.0f,
+            Settings.create().mapColor(MapColor.LIGHT_BLUE).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
+                .strength(1.5f).ticksRandomly().luminance { _: BlockState -> 15 }
+                .pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    )
+    val TALL_REDSTONE_CRYSTAL = register(
+        "tall_redstone_crystal", TallRedstoneCrystalBlock(
+            Settings.create().mapColor(MapColor.RED).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
+                .strength(1.5f).ticksRandomly().luminance(luminanceOf(9))
+                .pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    )
 
     val BIG_CHAIN = register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
     val BIG_LANTERN =

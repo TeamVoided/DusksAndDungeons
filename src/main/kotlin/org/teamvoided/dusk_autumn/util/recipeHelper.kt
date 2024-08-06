@@ -39,21 +39,22 @@ fun RecipeExporter.createBigLantern(
 
 fun RecipeExporter.createCandle(
     candle: ItemConvertible,
+    honeycomb: ItemConvertible,
     soul: TagKey<Item>? = null
 ) {
     if (soul == null) {
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, candle, 1)
             .ingredient('S', Ingredient.ofItems(Items.STRING))
-            .ingredient('H', Ingredient.ofItems(Items.HONEYCOMB_BLOCK))
+            .ingredient('H', Ingredient.ofItems(honeycomb))
             .pattern("S")
             .pattern("H")
             .criterion(Items.STRING)
-            .criterion(Items.HONEYCOMB_BLOCK)
+            .criterion(honeycomb)
             .offerTo(this)
     } else {
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, candle, 1)
             .ingredient('S', Ingredient.ofItems(Items.STRING))
-            .ingredient('H', Ingredient.ofItems(Items.HONEYCOMB_BLOCK))
+            .ingredient('H', Ingredient.ofItems(honeycomb))
             .ingredient('#', Ingredient.ofTag(soul))
             .pattern("S")
             .pattern("H")

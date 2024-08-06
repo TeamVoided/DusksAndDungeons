@@ -58,7 +58,6 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 bigCandles.map { it.second } +
                 soulCandles.map { it.second } +
                 bigSoulCandles.map { it.second } +
-                logPiles.map { it.first } +
                 leafPiles.map { it.first }
 
     override fun generate() {
@@ -94,7 +93,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
-//        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
+        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
         add(DnDBlocks.WARPED_WART) { block: Block ->
             LootTable.builder().pool(
                 applyExplosionDecay(

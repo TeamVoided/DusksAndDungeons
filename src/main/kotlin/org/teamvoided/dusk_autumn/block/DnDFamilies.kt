@@ -26,42 +26,42 @@ object DnDFamilies {
 //            .slab(DnDBlocks.PINE_SLAB)
 //            .fence(DnDBlocks.PINE_FENCE)
 //            .fenceGate(DnDBlocks.PINE_FENCE_GATE)
-////            .door(DuskBlocks.PINE_DOOR)
-////            .trapdoor(DuskBlocks.PINE_TRAPDOOR)
-////            .button(DuskBlocks.PINE_BUTTON)
-////            .pressurePlate(DuskBlocks.PINE_PRESSURE_PLATE)
-////            .sign(DuskBlocks.PINE_SIGN, DuskBlocks.PINE_WALL_SIGN)
+////            .door(DnDBlocks.PINE_DOOR)
+////            .trapdoor(DnDBlocks.PINE_TRAPDOOR)
+////            .button(DnDBlocks.PINE_BUTTON)
+////            .pressurePlate(DnDBlocks.PINE_PRESSURE_PLATE)
+////            .sign(DnDBlocks.PINE_SIGN, DnDBlocks.PINE_WALL_SIGN)
 //            .group("wooden")
 //            .unlockCriterionName("has_planks")
 //            .build()
-//    val BONEWOOD_FAMILY: BlockFamily =
-//        BlockFamilies.register(DnDBlocks.BONEWOOD_PLANKS)
-//            .stairs(DnDBlocks.BONEWOOD_STAIRS)
-//            .slab(DnDBlocks.BONEWOOD_SLAB)
-//            .fence(DnDBlocks.BONEWOOD_FENCE)
-//            .fenceGate(DnDBlocks.BONEWOOD_FENCE_GATE)
-////            .door(DuskBlocks.BONEWOOD_DOOR)
-////            .trapdoor(DuskBlocks.BONEWOOD_TRAPDOOR)
-////            .button(DuskBlocks.BONEWOOD_BUTTON)
-////            .pressurePlate(DuskBlocks.BONEWOOD_PRESSURE_PLATE)
-////            .sign(DuskBlocks.BONEWOOD_SIGN, DuskBlocks.BONEWOOD_WALL_SIGN)
-//            .group("bonewood")
-//            .unlockCriterionName("has_bonewood")
-//            .build()
-//    val WITHERING_BONEWOOD_FAMILY: BlockFamily =
-//        BlockFamilies.register(DnDBlocks.WITHERING_BONEWOOD_PLANKS)
-//            .stairs(DnDBlocks.WITHERING_BONEWOOD_STAIRS)
-//            .slab(DnDBlocks.WITHERING_BONEWOOD_SLAB)
-//            .fence(DnDBlocks.WITHERING_BONEWOOD_FENCE)
-//            .fenceGate(DnDBlocks.WITHERING_BONEWOOD_FENCE_GATE)
-////            .door(DuskBlocks.WITHERING_BONEWOOD_DOOR)
-////            .trapdoor(DuskBlocks.WITHERING_BONEWOOD_TRAPDOOR)
-////            .button(DuskBlocks.WITHERING_BONEWOOD_BUTTON)
-////            .pressurePlate(DuskBlocks.WITHERING_BONEWOOD_PRESSURE_PLATE)
-////            .sign(DuskBlocks.WITHERING_BONEWOOD_SIGN, DuskBlocks.WITHERING_BONEWOOD_WALL_SIGN)
-//            .group("bonewood")
-//            .unlockCriterionName("has_bonewood")
-//            .build()
+    val BONEWOOD_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.BONEWOOD_PLANKS)
+            .stairs(DnDBlocks.BONEWOOD_STAIRS)
+            .slab(DnDBlocks.BONEWOOD_SLAB)
+            .fence(DnDBlocks.BONEWOOD_FENCE)
+            .fenceGate(DnDBlocks.BONEWOOD_FENCE_GATE)
+            .door(DnDBlocks.BONEWOOD_DOOR)
+            .trapdoor(DnDBlocks.BONEWOOD_TRAPDOOR)
+//            .button(DnDBlocks.BONEWOOD_BUTTON)
+//            .pressurePlate(DnDBlocks.BONEWOOD_PRESSURE_PLATE)
+//            .sign(DnDBlocks.BONEWOOD_SIGN, DnDBlocks.BONEWOOD_WALL_SIGN)
+            .group("bonewood")
+            .unlockCriterionName("has_bonewood")
+            .build()
+    val WITHERING_BONEWOOD_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.WITHERING_BONEWOOD_PLANKS)
+            .stairs(DnDBlocks.WITHERING_BONEWOOD_STAIRS)
+            .slab(DnDBlocks.WITHERING_BONEWOOD_SLAB)
+            .fence(DnDBlocks.WITHERING_BONEWOOD_FENCE)
+            .fenceGate(DnDBlocks.WITHERING_BONEWOOD_FENCE_GATE)
+            .door(DnDBlocks.WITHERING_BONEWOOD_DOOR)
+            .trapdoor(DnDBlocks.WITHERING_BONEWOOD_TRAPDOOR)
+//            .button(DnDBlocks.WITHERING_BONEWOOD_BUTTON)
+//            .pressurePlate(DnDBlocks.WITHERING_BONEWOOD_PRESSURE_PLATE)
+//            .sign(DnDBlocks.WITHERING_BONEWOOD_SIGN, DnDBlocks.WITHERING_BONEWOOD_WALL_SIGN)
+            .group("bonewood")
+            .unlockCriterionName("has_bonewood")
+            .build()
     val POLISHED_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDBlocks.POLISHED_NETHER_BRICKS)
             .stairs(DnDBlocks.POLISHED_NETHER_BRICK_STAIRS)
@@ -144,8 +144,8 @@ object DnDFamilies {
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
 //        PINE_FAMILY,
-//        BONEWOOD_FAMILY,
-//        WITHERING_BONEWOOD_FAMILY,
+        BONEWOOD_FAMILY,
+        WITHERING_BONEWOOD_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         MIXED_RED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY,

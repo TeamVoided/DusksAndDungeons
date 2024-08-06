@@ -69,8 +69,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
-//        gen.registerAmethyst(DnDBlocks.MOONCORE)
-//        gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
+        gen.registerAmethyst(DnDBlocks.MOONCORE)
+        gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
 
         gen.registerItemModel(DnDBlocks.BIG_CHAIN.asItem())
         gen.registerAxisRotated(DnDBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DnDBlocks.BIG_CHAIN))
@@ -132,9 +132,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.registerHandheldItem(it)
         }
 
-//        gen.registerItemModel(DnDItems.CHILL_CHARGE)
-//        gen.registerHandheldItem(DnDItems.FREEZE_ROD)
-//        gen.registerHandheldItem(DnDItems.ICE_SWORD)
+        gen.registerItemModel(DnDItems.CHILL_CHARGE)
+        gen.registerHandheldItem(DnDItems.FREEZE_ROD)
+        gen.registerHandheldItem(DnDItems.ICE_SWORD)
 
 
         val mossyCobble = id("block/overgrown/cobblestone_overlay")

@@ -25,7 +25,7 @@ object DnDItemLists {
         DnDItems.CASCADE_HANGING_SIGN
     )
 
-//    val pineWood = listOf(
+    //    val pineWood = listOf(
 ////        DuskBlocks.PINE_LOG,
 ////        DuskBlocks.PINE_WOOD,
 ////        DuskBlocks.STRIPPED_PINE_LOG,
@@ -40,18 +40,22 @@ object DnDItemLists {
 ////        DuskBlocks.PINE_PRESSURE_PLATE,
 ////        DuskBlocks.PINE_BUTTON
 //    ).toItems()
-//    val bonewoodWood = listOf(
-//        DnDBlocks.BONEWOOD_PLANKS,
-//        DnDBlocks.BONEWOOD_STAIRS,
-//        DnDBlocks.BONEWOOD_SLAB,
-//        DnDBlocks.BONEWOOD_FENCE,
-//        DnDBlocks.BONEWOOD_FENCE_GATE,
-//        DnDBlocks.WITHERING_BONEWOOD_PLANKS,
-//        DnDBlocks.WITHERING_BONEWOOD_STAIRS,
-//        DnDBlocks.WITHERING_BONEWOOD_SLAB,
-//        DnDBlocks.WITHERING_BONEWOOD_FENCE,
-//        DnDBlocks.WITHERING_BONEWOOD_FENCE_GATE
-//    ).toItems()
+    val bonewoodWood = listOf(
+        DnDBlocks.BONEWOOD_PLANKS,
+        DnDBlocks.BONEWOOD_STAIRS,
+        DnDBlocks.BONEWOOD_SLAB,
+        DnDBlocks.BONEWOOD_FENCE,
+        DnDBlocks.BONEWOOD_FENCE_GATE,
+        DnDBlocks.BONEWOOD_DOOR,
+        DnDBlocks.BONEWOOD_TRAPDOOR,
+        DnDBlocks.WITHERING_BONEWOOD_PLANKS,
+        DnDBlocks.WITHERING_BONEWOOD_STAIRS,
+        DnDBlocks.WITHERING_BONEWOOD_SLAB,
+        DnDBlocks.WITHERING_BONEWOOD_FENCE,
+        DnDBlocks.WITHERING_BONEWOOD_FENCE_GATE,
+        DnDBlocks.WITHERING_BONEWOOD_DOOR,
+        DnDBlocks.WITHERING_BONEWOOD_TRAPDOOR,
+    ).toItems()
     val bigCandles = listOf(
         DnDBlocks.BIG_CANDLE,
         DnDBlocks.BIG_WHITE_CANDLE,
