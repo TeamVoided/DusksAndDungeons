@@ -305,6 +305,27 @@ object DnDBlocks {
 
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
+    val OVERGROWN_COBBLESTONE =
+        register("overgrown_cobblestone", Block(copy(MOSSY_COBBLESTONE)).cutout().pickaxe())
+    val OVERGROWN_COBBLESTONE_STAIRS =
+        register("overgrown_cobblestone_stairs", stairsOf(OVERGROWN_COBBLESTONE).cutout().pickaxe())
+    val OVERGROWN_COBBLESTONE_SLAB =
+        register("overgrown_cobblestone_slab", slabOf(MOSSY_COBBLESTONE_SLAB).cutout().pickaxe())
+    val OVERGROWN_COBBLESTONE_WALL =
+        register("overgrown_cobblestone_wall", wallOf(MOSSY_COBBLESTONE_WALL).cutout().pickaxe())
+    val OVERGROWN_STONE_BRICKS =
+        register("overgrown_stone_bricks", Block(copy(MOSSY_STONE_BRICKS)).cutout().pickaxe())
+    val OVERGROWN_STONE_BRICK_STAIRS =
+        register("overgrown_stone_brick_stairs", stairsOf(MOSSY_STONE_BRICKS).cutout().pickaxe())
+    val OVERGROWN_STONE_BRICK_SLAB =
+        register("overgrown_stone_brick_slab", slabOf(MOSSY_STONE_BRICK_SLAB).cutout().pickaxe())
+    val OVERGROWN_STONE_BRICK_WALL =
+        register("overgrown_stone_brick_wall", wallOf(MOSSY_STONE_BRICK_WALL).cutout().pickaxe())
+    val SNOWY_STONE_BRICKS = register("snowy_stone_bricks", Block(copy(STONE_BRICKS)).pickaxe())
+    val SNOWY_STONE_BRICK_STAIRS = register("snowy_stone_brick_stairs", stairsOf(STONE_BRICKS).pickaxe())
+    val SNOWY_STONE_BRICK_SLAB = register("snowy_stone_brick_slab", slabOf(STONE_BRICK_SLAB).pickaxe())
+    val SNOWY_STONE_BRICK_WALL = register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe())
+
     val MOONCORE = register(
         "mooncore", CrytalClusterWithParticlesBlock(
             12.0f, 2.0f,
@@ -561,24 +582,6 @@ object DnDBlocks {
         register("polished_gray_nether_brick_slab", slabOf(GRAY_NETHER_BRICK_SLAB).pickaxe())
     val POLISHED_GRAY_NETHER_BRICK_WALL =
         register("polished_gray_nether_brick_wall", wallOf(GRAY_NETHER_BRICK_WALL).pickaxe())
-
-
-    val OVERGROWN_COBBLESTONE =
-        register("overgrown_cobblestone", Block(copy(MOSSY_COBBLESTONE)).cutout().pickaxe())
-    val OVERGROWN_COBBLESTONE_STAIRS =
-        register("overgrown_cobblestone_stairs", stairsOf(OVERGROWN_COBBLESTONE).cutout().pickaxe())
-    val OVERGROWN_COBBLESTONE_SLAB =
-        register("overgrown_cobblestone_slab", slabOf(MOSSY_COBBLESTONE_SLAB).cutout().pickaxe())
-    val OVERGROWN_COBBLESTONE_WALL =
-        register("overgrown_cobblestone_wall", wallOf(MOSSY_COBBLESTONE_WALL).cutout().pickaxe())
-    val OVERGROWN_STONE_BRICKS =
-        register("overgrown_stone_bricks", Block(copy(MOSSY_STONE_BRICKS)).cutout().pickaxe())
-    val OVERGROWN_STONE_BRICK_STAIRS =
-        register("overgrown_stone_brick_stairs", stairsOf(MOSSY_STONE_BRICKS).cutout().pickaxe())
-    val OVERGROWN_STONE_BRICK_SLAB =
-        register("overgrown_stone_brick_slab", slabOf(MOSSY_STONE_BRICK_SLAB).cutout().pickaxe())
-    val OVERGROWN_STONE_BRICK_WALL =
-        register("overgrown_stone_brick_wall", wallOf(MOSSY_STONE_BRICK_WALL).cutout().pickaxe())
 
     val ROOT_BLOCK = register(
         "root_block",

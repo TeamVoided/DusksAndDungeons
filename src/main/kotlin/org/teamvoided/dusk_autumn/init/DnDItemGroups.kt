@@ -46,6 +46,7 @@ object DnDItemGroups {
                     DnDItemLists.leafPiles,
                     DnDItemLists.overgrownCobblestone,
                     DnDItemLists.overgrownStoneBricks,
+                    DnDItemLists.snowyStoneBricks,
                 )
                 entries.addItem(
                     DnDBlocks.STONE_PILLAR,
@@ -107,7 +108,7 @@ object DnDItemGroups {
                         DnDItemLists.mixedBlueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
             )
             it.addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
-            it.addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks)
+            it.addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks + DnDItemLists.snowyStoneBricks)
         }
 
         addToTab(ItemGroups.COLORED_BLOCKS) { it.addCandles() }
@@ -139,7 +140,7 @@ object DnDItemGroups {
         }
 
         addToTab(ItemGroups.TOOLS_AND_UTILITIES) {
-            it.addAfter( // this is what you should have done dusk >:(
+            it.addAfter( // this is what you should have done dusk >:( // L plus M N O P =)
                 Items.STONE_HOE,
                 DnDItems.BLACKSTONE_SHOVEL, DnDItems.BLACKSTONE_PICKAXE,
                 DnDItems.BLACKSTONE_AXE, DnDItems.BLACKSTONE_HOE

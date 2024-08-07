@@ -62,6 +62,26 @@ object DnDFamilies {
             .group("bonewood")
             .unlockCriterionName("has_bonewood")
             .build()
+
+    val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.OVERGROWN_COBBLESTONE)
+            .stairs(DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS)
+            .slab(DnDBlocks.OVERGROWN_COBBLESTONE_SLAB)
+            .wall(DnDBlocks.OVERGROWN_COBBLESTONE_WALL)
+            .build()
+    val OVERGROWN_STONE_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.OVERGROWN_STONE_BRICKS)
+            .stairs(DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS)
+            .slab(DnDBlocks.OVERGROWN_STONE_BRICK_SLAB)
+            .wall(DnDBlocks.OVERGROWN_STONE_BRICK_WALL)
+            .build()
+    val SNOWY_STONE_BRICKS_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.SNOWY_STONE_BRICKS)
+            .stairs(DnDBlocks.SNOWY_STONE_BRICK_STAIRS)
+            .slab(DnDBlocks.SNOWY_STONE_BRICK_SLAB)
+            .wall(DnDBlocks.SNOWY_STONE_BRICK_WALL)
+            .build()
+
     val POLISHED_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDBlocks.POLISHED_NETHER_BRICKS)
             .stairs(DnDBlocks.POLISHED_NETHER_BRICK_STAIRS)
@@ -129,23 +149,12 @@ object DnDFamilies {
             .wall(DnDBlocks.POLISHED_GRAY_NETHER_BRICK_WALL)
             .build()
 
-    val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDBlocks.OVERGROWN_COBBLESTONE)
-            .stairs(DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS)
-            .slab(DnDBlocks.OVERGROWN_COBBLESTONE_SLAB)
-            .wall(DnDBlocks.OVERGROWN_COBBLESTONE_WALL)
-            .build()
-    val OVERGROWN_STONE_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDBlocks.OVERGROWN_STONE_BRICKS)
-            .stairs(DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS)
-            .slab(DnDBlocks.OVERGROWN_STONE_BRICK_SLAB)
-            .wall(DnDBlocks.OVERGROWN_STONE_BRICK_WALL)
-            .build()
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
 //        PINE_FAMILY,
         BONEWOOD_FAMILY,
         WITHERING_BONEWOOD_FAMILY,
+        SNOWY_STONE_BRICKS_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         MIXED_RED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY,

@@ -56,6 +56,24 @@ object DnDItemLists {
         DnDBlocks.WITHERING_BONEWOOD_DOOR,
         DnDBlocks.WITHERING_BONEWOOD_TRAPDOOR,
     ).toItems()
+    val overgrownCobblestone = listOf(
+        DnDBlocks.OVERGROWN_COBBLESTONE,
+        DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
+        DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
+        DnDBlocks.OVERGROWN_COBBLESTONE_WALL,
+    ).toItems()
+    val overgrownStoneBricks = listOf(
+        DnDBlocks.OVERGROWN_STONE_BRICKS,
+        DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS,
+        DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
+        DnDBlocks.OVERGROWN_STONE_BRICK_WALL,
+    ).toItems()
+    val snowyStoneBricks = listOf(
+        DnDBlocks.SNOWY_STONE_BRICKS,
+        DnDBlocks.SNOWY_STONE_BRICK_STAIRS,
+        DnDBlocks.SNOWY_STONE_BRICK_SLAB,
+        DnDBlocks.SNOWY_STONE_BRICK_WALL,
+    ).toItems()
     val bigCandles = listOf(
         DnDBlocks.BIG_CANDLE,
         DnDBlocks.BIG_WHITE_CANDLE,
@@ -205,18 +223,6 @@ object DnDItemLists {
         DnDItems.BLACKSTONE_SHOVEL,
         DnDItems.BLACKSTONE_HOE
     )
-    val overgrownCobblestone = listOf(
-        DnDBlocks.OVERGROWN_COBBLESTONE,
-        DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-        DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
-        DnDBlocks.OVERGROWN_COBBLESTONE_WALL,
-    ).toItems()
-    val overgrownStoneBricks = listOf(
-        DnDBlocks.OVERGROWN_STONE_BRICKS,
-        DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-        DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
-        DnDBlocks.OVERGROWN_STONE_BRICK_WALL,
-    ).toItems()
     val logPiles = listOf(
         DnDBlocks.OAK_LOG_PILE,
         DnDBlocks.SPRUCE_LOG_PILE,
