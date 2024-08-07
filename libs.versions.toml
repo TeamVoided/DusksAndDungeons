@@ -5,14 +5,20 @@ iridium = "3.3.1"
 
 #farrow = "1.0.0+arrow.1.2.4"
 modmenu = "11.0.1"
+
 biolith = "3.0.0-beta.1"
+reef = "0.2.0-beta.1"
+
 voidmill = "1.0.4"
 emi = "1.1.10+1.21"
 
 [libraries]
 #farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
-biolith = { module = "com.terraformersmc:biolith-fabric", version.ref = "biolith" }
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
+
+biolith = { module = "com.terraformersmc:biolith-fabric", version.ref = "biolith" }
+reef = { module = "org.teamvoided:reef", version.ref = "reef" }
+
 voidmill = { module = "org.teamvoided:voidmill", version.ref = "voidmill" }
 emi = { module = "dev.emi:emi-fabric", version.ref = "emi" }
 

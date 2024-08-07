@@ -43,6 +43,9 @@ dependencies {
     modImplementation(libs.biolith)
     include(libs.biolith)
 
+    modImplementation(libs.reef)
+    include(libs.reef)
+
     modImplementation(libs.voidmill)
     include(libs.voidmill)
 
