@@ -2,12 +2,12 @@ package org.teamvoided.dusk_autumn.data.worldgen
 
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import org.teamvoided.dusk_autumn.DuskAutumns
+import net.minecraft.world.gen.feature.ConfiguredFeature
+import org.teamvoided.dusk_autumn.DuskAutumns.id
 
-@Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
-object DuskPlacedFeature {
+@Suppress("MemberVisibilityCanBePrivate")
+object DnDConfiguredFeature {
     val COBBLESTONE_ROCK = create("cobblestone_rock")
-    val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
     val CASCADE_TREE = create("cascade_tree")
     val CASCADE_TREE_BEES = create("cascade_tree_bees")
     val CASCADE_TREE_WETLANDS = create("cascade_tree_wetlands")
@@ -18,28 +18,33 @@ object DuskPlacedFeature {
     val DARK_OAK_AUTUMN_WETLANDS = create("dark_oak_autumn_wetlands")
     val ACACIA_AUTUMN = create("acacia_autumn")
     val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
-    val PATCH_GRASS_AUTUMN_PLAIN = create("patch_grass_autumn_plain")
-    val PATCH_TALL_GRASS_AUTUMN_PLAIN = create("patch_tall_grass_autumn_plain")
-    val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val DISK_PODZOL = create("disk_podzol")
     val DISK_MUD = create("disk_mud")
     val DISK_RED_SAND = create("disk_red_sand")
+    val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
     val AUTUMN_WETLANDS_VEGETATION = create("autumn_wetlands_vegetation")
     val FLOWER_AUTUMN = create("flower_autumn")
     val PATCH_ROSEBUSH = create("patch_rosebush")
     val BLUE_PETALS = create("blue_petals")
-    val AUTUMN_FARMLANDS = create("autumn_farmlands")
+    val AUTUMN_FARMLAND = create("autumn_farmland")
+    val AUTUMN_FARMLAND_CROPS = create("crops/autumn_farmland_crops")
     val CROPS_WILD_WHEAT = create("crops/wild_wheat")
+    val CROPS_WHEAT = create("crops/wheat")
+    val CROPS_CARROTS = create("crops/carrots")
+    val CROPS_POTATOES = create("crops/potatoes")
+    val CROPS_PUMPKIN = create("crops/pumpkins")
+    val CROPS_BEETROOTS = create("crops/beetroots")
+    val CROPS_GOLDEN_BEETROOTS = create("crops/golden_beetroots")
 
-    val ROCKY_ORE_UPPER = create("rocky_ore_upper")
-    val ROCKY_ORE_LOWER = create("rocky_ore_lower")
-    val SLATED_ORE = create("slated_ore")
-    val BLACKSTONED_ORE = create("blackstoned_ore")
+
+    val ROCKY_OVERWORLD_ORE = create("rocky_overworld_ore")
+    val SLATED_OVERWORLD_ORE = create("slated_overworld_ore")
+    val BLACKSTONE_NETHER_ORE = create("blackstone_nether_ore")
 
 
+    fun create(id: String): RegistryKey<ConfiguredFeature<*, *>> =
+        RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id(id))
 
-
-    fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumns.id(id))
 }

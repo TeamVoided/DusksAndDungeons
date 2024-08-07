@@ -10,6 +10,7 @@ import net.minecraft.registry.RegistrySetBuilder
 import net.minecraft.resource.ResourceType
 import net.minecraft.resource.pack.metadata.PackResourceMetadataSection
 import net.minecraft.text.Text
+import net.minecraft.world.gen.feature.org.teamvoided.dusk_autumn.data.gen.worldgen.NoiseCreator
 import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.gen.fancy_name_pack.FancyNameTranslationProvider
@@ -54,6 +55,7 @@ class DuskAutumnsData : DataGeneratorEntrypoint {
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
+        gen.add(RegistryKeys.NOISE_PARAMETERS, NoiseCreator::bootstrap)
         gen.add(RegistryKeys.BIOME, BiomeCreator::boostrap)
         gen.add(RegistryKeys.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
         gen.add(RegistryKeys.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)

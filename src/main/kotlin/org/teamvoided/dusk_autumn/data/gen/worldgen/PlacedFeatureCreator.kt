@@ -17,37 +17,37 @@ import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.decorator.*
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ACACIA_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ACACIA_BUSH_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_FARMLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_WETLANDS_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.AUTUMN_WOODS_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.BLACKSTONED_ORE
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.BLUE_PETALS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CASCADE_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CASCADE_TREE_BEES
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CASCADE_TREE_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.COBBLESTONE_ROCK
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.CROPS_WILD_WHEAT
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DARK_OAK_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DARK_OAK_AUTUMN_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DISK_MUD
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DISK_PODZOL
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.DISK_RED_SAND
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.FLOWER_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_TALL
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ORE_LAPIS_EXTRA
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_PUMPKIN_EXTRA
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_ROSEBUSH
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ROCKY_ORE_LOWER
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.ROCKY_ORE_UPPER
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature.SLATED_ORE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.ACACIA_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.ACACIA_BUSH_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.AUTUMN_FARMLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.AUTUMN_WETLANDS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.BLACKSTONED_ORE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.BLUE_PETALS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.CASCADE_TREE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.CASCADE_TREE_BEES
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.CASCADE_TREE_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.COBBLESTONE_ROCK
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.CROPS_WILD_WHEAT
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.DARK_OAK_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.DARK_OAK_AUTUMN_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.DISK_MUD
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.DISK_PODZOL
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.DISK_RED_SAND
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.FLOWER_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.GOLDEN_BIRCH_TALL
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.ORE_LAPIS_EXTRA
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.PATCH_PUMPKIN_EXTRA
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.PATCH_ROSEBUSH
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.ROCKY_ORE_LOWER
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.ROCKY_ORE_UPPER
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature.SLATED_ORE
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber", "LongMethod")
@@ -62,7 +62,7 @@ object PlacedFeatureCreator {
         val acaciaSapling = PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.ACACIA_SAPLING)
 
         c.register(
-            COBBLESTONE_ROCK, holderProvider.getHolderOrThrow(DuskConfiguredFeature.COBBLESTONE_ROCK),
+            COBBLESTONE_ROCK, holderProvider.getHolderOrThrow(DnDConfiguredFeature.COBBLESTONE_ROCK),
             RarityFilterPlacementModifier.create(5),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
@@ -77,44 +77,44 @@ object PlacedFeatureCreator {
             )
         )
         c.register(
-            CASCADE_TREE, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE),
+            CASCADE_TREE, holderProvider.getHolderOrThrow(DnDConfiguredFeature.CASCADE_TREE),
             cascadeSapling
         )
         c.register(
-            CASCADE_TREE_BEES, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE_BEES),
+            CASCADE_TREE_BEES, holderProvider.getHolderOrThrow(DnDConfiguredFeature.CASCADE_TREE_BEES),
             cascadeSapling
         )
         c.register(
-            CASCADE_TREE_WETLANDS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CASCADE_TREE_WETLANDS),
+            CASCADE_TREE_WETLANDS, holderProvider.getHolderOrThrow(DnDConfiguredFeature.CASCADE_TREE_WETLANDS),
             cascadeSapling
         )
         c.register(
-            GOLDEN_BIRCH_TALL, holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL),
+            GOLDEN_BIRCH_TALL, holderProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL),
             goldenBirchSapling
         )
         c.register(
-            GOLDEN_BIRCH_TALL_BEES, holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
+            GOLDEN_BIRCH_TALL_BEES, holderProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
             goldenBirchSapling
         )
         c.register(
             GOLDEN_BIRCH_TALL_WETLANDS,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS),
+            holderProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS),
             goldenBirchSapling
         )
         c.register(
-            DARK_OAK_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DARK_OAK_AUTUMN),
+            DARK_OAK_AUTUMN, holderProvider.getHolderOrThrow(DnDConfiguredFeature.DARK_OAK_AUTUMN),
             darkOakSapling
         )
         c.register(
-            DARK_OAK_AUTUMN_WETLANDS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DARK_OAK_AUTUMN_WETLANDS),
+            DARK_OAK_AUTUMN_WETLANDS, holderProvider.getHolderOrThrow(DnDConfiguredFeature.DARK_OAK_AUTUMN_WETLANDS),
             darkOakSapling
         )
         c.register(
-            ACACIA_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.ACACIA_AUTUMN),
+            ACACIA_AUTUMN, holderProvider.getHolderOrThrow(DnDConfiguredFeature.ACACIA_AUTUMN),
             acaciaSapling
         )
         c.register(
-            ACACIA_BUSH_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.ACACIA_BUSH_AUTUMN),
+            ACACIA_BUSH_AUTUMN, holderProvider.getHolderOrThrow(DnDConfiguredFeature.ACACIA_BUSH_AUTUMN),
             acaciaSapling
         )
         c.register(
@@ -140,14 +140,14 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            PATCH_PUMPKIN_EXTRA, holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_PUMPKIN_EXTRA),
+            PATCH_PUMPKIN_EXTRA, holderProvider.getHolderOrThrow(DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA),
             RarityFilterPlacementModifier.create(50),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            DISK_PODZOL, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_PODZOL),
+            DISK_PODZOL, holderProvider.getHolderOrThrow(DnDConfiguredFeature.DISK_PODZOL),
             RarityFilterPlacementModifier.create(40),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
@@ -158,7 +158,7 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            DISK_MUD, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_MUD),
+            DISK_MUD, holderProvider.getHolderOrThrow(DnDConfiguredFeature.DISK_MUD),
             RarityFilterPlacementModifier.create(10),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
@@ -169,7 +169,7 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            DISK_RED_SAND, holderProvider.getHolderOrThrow(DuskConfiguredFeature.DISK_RED_SAND),
+            DISK_RED_SAND, holderProvider.getHolderOrThrow(DnDConfiguredFeature.DISK_RED_SAND),
             CountPlacementModifier.create(3),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
@@ -179,7 +179,7 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            AUTUMN_WOODS_VEGETATION, holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_WOODS_VEGETATION),
+            AUTUMN_WOODS_VEGETATION, holderProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION),
             CountPlacementModifier.create(14),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
@@ -188,7 +188,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             AUTUMN_PASTURES_VEGETATION,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
+            holderProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
             RarityFilterPlacementModifier.create(2),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
@@ -197,7 +197,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             AUTUMN_WETLANDS_VEGETATION,
-            holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_WETLANDS_VEGETATION),
+            holderProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION),
             PlacedFeatureUtil.createCountExtraModifier(3, 0.25f, 1),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(3),
@@ -206,7 +206,7 @@ object PlacedFeatureCreator {
         )
 
         c.register(
-            FLOWER_AUTUMN, holderProvider.getHolderOrThrow(DuskConfiguredFeature.FLOWER_AUTUMN),
+            FLOWER_AUTUMN, holderProvider.getHolderOrThrow(DnDConfiguredFeature.FLOWER_AUTUMN),
             NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
             RarityFilterPlacementModifier.create(14),
             InSquarePlacementModifier.getInstance(),
@@ -214,7 +214,7 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            BLUE_PETALS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.BLUE_PETALS),
+            BLUE_PETALS, holderProvider.getHolderOrThrow(DnDConfiguredFeature.BLUE_PETALS),
             NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
             RarityFilterPlacementModifier.create(18),
             InSquarePlacementModifier.getInstance(),
@@ -222,7 +222,7 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            PATCH_ROSEBUSH, holderProvider.getHolderOrThrow(DuskConfiguredFeature.PATCH_ROSEBUSH),
+            PATCH_ROSEBUSH, holderProvider.getHolderOrThrow(DnDConfiguredFeature.PATCH_ROSEBUSH),
             RarityFilterPlacementModifier.create(7),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
@@ -230,7 +230,7 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            AUTUMN_FARMLANDS, holderProvider.getHolderOrThrow(DuskConfiguredFeature.AUTUMN_FARMLAND),
+            AUTUMN_FARMLANDS, holderProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND),
             RarityFilterPlacementModifier.create(28),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
@@ -239,7 +239,7 @@ object PlacedFeatureCreator {
             BiomePlacementModifier.getInstance()
         )
         c.register(
-            CROPS_WILD_WHEAT, holderProvider.getHolderOrThrow(DuskConfiguredFeature.CROPS_WILD_WHEAT),
+            CROPS_WILD_WHEAT, holderProvider.getHolderOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
             RarityFilterPlacementModifier.create(9),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
@@ -248,28 +248,28 @@ object PlacedFeatureCreator {
 
 
         c.register(
-            ROCKY_ORE_UPPER, holderProvider.getHolderOrThrow(DuskConfiguredFeature.ROCKY_OVERWORLD_ORE),
+            ROCKY_ORE_UPPER, holderProvider.getHolderOrThrow(DnDConfiguredFeature.ROCKY_OVERWORLD_ORE),
             OrePlacedFeatures.rareOrePlacementModifiers(
                 16,
                 HeightRangePlacementModifier.createUniform(YOffset.fixed(64), YOffset.fixed(128))
             )
         )
         c.register(
-            ROCKY_ORE_LOWER, holderProvider.getHolderOrThrow(DuskConfiguredFeature.ROCKY_OVERWORLD_ORE),
+            ROCKY_ORE_LOWER, holderProvider.getHolderOrThrow(DnDConfiguredFeature.ROCKY_OVERWORLD_ORE),
             OrePlacedFeatures.rareOrePlacementModifiers(
                 8,
                 HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.fixed(60))
             )
         )
         c.register(
-            SLATED_ORE, holderProvider.getHolderOrThrow(DuskConfiguredFeature.SLATED_OVERWORLD_ORE),
+            SLATED_ORE, holderProvider.getHolderOrThrow(DnDConfiguredFeature.SLATED_OVERWORLD_ORE),
             OrePlacedFeatures.rareOrePlacementModifiers(
                 8,
                 HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(0))
             )
         )
         c.register(
-            BLACKSTONED_ORE, holderProvider.getHolderOrThrow(DuskConfiguredFeature.BLACKSTONE_NETHER_ORE),
+            BLACKSTONED_ORE, holderProvider.getHolderOrThrow(DnDConfiguredFeature.BLACKSTONE_NETHER_ORE),
             OrePlacedFeatures.rareOrePlacementModifiers(
                 16,
                 HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.belowTop(128))

@@ -25,7 +25,7 @@ data class FallenTreeConfig(
             RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<FallenTreeConfig> ->
                 instance.group(
                     BlockStateProvider.TYPE_CODEC.fieldOf("log_block").forGetter { it.logBlock },
-                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_placenemt")
+                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_placement")
                         .forGetter { it.allowedPlacement },
                     BlockStateProvider.TYPE_CODEC.fieldOf("log_topper").forGetter { it.logTopper },
                     BlockStateProvider.TYPE_CODEC.fieldOf("stump_sides").forGetter { it.stumpSides },

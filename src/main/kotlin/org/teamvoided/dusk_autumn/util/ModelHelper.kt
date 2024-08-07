@@ -9,7 +9,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.block.SnowyBlock
 import net.minecraft.block.enums.*
 import net.minecraft.data.client.model.*
-import net.minecraft.data.client.model.BlockStateModelGenerator.TintType
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
@@ -671,6 +670,27 @@ fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: B
     )
 }
 
+fun BlockStateModelGenerator.iceStairs(
+    block: Block,
+    parent: Block
+) {
+    val texture: Texture = Texture.texture(parent)
+        .put(TextureKey.BOTTOM, parent.model())
+        .put(TextureKey.SIDE, parent.model())
+        .put(TextureKey.TOP, parent.model())
+    val ner: Identifier = block("parent/translucent_stairs", TextureKey.BOTTOM, TextureKey.TOP, TextureKey.SIDE)
+        .upload(block, texture, this.modelCollector)
+    val inner: Identifier =
+        block("parent/translucent_inner_stairs", "_inner", TextureKey.BOTTOM, TextureKey.TOP, TextureKey.SIDE)
+            .upload(block, texture, this.modelCollector)
+    val outer: Identifier =
+        block("parent/translucent_outer_stairs", "_outer", TextureKey.BOTTOM, TextureKey.TOP, TextureKey.SIDE)
+            .upload(block, texture, this.modelCollector)
+
+    this.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(block, inner, ner, outer))
+    this.registerParentedItemModel(block, ner)
+}
+
 //shamelessley stolen from voidUtils :)
 fun BlockStateModelGenerator.stairs(block: Block) =
     stairs(block, block, block, block, block)
@@ -705,23 +725,32 @@ fun BlockStateModelGenerator.stairs(
 
 fun BlockStateModelGenerator.slab(block: Block) = slab(block, block)
 fun BlockStateModelGenerator.slab(block: Block, texture: Block) =
-    slab(block, texture, texture, texture)
+    slab(block, texture, texture, texture, texture)
 
-fun BlockStateModelGenerator.slab(block: Block, bottom: Block, side: Block, top: Block) =
+fun BlockStateModelGenerator.slab(block: Block, texture: Block, full: Block) =
+    slab(block, slabTexture(texture), full)
+
+fun BlockStateModelGenerator.slab(block: Block, bottom: Block, side: Block, top: Block, full: Block) =
     slab(
         block, Texture.texture(block.model())
             .put(TextureKey.BOTTOM, bottom.model())
             .put(TextureKey.SIDE, side.model())
-            .put(TextureKey.TOP, top.model())
+            .put(TextureKey.TOP, top.model()),
+        full
     )
 
-fun BlockStateModelGenerator.slab(block: Block, texture: Texture) {
+fun BlockStateModelGenerator.slab(block: Block, texture: Texture, full: Block) {
     val id = Models.SLAB.upload(block, texture, this.modelCollector)
     val id2 = Models.SLAB_TOP.upload(block, texture, this.modelCollector)
-    val id3 = block.model()
+    val id3 = full.model()
     this.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(block, id, id2, id3))
     this.registerParentedItemModel(block, id)
 }
+
+fun slabTexture(texture: Block): Texture = Texture.texture(texture.model())
+    .put(TextureKey.BOTTOM, texture.model())
+    .put(TextureKey.SIDE, texture.model())
+    .put(TextureKey.TOP, texture.model())
 
 fun BlockStateModelGenerator.wall(block: Block) = wall(block, block.model())
 fun BlockStateModelGenerator.wall(block: Block, texture: Block) = wall(block, texture.model())

@@ -14,7 +14,7 @@ import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomes.AUTUMN_CASCADES
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomes.AUTUMN_PASTURES
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomes.AUTUMN_WETLANDS
@@ -46,14 +46,14 @@ object BiomeCreator {
     }
 
     private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder) {
-        generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DuskPlacedFeature.AUTUMN_FARMLANDS)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.ORE_LAPIS_EXTRA)
-        generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DuskPlacedFeature.COBBLESTONE_ROCK)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.PATCH_PUMPKIN_EXTRA)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.FLOWER_AUTUMN)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.BLUE_PETALS)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.CROPS_WILD_WHEAT)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_MUD)
+        generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DnDPlacedFeature.AUTUMN_FARMLANDS)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.ORE_LAPIS_EXTRA)
+        generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DnDPlacedFeature.COBBLESTONE_ROCK)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.PATCH_PUMPKIN_EXTRA)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.FLOWER_AUTUMN)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.BLUE_PETALS)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.CROPS_WILD_WHEAT)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_MUD)
     }
     private fun addAutumnSwampFeatures(generationSettings: GenerationSettings.Builder) {
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
@@ -77,10 +77,10 @@ object BiomeCreator {
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_PODZOL)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_PODZOL)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.AUTUMN_WOODS_VEGETATION
+            DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
         )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
         generationSettings.feature(
@@ -94,7 +94,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DuskPlacedFeature.PATCH_ROSEBUSH)
+        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.PATCH_ROSEBUSH)
 
         return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
             BiomeEffects.Builder()
@@ -123,15 +123,15 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
+            DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
         )
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN
+            DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN
         )
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN
+            DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN
         )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
@@ -163,10 +163,10 @@ object BiomeCreator {
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DuskPlacedFeature.DISK_PODZOL)
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_PODZOL)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.AUTUMN_PASTURES_VEGETATION
+            DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
         )
         DefaultBiomeFeatures.addPlainsTallGrass(generationSettings)
         DefaultBiomeFeatures.addGiantTaigaGrass(generationSettings)
@@ -204,7 +204,7 @@ object BiomeCreator {
         addAutumnSwampFeatures(generationSettings)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            DuskPlacedFeature.AUTUMN_WETLANDS_VEGETATION
+            DnDPlacedFeature.AUTUMN_WETLANDS_VEGETATION
         )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         addAutumnFeatures(generationSettings)

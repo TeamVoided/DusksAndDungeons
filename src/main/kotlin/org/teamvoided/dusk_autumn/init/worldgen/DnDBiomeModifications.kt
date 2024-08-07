@@ -11,7 +11,7 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.PlacedFeature
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature
 
 
 object DnDBiomeModifications {
@@ -19,25 +19,25 @@ object DnDBiomeModifications {
         addFeature(
             "add_shallow_stoney_ore",
             GenerationStep.Feature.UNDERGROUND_ORES,
-            DuskPlacedFeature.ROCKY_ORE_UPPER,
+            DnDPlacedFeature.ROCKY_ORE_UPPER,
             ConventionalBiomeTags.IS_OVERWORLD
         )
         addFeature(
             "add_deep_stoney_ore",
             GenerationStep.Feature.UNDERGROUND_ORES,
-            DuskPlacedFeature.ROCKY_ORE_LOWER,
+            DnDPlacedFeature.ROCKY_ORE_LOWER,
             ConventionalBiomeTags.IS_OVERWORLD
         )
         addFeature(
             "add_slated_ore",
             GenerationStep.Feature.UNDERGROUND_ORES,
-            DuskPlacedFeature.SLATED_ORE,
+            DnDPlacedFeature.SLATED_ORE,
             ConventionalBiomeTags.IS_OVERWORLD
         )
         addFeature(
             "add_blackstoned_ore",
             GenerationStep.Feature.UNDERGROUND_ORES,
-            DuskPlacedFeature.BLACKSTONED_ORE,
+            DnDPlacedFeature.BLACKSTONED_ORE,
             ConventionalBiomeTags.IS_NETHER
         )
     }

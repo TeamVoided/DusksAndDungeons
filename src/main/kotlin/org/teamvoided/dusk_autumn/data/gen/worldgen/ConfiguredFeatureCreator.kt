@@ -34,40 +34,40 @@ import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.ACACIA_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.ACACIA_BUSH_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_FARMLAND
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_FARMLAND_CROPS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_PASTURES_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_WETLANDS_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.AUTUMN_WOODS_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.BLACKSTONE_NETHER_ORE
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.BLUE_PETALS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CASCADE_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CASCADE_TREE_BEES
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CASCADE_TREE_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.COBBLESTONE_ROCK
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_BEETROOTS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_CARROTS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_GOLDEN_BEETROOTS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_POTATOES
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_PUMPKIN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_WHEAT
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.CROPS_WILD_WHEAT
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DARK_OAK_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DARK_OAK_AUTUMN_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DISK_MUD
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DISK_PODZOL
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.DISK_RED_SAND
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.FLOWER_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.GOLDEN_BIRCH_TALL
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.GOLDEN_BIRCH_TALL_BEES
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.PATCH_PUMPKIN_EXTRA
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.PATCH_ROSEBUSH
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.ROCKY_OVERWORLD_ORE
-import org.teamvoided.dusk_autumn.data.worldgen.DuskConfiguredFeature.SLATED_OVERWORLD_ORE
-import org.teamvoided.dusk_autumn.data.worldgen.DuskPlacedFeature
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_BUSH_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_FARMLAND
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BLACKSTONE_NETHER_ORE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BLUE_PETALS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE_BEES
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.COBBLESTONE_ROCK
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_BEETROOTS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_CARROTS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_GOLDEN_BEETROOTS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_POTATOES
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_PUMPKIN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_WHEAT
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_WILD_WHEAT
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DARK_OAK_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DARK_OAK_AUTUMN_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_MUD
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_PODZOL
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_RED_SAND
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.FLOWER_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.PATCH_ROSEBUSH
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ROCKY_OVERWORLD_ORE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.SLATED_OVERWORLD_ORE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
@@ -428,21 +428,21 @@ object ConfiguredFeatureCreator {
                             *arrayOfNulls(0)
                         ), 0.005f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.DARK_OAK_AUTUMN), 0.425f),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.425f)
-                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN), 0.425f),
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_BEES), 0.425f)
+                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
             )
         )
         c.registerConfiguredFeature(
             AUTUMN_PASTURES_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
                     WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_BEES),
+                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES),
                         0.05f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_BEES), 0.01f)
-                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.ACACIA_AUTUMN)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_BEES), 0.01f)
+                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.ACACIA_AUTUMN)
             )
         )
         c.registerConfiguredFeature(
@@ -461,14 +461,14 @@ object ConfiguredFeatureCreator {
                         ), 0.005f
                     ),
                     WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(DuskPlacedFeature.DARK_OAK_AUTUMN_WETLANDS),
+                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN_WETLANDS),
                         0.425f
                     ),
                     WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(DuskPlacedFeature.CASCADE_TREE_WETLANDS),
+                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_WETLANDS),
                         0.425f
                     )
-                ), placedFeatures.getHolderOrThrow(DuskPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS)
+                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS)
             )
         )
         c.registerConfiguredFeature(

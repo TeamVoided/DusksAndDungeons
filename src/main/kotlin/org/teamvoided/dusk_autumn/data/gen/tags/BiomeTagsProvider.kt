@@ -25,12 +25,17 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DnDBiomes.AUTUMN_PASTURES)
             .add(DnDBiomes.AUTUMN_CASCADES)
             .add(DnDBiomes.AUTUMN_WETLANDS)
+
         getOrCreateTagBuilder(DnDBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS)
 //            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
+
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_SILVER_FOXES)
             .forceAddTag(DnDBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)
             .forceAddTag(DnDBiomeTags.IS_AUTUMN)
+
+        getOrCreateTagBuilder(DnDBiomeTags.HAS_GLACIERS)
+            .forceAddTag(ConventionalBiomeTags.IS_SNOWY)
     }
 
     fun vanillaTags() {

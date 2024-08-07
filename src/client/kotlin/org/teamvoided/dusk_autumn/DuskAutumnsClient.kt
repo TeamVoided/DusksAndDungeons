@@ -69,6 +69,7 @@ object DuskAutumnsClient {
 
 
     private fun initBlocks() {
+
         ColorProviderRegistry.BLOCK.register(
             { _, world, pos, _ ->
                 foliageColorOrDefault(world, pos)
@@ -105,6 +106,7 @@ object DuskAutumnsClient {
 //    val GOLDEN_BIRCH_COLOR = 16760872
 
         DnDBlocks.CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
+        DnDBlocks.TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getTranslucent()) }
     }
 
     private fun initItems() {

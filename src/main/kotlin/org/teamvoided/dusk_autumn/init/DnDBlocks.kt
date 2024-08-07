@@ -19,6 +19,9 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.big.BigChainBlock
 import org.teamvoided.dusk_autumn.block.big.BigLanternBlock
+import org.teamvoided.dusk_autumn.block.meltable.MeltableSlabBlock
+import org.teamvoided.dusk_autumn.block.meltable.MeltableStairsBlock
+import org.teamvoided.dusk_autumn.block.meltable.MeltableWallBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyDirtPathBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyGrassBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyMyceliumBlock
@@ -36,6 +39,7 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
     val CUTOUT_BLOCKS = mutableSetOf<Block>()
+    val TRANSLUCENT_BLOCKS = mutableSetOf<Block>()
     val WALLS = mutableSetOf<Block>()
     val SWORDABLE = mutableSetOf<Block>()
     val PICKAXABLE = mutableSetOf<Block>()
@@ -314,7 +318,8 @@ object DnDBlocks {
     val MOSSY_POLISHED_STONE_STAIRS = register("mossy_polished_stone_stairs", stairsOf(MOSSY_POLISHED_STONE).pickaxe())
     val MOSSY_POLISHED_STONE_SLAB = register("mossy_polished_stone_slab", slabOf(MOSSY_POLISHED_STONE).pickaxe())
     val MOSSY_POLISHED_STONE_WALL = register("mossy_polished_stone_wall", wallOf(MOSSY_POLISHED_STONE).pickaxe())
-    val OVERGROWN_POLISHED_STONE = register("overgrown_polished_stone", Block(copy(MOSSY_POLISHED_STONE)).cutout().pickaxe())
+    val OVERGROWN_POLISHED_STONE =
+        register("overgrown_polished_stone", Block(copy(MOSSY_POLISHED_STONE)).cutout().pickaxe())
     val OVERGROWN_POLISHED_STONE_STAIRS =
         register("overgrown_polished_stone_stairs", stairsOf(OVERGROWN_POLISHED_STONE).cutout().pickaxe())
     val OVERGROWN_POLISHED_STONE_SLAB =
@@ -341,6 +346,16 @@ object DnDBlocks {
     val SNOWY_STONE_BRICK_STAIRS = register("snowy_stone_brick_stairs", stairsOf(STONE_BRICKS).pickaxe())
     val SNOWY_STONE_BRICK_SLAB = register("snowy_stone_brick_slab", slabOf(STONE_BRICK_SLAB).pickaxe())
     val SNOWY_STONE_BRICK_WALL = register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe())
+
+    val ICE_STAIRS = register("ice_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe())
+    val ICE_SLAB = register("ice_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe())
+    val ICE_WALL = register("ice_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe())
+    val PACKED_ICE_STAIRS = register("packed_ice_stairs", stairsOf(PACKED_ICE).pickaxe())
+    val PACKED_ICE_SLAB = register("packed_ice_slab", slabOf(PACKED_ICE).pickaxe())
+    val PACKED_ICE_WALL = register("packed_ice_wall", wallOf(PACKED_ICE).pickaxe())
+    val BLUE_ICE_STAIRS = register("blue_ice_stairs", stairsOf(BLUE_ICE).pickaxe())
+    val BLUE_ICE_SLAB = register("blue_ice_slab", slabOf(BLUE_ICE).pickaxe())
+    val BLUE_ICE_WALL = register("blue_ice_wall", wallOf(BLUE_ICE).pickaxe())
 
     val MOONCORE = register(
         "mooncore", CrytalClusterWithParticlesBlock(
@@ -898,6 +913,11 @@ object DnDBlocks {
 
     fun Block.cutout(): Block {
         CUTOUT_BLOCKS.add(this)
+        return this
+    }
+
+    fun Block.translucent(): Block {
+        TRANSLUCENT_BLOCKS.add(this)
         return this
     }
 

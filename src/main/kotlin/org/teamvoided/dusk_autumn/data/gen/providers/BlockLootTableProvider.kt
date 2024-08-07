@@ -4,18 +4,17 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.*
 import net.minecraft.block.enums.DoubleBlockHalf
+import net.minecraft.block.enums.SlabType
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
 import net.minecraft.enchantment.Enchantments
-import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
-import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
-import org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
-import org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
+import net.minecraft.loot.entry.LootPoolEntry
 import net.minecraft.loot.entry.LootTableEntry
 import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
@@ -31,6 +30,10 @@ import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.block.TallCrystalBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
 import java.util.concurrent.CompletableFuture
 
 class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
@@ -40,6 +43,9 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             DnDBlocks.BLUE_PETALS,
             DnDBlocks.CASCADE_LEAVES,
             DnDBlocks.GOLDEN_BIRCH_LEAVES,
+            DnDBlocks.ICE_STAIRS,
+            DnDBlocks.ICE_SLAB,
+            DnDBlocks.ICE_WALL,
 //            DnDBlocks.TALL_REDSTONE_CRYSTAL,
             DnDBlocks.WARPED_WART,
             DnDBlocks.GOLDEN_BEETROOTS,
@@ -84,6 +90,9 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
+        addDropWithSilkTouch(DnDBlocks.ICE_STAIRS)
+        addIceSlab(DnDBlocks.ICE_SLAB)
+        addDropWithSilkTouch(DnDBlocks.ICE_WALL)
         add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
         add(DnDBlocks.WARPED_WART) { block: Block ->
             LootTable.builder().pool(
@@ -148,6 +157,20 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                     )
                 )
             )
+        )
+    }
+
+    fun addIceSlab(block: Block) {
+        return add(block, LootTable.builder().pool(
+            LootPool.builder().conditionally(this.method_60390()).rolls(ConstantLootNumberProvider.create(1.0f)).with(
+                ItemEntry.builder(block).apply(
+                    SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0f)).conditionally(
+                        BlockStatePropertyLootCondition.builder(block).properties(
+                            StatePredicate.Builder.create().exactMatch(SlabBlock.TYPE, SlabType.DOUBLE)
+                        )
+                    )
+                )
+            ))
         )
     }
 
