@@ -44,6 +44,8 @@ object DnDItemGroups {
                     DnDItemLists.bonewoodWood,
                     DnDItemLists.logPiles,
                     DnDItemLists.leafPiles,
+                    DnDItemLists.polishedStone,
+                    DnDItemLists.mossyPolishedStone,
                     DnDItemLists.overgrownCobblestone,
                     DnDItemLists.overgrownStoneBricks,
                     DnDItemLists.snowyStoneBricks,

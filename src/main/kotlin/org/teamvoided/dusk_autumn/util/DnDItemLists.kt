@@ -56,6 +56,18 @@ object DnDItemLists {
         DnDBlocks.WITHERING_BONEWOOD_DOOR,
         DnDBlocks.WITHERING_BONEWOOD_TRAPDOOR,
     ).toItems()
+    val polishedStone = listOf(
+        DnDBlocks.POLISHED_STONE,
+        DnDBlocks.POLISHED_STONE_STAIRS,
+        DnDBlocks.POLISHED_STONE_SLAB,
+        DnDBlocks.POLISHED_STONE_WALL,
+    ).toItems()
+    val mossyPolishedStone = listOf(
+        DnDBlocks.MOSSY_POLISHED_STONE,
+        DnDBlocks.MOSSY_POLISHED_STONE_STAIRS,
+        DnDBlocks.MOSSY_POLISHED_STONE_SLAB,
+        DnDBlocks.MOSSY_POLISHED_STONE_WALL,
+    ).toItems()
     val overgrownCobblestone = listOf(
         DnDBlocks.OVERGROWN_COBBLESTONE,
         DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,

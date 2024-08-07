@@ -14,7 +14,7 @@ import net.minecraft.client.color.world.GrassColors
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.coloredBlocks
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.coloredBlocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
 import org.teamvoided.dusk_autumn.DuskAutumns.MODID

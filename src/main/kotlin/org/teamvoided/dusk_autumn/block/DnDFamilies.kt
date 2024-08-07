@@ -63,6 +63,24 @@ object DnDFamilies {
             .unlockCriterionName("has_bonewood")
             .build()
 
+    val POLISHED_STONE_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.POLISHED_STONE)
+            .stairs(DnDBlocks.POLISHED_STONE_STAIRS)
+            .slab(DnDBlocks.POLISHED_STONE_SLAB)
+            .wall(DnDBlocks.POLISHED_STONE_WALL)
+            .build()
+    val MOSSY_POLISHED_STONE_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.MOSSY_POLISHED_STONE)
+            .stairs(DnDBlocks.MOSSY_POLISHED_STONE_STAIRS)
+            .slab(DnDBlocks.MOSSY_POLISHED_STONE_SLAB)
+            .wall(DnDBlocks.MOSSY_POLISHED_STONE_WALL)
+            .build()
+    val OVERGROWN_POLISHED_STONE_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.OVERGROWN_POLISHED_STONE)
+            .stairs(DnDBlocks.OVERGROWN_POLISHED_STONE_STAIRS)
+            .slab(DnDBlocks.OVERGROWN_POLISHED_STONE_SLAB)
+            .wall(DnDBlocks.OVERGROWN_POLISHED_STONE_WALL)
+            .build()
     val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
         BlockFamilies.register(DnDBlocks.OVERGROWN_COBBLESTONE)
             .stairs(DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS)
@@ -154,6 +172,8 @@ object DnDFamilies {
 //        PINE_FAMILY,
         BONEWOOD_FAMILY,
         WITHERING_BONEWOOD_FAMILY,
+        POLISHED_STONE_FAMILY,
+        MOSSY_POLISHED_STONE_FAMILY,
         SNOWY_STONE_BRICKS_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         MIXED_RED_NETHER_BRICKS_FAMILY,
@@ -166,6 +186,7 @@ object DnDFamilies {
         POLISHED_GRAY_NETHER_BRICKS_FAMILY,
     )
     val recipesBlockFamilies = modelsBlockFamilies + listOf(
+        OVERGROWN_POLISHED_STONE_FAMILY,
         OVERGROWN_COBBLESTONE_FAMILY,
         OVERGROWN_STONE_BRICKS_FAMILY
     )

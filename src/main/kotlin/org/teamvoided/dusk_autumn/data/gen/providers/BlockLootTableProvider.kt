@@ -6,17 +6,14 @@ import net.minecraft.block.*
 import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
 import net.minecraft.enchantment.Enchantments
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
-import net.minecraft.loot.condition.LootCondition
-import net.minecraft.loot.condition.MatchToolLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LootTableEntry
@@ -24,22 +21,16 @@ import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
-import net.minecraft.predicate.NumberRange
 import net.minecraft.predicate.StatePredicate
-import net.minecraft.predicate.item.EnchantmentPredicate
-import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.state.property.Property
-import net.minecraft.unmapped.C_idgyzprx
-import net.minecraft.unmapped.C_loxplxmp
 import net.minecraft.util.StringIdentifiable
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.block.TallCrystalBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
-import java.util.List
 import java.util.concurrent.CompletableFuture
 
 class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :

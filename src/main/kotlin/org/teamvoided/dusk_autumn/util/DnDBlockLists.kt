@@ -1,4 +1,4 @@
-package net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util
+package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.Blocks
 import net.minecraft.item.Items
@@ -6,6 +6,10 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 
 object DnDBlockLists {
     val coloredBlocks = listOf(
+        DnDBlocks.OVERGROWN_POLISHED_STONE,
+        DnDBlocks.OVERGROWN_POLISHED_STONE_STAIRS,
+        DnDBlocks.OVERGROWN_POLISHED_STONE_SLAB,
+        DnDBlocks.OVERGROWN_POLISHED_STONE_WALL,
         DnDBlocks.OVERGROWN_COBBLESTONE,
         DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
         DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,

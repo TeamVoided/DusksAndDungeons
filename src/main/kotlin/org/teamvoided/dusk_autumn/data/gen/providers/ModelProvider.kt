@@ -6,7 +6,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists
+import org.teamvoided.dusk_autumn.util.DnDBlockLists
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
@@ -137,25 +137,27 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerHandheldItem(DnDItems.ICE_SWORD)
 
 
+        val mossyPolish = id("block/overgrown/polished_overlay")
         val mossyCobble = id("block/overgrown/cobblestone_overlay")
         val mossyBrick = id("block/overgrown/bricks_overlay")
+        gen.registerTintedOverlay(mossyPolish)
         gen.registerTintedOverlay(mossyCobble)
         gen.registerTintedOverlay(mossyBrick)
+        gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_POLISHED_STONE, DnDBlocks.MOSSY_POLISHED_STONE, mossyPolish)
+        gen.stairsWithTintedOverlay(
+            DnDBlocks.OVERGROWN_POLISHED_STONE_STAIRS,
+            DnDBlocks.MOSSY_POLISHED_STONE,
+            mossyPolish
+        )
+        gen.slabWithTintedOverlay(DnDBlocks.OVERGROWN_POLISHED_STONE_SLAB, DnDBlocks.MOSSY_POLISHED_STONE, mossyPolish)
+        gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_POLISHED_STONE_WALL, DnDBlocks.MOSSY_POLISHED_STONE, mossyPolish)
         gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.stairsWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.slabWithTintedOverlay(
-            DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
-            Blocks.MOSSY_COBBLESTONE,
-            mossyCobble
-        )
+        gen.slabWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.stairsWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
-        gen.slabWithTintedOverlay(
-            DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
-            Blocks.MOSSY_STONE_BRICKS,
-            mossyBrick
-        )
+        gen.slabWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_SLAB, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
         DnDBlockLists.logPiles.forEach { (it, texture) ->

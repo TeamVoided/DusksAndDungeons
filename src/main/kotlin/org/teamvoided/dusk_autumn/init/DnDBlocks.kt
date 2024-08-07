@@ -36,6 +36,7 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
     val CUTOUT_BLOCKS = mutableSetOf<Block>()
+    val WALLS = mutableSetOf<Block>()
     val SWORDABLE = mutableSetOf<Block>()
     val PICKAXABLE = mutableSetOf<Block>()
     val AXABLE = mutableSetOf<Block>()
@@ -305,6 +306,21 @@ object DnDBlocks {
 
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
+    val POLISHED_STONE = register("polished_stone", Block(copy(SMOOTH_STONE)).pickaxe())
+    val POLISHED_STONE_STAIRS = register("polished_stone_stairs", stairsOf(POLISHED_STONE).pickaxe())
+    val POLISHED_STONE_SLAB = register("polished_stone_slab", slabOf(POLISHED_STONE).pickaxe())
+    val POLISHED_STONE_WALL = register("polished_stone_wall", wallOf(POLISHED_STONE).pickaxe())
+    val MOSSY_POLISHED_STONE = register("mossy_polished_stone", Block(copy(POLISHED_STONE)).pickaxe())
+    val MOSSY_POLISHED_STONE_STAIRS = register("mossy_polished_stone_stairs", stairsOf(MOSSY_POLISHED_STONE).pickaxe())
+    val MOSSY_POLISHED_STONE_SLAB = register("mossy_polished_stone_slab", slabOf(MOSSY_POLISHED_STONE).pickaxe())
+    val MOSSY_POLISHED_STONE_WALL = register("mossy_polished_stone_wall", wallOf(MOSSY_POLISHED_STONE).pickaxe())
+    val OVERGROWN_POLISHED_STONE = register("overgrown_polished_stone", Block(copy(MOSSY_POLISHED_STONE)).cutout().pickaxe())
+    val OVERGROWN_POLISHED_STONE_STAIRS =
+        register("overgrown_polished_stone_stairs", stairsOf(OVERGROWN_POLISHED_STONE).cutout().pickaxe())
+    val OVERGROWN_POLISHED_STONE_SLAB =
+        register("overgrown_polished_stone_slab", slabOf(OVERGROWN_POLISHED_STONE).cutout().pickaxe())
+    val OVERGROWN_POLISHED_STONE_WALL =
+        register("overgrown_polished_stone_wall", wallOf(OVERGROWN_POLISHED_STONE).cutout().pickaxe())
     val OVERGROWN_COBBLESTONE =
         register("overgrown_cobblestone", Block(copy(MOSSY_COBBLESTONE)).cutout().pickaxe())
     val OVERGROWN_COBBLESTONE_STAIRS =

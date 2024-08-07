@@ -6,9 +6,9 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
 import net.minecraft.feature_flags.FeatureFlags
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
