@@ -49,6 +49,7 @@ object DnDItemGroups {
                     DnDItemLists.overgrownCobblestone,
                     DnDItemLists.overgrownStoneBricks,
                     DnDItemLists.snowyStoneBricks,
+                    DnDItemLists.ice
                 )
                 entries.addItem(
                     DnDBlocks.STONE_PILLAR,

@@ -86,6 +86,17 @@ object DnDItemLists {
         DnDBlocks.SNOWY_STONE_BRICK_SLAB,
         DnDBlocks.SNOWY_STONE_BRICK_WALL,
     ).toItems()
+    val ice = listOf(
+        DnDBlocks.ICE_STAIRS,
+        DnDBlocks.ICE_SLAB,
+        DnDBlocks.ICE_WALL,
+        DnDBlocks.PACKED_ICE_STAIRS,
+        DnDBlocks.PACKED_ICE_SLAB,
+        DnDBlocks.PACKED_ICE_WALL,
+        DnDBlocks.BLUE_ICE_STAIRS,
+        DnDBlocks.BLUE_ICE_SLAB,
+        DnDBlocks.BLUE_ICE_WALL,
+    ).toItems()
     val bigCandles = listOf(
         DnDBlocks.BIG_CANDLE,
         DnDBlocks.BIG_WHITE_CANDLE,

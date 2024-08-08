@@ -10,7 +10,7 @@ import net.minecraft.registry.RegistrySetBuilder
 import net.minecraft.resource.ResourceType
 import net.minecraft.resource.pack.metadata.PackResourceMetadataSection
 import net.minecraft.text.Text
-import net.minecraft.world.gen.feature.org.teamvoided.dusk_autumn.data.gen.worldgen.NoiseCreator
+import org.teamvoided.dusk_autumn.data.gen.worldgen.NoiseCreator
 import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.gen.fancy_name_pack.FancyNameTranslationProvider

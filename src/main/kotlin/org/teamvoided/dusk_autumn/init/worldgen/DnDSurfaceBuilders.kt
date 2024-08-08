@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumn.init.worldgen
 
-import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler
@@ -14,7 +13,7 @@ import kotlin.math.ceil
 
 object DnDSurfaceBuilders {
     var glacierIce: DoublePerlinNoiseSampler? = null
-    var glacierRoofOffset: DoublePerlinNoiseSampler? =
+    var glacierJaggedness: DoublePerlinNoiseSampler? =
         null //roof offset will most likely turn into the jagged spike region instead of an unnecessary offset value
     var glacierSnow: DoublePerlinNoiseSampler? = null
     var glacierWaterRoof: DoublePerlinNoiseSampler? = null
@@ -23,8 +22,8 @@ object DnDSurfaceBuilders {
         CustomSurfaceBuilder.POST_RULES.register { random, defaultBlock, seaLevel, biome, chunk, blockColumn, x, z ->
             if (glacierIce == null) glacierIce =
                 random.getOrCreateNoiseSampler(DnDNoise.GLACIER_ICE_PICKER)
-            if (glacierRoofOffset == null) glacierRoofOffset =
-                random.getOrCreateNoiseSampler(DnDNoise.GLACIER_ROOF_OFFSET)
+            if (glacierJaggedness == null) glacierJaggedness =
+                random.getOrCreateNoiseSampler(DnDNoise.GLACIER_JAGGEDNESS)
             if (glacierSnow == null) glacierSnow =
                 random.getOrCreateNoiseSampler(DnDNoise.GLACIER_SNOW_SURFACE)
             if (glacierWaterRoof == null) glacierWaterRoof =
@@ -33,10 +32,19 @@ object DnDSurfaceBuilders {
             val y = chunk.sampleHeightmap(Heightmap.Type.OCEAN_FLOOR_WG, x, z) + 1
 
             if (biome.getBiome(BlockPos(x, y, z)).isIn(DnDBiomeTags.HAS_GLACIERS)) {
-                val glacierSurfaceOffset: Double = glacierRoofOffset!!.sample(x.toDouble(), 0.0, z.toDouble()) * 3
+                val glacierJaggednessRange: Double = glacierJaggedness!!.sample(x.toDouble(), 0.0, z.toDouble())
+                val glacierJaggedness: Double = if (glacierJaggednessRange > 0) {
+                    glacierJaggednessRange * (halfNegative(
+                        glacierJaggedness!!.sample(
+                            1500 * x.toDouble(),
+                            0.0,
+                            1500 * z.toDouble()
+                        )
+                    ) * 40)
+                } else 0.0
 
                 val bias = seaLevel + 40
-                val glacierYLevel: Int = ((y - bias) * 0.175 + bias + glacierSurfaceOffset).toInt()
+                val glacierYLevel: Int = ((y - bias) * 0.175 + bias + glacierJaggedness).toInt()
 
                 val snowSurface: Double = glacierSnow!!.sample(x * 0.75, 0.0, z * 0.75) * 1.5
                 val snowLevel: Int = (glacierYLevel + ceil(snowSurface * 10)).toInt()
@@ -45,7 +53,7 @@ object DnDSurfaceBuilders {
                 if (y < seaLevel) {
                     val glacierWater: Double = glacierWaterRoof!!.sample(x * 0.75, 0.0, z * 0.75) * 1.5
                     for (yLevel in glacierYLevel downTo y) {
-                        if (glacierWater > (6 + yLevel - glacierYLevel).absoluteValue * 0.2) {
+                        if (glacierWater > (halfNegative((4 + yLevel - glacierYLevel) * 0.2)).absoluteValue) {
                             val glacierIce: Double = glacierIce!!.sample(x * 0.75, yLevel * 0.75, z * 0.75) * 1.5
                             placeGlacierBlock(yLevel, blockColumn, snowLevel, glacierIce)
                         }
@@ -65,9 +73,13 @@ object DnDSurfaceBuilders {
         }
     }
 
+    private fun halfNegative(double: Double): Double {
+        return if (double < 0) double / 2 else double
+    }
+
     private fun placeGlacierBlock(yLevel: Int, blockColumn: BlockColumn, snowLevel: Int, icePicker: Double) {
         if (yLevel > snowLevel)
-            if (yLevel - snowLevel > 10)
+            if (yLevel - snowLevel > 8)
                 blockColumn.setState(yLevel, Blocks.POWDER_SNOW.defaultState)
             else
                 blockColumn.setState(yLevel, Blocks.SNOW_BLOCK.defaultState)
