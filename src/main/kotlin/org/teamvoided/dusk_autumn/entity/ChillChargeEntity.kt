@@ -29,7 +29,6 @@ import net.minecraft.world.explosion.SimpleExplosionBehavior
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.data.tags.DnDEntityTypeTags
 import org.teamvoided.dusk_autumn.init.DnDEntities
-import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.DnDParticles
 import org.teamvoided.dusk_autumn.util.spawnParticles
 import java.util.*

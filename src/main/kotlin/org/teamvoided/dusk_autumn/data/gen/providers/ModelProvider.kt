@@ -6,7 +6,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
-import org.teamvoided.dusk_autumn.util.DnDBlockLists
 import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier

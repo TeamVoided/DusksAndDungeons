@@ -1,19 +1,14 @@
 package org.teamvoided.dusk_autumn.block.meltable
 
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.IceBlock
 import net.minecraft.block.WallBlock
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.registry.tag.EnchantmentTags
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.LightType
 import net.minecraft.world.World
 
 class MeltableWallBlock(settings: Settings) : WallBlock(settings) {

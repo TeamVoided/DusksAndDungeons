@@ -4,18 +4,15 @@ import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
-import net.minecraft.block.*
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.DirectionProperty
+import net.minecraft.block.BlockState
+import net.minecraft.block.CandleBlock
+import net.minecraft.block.ShapeContext
 import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
-import org.teamvoided.dusk_autumn.util.rotate
 
 open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
 

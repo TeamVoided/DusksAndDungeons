@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.init.DnDItems
 
 class FunnyIceSword(settings: Settings) : Item(settings) {
 

@@ -1,13 +1,9 @@
 package org.teamvoided.dusk_autumn.init
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.Blocks
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.registry.tag.BiomeTags
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.Heightmap
-import net.minecraft.world.gen.feature.org.teamvoided.dusk_autumn.init.worldgen.DnDSurfaceBuilders
+import org.teamvoided.dusk_autumn.init.worldgen.DnDSurfaceBuilders
 import net.minecraft.world.gen.foliage.FoliagePlacer
 import net.minecraft.world.gen.foliage.FoliagePlacerType
 import net.minecraft.world.gen.root.RootPlacer
@@ -27,8 +23,6 @@ import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecora
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.trunk.ThreeWideTrunkPlacer
-import org.teamvoided.reef.events.CustomSurfaceBuilder
-
 
 object DnDWorldgen {
 

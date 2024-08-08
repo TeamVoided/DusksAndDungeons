@@ -2,7 +2,8 @@ package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
-import net.minecraft.block.AbstractBlock.*
+import net.minecraft.block.AbstractBlock.OffsetType
+import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
@@ -13,7 +14,6 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Color
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*

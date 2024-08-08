@@ -6,9 +6,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
-import org.teamvoided.dusk_autumn.util.DnDBlockLists
-import org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
-import org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
 import net.minecraft.feature_flags.FeatureFlags
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
@@ -20,6 +17,8 @@ import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
+import org.teamvoided.dusk_autumn.util.DnDBlockLists.logPiles
 import java.util.concurrent.CompletableFuture
 
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
