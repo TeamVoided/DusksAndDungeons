@@ -32,7 +32,8 @@ object DnDSurfaceBuilders {
             val y = chunk.sampleHeightmap(Heightmap.Type.OCEAN_FLOOR_WG, x, z) + 1
 
             if (biome.getBiome(BlockPos(x, y, z)).isIn(DnDBiomeTags.HAS_GLACIERS)) {
-                val glacierJaggednessRange: Double = glacierJaggedness!!.sample(x.toDouble(), 0.0, z.toDouble())
+                val glacierJaggednessRange: Double =
+                    glacierJaggedness!!.sample(150 * x.toDouble(), 0.0, 150 * z.toDouble())
                 val glacierJaggedness: Double = if (glacierJaggednessRange > 0) {
                     glacierJaggednessRange * (halfNegative(
                         glacierJaggedness!!.sample(
