@@ -11,6 +11,7 @@ import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import java.util.concurrent.CompletableFuture
 
+@Suppress("LongMethod")
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
     override fun configure(arg: HolderLookup.Provider) {
@@ -19,7 +20,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         conventionTags()
     }
 
-    fun duskTags() {
+    private fun duskTags() {
         getOrCreateTagBuilder(DnDBlockTags.CASCADE_LOGS)
             .add(DnDBlocks.CASCADE_LOG)
             .add(DnDBlocks.CASCADE_WOOD)
@@ -164,7 +165,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.DIRT)
     }
 
-    fun vanillaTags() {
+    private fun vanillaTags() {
         getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
             .add(DnDBlocks.BLUE_PETALS)
@@ -353,9 +354,13 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
             .addAll(DnDBlocks.HOEABLE)
+
+
+        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+            .add(Blocks.ICE, Blocks.SNOW)
     }
 
-    fun conventionTags() {
+    private fun conventionTags() {
         getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES)
             .add(DnDBlocks.OVERGROWN_COBBLESTONE)
         getOrCreateTagBuilder(ConventionalBlockTags.CHAINS)
