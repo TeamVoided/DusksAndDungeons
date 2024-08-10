@@ -100,6 +100,25 @@ object DnDFamilies {
             .wall(DnDBlocks.SNOWY_STONE_BRICK_WALL)
             .build()
 
+    val ICE_BRICKS_FAMILY:BlockFamily =
+        BlockFamilies.register(DnDBlocks.ICE_BRICKS)
+            .stairs(DnDBlocks.ICE_BRICK_STAIRS)
+            .slab(DnDBlocks.ICE_BRICK_SLAB)
+            .wall(DnDBlocks.ICE_BRICK_WALL)
+            .build()
+    val PACKED_ICE_BRICKS_FAMILY:BlockFamily =
+        BlockFamilies.register(DnDBlocks.PACKED_ICE_BRICKS)
+            .stairs(DnDBlocks.PACKED_ICE_BRICK_STAIRS)
+            .slab(DnDBlocks.PACKED_ICE_BRICK_SLAB)
+            .wall(DnDBlocks.PACKED_ICE_BRICK_WALL)
+            .build()
+    val BLUE_ICE_BRICKS_FAMILY:BlockFamily =
+        BlockFamilies.register(DnDBlocks.BLUE_ICE_BRICKS)
+            .stairs(DnDBlocks.BLUE_ICE_BRICK_STAIRS)
+            .slab(DnDBlocks.BLUE_ICE_BRICK_SLAB)
+            .wall(DnDBlocks.BLUE_ICE_BRICK_WALL)
+            .build()
+
     val POLISHED_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDBlocks.POLISHED_NETHER_BRICKS)
             .stairs(DnDBlocks.POLISHED_NETHER_BRICK_STAIRS)
@@ -175,6 +194,8 @@ object DnDFamilies {
         POLISHED_STONE_FAMILY,
         MOSSY_POLISHED_STONE_FAMILY,
         SNOWY_STONE_BRICKS_FAMILY,
+        PACKED_ICE_BRICKS_FAMILY,
+        BLUE_ICE_BRICKS_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         MIXED_RED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY,
@@ -188,7 +209,8 @@ object DnDFamilies {
     val recipesBlockFamilies = modelsBlockFamilies + listOf(
         OVERGROWN_POLISHED_STONE_FAMILY,
         OVERGROWN_COBBLESTONE_FAMILY,
-        OVERGROWN_STONE_BRICKS_FAMILY
+        OVERGROWN_STONE_BRICKS_FAMILY,
+        ICE_BRICKS_FAMILY
     )
 
     fun init() {}

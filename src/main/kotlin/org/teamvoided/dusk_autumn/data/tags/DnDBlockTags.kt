@@ -10,6 +10,7 @@ object DnDBlockTags {
     val LOG_PILES = create("log_piles")
     val LEAF_PILES = create("leaf_piles")
     val LEAF_PILES_PLACE_ON = create("leaf_piles_place_on")
+    val ICE_BLOCK_TRANSLUCENT = create("ice_block_translucent")
     val BIG_CANDLES = create("big_candles")
     val SOUL_CANDLES = create("soul_candles")
     val BIG_SOUL_CANDLES = create("big_soul_candles")

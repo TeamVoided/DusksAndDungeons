@@ -68,6 +68,19 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
+        gen.iceStairs(DnDBlocks.ICE_STAIRS, Blocks.ICE)
+        gen.slab(DnDBlocks.ICE_SLAB, Blocks.ICE)
+        gen.wall(DnDBlocks.ICE_WALL, Blocks.ICE)
+        gen.stairs(DnDBlocks.PACKED_ICE_STAIRS, Blocks.PACKED_ICE)
+        gen.slab(DnDBlocks.PACKED_ICE_SLAB, Blocks.PACKED_ICE)
+        gen.wall(DnDBlocks.PACKED_ICE_WALL, Blocks.PACKED_ICE)
+        gen.stairs(DnDBlocks.BLUE_ICE_STAIRS, Blocks.BLUE_ICE)
+        gen.slab(DnDBlocks.BLUE_ICE_SLAB, Blocks.BLUE_ICE)
+        gen.wall(DnDBlocks.BLUE_ICE_WALL, Blocks.BLUE_ICE)
+        gen.registerSimpleCubeAll(DnDBlocks.ICE_BRICKS)
+        gen.iceStairs(DnDBlocks.ICE_BRICK_STAIRS, DnDBlocks.ICE_BRICKS)
+        gen.slab(DnDBlocks.ICE_BRICK_SLAB, DnDBlocks.ICE_BRICKS)
+        gen.wall(DnDBlocks.ICE_BRICK_WALL, DnDBlocks.ICE_BRICKS)
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
 
@@ -84,16 +97,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDBlockLists.bigSoulCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
         }
-
-        gen.iceStairs(DnDBlocks.ICE_STAIRS, Blocks.ICE)
-        gen.slab(DnDBlocks.ICE_SLAB, Blocks.ICE)
-        gen.wall(DnDBlocks.ICE_WALL, Blocks.ICE)
-        gen.stairs(DnDBlocks.PACKED_ICE_STAIRS, Blocks.PACKED_ICE)
-        gen.slab(DnDBlocks.PACKED_ICE_SLAB, Blocks.PACKED_ICE)
-        gen.wall(DnDBlocks.PACKED_ICE_WALL, Blocks.PACKED_ICE)
-        gen.stairs(DnDBlocks.BLUE_ICE_STAIRS, Blocks.BLUE_ICE)
-        gen.slab(DnDBlocks.BLUE_ICE_SLAB, Blocks.BLUE_ICE)
-        gen.wall(DnDBlocks.BLUE_ICE_WALL, Blocks.BLUE_ICE)
 
         gen.stairs(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         gen.slab(DnDBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)

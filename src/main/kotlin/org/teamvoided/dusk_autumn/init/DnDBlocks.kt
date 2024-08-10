@@ -350,12 +350,26 @@ object DnDBlocks {
     val ICE_STAIRS = register("ice_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe())
     val ICE_SLAB = register("ice_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe())
     val ICE_WALL = register("ice_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe())
+    val ICE_BRICKS = register("ice_bricks", IceBlock(copy(ICE)).translucent().pickaxe())
+    val ICE_BRICK_STAIRS = register("ice_brick_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe())
+    val ICE_BRICK_SLAB = register("ice_brick_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe())
+    val ICE_BRICK_WALL = register("ice_brick_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe())
+
     val PACKED_ICE_STAIRS = register("packed_ice_stairs", stairsOf(PACKED_ICE).pickaxe())
     val PACKED_ICE_SLAB = register("packed_ice_slab", slabOf(PACKED_ICE).pickaxe())
     val PACKED_ICE_WALL = register("packed_ice_wall", wallOf(PACKED_ICE).pickaxe())
+    val PACKED_ICE_BRICKS = register("packed_ice_bricks", Block(copy(PACKED_ICE)).pickaxe())
+    val PACKED_ICE_BRICK_STAIRS = register("packed_ice_brick_stairs", stairsOf(PACKED_ICE).pickaxe())
+    val PACKED_ICE_BRICK_SLAB = register("packed_ice_brick_slab", slabOf(PACKED_ICE).pickaxe())
+    val PACKED_ICE_BRICK_WALL = register("packed_ice_brick_wall", wallOf(PACKED_ICE).pickaxe())
+
     val BLUE_ICE_STAIRS = register("blue_ice_stairs", stairsOf(BLUE_ICE).pickaxe())
     val BLUE_ICE_SLAB = register("blue_ice_slab", slabOf(BLUE_ICE).pickaxe())
     val BLUE_ICE_WALL = register("blue_ice_wall", wallOf(BLUE_ICE).pickaxe())
+    val BLUE_ICE_BRICKS = register("blue_ice_bricks", Block(copy(BLUE_ICE)).pickaxe())
+    val BLUE_ICE_BRICK_STAIRS = register("blue_ice_brick_stairs", stairsOf(BLUE_ICE).pickaxe())
+    val BLUE_ICE_BRICK_SLAB = register("blue_ice_brick_slab", slabOf(BLUE_ICE).pickaxe())
+    val BLUE_ICE_BRICK_WALL = register("blue_ice_brick_wall", wallOf(BLUE_ICE).pickaxe())
 
     val MOONCORE = register(
         "mooncore", CrytalClusterWithParticlesBlock(

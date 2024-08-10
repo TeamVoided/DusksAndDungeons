@@ -13,6 +13,7 @@ import net.minecraft.world.World
 
 class MeltableSlabBlock(settings: Settings) : SlabBlock(settings) {
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
+
         return if (stateFrom.isOf(this)) true else super.isSideInvisible(state, stateFrom, direction)
     }
 
