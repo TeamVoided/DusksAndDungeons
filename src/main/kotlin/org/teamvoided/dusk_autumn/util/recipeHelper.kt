@@ -182,7 +182,7 @@ fun RecipeExporter.createStair(output: ItemConvertible, block: ItemConvertible, 
 }
 
 fun RecipeExporter.createSlab(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
         .ingredient('#', block)
         .pattern("###")
         .criterion(item)
