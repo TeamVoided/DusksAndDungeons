@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumn.init
 import com.mojang.serialization.MapCodec
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import org.teamvoided.dusk_autumn.init.worldgen.DnDSurfaceBuilders
 import net.minecraft.world.gen.foliage.FoliagePlacer
 import net.minecraft.world.gen.foliage.FoliagePlacerType
 import net.minecraft.world.gen.root.RootPlacer
@@ -13,8 +12,10 @@ import net.minecraft.world.gen.treedecorator.TreeDecoratorType
 import net.minecraft.world.gen.trunk.TrunkPlacer
 import net.minecraft.world.gen.trunk.TrunkPlacerType
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DuskAutumns.isDev
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomes
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
+import org.teamvoided.dusk_autumn.init.worldgen.DnDSurfaceBuilders
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.foliage.ManhattanFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootPlacer
@@ -43,7 +44,8 @@ object DnDWorldgen {
     fun init() {
         DnDBiomes.init()
         DnDFeatures.init()
-        DnDSurfaceBuilders.init()
+
+        if (isDev()) DnDSurfaceBuilders.init()
     }
 
     private fun <P : TreeDecorator> registerTreeDecorator(id: String, codec: MapCodec<P>): TreeDecoratorType<P> {

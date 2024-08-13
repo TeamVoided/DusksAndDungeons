@@ -83,12 +83,13 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.createStackedCraft(DnDBlocks.STONE_PILLAR, Blocks.STONE_BRICKS, ItemTags.STONE_BRICKS)
         createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.STONE_PILLAR, Blocks.STONE)
         createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.STONE_PILLAR, Blocks.STONE_BRICKS)
+
         e.createStackedCraft(DnDBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
         createStonecuttingRecipe(
-            e,
-            RecipeCategory.BUILDING_BLOCKS,
-            DnDBlocks.DEEPSLATE_PILLAR,
-            Blocks.COBBLED_DEEPSLATE
+            e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.DEEPSLATE_PILLAR, Blocks.COBBLED_DEEPSLATE
+        )
+        createStonecuttingRecipe(
+            e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.DEEPSLATE_PILLAR, Blocks.POLISHED_DEEPSLATE
         )
         createStonecuttingRecipe(e, RecipeCategory.BUILDING_BLOCKS, DnDBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
 
@@ -135,7 +136,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
     private fun generateNetherRecipes(e: RecipeExporter) {
         e.createStair(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
         e.createSlab(DnDBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
-        e.createwall(DnDBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)
+        e.createWall(DnDBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)
         e.createStackedCraft(DnDBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
         e.createStonecuttedSet(
             listOf(Blocks.NETHERRACK),

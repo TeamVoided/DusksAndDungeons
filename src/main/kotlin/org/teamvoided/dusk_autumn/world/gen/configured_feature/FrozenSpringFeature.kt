@@ -1,19 +1,9 @@
 package org.teamvoided.dusk_autumn.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
-import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap
-import net.minecraft.block.Block.NeighborGroup
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.DoorBlock
-import net.minecraft.block.FluidFillable
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.fluid.FlowableFluid
-import net.minecraft.fluid.Fluid
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.StructureWorldAccess
 import net.minecraft.world.gen.feature.Feature
@@ -100,6 +90,8 @@ class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpri
         //add blocks in a diamond shape around given position until one goes over an overhang or goes out of range of config.horizontalRange, or until it loops config.spreadRange amount of times
         //if it goes over an overhang, run it back through placeColumnUntilBlocked and stop looping
         //ask ender how to add to a list unless it's a duplicate
+
+        //(ender) what ur looking for is a set its like a list but with no duplicates
         println("he he he haw")
     }
 

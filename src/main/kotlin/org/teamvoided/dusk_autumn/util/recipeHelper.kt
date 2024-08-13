@@ -163,8 +163,8 @@ fun RecipeExporter.createSlab(output: ItemConvertible, block: ItemConvertible) {
     createSlab(output, block, block)
 }
 
-fun RecipeExporter.createwall(output: ItemConvertible, block: ItemConvertible) {
-    createwall(output, block, block)
+fun RecipeExporter.createWall(output: ItemConvertible, block: ItemConvertible) {
+    createWall(output, block, block)
 }
 
 fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible) {
@@ -172,7 +172,7 @@ fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible) 
 }
 
 fun RecipeExporter.createStair(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
         .ingredient('#', block)
         .pattern("#  ")
         .pattern("## ")
@@ -189,7 +189,7 @@ fun RecipeExporter.createSlab(output: ItemConvertible, block: ItemConvertible, i
         .offerTo(this)
 }
 
-fun RecipeExporter.createwall(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
+fun RecipeExporter.createWall(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
     ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
         .ingredient('#', block)
         .pattern("###")

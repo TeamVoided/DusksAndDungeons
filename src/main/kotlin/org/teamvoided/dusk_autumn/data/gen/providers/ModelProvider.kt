@@ -146,7 +146,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
         gen.registerItemModel(DnDItems.CHILL_CHARGE)
         gen.registerHandheldItem(DnDItems.FREEZE_ROD)
-        gen.registerHandheldItem(DnDItems.ICE_SWORD)
+//        gen.registerHandheldItem(DnDItems.ICE_SWORD)
 
 
         val mossyPolish = id("block/overgrown/polished_overlay")

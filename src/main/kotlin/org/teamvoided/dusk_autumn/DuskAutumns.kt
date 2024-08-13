@@ -1,5 +1,6 @@
 package org.teamvoided.dusk_autumn
 
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumn.event.AddWanderingTrades
@@ -35,4 +36,6 @@ object DuskAutumns {
     fun id(path: String) = Identifier.of(MODID, path)
     fun mc(path: String) = Identifier.ofDefault(path)
     fun id(modId: String, path: String) = Identifier.of(modId, path)
+
+    fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
 }

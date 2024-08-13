@@ -82,7 +82,7 @@ object DnDItemGroups {
                 entries.addItem(
                     DnDItems.CHILL_CHARGE,
                     DnDItems.FREEZE_ROD,
-                    DnDItems.ICE_SWORD
+//                    DnDItems.ICE_SWORD
                 )
             }.build()
     )
