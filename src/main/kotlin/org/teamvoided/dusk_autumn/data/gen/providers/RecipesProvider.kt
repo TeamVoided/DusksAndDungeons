@@ -311,6 +311,4 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern(" #")
             .criterion(Items.BLACKSTONE).offerTo(e)
     }
-
-//    private fun generateRecipes(e: RecipeExporter) {}
 }

@@ -764,6 +764,12 @@ fun BlockStateModelGenerator.wall(wallBlock: Block, inId: Identifier) {
     this.registerParentedItemModel(wallBlock, Models.WALL_INVENTORY.upload(wallBlock, texture, this.modelCollector))
 }
 
+fun BlockStateModelGenerator.genPsudoFamily(stairs:Block, slab:Block, wall:Block, texture: Block){
+    this.stairs(stairs, texture)
+    this.slab(stairs, texture)
+    this.wall(stairs, texture)
+}
+
 fun BlockStateModelGenerator.fence(fenceBlock: Block, reference: Block) {
     val texture = Texture.texture(reference)
     val id = Models.FENCE_POST.upload(fenceBlock, texture, this.modelCollector)

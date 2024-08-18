@@ -171,7 +171,7 @@ object DnDItemLists {
         DnDBlocks.BIG_CHAIN,
         DnDBlocks.BIG_LANTERN,
         DnDBlocks.BIG_SOUL_LANTERN
-    ).toItems() + candles
+    ).toItems()
     val netherrackStuff = listOf(
         DnDBlocks.NETHERRACK_STAIRS,
         DnDBlocks.NETHERRACK_SLAB,
@@ -257,6 +257,41 @@ object DnDItemLists {
         DnDItems.BLACKSTONE_AXE,
         DnDItems.BLACKSTONE_SHOVEL,
         DnDItems.BLACKSTONE_HOE
+    )
+    val woodStuff = listOf(
+        DnDBlocks.OAK_WOOD_STAIRS,
+        DnDBlocks.OAK_WOOD_SLAB,
+        DnDBlocks.OAK_WOOD_WALL,
+        DnDBlocks.SPRUCE_WOOD_STAIRS,
+        DnDBlocks.SPRUCE_WOOD_SLAB,
+        DnDBlocks.SPRUCE_WOOD_WALL,
+        DnDBlocks.BIRCH_WOOD_STAIRS,
+        DnDBlocks.BIRCH_WOOD_SLAB,
+        DnDBlocks.BIRCH_WOOD_WALL,
+        DnDBlocks.JUNGLE_WOOD_STAIRS,
+        DnDBlocks.JUNGLE_WOOD_SLAB,
+        DnDBlocks.JUNGLE_WOOD_WALL,
+        DnDBlocks.ACACIA_WOOD_STAIRS,
+        DnDBlocks.ACACIA_WOOD_SLAB,
+        DnDBlocks.ACACIA_WOOD_WALL,
+        DnDBlocks.DARK_OAK_WOOD_STAIRS,
+        DnDBlocks.DARK_OAK_WOOD_SLAB,
+        DnDBlocks.DARK_OAK_WOOD_WALL,
+        DnDBlocks.MANGROVE_WOOD_STAIRS,
+        DnDBlocks.MANGROVE_WOOD_SLAB,
+        DnDBlocks.MANGROVE_WOOD_WALL,
+        DnDBlocks.CHERRY_WOOD_STAIRS,
+        DnDBlocks.CHERRY_WOOD_SLAB,
+        DnDBlocks.CHERRY_WOOD_WALL,
+        DnDBlocks.CASCADE_WOOD_STAIRS,
+        DnDBlocks.CASCADE_WOOD_SLAB,
+        DnDBlocks.CASCADE_WOOD_WALL,
+        DnDBlocks.CRIMSON_STEM_STAIRS,
+        DnDBlocks.CRIMSON_STEM_SLAB,
+        DnDBlocks.CRIMSON_STEM_WALL,
+        DnDBlocks.WARPED_STEM_STAIRS,
+        DnDBlocks.WARPED_STEM_SLAB,
+        DnDBlocks.WARPED_STEM_WALL,
     )
     val logPiles = listOf(
         DnDBlocks.OAK_LOG_PILE,

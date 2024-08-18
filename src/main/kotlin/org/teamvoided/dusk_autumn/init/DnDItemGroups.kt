@@ -42,6 +42,7 @@ object DnDItemGroups {
                     DnDItemLists.moonberry,
 //                    DnDItemLists.pineWood,
                     DnDItemLists.bonewoodWood,
+                    DnDItemLists.woodStuff,
                     DnDItemLists.logPiles,
                     DnDItemLists.leafPiles,
                     DnDItemLists.polishedStone,
