@@ -40,6 +40,19 @@ object DnDBlockLists {
         Items.MAGENTA_DYE,
         Items.PINK_DYE
     )
+    val logsAndWood = listOf(
+        (Blocks.OAK_LOG to Blocks.STRIPPED_OAK_LOG),
+        (Blocks.SPRUCE_LOG to Blocks.STRIPPED_SPRUCE_LOG),
+        (Blocks.BIRCH_LOG to Blocks.STRIPPED_BIRCH_LOG),
+        (Blocks.JUNGLE_LOG to Blocks.STRIPPED_JUNGLE_LOG),
+        (Blocks.ACACIA_LOG to Blocks.STRIPPED_ACACIA_LOG),
+        (Blocks.DARK_OAK_LOG to Blocks.STRIPPED_DARK_OAK_LOG),
+        (Blocks.MANGROVE_LOG to Blocks.STRIPPED_MANGROVE_LOG),
+        (Blocks.CHERRY_LOG to Blocks.STRIPPED_CHERRY_LOG),
+        (DnDBlocks.CASCADE_LOG to DnDBlocks.STRIPPED_CASCADE_LOG),
+        (Blocks.CRIMSON_STEM to Blocks.STRIPPED_CRIMSON_STEM),
+        (Blocks.WARPED_STEM to Blocks.STRIPPED_WARPED_STEM)
+    )
     val bigCandles = listOf(
         (DnDBlocks.BIG_CANDLE to DnDBlocks.BIG_CANDLE_CAKE),
         (DnDBlocks.BIG_WHITE_CANDLE to DnDBlocks.BIG_WHITE_CANDLE_CAKE),
@@ -96,6 +109,19 @@ object DnDBlockLists {
         (DnDBlocks.BIG_PURPLE_SOUL_CANDLE to DnDBlocks.BIG_PURPLE_SOUL_CANDLE_CAKE),
         (DnDBlocks.BIG_MAGENTA_SOUL_CANDLE to DnDBlocks.BIG_MAGENTA_SOUL_CANDLE_CAKE),
         (DnDBlocks.BIG_PINK_SOUL_CANDLE to DnDBlocks.BIG_PINK_SOUL_CANDLE_CAKE),
+    )
+    val hollowLogs = listOf(
+        DnDBlocks.HOLLOW_OAK_LOG,
+        DnDBlocks.HOLLOW_SPRUCE_LOG,
+        DnDBlocks.HOLLOW_BIRCH_LOG ,
+        DnDBlocks.HOLLOW_JUNGLE_LOG,
+        DnDBlocks.HOLLOW_ACACIA_LOG,
+        DnDBlocks.HOLLOW_DARK_OAK_LOG,
+        DnDBlocks.HOLLOW_MANGROVE_LOG,
+        DnDBlocks.HOLLOW_CHERRY_LOG,
+        DnDBlocks.HOLLOW_CASCADE_LOG ,
+        DnDBlocks.HOLLOW_CRIMSON_STEM,
+        DnDBlocks.HOLLOW_WARPED_STEM
     )
     val logPiles = listOf(
         (DnDBlocks.OAK_LOG_PILE to Blocks.OAK_LOG),

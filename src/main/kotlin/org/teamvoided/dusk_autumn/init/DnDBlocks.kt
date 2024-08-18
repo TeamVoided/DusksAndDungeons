@@ -263,6 +263,19 @@ object DnDBlocks {
         ).cutout().axe()
     )
 
+
+    val HOLLOW_OAK_LOG = register("hollow_oak_log", hollowLog(OAK_WOOD))
+    val HOLLOW_SPRUCE_LOG = register("hollow_spruce_log", hollowLog(SPRUCE_WOOD))
+    val HOLLOW_BIRCH_LOG = register("hollow_birch_log", hollowLog(BIRCH_WOOD))
+    val HOLLOW_JUNGLE_LOG = register("hollow_jungle_log", hollowLog(JUNGLE_WOOD))
+    val HOLLOW_ACACIA_LOG = register("hollow_acacia_log", hollowLog(ACACIA_WOOD))
+    val HOLLOW_DARK_OAK_LOG = register("hollow_dark_oak_log", hollowLog(DARK_OAK_WOOD))
+    val HOLLOW_MANGROVE_LOG = register("hollow_mangrove_log", hollowLog(MANGROVE_WOOD))
+    val HOLLOW_CHERRY_LOG = register("hollow_cherry_log", hollowLog(CHERRY_WOOD))
+    val HOLLOW_CASCADE_LOG = register("hollow_cascade_log", hollowLog(CASCADE_WOOD))
+    val HOLLOW_CRIMSON_STEM = register("hollow_crimson_stem", hollowLog(CRIMSON_HYPHAE))
+    val HOLLOW_WARPED_STEM = register("hollow_warped_stem", hollowLog(WARPED_HYPHAE))
+
     val OAK_WOOD_STAIRS = register("oak_wood_stairs", stairsOf(OAK_WOOD))
     val OAK_WOOD_SLAB = register("oak_wood_slab", slabOf(OAK_WOOD))
     val OAK_WOOD_WALL = register("oak_wood_wall", wallOf(OAK_WOOD))
@@ -290,12 +303,12 @@ object DnDBlocks {
     val CASCADE_WOOD_STAIRS = register("cascade_wood_stairs", stairsOf(CASCADE_WOOD))
     val CASCADE_WOOD_SLAB = register("cascade_wood_slab", slabOf(CASCADE_WOOD))
     val CASCADE_WOOD_WALL = register("cascade_wood_wall", wallOf(CASCADE_WOOD))
-    val CRIMSON_STEM_STAIRS = register("crimson_stem_stairs", stairsOf(CRIMSON_STEM))
-    val CRIMSON_STEM_SLAB = register("crimson_stem_slab", slabOf(CRIMSON_STEM))
-    val CRIMSON_STEM_WALL = register("crimson_stem_wall", wallOf(CRIMSON_STEM))
-    val WARPED_STEM_STAIRS = register("warped_stem_stairs", stairsOf(WARPED_STEM))
-    val WARPED_STEM_SLAB = register("warped_stem_slab", slabOf(WARPED_STEM))
-    val WARPED_STEM_WALL = register("warped_stem_wall", wallOf(WARPED_STEM))
+    val CRIMSON_HYPHAE_STAIRS = register("crimson_hyphae_stairs", stairsOf(CRIMSON_HYPHAE))
+    val CRIMSON_HYPHAE_SLAB = register("crimson_hyphae_slab", slabOf(CRIMSON_HYPHAE))
+    val CRIMSON_HYPHAE_WALL = register("crimson_hyphae_wall", wallOf(CRIMSON_HYPHAE))
+    val WARPED_HYPHAE_STAIRS = register("warped_hyphae_stairs", stairsOf(WARPED_HYPHAE))
+    val WARPED_HYPHAE_SLAB = register("warped_hyphae_slab", slabOf(WARPED_HYPHAE))
+    val WARPED_HYPHAE_WALL = register("warped_hyphae_wall", wallOf(WARPED_HYPHAE))
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
     val OAK_LOG_PILE = register("oak_log_pile", logPile(OAK_WOOD))

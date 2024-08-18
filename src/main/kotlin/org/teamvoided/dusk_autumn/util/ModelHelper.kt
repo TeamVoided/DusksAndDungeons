@@ -26,6 +26,7 @@ import java.util.*
 
 
 val ALL_KRY: TextureKey = TextureKey.of("all")
+val INNER: TextureKey = TextureKey.of("inner")
 
 fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
     val texture = Texture().put(TextureKey.ALL, overlay)
@@ -764,10 +765,15 @@ fun BlockStateModelGenerator.wall(wallBlock: Block, inId: Identifier) {
     this.registerParentedItemModel(wallBlock, Models.WALL_INVENTORY.upload(wallBlock, texture, this.modelCollector))
 }
 
-fun BlockStateModelGenerator.genPsudoFamily(stairs:Block, slab:Block, wall:Block, texture: Block){
+fun BlockStateModelGenerator.genPsudoFamily(stairs: Block, slab: Block, wall: Block, texture: Block) {
     this.stairs(stairs, texture)
-    this.slab(stairs, texture)
-    this.wall(stairs, texture)
+    this.slab(slab, texture)
+    this.wall(wall, texture)
+}
+fun BlockStateModelGenerator.genPsudoFamily(stairs: Block, slab: Block, wall: Block, texture: Block, fullSlab: Block) {
+    this.stairs(stairs, texture)
+    this.slab(slab, texture, fullSlab)
+    this.wall(wall, texture)
 }
 
 fun BlockStateModelGenerator.fence(fenceBlock: Block, reference: Block) {
@@ -784,6 +790,21 @@ fun BlockStateModelGenerator.registerHandheldItem(item: Item) {
         ModelIds.getItemModelId(item),
         Texture.layer0(item),
         this.modelCollector
+    )
+}
+
+fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, strippedLog: Block) {
+    val texture: Texture = Texture.texture(hollowLog)
+        .put(TextureKey.SIDE, log.model())
+        .put(TextureKey.END, log.model("_top"))
+        .put(INNER, strippedLog.model())
+    val identifier: Identifier = block("parent/hollow_log", TextureKey.SIDE, TextureKey.END, INNER)
+        .upload(hollowLog, texture, this.modelCollector)
+    this.blockStateCollector.accept(
+        BlockStateModelGenerator.createAxisRotatedBlockState(
+            hollowLog,
+            identifier
+        )
     )
 }
 

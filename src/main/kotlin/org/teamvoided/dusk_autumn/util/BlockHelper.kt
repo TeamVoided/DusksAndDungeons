@@ -3,15 +3,13 @@ package org.teamvoided.dusk_autumn.util
 import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
 import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.block.*
+import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
-import org.teamvoided.dusk_autumn.block.LeafPileBlock
-import org.teamvoided.dusk_autumn.block.LogPileBlock
-import org.teamvoided.dusk_autumn.block.SoulCandleBlock
-import org.teamvoided.dusk_autumn.block.SoulCandleCakeBlock
+import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.big.BigCandleBlock
 import org.teamvoided.dusk_autumn.block.big.BigCandleCakeBlock
 import org.teamvoided.dusk_autumn.block.big.BigSoulCandleBlock
@@ -110,7 +108,7 @@ fun bigSoulCandleCakeOf(block: Block): Block = bigSoulCandleCakeOf(block, DnDBlo
 fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block =
     BigSoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
 
-
+fun hollowLog(log:Block): Block = HollowLogBlock(AbstractBlock.Settings.copy(log))
 fun logPile(log:Block): Block = LogPileBlock(AbstractBlock.Settings.copy(log).nonOpaque())
 fun leafPile(): Block = leafPile(MapColor.PLANT, BlockSoundGroup.GRASS)
 fun leafPile(soundGroup: BlockSoundGroup): Block = leafPile(MapColor.PLANT, soundGroup)

@@ -89,13 +89,43 @@ fun RecipeExporter.smeltDefault(
 }
 
 fun RecipeExporter.createOvergrown(
-    block: ItemConvertible,
-    stone: ItemConvertible
+    output: ItemConvertible,
+    input: ItemConvertible
 ) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block)
-        .ingredient(Ingredient.ofItems(stone))
-        .ingredient(Ingredient.ofTag(ItemTags.LEAVES))
-        .criterion(stone)
+    this.createTwoPiece(output, input, ItemTags.LEAVES)
+}
+
+fun RecipeExporter.createTwoPiece(
+    input1: ItemConvertible,
+    input2: ItemConvertible,
+    output: ItemConvertible
+) {
+    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+        .ingredient(Ingredient.ofItems(input1))
+        .ingredient(Ingredient.ofItems(input2))
+        .criterion(input1)
+        .criterion(input2)
+        .offerTo(this)
+}
+
+fun RecipeExporter.createTwoPiece(
+    output: ItemConvertible,
+    input1: ItemConvertible,
+    input2: TagKey<Item>
+) {
+    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+        .ingredient(Ingredient.ofItems(input1))
+        .ingredient(Ingredient.ofTag(input2))
+        .criterion(input1)
+        .criterion(input2)
+        .offerTo(this)
+}
+fun RecipeExporter.createSmallSquare(output: ItemConvertible, input: ItemConvertible) {
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
+        .ingredient('#', input)
+        .pattern("##")
+        .pattern("##")
+        .criterion(input)
         .offerTo(this)
 }
 
@@ -134,6 +164,15 @@ fun RecipeExporter.createStonecuttedSet(
                 )
             }
         }
+    }
+}
+
+fun RecipeExporter.createStonecuttedFromList(
+    input: List<Block>,
+    output: ItemConvertible?
+) {
+    input.forEach {
+        FabricRecipeProvider.createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, output, it)
     }
 }
 

@@ -175,48 +175,51 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
         gen.genPsudoFamily(
             DnDBlocks.OAK_WOOD_STAIRS, DnDBlocks.OAK_WOOD_SLAB, DnDBlocks.OAK_WOOD_WALL,
-            Blocks.OAK_WOOD
+            Blocks.OAK_LOG, Blocks.OAK_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.SPRUCE_WOOD_STAIRS, DnDBlocks.SPRUCE_WOOD_SLAB, DnDBlocks.SPRUCE_WOOD_WALL,
-            Blocks.SPRUCE_WOOD
+            Blocks.SPRUCE_LOG, Blocks.SPRUCE_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.BIRCH_WOOD_STAIRS, DnDBlocks.BIRCH_WOOD_SLAB, DnDBlocks.BIRCH_WOOD_WALL,
-            Blocks.BIRCH_WOOD
+            Blocks.BIRCH_LOG, Blocks.BIRCH_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.JUNGLE_WOOD_STAIRS, DnDBlocks.JUNGLE_WOOD_SLAB, DnDBlocks.JUNGLE_WOOD_WALL,
-            Blocks.JUNGLE_WOOD
+            Blocks.JUNGLE_LOG, Blocks.JUNGLE_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.ACACIA_WOOD_STAIRS, DnDBlocks.ACACIA_WOOD_SLAB, DnDBlocks.ACACIA_WOOD_WALL,
-            Blocks.ACACIA_WOOD
+            Blocks.ACACIA_LOG, Blocks.ACACIA_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.DARK_OAK_WOOD_STAIRS, DnDBlocks.DARK_OAK_WOOD_SLAB, DnDBlocks.DARK_OAK_WOOD_WALL,
-            Blocks.DARK_OAK_WOOD
+            Blocks.DARK_OAK_LOG, Blocks.DARK_OAK_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.MANGROVE_WOOD_STAIRS, DnDBlocks.MANGROVE_WOOD_SLAB, DnDBlocks.MANGROVE_WOOD_WALL,
-            Blocks.MANGROVE_WOOD
+            Blocks.MANGROVE_LOG, Blocks.MANGROVE_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.CHERRY_WOOD_STAIRS, DnDBlocks.CHERRY_WOOD_SLAB, DnDBlocks.CHERRY_WOOD_WALL,
-            Blocks.CHERRY_WOOD
+            Blocks.CHERRY_LOG, Blocks.CHERRY_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.CASCADE_WOOD_STAIRS, DnDBlocks.CASCADE_WOOD_SLAB, DnDBlocks.CASCADE_WOOD_WALL,
-            DnDBlocks.CASCADE_WOOD
+            DnDBlocks.CASCADE_LOG, DnDBlocks.CASCADE_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.CRIMSON_STEM_STAIRS, DnDBlocks.CRIMSON_STEM_SLAB, DnDBlocks.CRIMSON_STEM_WALL,
-            Blocks.CRIMSON_STEM
+            DnDBlocks.CRIMSON_HYPHAE_STAIRS, DnDBlocks.CRIMSON_HYPHAE_SLAB, DnDBlocks.CRIMSON_HYPHAE_WALL,
+            Blocks.CRIMSON_STEM, Blocks.CRIMSON_HYPHAE
         )
         gen.genPsudoFamily(
-            DnDBlocks.WARPED_STEM_STAIRS, DnDBlocks.WARPED_STEM_SLAB, DnDBlocks.WARPED_STEM_WALL,
-            Blocks.WARPED_STEM
+            DnDBlocks.WARPED_HYPHAE_STAIRS, DnDBlocks.WARPED_HYPHAE_SLAB, DnDBlocks.WARPED_HYPHAE_WALL,
+            Blocks.WARPED_STEM, Blocks.WARPED_HYPHAE
         )
+        DnDBlockLists.hollowLogs.forEachIndexed { idx, it ->
+            gen.hollowLog(it, DnDBlockLists.logsAndWood[idx].first , DnDBlockLists.logsAndWood[idx].second)
+        }
         DnDBlockLists.logPiles.forEach { (it, texture) ->
             gen.createLogPile(it, texture)
         }

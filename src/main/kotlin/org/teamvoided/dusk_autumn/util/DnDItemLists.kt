@@ -286,12 +286,12 @@ object DnDItemLists {
         DnDBlocks.CASCADE_WOOD_STAIRS,
         DnDBlocks.CASCADE_WOOD_SLAB,
         DnDBlocks.CASCADE_WOOD_WALL,
-        DnDBlocks.CRIMSON_STEM_STAIRS,
-        DnDBlocks.CRIMSON_STEM_SLAB,
-        DnDBlocks.CRIMSON_STEM_WALL,
-        DnDBlocks.WARPED_STEM_STAIRS,
-        DnDBlocks.WARPED_STEM_SLAB,
-        DnDBlocks.WARPED_STEM_WALL,
+        DnDBlocks.CRIMSON_HYPHAE_STAIRS,
+        DnDBlocks.CRIMSON_HYPHAE_SLAB,
+        DnDBlocks.CRIMSON_HYPHAE_WALL,
+        DnDBlocks.WARPED_HYPHAE_STAIRS,
+        DnDBlocks.WARPED_HYPHAE_SLAB,
+        DnDBlocks.WARPED_HYPHAE_WALL,
     )
     val logPiles = listOf(
         DnDBlocks.OAK_LOG_PILE,
