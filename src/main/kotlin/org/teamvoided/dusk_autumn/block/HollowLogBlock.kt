@@ -15,7 +15,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 import org.teamvoided.dusk_autumn.util.rotateColumn
 
-class HollowLogBlock(settings: Settings) : PillarBlock(settings), Waterloggable {
+open class HollowLogBlock(settings: Settings) : PillarBlock(settings), Waterloggable {
     init {
         this.defaultState = stateManager.defaultState
             .with(AXIS, Direction.Axis.X)
