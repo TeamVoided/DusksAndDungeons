@@ -40,7 +40,7 @@ object DnDBlockLists {
         Items.MAGENTA_DYE,
         Items.PINK_DYE
     )
-    val logsAndWood = listOf(
+    val logsAndStrippedLogs = listOf(
         (Blocks.OAK_LOG to Blocks.STRIPPED_OAK_LOG),
         (Blocks.SPRUCE_LOG to Blocks.STRIPPED_SPRUCE_LOG),
         (Blocks.BIRCH_LOG to Blocks.STRIPPED_BIRCH_LOG),
@@ -52,6 +52,19 @@ object DnDBlockLists {
         (DnDBlocks.CASCADE_LOG to DnDBlocks.STRIPPED_CASCADE_LOG),
         (Blocks.CRIMSON_STEM to Blocks.STRIPPED_CRIMSON_STEM),
         (Blocks.WARPED_STEM to Blocks.STRIPPED_WARPED_STEM)
+    )
+    val woodAndStrippedWood = listOf(
+        (Blocks.OAK_WOOD to Blocks.STRIPPED_OAK_WOOD),
+        (Blocks.SPRUCE_WOOD to Blocks.STRIPPED_SPRUCE_WOOD),
+        (Blocks.BIRCH_WOOD to Blocks.STRIPPED_BIRCH_WOOD),
+        (Blocks.JUNGLE_WOOD to Blocks.STRIPPED_JUNGLE_WOOD),
+        (Blocks.ACACIA_WOOD to Blocks.STRIPPED_ACACIA_WOOD),
+        (Blocks.DARK_OAK_WOOD to Blocks.STRIPPED_DARK_OAK_WOOD),
+        (Blocks.MANGROVE_WOOD to Blocks.STRIPPED_MANGROVE_WOOD),
+        (Blocks.CHERRY_WOOD to Blocks.STRIPPED_CHERRY_WOOD),
+        (DnDBlocks.CASCADE_WOOD to DnDBlocks.STRIPPED_CASCADE_WOOD),
+        (Blocks.CRIMSON_HYPHAE to Blocks.STRIPPED_CRIMSON_HYPHAE),
+        (Blocks.WARPED_HYPHAE to Blocks.STRIPPED_WARPED_HYPHAE)
     )
     val bigCandles = listOf(
         (DnDBlocks.BIG_CANDLE to DnDBlocks.BIG_CANDLE_CAKE),
@@ -122,6 +135,19 @@ object DnDBlockLists {
         DnDBlocks.HOLLOW_CASCADE_LOG ,
         DnDBlocks.HOLLOW_CRIMSON_STEM,
         DnDBlocks.HOLLOW_WARPED_STEM
+    )
+    val hollowStrippedLogs = listOf(
+        DnDBlocks.HOLLOW_STRIPPED_OAK_LOG,
+        DnDBlocks.HOLLOW_STRIPPED_SPRUCE_LOG,
+        DnDBlocks.HOLLOW_STRIPPED_BIRCH_LOG ,
+        DnDBlocks.HOLLOW_STRIPPED_JUNGLE_LOG,
+        DnDBlocks.HOLLOW_STRIPPED_ACACIA_LOG,
+        DnDBlocks.HOLLOW_STRIPPED_DARK_OAK_LOG,
+        DnDBlocks.HOLLOW_STRIPPED_MANGROVE_LOG,
+        DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG,
+        DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG ,
+        DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM,
+        DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM
     )
     val logPiles = listOf(
         (DnDBlocks.OAK_LOG_PILE to Blocks.OAK_LOG),

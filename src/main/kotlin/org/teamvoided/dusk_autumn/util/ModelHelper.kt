@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import net.minecraft.block.AbstractLichenBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.PillarBlock
 import net.minecraft.block.SnowyBlock
 import net.minecraft.block.enums.*
 import net.minecraft.data.client.model.*
@@ -18,9 +19,7 @@ import net.minecraft.state.property.Property
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.block.LeafPileBlock
-import org.teamvoided.dusk_autumn.block.LogPileBlock
-import org.teamvoided.dusk_autumn.block.MoonberryVineBlock
+import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import java.util.*
 
@@ -770,6 +769,7 @@ fun BlockStateModelGenerator.genPsudoFamily(stairs: Block, slab: Block, wall: Bl
     this.slab(slab, texture)
     this.wall(wall, texture)
 }
+
 fun BlockStateModelGenerator.genPsudoFamily(stairs: Block, slab: Block, wall: Block, texture: Block, fullSlab: Block) {
     this.stairs(stairs, texture)
     this.slab(slab, texture, fullSlab)
@@ -798,11 +798,81 @@ fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, strippedLog
         .put(TextureKey.SIDE, log.model())
         .put(TextureKey.END, log.model("_top"))
         .put(INNER, strippedLog.model())
-    val identifier: Identifier = block("parent/hollow_log", TextureKey.SIDE, TextureKey.END, INNER)
-        .upload(hollowLog, texture, this.modelCollector)
+    val model = MultipartBlockStateSupplier.create(hollowLog)
+    val allDirectionFalse = When.create()
+        .set(HollowLogBlockWithCutting.NORTH, false)
+        .set(HollowLogBlockWithCutting.SOUTH, false)
+        .set(HollowLogBlockWithCutting.EAST, false)
+        .set(HollowLogBlockWithCutting.WEST, false)
+    val directions = listOf(
+        Direction.NORTH,
+        Direction.EAST,
+        Direction.SOUTH,
+        Direction.WEST
+    )
+    var identifier: Identifier
+    directions.forEach {
+        block("parent/hollow_log_$it", TextureKey.SIDE, TextureKey.END, INNER)
+            .upload(hollowLog, "_$it", texture, this.modelCollector)
+        identifier = hollowLog.model("_$it")
+        model.with(
+            When.create()
+                .set(PillarBlock.AXIS, Direction.Axis.X)
+                .set(HollowLogBlockWithCutting.getProperty(it), true),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, identifier)
+                .put(VariantSettings.Y, Rotation.R90)
+        )
+        model.with(
+            allDirectionFalse,
+            BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+        )
+        model.with(
+            When.create()
+                .set(PillarBlock.AXIS, Direction.Axis.Y)
+                .set(HollowLogBlockWithCutting.getProperty(it), true),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, identifier)
+                .put(VariantSettings.X, Rotation.R270)
+        )
+        model.with(
+            allDirectionFalse,
+            BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+        )
+        model.with(
+            When.create()
+                .set(PillarBlock.AXIS, Direction.Axis.Z)
+                .set(HollowLogBlockWithCutting.getProperty(it), true),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, identifier)
+        )
+        model.with(
+            allDirectionFalse,
+            BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+        )
+    }
+    this.registerParentedItemModel(
+        hollowLog, block("parent/hollow_log", TextureKey.SIDE, TextureKey.END, INNER)
+            .upload(hollowLog, texture, this.modelCollector)
+    )
+    this.blockStateCollector.accept(model)
+//    this.blockStateCollector.accept(
+//        BlockStateModelGenerator.createAxisRotatedBlockState(
+//            hollowLog,
+//            identifier
+//        )
+//    )
+}
+
+fun BlockStateModelGenerator.hollowBambooBlock(hollowBamboo: Block, bamboo: Block) {
+    val texture: Texture = Texture.texture(hollowBamboo)
+        .put(TextureKey.SIDE, bamboo.model())
+        .put(TextureKey.END, bamboo.model("_top"))
+    val identifier: Identifier = block("parent/hollow_bamboo_block", TextureKey.SIDE, TextureKey.END)
+        .upload(hollowBamboo, texture, this.modelCollector)
     this.blockStateCollector.accept(
         BlockStateModelGenerator.createAxisRotatedBlockState(
-            hollowLog,
+            hollowBamboo,
             identifier
         )
     )

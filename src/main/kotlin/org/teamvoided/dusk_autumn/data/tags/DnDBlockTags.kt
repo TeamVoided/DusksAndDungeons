@@ -7,6 +7,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 object DnDBlockTags {
     val CASCADE_LOGS = create("cascade_logs")
+    val WOODEN_WALLS = create("wooden_walls")
     val LOG_PILES = create("log_piles")
     val LEAF_PILES = create("leaf_piles")
     val LEAF_PILES_PLACE_ON = create("leaf_piles_place_on")

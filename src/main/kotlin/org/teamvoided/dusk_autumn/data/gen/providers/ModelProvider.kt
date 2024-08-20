@@ -218,8 +218,21 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             Blocks.WARPED_STEM, Blocks.WARPED_HYPHAE
         )
         DnDBlockLists.hollowLogs.forEachIndexed { idx, it ->
-            gen.hollowLog(it, DnDBlockLists.logsAndWood[idx].first , DnDBlockLists.logsAndWood[idx].second)
+            val log = DnDBlockLists.logsAndStrippedLogs[idx].first
+            val strippedLog = DnDBlockLists.logsAndStrippedLogs[idx].second
+            gen.hollowLog(
+                it,
+                log,
+                strippedLog
+            )
+            gen.hollowLog(
+                DnDBlockLists.hollowStrippedLogs[idx],
+                strippedLog,
+                strippedLog
+            )
         }
+        gen.hollowBambooBlock(DnDBlocks.HOLLOW_BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK)
+        gen.hollowBambooBlock(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
         DnDBlockLists.logPiles.forEach { (it, texture) ->
             gen.createLogPile(it, texture)
         }

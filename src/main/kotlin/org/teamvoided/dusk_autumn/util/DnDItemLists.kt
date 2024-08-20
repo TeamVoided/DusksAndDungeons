@@ -258,41 +258,87 @@ object DnDItemLists {
         DnDItems.BLACKSTONE_SHOVEL,
         DnDItems.BLACKSTONE_HOE
     )
-    val woodStuff = listOf(
+    val oakWoodStuff = listOf(
         DnDBlocks.OAK_WOOD_STAIRS,
         DnDBlocks.OAK_WOOD_SLAB,
-        DnDBlocks.OAK_WOOD_WALL,
+        DnDBlocks.OAK_WOOD_WALL
+    )
+    val spruceWoodStuff = listOf(
         DnDBlocks.SPRUCE_WOOD_STAIRS,
         DnDBlocks.SPRUCE_WOOD_SLAB,
-        DnDBlocks.SPRUCE_WOOD_WALL,
+        DnDBlocks.SPRUCE_WOOD_WALL
+    )
+    val birchWoodStuff = listOf(
         DnDBlocks.BIRCH_WOOD_STAIRS,
         DnDBlocks.BIRCH_WOOD_SLAB,
-        DnDBlocks.BIRCH_WOOD_WALL,
+        DnDBlocks.BIRCH_WOOD_WALL
+    )
+    val jungleWoodStuff = listOf(
         DnDBlocks.JUNGLE_WOOD_STAIRS,
         DnDBlocks.JUNGLE_WOOD_SLAB,
-        DnDBlocks.JUNGLE_WOOD_WALL,
+        DnDBlocks.JUNGLE_WOOD_WALL
+    )
+    val acaciaWoodStuff = listOf(
         DnDBlocks.ACACIA_WOOD_STAIRS,
         DnDBlocks.ACACIA_WOOD_SLAB,
-        DnDBlocks.ACACIA_WOOD_WALL,
+        DnDBlocks.ACACIA_WOOD_WALL
+    )
+    val darkOakWoodStuff = listOf(
         DnDBlocks.DARK_OAK_WOOD_STAIRS,
         DnDBlocks.DARK_OAK_WOOD_SLAB,
-        DnDBlocks.DARK_OAK_WOOD_WALL,
+        DnDBlocks.DARK_OAK_WOOD_WALL
+    )
+    val mangroveWoodStuff = listOf(
         DnDBlocks.MANGROVE_WOOD_STAIRS,
         DnDBlocks.MANGROVE_WOOD_SLAB,
-        DnDBlocks.MANGROVE_WOOD_WALL,
+        DnDBlocks.MANGROVE_WOOD_WALL
+    )
+    val cherryWoodStuff = listOf(
         DnDBlocks.CHERRY_WOOD_STAIRS,
         DnDBlocks.CHERRY_WOOD_SLAB,
-        DnDBlocks.CHERRY_WOOD_WALL,
+        DnDBlocks.CHERRY_WOOD_WALL
+    )
+    val cascadeWoodStuff = listOf(
         DnDBlocks.CASCADE_WOOD_STAIRS,
         DnDBlocks.CASCADE_WOOD_SLAB,
-        DnDBlocks.CASCADE_WOOD_WALL,
+        DnDBlocks.CASCADE_WOOD_WALL
+    )
+    val crimsonHyphaeStuff = listOf(
         DnDBlocks.CRIMSON_HYPHAE_STAIRS,
         DnDBlocks.CRIMSON_HYPHAE_SLAB,
-        DnDBlocks.CRIMSON_HYPHAE_WALL,
+        DnDBlocks.CRIMSON_HYPHAE_WALL
+    )
+    val warpedHyphaeStuff = listOf(
         DnDBlocks.WARPED_HYPHAE_STAIRS,
         DnDBlocks.WARPED_HYPHAE_SLAB,
         DnDBlocks.WARPED_HYPHAE_WALL,
     )
+    val woodLists = listOf(
+        oakWoodStuff,
+        spruceWoodStuff,
+        birchWoodStuff,
+        jungleWoodStuff,
+        acaciaWoodStuff,
+        darkOakWoodStuff,
+        mangroveWoodStuff,
+        cherryWoodStuff,
+        cascadeWoodStuff,
+        crimsonHyphaeStuff,
+        warpedHyphaeStuff
+    )
+    val woodStuff =
+        listOf(DnDBlocks.HOLLOW_OAK_LOG, DnDBlocks.HOLLOW_STRIPPED_OAK_LOG) + oakWoodStuff +
+                DnDBlocks.HOLLOW_SPRUCE_LOG + DnDBlocks.HOLLOW_STRIPPED_SPRUCE_LOG + spruceWoodStuff +
+                DnDBlocks.HOLLOW_BIRCH_LOG + DnDBlocks.HOLLOW_STRIPPED_BIRCH_LOG + birchWoodStuff +
+                DnDBlocks.HOLLOW_JUNGLE_LOG + DnDBlocks.HOLLOW_STRIPPED_JUNGLE_LOG + jungleWoodStuff +
+                DnDBlocks.HOLLOW_ACACIA_LOG + DnDBlocks.HOLLOW_STRIPPED_ACACIA_LOG + acaciaWoodStuff +
+                DnDBlocks.HOLLOW_DARK_OAK_LOG + DnDBlocks.HOLLOW_STRIPPED_DARK_OAK_LOG + darkOakWoodStuff +
+                DnDBlocks.HOLLOW_MANGROVE_LOG + DnDBlocks.HOLLOW_STRIPPED_MANGROVE_LOG + mangroveWoodStuff +
+                DnDBlocks.HOLLOW_CHERRY_LOG + DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG + cherryWoodStuff +
+                DnDBlocks.HOLLOW_CASCADE_LOG + DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG + cascadeWoodStuff +
+                DnDBlocks.HOLLOW_BAMBOO_BLOCK + DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK +
+                DnDBlocks.HOLLOW_CRIMSON_STEM + DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM + crimsonHyphaeStuff +
+                DnDBlocks.HOLLOW_WARPED_STEM + DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM + warpedHyphaeStuff
     val logPiles = listOf(
         DnDBlocks.OAK_LOG_PILE,
         DnDBlocks.SPRUCE_LOG_PILE,

@@ -54,7 +54,7 @@ open class HollowLogBlock(settings: Settings) : PillarBlock(settings), Waterlogg
         pos: BlockPos,
         context: ShapeContext
     ): VoxelShape {
-        return (SHAPE).rotateColumn(state.get(AXIS))
+        return SHAPE.rotateColumn(state.get(AXIS))
     }
 
     override fun getRaycastShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
