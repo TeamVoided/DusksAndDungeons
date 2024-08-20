@@ -26,8 +26,8 @@ class HollowBambooBlock(settings: Settings) : HollowLogBlockWithCutting(settings
 
     companion object {
         val NORTH_BAMBOO_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 4.0)
-        val SOUTH_BAMBOO_SHAPE: VoxelShape = createCuboidShape(12.0, 0.0, 0.0, 16.0, 16.0, 16.0)
-        val EAST_BAMBOO_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 12.0, 16.0, 16.0, 16.0)
+        val SOUTH_BAMBOO_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 12.0, 16.0, 16.0, 16.0)
+        val EAST_BAMBOO_SHAPE: VoxelShape = createCuboidShape(12.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         val WEST_BAMBOO_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 4.0, 16.0, 16.0)
     }
 }

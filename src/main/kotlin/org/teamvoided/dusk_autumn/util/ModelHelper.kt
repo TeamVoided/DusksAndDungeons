@@ -810,45 +810,51 @@ fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, strippedLog
         Direction.SOUTH,
         Direction.WEST
     )
-    var identifier: Identifier
-    directions.forEach {
+    val directionsX = listOf(
+        Direction.EAST,
+        Direction.NORTH,
+        Direction.WEST,
+        Direction.SOUTH,
+    )
+    var modelId: Identifier
+    directions.forEachIndexed { idx, it ->
         block("parent/hollow_log_$it", TextureKey.SIDE, TextureKey.END, INNER)
             .upload(hollowLog, "_$it", texture, this.modelCollector)
-        identifier = hollowLog.model("_$it")
+        modelId = hollowLog.model("_$it")
         model.with(
             When.create()
                 .set(PillarBlock.AXIS, Direction.Axis.X)
                 .set(HollowLogBlockWithCutting.getProperty(it), true),
             BlockStateVariant.create()
-                .put(VariantSettings.MODEL, identifier)
+                .put(VariantSettings.MODEL, hollowLog.model("_" + directionsX[idx].toString()))
                 .put(VariantSettings.Y, Rotation.R90)
         )
         model.with(
             allDirectionFalse,
-            BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+            BlockStateVariant.create().put(VariantSettings.MODEL, modelId)
         )
         model.with(
             When.create()
                 .set(PillarBlock.AXIS, Direction.Axis.Y)
                 .set(HollowLogBlockWithCutting.getProperty(it), true),
             BlockStateVariant.create()
-                .put(VariantSettings.MODEL, identifier)
+                .put(VariantSettings.MODEL, modelId)
                 .put(VariantSettings.X, Rotation.R270)
         )
         model.with(
             allDirectionFalse,
-            BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+            BlockStateVariant.create().put(VariantSettings.MODEL, modelId)
         )
         model.with(
             When.create()
                 .set(PillarBlock.AXIS, Direction.Axis.Z)
                 .set(HollowLogBlockWithCutting.getProperty(it), true),
             BlockStateVariant.create()
-                .put(VariantSettings.MODEL, identifier)
+                .put(VariantSettings.MODEL, modelId)
         )
         model.with(
             allDirectionFalse,
-            BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+            BlockStateVariant.create().put(VariantSettings.MODEL, modelId)
         )
     }
     this.registerParentedItemModel(

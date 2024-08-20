@@ -18,6 +18,7 @@ import net.minecraft.util.ItemInteractionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.Vec3d
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
@@ -46,7 +47,7 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
         hand: Hand,
         hitResult: BlockHitResult
     ): ItemInteractionResult {
-        val getHit = this.getRelativeHitCoordinates(hitResult, state)
+        val getHit = this.getRelativeHitCoordinates(hitResult, state, pos)
         if (getHit != null && !stack.isEmpty && entity.abilities.allowModifyWorld && stack.isIn(ItemTags.AXES)) {
             println(state)
             println(getHit)
@@ -57,62 +58,85 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
         }
     }
 
-    private fun getRelativeHitCoordinates(blockHitResult: BlockHitResult, state: BlockState): BlockState? {
+    private fun getRelativeHitCoordinates(
+        blockHitResult: BlockHitResult,
+        state: BlockState,
+        pos: BlockPos
+    ): BlockState? {
         if (howManyTrueSides(state) <= 1) {
             return null
         }
+        val vec3d: Vec3d = blockHitResult.pos.subtract(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
         val directionAxis = state.get(AXIS)
         val directionHit = blockHitResult.side
         val north: Direction
-        val south: Direction
         val east: Direction
-        val west: Direction
         val up: Direction
-        val down: Direction
-
         when (directionAxis) {
             Direction.Axis.X -> {
-                north = Direction.NORTH
-                south = Direction.SOUTH
+                north = if (vec3d.y > 0.5) Direction.SOUTH else Direction.NORTH
                 east = Direction.UP
-                west = Direction.DOWN
-                up = Direction.WEST
-                down = Direction.EAST
+                up = if (vec3d.z > 0.5) Direction.EAST else Direction.WEST
+            }
+
+            Direction.Axis.Y -> {
+                north = if (vec3d.z < 0.5) Direction.SOUTH else Direction.NORTH
+                east = if (vec3d.x > 0.5) Direction.WEST else Direction.EAST
+                up = Direction.UP
             }
 
             Direction.Axis.Z -> {
                 north = Direction.DOWN
-                south = Direction.UP
-                east = Direction.EAST
-                west = Direction.WEST
-                up = Direction.SOUTH
-                down = Direction.NORTH
+                east = if (vec3d.y < 0.5) Direction.WEST else Direction.EAST
+                up = if (vec3d.x < 0.5) Direction.NORTH else Direction.SOUTH
             }
 
-            Direction.Axis.Y -> {
-                north = Direction.NORTH
-                south = Direction.SOUTH
-                east = Direction.EAST
-                west = Direction.WEST
-                up = Direction.UP
-                down = Direction.DOWN
-            }
-
-            else -> throw MatchException("somehow managed to give an invalid axis for hollow logs", null as Throwable?)
-        }
-
-        val newState = when (directionHit) {
-            north -> stateOrNull(NORTH, state)
-            south -> stateOrNull(SOUTH, state)
-            east -> stateOrNull(EAST, state)
-            west -> stateOrNull(WEST, state)
-            up, down -> null
             else -> throw MatchException(
-                "somehow managed to give an invalid side for hollow logs",
+                "somehow managed to give an invalid axis for hollow logs",
                 null as Throwable?
             )
         }
-        return newState
+
+        when (directionHit) {
+            north -> return stateOrNull(NORTH, state)
+            north.opposite -> return stateOrNull(SOUTH, state)
+            east -> return stateOrNull(EAST, state)
+            east.opposite -> return stateOrNull(WEST, state)
+            up, up.opposite -> {
+                when (directionAxis) {
+                    Direction.Axis.X -> {
+                        return upDownSurfaceCase(vec3d.y, vec3d.z, state)
+                    }
+
+                    Direction.Axis.Y -> {
+                        return upDownSurfaceCase(vec3d.x, vec3d.z, state)
+                    }
+
+                    Direction.Axis.Z -> {
+                        return upDownSurfaceCase(vec3d.x, vec3d.y, state)
+                    }
+                }
+            }
+            else -> {
+                throw MatchException(
+                    "somehow managed to give an invalid side for hollow logs, thrower is $directionHit, north $north, east $east, and up $up",
+                    null as Throwable?
+                )
+            }
+        }
+        return null
+    }
+
+    fun upDownSurfaceCase(x: Double, z: Double, state: BlockState): BlockState? {
+        return if (x > z && x < (1 - z)) {
+            stateOrNull(NORTH, state)
+        } else if (x < z && x > (1 - z)) {
+            stateOrNull(SOUTH, state)
+        } else if (x > z && x > (1 - z)) {
+            stateOrNull(EAST, state)
+        } else if (x < z && x < (1 - z)) {
+            stateOrNull(WEST, state)
+        } else null
     }
 
     fun stateOrNull(direction: Property<Boolean>, state: BlockState): BlockState? {
@@ -120,7 +144,7 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
         else state.with(direction, false)
     }
 
-    fun howManyTrueSides(state: BlockState): Int {
+    private fun howManyTrueSides(state: BlockState): Int {
         return listOf(
             (state.get(NORTH) == true),
             (state.get(SOUTH) == true),
@@ -156,8 +180,11 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
         if (state.get(SOUTH)) shape = VoxelShapes.union(shape, SOUTH_SHAPE)
         if (state.get(EAST)) shape = VoxelShapes.union(shape, EAST_SHAPE)
         if (state.get(WEST)) shape = VoxelShapes.union(shape, WEST_SHAPE)
-
         return shape.rotateColumn(state.get(AXIS))
+    }
+
+    override fun getRaycastShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
+        return VoxelShapes.empty()
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
@@ -175,8 +202,8 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
         }
 
         val NORTH_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
-        val EAST_SHAPE: VoxelShape = createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         val SOUTH_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 14.0, 16.0, 16.0, 16.0)
+        val EAST_SHAPE: VoxelShape = createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         val WEST_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 16.0)
     }
 }
