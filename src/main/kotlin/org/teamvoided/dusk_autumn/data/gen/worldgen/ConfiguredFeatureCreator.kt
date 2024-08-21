@@ -72,6 +72,8 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
+import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootConfig
+import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootPlacer
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusk_autumn.world.gen.treedcorator.AttachedToTrunkTreeDecorator
@@ -108,24 +110,19 @@ object ConfiguredFeatureCreator {
                 ConstantIntProvider.create(2),
                 100
             ),
-//            Optional.of(
-//                CascadeRootPlacer(
-//                    UniformIntProvider.create(3, 7),
-//                    BlockStateProvider.of(DuskBlocks.CASCADE_LOG),
-//                    Optional.empty(),
-//                    CascadeRootConfig(
-//                        blockTags.getTagOrThrow(BlockTags.REPLACEABLE_BY_TREES),
-//                        HolderSet.createDirect(
-//                            { it.builtInRegistryHolder },
-//                            *arrayOf(Blocks.DIRT)
-//                        ),
-//                        BlockStateProvider.of(Blocks.ROOTED_DIRT),
-//                        8,
-//                        15,
-//                        0.2f
-//                    )
-//                )
-//            ),
+            Optional.of(
+                CascadeRootPlacer(
+                    UniformIntProvider.create(0, 2),
+                    BlockStateProvider.of(DnDBlocks.CASCADE_LOG),
+                    Optional.empty(),
+                    CascadeRootConfig(
+                        blockTags.getTagOrThrow(BlockTags.REPLACEABLE_BY_TREES),
+                        3,
+                        2,
+                        6,
+                    )
+                )
+            ),
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
         val goldenBirchTree = builder(Blocks.BIRCH_LOG, DnDBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
