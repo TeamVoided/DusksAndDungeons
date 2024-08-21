@@ -23,15 +23,8 @@ import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import java.util.*
 
-
 val ALL_KRY: TextureKey = TextureKey.of("all")
 val INNER: TextureKey = TextureKey.of("inner")
-val DIRECTIONS_HORIZONTAL: List<Direction> = listOf(
-    Direction.NORTH,
-    Direction.EAST,
-    Direction.SOUTH,
-    Direction.WEST
-)
 
 fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
     val texture = Texture().put(TextureKey.ALL, overlay)
@@ -812,7 +805,7 @@ fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, innerTextur
         .put(TextureKey.SIDE, log.model())
         .put(TextureKey.END, log.model("_top"))
         .put(INNER, innerTexture)
-    DIRECTIONS_HORIZONTAL.forEach {
+    Direction.Type.HORIZONTAL.forEach {
         block("parent/hollow_log_$it", TextureKey.SIDE, TextureKey.END, INNER)
             .upload(hollowLog, "_$it", texture, this.modelCollector)
     }
@@ -827,7 +820,7 @@ fun BlockStateModelGenerator.hollowBambooBlock(hollowBamboo: Block, bambooBlock:
     val texture: Texture = Texture.texture(hollowBamboo)
         .put(TextureKey.SIDE, bambooBlock.model())
         .put(TextureKey.END, bambooBlock.model("_top"))
-    DIRECTIONS_HORIZONTAL.forEach {
+    Direction.Type.HORIZONTAL.forEach {
         block("parent/hollow_bamboo_block_$it", TextureKey.SIDE, TextureKey.END)
             .upload(hollowBamboo, "_$it", texture, this.modelCollector)
     }
@@ -852,7 +845,7 @@ fun BlockStateModelGenerator.hollowBlock(block: Block) {
         Direction.EAST,
         Direction.NORTH,
     )
-    DIRECTIONS_HORIZONTAL.forEachIndexed { idx, it ->
+    Direction.Type.HORIZONTAL.forEachIndexed { idx, it ->
         modelId = block.model("_$it")
         model.with(
             When.create()

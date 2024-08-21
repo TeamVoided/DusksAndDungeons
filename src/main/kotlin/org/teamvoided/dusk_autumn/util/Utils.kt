@@ -6,6 +6,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.StructureWorldAccess
 
 val pi = 3.1415927f

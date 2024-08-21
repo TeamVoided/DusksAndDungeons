@@ -11,10 +11,10 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
 data class FallenTreeConfig(
     val logBlock: BlockStateProvider,
-    var allowedPlacement: TagKey<Block>,
-    val logTopper: BlockStateProvider,
-    val stumpSides: BlockStateProvider,
-    val treeWidth: Int,
+    val allowedPlacement: TagKey<Block>,
+//    val logTopper: BlockStateProvider,
+//    val stumpSides: BlockStateProvider,
+//    val treeWidth: Int,
     val stumpHeight: IntProvider,
     val trunkLength: IntProvider,
     val trunkDistanceFromStump: IntProvider,
@@ -27,9 +27,9 @@ data class FallenTreeConfig(
                     BlockStateProvider.TYPE_CODEC.fieldOf("log_block").forGetter { it.logBlock },
                     TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_placement")
                         .forGetter { it.allowedPlacement },
-                    BlockStateProvider.TYPE_CODEC.fieldOf("log_topper").forGetter { it.logTopper },
-                    BlockStateProvider.TYPE_CODEC.fieldOf("stump_sides").forGetter { it.stumpSides },
-                    Codec.intRange(1, 3).fieldOf("tree_width").forGetter { it.treeWidth },
+//                    BlockStateProvider.TYPE_CODEC.fieldOf("log_topper").forGetter { it.logTopper },
+//                    BlockStateProvider.TYPE_CODEC.fieldOf("stump_sides").forGetter { it.stumpSides },
+//                    Codec.intRange(1, 3).fieldOf("tree_width").forGetter { it.treeWidth },
                     IntProvider.method_35004(0, 32).fieldOf("stump_height").forGetter { it.stumpHeight },
                     IntProvider.method_35004(0, 32).fieldOf("trunk_length").forGetter { it.trunkLength },
                     IntProvider.method_35004(0, 16).fieldOf("trunk_distance_from_stump")
