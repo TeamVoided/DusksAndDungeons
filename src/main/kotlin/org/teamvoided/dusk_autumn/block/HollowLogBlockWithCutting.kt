@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.ConnectingBlock
 import net.minecraft.block.ShapeContext
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.sound.SoundCategory
@@ -51,8 +52,7 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
     ): ItemInteractionResult {
         val getHit = this.getRelativeHitCoordinates(hitResult, state, pos)
         if (getHit != null && !stack.isEmpty && entity.abilities.allowModifyWorld && stack.isIn(ItemTags.AXES)) {
-            println(state)
-            println(getHit)
+            if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
             setBlockState(world, pos, entity, getHit)
             return ItemInteractionResult.success(world.isClient)
         } else {

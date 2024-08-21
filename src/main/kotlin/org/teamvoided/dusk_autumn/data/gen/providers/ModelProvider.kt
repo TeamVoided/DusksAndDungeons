@@ -227,7 +227,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             )
             gen.hollowLog(
                 DnDBlockLists.hollowStrippedLogs[idx],
-                strippedLog,
                 strippedLog
             )
         }

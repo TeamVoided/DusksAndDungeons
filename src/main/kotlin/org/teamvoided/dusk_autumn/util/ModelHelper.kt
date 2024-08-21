@@ -26,6 +26,12 @@ import java.util.*
 
 val ALL_KRY: TextureKey = TextureKey.of("all")
 val INNER: TextureKey = TextureKey.of("inner")
+val DIRECTIONS_HORIZONTAL: List<Direction> = listOf(
+    Direction.NORTH,
+    Direction.EAST,
+    Direction.SOUTH,
+    Direction.WEST
+)
 
 fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
     val texture = Texture().put(TextureKey.ALL, overlay)
@@ -793,6 +799,10 @@ fun BlockStateModelGenerator.registerHandheldItem(item: Item) {
     )
 }
 
+fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block) {
+    this.hollowLog(hollowLog, log, log.model())
+}
+
 fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, strippedLog: Block) {
     this.hollowLog(hollowLog, log, strippedLog.model())
 }
@@ -802,35 +812,54 @@ fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, innerTextur
         .put(TextureKey.SIDE, log.model())
         .put(TextureKey.END, log.model("_top"))
         .put(INNER, innerTexture)
-    val model = MultipartBlockStateSupplier.create(hollowLog)
+    DIRECTIONS_HORIZONTAL.forEach {
+        block("parent/hollow_log_$it", TextureKey.SIDE, TextureKey.END, INNER)
+            .upload(hollowLog, "_$it", texture, this.modelCollector)
+    }
+    this.hollowBlock(hollowLog)
+    this.registerParentedItemModel(
+        hollowLog, block("parent/hollow_log", TextureKey.SIDE, TextureKey.END, INNER)
+            .upload(hollowLog, texture, this.modelCollector)
+    )
+}
+
+fun BlockStateModelGenerator.hollowBambooBlock(hollowBamboo: Block, bambooBlock: Block) {
+    val texture: Texture = Texture.texture(hollowBamboo)
+        .put(TextureKey.SIDE, bambooBlock.model())
+        .put(TextureKey.END, bambooBlock.model("_top"))
+    DIRECTIONS_HORIZONTAL.forEach {
+        block("parent/hollow_bamboo_block_$it", TextureKey.SIDE, TextureKey.END)
+            .upload(hollowBamboo, "_$it", texture, this.modelCollector)
+    }
+    this.hollowBlock(hollowBamboo)
+    this.registerParentedItemModel(
+        hollowBamboo, block("parent/hollow_bamboo_block", TextureKey.SIDE, TextureKey.END)
+            .upload(hollowBamboo, texture, this.modelCollector)
+    )
+}
+
+fun BlockStateModelGenerator.hollowBlock(block: Block) {
+    val model = MultipartBlockStateSupplier.create(block)
+    var modelId: Identifier
     val allDirectionFalse = When.create()
         .set(HollowLogBlockWithCutting.NORTH, false)
         .set(HollowLogBlockWithCutting.SOUTH, false)
         .set(HollowLogBlockWithCutting.EAST, false)
         .set(HollowLogBlockWithCutting.WEST, false)
-    val directions = listOf(
-        Direction.NORTH,
-        Direction.EAST,
-        Direction.SOUTH,
-        Direction.WEST
-    )
     val directionsX = listOf(
+        Direction.WEST,
+        Direction.SOUTH,
         Direction.EAST,
         Direction.NORTH,
-        Direction.WEST,
-        Direction.SOUTH
     )
-    var modelId: Identifier
-    directions.forEachIndexed { idx, it ->
-        block("parent/hollow_log_$it", TextureKey.SIDE, TextureKey.END, INNER)
-            .upload(hollowLog, "_$it", texture, this.modelCollector)
-        modelId = hollowLog.model("_$it")
+    DIRECTIONS_HORIZONTAL.forEachIndexed { idx, it ->
+        modelId = block.model("_$it")
         model.with(
             When.create()
                 .set(PillarBlock.AXIS, Direction.Axis.X)
                 .set(HollowLogBlockWithCutting.getProperty(it), true),
             BlockStateVariant.create()
-                .put(VariantSettings.MODEL, hollowLog.model("_" + directionsX[idx].toString()))
+                .put(VariantSettings.MODEL, block.model("_" + directionsX[idx].toString()))
                 .put(VariantSettings.Y, Rotation.R90)
         )
         model.with(
@@ -861,32 +890,9 @@ fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, innerTextur
             BlockStateVariant.create().put(VariantSettings.MODEL, modelId)
         )
     }
-    this.registerParentedItemModel(
-        hollowLog, block("parent/hollow_log", TextureKey.SIDE, TextureKey.END, INNER)
-            .upload(hollowLog, texture, this.modelCollector)
-    )
     this.blockStateCollector.accept(model)
-//    this.blockStateCollector.accept(
-//        BlockStateModelGenerator.createAxisRotatedBlockState(
-//            hollowLog,
-//            identifier
-//        )
-//    )
 }
 
-fun BlockStateModelGenerator.hollowBambooBlock(hollowBamboo: Block, bamboo: Block) {
-    val texture: Texture = Texture.texture(hollowBamboo)
-        .put(TextureKey.SIDE, bamboo.model())
-        .put(TextureKey.END, bamboo.model("_top"))
-    val identifier: Identifier = block("parent/hollow_bamboo_block", TextureKey.SIDE, TextureKey.END)
-        .upload(hollowBamboo, texture, this.modelCollector)
-    this.blockStateCollector.accept(
-        BlockStateModelGenerator.createAxisRotatedBlockState(
-            hollowBamboo,
-            identifier
-        )
-    )
-}
 
 fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
     val layer1 = this.parentedLogPileModel(logPile, log, "_1")
