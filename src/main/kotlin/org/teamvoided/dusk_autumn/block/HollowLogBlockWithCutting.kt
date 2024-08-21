@@ -27,6 +27,8 @@ import net.minecraft.world.event.GameEvent
 import org.teamvoided.dusk_autumn.util.rotateColumn
 
 open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settings) {
+    open val special1: Double = 0.0625
+    open val special2: Double = 0.9375
 
     init {
         this.defaultState = stateManager.defaultState
@@ -68,27 +70,39 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
         }
         val vec3d: Vec3d = blockHitResult.pos.subtract(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
         val directionAxis = state.get(AXIS)
-        val directionHit = blockHitResult.side
         val north: Direction
         val east: Direction
         val up: Direction
+        var directionHit: Direction = blockHitResult.side
         when (directionAxis) {
             Direction.Axis.X -> {
-                north = if (vec3d.y > 0.5) Direction.SOUTH else Direction.NORTH
+                north = Direction.NORTH
                 east = Direction.UP
-                up = if (vec3d.z > 0.5) Direction.EAST else Direction.WEST
+                up = Direction.WEST
+                if ((directionHit != east && directionHit != east.opposite) &&
+                    (vec3d.y > special1 && vec3d.y < special2) &&
+                    (vec3d.z > special1 && vec3d.z < special2)
+                ) directionHit = directionHit.opposite
             }
 
             Direction.Axis.Y -> {
-                north = if (vec3d.z < 0.5) Direction.SOUTH else Direction.NORTH
-                east = if (vec3d.x > 0.5) Direction.WEST else Direction.EAST
+                north = Direction.NORTH
+                east = Direction.EAST
                 up = Direction.UP
+                if ((directionHit != up && directionHit != up.opposite) &&
+                    (vec3d.x > special1 && vec3d.x < special2) &&
+                    (vec3d.z > special1 && vec3d.z < special2)
+                ) directionHit = directionHit.opposite
             }
 
             Direction.Axis.Z -> {
                 north = Direction.DOWN
-                east = if (vec3d.y < 0.5) Direction.WEST else Direction.EAST
-                up = if (vec3d.x < 0.5) Direction.NORTH else Direction.SOUTH
+                east = Direction.EAST
+                up = Direction.SOUTH
+                if ((directionHit != north && directionHit != north.opposite) &&
+                    (vec3d.x > special1 && vec3d.x < special2) &&
+                    (vec3d.y > special1 && vec3d.y < special2)
+                ) directionHit = directionHit.opposite
             }
 
             else -> throw MatchException(
@@ -103,39 +117,39 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
             east -> return stateOrNull(EAST, state)
             east.opposite -> return stateOrNull(WEST, state)
             up, up.opposite -> {
-                when (directionAxis) {
+                return when (directionAxis) {
                     Direction.Axis.X -> {
-                        return upDownSurfaceCase(vec3d.y, vec3d.z, state)
+                        upDownSurfaceCase(vec3d.y, vec3d.z, state)
                     }
 
                     Direction.Axis.Y -> {
-                        return upDownSurfaceCase(vec3d.x, vec3d.z, state)
+                        upDownSurfaceCase(vec3d.x, vec3d.z, state)
                     }
 
                     Direction.Axis.Z -> {
-                        return upDownSurfaceCase(vec3d.x, vec3d.y, state)
+                        upDownSurfaceCase(vec3d.x, vec3d.y, state)
                     }
                 }
             }
+
             else -> {
                 throw MatchException(
-                    "somehow managed to give an invalid side for hollow logs, thrower is $directionHit, north $north, east $east, and up $up",
+                    "somehow managed to give an invalid side for hollow logs, thrower is $directionHit, north $north, east $east, up $up",
                     null as Throwable?
                 )
             }
         }
-        return null
     }
 
     fun upDownSurfaceCase(x: Double, z: Double, state: BlockState): BlockState? {
-        return if (x > z && x < (1 - z)) {
-            stateOrNull(NORTH, state)
-        } else if (x < z && x > (1 - z)) {
-            stateOrNull(SOUTH, state)
-        } else if (x > z && x > (1 - z)) {
-            stateOrNull(EAST, state)
-        } else if (x < z && x < (1 - z)) {
-            stateOrNull(WEST, state)
+        return if (state.get(NORTH) == true && x > z && x < (1 - z)) {
+            state.with(NORTH, false)
+        } else if (state.get(SOUTH) == true && x < z && x > (1 - z)) {
+            state.with(SOUTH, false)
+        } else if (state.get(EAST) == true && x > z && x > (1 - z)) {
+            state.with(EAST, false)
+        } else if (state.get(WEST) == true && x < z && x < (1 - z)) {
+            state.with(WEST, false)
         } else null
     }
 
@@ -184,7 +198,8 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
     }
 
     override fun getRaycastShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
-        return VoxelShapes.empty()
+        return if (howManyTrueSides(state) <= 4) super.getRaycastShape(state, world, pos)
+        else VoxelShapes.empty()
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

@@ -794,10 +794,14 @@ fun BlockStateModelGenerator.registerHandheldItem(item: Item) {
 }
 
 fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, strippedLog: Block) {
+    this.hollowLog(hollowLog, log, strippedLog.model())
+}
+
+fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, innerTexture: Identifier) {
     val texture: Texture = Texture.texture(hollowLog)
         .put(TextureKey.SIDE, log.model())
         .put(TextureKey.END, log.model("_top"))
-        .put(INNER, strippedLog.model())
+        .put(INNER, innerTexture)
     val model = MultipartBlockStateSupplier.create(hollowLog)
     val allDirectionFalse = When.create()
         .set(HollowLogBlockWithCutting.NORTH, false)
@@ -814,7 +818,7 @@ fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, strippedLog
         Direction.EAST,
         Direction.NORTH,
         Direction.WEST,
-        Direction.SOUTH,
+        Direction.SOUTH
     )
     var modelId: Identifier
     directions.forEachIndexed { idx, it ->
