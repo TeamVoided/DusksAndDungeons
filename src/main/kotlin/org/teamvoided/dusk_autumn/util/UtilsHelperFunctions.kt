@@ -2,6 +2,8 @@ package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.state.property.BooleanProperty
+import net.minecraft.state.property.Properties
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.shape.VoxelShape
@@ -9,6 +11,16 @@ import net.minecraft.util.shape.VoxelShapes
 
 fun ServerWorld.spawnParticles(particle: ParticleEffect, pos: Vec3d, velocity: Vec3d) =
     this.spawnParticles(particle, pos.x, pos.y, pos.z, 0, velocity.x, velocity.y, velocity.z, 1.0)
+
+fun Direction.getPropertyFromDirection(direction: Direction): BooleanProperty {
+    return when (direction) {
+        Direction.NORTH -> Properties.NORTH
+        Direction.SOUTH -> Properties.SOUTH
+        Direction.EAST -> Properties.EAST
+        Direction.WEST -> Properties.WEST
+        else -> Properties.NORTH
+    }
+}
 
 fun VoxelShape.rotate(times: Int): VoxelShape {
     val shapes = arrayOf(this, VoxelShapes.empty())

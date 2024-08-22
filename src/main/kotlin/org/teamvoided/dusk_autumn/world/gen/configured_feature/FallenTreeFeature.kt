@@ -2,8 +2,10 @@ package org.teamvoided.dusk_autumn.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
 import net.minecraft.fluid.Fluids
+import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -55,7 +57,8 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
                     origin,
                     Direction.UP,
                     fallenTreeConfig,
-                    structureWorldAccess
+                    structureWorldAccess,
+                    randomGenerator
                 )
                 return true
             } else return false
@@ -82,7 +85,7 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
                 //places the trunk
                 for (length in 0..trunkLength) {
                     val posPlacer = pos.offset(direction, length)
-                    placeLog(config.logBlock.getBlockState(random, pos), posPlacer, direction, config, world)
+                    placeLog(config.logBlock.getBlockState(random, pos), posPlacer, direction, config, world, random)
                 }
                 return true
             } else if (
@@ -126,7 +129,8 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
                             posPlacer,
                             direction,
                             config,
-                            world
+                            world,
+                            random
                         )
                     }
                     return true
@@ -142,13 +146,42 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
     }
 
     fun placeLog(
-        state: BlockState, pos: BlockPos, direction: Direction, config: FallenTreeConfig, world: StructureWorldAccess
+        state: BlockState,
+        pos: BlockPos,
+        direction: Direction,
+        config: FallenTreeConfig,
+        world: StructureWorldAccess,
+        random: RandomGenerator
     ) {
         if (world.getBlockState(pos).isIn(config.replaceable)) {
-            val blockState = state
+            val logBlockState = state
                 .withIfExists(PillarBlock.AXIS, direction.axis)
                 .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER)
-            world.setBlockState(pos, blockState, 3)
+            world.setBlockState(pos, logBlockState, 3)
+
+            var vineBlockState = config.logTopper.getBlockState(random, pos)
+            if (direction.axis == Direction.Axis.Y && vineBlockState != Blocks.AIR) {
+                Direction.Type.HORIZONTAL.forEach {
+                    val vinePos = pos.offset(it)
+//                    vineBlockState.withIfExists(Direction.getPropertyFromDirection(it) it)
+                    vineBlockState = config.logTopper.getBlockState(random, pos)
+                }
+            }
+
+            val abovePos = pos.up()
+            val mushroomBlockState = config.logTopper.getBlockState(random, abovePos)
+            if (world.getBlockState(abovePos).isIn(config.replaceable) && mushroomBlockState != Blocks.AIR) {
+                mushroomBlockState
+                    .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER)
+                world.setBlockState(abovePos, mushroomBlockState, 3)
+            }
         }
+
+
+//        if (t == 1) {
+//        } else if (t == 2) {
+//        } else {
+//        }
     }
+
 }
