@@ -27,12 +27,14 @@ import net.minecraft.world.gen.foliage.AcaciaFoliagePlacer
 import net.minecraft.world.gen.foliage.BlobFoliagePlacer
 import net.minecraft.world.gen.foliage.DarkOakFoliagePlacer
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
+import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
+import org.teamvoided.dusk_autumn.data.gen.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_AUTUMN
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_BUSH_AUTUMN
@@ -63,6 +65,7 @@ import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.FLOWER_AUTU
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.OAK_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.PATCH_ROSEBUSH
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ROCKY_OVERWORLD_ORE
@@ -70,6 +73,7 @@ import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.SLATED_OVER
 import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FallenTreeConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusk_autumn.world.gen.root.CascadeRootConfig
@@ -626,7 +630,25 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+        fallenTrees(c)
+        overlayOres(c)
+    }
 
+    fun fallenTrees(c: BootstrapContext<ConfiguredFeature<*, *>>) {
+        c.registerConfiguredFeature(
+            OAK_FALLEN_TREE, DnDFeatures.FALLEN_TREE, FallenTreeConfig(
+                BlockStateProvider.of(Blocks.OAK_LOG),
+                BlockStateProvider.of(DnDBlocks.HOLLOW_OAK_LOG),
+                DnDBlockTags.FALLEN_TREE_REPLACEABLE,
+                BiasedToBottomIntProvider.create(1,3),
+                UniformIntProvider.create(2,5),
+                UniformIntProvider.create(1,3),
+                20
+            )
+        )
+    }
+
+    fun overlayOres(c: BootstrapContext<ConfiguredFeature<*, *>>) {
         c.registerConfiguredFeature(
             ROCKY_OVERWORLD_ORE,
             Feature.ORE,
