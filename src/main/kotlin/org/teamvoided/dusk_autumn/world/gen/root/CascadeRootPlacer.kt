@@ -25,7 +25,7 @@ class CascadeRootPlacer(
     private val cascadeRootConfig: CascadeRootConfig
 ) : RootPlacer(trunkOffsetY, rootProvider, aboveRootPlacement) {
 
-    override fun getType(): RootPlacerType<*> = DnDWorldgen.CASCADE_ROOT_PLACER
+    override fun getType(): RootPlacerType<CascadeRootPlacer> = DnDWorldgen.CASCADE_ROOT_PLACER
 
     override fun generate(
         world: TestableWorld, replacer: BiConsumer<BlockPos, BlockState>,
@@ -40,7 +40,7 @@ class CascadeRootPlacer(
                 for (ignored in 0..random.range(0, cascadeRootConfig.maxDistanceFromTrunk)) {
                     movingPos = movingPos.offset(dir, 1)
                     if (canReplace(world, movingPos))
-                        replacer.placeRoot(movingPos, random) { it.with(PillarBlock.AXIS, dir.axis) }
+                        replacer.placeRoot(movingPos, random) { it.withIfExists(PillarBlock.AXIS, dir.axis) }
                 }
                 for (ignored in 0..cascadeRootConfig.maxRootLength) {
                     movingPos = movingPos.down()
