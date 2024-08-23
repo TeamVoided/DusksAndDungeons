@@ -1,7 +1,6 @@
 package org.teamvoided.dusk_autumn.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
 import net.minecraft.fluid.Fluids
@@ -29,19 +28,18 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
         val extraDistance = fallenTreeConfig.trunkDistanceFromStump.get(randomGenerator) + 1
         if (structureWorldAccess.getBlockState(origin).isIn(fallenTreeConfig.replaceable)) {
             val retur: Boolean
+            val trunkStartPos = origin.offset(direction, extraDistance)
             if (trunkLength <= 3) {
                 //edge case
-                val posPlacement = origin.offset(direction, extraDistance)
                 retur = placeSmallFallenTrunk(
                     trunkLength,
                     direction,
-                    posPlacement,
+                    trunkStartPos,
                     fallenTreeConfig,
                     structureWorldAccess,
                     randomGenerator
                 )
             } else {
-                val trunkStartPos = origin.offset(direction, extraDistance)
                 retur = placeFallenTrunk(
                     trunkLength,
                     direction,
@@ -52,13 +50,14 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
                 )
             }
             if (retur) {
-                placeLog(
-                    fallenTreeConfig.stumpBlock.getBlockState(randomGenerator, origin),
+                placeLogs(
                     origin,
                     Direction.UP,
+                    fallenTreeConfig.stumpHeight.get(randomGenerator),
                     fallenTreeConfig,
                     structureWorldAccess,
-                    randomGenerator
+                    randomGenerator,
+                    true
                 )
                 return true
             } else return false
@@ -75,18 +74,23 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
         world: StructureWorldAccess,
         random: RandomGenerator
     ): Boolean {
-        var pos: BlockPos = start.offset(Direction.UP)
+        var pos: BlockPos = start.offset(Direction.UP, 3)
         //checks if the position is eligible, else, moves down until its blocked
-        for (posCheck in 1 downTo -config.trunkVerticalRange) {
-            pos = pos.offset(Direction.DOWN)
+        for (posCheck in 0 downTo -config.trunkVerticalRange) {
             if (world.getBlockState(pos.down()).isSideSolidFullSquare(world, pos.down(), Direction.UP)) {
                 //places the trunk
-                for (length in 0..trunkLength) {
-                    val posPlacer = pos.offset(direction, length)
-                    placeLog(config.logBlock.getBlockState(random, pos), posPlacer, direction, config, world, random)
-                }
+                placeLogs(
+                    pos,
+                    direction,
+                    trunkLength,
+                    config,
+                    world,
+                    random
+                )
                 return true
-            } else if (
+            }
+            pos = pos.down()
+            if (
                 (world.getBlockState(pos).isFullCube(world, pos) &&
                         !world.getBlockState(pos).isIn(config.replaceable)) ||
                 pos.y <= world.bottomY + 1
@@ -106,85 +110,146 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
     ): Boolean {
 //        println("no, the complex fallen logs have not been done yet, this is done with horrendous code")
 //        return false
-        var pos: BlockPos = start.offset(Direction.UP)
-        for (posCheck in 1 downTo -config.trunkVerticalRange) {
-            pos = pos.offset(Direction.DOWN)
-            for (length in 0..trunkLength / 2) {
-                val near = pos.down().offset(direction, length)
-                val far = pos.down().offset(direction, trunkLength).offset(direction.opposite, length)
-                if (
-                    world.getBlockState(near).isSideSolidFullSquare(world, near, Direction.UP) &&
-                    world.getBlockState(far).isSideSolidFullSquare(world, far, Direction.UP)
-                ) {
-                    for (thinkOfAName in 0..trunkLength) {
-                        val posPlacer = pos.offset(direction, thinkOfAName)
-                        placeLog(
-                            config.logBlock.getBlockState(random, pos),
-                            posPlacer,
-                            direction,
-                            config,
-                            world,
-                            random
-                        )
-                    }
-                    return true
-                }
-            }
+        val trunkLength3 = trunkLength / 3
+        var pos: BlockPos = start.offset(Direction.UP, 3)
+        var near = pos.offset(direction, trunkLength3)
+        var far = pos.offset(direction, trunkLength - trunkLength3)
+        for (posCheck in 0 downTo -config.trunkVerticalRange) {
             if (
-                (world.getBlockState(pos).isFullCube(world, pos) &&
-                        !world.getBlockState(pos).isIn(config.replaceable)) ||
+                world.getBlockState(near).isSideSolidFullSquare(world, near, Direction.UP) &&
+                world.getBlockState(far).isSideSolidFullSquare(world, far, Direction.UP)
+            ) {
+                placeLogs(
+                    pos,
+                    direction,
+                    trunkLength,
+                    config,
+                    world,
+                    random
+                )
+                return true
+            }
+            pos = pos.down()
+            near = near.down()
+            far = far.down()
+            if (
+                (world.getBlockState(near).isFullCube(world, near) &&
+                        !world.getBlockState(near).isIn(config.replaceable)) ||
                 pos.y <= world.bottomY + 1
             ) /* stops moving check position down and cancels feature */ break
         }
         return false
     }
 
-    fun placeLog(
-        state: BlockState,
+    fun placeLogs(
         pos: BlockPos,
         direction: Direction,
+        size: Int,
+        config: FallenTreeConfig,
+        world: StructureWorldAccess,
+        random: RandomGenerator,
+        stump: Boolean = false
+    ) {
+        val width = config.treeWidth
+        if (width == 1) {
+            for (loop in 0..size) {
+                val position = pos.offset(direction, loop)
+                if (world.getBlockState(pos).isIn(config.replaceable)) {
+                    val logBlockState = if (stump) config.stumpBlock.getBlockState(random, position)
+                    else config.logBlock.getBlockState(random, position)
+                    world.setBlockState(
+                        pos, logBlockState
+                            .withIfExists(PillarBlock.AXIS, direction.axis)
+                            .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER), 3
+                    )
+                }
+                if (stump) placeSides(pos, config, world, random)
+                placeTopper(pos, config, world, random)
+            }
+        } else {
+            val offset = width - (width / 2)
+            val directionSide = when (direction) {
+                Direction.NORTH -> Direction.EAST
+                Direction.EAST -> Direction.SOUTH
+                Direction.SOUTH -> Direction.WEST
+                Direction.WEST -> Direction.NORTH
+                else -> Direction.NORTH
+            }
+            if (stump) {
+                var position: BlockPos
+                for (x in 0..width) {
+                    for (z in 0..width) {
+                        position = pos
+                            .offset(
+                                directionSide,
+                                if (directionSide.direction == Direction.AxisDirection.NEGATIVE) x + offset
+                                else x - offset
+                            )
+                            .offset(direction.opposite, z)
+                        for (y in 0..config.stumpHeight.get(random)) {
+                            position = position.up(y)
+                            world.setBlockState(
+                                position, config.stumpBlock.getBlockState(random, position)
+                                    .withIfExists(
+                                        Properties.WATERLOGGED,
+                                        world.getFluidState(pos).fluid == Fluids.WATER
+                                    ), 3
+                            )
+                            placeSides(pos, config, world, random)
+                        }
+                    }
+                }
+            } else {
+
+            }
+        }
+    }
+
+    fun placeSides(
+        pos: BlockPos,
         config: FallenTreeConfig,
         world: StructureWorldAccess,
         random: RandomGenerator
     ) {
-        if (world.getBlockState(pos).isIn(config.replaceable)) {
-            val logBlockState = state
-                .withIfExists(PillarBlock.AXIS, direction.axis)
-                .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER)
-            world.setBlockState(pos, logBlockState, 3)
-
-            val sideChance = config.stumpSidesChance
-            if (sideChance != -1) {
-                var vineBlockState = config.stumpSides.getBlockState(random, pos)
-                if (direction.axis == Direction.Axis.Y && vineBlockState != Blocks.AIR) {
-                    Direction.Type.HORIZONTAL.forEach {
-                        val vinePos = pos.offset(it)
-                        if (random.range(0, sideChance) == 0 && world.getBlockState(vinePos).isIn(config.replaceable)) {
-                            vineBlockState.withIfExists(getPropertyFromDirection(it.opposite), true)
-                            world.setBlockState(vinePos, vineBlockState, 3)
-                        }
-                        vineBlockState = config.stumpSides.getBlockState(random, pos)
+        val sideChance = config.stumpSidesChance
+        if (sideChance != -1) {
+            var vineBlockState = config.stumpSides.getBlockState(random, pos)
+            if (vineBlockState != Blocks.AIR) {
+                Direction.Type.HORIZONTAL.forEach {
+                    val vinePos = pos.offset(it)
+                    val worldBlockState = world.getBlockState(vinePos)
+                    vineBlockState = config.stumpSides.getBlockState(random, pos)
+                    if (
+                        (sideChance == 0 || random.range(0, sideChance) == 0) &&
+                        worldBlockState.isIn(config.replaceable)
+                    ) {
+                        world.setBlockState(
+                            vinePos,
+                            vineBlockState.withIfExists(getPropertyFromDirection(it.opposite), true),
+                            3
+                        )
                     }
                 }
             }
+        }
+    }
 
-            val topperChance = config.logTopperChance
-            if (topperChance != -1 && random.range(0, topperChance) == 0) {
-                val abovePos = pos.up()
-                val mushroomBlockState = config.logTopper.getBlockState(random, abovePos)
-                if (mushroomBlockState != Blocks.AIR && world.getBlockState(abovePos).isIn(config.replaceable)) {
-                    mushroomBlockState
-                        .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER)
-                    world.setBlockState(abovePos, mushroomBlockState, 3)
-                }
+    fun placeTopper(
+        pos: BlockPos,
+        config: FallenTreeConfig,
+        world: StructureWorldAccess,
+        random: RandomGenerator
+    ) {
+        val topperChance = config.logTopperChance
+        if (topperChance != -1 && (topperChance == 0 || random.range(0, topperChance) == 0)) {
+            val abovePos = pos.up()
+            val mushroomBlockState = config.logTopper.getBlockState(random, abovePos)
+            if (mushroomBlockState != Blocks.AIR && world.getBlockState(abovePos).isIn(config.replaceable)) {
+                mushroomBlockState
+                    .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER)
+                world.setBlockState(abovePos, mushroomBlockState, 3)
             }
         }
-
-
-//        if (t == 1) {
-//        } else if (t == 2) {
-//        } else {
-//        }
     }
 
 }

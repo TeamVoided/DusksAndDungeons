@@ -49,6 +49,7 @@ import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BIRCH_FALLE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BIRCH_TALL_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BLACKSTONE_NETHER_ORE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BLUE_PETALS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE_BEES
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE_WETLANDS
@@ -64,6 +65,7 @@ import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_WHEAT
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_WILD_WHEAT
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DARK_OAK_AUTUMN
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DARK_OAK_AUTUMN_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DARK_OAK_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_MUD
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_PODZOL
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_RED_SAND
@@ -719,9 +721,31 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
+            DARK_OAK_FALLEN_TREE,
+            Blocks.DARK_OAK_LOG,
+            DnDBlocks.HOLLOW_DARK_OAK_LOG,
+            5,
+            3,
+            mushrooms,
+            vine,
+            2
+        )
+        createFallenTree(
+            c,
             CHERRY_FALLEN_TREE,
             Blocks.CHERRY_LOG,
             DnDBlocks.HOLLOW_CHERRY_LOG
+        )
+        createFallenTree(
+            c,
+            CASCADE_FALLEN_TREE,
+            DnDBlocks.CASCADE_LOG,
+            DnDBlocks.HOLLOW_CASCADE_LOG,
+            5,
+            3,
+            mushrooms,
+            vine,
+            3
         )
         createFallenTree(
             c,
@@ -779,7 +803,7 @@ object ConfiguredFeatureCreator {
                 width ?: 1,
                 stumpHeight ?: BiasedToBottomIntProvider.create(1, 3),
                 trunkLength ?: UniformIntProvider.create(2, 4),
-                trunkDistanceFromStump ?: UniformIntProvider.create(1, 3),
+                trunkDistanceFromStump ?: UniformIntProvider.create(0, 2),
                 trunkVerticalRange ?: 16
             )
         )
