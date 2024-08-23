@@ -1,7 +1,6 @@
 package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.ConnectingBlock
-import net.minecraft.block.VineBlock
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.property.BooleanProperty
@@ -23,17 +22,6 @@ fun getPropertyFromDirection(direction: Direction): BooleanProperty {
         Direction.UP -> Properties.UP
         Direction.DOWN -> Properties.DOWN
         else -> Properties.NORTH
-    }
-}
-
-fun getVinePropertyFromDirection(direction: Direction): BooleanProperty {
-    return when (direction) {
-        Direction.NORTH -> VineBlock.NORTH
-        Direction.SOUTH -> VineBlock.SOUTH
-        Direction.EAST -> VineBlock.EAST
-        Direction.WEST -> VineBlock.WEST
-        Direction.UP -> VineBlock.UP
-        else -> VineBlock.NORTH
     }
 }
 

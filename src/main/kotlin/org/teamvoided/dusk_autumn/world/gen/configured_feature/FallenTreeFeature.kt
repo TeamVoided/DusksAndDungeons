@@ -12,7 +12,7 @@ import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.StructureWorldAccess
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.util.FeatureContext
-import org.teamvoided.dusk_autumn.util.getVinePropertyFromDirection
+import org.teamvoided.dusk_autumn.util.getPropertyFromDirection
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FallenTreeConfig
 
 open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
@@ -160,10 +160,10 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
                     Direction.Type.HORIZONTAL.forEach {
                         val vinePos = pos.offset(it)
                         if (random.range(0, sideChance) == 0 && world.getBlockState(vinePos).isIn(config.replaceable)) {
-                            vineBlockState.withIfExists(getVinePropertyFromDirection(it.opposite), true)
-                            vineBlockState = config.stumpSides.getBlockState(random, pos)
+                            vineBlockState.withIfExists(getPropertyFromDirection(it.opposite), true)
                             world.setBlockState(vinePos, vineBlockState, 3)
                         }
+                        vineBlockState = config.stumpSides.getBlockState(random, pos)
                     }
                 }
             }
