@@ -1,5 +1,7 @@
 package org.teamvoided.dusk_autumn.util
 
+import net.minecraft.block.ConnectingBlock
+import net.minecraft.block.VineBlock
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.property.BooleanProperty
@@ -12,13 +14,26 @@ import net.minecraft.util.shape.VoxelShapes
 fun ServerWorld.spawnParticles(particle: ParticleEffect, pos: Vec3d, velocity: Vec3d) =
     this.spawnParticles(particle, pos.x, pos.y, pos.z, 0, velocity.x, velocity.y, velocity.z, 1.0)
 
-fun Direction.getPropertyFromDirection(direction: Direction): BooleanProperty {
+fun getPropertyFromDirection(direction: Direction): BooleanProperty {
     return when (direction) {
         Direction.NORTH -> Properties.NORTH
         Direction.SOUTH -> Properties.SOUTH
         Direction.EAST -> Properties.EAST
         Direction.WEST -> Properties.WEST
+        Direction.UP -> Properties.UP
+        Direction.DOWN -> Properties.DOWN
         else -> Properties.NORTH
+    }
+}
+
+fun getVinePropertyFromDirection(direction: Direction): BooleanProperty {
+    return when (direction) {
+        Direction.NORTH -> VineBlock.NORTH
+        Direction.SOUTH -> VineBlock.SOUTH
+        Direction.EAST -> VineBlock.EAST
+        Direction.WEST -> VineBlock.WEST
+        Direction.UP -> VineBlock.UP
+        else -> VineBlock.NORTH
     }
 }
 

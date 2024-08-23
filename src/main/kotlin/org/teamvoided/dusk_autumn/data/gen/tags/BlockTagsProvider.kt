@@ -9,6 +9,7 @@ import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.util.DnDBlockLists
 import java.util.concurrent.CompletableFuture
 
 @Suppress("LongMethod")
@@ -21,6 +22,31 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     }
 
     private fun duskTags() {
+        getOrCreateTagBuilder(DnDBlockTags.HOLLOW_LOGS)
+            .forceAddTag(DnDBlockTags.HOLLOW_LOGS_THAT_BURN)
+            .add(DnDBlocks.HOLLOW_CRIMSON_STEM)
+            .add(DnDBlocks.HOLLOW_WARPED_STEM)
+            .add(DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM)
+            .add(DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM)
+        getOrCreateTagBuilder(DnDBlockTags.HOLLOW_LOGS_THAT_BURN)
+            .add(DnDBlocks.HOLLOW_OAK_LOG)
+            .add(DnDBlocks.HOLLOW_SPRUCE_LOG)
+            .add(DnDBlocks.HOLLOW_BIRCH_LOG)
+            .add(DnDBlocks.HOLLOW_JUNGLE_LOG)
+            .add(DnDBlocks.HOLLOW_ACACIA_LOG)
+            .add(DnDBlocks.HOLLOW_DARK_OAK_LOG)
+            .add(DnDBlocks.HOLLOW_MANGROVE_LOG)
+            .add(DnDBlocks.HOLLOW_CHERRY_LOG)
+            .add(DnDBlocks.HOLLOW_CASCADE_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_OAK_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_SPRUCE_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_BIRCH_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_JUNGLE_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_ACACIA_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_DARK_OAK_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_MANGROVE_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG)
+            .add(DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG)
         getOrCreateTagBuilder(DnDBlockTags.CASCADE_LOGS)
             .add(DnDBlocks.CASCADE_LOG)
             .add(DnDBlocks.CASCADE_WOOD)
@@ -159,7 +185,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.POLISHED_BLUE_NETHER_BRICKS)
             .add(DnDBlocks.POLISHED_GRAY_NETHER_BRICKS)
         getOrCreateTagBuilder(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
-            .addOptionalTag(id("nullium","support/nether_wart"))
+            .addOptionalTag(id("nullium", "support/nether_wart"))
             .add(Blocks.SOUL_SAND)
         getOrCreateTagBuilder(DnDBlockTags.CHILL_CHARGE_AFFECTS)
             .forceAddTag(BlockTags.CANDLES)
@@ -247,6 +273,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.ROCKY_PODZOL, DnDBlocks.SLATED_PODZOL, DnDBlocks.BLACKSTONE_PODZOL)
             .add(DnDBlocks.ROCKY_MYCELIUM, DnDBlocks.SLATED_MYCELIUM, DnDBlocks.BLACKSTONE_MYCELIUM)
             .forceAddTag(BlockTags.LOGS)
+            .forceAddTag(DnDBlockTags.HOLLOW_LOGS)
 
         getOrCreateTagBuilder(BlockTags.CANDLES)
             .forceAddTag(DnDBlockTags.BIG_CANDLES)
@@ -388,6 +415,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 }
 
 private fun <T> FabricTagProvider<T>.FabricTagBuilder.addAll(list: Collection<T>): FabricTagProvider<T>.FabricTagBuilder {
-    list.forEach{this.add(it)}
+    list.forEach { this.add(it) }
     return this
 }

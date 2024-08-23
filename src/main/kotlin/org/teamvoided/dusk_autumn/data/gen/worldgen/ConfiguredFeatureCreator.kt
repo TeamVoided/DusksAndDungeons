@@ -16,6 +16,7 @@ import net.minecraft.util.collection.DataPool
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.int_provider.BiasedToBottomIntProvider
 import net.minecraft.util.math.int_provider.ConstantIntProvider
+import net.minecraft.util.math.int_provider.IntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.feature.*
@@ -38,17 +39,22 @@ import org.teamvoided.dusk_autumn.data.gen.worldgen.ConfiguredFeatureCreator.reg
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_AUTUMN
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_BUSH_AUTUMN
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_FARMLAND
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BIRCH_FALLEN_TREE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BIRCH_TALL_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BLACKSTONE_NETHER_ORE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BLUE_PETALS
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE_BEES
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CHERRY_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.COBBLESTONE_ROCK
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CRIMSON_FALLEN_STEM
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_BEETROOTS
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_CARROTS
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_GOLDEN_BEETROOTS
@@ -65,11 +71,14 @@ import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.FLOWER_AUTU
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.JUNGLE_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.OAK_FALLEN_TREE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.PATCH_ROSEBUSH
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ROCKY_OVERWORLD_ORE
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.SLATED_OVERWORLD_ORE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.SPRUCE_FALLEN_TREE
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.WARPED_FALLEN_STEM
 import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
@@ -116,13 +125,13 @@ object ConfiguredFeatureCreator {
             ),
             Optional.of(
                 CascadeRootPlacer(
-                    UniformIntProvider.create(0, 2),
+                    BiasedToBottomIntProvider.create(0, 1),
                     BlockStateProvider.of(DnDBlocks.CASCADE_LOG),
                     Optional.empty(),
                     CascadeRootConfig(
                         blockTags.getTagOrThrow(BlockTags.REPLACEABLE_BY_TREES),
                         3,
-                        2,
+                        BiasedToBottomIntProvider.create(1,2),
                         6,
                     )
                 )
@@ -635,20 +644,146 @@ object ConfiguredFeatureCreator {
     }
 
     fun fallenTrees(c: BootstrapContext<ConfiguredFeature<*, *>>) {
+        val mushrooms = WeightedBlockStateProvider(
+            DataPool.builder<BlockState>()
+                .addWeighted(Blocks.BROWN_MUSHROOM.defaultState, 1)
+                .addWeighted(Blocks.RED_MUSHROOM.defaultState, 1)
+        )
+        val vine = BlockStateProvider.of(Blocks.VINE)
+        createFallenTree(
+            c,
+            OAK_FALLEN_TREE,
+            Blocks.OAK_LOG,
+            DnDBlocks.HOLLOW_OAK_LOG,
+            5,
+            3,
+            mushrooms,
+            vine
+        )
+        createFallenTree(
+            c,
+            SPRUCE_FALLEN_TREE,
+            Blocks.SPRUCE_LOG,
+            DnDBlocks.HOLLOW_SPRUCE_LOG,
+            5,
+            5,
+            mushrooms,
+            vine,
+            null, null,
+            UniformIntProvider.create(2, 5)
+        )
+        createFallenTree(
+            c,
+            BIRCH_FALLEN_TREE,
+            Blocks.BIRCH_LOG,
+            DnDBlocks.HOLLOW_BIRCH_LOG,
+            5,
+            null,
+            mushrooms
+        )
+        createFallenTree(
+            c,
+            BIRCH_TALL_FALLEN_TREE,
+            Blocks.BIRCH_LOG,
+            DnDBlocks.HOLLOW_BIRCH_LOG,
+            5,
+            null,
+            mushrooms,
+            null,
+            null,
+            null,
+            UniformIntProvider.create(3, 6)
+        )
+        createFallenTree(
+            c,
+            JUNGLE_FALLEN_TREE,
+            Blocks.JUNGLE_LOG,
+            DnDBlocks.HOLLOW_JUNGLE_LOG,
+            5,
+            0,
+            mushrooms,
+            vine,
+            null,
+            null,
+            UniformIntProvider.create(2, 6)
+        )
+        createFallenTree(
+            c,
+            ACACIA_FALLEN_TREE,
+            Blocks.ACACIA_LOG,
+            DnDBlocks.HOLLOW_ACACIA_LOG,
+            5,
+            5,
+            mushrooms,
+            vine
+        )
+        createFallenTree(
+            c,
+            CHERRY_FALLEN_TREE,
+            Blocks.CHERRY_LOG,
+            DnDBlocks.HOLLOW_CHERRY_LOG
+        )
+        createFallenTree(
+            c,
+            CRIMSON_FALLEN_STEM,
+            Blocks.CRIMSON_STEM,
+            DnDBlocks.HOLLOW_CRIMSON_STEM,
+            16,
+            null,
+            mushrooms,
+            null,
+            null,
+            null,
+            UniformIntProvider.create(2, 6)
+        )
+        createFallenTree(
+            c,
+            WARPED_FALLEN_STEM,
+            Blocks.WARPED_STEM,
+            DnDBlocks.HOLLOW_WARPED_STEM,
+            16,
+            null,
+            mushrooms,
+            null,
+            null,
+            null,
+            UniformIntProvider.create(2, 6)
+        )
+    }
+
+    fun createFallenTree(
+        c: BootstrapContext<ConfiguredFeature<*, *>>,
+        feature: RegistryKey<ConfiguredFeature<*, *>>,
+        log: Block,
+        hollowLog: Block,
+        topperChance: Int? = null,
+        sidesChance: Int? = null,
+        topper: BlockStateProvider? = null,
+        sides: BlockStateProvider? = null,
+        width: Int? = null,
+        stumpHeight: IntProvider? = null,
+        trunkLength: IntProvider? = null,
+        trunkDistanceFromStump: IntProvider? = null,
+        trunkVerticalRange: Int? = null,
+    ) {
+        //the values are null because the thing below yells at me, so I moved the default values down here
         c.registerConfiguredFeature(
-            OAK_FALLEN_TREE, DnDFeatures.FALLEN_TREE, FallenTreeConfig(
-                BlockStateProvider.of(Blocks.OAK_LOG),
-                BlockStateProvider.of(DnDBlocks.HOLLOW_OAK_LOG),
+            feature, DnDFeatures.FALLEN_TREE, FallenTreeConfig(
+                BlockStateProvider.of(log),
+                BlockStateProvider.of(hollowLog),
                 DnDBlockTags.FALLEN_TREE_REPLACEABLE,
-                BlockStateProvider.of(Blocks.AIR),
-                BlockStateProvider.of(Blocks.AIR),
-                1,
-                BiasedToBottomIntProvider.create(1,3),
-                UniformIntProvider.create(2,5),
-                UniformIntProvider.create(1,3),
-                20
+                topperChance ?: -1,
+                sidesChance ?: -1,
+                topper ?: BlockStateProvider.of(Blocks.AIR),
+                sides ?: BlockStateProvider.of(Blocks.AIR),
+                width ?: 1,
+                stumpHeight ?: BiasedToBottomIntProvider.create(1, 3),
+                trunkLength ?: UniformIntProvider.create(2, 4),
+                trunkDistanceFromStump ?: UniformIntProvider.create(1, 3),
+                trunkVerticalRange ?: 16
             )
         )
+
     }
 
     fun overlayOres(c: BootstrapContext<ConfiguredFeature<*, *>>) {

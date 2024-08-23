@@ -14,6 +14,8 @@ data class FallenTreeConfig(
     val stumpBlock: BlockStateProvider,
     val logBlock: BlockStateProvider,
     val replaceable: TagKey<Block>,
+    val logTopperChance: Int,
+    val stumpSidesChance: Int,
     val logTopper: BlockStateProvider,    //mushrooms
     val stumpSides: BlockStateProvider,   //vines
     val treeWidth: Int,                   //oak, dark oak, cascade
@@ -30,6 +32,8 @@ data class FallenTreeConfig(
                     BlockStateProvider.TYPE_CODEC.fieldOf("log_block").forGetter { it.logBlock },
                     TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("replaceable")
                         .forGetter { it.replaceable },
+                    Codec.intRange(-1, 48).fieldOf("log_topper_chance").forGetter { it.logTopperChance },
+                    Codec.intRange(-1, 48).fieldOf("stump_sides_chance").forGetter { it.stumpSidesChance },
                     BlockStateProvider.TYPE_CODEC.fieldOf("log_topper").orElse(BlockStateProvider.of(Blocks.AIR))
                         .forGetter { it.logTopper },
                     BlockStateProvider.TYPE_CODEC.fieldOf("stump_sides").orElse(BlockStateProvider.of(Blocks.AIR))

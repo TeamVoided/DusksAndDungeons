@@ -54,6 +54,7 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
         if (getHit != null && !stack.isEmpty && entity.abilities.allowModifyWorld && stack.isIn(ItemTags.AXES)) {
             if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
             setBlockState(world, pos, entity, getHit)
+            world.updateNeighbor(pos, this, pos)
             return ItemInteractionResult.success(world.isClient)
         } else {
             return super.onInteract(stack, state, world, pos, entity, hand, hitResult)
@@ -155,7 +156,9 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
 
     fun stateOrNull(direction: Property<Boolean>, state: BlockState): BlockState? {
         return if (state.get(direction) == false) null
-        else state.with(direction, false)
+        else {
+            state.with(direction, false)
+        }
     }
 
     private fun howManyTrueSides(state: BlockState): Int {
@@ -198,8 +201,7 @@ open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settin
     }
 
     override fun getRaycastShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
-        return if (howManyTrueSides(state) <= 4) super.getRaycastShape(state, world, pos)
-        else VoxelShapes.empty()
+        return VoxelShapes.empty()
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

@@ -5,7 +5,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
 import net.minecraft.fluid.Fluids
-import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -13,6 +12,7 @@ import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.StructureWorldAccess
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.util.FeatureContext
+import org.teamvoided.dusk_autumn.util.getVinePropertyFromDirection
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FallenTreeConfig
 
 open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
@@ -26,7 +26,7 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
         val direction = Direction.Type.HORIZONTAL.random(randomGenerator)
         val fallenTreeConfig = context.config
         val trunkLength = fallenTreeConfig.trunkLength.get(randomGenerator)
-        val extraDistance = fallenTreeConfig.trunkDistanceFromStump.get(randomGenerator)
+        val extraDistance = fallenTreeConfig.trunkDistanceFromStump.get(randomGenerator) + 1
         if (structureWorldAccess.getBlockState(origin).isIn(fallenTreeConfig.replaceable)) {
             val retur: Boolean
             if (trunkLength <= 3) {
@@ -79,8 +79,6 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
         //checks if the position is eligible, else, moves down until its blocked
         for (posCheck in 1 downTo -config.trunkVerticalRange) {
             pos = pos.offset(Direction.DOWN)
-            println(world.getBlockState(pos.down()))
-            println(world.getBlockState(pos.down()).isSideSolidFullSquare(world, pos.down(), Direction.UP))
             if (world.getBlockState(pos.down()).isSideSolidFullSquare(world, pos.down(), Direction.UP)) {
                 //places the trunk
                 for (length in 0..trunkLength) {
@@ -106,7 +104,7 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
         world: StructureWorldAccess,
         random: RandomGenerator
     ): Boolean {
-        println("no, the complex fallen logs have not been done yet, this is done with horrendous code")
+//        println("no, the complex fallen logs have not been done yet, this is done with horrendous code")
 //        return false
         var pos: BlockPos = start.offset(Direction.UP)
         for (posCheck in 1 downTo -config.trunkVerticalRange) {
@@ -114,16 +112,12 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
             for (length in 0..trunkLength / 2) {
                 val near = pos.down().offset(direction, length)
                 val far = pos.down().offset(direction, trunkLength).offset(direction.opposite, length)
-                println(world.getBlockState(near))
-                println(world.getBlockState(near).isSideSolidFullSquare(world, near, Direction.UP))
-                println(world.getBlockState(far))
-                println(world.getBlockState(far).isSideSolidFullSquare(world, far, Direction.UP))
                 if (
                     world.getBlockState(near).isSideSolidFullSquare(world, near, Direction.UP) &&
                     world.getBlockState(far).isSideSolidFullSquare(world, far, Direction.UP)
                 ) {
-                    for (ignore in 0..trunkLength) {
-                        val posPlacer = pos.offset(direction, length)
+                    for (thinkOfAName in 0..trunkLength) {
+                        val posPlacer = pos.offset(direction, thinkOfAName)
                         placeLog(
                             config.logBlock.getBlockState(random, pos),
                             posPlacer,
@@ -159,21 +153,30 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
                 .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER)
             world.setBlockState(pos, logBlockState, 3)
 
-            var vineBlockState = config.logTopper.getBlockState(random, pos)
-            if (direction.axis == Direction.Axis.Y && vineBlockState != Blocks.AIR) {
-                Direction.Type.HORIZONTAL.forEach {
-                    val vinePos = pos.offset(it)
-//                    vineBlockState.withIfExists(Direction.getPropertyFromDirection(it) it)
-                    vineBlockState = config.logTopper.getBlockState(random, pos)
+            val sideChance = config.stumpSidesChance
+            if (sideChance != -1) {
+                var vineBlockState = config.stumpSides.getBlockState(random, pos)
+                if (direction.axis == Direction.Axis.Y && vineBlockState != Blocks.AIR) {
+                    Direction.Type.HORIZONTAL.forEach {
+                        val vinePos = pos.offset(it)
+                        if (random.range(0, sideChance) == 0 && world.getBlockState(vinePos).isIn(config.replaceable)) {
+                            vineBlockState.withIfExists(getVinePropertyFromDirection(it.opposite), true)
+                            vineBlockState = config.stumpSides.getBlockState(random, pos)
+                            world.setBlockState(vinePos, vineBlockState, 3)
+                        }
+                    }
                 }
             }
 
-            val abovePos = pos.up()
-            val mushroomBlockState = config.logTopper.getBlockState(random, abovePos)
-            if (world.getBlockState(abovePos).isIn(config.replaceable) && mushroomBlockState != Blocks.AIR) {
-                mushroomBlockState
-                    .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER)
-                world.setBlockState(abovePos, mushroomBlockState, 3)
+            val topperChance = config.logTopperChance
+            if (topperChance != -1 && random.range(0, topperChance) == 0) {
+                val abovePos = pos.up()
+                val mushroomBlockState = config.logTopper.getBlockState(random, abovePos)
+                if (mushroomBlockState != Blocks.AIR && world.getBlockState(abovePos).isIn(config.replaceable)) {
+                    mushroomBlockState
+                        .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER)
+                    world.setBlockState(abovePos, mushroomBlockState, 3)
+                }
             }
         }
 

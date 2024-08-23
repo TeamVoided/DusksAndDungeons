@@ -37,7 +37,7 @@ class CascadeRootPlacer(
             for (listPos in listOf(originalPos.offset(axis, 1), originalPos, originalPos.offset(axis, -1))) {
                 if (random.range(0, cascadeRootConfig.chanceForRoot) == 0) continue
                 var movingPos = listPos
-                for (ignored in 0..random.range(0, cascadeRootConfig.maxDistanceFromTrunk)) {
+                for (ignored in 0..random.range(0, cascadeRootConfig.maxDistanceFromTrunk.get(random))) {
                     movingPos = movingPos.offset(dir, 1)
                     if (canReplace(world, movingPos))
                         replacer.placeRoot(movingPos, random) { it.withIfExists(PillarBlock.AXIS, dir.axis) }
