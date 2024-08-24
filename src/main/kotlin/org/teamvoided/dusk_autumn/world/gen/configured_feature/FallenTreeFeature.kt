@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.StructureWorldAccess
+import net.minecraft.world.WorldView
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.util.FeatureContext
 import org.teamvoided.dusk_autumn.util.getPropertyFromDirection
@@ -17,154 +18,101 @@ import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FallenTree
 open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
     Feature<FallenTreeConfig>(codec) {
     override fun place(context: FeatureContext<FallenTreeConfig>): Boolean {
-        val structureWorldAccess = context.world
-        val origin = context.origin
-        // bottom of world check
-        if (origin.y <= structureWorldAccess.bottomY + 1 || origin.y >= structureWorldAccess.topY - 1) return false
-        val randomGenerator = context.random
-        val direction = Direction.Type.HORIZONTAL.random(randomGenerator)
-        val fallenTreeConfig = context.config
-        val trunkLength = fallenTreeConfig.trunkLength.get(randomGenerator)
-        val extraDistance = fallenTreeConfig.trunkDistanceFromStump.get(randomGenerator) + 1
-        if (structureWorldAccess.getBlockState(origin).isIn(fallenTreeConfig.replaceable)) {
-            val retur: Boolean
-            val trunkStartPos = origin.offset(direction, extraDistance)
-            if (trunkLength <= 3) {
-                //edge case
-                retur = placeSmallFallenTrunk(
-                    trunkLength,
-                    direction,
-                    trunkStartPos,
-                    fallenTreeConfig,
-                    structureWorldAccess,
-                    randomGenerator
-                )
-            } else {
-                retur = placeFallenTrunk(
-                    trunkLength,
-                    direction,
-                    trunkStartPos,
-                    fallenTreeConfig,
-                    structureWorldAccess,
-                    randomGenerator
-                )
-            }
-            if (retur) {
-                placeLogs(
-                    origin,
-                    Direction.UP,
-                    fallenTreeConfig.stumpHeight.get(randomGenerator),
-                    fallenTreeConfig,
-                    structureWorldAccess,
-                    randomGenerator,
-                    true
-                )
-                return true
-            } else return false
+        val world = context.world
+        val random = context.random
+        val config = context.config
+        val pos = context.origin
+        if (world.isOutOfWorld(pos)) return false
+
+        val direction = Direction.Type.HORIZONTAL.random(random)
+        val trunkLength = config.trunkLength.get(random)
+        val trunkOffset = config.trunkDistanceFromStump.get(random) + 1
+
+
+        if (!world.getBlockState(pos).isIn(config.replaceable)) return false
+
+        val trunkStartPos = pos.offset(direction, trunkOffset)
+
+        val placeStump: Boolean = (if (trunkLength <= 3) ::placeSmallFallenTrunk else ::placeFallenTrunk
+                ).invoke(trunkLength, direction, trunkStartPos, config, world, random)
+
+        if (placeStump) {
+            world.placeLogs(pos, Direction.UP, config.stumpHeight.get(random), config, random, true)
         }
-        return false
+        return placeStump
     }
 
     //places the small fallen trunk
     private fun placeSmallFallenTrunk(
-        trunkLength: Int,
-        direction: Direction,
-        start: BlockPos,
-        config: FallenTreeConfig,
-        world: StructureWorldAccess,
-        random: RandomGenerator
+        trunkLength: Int, direction: Direction, start: BlockPos, config: FallenTreeConfig,
+        world: StructureWorldAccess, random: RandomGenerator
     ): Boolean {
-        var pos: BlockPos = start.offset(Direction.UP, 3)
+        var pos = start.offset(Direction.UP, 3)
+        if (world.aboveTop(pos)) return false
+
         //checks if the position is eligible, else, moves down until its blocked
-        for (posCheck in 0 downTo -config.trunkVerticalRange) {
-            if (world.getBlockState(pos.down()).isSideSolidFullSquare(world, pos.down(), Direction.UP)) {
-                //places the trunk
-                placeLogs(
-                    pos,
-                    direction,
-                    trunkLength,
-                    config,
-                    world,
-                    random
-                )
+        for (ignored in 0..config.trunkVerticalRange) {
+            pos = pos.down()
+            if (world.bellowBottom(pos) ||
+                (world.getBlockState(pos).isFullCube(world, pos) && !world.getBlockState(pos).isIn(config.replaceable))
+            ) break /* stops moving check position down and cancels feature */
+
+            if (world.getBlockState(pos).isSideSolidFullSquare(world, pos, Direction.UP)) {
+                world.placeLogs(pos.up(), direction, trunkLength, config, random) //places the trunk
                 return true
             }
-            pos = pos.down()
-            if (
-                (world.getBlockState(pos).isFullCube(world, pos) &&
-                        !world.getBlockState(pos).isIn(config.replaceable)) ||
-                pos.y <= world.bottomY + 1
-            ) /* stops moving check position down and cancels feature */ break
         }
         return false
     }
 
     //places the regular fallen trunk
     private fun placeFallenTrunk(
-        trunkLength: Int,
-        direction: Direction,
-        start: BlockPos,
-        config: FallenTreeConfig,
-        world: StructureWorldAccess,
-        random: RandomGenerator
+        trunkLength: Int, direction: Direction, start: BlockPos, config: FallenTreeConfig,
+        world: StructureWorldAccess, random: RandomGenerator
     ): Boolean {
-//        println("no, the complex fallen logs have not been done yet, this is done with horrendous code")
-//        return false
         val trunkLength3 = trunkLength / 3
         var pos: BlockPos = start.offset(Direction.UP, 3)
         var near = pos.offset(direction, trunkLength3)
         var far = pos.offset(direction, trunkLength - trunkLength3)
-        for (posCheck in 0 downTo -config.trunkVerticalRange) {
+        for (ignored in 0..config.trunkVerticalRange) {
             if (
                 world.getBlockState(near).isSideSolidFullSquare(world, near, Direction.UP) &&
                 world.getBlockState(far).isSideSolidFullSquare(world, far, Direction.UP)
             ) {
-                placeLogs(
-                    pos,
-                    direction,
-                    trunkLength,
-                    config,
-                    world,
-                    random
-                )
+                world.placeLogs(pos, direction, trunkLength, config, random)
                 return true
             }
             pos = pos.down()
             near = near.down()
             far = far.down()
             if (
-                (world.getBlockState(near).isFullCube(world, near) &&
-                        !world.getBlockState(near).isIn(config.replaceable)) ||
-                pos.y <= world.bottomY + 1
+                (world.getBlockState(near).isFullCube(world, near) && !world.getBlockState(near)
+                    .isIn(config.replaceable)) ||
+                world.bellowBottom(pos)
             ) /* stops moving check position down and cancels feature */ break
         }
         return false
     }
 
-    fun placeLogs(
-        pos: BlockPos,
-        direction: Direction,
-        size: Int,
-        config: FallenTreeConfig,
-        world: StructureWorldAccess,
-        random: RandomGenerator,
+    fun StructureWorldAccess.placeLogs(
+        pos: BlockPos, direction: Direction, size: Int, config: FallenTreeConfig, random: RandomGenerator,
         stump: Boolean = false
     ) {
         val width = config.treeWidth
         if (width == 1) {
             for (loop in 0..size) {
                 val position = pos.offset(direction, loop)
-                if (world.getBlockState(pos).isIn(config.replaceable)) {
+                if (this.getBlockState(pos).isIn(config.replaceable)) {
                     val logBlockState = if (stump) config.stumpBlock.getBlockState(random, position)
                     else config.logBlock.getBlockState(random, position)
-                    world.setBlockState(
+                    this.setBlockState(
                         pos, logBlockState
                             .withIfExists(PillarBlock.AXIS, direction.axis)
-                            .withIfExists(Properties.WATERLOGGED, world.getFluidState(pos).fluid == Fluids.WATER), 3
+                            .withIfExists(Properties.WATERLOGGED, this.getFluidState(pos).fluid == Fluids.WATER), 3
                     )
                 }
-                if (stump) placeSides(pos, config, world, random)
-                placeTopper(pos, config, world, random)
+                if (stump) placeSides(pos, config, this, random)
+                placeTopper(pos, config, this, random)
             }
         } else {
             val offset = width - (width / 2)
@@ -188,14 +136,14 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
                             .offset(direction.opposite, z)
                         for (y in 0..config.stumpHeight.get(random)) {
                             position = position.up(y)
-                            world.setBlockState(
+                            this.setBlockState(
                                 position, config.stumpBlock.getBlockState(random, position)
                                     .withIfExists(
                                         Properties.WATERLOGGED,
-                                        world.getFluidState(pos).fluid == Fluids.WATER
+                                        this.getFluidState(pos).fluid == Fluids.WATER
                                     ), 3
                             )
-                            placeSides(pos, config, world, random)
+                            placeSides(pos, config, this, random)
                         }
                     }
                 }
@@ -234,12 +182,7 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
         }
     }
 
-    fun placeTopper(
-        pos: BlockPos,
-        config: FallenTreeConfig,
-        world: StructureWorldAccess,
-        random: RandomGenerator
-    ) {
+    fun placeTopper(pos: BlockPos, config: FallenTreeConfig, world: StructureWorldAccess, random: RandomGenerator) {
         val topperChance = config.logTopperChance
         if (topperChance != -1 && (topperChance == 0 || random.range(0, topperChance) == 0)) {
             val abovePos = pos.up()
@@ -252,4 +195,10 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
         }
     }
 
+    companion object {
+        // move to util
+        fun WorldView.isOutOfWorld(pos: BlockPos): Boolean = pos.y <= this.bottomY + 1 || pos.y >= this.topY - 1
+        fun WorldView.bellowBottom(pos: BlockPos): Boolean = pos.y <= this.bottomY + 1
+        fun WorldView.aboveTop(pos: BlockPos): Boolean = pos.y >= this.topY - 1
+    }
 }
