@@ -28,59 +28,13 @@ import net.minecraft.world.gen.foliage.AcaciaFoliagePlacer
 import net.minecraft.world.gen.foliage.BlobFoliagePlacer
 import net.minecraft.world.gen.foliage.DarkOakFoliagePlacer
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
-import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
-import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
-import org.teamvoided.dusk_autumn.data.gen.worldgen.ConfiguredFeatureCreator.registerConfiguredFeature
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_BUSH_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ACACIA_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_FARMLAND
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BIRCH_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BIRCH_TALL_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BLACKSTONE_NETHER_ORE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.BLUE_PETALS
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE_BEES
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CASCADE_TREE_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CHERRY_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.COBBLESTONE_ROCK
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CRIMSON_FALLEN_STEM
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_BEETROOTS
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_CARROTS
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_GOLDEN_BEETROOTS
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_POTATOES
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_PUMPKIN
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_WHEAT
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.CROPS_WILD_WHEAT
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DARK_OAK_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DARK_OAK_AUTUMN_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DARK_OAK_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_MUD
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_PODZOL
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.DISK_RED_SAND
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.FLOWER_AUTUMN
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.GOLDEN_BIRCH_TALL_WETLANDS
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.JUNGLE_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.OAK_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.PATCH_ROSEBUSH
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.ROCKY_OVERWORLD_ORE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.SLATED_OVERWORLD_ORE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.SPRUCE_FALLEN_TREE
-import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature.WARPED_FALLEN_STEM
+import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
@@ -105,16 +59,6 @@ object ConfiguredFeatureCreator {
         val configuredFeatures = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
         val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
 
-        val petalFlowerBuilder = DataPool.builder<BlockState>()
-        (1..4).forEach { count ->
-            Direction.Type.HORIZONTAL.forEach { direction ->
-                petalFlowerBuilder.addWeighted(
-                    DnDBlocks.BLUE_PETALS.defaultState
-                        .with(PinkPetalsBlock.AMOUNT, count).with(PinkPetalsBlock.FACING, direction),
-                    1
-                )
-            }
-        }
         val cascadeTree = TreeFeatureConfig.Builder(
             BlockStateProvider.of(DnDBlocks.CASCADE_LOG),
             ThreeWideTrunkPlacer(9, 2, 1),
@@ -127,13 +71,13 @@ object ConfiguredFeatureCreator {
             ),
             Optional.of(
                 CascadeRootPlacer(
-                    BiasedToBottomIntProvider.create(0, 1),
+                    BiasedToBottomIntProvider.create(0, 2),
                     BlockStateProvider.of(DnDBlocks.CASCADE_LOG),
                     Optional.empty(),
                     CascadeRootConfig(
                         blockTags.getTagOrThrow(BlockTags.REPLACEABLE_BY_TREES),
                         3,
-                        BiasedToBottomIntProvider.create(1,2),
+                        BiasedToBottomIntProvider.create(1, 3),
                         6,
                     )
                 )
@@ -172,7 +116,7 @@ object ConfiguredFeatureCreator {
 //            c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
 //        )
         c.registerConfiguredFeature(
-            COBBLESTONE_ROCK,
+            DnDConfiguredFeature.COBBLESTONE_ROCK,
             Feature.ORE,
             OreFeatureConfig(
                 TagMatchRuleTest(DnDBlockTags.REPLACEABLE_OR_DIRT),
@@ -182,18 +126,36 @@ object ConfiguredFeatureCreator {
         )
 
         c.registerConfiguredFeature(
-            CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
+            DnDConfiguredFeature.CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
+                ImmutableList.of(leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags))
+            ).build()
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.CASCADE_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
+                ImmutableList.of(BeehiveBigTreeDecorator(0.1F), leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags))
+            ).build()
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.GOLDEN_BIRCH_TALL, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
-                    AlterGroundRadiusTreeDecorator(
-                        BlockStateProvider.of(Blocks.PODZOL), 2, 5,
-                        blockTags.getTagOrThrow(BlockTags.DIRT)
-                    ),
-                    leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags)
+                    birchDecorator1,
+                    birchDecorator2,
+                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
         c.registerConfiguredFeature(
-            CASCADE_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
+            DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
+                ImmutableList.of(
+                    BeehiveBigTreeDecorator(0.1F),
+                    birchDecorator1,
+                    birchDecorator2,
+                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                )
+            ).build()
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.CASCADE_TREE_AUTUMN, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
                     BeehiveBigTreeDecorator(0.02F),
                     AlterGroundRadiusTreeDecorator(
@@ -206,33 +168,7 @@ object ConfiguredFeatureCreator {
             ).build()
         )
         c.registerConfiguredFeature(
-            CASCADE_TREE_WETLANDS, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
-                ImmutableList.of(
-                    LeavesVineTreeDecorator(0.25F),
-                    BeehiveBigTreeDecorator(0.02F),
-                    AlterGroundRadiusTreeDecorator(
-                        BlockStateProvider.of(Blocks.PODZOL), 2, 5,
-                        blockTags.getTagOrThrow(BlockTags.DIRT)
-                    ),
-                    leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags)
-                )
-            ).build()
-        )
-        c.registerConfiguredFeature(
-            GOLDEN_BIRCH_TALL, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
-                ImmutableList.of(
-                    AlterGroundRadiusTreeDecorator(
-                        BlockStateProvider.of(Blocks.PODZOL), 2, 20,
-                        blockTags.getTagOrThrow(BlockTags.DIRT)
-                    ),
-                    birchDecorator1,
-                    birchDecorator2,
-                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
-                )
-            ).build()
-        )
-        c.registerConfiguredFeature(
-            GOLDEN_BIRCH_TALL_BEES, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
+            DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
                     BeehiveBigTreeDecorator(0.02F),
                     AlterGroundRadiusTreeDecorator(
@@ -245,26 +181,8 @@ object ConfiguredFeatureCreator {
                 )
             ).build()
         )
-        ConfiguredFeatureUtil.method_39708(
-            c,
-            GOLDEN_BIRCH_TALL_WETLANDS,
-            Feature.TREE,
-            builder(Blocks.BIRCH_LOG, DnDBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 3).ignoreVines().decorators(
-                ImmutableList.of(
-                    LeavesVineTreeDecorator(0.25F),
-                    BeehiveBigTreeDecorator(0.02F),
-                    AlterGroundRadiusTreeDecorator(
-                        BlockStateProvider.of(Blocks.PODZOL), 2, 20,
-                        blockTags.getTagOrThrow(BlockTags.DIRT)
-                    ),
-                    birchDecorator1,
-                    birchDecorator2,
-                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
-                )
-            ).build()
-        )
         c.registerConfiguredFeature(
-            DARK_OAK_AUTUMN, Feature.TREE, TreeFeatureConfig.Builder(
+            DnDConfiguredFeature.DARK_OAK_AUTUMN, Feature.TREE, TreeFeatureConfig.Builder(
                 BlockStateProvider.of(Blocks.DARK_OAK_LOG),
                 DarkOakTrunkPlacer(6, 3, 1),
                 BlockStateProvider.of(Blocks.DARK_OAK_LEAVES),
@@ -283,27 +201,7 @@ object ConfiguredFeatureCreator {
                 ).build()
         )
         c.registerConfiguredFeature(
-            DARK_OAK_AUTUMN_WETLANDS, Feature.TREE, TreeFeatureConfig.Builder(
-                BlockStateProvider.of(Blocks.DARK_OAK_LOG),
-                DarkOakTrunkPlacer(6, 3, 1),
-                BlockStateProvider.of(Blocks.DARK_OAK_LEAVES),
-                DarkOakFoliagePlacer(ConstantIntProvider.create(1), ConstantIntProvider.create(0)),
-                ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
-            )
-                .forceDirt().ignoreVines().decorators(
-                    ImmutableList.of(
-                        LeavesVineTreeDecorator(0.25F),
-                        BeehiveBigTreeDecorator(0.02F),
-                        AlterGroundRadiusTreeDecorator(
-                            BlockStateProvider.of(Blocks.PODZOL), 2, 5,
-                            blockTags.getTagOrThrow(BlockTags.DIRT)
-                        ),
-                        leafPiles(DnDBlocks.DARK_OAK_LEAF_PILE, blockTags)
-                    )
-                ).build()
-        )
-        c.registerConfiguredFeature(
-            ACACIA_AUTUMN, Feature.TREE, TreeFeatureConfig.Builder(
+            DnDConfiguredFeature.ACACIA_AUTUMN, Feature.TREE, TreeFeatureConfig.Builder(
                 BlockStateProvider.of(Blocks.ACACIA_LOG),
                 StraightTrunkPlacer(4, 2, 0),
                 BlockStateProvider.of(Blocks.ACACIA_LEAVES),
@@ -314,8 +212,8 @@ object ConfiguredFeatureCreator {
                     ImmutableList.of<TreeDecorator>(leafPiles(DnDBlocks.ACACIA_LEAF_PILE, blockTags))
                 ).build()
         )
-        ConfiguredFeatureUtil.method_39708<TreeFeatureConfig, Feature<TreeFeatureConfig>>(
-            c, ACACIA_BUSH_AUTUMN, Feature.TREE,
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.ACACIA_BUSH_AUTUMN, Feature.TREE,
             TreeFeatureConfig.Builder(
                 BlockStateProvider.of(Blocks.ACACIA_LOG),
                 StraightTrunkPlacer(1, 0, 0),
@@ -324,8 +222,8 @@ object ConfiguredFeatureCreator {
                 TwoLayersFeatureSize(0, 0, 0)
             ).build()
         )
-        ConfiguredFeatureUtil.method_39708<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
-            c, DISK_PODZOL, Feature.DISK, DiskFeatureConfig(
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.DISK_PODZOL, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz(
                     BlockStateProvider.of(Blocks.DIRT), listOf(
                         C_pkkqenbk(
@@ -342,8 +240,8 @@ object ConfiguredFeatureCreator {
                 UniformIntProvider.create(2, 6), 2
             )
         )
-        ConfiguredFeatureUtil.method_39708<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
-            c, DISK_MUD, Feature.DISK, DiskFeatureConfig(
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.DISK_MUD, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz.method_43312(Blocks.MUD), BlockPredicate.matchingBlocks(
                     listOf(
                         Blocks.DIRT,
@@ -358,8 +256,8 @@ object ConfiguredFeatureCreator {
             )
         )
 
-        ConfiguredFeatureUtil.method_39708<DiskFeatureConfig, Feature<DiskFeatureConfig>>(
-            c, DISK_RED_SAND, Feature.DISK, DiskFeatureConfig(
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.DISK_RED_SAND, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz(
                     BlockStateProvider.of(Blocks.RED_SAND), listOf(
                         C_pkkqenbk(
@@ -380,38 +278,25 @@ object ConfiguredFeatureCreator {
                 ), UniformIntProvider.create(2, 6), 2
             )
         )
+        val pumpkins = DataPool.builder<BlockState>()
+        Direction.Type.HORIZONTAL.forEach {
+            pumpkins
+                .addWeighted(
+                    Blocks.CARVED_PUMPKIN.defaultState
+                        .with(HorizontalFacingBlock.FACING, it), 8
+                )
+                .addWeighted(
+                    Blocks.JACK_O_LANTERN.defaultState
+                        .with(HorizontalFacingBlock.FACING, it), 1
+                )
+        }
         c.registerConfiguredFeature(
-            PATCH_PUMPKIN_EXTRA, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
-                        DataPool.builder<BlockState>()
-                            .addWeighted(Blocks.PUMPKIN.defaultState, 64)
-                            .addWeighted(Blocks.CARVED_PUMPKIN.defaultState, 8)
-                            .addWeighted(
-                                Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 8
-                            )
-                            .addWeighted(
-                                Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.EAST), 8
-                            )
-                            .addWeighted(
-                                Blocks.CARVED_PUMPKIN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.WEST), 8
-                            )
-                            .addWeighted(Blocks.JACK_O_LANTERN.defaultState, 1)
-                            .addWeighted(
-                                Blocks.JACK_O_LANTERN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.SOUTH), 1
-                            )
-                            .addWeighted(
-                                Blocks.JACK_O_LANTERN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.EAST), 1
-                            )
-                            .addWeighted(
-                                Blocks.JACK_O_LANTERN.defaultState
-                                    .with(HorizontalFacingBlock.FACING, Direction.WEST), 1
-                            )
+                        pumpkins.addWeighted(Blocks.PUMPKIN.defaultState, 64)
                     )
                 ),
                 listOf(
@@ -426,7 +311,7 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            AUTUMN_WOODS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
+            DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
@@ -441,50 +326,50 @@ object ConfiguredFeatureCreator {
                         ), 0.005f
                     ),
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN), 0.425f),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_BEES), 0.425f)
-                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_AUTUMN), 0.425f)
+                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_AUTUMN)
             )
         )
         c.registerConfiguredFeature(
-            AUTUMN_PASTURES_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
+            DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
                     WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
                     WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES),
+                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_AUTUMN),
                         0.05f
                     ),
-                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_BEES), 0.01f)
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_AUTUMN), 0.01f)
                 ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.ACACIA_AUTUMN)
             )
         )
+//        c.registerConfiguredFeature(
+//            DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
+//                listOf(
+//                    WeightedPlacedFeature(
+//                        PlacedFeatureUtil.placedInline(
+//                            configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM),
+//                            *arrayOfNulls(0)
+//                        ), 0.0025f
+//                    ),
+//                    WeightedPlacedFeature(
+//                        PlacedFeatureUtil.placedInline(
+//                            configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM),
+//                            *arrayOfNulls(0)
+//                        ), 0.005f
+//                    ),
+//                    WeightedPlacedFeature(
+//                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN_WETLANDS),
+//                        0.425f
+//                    ),
+//                    WeightedPlacedFeature(
+//                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_WETLANDS),
+//                        0.425f
+//                    )
+//                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS)
+//            )
+//        )
         c.registerConfiguredFeature(
-            AUTUMN_WETLANDS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
-                listOf(
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM),
-                            *arrayOfNulls(0)
-                        ), 0.0025f
-                    ),
-                    WeightedPlacedFeature(
-                        PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM),
-                            *arrayOfNulls(0)
-                        ), 0.005f
-                    ),
-                    WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN_WETLANDS),
-                        0.425f
-                    ),
-                    WeightedPlacedFeature(
-                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_WETLANDS),
-                        0.425f
-                    )
-                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS)
-            )
-        )
-        c.registerConfiguredFeature(
-            FLOWER_AUTUMN, Feature.FLOWER, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.FLOWER_AUTUMN, Feature.FLOWER, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 64,
                 PlacedFeatureUtil.onlyWhenEmpty(
                     Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
@@ -499,20 +384,23 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            PATCH_ROSEBUSH, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.PATCH_ROSEBUSH,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(BlockStateProvider.of(Blocks.ROSE_BUSH))
             )
         )
         c.registerConfiguredFeature(
-            BLUE_PETALS, Feature.FLOWER, RandomPatchFeatureConfig(
+            DnDConfiguredFeature.BLUE_PETALS, Feature.FLOWER, RandomPatchFeatureConfig(
                 96, 6, 2,
                 PlacedFeatureUtil.onlyWhenEmpty(
-                    Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(WeightedBlockStateProvider(petalFlowerBuilder))
+                    Feature.SIMPLE_BLOCK,
+                    SimpleBlockFeatureConfig(WeightedBlockStateProvider(petalBuilder(DnDBlocks.BLUE_PETALS)))
                 )
             )
         )
         c.registerConfiguredFeature(
-            AUTUMN_FARMLAND, DnDFeatures.FARMLAND, FarmlandConfig(
+            DnDConfiguredFeature.AUTUMN_FARMLAND, DnDFeatures.FARMLAND, FarmlandConfig(
                 BlockTags.DIRT,
                 DnDBlockTags.FARMLAND_PLACES_UNDER,
                 BlockStateProvider.of(Blocks.FARMLAND.defaultState.with(FarmlandBlock.MOISTURE, 7)),
@@ -525,7 +413,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.of(Blocks.WATER),
                 0.9f,
                 PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(AUTUMN_FARMLAND_CROPS),
+                    configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS),
                     *arrayOfNulls<PlacementModifier>(0)
                 ),
                 0.1f,
@@ -534,52 +422,54 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            AUTUMN_FARMLAND_CROPS, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
+            DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
                 listOf(
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(CROPS_WHEAT),
+                            configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_WHEAT),
                             *arrayOfNulls<PlacementModifier>(0)
                         ), 0.25f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(CROPS_CARROTS),
+                            configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_CARROTS),
                             *arrayOfNulls<PlacementModifier>(0)
                         ), 0.175f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(CROPS_POTATOES),
+                            configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_POTATOES),
                             *arrayOfNulls<PlacementModifier>(0)
                         ), 0.175f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(CROPS_PUMPKIN),
+                            configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_PUMPKIN),
                             *arrayOfNulls<PlacementModifier>(0)
                         ), 0.175f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(CROPS_BEETROOTS),
+                            configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_BEETROOTS),
                             *arrayOfNulls<PlacementModifier>(0)
                         ), 0.175f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(CROPS_GOLDEN_BEETROOTS),
+                            configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_GOLDEN_BEETROOTS),
                             *arrayOfNulls<PlacementModifier>(0)
                         ), 0.05f
                     )
                 ), PlacedFeatureUtil.placedInline(
-                    configuredFeatures.getHolderOrThrow(CROPS_WILD_WHEAT),
+                    configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
                     *arrayOfNulls<PlacementModifier>(0)
                 )
             )
         )
         c.registerConfiguredFeature(
-            CROPS_WILD_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.CROPS_WILD_WHEAT,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockFeatureConfig(
                     BlockStateProvider.of(
@@ -589,7 +479,9 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            CROPS_WHEAT, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.CROPS_WHEAT,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockFeatureConfig(
                     basicCropAges(Blocks.WHEAT)
@@ -597,28 +489,36 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            CROPS_CARROTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.CROPS_CARROTS,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     basicCropAges(Blocks.CARROTS)
                 )
             )
         )
         c.registerConfiguredFeature(
-            CROPS_POTATOES, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.CROPS_POTATOES,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     basicCropAges(Blocks.POTATOES)
                 )
             )
         )
         c.registerConfiguredFeature(
-            CROPS_PUMPKIN, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.CROPS_PUMPKIN,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     basicCropAges(Blocks.PUMPKIN_STEM)
                 )
             )
         )
         c.registerConfiguredFeature(
-            CROPS_BEETROOTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.CROPS_BEETROOTS,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
@@ -630,7 +530,9 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            CROPS_GOLDEN_BEETROOTS, Feature.RANDOM_PATCH, ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
+            DnDConfiguredFeature.CROPS_GOLDEN_BEETROOTS,
+            Feature.RANDOM_PATCH,
+            ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
@@ -654,7 +556,7 @@ object ConfiguredFeatureCreator {
         val vine = BlockStateProvider.of(Blocks.VINE)
         createFallenTree(
             c,
-            OAK_FALLEN_TREE,
+            DnDConfiguredFeature.OAK_FALLEN_TREE,
             Blocks.OAK_LOG,
             DnDBlocks.HOLLOW_OAK_LOG,
             5,
@@ -664,7 +566,7 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            SPRUCE_FALLEN_TREE,
+            DnDConfiguredFeature.SPRUCE_FALLEN_TREE,
             Blocks.SPRUCE_LOG,
             DnDBlocks.HOLLOW_SPRUCE_LOG,
             5,
@@ -676,7 +578,7 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            BIRCH_FALLEN_TREE,
+            DnDConfiguredFeature.BIRCH_FALLEN_TREE,
             Blocks.BIRCH_LOG,
             DnDBlocks.HOLLOW_BIRCH_LOG,
             5,
@@ -685,7 +587,7 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            BIRCH_TALL_FALLEN_TREE,
+            DnDConfiguredFeature.BIRCH_TALL_FALLEN_TREE,
             Blocks.BIRCH_LOG,
             DnDBlocks.HOLLOW_BIRCH_LOG,
             5,
@@ -698,7 +600,7 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            JUNGLE_FALLEN_TREE,
+            DnDConfiguredFeature.JUNGLE_FALLEN_TREE,
             Blocks.JUNGLE_LOG,
             DnDBlocks.HOLLOW_JUNGLE_LOG,
             5,
@@ -711,7 +613,7 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            ACACIA_FALLEN_TREE,
+            DnDConfiguredFeature.ACACIA_FALLEN_TREE,
             Blocks.ACACIA_LOG,
             DnDBlocks.HOLLOW_ACACIA_LOG,
             5,
@@ -721,7 +623,7 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            DARK_OAK_FALLEN_TREE,
+            DnDConfiguredFeature.DARK_OAK_FALLEN_TREE,
             Blocks.DARK_OAK_LOG,
             DnDBlocks.HOLLOW_DARK_OAK_LOG,
             5,
@@ -732,13 +634,13 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            CHERRY_FALLEN_TREE,
+            DnDConfiguredFeature.CHERRY_FALLEN_TREE,
             Blocks.CHERRY_LOG,
             DnDBlocks.HOLLOW_CHERRY_LOG
         )
         createFallenTree(
             c,
-            CASCADE_FALLEN_TREE,
+            DnDConfiguredFeature.CASCADE_FALLEN_TREE,
             DnDBlocks.CASCADE_LOG,
             DnDBlocks.HOLLOW_CASCADE_LOG,
             5,
@@ -749,7 +651,7 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            CRIMSON_FALLEN_STEM,
+            DnDConfiguredFeature.CRIMSON_FALLEN_STEM,
             Blocks.CRIMSON_STEM,
             DnDBlocks.HOLLOW_CRIMSON_STEM,
             16,
@@ -762,7 +664,7 @@ object ConfiguredFeatureCreator {
         )
         createFallenTree(
             c,
-            WARPED_FALLEN_STEM,
+            DnDConfiguredFeature.WARPED_FALLEN_STEM,
             Blocks.WARPED_STEM,
             DnDBlocks.HOLLOW_WARPED_STEM,
             16,
@@ -812,7 +714,7 @@ object ConfiguredFeatureCreator {
 
     fun overlayOres(c: BootstrapContext<ConfiguredFeature<*, *>>) {
         c.registerConfiguredFeature(
-            ROCKY_OVERWORLD_ORE,
+            DnDConfiguredFeature.ROCKY_OVERWORLD_ORE,
             Feature.ORE,
             OreFeatureConfig(
                 listOf<OreFeatureConfig.Target>(
@@ -844,7 +746,7 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            SLATED_OVERWORLD_ORE,
+            DnDConfiguredFeature.SLATED_OVERWORLD_ORE,
             Feature.ORE,
             OreFeatureConfig(
                 listOf<OreFeatureConfig.Target>(
@@ -860,7 +762,7 @@ object ConfiguredFeatureCreator {
             )
         )
         c.registerConfiguredFeature(
-            BLACKSTONE_NETHER_ORE,
+            DnDConfiguredFeature.BLACKSTONE_NETHER_ORE,
             Feature.ORE,
             OreFeatureConfig(
                 listOf<OreFeatureConfig.Target>(
@@ -914,7 +816,21 @@ object ConfiguredFeatureCreator {
         )
     }
 
-    fun leafPiles(leafPile: Block, blockTags: HolderProvider<Block>): AlterOnGroundTreeDecorator {
+    fun petalBuilder(flower: Block): DataPool.Builder<BlockState> {
+        val petalFlowerBuilder = DataPool.builder<BlockState>()
+        (1..4).forEach { count ->
+            Direction.Type.HORIZONTAL.forEach { direction ->
+                petalFlowerBuilder.addWeighted(
+                    flower.defaultState
+                        .with(PinkPetalsBlock.AMOUNT, count).with(PinkPetalsBlock.FACING, direction),
+                    1
+                )
+            }
+        }
+        return petalFlowerBuilder
+    }
+
+    fun leafPiles(leafPile: Block, blockTags: HolderProvider<Block>): TreeDecorator {
         return AlterOnGroundTreeDecorator(
             WeightedBlockStateProvider(
                 DataPool.builder<BlockState>()

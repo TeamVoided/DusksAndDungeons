@@ -27,13 +27,13 @@ fun FabricItemGroupEntries.addWoodStuffAndLeafPiles() {
         this.addAfter(stripped, DnDBlockLists.hollowStrippedLogs[idx])
         this.addAfter(
             DnDBlockLists.woodAndStrippedWood[idx].first,
-            DnDItemLists.woodLists[idx] + DnDBlockLists.logPiles[idx].first
+            DnDItemLists.woodLists[idx] + DnDBlockLists.logPiles[idx]
         )
     }
     this.addAfter(Blocks.BAMBOO_BLOCK, DnDBlocks.HOLLOW_BAMBOO_BLOCK)
     this.addAfter(Blocks.STRIPPED_BAMBOO_BLOCK, DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK)
-    DnDBlockLists.leafPiles.forEach { (leafPile, leaves) ->
-        this.addAfter(leaves, leafPile)
+    DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
+        this.addAfter(DnDBlockLists.leaves[idx], leafPile)
     }
 }
 

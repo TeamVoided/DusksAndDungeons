@@ -76,7 +76,6 @@ fun stairsOf(block: Block): Block = StairsBlock(block.defaultState, AbstractBloc
 fun slabOf(block: Block): Block = SlabBlock(AbstractBlock.Settings.copy(block))
 
 fun wallOf(block: Block): Block = WallBlock(AbstractBlock.Settings.copy(block).solid())
-fun woodenWallOf(block: Block): Block = WoodenWallBlock(AbstractBlock.Settings.copy(block).solid())
 
 fun fenceOf(block: Block): Block = FenceBlock(AbstractBlock.Settings.copy(block).solid())
 
@@ -110,9 +109,12 @@ fun bigSoulCandleCakeOf(block: Block): Block = bigSoulCandleCakeOf(block, DnDBlo
 fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block =
     BigSoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
 
-fun hollowLog(log:Block): Block = HollowLogBlockWithCutting(AbstractBlock.Settings.copy(log))
-fun hollowBambooBlock(bambooBlock:Block): Block = HollowBambooBlock(AbstractBlock.Settings.copy(bambooBlock))
-fun logPile(log:Block): Block = LogPileBlock(AbstractBlock.Settings.copy(log).nonOpaque())
+fun hollowLog(log: Block): Block = HollowLogBlockWithCutting(AbstractBlock.Settings.copy(log))
+fun hollowBambooBlock(bambooBlock: Block): Block = HollowBambooBlock(AbstractBlock.Settings.copy(bambooBlock))
+fun logPile(log: Block): Block = LogPileBlock(AbstractBlock.Settings.copy(log).nonOpaque())
+fun logPile(log: Block, mapColor: MapColor): Block =
+    LogPileBlock(AbstractBlock.Settings.copy(log).mapColor(mapColor).nonOpaque())
+
 fun leafPile(): Block = leafPile(MapColor.PLANT, BlockSoundGroup.GRASS)
 fun leafPile(soundGroup: BlockSoundGroup): Block = leafPile(MapColor.PLANT, soundGroup)
 fun leafPile(mapColor: MapColor): Block = leafPile(mapColor, BlockSoundGroup.GRASS)

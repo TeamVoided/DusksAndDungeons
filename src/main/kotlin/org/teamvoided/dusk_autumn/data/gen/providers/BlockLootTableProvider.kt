@@ -28,6 +28,7 @@ import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.block.TallCrystalBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.util.DnDBlockLists
 import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
 import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
 import org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
@@ -38,7 +39,6 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     FabricBlockLootTableProvider(o, r) {
     private val excludeList =
         listOf(
-            DnDBlocks.BLUE_PETALS,
             DnDBlocks.CASCADE_LEAVES,
             DnDBlocks.GOLDEN_BIRCH_LEAVES,
             DnDBlocks.ICE_STAIRS,
@@ -53,7 +53,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 bigCandles.map { it.second } +
                 soulCandles.map { it.second } +
                 bigSoulCandles.map { it.second } +
-                leafPiles.map { it.first }
+                leafPiles.map { it }
 
     override fun generate() {
         val enchantmentLookup = field_51845.getLookupOrThrow(RegistryKeys.ENCHANTMENT)
@@ -64,6 +64,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 is DoorBlock -> add(it, ::doorDrops)
                 is LogPileBlock -> add(it, ::logPile)
                 is CandleBlock -> add(it, ::candleDrops)
+                is PinkPetalsBlock -> add(it, ::flowerbedDrops)
                 else -> addDrop(it)
             }
         }
@@ -76,10 +77,9 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         bigSoulCandles.forEach { (candle, cake) ->
             add(cake) { candleCakeDrops(candle) }
         }
-        leafPiles.forEach { (pile, leaves) ->
-            add(pile) { leafPile(it, leaves) }
+        leafPiles.forEachIndexed { idx, pile ->
+            add(pile) { leafPile(it, DnDBlockLists.leaves[idx]) }
         }
-        add(DnDBlocks.BLUE_PETALS, ::flowerbedDrops)
         add(DnDBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDBlocks.CASCADE_SAPLING) }
         add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
         add(DnDBlocks.CASCADE_LEAVES) {
@@ -88,6 +88,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
+        twoTallDrop(DnDBlocks.SPIDERLILY)
         addDropWithSilkTouch(DnDBlocks.ICE_STAIRS)
         addIceSlab(DnDBlocks.ICE_SLAB)
         addDropWithSilkTouch(DnDBlocks.ICE_WALL)
@@ -129,13 +130,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 )
             )
         )
-        add(DnDBlocks.WILD_WHEAT) { block: Block ->
-            this.dropsWithPropertyValue(
-                block,
-                TallPlantBlock.HALF,
-                DoubleBlockHalf.LOWER
-            )
-        }
+        twoTallDrop(DnDBlocks.WILD_WHEAT)
     }
 
     private fun constantLootNumber(i: Number): ConstantLootNumberProvider =
@@ -158,17 +153,30 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         )
     }
 
+    fun twoTallDrop(block: Block) {
+        add(block) { block2: Block ->
+            this.dropsWithPropertyValue(
+                block2,
+                TallPlantBlock.HALF,
+                DoubleBlockHalf.LOWER
+            )
+        }
+    }
+
     fun addIceSlab(block: Block) {
-        return add(block, LootTable.builder().pool(
-            LootPool.builder().conditionally(this.method_60390()).rolls(ConstantLootNumberProvider.create(1.0f)).with(
-                ItemEntry.builder(block).apply(
-                    SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0f)).conditionally(
-                        BlockStatePropertyLootCondition.builder(block).properties(
-                            StatePredicate.Builder.create().exactMatch(SlabBlock.TYPE, SlabType.DOUBLE)
+        return add(
+            block, LootTable.builder().pool(
+                LootPool.builder().conditionally(this.method_60390()).rolls(ConstantLootNumberProvider.create(1.0f))
+                    .with(
+                        ItemEntry.builder(block).apply(
+                            SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0f)).conditionally(
+                                BlockStatePropertyLootCondition.builder(block).properties(
+                                    StatePredicate.Builder.create().exactMatch(SlabBlock.TYPE, SlabType.DOUBLE)
+                                )
+                            )
                         )
                     )
-                )
-            ))
+            )
         )
     }
 

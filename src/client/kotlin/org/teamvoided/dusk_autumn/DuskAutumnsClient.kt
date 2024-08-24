@@ -14,7 +14,6 @@ import net.minecraft.client.color.world.GrassColors
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
-import org.teamvoided.dusk_autumn.util.DnDBlockLists.coloredBlocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
 import org.teamvoided.dusk_autumn.DuskAutumns.MODID
@@ -59,7 +58,7 @@ object DuskAutumnsClient {
 //        }
 
         ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT.register { blockState, _, _ ->
-            blockState.block !in coloredBlocks
+            blockState.block !in DnDBlocks.GRASS_TINT_BLOCKS
         }
 
         FabricLoader.getInstance().getModContainer(MODID).ifPresent {
@@ -86,11 +85,12 @@ object DuskAutumnsClient {
                     grassColorOrDefault(world, pos)
                 } else -1
             },
-            DnDBlocks.BLUE_PETALS
+            DnDBlocks.BLUE_PETALS,
+            DnDBlocks.WILD_PETALS
         )
         ColorProviderRegistry.BLOCK.register(
             { _, world, pos, _ -> grassColorOrDefault(world, pos) },
-            *coloredBlocks.toTypedArray()
+            *DnDBlocks.GRASS_TINT_BLOCKS.toTypedArray()
         )
         ColorProviderRegistry.BLOCK.register(
             { _, _, _, _ -> FoliageColors.getSpruceColor() }, DnDBlocks.SPRUCE_LEAF_PILE
@@ -112,7 +112,7 @@ object DuskAutumnsClient {
     private fun initItems() {
         ColorProviderRegistry.ITEM.register(
             { _, _ -> GrassColors.getDefault() },
-            *coloredBlocks.map { it.asItem() }.toTypedArray()
+            *DnDBlocks.GRASS_TINT_BLOCKS.map { it.asItem() }.toTypedArray()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getDefaultColor() },

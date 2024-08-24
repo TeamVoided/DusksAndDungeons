@@ -100,7 +100,7 @@ class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Settings) : Sap
         random: RandomGenerator,
         bees: Boolean
     ): RegistryKey<ConfiguredFeature<*, *>> {
-        return if (bees) DnDConfiguredFeature.CASCADE_TREE_BEES else DnDConfiguredFeature.CASCADE_TREE
+        return if (bees) DnDConfiguredFeature.CASCADE_TREE_AUTUMN else DnDConfiguredFeature.CASCADE_TREE
     }
 
     companion object {

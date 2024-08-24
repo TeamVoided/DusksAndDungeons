@@ -19,6 +19,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.big.BigChainBlock
 import org.teamvoided.dusk_autumn.block.big.BigLanternBlock
+import org.teamvoided.dusk_autumn.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableWallBlock
@@ -40,6 +41,8 @@ object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
     val CUTOUT_BLOCKS = mutableSetOf<Block>()
     val TRANSLUCENT_BLOCKS = mutableSetOf<Block>()
+    val GRASS_TINT_BLOCKS = mutableSetOf<Block>()
+    val FOLIAGE_TINT_BLOCKS = mutableSetOf<Block>()
     val WALLS = mutableSetOf<Block>()
     val SWORDABLE = mutableSetOf<Block>()
     val PICKAXABLE = mutableSetOf<Block>()
@@ -292,37 +295,37 @@ object DnDBlocks {
 
     val OAK_WOOD_STAIRS = register("oak_wood_stairs", stairsOf(OAK_WOOD))
     val OAK_WOOD_SLAB = register("oak_wood_slab", slabOf(OAK_WOOD))
-    val OAK_WOOD_WALL = register("oak_wood_wall", woodenWallOf(OAK_WOOD))
+    val OAK_WOOD_WALL = register("oak_wood_wall", wallOf(OAK_WOOD))
     val SPRUCE_WOOD_STAIRS = register("spruce_wood_stairs", stairsOf(SPRUCE_WOOD))
     val SPRUCE_WOOD_SLAB = register("spruce_wood_slab", slabOf(SPRUCE_WOOD))
-    val SPRUCE_WOOD_WALL = register("spruce_wood_wall", woodenWallOf(SPRUCE_WOOD))
+    val SPRUCE_WOOD_WALL = register("spruce_wood_wall", wallOf(SPRUCE_WOOD))
     val BIRCH_WOOD_STAIRS = register("birch_wood_stairs", stairsOf(BIRCH_WOOD))
     val BIRCH_WOOD_SLAB = register("birch_wood_slab", slabOf(BIRCH_WOOD))
-    val BIRCH_WOOD_WALL = register("birch_wood_wall", woodenWallOf(BIRCH_WOOD))
+    val BIRCH_WOOD_WALL = register("birch_wood_wall", wallOf(BIRCH_WOOD))
     val JUNGLE_WOOD_STAIRS = register("jungle_wood_stairs", stairsOf(JUNGLE_WOOD))
     val JUNGLE_WOOD_SLAB = register("jungle_wood_slab", slabOf(JUNGLE_WOOD))
-    val JUNGLE_WOOD_WALL = register("jungle_wood_wall", woodenWallOf(JUNGLE_WOOD))
+    val JUNGLE_WOOD_WALL = register("jungle_wood_wall", wallOf(JUNGLE_WOOD))
     val ACACIA_WOOD_STAIRS = register("acacia_wood_stairs", stairsOf(ACACIA_WOOD))
     val ACACIA_WOOD_SLAB = register("acacia_wood_slab", slabOf(ACACIA_WOOD))
-    val ACACIA_WOOD_WALL = register("acacia_wood_wall", woodenWallOf(ACACIA_WOOD))
+    val ACACIA_WOOD_WALL = register("acacia_wood_wall", wallOf(ACACIA_WOOD))
     val DARK_OAK_WOOD_STAIRS = register("dark_oak_wood_stairs", stairsOf(DARK_OAK_WOOD))
     val DARK_OAK_WOOD_SLAB = register("dark_oak_wood_slab", slabOf(DARK_OAK_WOOD))
-    val DARK_OAK_WOOD_WALL = register("dark_oak_wood_wall", woodenWallOf(DARK_OAK_WOOD))
+    val DARK_OAK_WOOD_WALL = register("dark_oak_wood_wall", wallOf(DARK_OAK_WOOD))
     val MANGROVE_WOOD_STAIRS = register("mangrove_wood_stairs", stairsOf(MANGROVE_WOOD))
     val MANGROVE_WOOD_SLAB = register("mangrove_wood_slab", slabOf(MANGROVE_WOOD))
-    val MANGROVE_WOOD_WALL = register("mangrove_wood_wall", woodenWallOf(MANGROVE_WOOD))
+    val MANGROVE_WOOD_WALL = register("mangrove_wood_wall", wallOf(MANGROVE_WOOD))
     val CHERRY_WOOD_STAIRS = register("cherry_wood_stairs", stairsOf(CHERRY_WOOD))
     val CHERRY_WOOD_SLAB = register("cherry_wood_slab", slabOf(CHERRY_WOOD))
-    val CHERRY_WOOD_WALL = register("cherry_wood_wall", woodenWallOf(CHERRY_WOOD))
+    val CHERRY_WOOD_WALL = register("cherry_wood_wall", wallOf(CHERRY_WOOD))
     val CASCADE_WOOD_STAIRS = register("cascade_wood_stairs", stairsOf(CASCADE_WOOD))
     val CASCADE_WOOD_SLAB = register("cascade_wood_slab", slabOf(CASCADE_WOOD))
-    val CASCADE_WOOD_WALL = register("cascade_wood_wall", woodenWallOf(CASCADE_WOOD))
+    val CASCADE_WOOD_WALL = register("cascade_wood_wall", wallOf(CASCADE_WOOD))
     val CRIMSON_HYPHAE_STAIRS = register("crimson_hyphae_stairs", stairsOf(CRIMSON_HYPHAE))
     val CRIMSON_HYPHAE_SLAB = register("crimson_hyphae_slab", slabOf(CRIMSON_HYPHAE))
-    val CRIMSON_HYPHAE_WALL = register("crimson_hyphae_wall", woodenWallOf(CRIMSON_HYPHAE))
+    val CRIMSON_HYPHAE_WALL = register("crimson_hyphae_wall", wallOf(CRIMSON_HYPHAE))
     val WARPED_HYPHAE_STAIRS = register("warped_hyphae_stairs", stairsOf(WARPED_HYPHAE))
     val WARPED_HYPHAE_SLAB = register("warped_hyphae_slab", slabOf(WARPED_HYPHAE))
-    val WARPED_HYPHAE_WALL = register("warped_hyphae_wall", woodenWallOf(WARPED_HYPHAE))
+    val WARPED_HYPHAE_WALL = register("warped_hyphae_wall", wallOf(WARPED_HYPHAE))
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
     val OAK_LOG_PILE = register("oak_log_pile", logPile(OAK_WOOD))
@@ -336,6 +339,8 @@ object DnDBlocks {
     val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD))
     val CRIMSON_STEM_PILE = register("crimson_stem_pile", logPile(CRIMSON_HYPHAE))
     val WARPED_STEM_PILE = register("warped_stem_pile", logPile(WARPED_HYPHAE))
+    val BAMBOO_PILE = register("bamboo_pile", logPile(BAMBOO_PLANKS, MapColor.PLANT))
+    val STRIPPED_BAMBOO_PILE = register("stripped_bamboo_pile", logPile(BAMBOO_PLANKS))
     val OAK_LEAF_PILE = register("oak_leaf_pile", leafPile().cutout())
     val SPRUCE_LEAF_PILE = register("spruce_leaf_pile", leafPile().cutout())
     val BIRCH_LEAF_PILE = register("birch_leaf_pile", leafPile().cutout())
@@ -369,6 +374,27 @@ object DnDBlocks {
         leafPile(MapColor.YELLOW).cutout()
     )
 
+    val BROWN_TREE_FUNGUS = register(
+        "brown_tree_fungus", TransparentBlock(
+            copy(BROWN_MUSHROOM)
+        ).cutout()
+    )
+    val SPIDERLILY = register(
+        "spiderlily", SpiderlilyBlock(
+            copy(ROSE_BUSH).ticksRandomly()
+        ).cutout().sword().hoe()
+    )
+    val BLUE_PETALS = register(
+        "blue_petals", PinkPetalsBlock(
+            copy(PINK_PETALS)
+        ).cutout().sword().hoe()
+    )
+    val WILD_PETALS = register(
+        "wild_petals", PinkPetalsBlock(
+            copy(PINK_PETALS)
+        ).cutout().sword().hoe()
+    )
+
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
     val POLISHED_STONE = register("polished_stone", Block(copy(SMOOTH_STONE)).pickaxe())
@@ -380,29 +406,29 @@ object DnDBlocks {
     val MOSSY_POLISHED_STONE_SLAB = register("mossy_polished_stone_slab", slabOf(MOSSY_POLISHED_STONE).pickaxe())
     val MOSSY_POLISHED_STONE_WALL = register("mossy_polished_stone_wall", wallOf(MOSSY_POLISHED_STONE).pickaxe())
     val OVERGROWN_POLISHED_STONE =
-        register("overgrown_polished_stone", Block(copy(MOSSY_POLISHED_STONE)).cutout().pickaxe())
+        register("overgrown_polished_stone", Block(copy(MOSSY_POLISHED_STONE)).cutout().grass().pickaxe())
     val OVERGROWN_POLISHED_STONE_STAIRS =
-        register("overgrown_polished_stone_stairs", stairsOf(OVERGROWN_POLISHED_STONE).cutout().pickaxe())
+        register("overgrown_polished_stone_stairs", stairsOf(OVERGROWN_POLISHED_STONE).cutout().grass().pickaxe())
     val OVERGROWN_POLISHED_STONE_SLAB =
-        register("overgrown_polished_stone_slab", slabOf(OVERGROWN_POLISHED_STONE).cutout().pickaxe())
+        register("overgrown_polished_stone_slab", slabOf(OVERGROWN_POLISHED_STONE).cutout().grass().pickaxe())
     val OVERGROWN_POLISHED_STONE_WALL =
-        register("overgrown_polished_stone_wall", wallOf(OVERGROWN_POLISHED_STONE).cutout().pickaxe())
+        register("overgrown_polished_stone_wall", wallOf(OVERGROWN_POLISHED_STONE).cutout().grass().pickaxe())
     val OVERGROWN_COBBLESTONE =
-        register("overgrown_cobblestone", Block(copy(MOSSY_COBBLESTONE)).cutout().pickaxe())
+        register("overgrown_cobblestone", Block(copy(MOSSY_COBBLESTONE)).cutout().grass().pickaxe())
     val OVERGROWN_COBBLESTONE_STAIRS =
-        register("overgrown_cobblestone_stairs", stairsOf(OVERGROWN_COBBLESTONE).cutout().pickaxe())
+        register("overgrown_cobblestone_stairs", stairsOf(OVERGROWN_COBBLESTONE).cutout().grass().pickaxe())
     val OVERGROWN_COBBLESTONE_SLAB =
-        register("overgrown_cobblestone_slab", slabOf(MOSSY_COBBLESTONE_SLAB).cutout().pickaxe())
+        register("overgrown_cobblestone_slab", slabOf(MOSSY_COBBLESTONE_SLAB).cutout().grass().pickaxe())
     val OVERGROWN_COBBLESTONE_WALL =
-        register("overgrown_cobblestone_wall", wallOf(MOSSY_COBBLESTONE_WALL).cutout().pickaxe())
+        register("overgrown_cobblestone_wall", wallOf(MOSSY_COBBLESTONE_WALL).cutout().grass().pickaxe())
     val OVERGROWN_STONE_BRICKS =
-        register("overgrown_stone_bricks", Block(copy(MOSSY_STONE_BRICKS)).cutout().pickaxe())
+        register("overgrown_stone_bricks", Block(copy(MOSSY_STONE_BRICKS)).cutout().grass().pickaxe())
     val OVERGROWN_STONE_BRICK_STAIRS =
-        register("overgrown_stone_brick_stairs", stairsOf(MOSSY_STONE_BRICKS).cutout().pickaxe())
+        register("overgrown_stone_brick_stairs", stairsOf(MOSSY_STONE_BRICKS).cutout().grass().pickaxe())
     val OVERGROWN_STONE_BRICK_SLAB =
-        register("overgrown_stone_brick_slab", slabOf(MOSSY_STONE_BRICK_SLAB).cutout().pickaxe())
+        register("overgrown_stone_brick_slab", slabOf(MOSSY_STONE_BRICK_SLAB).cutout().grass().pickaxe())
     val OVERGROWN_STONE_BRICK_WALL =
-        register("overgrown_stone_brick_wall", wallOf(MOSSY_STONE_BRICK_WALL).cutout().pickaxe())
+        register("overgrown_stone_brick_wall", wallOf(MOSSY_STONE_BRICK_WALL).cutout().grass().pickaxe())
     val SNOWY_STONE_BRICKS = register("snowy_stone_bricks", Block(copy(STONE_BRICKS)).pickaxe())
     val SNOWY_STONE_BRICK_STAIRS = register("snowy_stone_brick_stairs", stairsOf(STONE_BRICKS).pickaxe())
     val SNOWY_STONE_BRICK_SLAB = register("snowy_stone_brick_slab", slabOf(STONE_BRICK_SLAB).pickaxe())
@@ -452,6 +478,11 @@ object DnDBlocks {
     val BIG_CHAIN = register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
     val BIG_LANTERN =
         register("big_lantern", BigLanternBlock(copy(LANTERN).sounds(bigLanternSound)).pickaxe())
+    val BIG_REDSTONE_LANTERN =
+        register(
+            "big_redstone_lantern",
+            BigRedstoneLanternBlock(copy(LANTERN).sounds(bigLanternSound).luminance(luminanceOf(8))).pickaxe()
+        )
     val BIG_SOUL_LANTERN =
         register("big_soul_lantern", BigLanternBlock(copy(SOUL_LANTERN).sounds(bigLanternSound)).pickaxe())
     val BIG_CANDLE = register("big_candle", bigCandleOf(MapColor.SAND))
@@ -699,13 +730,6 @@ object DnDBlocks {
         ).cutout().sword().axe()
     )
 
-    val BLUE_PETALS = register(
-        "blue_petals", PinkPetalsBlock(
-            Settings.create().mapColor(MapColor.PLANT)
-                .noCollision().sounds(BlockSoundGroup.PINK_PETALS).pistonBehavior(PistonBehavior.DESTROY)
-        ).cutout().sword().hoe()
-    )
-
     val WILD_WHEAT = registerNoItem(
         "wild_wheat",
         TallPlantBlock(
@@ -743,8 +767,8 @@ object DnDBlocks {
         )
     val ROCKY_GRASS = register(
         "grassy_rocks",
-        RockyGrassBlock(ROCKY_DIRT, copy(GRASS_BLOCK).mapColor(COBBLESTONE.defaultMapColor)).cutout().pickaxe()
-            .shovel()
+        RockyGrassBlock(ROCKY_DIRT, copy(GRASS_BLOCK).mapColor(COBBLESTONE.defaultMapColor))
+            .cutout().grass().pickaxe().shovel()
     )
     val ROCKY_PODZOL =
         register(
@@ -753,8 +777,8 @@ object DnDBlocks {
         )
     val ROCKY_MYCELIUM = register(
         "mycelium_rocks",
-        RockyMyceliumBlock(ROCKY_DIRT, copy(MYCELIUM).mapColor(COBBLESTONE.defaultMapColor)).cutout().pickaxe()
-            .shovel()
+        RockyMyceliumBlock(ROCKY_DIRT, copy(MYCELIUM).mapColor(COBBLESTONE.defaultMapColor))
+            .cutout().pickaxe().shovel()
     )
     val ROCKY_COARSE_DIRT = register(
         "coarsely_dirty_rocks",
@@ -798,7 +822,7 @@ object DnDBlocks {
     val SLATED_GRASS = register(
         "grassy_slate",
         RockyGrassBlock(SLATED_DIRT, copy(GRASS_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-            .cutout().pickaxe().shovel()
+            .cutout().grass().pickaxe().shovel()
     )
     val SLATED_PODZOL =
         register(
@@ -807,9 +831,8 @@ object DnDBlocks {
         )
     val SLATED_MYCELIUM = register(
         "mycelium_slate",
-        RockyMyceliumBlock(SLATED_DIRT, copy(MYCELIUM).mapColor(COBBLED_DEEPSLATE.defaultMapColor)).cutout()
-            .pickaxe()
-            .shovel()
+        RockyMyceliumBlock(SLATED_DIRT, copy(MYCELIUM).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
+            .cutout().pickaxe().shovel()
     )
     val SLATED_COARSE_DIRT =
         register(
@@ -864,7 +887,7 @@ object DnDBlocks {
     val BLACKSTONE_GRASS = register(
         "grassy_blackstone",
         RockyGrassBlock(BLACKSTONE_DIRT, copy(GRASS_BLOCK).mapColor(COBBLED_DEEPSLATE.defaultMapColor))
-            .cutout().pickaxe().shovel()
+            .cutout().grass().pickaxe().shovel()
     )
     val BLACKSTONE_PODZOL =
         register(
@@ -994,6 +1017,16 @@ object DnDBlocks {
 
     fun Block.translucent(): Block {
         TRANSLUCENT_BLOCKS.add(this)
+        return this
+    }
+
+    fun Block.grass(): Block {
+        GRASS_TINT_BLOCKS.add(this)
+        return this
+    }
+
+    fun Block.foliage(): Block {
+        FOLIAGE_TINT_BLOCKS.add(this)
         return this
     }
 

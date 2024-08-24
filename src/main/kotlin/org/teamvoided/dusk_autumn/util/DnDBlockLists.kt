@@ -5,23 +5,6 @@ import net.minecraft.item.Items
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 
 object DnDBlockLists {
-    val coloredBlocks = listOf(
-        DnDBlocks.OVERGROWN_POLISHED_STONE,
-        DnDBlocks.OVERGROWN_POLISHED_STONE_STAIRS,
-        DnDBlocks.OVERGROWN_POLISHED_STONE_SLAB,
-        DnDBlocks.OVERGROWN_POLISHED_STONE_WALL,
-        DnDBlocks.OVERGROWN_COBBLESTONE,
-        DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-        DnDBlocks.OVERGROWN_COBBLESTONE_SLAB,
-        DnDBlocks.OVERGROWN_COBBLESTONE_WALL,
-        DnDBlocks.OVERGROWN_STONE_BRICKS,
-        DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-        DnDBlocks.OVERGROWN_STONE_BRICK_SLAB,
-        DnDBlocks.OVERGROWN_STONE_BRICK_WALL,
-        DnDBlocks.ROCKY_GRASS,
-        DnDBlocks.SLATED_GRASS,
-        DnDBlocks.BLACKSTONE_GRASS
-    )
     val dye = listOf(
         Items.WHITE_DYE,
         Items.LIGHT_GRAY_DYE,
@@ -65,6 +48,20 @@ object DnDBlockLists {
         (DnDBlocks.CASCADE_WOOD to DnDBlocks.STRIPPED_CASCADE_WOOD),
         (Blocks.CRIMSON_HYPHAE to Blocks.STRIPPED_CRIMSON_HYPHAE),
         (Blocks.WARPED_HYPHAE to Blocks.STRIPPED_WARPED_HYPHAE)
+    )
+    val leaves = listOf(
+        Blocks.OAK_LEAVES,
+        Blocks.SPRUCE_LEAVES,
+        Blocks.BIRCH_LEAVES,
+        Blocks.JUNGLE_LEAVES,
+        Blocks.ACACIA_LEAVES,
+        Blocks.DARK_OAK_LEAVES,
+        Blocks.MANGROVE_LEAVES,
+        Blocks.CHERRY_LEAVES,
+        Blocks.AZALEA_LEAVES,
+        Blocks.FLOWERING_AZALEA_LEAVES,
+        DnDBlocks.CASCADE_LEAVES,
+        DnDBlocks.GOLDEN_BIRCH_LEAVES
     )
     val bigCandles = listOf(
         (DnDBlocks.BIG_CANDLE to DnDBlocks.BIG_CANDLE_CAKE),
@@ -126,54 +123,54 @@ object DnDBlockLists {
     val hollowLogs = listOf(
         DnDBlocks.HOLLOW_OAK_LOG,
         DnDBlocks.HOLLOW_SPRUCE_LOG,
-        DnDBlocks.HOLLOW_BIRCH_LOG ,
+        DnDBlocks.HOLLOW_BIRCH_LOG,
         DnDBlocks.HOLLOW_JUNGLE_LOG,
         DnDBlocks.HOLLOW_ACACIA_LOG,
         DnDBlocks.HOLLOW_DARK_OAK_LOG,
         DnDBlocks.HOLLOW_MANGROVE_LOG,
         DnDBlocks.HOLLOW_CHERRY_LOG,
-        DnDBlocks.HOLLOW_CASCADE_LOG ,
+        DnDBlocks.HOLLOW_CASCADE_LOG,
         DnDBlocks.HOLLOW_CRIMSON_STEM,
         DnDBlocks.HOLLOW_WARPED_STEM
     )
     val hollowStrippedLogs = listOf(
         DnDBlocks.HOLLOW_STRIPPED_OAK_LOG,
         DnDBlocks.HOLLOW_STRIPPED_SPRUCE_LOG,
-        DnDBlocks.HOLLOW_STRIPPED_BIRCH_LOG ,
+        DnDBlocks.HOLLOW_STRIPPED_BIRCH_LOG,
         DnDBlocks.HOLLOW_STRIPPED_JUNGLE_LOG,
         DnDBlocks.HOLLOW_STRIPPED_ACACIA_LOG,
         DnDBlocks.HOLLOW_STRIPPED_DARK_OAK_LOG,
         DnDBlocks.HOLLOW_STRIPPED_MANGROVE_LOG,
         DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG,
-        DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG ,
+        DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG,
         DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM,
         DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM
     )
     val logPiles = listOf(
-        (DnDBlocks.OAK_LOG_PILE to Blocks.OAK_LOG),
-        (DnDBlocks.SPRUCE_LOG_PILE to Blocks.SPRUCE_LOG),
-        (DnDBlocks.BIRCH_LOG_PILE to Blocks.BIRCH_LOG),
-        (DnDBlocks.JUNGLE_LOG_PILE to Blocks.JUNGLE_LOG),
-        (DnDBlocks.ACACIA_LOG_PILE to Blocks.ACACIA_LOG),
-        (DnDBlocks.DARK_OAK_LOG_PILE to Blocks.DARK_OAK_LOG),
-        (DnDBlocks.MANGROVE_LOG_PILE to Blocks.MANGROVE_LOG),
-        (DnDBlocks.CHERRY_LOG_PILE to Blocks.CHERRY_LOG),
-        (DnDBlocks.CASCADE_LOG_PILE to DnDBlocks.CASCADE_LOG),
-        (DnDBlocks.CRIMSON_STEM_PILE to Blocks.CRIMSON_STEM),
-        (DnDBlocks.WARPED_STEM_PILE to Blocks.WARPED_STEM)
+        DnDBlocks.OAK_LOG_PILE,
+        DnDBlocks.SPRUCE_LOG_PILE,
+        DnDBlocks.BIRCH_LOG_PILE,
+        DnDBlocks.JUNGLE_LOG_PILE,
+        DnDBlocks.ACACIA_LOG_PILE,
+        DnDBlocks.DARK_OAK_LOG_PILE,
+        DnDBlocks.MANGROVE_LOG_PILE,
+        DnDBlocks.CHERRY_LOG_PILE,
+        DnDBlocks.CASCADE_LOG_PILE,
+        DnDBlocks.CRIMSON_STEM_PILE,
+        DnDBlocks.WARPED_STEM_PILE
     )
     val leafPiles = listOf(
-        (DnDBlocks.OAK_LEAF_PILE to Blocks.OAK_LEAVES),
-        (DnDBlocks.SPRUCE_LEAF_PILE to Blocks.SPRUCE_LEAVES),
-        (DnDBlocks.BIRCH_LEAF_PILE to Blocks.BIRCH_LEAVES),
-        (DnDBlocks.JUNGLE_LEAF_PILE to Blocks.JUNGLE_LEAVES),
-        (DnDBlocks.ACACIA_LEAF_PILE to Blocks.ACACIA_LEAVES),
-        (DnDBlocks.DARK_OAK_LEAF_PILE to Blocks.DARK_OAK_LEAVES),
-        (DnDBlocks.MANGROVE_LEAF_PILE to Blocks.MANGROVE_LEAVES),
-        (DnDBlocks.CHERRY_LEAF_PILE to Blocks.CHERRY_LEAVES),
-        (DnDBlocks.AZALEA_LEAF_PILE to Blocks.AZALEA_LEAVES),
-        (DnDBlocks.FLOWERING_AZALEA_LEAF_PILE to Blocks.FLOWERING_AZALEA_LEAVES),
-        (DnDBlocks.CASCADE_LEAF_PILE to DnDBlocks.CASCADE_LEAVES),
-        (DnDBlocks.GOLDEN_BIRCH_LEAF_PILE to DnDBlocks.GOLDEN_BIRCH_LEAVES)
+        DnDBlocks.OAK_LEAF_PILE ,
+        DnDBlocks.SPRUCE_LEAF_PILE ,
+        DnDBlocks.BIRCH_LEAF_PILE ,
+        DnDBlocks.JUNGLE_LEAF_PILE ,
+        DnDBlocks.ACACIA_LEAF_PILE ,
+        DnDBlocks.DARK_OAK_LEAF_PILE,
+        DnDBlocks.MANGROVE_LEAF_PILE ,
+        DnDBlocks.CHERRY_LEAF_PILE,
+        DnDBlocks.AZALEA_LEAF_PILE,
+        DnDBlocks.FLOWERING_AZALEA_LEAF_PILE ,
+        DnDBlocks.CASCADE_LEAF_PILE,
+        DnDBlocks.GOLDEN_BIRCH_LEAF_PILE
     )
 }

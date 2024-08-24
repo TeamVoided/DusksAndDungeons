@@ -134,8 +134,8 @@ object DnDItemGroups {
             )
             it.addAfter(Items.FLOWERING_AZALEA, DnDBlocks.CASCADE_SAPLING, DnDBlocks.GOLDEN_BIRCH_SAPLING)
             it.addAfter(Items.VINE, DnDItemLists.moonberry)
-            DnDBlockLists.leafPiles.forEach { (leafPile, leaves) ->
-                it.addAfter(leaves, leafPile)
+            DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
+                it.addAfter(DnDBlockLists.leaves[idx], leafPile)
             }
         }
 

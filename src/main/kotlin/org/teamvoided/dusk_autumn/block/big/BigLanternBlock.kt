@@ -20,7 +20,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
-class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable {
+open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable {
     public override fun getCodec(): MapCodec<BigLanternBlock> {
         return CODEC
     }

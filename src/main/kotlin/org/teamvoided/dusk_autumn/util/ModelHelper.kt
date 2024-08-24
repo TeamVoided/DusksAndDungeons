@@ -3,13 +3,10 @@ package org.teamvoided.dusk_autumn.util
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
-import net.minecraft.block.AbstractLichenBlock
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.PillarBlock
-import net.minecraft.block.SnowyBlock
+import net.minecraft.block.*
 import net.minecraft.block.enums.*
 import net.minecraft.data.client.model.*
+import net.minecraft.data.client.model.BlockStateModelGenerator.TintType
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
@@ -25,6 +22,7 @@ import java.util.*
 
 val ALL_KRY: TextureKey = TextureKey.of("all")
 val INNER: TextureKey = TextureKey.of("inner")
+val SMALL: TextureKey = TextureKey.of("small")
 
 fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
     val texture = Texture().put(TextureKey.ALL, overlay)
@@ -472,6 +470,50 @@ fun createWallBlockStateWithOverlay(
     return model
 }
 
+fun BlockStateModelGenerator.registerTreeMushroom(block: Block, parentModel: String) {
+    this.registerItemModel(block)
+    val texture = Texture.texture(block)
+        .put(TextureKey.TOP, Texture.getSubId(block, "_top"))
+        .put(TextureKey.BOTTOM, Texture.getSubId(block, "_bottom"))
+        .put(SMALL, Texture.getSubId(block, "_small"))
+    val model = block(
+        parentModel,
+        TextureKey.TOP,
+        TextureKey.BOTTOM,
+        SMALL
+    )
+    this.registerSingleton(block, texture, model)
+}
+
+fun BlockStateModelGenerator.registerSpiderlilly(doubleBlock: Block, tintType: TintType) {
+    this.registerItemModel(doubleBlock, "_top")
+    val top: Identifier = this.createSubModel(doubleBlock, "_top", tintType.crossModel, Texture::cross)
+    val bottom: Identifier = this.createSubModel(doubleBlock, "_bottom", tintType.crossModel, Texture::cross)
+    val topFalse: Identifier = this.createSubModel(doubleBlock, "_top_false", tintType.crossModel, Texture::cross)
+    val bottomFalse: Identifier = this.createSubModel(doubleBlock, "_bottom_false", tintType.crossModel, Texture::cross)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(doubleBlock).coordinate(
+            BlockStateVariantMap.create(Properties.DOUBLE_BLOCK_HALF, SpiderlilyBlock.FLOWERING)
+                .register(
+                    DoubleBlockHalf.LOWER, true,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, bottom)
+                )
+                .register(
+                    DoubleBlockHalf.UPPER, true,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, top)
+                )
+                .register(
+                    DoubleBlockHalf.LOWER, false,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, bottomFalse)
+                )
+                .register(
+                    DoubleBlockHalf.UPPER, false,
+                    BlockStateVariant.create().put(VariantSettings.MODEL, topFalse)
+                )
+        )
+    )
+}
+
 fun BlockStateModelGenerator.registerTallCrystal(block: Block) {
     this.registerItemModel(block, "_top")
     val model = Models.CROSS
@@ -492,7 +534,7 @@ fun BlockStateModelGenerator.registerTallCrystal(block: Block) {
     )
 }
 
-fun BlockStateModelGenerator.registerBigLantern(block: Block) {
+fun BlockStateModelGenerator.registerBigLantern(block: Block, redstone: Boolean = false) {
     this.registerItemModel(block)
     val texture = Texture()
         .put(TextureKey.PARTICLE, Texture.getId(block))
@@ -501,10 +543,30 @@ fun BlockStateModelGenerator.registerBigLantern(block: Block) {
     val model = block(
         "parent/big_lantern",
         TextureKey.PARTICLE,
-        TextureKey.END,
-        TextureKey.SIDE
+        TextureKey.SIDE,
+        TextureKey.END
     )
-    this.registerSingleton(block, texture, model)
+    if (redstone) {
+        val textureOff = Texture()
+            .put(TextureKey.PARTICLE, Texture.getSubId(block, "_off"))
+            .put(TextureKey.SIDE, Texture.getSubId(block, "_off"))
+            .put(TextureKey.END, id("block/big_lantern_bottom"))
+        val modelLit = block(
+            "parent/big_redstone_lantern",
+            TextureKey.PARTICLE,
+            TextureKey.SIDE,
+            TextureKey.END
+        ).upload(block, texture, this.modelCollector)
+        this.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(block).coordinate(
+                BlockStateModelGenerator.createBooleanModelMap(
+                    Properties.LIT, modelLit, model.upload(block, "_off", textureOff, this.modelCollector)
+                )
+            )
+        )
+    } else {
+        this.registerSingleton(block, texture, model)
+    }
 }
 
 fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
@@ -887,14 +949,14 @@ fun BlockStateModelGenerator.hollowBlock(block: Block) {
 }
 
 
-fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
-    val layer1 = this.parentedLogPileModel(logPile, log, "_1")
-    val layer2 = this.parentedLogPileModel(logPile, log, "_2")
-    val layer3 = this.parentedLogPileModel(logPile, log, "_3")
-    val hanging1 = this.parentedLogPileModel(logPile, log, "_hanging_1")
-    val hanging2 = this.parentedLogPileModel(logPile, log, "_hanging_2")
-    val hanging3 = this.parentedLogPileModel(logPile, log, "_hanging_3")
-    val full = this.parentedLogPileModel(logPile, log)
+fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block, bamboo: Boolean = false) {
+    val layer1 = this.parentedLogPileModel(logPile, log, bamboo, "_1")
+    val layer2 = this.parentedLogPileModel(logPile, log, bamboo, "_2")
+    val layer3 = this.parentedLogPileModel(logPile, log, bamboo, "_3")
+    val hanging1 = this.parentedLogPileModel(logPile, log, bamboo, "_hanging_1")
+    val hanging2 = this.parentedLogPileModel(logPile, log, bamboo, "_hanging_2")
+    val hanging3 = this.parentedLogPileModel(logPile, log, bamboo, "_hanging_3")
+    val full = this.parentedLogPileModel(logPile, log, bamboo)
     this.registerParentedItemModel(logPile, layer2)
     this.blockStateCollector.accept(
         VariantsBlockStateSupplier.create(logPile)
@@ -938,9 +1000,10 @@ fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block) {
 fun BlockStateModelGenerator.parentedLogPileModel(
     block: Block,
     textBlock: Block,
+    bamboo: Boolean,
     parent: String = ""
 ): Identifier {
-    val pileModel = id("block/parent/log_pile")
+    val pileModel = if (bamboo) id("block/parent/bamboo_pile") else id("block/parent/log_pile")
     return Model(pileModel.suffix(parent).myb, Optional.empty(), TextureKey.SIDE, TextureKey.END)
         .upload(
             block.model(parent), Texture()
@@ -1152,6 +1215,7 @@ fun Item.model(): Identifier = ModelIds.getItemModelId(this)
 fun Item.model(str: String) = this.model().suffix(str)
 fun Item.prefixed(str: String): Identifier = this.id.withPrefix("item/$str")
 
+fun Identifier.toVariant(): BlockStateVariant = BlockStateVariant.create().put(VariantSettings.MODEL, this)
 
 fun Identifier.suffix(str: String) = Identifier(this.namespace, "${this.path}$str")
 

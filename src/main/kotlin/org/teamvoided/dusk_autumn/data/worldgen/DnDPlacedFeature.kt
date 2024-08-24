@@ -10,12 +10,11 @@ object DnDPlacedFeature {
     val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
     val CASCADE_TREE = create("cascade_tree")
     val CASCADE_TREE_BEES = create("cascade_tree_bees")
-    val CASCADE_TREE_WETLANDS = create("cascade_tree_wetlands")
+    val CASCADE_TREE_AUTUMN = create("cascade_tree_autumn")
     val GOLDEN_BIRCH_TALL = create("golden_birch_tall")
     val GOLDEN_BIRCH_TALL_BEES = create("golden_birch_tall_bees")
-    val GOLDEN_BIRCH_TALL_WETLANDS = create("golden_birch_tall_wetlands")
+    val GOLDEN_BIRCH_TALL_AUTUMN = create("golden_birch_tall_autumn")
     val DARK_OAK_AUTUMN = create("dark_oak_autumn")
-    val DARK_OAK_AUTUMN_WETLANDS = create("dark_oak_autumn_wetlands")
     val ACACIA_AUTUMN = create("acacia_autumn")
     val ACACIA_BUSH_AUTUMN = create("acacia_bush_autumn")
     val PATCH_GRASS_AUTUMN_PLAIN = create("patch_grass_autumn_plain")
@@ -26,7 +25,6 @@ object DnDPlacedFeature {
     val DISK_RED_SAND = create("disk_red_sand")
     val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
-    val AUTUMN_WETLANDS_VEGETATION = create("autumn_wetlands_vegetation")
     val FLOWER_AUTUMN = create("flower_autumn")
     val PATCH_ROSEBUSH = create("patch_rosebush")
     val BLUE_PETALS = create("blue_petals")
@@ -37,8 +35,6 @@ object DnDPlacedFeature {
     val ROCKY_ORE_LOWER = create("rocky_ore_lower")
     val SLATED_ORE = create("slated_ore")
     val BLACKSTONED_ORE = create("blackstoned_ore")
-
-
 
 
     fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DuskAutumns.id(id))

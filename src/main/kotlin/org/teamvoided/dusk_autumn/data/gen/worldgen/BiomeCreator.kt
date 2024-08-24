@@ -202,10 +202,10 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addClayDisk(generationSettings)
         addAutumnSwampFeatures(generationSettings)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            DnDPlacedFeature.AUTUMN_WETLANDS_VEGETATION
-        )
+//        generationSettings.feature(
+//            GenerationStep.Feature.VEGETAL_DECORATION,
+//            DnDPlacedFeature.AUTUMN_WETLANDS_VEGETATION
+//        )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         addAutumnFeatures(generationSettings)
         DefaultBiomeFeatures.addSwampVegetation(generationSettings)

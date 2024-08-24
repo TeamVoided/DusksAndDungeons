@@ -57,6 +57,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
+        gen.registerSpiderlilly(DnDBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
+        gen.registerFlowerbed(DnDBlocks.BLUE_PETALS)
+        gen.registerFlowerbed(DnDBlocks.WILD_PETALS)
+        gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
 
         gen.registerAxisRotated(
             DnDBlocks.STONE_PILLAR,
@@ -87,6 +91,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerItemModel(DnDBlocks.BIG_CHAIN.asItem())
         gen.registerAxisRotated(DnDBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DnDBlocks.BIG_CHAIN))
         gen.registerBigLantern(DnDBlocks.BIG_LANTERN)
+        gen.registerBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, true)
         gen.registerBigLantern(DnDBlocks.BIG_SOUL_LANTERN)
         DnDBlockLists.bigCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
@@ -232,14 +237,15 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         }
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK)
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
-        DnDBlockLists.logPiles.forEach { (it, texture) ->
-            gen.createLogPile(it, texture)
+        gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, true)
+        gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, true)
+        DnDBlockLists.logPiles.forEachIndexed { idx, it  ->
+            gen.createLogPile(it, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
-        DnDBlockLists.leafPiles.forEach { (it, texture) ->
-            gen.createLeafPile(it, texture)
+        DnDBlockLists.leafPiles.forEachIndexed { idx, it ->
+            gen.createLeafPile(it, DnDBlockLists.leaves[idx])
         }
         gen.registerSingleton(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
-        gen.registerFlowerbed(DnDBlocks.BLUE_PETALS)
         gen.registerDoubleBlock(DnDBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DnDBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerCropWithParent(

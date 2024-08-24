@@ -349,6 +349,8 @@ object DnDItemLists {
         DnDBlocks.MANGROVE_LOG_PILE,
         DnDBlocks.CHERRY_LOG_PILE,
         DnDBlocks.CASCADE_LOG_PILE,
+        DnDBlocks.BAMBOO_PILE,
+        DnDBlocks.STRIPPED_BAMBOO_PILE,
         DnDBlocks.CRIMSON_STEM_PILE,
         DnDBlocks.WARPED_STEM_PILE,
     ).toItems()

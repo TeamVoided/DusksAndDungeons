@@ -9,6 +9,7 @@ object DnDBlockTags {
     val HOLLOW_LOGS = create("hollow_logs")
     val HOLLOW_LOGS_THAT_BURN = create("hollow_logs_that_burn")
     val CASCADE_LOGS = create("cascade_logs")
+    @JvmField
     val WOODEN_WALLS = create("wooden_walls")
     val LOG_PILES = create("log_piles")
     val LEAF_PILES = create("leaf_piles")
