@@ -6,7 +6,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
 object DnDPlacedFeature {
-    val COBBLESTONE_ROCK = create("cobblestone_rock")
+    val OVERGROWN_COBBLESTONE_BOULDER = create("overgrown_cobblestone_boulder")
     val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
     val CASCADE_TREE = create("cascade_tree")
     val CASCADE_TREE_BEES = create("cascade_tree_bees")

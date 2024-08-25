@@ -384,14 +384,29 @@ object DnDBlocks {
             copy(ROSE_BUSH).ticksRandomly()
         ).cutout().sword().hoe()
     )
+    val WHITE_PETALS = register(
+        "white_petals", PinkPetalsBlock(
+            copy(PINK_PETALS).mapColor(MapColor.SNOW)
+        ).cutout().sword().hoe()
+    )
+    val RED_PETALS = register(
+        "red_petals", PinkPetalsBlock(
+            copy(WHITE_PETALS).mapColor(MapColor.RED)
+        ).cutout().sword().hoe()
+    )
+    val ORANGE_PETALS = register(
+        "orange_petals", PinkPetalsBlock(
+            copy(WHITE_PETALS).mapColor(MapColor.ORANGE)
+        ).cutout().sword().hoe()
+    )
     val BLUE_PETALS = register(
         "blue_petals", PinkPetalsBlock(
-            copy(PINK_PETALS)
+            copy(WHITE_PETALS).mapColor(MapColor.BLUE)
         ).cutout().sword().hoe()
     )
     val WILD_PETALS = register(
         "wild_petals", PinkPetalsBlock(
-            copy(PINK_PETALS)
+            copy(PINK_PETALS).mapColor(MapColor.PURPLE)
         ).cutout().sword().hoe()
     )
 

@@ -173,4 +173,11 @@ object DnDBlockLists {
         DnDBlocks.CASCADE_LEAF_PILE,
         DnDBlocks.GOLDEN_BIRCH_LEAF_PILE
     )
+    val flowerbedBlocks = listOf(
+        DnDBlocks.WHITE_PETALS,
+        DnDBlocks.RED_PETALS,
+        DnDBlocks.ORANGE_PETALS,
+        DnDBlocks.BLUE_PETALS,
+        DnDBlocks.WILD_PETALS
+    )
 }

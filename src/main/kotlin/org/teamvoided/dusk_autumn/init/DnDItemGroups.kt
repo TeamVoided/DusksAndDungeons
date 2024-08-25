@@ -1,8 +1,7 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
+import org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.ItemStack
@@ -29,7 +28,6 @@ object DnDItemGroups {
                     DnDBlocks.CASCADE_LEAVES,
                     DnDBlocks.GOLDEN_BIRCH_SAPLING,
                     DnDBlocks.GOLDEN_BIRCH_LEAVES,
-                    DnDBlocks.BLUE_PETALS,
                     DnDBlocks.ROOT_BLOCK,
                     DnDItems.FARMERS_HAT,
                     DnDItems.WILD_WHEAT,
@@ -37,6 +35,7 @@ object DnDItemGroups {
                 )
                 entries.addLists(
                     DnDItemLists.moonberry,
+                    DnDBlockLists.flowerbedBlocks,
 //                    DnDItemLists.pineWood,
                     DnDItemLists.bonewoodWood,
                     DnDItemLists.woodStuff,

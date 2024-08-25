@@ -38,6 +38,8 @@ import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.BoulderFeature
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.BoulderConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FallenTreeConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
@@ -116,12 +118,14 @@ object ConfiguredFeatureCreator {
 //            c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
 //        )
         c.registerConfiguredFeature(
-            DnDConfiguredFeature.COBBLESTONE_ROCK,
-            Feature.ORE,
-            OreFeatureConfig(
-                TagMatchRuleTest(DnDBlockTags.REPLACEABLE_OR_DIRT),
-                DnDBlocks.OVERGROWN_COBBLESTONE.defaultState,
-                33
+            DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
+            DnDFeatures.BOULDER,
+            BoulderConfig(
+                BlockStateProvider.of(DnDBlocks.OVERGROWN_COBBLESTONE.defaultState),
+                UniformIntProvider.create(2, 5),
+                UniformIntProvider.create(1, 3),
+                UniformIntProvider.create(0, 4),
+                UniformIntProvider.create(1, 3)
             )
         )
 

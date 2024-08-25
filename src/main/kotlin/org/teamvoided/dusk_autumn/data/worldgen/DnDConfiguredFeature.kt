@@ -7,7 +7,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 
 @Suppress("MemberVisibilityCanBePrivate")
 object DnDConfiguredFeature {
-    val COBBLESTONE_ROCK = create("cobblestone_rock")
+    val OVERGROWN_COBBLESTONE_BOULDER = create("overgrown_cobblestone_boulder")
     val CASCADE_TREE = create("cascade_tree")
     val CASCADE_TREE_BEES = create("cascade_tree_bees")
     val CASCADE_TREE_AUTUMN = create("cascade_tree_autumn")

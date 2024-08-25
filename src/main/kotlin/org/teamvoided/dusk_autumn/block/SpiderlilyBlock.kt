@@ -68,7 +68,7 @@ class SpiderlilyBlock(settings: Settings) : TallFlowerBlock(settings) {
             val random = world.random
             repeat(10) {
                 world.addParticle(
-                    DnDParticles.SNOWFLAKE,
+                    DnDParticles.SPIDERLILY,
                     true,
                     pos.x + random.nextDouble(),
                     pos.y + random.nextDouble(),

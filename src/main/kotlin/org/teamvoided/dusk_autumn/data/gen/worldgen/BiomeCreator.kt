@@ -48,7 +48,7 @@ object BiomeCreator {
     private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder) {
         generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DnDPlacedFeature.AUTUMN_FARMLANDS)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.ORE_LAPIS_EXTRA)
-        generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DnDPlacedFeature.COBBLESTONE_ROCK)
+        generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.PATCH_PUMPKIN_EXTRA)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.FLOWER_AUTUMN)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.BLUE_PETALS)

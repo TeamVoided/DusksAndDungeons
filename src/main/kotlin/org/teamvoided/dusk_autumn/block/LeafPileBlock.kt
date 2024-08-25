@@ -155,13 +155,13 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
 
         val FULL_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 
-        val DEFAULT_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
+        val DEFAULT_LAYERS_TO_SHAPE: List<VoxelShape> = listOf(
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
             FULL_SHAPE,
         )
-        val HANGING_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
+        val HANGING_LAYERS_TO_SHAPE: List<VoxelShape> = listOf(
             createCuboidShape(0.0, 12.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 8.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 4.0, 0.0, 16.0, 16.0, 16.0),

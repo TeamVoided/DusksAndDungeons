@@ -55,7 +55,9 @@ open class LogPileBlock(settings: Settings) : TwoWayFacingBlock(settings), Water
     }
 
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
-        return if (stateFrom.block is LogPileBlock &&
+        return if (
+            direction.axis != Direction.Axis.Y &&
+            stateFrom.block is LogPileBlock &&
             state.get(HANGING) == stateFrom.get(HANGING) &&
             state.get(PILE_LAYERS) <= stateFrom.get(PILE_LAYERS) &&
             state.get(AXIS) == stateFrom.get(AXIS)
@@ -99,33 +101,28 @@ open class LogPileBlock(settings: Settings) : TwoWayFacingBlock(settings), Water
         val AXIS = Properties.HORIZONTAL_AXIS
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
 
-        val FULL_SHAPE: VoxelShape = twoBoxShapeBottom(16.0)
+        val LAYER_1 = layer(0.0)
+        val LAYER_2 = layer(4.0, true)
+        val LAYER_3 = layer(8.0)
+        val LAYER_4 = layer(12.0, true)
 
-        val DEFAULT_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            createCuboidShape(0.0, 0.0, 2.0, 16.0, 4.0, 14.0),
-            twoBoxShapeBottom(8.0),
-            twoBoxShapeBottom(12.0),
-            FULL_SHAPE,
+        val DEFAULT_LAYERS_TO_SHAPE: List<VoxelShape> = listOf(
+            LAYER_1,
+            VoxelShapes.union(LAYER_1, LAYER_2),
+            VoxelShapes.union(LAYER_1, LAYER_2, LAYER_3),
+            VoxelShapes.union(LAYER_1, LAYER_2, LAYER_3, LAYER_4)
         )
-        val HANGING_LAYERS_TO_SHAPE: Array<VoxelShape> = arrayOf(
-            createCuboidShape(2.0, 12.0, 0.0, 14.0, 16.0, 16.0),
-            twoBoxShapeTop(8.0),
-            twoBoxShapeTop(4.0),
-            FULL_SHAPE,
+        val HANGING_LAYERS_TO_SHAPE: List<VoxelShape> = listOf(
+            LAYER_4,
+            VoxelShapes.union(LAYER_4, LAYER_3),
+            VoxelShapes.union(LAYER_4, LAYER_3, LAYER_2),
+            VoxelShapes.union(LAYER_4, LAYER_3, LAYER_2, LAYER_1)
         )
 
-        fun twoBoxShapeBottom(height: Double): VoxelShape {
-            return VoxelShapes.union(
-                createCuboidShape(0.0, 0.0, 2.0, 16.0, height, 14.0),
-                createCuboidShape(2.0, 0.0, 0.0, 14.0, height, 16.0)
-            )
-        }
-
-        fun twoBoxShapeTop(height: Double): VoxelShape {
-            return VoxelShapes.union(
-                createCuboidShape(2.0, height, 0.0, 14.0, 16.0, 16.0),
-                createCuboidShape(0.0, height, 2.0, 16.0, 16.0, 14.0)
-            )
+        fun layer(height: Double, z: Boolean = false): VoxelShape {
+            return if (z)
+                createCuboidShape(2.0, height, 0.0, 14.0, height + 4, 16.0) else
+                createCuboidShape(0.0, height, 2.0, 16.0, height + 4, 14.0)
         }
 
         fun addLayer(i: Int): Int = min(MAX_LAYERS, (i + 1))

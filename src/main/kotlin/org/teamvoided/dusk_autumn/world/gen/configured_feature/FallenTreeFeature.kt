@@ -197,7 +197,7 @@ open class FallenTreeFeature(codec: Codec<FallenTreeConfig>) :
 
     companion object {
         // move to util
-        fun WorldView.isOutOfWorld(pos: BlockPos): Boolean = pos.y <= this.bottomY + 1 || pos.y >= this.topY - 1
+        fun WorldView.isOutOfWorld(pos: BlockPos): Boolean = this.bellowBottom(pos) || this.aboveTop(pos)
         fun WorldView.bellowBottom(pos: BlockPos): Boolean = pos.y <= this.bottomY + 1
         fun WorldView.aboveTop(pos: BlockPos): Boolean = pos.y >= this.topY - 1
     }

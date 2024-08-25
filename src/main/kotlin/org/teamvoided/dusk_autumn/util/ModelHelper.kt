@@ -16,6 +16,7 @@ import net.minecraft.state.property.Property
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DuskAutumns.mc
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import java.util.*
@@ -514,6 +515,64 @@ fun BlockStateModelGenerator.registerSpiderlilly(doubleBlock: Block, tintType: T
     )
 }
 
+fun BlockStateModelGenerator.registerFlowerbed2(
+    block: Block,
+    useDefault: Boolean = true,
+    parent: Identifier = mc("block/flowerbed")
+) {
+    this.registerItemModel(block.asItem())
+    val texture = Texture()
+        .put(TextureKey.FLOWERBED, Texture.getId(block))
+        .put(TextureKey.STEM, if (useDefault) Texture.getSubId(block, "_stem") else id("block/petals_stem"))
+    val identifier = block(parent.suffix("_1"), "_1", TextureKey.FLOWERBED, TextureKey.STEM)
+        .upload(block, texture, this.modelCollector)
+    val identifier2 = block(parent.suffix("_2"), "_2", TextureKey.FLOWERBED, TextureKey.STEM)
+        .upload(block, texture, this.modelCollector)
+    val identifier3 = block(parent.suffix("_3"), "_3", TextureKey.FLOWERBED, TextureKey.STEM)
+        .upload(block, texture, this.modelCollector)
+    val identifier4 = block(parent.suffix("_4"), "_4", TextureKey.FLOWERBED, TextureKey.STEM)
+        .upload(block, texture, this.modelCollector)
+    val flowerbed = MultipartBlockStateSupplier.create(block)
+    val directionAndRotation = listOf(
+        (Direction.NORTH to Rotation.R0),
+        (Direction.EAST to Rotation.R90),
+        (Direction.SOUTH to Rotation.R180),
+        (Direction.WEST to Rotation.R270)
+    )
+    directionAndRotation.forEach { (direction, rotation) ->
+        flowerbed.with(
+            When.create()
+                .set(Properties.FLOWER_AMOUNT, 1, 2, 3, 4)
+                .set(Properties.HORIZONTAL_FACING, direction),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, identifier)
+                .put(VariantSettings.Y, rotation)
+        ).with(
+            When.create()
+                .set(Properties.FLOWER_AMOUNT, 2, 3, 4)
+                .set(Properties.HORIZONTAL_FACING, direction),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, identifier2)
+                .put(VariantSettings.Y, rotation)
+        ).with(
+            When.create()
+                .set(Properties.FLOWER_AMOUNT, 3, 4)
+                .set(Properties.HORIZONTAL_FACING, direction),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, identifier3)
+                .put(VariantSettings.Y, rotation)
+        ).with(
+            When.create()
+                .set(Properties.FLOWER_AMOUNT, 4)
+                .set(Properties.HORIZONTAL_FACING, direction),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, identifier4)
+                .put(VariantSettings.Y, rotation)
+        )
+    }
+    this.blockStateCollector.accept(flowerbed)
+}
+
 fun BlockStateModelGenerator.registerTallCrystal(block: Block) {
     this.registerItemModel(block, "_top")
     val model = Models.CROSS
@@ -546,26 +605,52 @@ fun BlockStateModelGenerator.registerBigLantern(block: Block, redstone: Boolean 
         TextureKey.SIDE,
         TextureKey.END
     )
+    val modelHanging = model.upload(block, "_hanging", texture, this.modelCollector)
     if (redstone) {
         val textureOff = Texture()
             .put(TextureKey.PARTICLE, Texture.getSubId(block, "_off"))
             .put(TextureKey.SIDE, Texture.getSubId(block, "_off"))
             .put(TextureKey.END, id("block/big_lantern_bottom"))
-        val modelLit = block(
-            "parent/big_redstone_lantern",
-            TextureKey.PARTICLE,
-            TextureKey.SIDE,
-            TextureKey.END
-        ).upload(block, texture, this.modelCollector)
+        val modelOff = model.upload(block, "_off", textureOff, this.modelCollector)
+        val modelHangingOff = model.upload(block, "_hanging_off", textureOff, this.modelCollector)
         this.blockStateCollector.accept(
             VariantsBlockStateSupplier.create(block).coordinate(
-                BlockStateModelGenerator.createBooleanModelMap(
-                    Properties.LIT, modelLit, model.upload(block, "_off", textureOff, this.modelCollector)
-                )
+                BlockStateVariantMap.create(Properties.HANGING, Properties.LIT)
+                    .register(
+                        false, true, BlockStateVariant.create()
+                            .put(VariantSettings.MODEL, model.upload(block, texture, this.modelCollector))
+                    )
+                    .register(
+                        false, false, BlockStateVariant.create()
+                            .put(VariantSettings.MODEL, modelOff)
+                    )
+                    .register(
+                        true, true, BlockStateVariant.create()
+                            .put(VariantSettings.X, Rotation.R180)
+                            .put(VariantSettings.MODEL, modelHanging)
+                    )
+                    .register(
+                        true, false, BlockStateVariant.create()
+                            .put(VariantSettings.X, Rotation.R180)
+                            .put(VariantSettings.MODEL, modelHangingOff)
+                    )
             )
         )
     } else {
-        this.registerSingleton(block, texture, model)
+        this.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(block).coordinate(
+                BlockStateVariantMap.create(Properties.HANGING)
+                    .register(
+                        false, BlockStateVariant.create()
+                            .put(VariantSettings.MODEL, model.upload(block, texture, this.modelCollector))
+                    )
+                    .register(
+                        true, BlockStateVariant.create()
+                            .put(VariantSettings.X, Rotation.R180)
+                            .put(VariantSettings.MODEL, modelHanging)
+                    )
+            )
+        )
     }
 }
 

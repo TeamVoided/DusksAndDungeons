@@ -1,8 +1,7 @@
-package net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util
+package org.teamvoided.dusk_autumn.util
 
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
-import org.teamvoided.dusk_autumn.util.toItems
 
 object DnDItemLists {
     val cascadeWood = listOf(

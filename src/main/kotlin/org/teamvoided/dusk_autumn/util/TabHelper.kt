@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumn.util
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Blocks
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.Items

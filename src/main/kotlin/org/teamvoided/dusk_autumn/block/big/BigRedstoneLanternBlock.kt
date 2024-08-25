@@ -21,11 +21,6 @@ class BigRedstoneLanternBlock(settings: Settings) : BigLanternBlock(settings) {
             .with(HANGING, false)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
-        return if (ctx.side == Direction.DOWN) super.getPlacementState(ctx)
-            ?.with(HANGING, true) else super.getPlacementState(ctx)
-    }
-
     override fun onBlockAdded(state: BlockState, world: World, pos: BlockPos, oldState: BlockState, notify: Boolean) {
         for (direction in Direction.entries) {
             world.updateNeighborsAlways(pos.offset(direction), this)
@@ -62,7 +57,6 @@ class BigRedstoneLanternBlock(settings: Settings) : BigLanternBlock(settings) {
 
     private fun shouldUnPower(world: World, pos: BlockPos, state: BlockState): Boolean {
         val isHanging = state.get(HANGING)
-
         return if (isHanging) world.isEmittingRedstonePower(pos.up(), Direction.UP)
         else world.isEmittingRedstonePower(pos.down(), Direction.DOWN)
     }
@@ -77,13 +71,12 @@ class BigRedstoneLanternBlock(settings: Settings) : BigLanternBlock(settings) {
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         super.appendProperties(builder)
-        builder.add(LIT, HANGING)
+        builder.add(LIT)
     }
 
     override fun isRedstonePowerSource(state: BlockState): Boolean = state.get(LIT)
 
     companion object {
         val LIT: BooleanProperty = Properties.LIT
-        val HANGING: BooleanProperty = Properties.HANGING
     }
 }

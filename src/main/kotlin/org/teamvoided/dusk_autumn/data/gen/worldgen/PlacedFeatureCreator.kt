@@ -32,9 +32,9 @@ object PlacedFeatureCreator {
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
         val configuredFeatureProvider = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
         c.register(
-            DnDPlacedFeature.COBBLESTONE_ROCK,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.COBBLESTONE_ROCK),
-            RarityFilterPlacementModifier.create(5),
+            DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER,
+            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER),
+            RarityFilterPlacementModifier.create(7),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
             RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),

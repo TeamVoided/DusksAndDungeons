@@ -21,13 +21,23 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
 open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable {
+
+    init {
+        defaultState = stateManager.defaultState
+            .with(HANGING, false)
+            .with(WATERLOGGED, false)
+    }
+
     public override fun getCodec(): MapCodec<BigLanternBlock> {
         return CODEC
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
         val fluidState = ctx.world.getFluidState(ctx.blockPos)
-        return defaultState.with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
+        val player = ctx.player?.isSneaking ?: false
+        return defaultState
+            .with(HANGING, player && ctx.side == Direction.DOWN)
+            .with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
     }
 
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
@@ -41,11 +51,11 @@ open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable 
         pos: BlockPos,
         context: ShapeContext
     ): VoxelShape {
-        return SHAPE
+        return if (state.get(HANGING)) HANGING_SHAPE else SHAPE
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(WATERLOGGED)
+        builder.add(HANGING, WATERLOGGED)
     }
 
     override fun getStateForNeighborUpdate(
@@ -70,10 +80,6 @@ open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable 
         return false
     }
 
-    init {
-        this.defaultState = stateManager.defaultState.with(WATERLOGGED, false)
-    }
-
     companion object {
         val CODEC: MapCodec<BigLanternBlock> = createCodec { settings: Settings ->
             BigLanternBlock(
@@ -81,6 +87,7 @@ open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable 
             )
         }
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
+        val HANGING: BooleanProperty = Properties.HANGING
         val minSize = 2.5
         val maxSize = 13.5
         val minSizeTop = 4.5
@@ -89,6 +96,11 @@ open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable 
             VoxelShapes.union(
                 createCuboidShape(minSize, 0.0, minSize, maxSize, 13.0, maxSize),
                 createCuboidShape(minSizeTop, 13.0, minSizeTop, maxSizeTop, 16.0, maxSizeTop)
+            )
+        protected val HANGING_SHAPE: VoxelShape =
+            VoxelShapes.union(
+                createCuboidShape(minSize, 3.0, minSize, maxSize, 16.0, maxSize),
+                createCuboidShape(minSizeTop, 0.0, minSizeTop, maxSizeTop, 3.0, maxSizeTop)
             )
     }
 }

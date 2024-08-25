@@ -6,7 +6,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
-import net.minecraft.entity.projectile.org.teamvoided.dusk_autumn.util.DnDItemLists
+import org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
@@ -58,8 +58,11 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
         gen.registerSpiderlilly(DnDBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
-        gen.registerFlowerbed(DnDBlocks.BLUE_PETALS)
-        gen.registerFlowerbed(DnDBlocks.WILD_PETALS)
+        gen.registerFlowerbed2(DnDBlocks.WHITE_PETALS, false)
+        gen.registerFlowerbed2(DnDBlocks.RED_PETALS, false)
+        gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS, false)
+        gen.registerFlowerbed2(DnDBlocks.BLUE_PETALS, false)
+        gen.registerFlowerbed2(DnDBlocks.WILD_PETALS, false, id("block/parent/wildflowerbed"))
         gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
 
         gen.registerAxisRotated(
@@ -239,7 +242,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
         gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, true)
         gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, true)
-        DnDBlockLists.logPiles.forEachIndexed { idx, it  ->
+        DnDBlockLists.logPiles.forEachIndexed { idx, it ->
             gen.createLogPile(it, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
         DnDBlockLists.leafPiles.forEachIndexed { idx, it ->

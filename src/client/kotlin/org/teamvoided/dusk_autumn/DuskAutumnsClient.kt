@@ -26,14 +26,19 @@ import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.DnDParticles.CASCADE_LEAF_PARTICLE
 import org.teamvoided.dusk_autumn.init.DnDParticles.SMALL_SOUL_FLAME_PARTICLE
 import org.teamvoided.dusk_autumn.init.DnDParticles.SNOWFLAKE
+import org.teamvoided.dusk_autumn.init.DnDParticles.SPIDERLILY
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
+import org.teamvoided.dusk_autumn.particle.SpiderlilyPetalParticle
 import org.teamvoided.dusk_autumn.particle.SnowflakeParticle
+import org.teamvoided.dusk_autumn.util.DnDBlockLists
 
 @Suppress("unused")
 object DuskAutumnsClient {
 
     //    val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
-    const val CASCADE_LEAF_COLOR = 14701655
+//    const val CASCADE_LEAF_COLOR = 14701655
+//    const val GOLDEN_BIRCH_COLOR = 16761873
+//    const val GOLDEN_BIRCH_COLOR = 16760872
 
 //    var cooldown = 0
 
@@ -43,8 +48,8 @@ object DuskAutumnsClient {
         initItems()
         ParticleFactoryRegistry.getInstance().register(CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
         ParticleFactoryRegistry.getInstance().register(SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
+        ParticleFactoryRegistry.getInstance().register(SPIDERLILY, SpiderlilyPetalParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(SNOWFLAKE, SnowflakeParticle::Factory)
-
 
         EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
 
@@ -85,8 +90,7 @@ object DuskAutumnsClient {
                     grassColorOrDefault(world, pos)
                 } else -1
             },
-            DnDBlocks.BLUE_PETALS,
-            DnDBlocks.WILD_PETALS
+            *DnDBlockLists.flowerbedBlocks.toTypedArray()
         )
         ColorProviderRegistry.BLOCK.register(
             { _, world, pos, _ -> grassColorOrDefault(world, pos) },
@@ -98,12 +102,6 @@ object DuskAutumnsClient {
         ColorProviderRegistry.BLOCK.register(
             { _, _, _, _ -> FoliageColors.getBirchColor() }, DnDBlocks.BIRCH_LEAF_PILE
         )
-        ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> CASCADE_LEAF_COLOR }, DnDBlocks.CASCADE_LEAVES, DnDBlocks.CASCADE_LEAF_PILE
-        )
-
-//    val GOLDEN_BIRCH_COLOR = 16761873
-//    val GOLDEN_BIRCH_COLOR = 16760872
 
         DnDBlocks.CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
         DnDBlocks.TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getTranslucent()) }
@@ -132,9 +130,6 @@ object DuskAutumnsClient {
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getMangroveColor() },
             DnDBlocks.MANGROVE_LEAF_PILE.asItem()
-        )
-        ColorProviderRegistry.ITEM.register(
-            { _, _ -> CASCADE_LEAF_COLOR }, DnDBlocks.CASCADE_LEAVES.asItem(), DnDBlocks.CASCADE_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) }, DnDItems.FARMERS_HAT
