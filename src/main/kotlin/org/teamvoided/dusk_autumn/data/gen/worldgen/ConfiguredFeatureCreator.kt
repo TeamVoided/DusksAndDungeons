@@ -123,9 +123,9 @@ object ConfiguredFeatureCreator {
             BoulderConfig(
                 BlockStateProvider.of(DnDBlocks.OVERGROWN_COBBLESTONE.defaultState),
                 UniformIntProvider.create(2, 5),
-                UniformIntProvider.create(1, 3),
-                UniformIntProvider.create(0, 4),
-                UniformIntProvider.create(1, 3)
+                UniformIntProvider.create(1, 4),
+                UniformIntProvider.create(1, 2),
+                UniformIntProvider.create(2, 4)
             )
         )
 

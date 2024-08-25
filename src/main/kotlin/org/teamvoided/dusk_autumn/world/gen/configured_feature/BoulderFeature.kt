@@ -15,10 +15,8 @@ class BoulderFeature(codec: Codec<BoulderConfig>) :
         val randomGenerator = context.random
         val config = context.config as BoulderConfig
 
-        val size = config.size[randomGenerator]
+        var size = config.size[randomGenerator]
         val boulderCount = config.boulderCount[randomGenerator]
-        val weirdness = config.weirdness[randomGenerator]
-        val otherBoulderOffset = config.otherBoulderOffset[randomGenerator]
 
         if (blockPos.y <= structureWorldAccess.bottomY + 1 + size) {
             return false
@@ -26,6 +24,7 @@ class BoulderFeature(codec: Codec<BoulderConfig>) :
             if (!structureWorldAccess.getBlockState(blockPos).isIn(BlockTags.FEATURES_CANNOT_REPLACE))
                 structureWorldAccess.setBlockState(blockPos, config.block.getBlockState(randomGenerator, blockPos), 3)
             for (i in 0..boulderCount) {
+                size = config.size[randomGenerator]
                 val x = randomGenerator.nextInt(size)
                 val y = randomGenerator.nextInt(size)
                 val z = randomGenerator.nextInt(size)
@@ -39,9 +38,9 @@ class BoulderFeature(codec: Codec<BoulderConfig>) :
                     val yOffset = blockPos.y - blockPosPlace.y
                     val zOffset = blockPos.z - blockPosPlace.z
                     val distance =
-                        ((randomGenerator.nextInt(weirdness) + 1) * xOffset * xOffset) +
-                                ((randomGenerator.nextInt(weirdness) + 1) * zOffset * zOffset) +
-                                ((randomGenerator.nextInt(weirdness) + 1) * yOffset * yOffset)
+                        (config.weirdness[randomGenerator] * xOffset * xOffset) +
+                                (config.weirdness[randomGenerator] * zOffset * zOffset) +
+                                (config.weirdness[randomGenerator] * yOffset * yOffset)
                     if (distance <= (f * f) &&
                         !structureWorldAccess.getBlockState(blockPosPlace).isIn(BlockTags.FEATURES_CANNOT_REPLACE)
                     ) {
@@ -54,9 +53,9 @@ class BoulderFeature(codec: Codec<BoulderConfig>) :
                 }
 
                 blockPos = blockPos.add(
-                    randomGenerator.nextInt(otherBoulderOffset) - randomGenerator.nextInt(otherBoulderOffset),
-                    -randomGenerator.nextInt(otherBoulderOffset),
-                    randomGenerator.nextInt(otherBoulderOffset) - randomGenerator.nextInt(otherBoulderOffset)
+                    config.otherBoulderOffset[randomGenerator] - config.otherBoulderOffset[randomGenerator],
+                    -config.otherBoulderOffset[randomGenerator],
+                    config.otherBoulderOffset[randomGenerator] - config.otherBoulderOffset[randomGenerator]
                 )
             }
 

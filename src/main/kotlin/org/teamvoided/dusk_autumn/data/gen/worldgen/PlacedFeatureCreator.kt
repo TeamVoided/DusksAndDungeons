@@ -37,7 +37,6 @@ object PlacedFeatureCreator {
             RarityFilterPlacementModifier.create(7),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
-            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(1)),
             BiomePlacementModifier.getInstance()
         )
         c.register(
@@ -156,7 +155,10 @@ object PlacedFeatureCreator {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
             BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(BlockPos.ORIGIN.down(), *arrayOf(Blocks.GRASS_BLOCK))
+                BlockPredicate.matchingBlocks(
+                    BlockPos.ORIGIN.down(),
+                    *arrayOf(Blocks.GRASS_BLOCK, Blocks.COARSE_DIRT, Blocks.COARSE_DIRT)
+                )
             ),
             BiomePlacementModifier.getInstance()
         )
@@ -168,7 +170,10 @@ object PlacedFeatureCreator {
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(BlockPos.ORIGIN.down(), *arrayOf(Blocks.GRASS_BLOCK))
+                BlockPredicate.matchingBlocks(
+                    BlockPos.ORIGIN.down(),
+                    *arrayOf(Blocks.GRASS_BLOCK, Blocks.COARSE_DIRT, Blocks.COARSE_DIRT)
+                )
             ),
             BiomePlacementModifier.getInstance()
         )

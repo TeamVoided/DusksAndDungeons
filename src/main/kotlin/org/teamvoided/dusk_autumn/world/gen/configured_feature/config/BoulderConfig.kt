@@ -22,7 +22,7 @@ data class BoulderConfig(
                     BlockStateProvider.TYPE_CODEC.fieldOf("block").forGetter { it.block },
                     IntProvider.method_35004(1, 16).fieldOf("size").forGetter { it.size },
                     IntProvider.method_35004(1, 8).fieldOf("boulder_count").forGetter { it.boulderCount },
-                    IntProvider.method_35004(0, 16).fieldOf("weirdness").forGetter { it.weirdness },
+                    IntProvider.method_35004(1, 16).fieldOf("weirdness").forGetter { it.weirdness },
                     IntProvider.method_35004(0, 16).fieldOf("other_boulder_offset")
                         .forGetter { it.otherBoulderOffset },
                 ).apply(instance, ::BoulderConfig)
