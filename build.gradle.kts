@@ -21,6 +21,7 @@ val curse_id: String? by project
 
 repositories {
     maven("https://teamvoided.org/releases")
+    maven("https://api.modrinth.com/maven")
     maven("https://maven.terraformersmc.com/") { name = "TerraformersMC" }
     mavenCentral()
 }
@@ -51,6 +52,8 @@ dependencies {
 
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
+
+    modImplementation(libs.dramatic.doors)
 }
 
 loom {

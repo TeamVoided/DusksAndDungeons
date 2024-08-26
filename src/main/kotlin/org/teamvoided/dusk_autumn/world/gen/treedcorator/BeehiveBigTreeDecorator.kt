@@ -9,7 +9,7 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.util.math.Direction
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
-import org.teamvoided.dusk_autumn.DuskAutumns.LOGGER
+import org.teamvoided.dusk_autumn.DuskAutumns.log
 import org.teamvoided.dusk_autumn.init.DnDWorldgen
 import kotlin.math.max
 import kotlin.math.min
@@ -62,7 +62,7 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
                      */
                 }
             }
-            LOGGER.info("No beehive was placed by BeehiveBigTreeDecorator!")
+            log.info("No beehive was placed by BeehiveBigTreeDecorator!")
         }
     }
 

@@ -12,6 +12,9 @@ reef = "0.2.0-beta.2"
 voidmill = "1.0.4"
 emi = "1.1.10+1.21"
 
+# compat
+dramatic-doors = "1.21-3.2.4_1"
+
 [libraries]
 #farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
@@ -21,6 +24,9 @@ reef = { module = "org.teamvoided:reef", version.ref = "reef" }
 
 voidmill = { module = "org.teamvoided:voidmill", version.ref = "voidmill" }
 emi = { module = "dev.emi:emi-fabric", version.ref = "emi" }
+
+# compat
+dramatic-doors = { module = "maven.modrinth:dramatic-doors", version.ref = "dramatic-doors" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

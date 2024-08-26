@@ -9,7 +9,9 @@ import net.minecraft.data.client.model.*
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DuskAutumns.isModLoaded
 import org.teamvoided.dusk_autumn.block.DnDFamilies
+import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.util.*
@@ -225,29 +227,20 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DnDBlocks.WARPED_HYPHAE_STAIRS, DnDBlocks.WARPED_HYPHAE_SLAB, DnDBlocks.WARPED_HYPHAE_WALL,
             Blocks.WARPED_STEM, Blocks.WARPED_HYPHAE
         )
-        DnDBlockLists.hollowLogs.forEachIndexed { idx, it ->
+        DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->
             val log = DnDBlockLists.logsAndStrippedLogs[idx].first
             val strippedLog = DnDBlockLists.logsAndStrippedLogs[idx].second
-            gen.hollowLog(
-                it,
-                log,
-                strippedLog
-            )
-            gen.hollowLog(
-                DnDBlockLists.hollowStrippedLogs[idx],
-                strippedLog
-            )
+            gen.hollowLog(hollowLog, log, strippedLog)
+            gen.hollowLog(DnDBlockLists.hollowStrippedLogs[idx], strippedLog)
         }
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK)
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
         gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, true)
         gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, true)
-        DnDBlockLists.logPiles.forEachIndexed { idx, it ->
-            gen.createLogPile(it, DnDBlockLists.logsAndStrippedLogs[idx].first)
+        DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
+            gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
-        DnDBlockLists.leafPiles.forEachIndexed { idx, it ->
-            gen.createLeafPile(it, DnDBlockLists.leaves[idx])
-        }
+        DnDBlockLists.leafPiles.forEachIndexed { idx, pile -> gen.createLeafPile(pile, DnDBlockLists.leaves[idx]) }
         gen.registerSingleton(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
         gen.registerDoubleBlock(DnDBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DnDBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
@@ -320,10 +313,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
                 .put(VariantSettings.UVLOCK, true)
         )*/
+        if (isModLoaded("dramaticdoors")) DramaticDoorsCompat.datagen(gen)
     }
 
-    override fun generateItemModels(gen: ItemModelGenerator) {
-    }
+    override fun generateItemModels(gen: ItemModelGenerator) = Unit
 
     private fun BlockStateModelGenerator.parentedModel(
         block: Block, textBlock: Block, parent: Identifier

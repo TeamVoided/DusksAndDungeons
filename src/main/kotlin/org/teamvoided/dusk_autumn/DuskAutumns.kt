@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumn
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
+import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.event.AddWanderingTrades
 import org.teamvoided.dusk_autumn.init.*
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
@@ -14,10 +15,10 @@ object DuskAutumns {
     const val MODID = "dusk_autumn"
 
     @JvmField
-    val LOGGER = LoggerFactory.getLogger(DuskAutumns::class.java)
+    val log = LoggerFactory.getLogger(DuskAutumns::class.java)
 
     fun init() {
-        LOGGER.info("Its DnD time!")
+        log.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()
         DnDWorldgen.init()
@@ -33,6 +34,8 @@ object DuskAutumns {
             }.build()
             dispatcher.root.addChild(test)
         }*/
+
+        if (isModLoaded("dramaticdoors") && isDev()) DramaticDoorsCompat.initCompat()
     }
 
     fun id(path: String) = Identifier.of(MODID, path)
@@ -40,4 +43,5 @@ object DuskAutumns {
     fun id(modId: String, path: String) = Identifier.of(modId, path)
 
     fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
+    fun isModLoaded(modId: String) = FabricLoader.getInstance().isModLoaded(modId)
 }
