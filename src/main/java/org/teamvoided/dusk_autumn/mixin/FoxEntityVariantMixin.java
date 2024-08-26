@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.IntFunction;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({"SameParameterValue", "deprecation"})
 @Mixin(FoxEntity.Variant.class)
 public class FoxEntityVariantMixin {
     @Mutable
@@ -37,11 +37,11 @@ public class FoxEntityVariantMixin {
 
     @Inject(method = "fromBiome", at = @At("HEAD"), cancellable = true)
     private static void fixBiomeSpawning(Holder<Biome> biome, CallbackInfoReturnable<FoxEntity.Variant> cir) {
-        int x = 0;
-        if (biome.isIn(BiomeTags.SPAWNS_SNOW_FOXES)) x = 1;
-        else if (biome.isIn(DnDBiomeTags.SPAWNS_SILVER_FOXES)) x = 2;
+        int id = 0;
+        if (biome.isIn(BiomeTags.SPAWNS_SNOW_FOXES)) id = 1;
+        else if (biome.isIn(DnDBiomeTags.SPAWNS_SILVER_FOXES)) id = 2;
 
-        cir.setReturnValue(FoxEntity.Variant.get(x));
+        cir.setReturnValue(FoxEntity.Variant.get(id));
     }
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
@@ -57,7 +57,7 @@ public class FoxEntityVariantMixin {
     }
 
 
-    @SuppressWarnings("UnusedReturnValue")
+    @SuppressWarnings({"UnusedReturnValue", "SequencedCollectionMethodCanBeUsed"})
     @Unique
     private static FoxEntity.Variant register(String name, int id, String typeName) {
         ArrayList<FoxEntity.Variant> values = new ArrayList<>(Arrays.asList(field_18003));
