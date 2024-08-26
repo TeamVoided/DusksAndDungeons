@@ -1,9 +1,5 @@
 {
 	"parent": "minecraft:block/block",
-	"textures": {
-		"particle": "dusk_autumn:block/big_chain",
-		"all": "dusk_autumn:block/big_chain"
-	},
 	"elements": [
 		{
 			"from": [4.5, 0, 4.5],

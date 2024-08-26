@@ -32,8 +32,15 @@ object OtherStoneRecipes {
         e.createOvergrown(DnDBlocks.OVERGROWN_POLISHED_STONE, DnDBlocks.POLISHED_STONE)
         e.createOvergrown(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
         e.createOvergrown(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
+        e.createStonecuttedFromList(
+            listOf(
+                Blocks.STONE,
+                Blocks.STONE_BRICKS
+            ),
+            DnDBlocks.POLISHED_STONE
+        )
         e.createStonecuttedSet(
-            listOf(DnDBlocks.POLISHED_STONE, Blocks.STONE_BRICKS),
+            listOf(DnDBlocks.POLISHED_STONE, Blocks.STONE, Blocks.STONE_BRICKS),
             null,
             DnDBlocks.POLISHED_STONE_STAIRS,
             DnDBlocks.POLISHED_STONE_SLAB,

@@ -25,6 +25,24 @@ fun getPropertyFromDirection(direction: Direction): BooleanProperty {
     }
 }
 
+fun nextHorizontalDirection(direction: Direction, rotations: Int): Direction {
+    var directionReturn = direction
+        for (i in 0 until rotations) {
+            directionReturn = nextHorizontalDirection(directionReturn)
+        }
+    return directionReturn
+}
+
+fun nextHorizontalDirection(direction: Direction): Direction {
+    return when (direction) {
+        Direction.NORTH -> Direction.EAST
+        Direction.EAST -> Direction.SOUTH
+        Direction.SOUTH -> Direction.WEST
+        Direction.WEST -> Direction.NORTH
+        else -> Direction.NORTH
+    }
+}
+
 fun VoxelShape.rotate(times: Int): VoxelShape {
     val shapes = arrayOf(this, VoxelShapes.empty())
     for (i in 0 until times) {

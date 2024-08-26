@@ -19,6 +19,8 @@ fun addToTab(itemGroup: RegistryKey<ItemGroup>, itemBefore: ItemGroupEvents.Modi
 
 fun FabricItemGroupEntries.addAfter(item: ItemConvertible, list: Collection<ItemConvertible>) =
     this.addAfter(item.asItem(), list.map { it.asItem().defaultStack })
+fun FabricItemGroupEntries.addBefore(item: ItemConvertible, list: Collection<ItemConvertible>) =
+    this.addBefore(item.asItem(), list.map { it.asItem().defaultStack })
 
 fun FabricItemGroupEntries.addWoodStuffAndLeafPiles() {
     DnDBlockLists.logsAndStrippedLogs.forEachIndexed { idx, (log, stripped) ->

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:barter",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dusk_autumn:crimson_vivions"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dusk_autumn:warped_vivions"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "minecraft:gameplay/piglin_bartering"
+}

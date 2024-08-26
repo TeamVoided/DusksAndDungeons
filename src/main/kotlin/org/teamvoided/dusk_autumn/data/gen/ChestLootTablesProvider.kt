@@ -3,11 +3,16 @@ package org.teamvoided.dusk_autumn.data.gen
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider
 import net.minecraft.item.Item
+import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.context.LootContextTypes
 import net.minecraft.loot.entry.ItemEntry
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
+import org.teamvoided.dusk_autumn.data.DnDLootTables
+import org.teamvoided.dusk_autumn.init.DnDItems
 import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
 
@@ -16,6 +21,7 @@ class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLo
     override fun generate(gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
 
         // eStrongholdLibraryLootTable
+
 //        gen.accept(
 //            RegistryKey.of(RegistryKeys.LOOT_TABLE, DuskLootTables.COOL_CHEST),
 //            LootTable.builder().pool(

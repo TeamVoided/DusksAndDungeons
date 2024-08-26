@@ -132,7 +132,7 @@ object DnDBlocks {
                 .nonOpaque().allowsSpawning(Blocks::allowOcelotsAndParrots).suffocates(Blocks::nonSolid)
                 .blockVision(Blocks::nonSolid)
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
-                .sounds(BlockSoundGroup.CHERRY_LEAVES)
+                .sounds(BlockSoundGroup.AZALEA_LEAVES)
                 .mapColor(MapColor.RED), DnDParticles.CASCADE_LEAF_PARTICLE
         ).cutout().axe()
     )
@@ -357,7 +357,7 @@ object DnDBlocks {
     )
     val CASCADE_LEAF_PILE = register(
         "cascade_leaf_pile", FallingLeafPileBlock(
-            fallingLeafPile(MapColor.RED, BlockSoundGroup.CHERRY_LEAVES),
+            fallingLeafPile(MapColor.RED, BlockSoundGroup.AZALEA_LEAVES),
             DnDParticles.CASCADE_LEAF_PARTICLE
         ).cutout()
     )
@@ -402,6 +402,16 @@ object DnDBlocks {
     val BLUE_PETALS = register(
         "blue_petals", PinkPetalsBlock(
             copy(WHITE_PETALS).mapColor(MapColor.BLUE)
+        ).cutout().sword().hoe()
+    )
+    val CRIMSON_VIVIONS = register(
+        "crimson_vivions", VivionbedBlock(
+            copy(PINK_PETALS).mapColor(MapColor.RED).sounds(BlockSoundGroup.NETHER_SPROUTS)
+        ).cutout().sword().hoe()
+    )
+    val WARPED_VIVIONS = register(
+        "warped_vivions", VivionbedBlock(
+            copy(CRIMSON_VIVIONS).mapColor(MapColor.WARPED_WART_BLOCK)
         ).cutout().sword().hoe()
     )
     val WILD_PETALS = register(

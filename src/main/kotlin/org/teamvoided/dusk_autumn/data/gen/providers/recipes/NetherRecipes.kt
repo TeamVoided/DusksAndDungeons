@@ -18,9 +18,7 @@ object NetherRecipes {
         generateNetherBrickRecipes(e)
     }
     private fun generateMiscNetherRecipes(e:RecipeExporter){
-        e.createStair(DnDBlocks.NETHERRACK_STAIRS, Blocks.NETHERRACK)
-        e.createSlab(DnDBlocks.NETHERRACK_SLAB, Blocks.NETHERRACK)
-        e.createWall(DnDBlocks.NETHERRACK_WALL, Blocks.NETHERRACK)}
+    }
     private fun generateNetherBrickRecipes(e: RecipeExporter) {
         e.createStackedCraft(DnDBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
         e.createStonecuttedSet(

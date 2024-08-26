@@ -40,6 +40,7 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.BoulderFeature
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.BoulderConfig
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FairyRingConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FallenTreeConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FarmlandConfig
 import org.teamvoided.dusk_autumn.world.gen.foliage.CascadeFoliagePlacer
@@ -114,9 +115,6 @@ object ConfiguredFeatureCreator {
             listOf(Direction.NORTH, Direction.SOUTH)
         )
 
-//        ConfiguredFeatureUtil.registerConfiguredFeature(
-//            c, COBBLESTONE_ROCK, Feature.FOREST_ROCK, SingleStateFeatureConfig(Blocks.COBBLESTONE.defaultState)
-//        )
         c.registerConfiguredFeature(
             DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
             DnDFeatures.BOULDER,
@@ -126,6 +124,36 @@ object ConfiguredFeatureCreator {
                 UniformIntProvider.create(1, 4),
                 UniformIntProvider.create(1, 2),
                 UniformIntProvider.create(2, 4)
+            )
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.FAIRY_RING_RED,
+            DnDFeatures.FAIRY_RING,
+            FairyRingConfig(
+                BlockStateProvider.of(DnDBlocks.RED_PETALS.defaultState),
+                DnDBlockTags.FALLEN_TREE_REPLACEABLE,
+                3,
+                UniformIntProvider.create(1, 3)
+            )
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.FAIRY_RING_CRIMSON,
+            DnDFeatures.FAIRY_RING,
+            FairyRingConfig(
+                BlockStateProvider.of(DnDBlocks.CRIMSON_VIVIONS.defaultState),
+                DnDBlockTags.FALLEN_TREE_REPLACEABLE,
+                5,
+                UniformIntProvider.create(1, 3)
+            )
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.FAIRY_RING_WARPED,
+            DnDFeatures.FAIRY_RING,
+            FairyRingConfig(
+                BlockStateProvider.of(DnDBlocks.WARPED_VIVIONS.defaultState),
+                DnDBlockTags.FALLEN_TREE_REPLACEABLE,
+                5,
+                UniformIntProvider.create(1, 3)
             )
         )
 

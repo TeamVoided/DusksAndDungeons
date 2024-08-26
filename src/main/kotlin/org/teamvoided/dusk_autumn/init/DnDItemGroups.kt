@@ -28,7 +28,6 @@ object DnDItemGroups {
                     DnDBlocks.CASCADE_LEAVES,
                     DnDBlocks.GOLDEN_BIRCH_SAPLING,
                     DnDBlocks.GOLDEN_BIRCH_LEAVES,
-                    DnDBlocks.ROOT_BLOCK,
                     DnDItems.FARMERS_HAT,
                     DnDItems.WILD_WHEAT,
                     DnDItems.GOLDEN_BEETROOT,
@@ -36,6 +35,7 @@ object DnDItemGroups {
                 entries.addLists(
                     DnDItemLists.moonberry,
                     DnDBlockLists.flowerbedBlocks,
+                    DnDBlockLists.vivionbedBlocks,
 //                    DnDItemLists.pineWood,
                     DnDItemLists.bonewoodWood,
                     DnDItemLists.woodStuff,
@@ -49,6 +49,7 @@ object DnDItemGroups {
                     DnDItemLists.ice
                 )
                 entries.addItem(
+                    DnDBlocks.ROOT_BLOCK,
                     DnDBlocks.STONE_PILLAR,
                     DnDBlocks.DEEPSLATE_PILLAR,
                     DnDBlocks.TALL_REDSTONE_CRYSTAL,
@@ -126,6 +127,8 @@ object DnDItemGroups {
 
         addToTab(ItemGroups.NATURAL_BLOCKS) {
             it.addAfter(Items.CHERRY_LOG, DnDBlocks.CASCADE_LOG)
+            it.addBefore(Items.PINK_PETALS, DnDBlockLists.flowerbedBlocks)
+            it.addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
 
             it.addAfter(
                 Items.FLOWERING_AZALEA_LEAVES,

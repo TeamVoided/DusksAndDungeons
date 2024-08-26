@@ -1,5 +1,6 @@
 package org.teamvoided.dusk_autumn.world.gen.configured_feature.config
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.Block
 import net.minecraft.registry.RegistryKeys
@@ -13,7 +14,8 @@ data class BoulderConfig(
     val size: IntProvider,
     val boulderCount: IntProvider,
     val weirdness: IntProvider,
-    val otherBoulderOffset: IntProvider
+    val otherBoulderOffset: IntProvider,
+    val moveDownIfReplaceable: Boolean = true
 ) : FeatureConfig {
     companion object {
         val CODEC =
@@ -25,6 +27,7 @@ data class BoulderConfig(
                     IntProvider.method_35004(1, 16).fieldOf("weirdness").forGetter { it.weirdness },
                     IntProvider.method_35004(0, 16).fieldOf("other_boulder_offset")
                         .forGetter { it.otherBoulderOffset },
+                    Codec.BOOL.fieldOf("move_Down_If_Replaceable").orElse(true).forGetter { it.moveDownIfReplaceable }
                 ).apply(instance, ::BoulderConfig)
             }
     }

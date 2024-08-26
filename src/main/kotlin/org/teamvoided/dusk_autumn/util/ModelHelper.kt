@@ -593,6 +593,19 @@ fun BlockStateModelGenerator.registerTallCrystal(block: Block) {
     )
 }
 
+fun BlockStateModelGenerator.registerBigChain(block: Block) {
+    this.registerItemModel(block.asItem())
+    val texture = Texture()
+        .put(TextureKey.PARTICLE, Texture.getId(block))
+        .put(TextureKey.ALL, Texture.getId(block))
+    val model = block(
+        "parent/big_chain",
+        TextureKey.PARTICLE,
+        TextureKey.ALL
+    ).upload(block, texture, this.modelCollector)
+    this.registerAxisRotated(block, model)
+}
+
 fun BlockStateModelGenerator.registerBigLantern(block: Block, redstone: Boolean = false) {
     this.registerItemModel(block)
     val texture = Texture()

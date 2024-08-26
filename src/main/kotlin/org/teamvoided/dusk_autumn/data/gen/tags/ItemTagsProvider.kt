@@ -29,6 +29,10 @@ class ItemTagsProvider(
 
     fun duskTags() {
         copy(DnDBlockTags.CASCADE_LOGS, DnDItemTags.CASCADE_LOGS)
+        copy(DnDBlockTags.LEAF_PILES, DnDItemTags.LEAF_PILES)
+        copy(DnDBlockTags.LOG_PILES, DnDItemTags.LOG_PILES)
+        copy(DnDBlockTags.FLOWERBEDS, DnDItemTags.FLOWERBEDS)
+        copy(DnDBlockTags.VIVIONBEDS, DnDItemTags.VIVIONBEDS)
         copy(DnDBlockTags.BIG_CANDLES, DnDItemTags.BIG_CANDLES)
         copy(DnDBlockTags.SOUL_CANDLES, DnDItemTags.SOUL_CANDLES)
         copy(DnDBlockTags.BIG_SOUL_CANDLES, DnDItemTags.BIG_SOUL_CANDLES)
@@ -40,9 +44,6 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
             .addOptional(id("supplementaries","ash_pile"))
             .add(Items.BASALT)
-        copy(DnDBlockTags.LEAF_PILES, DnDItemTags.LEAF_PILES)
-        copy(DnDBlockTags.LOG_PILES, DnDItemTags.LOG_PILES)
-
     }
 
     fun vanillaTags() {

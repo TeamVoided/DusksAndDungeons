@@ -20,8 +20,7 @@ public abstract class WallBlockMixin extends Block implements Waterloggable {
 
     @Inject(at = @At("HEAD"), method = "shouldConnectTo", cancellable = true)
     private void connectToWoodenOrRegular(BlockState state, boolean faceFullSquare, Direction side, CallbackInfoReturnable<Boolean> cir) {
-        boolean thisState = this.getDefaultState().isIn(DnDBlockTags.WOODEN_WALLS);
-        if (thisState) {
+        if (this.getDefaultState().isIn(DnDBlockTags.WOODEN_WALLS)) {
             if (state.isIn(DnDBlockTags.WOODEN_WALLS))
                 cir.setReturnValue(true);
             else if (state.isIn(BlockTags.WALLS))

@@ -8,6 +8,12 @@ import org.teamvoided.dusk_autumn.DuskAutumns.id
 @Suppress("MemberVisibilityCanBePrivate")
 object DnDConfiguredFeature {
     val OVERGROWN_COBBLESTONE_BOULDER = create("overgrown_cobblestone_boulder")
+    val FAIRY_RING_RED = create("fairy_ring/red")
+    @JvmField
+    val FAIRY_RING_CRIMSON = create("fairy_ring/crimson")
+    @JvmField
+    val FAIRY_RING_WARPED = create("fairy_ring/warped")
+
     val CASCADE_TREE = create("cascade_tree")
     val CASCADE_TREE_BEES = create("cascade_tree_bees")
     val CASCADE_TREE_AUTUMN = create("cascade_tree_autumn")

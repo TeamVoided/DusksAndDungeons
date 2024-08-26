@@ -6,7 +6,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
-import org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.id
@@ -63,6 +62,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.BLUE_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.WILD_PETALS, false, id("block/parent/wildflowerbed"))
+        gen.registerFlowerbed(DnDBlocks.CRIMSON_VIVIONS)
+        gen.registerFlowerbed(DnDBlocks.WARPED_VIVIONS)
         gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
 
         gen.registerAxisRotated(
@@ -91,8 +92,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
 
-        gen.registerItemModel(DnDBlocks.BIG_CHAIN.asItem())
-        gen.registerAxisRotated(DnDBlocks.BIG_CHAIN, ModelIds.getBlockModelId(DnDBlocks.BIG_CHAIN))
+        gen.registerBigChain(DnDBlocks.BIG_CHAIN)
         gen.registerBigLantern(DnDBlocks.BIG_LANTERN)
         gen.registerBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, true)
         gen.registerBigLantern(DnDBlocks.BIG_SOUL_LANTERN)

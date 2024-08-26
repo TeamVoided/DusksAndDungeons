@@ -51,12 +51,17 @@ class BoulderFeature(codec: Codec<BoulderConfig>) :
                         )
                     }
                 }
-
                 blockPos = blockPos.add(
                     config.otherBoulderOffset[randomGenerator] - config.otherBoulderOffset[randomGenerator],
-                    -config.otherBoulderOffset[randomGenerator],
+                    randomGenerator.nextInt(size) - randomGenerator.nextInt(size),
                     config.otherBoulderOffset[randomGenerator] - config.otherBoulderOffset[randomGenerator]
                 )
+                if (config.moveDownIfReplaceable)
+                    for (i in 0..size) {
+                        if (structureWorldAccess.getBlockState(blockPos).isIn(BlockTags.REPLACEABLE)) {
+                            blockPos.down()
+                        }
+                    }
             }
 
             return true

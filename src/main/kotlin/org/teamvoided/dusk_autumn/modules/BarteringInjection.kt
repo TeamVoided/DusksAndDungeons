@@ -9,14 +9,14 @@ import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.DnDLootTables
 
-object SnifferInjection {
-    private val ADD_MOONBERRIES: RegistryKey<LootTable> =
-        RegistryKey.of(RegistryKeys.LOOT_TABLE, DnDLootTables.SNIFFER_ADD_MOONBERRY)
+object BarteringInjection {
+    private val ADD_VIVIONS: RegistryKey<LootTable> =
+        RegistryKey.of(RegistryKeys.LOOT_TABLE, DnDLootTables.BARTERING_ADD_VIVIONS)
 
     fun init() {
         LootTableEvents.MODIFY.register { key, tableBuilder, _, _ ->
-            if (key == LootTables.SNIFFER_DIGGING_GAMEPLAY)
-                tableBuilder.modifyPools { it.with(LootTableEntry.method_428(ADD_MOONBERRIES)).build() }
+            if (key == LootTables.PIGLIN_BARTERING_GAMEPLAY)
+                tableBuilder.modifyPools { it.with(LootTableEntry.method_428(ADD_VIVIONS)).build() }
         }
     }
 }
