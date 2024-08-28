@@ -995,10 +995,10 @@ fun BlockStateModelGenerator.hollowBlock(block: Block) {
     val model = MultipartBlockStateSupplier.create(block)
     var modelId: Identifier
     val allDirectionFalse = When.create()
-        .set(HollowLogBlockWithCutting.NORTH, false)
-        .set(HollowLogBlockWithCutting.SOUTH, false)
-        .set(HollowLogBlockWithCutting.EAST, false)
-        .set(HollowLogBlockWithCutting.WEST, false)
+        .set(HollowLogWithCuttingBlock.NORTH, false)
+        .set(HollowLogWithCuttingBlock.SOUTH, false)
+        .set(HollowLogWithCuttingBlock.EAST, false)
+        .set(HollowLogWithCuttingBlock.WEST, false)
     val directionsX = listOf(
         Direction.WEST,
         Direction.SOUTH,
@@ -1010,7 +1010,7 @@ fun BlockStateModelGenerator.hollowBlock(block: Block) {
         model.with(
             When.create()
                 .set(PillarBlock.AXIS, Direction.Axis.X)
-                .set(HollowLogBlockWithCutting.getProperty(it), true),
+                .set(HollowLogWithCuttingBlock.getProperty(it), true),
             BlockStateVariant.create()
                 .put(VariantSettings.MODEL, block.model("_" + directionsX[idx].toString()))
                 .put(VariantSettings.Y, Rotation.R90)
@@ -1022,7 +1022,7 @@ fun BlockStateModelGenerator.hollowBlock(block: Block) {
         model.with(
             When.create()
                 .set(PillarBlock.AXIS, Direction.Axis.Y)
-                .set(HollowLogBlockWithCutting.getProperty(it), true),
+                .set(HollowLogWithCuttingBlock.getProperty(it), true),
             BlockStateVariant.create()
                 .put(VariantSettings.MODEL, modelId)
                 .put(VariantSettings.X, Rotation.R270)
@@ -1034,7 +1034,7 @@ fun BlockStateModelGenerator.hollowBlock(block: Block) {
         model.with(
             When.create()
                 .set(PillarBlock.AXIS, Direction.Axis.Z)
-                .set(HollowLogBlockWithCutting.getProperty(it), true),
+                .set(HollowLogWithCuttingBlock.getProperty(it), true),
             BlockStateVariant.create()
                 .put(VariantSettings.MODEL, modelId)
         )

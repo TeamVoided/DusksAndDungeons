@@ -27,7 +27,7 @@ import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
 import org.teamvoided.dusk_autumn.util.rotateColumn
 
-open class HollowLogBlockWithCutting(settings: Settings) : HollowLogBlock(settings) {
+open class HollowLogWithCuttingBlock(settings: Settings) : HollowLogBlock(settings) {
     open val special1: Double = 0.0625
     open val special2: Double = 0.9375
 

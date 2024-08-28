@@ -8,7 +8,7 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import org.teamvoided.dusk_autumn.util.rotateColumn
 
-class HollowBambooBlock(settings: Settings) : HollowLogBlockWithCutting(settings) {
+class HollowBambooBlock(settings: Settings) : HollowLogWithCuttingBlock(settings) {
     override val special1: Double = 0.125
     override val special2: Double = 0.875
     override fun getOutlineShape(
