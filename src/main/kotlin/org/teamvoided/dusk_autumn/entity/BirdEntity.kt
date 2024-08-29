@@ -13,9 +13,9 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 
-class BirdEntity : AnimalEntity {
+class BirdEntity(entityType: EntityType<out BirdEntity>, world: World) : AnimalEntity(entityType, world) {
 
-    constructor(entityType: EntityType<out BirdEntity>, world: World) : super(entityType, world) {
+    init {
         this.moveControl = FlightMoveControl(this, 10, false)
         this.addPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0f)
         this.addPathfindingPenalty(PathNodeType.DAMAGE_FIRE, -1.0f)
