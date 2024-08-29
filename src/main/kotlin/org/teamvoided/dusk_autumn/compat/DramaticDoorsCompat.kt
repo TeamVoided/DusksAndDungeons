@@ -13,7 +13,6 @@ import net.minecraft.data.client.model.Models
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DuskAutumns.log
-import org.teamvoided.dusk_autumn.block.DnDWoodTypes
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.id
 
@@ -24,8 +23,8 @@ object DramaticDoorsCompat {
         log.info("Initializing DramaticDoors Compat")
         Compats.modChecker = FabricUtils.INSTANCE //(ender)  if this is not here we get a crash
 
-        makeDnDDoors(DnDBlocks.BLUE_DOOR, DnDWoodTypes.CASCADE_BLOCK_SET_TYPE)
-        makeDnDDoors(DnDBlocks.CASCADE_DOOR, DnDWoodTypes.CASCADE_BLOCK_SET_TYPE)
+//        makeDnDDoors(DnDBlocks.BLUE_DOOR, DnDWoodTypes.CASCADE_BLOCK_SET_TYPE)
+//        makeDnDDoors(DnDBlocks.CASCADE_DOOR, DnDWoodTypes.CASCADE_BLOCK_SET_TYPE)
     }
 
     fun datagen(gen: BlockStateModelGenerator) {

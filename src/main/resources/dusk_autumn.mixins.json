@@ -6,6 +6,7 @@
   "mixins": [
     "FoxEntityVariantMixin",
     "NyliumBlockMixin",
+    "UtilMixin",
     "WallBlockMixin",
     "WitherSkeletonEntityMixin"
   ],

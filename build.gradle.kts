@@ -39,8 +39,6 @@ modSettings {
 dependencies {
     modImplementation(fileTree("libs"))
 
-    modImplementation(libs.modmenu)
-
     modImplementation(libs.biolith)
     include(libs.biolith)
 
@@ -50,10 +48,19 @@ dependencies {
     modImplementation(libs.voidmill)
     include(libs.voidmill)
 
+
+    // Dev
+    modImplementation(libs.modmenu)
+
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
 
+    modImplementation(libs.dev.tools.unlocker)
+
+
+    // Compat
     modImplementation(libs.dramatic.doors)
+
 }
 
 loom {
