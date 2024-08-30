@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ai.control.FlightMoveControl
 import net.minecraft.entity.ai.goal.LookAtEntityGoal
 import net.minecraft.entity.ai.goal.SwimGoal
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal
 import net.minecraft.entity.ai.pathing.PathNodeType
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.attribute.EntityAttributes
@@ -37,7 +38,7 @@ class BirdEntity(entityType: EntityType<out BirdEntity>, world: World) : AnimalE
     override fun initGoals() {
         goalSelector.add(0, SwimGoal(this))
         goalSelector.add(1, LookAtEntityGoal(this, PlayerEntity::class.java, 8.0f))
-        goalSelector.add(2, LookAtEntityGoal(this, LivingEntity::class.java, 8.0f))
+        goalSelector.add(2, WanderAroundFarGoal(this, 1.0))
     }
 
 
