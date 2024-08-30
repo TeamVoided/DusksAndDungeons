@@ -21,6 +21,7 @@ object DuskAutumns {
         log.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()
+        DnDEffects.init()
         DnDWorldgen.init()
         DnDBiomeModifications.init()
         DnDParticles.init()
