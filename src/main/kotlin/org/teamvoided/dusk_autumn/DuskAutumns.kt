@@ -22,6 +22,7 @@ object DuskAutumns {
         DnDItems.init()
         DnDBlocks.init()
         DnDEffects.init()
+        DnDEntities.init()
         DnDWorldgen.init()
         DnDBiomeModifications.init()
         DnDParticles.init()
@@ -36,7 +37,7 @@ object DuskAutumns {
             dispatcher.root.addChild(test)
         }*/
 
-        if (isModLoaded("dramaticdoors") && isDev()) DramaticDoorsCompat.initCompat()
+//        if (isModLoaded("dramaticdoors") && isDev()) DramaticDoorsCompat.initCompat()
     }
 
     fun id(path: String) = Identifier.of(MODID, path)

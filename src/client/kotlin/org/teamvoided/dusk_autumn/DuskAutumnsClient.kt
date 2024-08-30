@@ -19,6 +19,7 @@ import net.minecraft.world.BlockRenderView
 import org.teamvoided.dusk_autumn.DuskAutumns.MODID
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
+import org.teamvoided.dusk_autumn.entity.bird.BirdEntityRenderer
 import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDEntities
@@ -52,6 +53,7 @@ object DuskAutumnsClient {
         ParticleFactoryRegistry.getInstance().register(SNOWFLAKE, SnowflakeParticle::Factory)
 
         EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
+        EntityRendererRegistry.register(DnDEntities.BIRD_TEST, ::BirdEntityRenderer)
 
 //        ClientTickEvents.END_CLIENT_TICK.register {
 //            if (key.isPressed && cooldown < 1) {

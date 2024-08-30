@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumn.event
 
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
+import net.minecraft.block.Blocks
 import net.minecraft.village.TradeOffers
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.DnDBlockLists
@@ -13,6 +14,7 @@ object AddWanderingTrades {
             DnDBlockLists.flowerbedBlocks.forEach { flowerbed ->
                 it.add(TradeOffers.SellItemFactory(flowerbed, 3, 1, 8, 1))
             }
+            it.add(TradeOffers.SellItemFactory(Blocks.PINK_PETALS, 3, 1, 8, 1))
         }
     }
 }

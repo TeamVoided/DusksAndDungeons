@@ -8,11 +8,7 @@ import org.teamvoided.dusk_autumn.entity.ChillChargeEntity
 import java.util.function.Function
 
 class ChillChargeEntityModel(root: ModelPart) :
-    SinglePartEntityModel<ChillChargeEntity>(Function{ texture: Identifier ->
-        RenderLayer.getEntityTranslucent(
-            texture
-        )
-    }) {
+    SinglePartEntityModel<ChillChargeEntity>(RenderLayer::getEntityTranslucent) {
     private val bone: ModelPart = root.getChild("bone")
     private val chillCharge: ModelPart = bone.getChild("chill_charge")
 

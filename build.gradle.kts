@@ -59,7 +59,7 @@ dependencies {
 
 
     // Compat
-    modImplementation(libs.dramatic.doors)
+//    modImplementation(libs.dramatic.doors)
 
 }
 
