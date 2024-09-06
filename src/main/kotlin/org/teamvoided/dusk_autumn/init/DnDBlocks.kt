@@ -7,7 +7,7 @@ import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
-import net.minecraft.block.org.teamvoided.dusk_autumn.block.TallRedstoneCrystalBlock
+import org.teamvoided.dusk_autumn.block.TallRedstoneCrystalBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.particle.ParticleTypes

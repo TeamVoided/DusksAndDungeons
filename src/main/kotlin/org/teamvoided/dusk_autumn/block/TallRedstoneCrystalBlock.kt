@@ -1,4 +1,4 @@
-package net.minecraft.block.org.teamvoided.dusk_autumn.block
+package org.teamvoided.dusk_autumn.block
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -21,7 +21,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
-import org.teamvoided.dusk_autumn.block.TallCrystalBlock
 
 class TallRedstoneCrystalBlock(settings: Settings) : TallCrystalBlock(settings) {
     init {
