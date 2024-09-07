@@ -1,11 +1,9 @@
 package org.teamvoided.dusk_autumn.init
 
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectType
-import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry

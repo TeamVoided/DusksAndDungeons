@@ -25,6 +25,7 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDEntities
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.DnDParticles
+import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
 import org.teamvoided.dusk_autumn.particle.SpiderlilyPetalParticle
 import org.teamvoided.dusk_autumn.particle.SnowflakeParticle
@@ -78,11 +79,11 @@ object DuskAutumnsClient {
             { _, world, pos, _ ->
                 foliageColorOrDefault(world, pos)
             },
-            DnDBlocks.OAK_LEAF_PILE,
-            DnDBlocks.JUNGLE_LEAF_PILE,
-            DnDBlocks.ACACIA_LEAF_PILE,
-            DnDBlocks.DARK_OAK_LEAF_PILE,
-            DnDBlocks.MANGROVE_LEAF_PILE
+            DnDWoodBlocks.OAK_LEAF_PILE,
+            DnDWoodBlocks.JUNGLE_LEAF_PILE,
+            DnDWoodBlocks.ACACIA_LEAF_PILE,
+            DnDWoodBlocks.DARK_OAK_LEAF_PILE,
+            DnDWoodBlocks.MANGROVE_LEAF_PILE
         )
         ColorProviderRegistry.BLOCK.register(
             { _, world, pos, tintIndex ->
@@ -97,10 +98,10 @@ object DuskAutumnsClient {
             *DnDBlocks.GRASS_TINT_BLOCKS.toTypedArray()
         )
         ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> FoliageColors.getSpruceColor() }, DnDBlocks.SPRUCE_LEAF_PILE
+            { _, _, _, _ -> FoliageColors.getSpruceColor() }, DnDWoodBlocks.SPRUCE_LEAF_PILE
         )
         ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> FoliageColors.getBirchColor() }, DnDBlocks.BIRCH_LEAF_PILE
+            { _, _, _, _ -> FoliageColors.getBirchColor() }, DnDWoodBlocks.BIRCH_LEAF_PILE
         )
 
         DnDBlocks.CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
@@ -114,22 +115,22 @@ object DuskAutumnsClient {
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getDefaultColor() },
-            DnDBlocks.OAK_LEAF_PILE.asItem(),
-            DnDBlocks.JUNGLE_LEAF_PILE.asItem(),
-            DnDBlocks.ACACIA_LEAF_PILE.asItem(),
-            DnDBlocks.DARK_OAK_LEAF_PILE.asItem()
+            DnDWoodBlocks.OAK_LEAF_PILE.asItem(),
+            DnDWoodBlocks.JUNGLE_LEAF_PILE.asItem(),
+            DnDWoodBlocks.ACACIA_LEAF_PILE.asItem(),
+            DnDWoodBlocks.DARK_OAK_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getSpruceColor() },
-            DnDBlocks.SPRUCE_LEAF_PILE.asItem()
+            DnDWoodBlocks.SPRUCE_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getBirchColor() },
-            DnDBlocks.BIRCH_LEAF_PILE.asItem()
+            DnDWoodBlocks.BIRCH_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { _, _ -> FoliageColors.getMangroveColor() },
-            DnDBlocks.MANGROVE_LEAF_PILE.asItem()
+            DnDWoodBlocks.MANGROVE_LEAF_PILE.asItem()
         )
         ColorProviderRegistry.ITEM.register(
             { stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) }, DnDItems.FARMERS_HAT

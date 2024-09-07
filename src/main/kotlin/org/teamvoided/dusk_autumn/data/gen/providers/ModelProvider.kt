@@ -14,6 +14,7 @@ import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.*
 import org.teamvoided.dusk_autumn.util.*
 import java.util.*
 
@@ -49,60 +50,66 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
         }
         gen.registerFlowerPotPlant(
-            DnDBlocks.CASCADE_SAPLING,
-            DnDBlocks.POTTED_CASCADE_SAPLING,
+            DnDWoodBlocks.CASCADE_SAPLING,
+            DnDWoodBlocks.POTTED_CASCADE_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
 
-        gen.registerLog(DnDBlocks.CASCADE_LOG)
-            .log(DnDBlocks.CASCADE_LOG)
-            .wood(DnDBlocks.CASCADE_WOOD)
-        gen.registerLog(DnDBlocks.STRIPPED_CASCADE_LOG)
-            .log(DnDBlocks.STRIPPED_CASCADE_LOG)
-            .log(DnDBlocks.STRIPPED_CASCADE_WOOD)
+        gen.registerLog(DnDWoodBlocks.CASCADE_LOG)
+            .log(DnDWoodBlocks.CASCADE_LOG)
+            .wood(DnDWoodBlocks.CASCADE_WOOD)
+        gen.registerLog(DnDWoodBlocks.STRIPPED_CASCADE_LOG)
+            .log(DnDWoodBlocks.STRIPPED_CASCADE_LOG)
+            .log(DnDWoodBlocks.STRIPPED_CASCADE_WOOD)
         gen.registerHangingSign(
-            DnDBlocks.STRIPPED_CASCADE_LOG,
-            DnDBlocks.CASCADE_HANGING_SIGN,
-            DnDBlocks.CASCADE_WALL_HANGING_SIGN
+            DnDWoodBlocks.STRIPPED_CASCADE_LOG,
+            DnDWoodBlocks.CASCADE_HANGING_SIGN,
+            DnDWoodBlocks.CASCADE_WALL_HANGING_SIGN
         )
-        gen.registerSingleton(DnDBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
-        gen.registerDoor(DnDBlocks.BLUE_DOOR)
+        gen.registerSingleton(DnDWoodBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
+        gen.registerDoor(DnDWoodBlocks.BLUE_DOOR)
         gen.registerFlowerPotPlant(
-            DnDBlocks.GOLDEN_BIRCH_SAPLING,
-            DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
+            DnDWoodBlocks.GOLDEN_BIRCH_SAPLING,
+            DnDWoodBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
-        gen.registerLog(DnDBlocks.GALLERY_MAPLE_LOG)
-            .log(DnDBlocks.GALLERY_MAPLE_LOG)
-            .wood(DnDBlocks.GALLERY_MAPLE_WOOD)
-        gen.registerLog(DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG)
-            .log(DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG)
-            .wood(DnDBlocks.STRIPPED_GALLERY_MAPLE_WOOD)
-        gen.registerHangingSign(
-            DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG,
-            DnDBlocks.GALLERY_MAPLE_HANGING_SIGN,
-            DnDBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN
-        )
-        gen.registerSingleton(DnDBlocks.GALLERY_MAPLE_LEAVES, TexturedModel.LEAVES)
-        gen.registerGalleryRose(DnDBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
 
-        gen.registerSpiderlilly(DnDBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
-        gen.registerFlowerbed2(DnDBlocks.WHITE_PETALS, false)
-        gen.registerFlowerbed2(DnDBlocks.RED_PETALS, false)
-        gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS, false)
-        gen.registerFlowerbed2(DnDBlocks.BLUE_PETALS, false)
-        gen.registerFlowerbed2(DnDBlocks.WILD_PETALS, false, id("block/parent/wildflowerbed"))
-        gen.registerFlowerbed(DnDBlocks.CRIMSON_VIVIONS)
-        gen.registerFlowerbed(DnDBlocks.WARPED_VIVIONS)
-        gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
+        gen.registerFlowerPotPlant(
+            DnDWoodBlocks.GALLERY_MAPLE_SAPLING,
+            DnDWoodBlocks.POTTED_GALLERY_MAPLE_SAPLING,
+            BlockStateModelGenerator.TintType.NOT_TINTED
+        )
+        gen.registerLog(DnDWoodBlocks.GALLERY_MAPLE_LOG)
+            .log(DnDWoodBlocks.GALLERY_MAPLE_LOG)
+            .wood(DnDWoodBlocks.GALLERY_MAPLE_WOOD)
+        gen.registerLog(DnDWoodBlocks.STRIPPED_GALLERY_MAPLE_LOG)
+            .log(DnDWoodBlocks.STRIPPED_GALLERY_MAPLE_LOG)
+            .wood(DnDWoodBlocks.STRIPPED_GALLERY_MAPLE_WOOD)
+        gen.registerHangingSign(
+            DnDWoodBlocks.STRIPPED_GALLERY_MAPLE_LOG,
+            DnDWoodBlocks.GALLERY_MAPLE_HANGING_SIGN,
+            DnDWoodBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN
+        )
+        gen.registerSingleton(DnDWoodBlocks.GALLERY_MAPLE_LEAVES, TexturedModel.LEAVES)
+        gen.registerGalleryRose(DnDFloraBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
+
+        gen.registerSpiderlilly(DnDFloraBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
+        gen.registerFlowerbed2(DnDFloraBlocks.WHITE_PETALS, false)
+        gen.registerFlowerbed2(DnDFloraBlocks.RED_PETALS, false)
+        gen.registerFlowerbed2(DnDFloraBlocks.ORANGE_PETALS, false)
+        gen.registerFlowerbed2(DnDFloraBlocks.BLUE_PETALS, false)
+        gen.registerFlowerbed2(DnDFloraBlocks.WILD_PETALS, false, id("block/parent/wildflowerbed"))
+        gen.registerFlowerbed(DnDFloraBlocks.CRIMSON_VIVIONS)
+        gen.registerFlowerbed(DnDFloraBlocks.WARPED_VIVIONS)
+        gen.registerTreeMushroom(DnDFloraBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
 
         gen.registerAxisRotated(
-            DnDBlocks.STONE_PILLAR,
+            DnDStoneBlocks.STONE_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
         gen.registerAxisRotated(
-            DnDBlocks.DEEPSLATE_PILLAR,
+            DnDStoneBlocks.DEEPSLATE_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
@@ -122,10 +129,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
 
-        gen.registerBigChain(DnDBlocks.BIG_CHAIN)
-        gen.registerBigLantern(DnDBlocks.BIG_LANTERN)
-        gen.registerBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, true)
-        gen.registerBigLantern(DnDBlocks.BIG_SOUL_LANTERN)
+        gen.registerBigChain(DnDBigBlocks.BIG_CHAIN)
+        gen.registerBigLantern(DnDBigBlocks.BIG_LANTERN)
+        gen.registerBigLantern(DnDBigBlocks.BIG_REDSTONE_LANTERN, true)
+        gen.registerBigLantern(DnDBigBlocks.BIG_SOUL_LANTERN)
         DnDBlockLists.bigCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
         }
@@ -137,46 +144,46 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         }
 
         gen.genPsudoFamily(
-            DnDBlocks.NETHERRACK_STAIRS, DnDBlocks.NETHERRACK_SLAB, DnDBlocks.NETHERRACK_WALL,
+            DnDNetherBrickBlocks.NETHERRACK_STAIRS, DnDNetherBrickBlocks.NETHERRACK_SLAB, DnDNetherBrickBlocks.NETHERRACK_WALL,
             Blocks.NETHERRACK
         )
-        gen.registerCropWithParent(DnDBlocks.WARPED_WART, id("block/parent/crop"), Properties.AGE_3, 0, 1, 1, 2)
+        gen.registerCropWithParent(DnDFloraBlocks.WARPED_WART, id("block/parent/crop"), Properties.AGE_3, 0, 1, 1, 2)
         gen.registerAxisRotated(
-            DnDBlocks.NETHER_BRICK_PILLAR,
+            DnDNetherBrickBlocks.NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
-        gen.registerSimpleCubeAll(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
-        gen.registerSimpleCubeAll(DnDBlocks.CHISELED_RED_NETHER_BRICKS)
-        gen.fence(DnDBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
-        gen.fence(DnDBlocks.MIXED_NETHER_BRICK_FENCE, DnDBlocks.MIXED_NETHER_BRICKS)
-        gen.registerMixedNetherBrickPillar(DnDBlocks.MIXED_NETHER_BRICK_PILLAR, DnDBlocks.RED_NETHER_BRICK_PILLAR)
+        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.CRACKED_RED_NETHER_BRICKS)
+        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.CHISELED_RED_NETHER_BRICKS)
+        gen.fence(DnDNetherBrickBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
+        gen.fence(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_FENCE, DnDNetherBrickBlocks.MIXED_NETHER_BRICKS)
+        gen.registerMixedNetherBrickPillar(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_PILLAR, DnDNetherBrickBlocks.RED_NETHER_BRICK_PILLAR)
         gen.registerAxisRotated(
-            DnDBlocks.RED_NETHER_BRICK_PILLAR,
+            DnDNetherBrickBlocks.RED_NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
-        gen.fence(DnDBlocks.BLUE_NETHER_BRICK_FENCE, DnDBlocks.BLUE_NETHER_BRICKS)
+        gen.fence(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_FENCE, DnDNetherBrickBlocks.BLUE_NETHER_BRICKS)
         gen.registerAxisRotated(
-            DnDBlocks.BLUE_NETHER_BRICK_PILLAR,
+            DnDNetherBrickBlocks.BLUE_NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
-        gen.fence(DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DnDBlocks.MIXED_BLUE_NETHER_BRICKS)
+        gen.fence(DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICKS)
         gen.registerMixedNetherBrickPillar(
-            DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
-            DnDBlocks.BLUE_NETHER_BRICK_PILLAR
+            DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
+            DnDNetherBrickBlocks.BLUE_NETHER_BRICK_PILLAR
         )
-        gen.fence(DnDBlocks.GRAY_NETHER_BRICK_FENCE, DnDBlocks.GRAY_NETHER_BRICKS)
+        gen.fence(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_FENCE, DnDNetherBrickBlocks.GRAY_NETHER_BRICKS)
         gen.registerAxisRotated(
-            DnDBlocks.GRAY_NETHER_BRICK_PILLAR,
+            DnDNetherBrickBlocks.GRAY_NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
-        gen.fence(DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DnDBlocks.MIXED_GRAY_NETHER_BRICKS)
+        gen.fence(DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICKS)
         gen.registerMixedNetherBrickPillar(
-            DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR,
-            DnDBlocks.GRAY_NETHER_BRICK_PILLAR
+            DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR,
+            DnDNetherBrickBlocks.GRAY_NETHER_BRICK_PILLAR
         )
 
         DnDItemLists.blackstoneTools.forEach {
@@ -194,69 +201,69 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerTintedOverlay(mossyPolish)
         gen.registerTintedOverlay(mossyCobble)
         gen.registerTintedOverlay(mossyBrick)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_POLISHED_STONE, DnDBlocks.MOSSY_POLISHED_STONE, mossyPolish)
+        gen.cubeAllWithTintedOverlay(DnDStoneBlocks.OVERGROWN_POLISHED_STONE, DnDStoneBlocks.MOSSY_POLISHED_STONE, mossyPolish)
         gen.stairsWithTintedOverlay(
-            DnDBlocks.OVERGROWN_POLISHED_STONE_STAIRS,
-            DnDBlocks.MOSSY_POLISHED_STONE,
+            DnDStoneBlocks.OVERGROWN_POLISHED_STONE_STAIRS,
+            DnDStoneBlocks.MOSSY_POLISHED_STONE,
             mossyPolish
         )
-        gen.slabWithTintedOverlay(DnDBlocks.OVERGROWN_POLISHED_STONE_SLAB, DnDBlocks.MOSSY_POLISHED_STONE, mossyPolish)
-        gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_POLISHED_STONE_WALL, DnDBlocks.MOSSY_POLISHED_STONE, mossyPolish)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.stairsWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.slabWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
-        gen.stairsWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
-        gen.slabWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_SLAB, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
-        gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.slabWithTintedOverlay(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_SLAB, DnDStoneBlocks.MOSSY_POLISHED_STONE, mossyPolish)
+        gen.wallWithTintedOverlay(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_WALL, DnDStoneBlocks.MOSSY_POLISHED_STONE, mossyPolish)
+        gen.cubeAllWithTintedOverlay(DnDStoneBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.stairsWithTintedOverlay(DnDStoneBlocks.OVERGROWN_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.slabWithTintedOverlay(DnDStoneBlocks.OVERGROWN_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.wallWithTintedOverlay(DnDStoneBlocks.OVERGROWN_COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE, mossyCobble)
+        gen.cubeAllWithTintedOverlay(DnDStoneBlocks.OVERGROWN_STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.stairsWithTintedOverlay(DnDStoneBlocks.OVERGROWN_STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.slabWithTintedOverlay(DnDStoneBlocks.OVERGROWN_STONE_BRICK_SLAB, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
+        gen.wallWithTintedOverlay(DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
         gen.genPsudoFamily(
-            DnDBlocks.OAK_WOOD_STAIRS, DnDBlocks.OAK_WOOD_SLAB, DnDBlocks.OAK_WOOD_WALL,
+            DnDWoodBlocks.OAK_WOOD_STAIRS, DnDWoodBlocks.OAK_WOOD_SLAB, DnDWoodBlocks.OAK_WOOD_WALL,
             Blocks.OAK_LOG, Blocks.OAK_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.SPRUCE_WOOD_STAIRS, DnDBlocks.SPRUCE_WOOD_SLAB, DnDBlocks.SPRUCE_WOOD_WALL,
+            DnDWoodBlocks.SPRUCE_WOOD_STAIRS, DnDWoodBlocks.SPRUCE_WOOD_SLAB, DnDWoodBlocks.SPRUCE_WOOD_WALL,
             Blocks.SPRUCE_LOG, Blocks.SPRUCE_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.BIRCH_WOOD_STAIRS, DnDBlocks.BIRCH_WOOD_SLAB, DnDBlocks.BIRCH_WOOD_WALL,
+            DnDWoodBlocks.BIRCH_WOOD_STAIRS, DnDWoodBlocks.BIRCH_WOOD_SLAB, DnDWoodBlocks.BIRCH_WOOD_WALL,
             Blocks.BIRCH_LOG, Blocks.BIRCH_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.JUNGLE_WOOD_STAIRS, DnDBlocks.JUNGLE_WOOD_SLAB, DnDBlocks.JUNGLE_WOOD_WALL,
+            DnDWoodBlocks.JUNGLE_WOOD_STAIRS, DnDWoodBlocks.JUNGLE_WOOD_SLAB, DnDWoodBlocks.JUNGLE_WOOD_WALL,
             Blocks.JUNGLE_LOG, Blocks.JUNGLE_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.ACACIA_WOOD_STAIRS, DnDBlocks.ACACIA_WOOD_SLAB, DnDBlocks.ACACIA_WOOD_WALL,
+            DnDWoodBlocks.ACACIA_WOOD_STAIRS, DnDWoodBlocks.ACACIA_WOOD_SLAB, DnDWoodBlocks.ACACIA_WOOD_WALL,
             Blocks.ACACIA_LOG, Blocks.ACACIA_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.DARK_OAK_WOOD_STAIRS, DnDBlocks.DARK_OAK_WOOD_SLAB, DnDBlocks.DARK_OAK_WOOD_WALL,
+            DnDWoodBlocks.DARK_OAK_WOOD_STAIRS, DnDWoodBlocks.DARK_OAK_WOOD_SLAB, DnDWoodBlocks.DARK_OAK_WOOD_WALL,
             Blocks.DARK_OAK_LOG, Blocks.DARK_OAK_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.MANGROVE_WOOD_STAIRS, DnDBlocks.MANGROVE_WOOD_SLAB, DnDBlocks.MANGROVE_WOOD_WALL,
+            DnDWoodBlocks.MANGROVE_WOOD_STAIRS, DnDWoodBlocks.MANGROVE_WOOD_SLAB, DnDWoodBlocks.MANGROVE_WOOD_WALL,
             Blocks.MANGROVE_LOG, Blocks.MANGROVE_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.CHERRY_WOOD_STAIRS, DnDBlocks.CHERRY_WOOD_SLAB, DnDBlocks.CHERRY_WOOD_WALL,
+            DnDWoodBlocks.CHERRY_WOOD_STAIRS, DnDWoodBlocks.CHERRY_WOOD_SLAB, DnDWoodBlocks.CHERRY_WOOD_WALL,
             Blocks.CHERRY_LOG, Blocks.CHERRY_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.CASCADE_WOOD_STAIRS, DnDBlocks.CASCADE_WOOD_SLAB, DnDBlocks.CASCADE_WOOD_WALL,
-            DnDBlocks.CASCADE_LOG, DnDBlocks.CASCADE_WOOD
+            DnDWoodBlocks.CASCADE_WOOD_STAIRS, DnDWoodBlocks.CASCADE_WOOD_SLAB, DnDWoodBlocks.CASCADE_WOOD_WALL,
+            DnDWoodBlocks.CASCADE_LOG, DnDWoodBlocks.CASCADE_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.GALLERY_MAPLE_WOOD_STAIRS, DnDBlocks.GALLERY_MAPLE_WOOD_SLAB, DnDBlocks.GALLERY_MAPLE_WOOD_WALL,
-            DnDBlocks.GALLERY_MAPLE_LOG, DnDBlocks.GALLERY_MAPLE_WOOD
+            DnDWoodBlocks.GALLERY_MAPLE_WOOD_STAIRS, DnDWoodBlocks.GALLERY_MAPLE_WOOD_SLAB, DnDWoodBlocks.GALLERY_MAPLE_WOOD_WALL,
+            DnDWoodBlocks.GALLERY_MAPLE_LOG, DnDWoodBlocks.GALLERY_MAPLE_WOOD
         )
         gen.genPsudoFamily(
-            DnDBlocks.CRIMSON_HYPHAE_STAIRS, DnDBlocks.CRIMSON_HYPHAE_SLAB, DnDBlocks.CRIMSON_HYPHAE_WALL,
+            DnDWoodBlocks.CRIMSON_HYPHAE_STAIRS, DnDWoodBlocks.CRIMSON_HYPHAE_SLAB, DnDWoodBlocks.CRIMSON_HYPHAE_WALL,
             Blocks.CRIMSON_STEM, Blocks.CRIMSON_HYPHAE
         )
         gen.genPsudoFamily(
-            DnDBlocks.WARPED_HYPHAE_STAIRS, DnDBlocks.WARPED_HYPHAE_SLAB, DnDBlocks.WARPED_HYPHAE_WALL,
+            DnDWoodBlocks.WARPED_HYPHAE_STAIRS, DnDWoodBlocks.WARPED_HYPHAE_SLAB, DnDWoodBlocks.WARPED_HYPHAE_WALL,
             Blocks.WARPED_STEM, Blocks.WARPED_HYPHAE
         )
         DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->
@@ -265,26 +272,26 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.hollowLog(hollowLog, log, strippedLog)
             gen.hollowLog(DnDBlockLists.hollowStrippedLogs[idx], strippedLog)
         }
-        gen.hollowBambooBlock(DnDBlocks.HOLLOW_BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK)
-        gen.hollowBambooBlock(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
-        gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, true)
-        gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, true)
+        gen.hollowBambooBlock(DnDWoodBlocks.HOLLOW_BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK)
+        gen.hollowBambooBlock(DnDWoodBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
+        gen.createLogPile(DnDWoodBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, true)
+        gen.createLogPile(DnDWoodBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, true)
         DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
             gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
         DnDBlockLists.leafPiles.forEachIndexed { idx, pile -> gen.createLeafPile(pile, DnDBlockLists.leaves[idx]) }
-        gen.registerSingleton(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
-        gen.registerDoubleBlock(DnDBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
-        gen.registerCrop(DnDBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
+        gen.registerSingleton(DnDWoodBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
+        gen.registerDoubleBlock(DnDFloraBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
+        gen.registerCrop(DnDFloraBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
         gen.registerCropWithParent(
-            DnDBlocks.MOONBERRY_VINELET, id("block/parent/floor_plant"),
+            DnDFloraBlocks.MOONBERRY_VINELET, id("block/parent/floor_plant"),
             Properties.AGE_2, 0, 1, 2
         )
-        gen.createMoonberryVine(DnDBlocks.MOONBERRY_VINE)
+        gen.createMoonberryVine(DnDFloraBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DnDItems.MOONBERRIES)
 
         gen.registerSingleton(
-            DnDBlocks.ROOT_BLOCK,
+            DnDFloraBlocks.ROOT_BLOCK,
             TexturedModel.makeFactory(Texture::all, block("parent/cube_in_eighths", TextureKey.ALL))
         )
 
@@ -298,47 +305,47 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.cube15Overlay(deepslate)
         gen.cube15Overlay(blackstone)
 
-        gen.grassWithOverlay(DnDBlocks.ROCKY_GRASS, Blocks.GRASS_BLOCK, stone)
-        gen.cubeSnowableColumnWithOverlay(DnDBlocks.ROCKY_PODZOL, Blocks.PODZOL, stone)
-        gen.cubeSnowableColumnWithOverlay(DnDBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, stone)
-        gen.cube15WithOverlay(DnDBlocks.ROCKY_DIRT_PATH, Blocks.DIRT_PATH, stone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_MUD, Blocks.MUD, stone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_SNOW, Blocks.SNOW_BLOCK, stone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, stone)
-        gen.rotatableCubeAllWithOverlay(DnDBlocks.ROCKY_SAND, Blocks.SAND, stone)
-        gen.rotatableCubeAllWithOverlay(DnDBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, stone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
+        gen.grassWithOverlay(DnDOverlayBlocks.ROCKY_GRASS, Blocks.GRASS_BLOCK, stone)
+        gen.cubeSnowableColumnWithOverlay(DnDOverlayBlocks.ROCKY_PODZOL, Blocks.PODZOL, stone)
+        gen.cubeSnowableColumnWithOverlay(DnDOverlayBlocks.ROCKY_MYCELIUM, Blocks.MYCELIUM, stone)
+        gen.cube15WithOverlay(DnDOverlayBlocks.ROCKY_DIRT_PATH, Blocks.DIRT_PATH, stone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.ROCKY_DIRT, Blocks.DIRT, stone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.ROCKY_COARSE_DIRT, Blocks.COARSE_DIRT, stone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.ROCKY_MUD, Blocks.MUD, stone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.ROCKY_SNOW, Blocks.SNOW_BLOCK, stone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.ROCKY_GRAVEL, Blocks.GRAVEL, stone)
+        gen.rotatableCubeAllWithOverlay(DnDOverlayBlocks.ROCKY_SAND, Blocks.SAND, stone)
+        gen.rotatableCubeAllWithOverlay(DnDOverlayBlocks.ROCKY_RED_SAND, Blocks.RED_SAND, stone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.ROCKY_SOUL_SAND, Blocks.SOUL_SAND, stone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.ROCKY_SOUL_SOIL, Blocks.SOUL_SOIL, stone)
 
-        gen.grassWithOverlay(DnDBlocks.SLATED_GRASS, Blocks.GRASS_BLOCK, deepslate)
-        gen.cubeSnowableColumnWithOverlay(DnDBlocks.SLATED_PODZOL, Blocks.PODZOL, deepslate)
-        gen.cubeSnowableColumnWithOverlay(DnDBlocks.SLATED_MYCELIUM, Blocks.MYCELIUM, deepslate)
-        gen.cube15WithOverlay(DnDBlocks.SLATED_DIRT_PATH, Blocks.DIRT_PATH, deepslate)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_DIRT, Blocks.DIRT, deepslate)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, deepslate)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_MUD, Blocks.MUD, deepslate)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_SNOW, Blocks.SNOW_BLOCK, deepslate)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_GRAVEL, Blocks.GRAVEL, deepslate)
-        gen.rotatableCubeAllWithOverlay(DnDBlocks.SLATED_SAND, Blocks.SAND, deepslate)
-        gen.rotatableCubeAllWithOverlay(DnDBlocks.SLATED_RED_SAND, Blocks.RED_SAND, deepslate)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, deepslate)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, deepslate)
+        gen.grassWithOverlay(DnDOverlayBlocks.SLATED_GRASS, Blocks.GRASS_BLOCK, deepslate)
+        gen.cubeSnowableColumnWithOverlay(DnDOverlayBlocks.SLATED_PODZOL, Blocks.PODZOL, deepslate)
+        gen.cubeSnowableColumnWithOverlay(DnDOverlayBlocks.SLATED_MYCELIUM, Blocks.MYCELIUM, deepslate)
+        gen.cube15WithOverlay(DnDOverlayBlocks.SLATED_DIRT_PATH, Blocks.DIRT_PATH, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.SLATED_DIRT, Blocks.DIRT, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.SLATED_COARSE_DIRT, Blocks.COARSE_DIRT, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.SLATED_MUD, Blocks.MUD, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.SLATED_SNOW, Blocks.SNOW_BLOCK, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.SLATED_GRAVEL, Blocks.GRAVEL, deepslate)
+        gen.rotatableCubeAllWithOverlay(DnDOverlayBlocks.SLATED_SAND, Blocks.SAND, deepslate)
+        gen.rotatableCubeAllWithOverlay(DnDOverlayBlocks.SLATED_RED_SAND, Blocks.RED_SAND, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.SLATED_SOUL_SAND, Blocks.SOUL_SAND, deepslate)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.SLATED_SOUL_SOIL, Blocks.SOUL_SOIL, deepslate)
 
-        gen.grassWithOverlay(DnDBlocks.BLACKSTONE_GRASS, Blocks.GRASS_BLOCK, blackstone)
-        gen.cubeSnowableColumnWithOverlay(DnDBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, blackstone)
-        gen.cubeSnowableColumnWithOverlay(DnDBlocks.BLACKSTONE_MYCELIUM, Blocks.MYCELIUM, blackstone)
-        gen.cube15WithOverlay(DnDBlocks.BLACKSTONE_DIRT_PATH, Blocks.DIRT_PATH, blackstone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_DIRT, Blocks.DIRT, blackstone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, blackstone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_MUD, Blocks.MUD, blackstone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_SNOW, Blocks.SNOW_BLOCK, blackstone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, blackstone)
-        gen.rotatableCubeAllWithOverlay(DnDBlocks.BLACKSTONE_SAND, Blocks.SAND, blackstone)
-        gen.rotatableCubeAllWithOverlay(DnDBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, blackstone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, blackstone)
-        gen.cubeAllWithTintedOverlay(DnDBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, blackstone)
+        gen.grassWithOverlay(DnDOverlayBlocks.BLACKSTONE_GRASS, Blocks.GRASS_BLOCK, blackstone)
+        gen.cubeSnowableColumnWithOverlay(DnDOverlayBlocks.BLACKSTONE_PODZOL, Blocks.PODZOL, blackstone)
+        gen.cubeSnowableColumnWithOverlay(DnDOverlayBlocks.BLACKSTONE_MYCELIUM, Blocks.MYCELIUM, blackstone)
+        gen.cube15WithOverlay(DnDOverlayBlocks.BLACKSTONE_DIRT_PATH, Blocks.DIRT_PATH, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.BLACKSTONE_DIRT, Blocks.DIRT, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.BLACKSTONE_COARSE_DIRT, Blocks.COARSE_DIRT, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.BLACKSTONE_MUD, Blocks.MUD, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.BLACKSTONE_SNOW, Blocks.SNOW_BLOCK, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.BLACKSTONE_GRAVEL, Blocks.GRAVEL, blackstone)
+        gen.rotatableCubeAllWithOverlay(DnDOverlayBlocks.BLACKSTONE_SAND, Blocks.SAND, blackstone)
+        gen.rotatableCubeAllWithOverlay(DnDOverlayBlocks.BLACKSTONE_RED_SAND, Blocks.RED_SAND, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.BLACKSTONE_SOUL_SAND, Blocks.SOUL_SAND, blackstone)
+        gen.cubeAllWithTintedOverlay(DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL, Blocks.SOUL_SOIL, blackstone)
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),

@@ -30,6 +30,7 @@ import net.minecraft.world.event.GameEvent
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 
 class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Waterloggable, Fertilizable {
 
@@ -47,7 +48,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
     }
 
     override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean =
-        context.stack.isOf(DnDBlocks.MOONBERRY_VINE.asItem())
+        context.stack.isOf(DnDFloraBlocks.MOONBERRY_VINE.asItem())
 
     override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState): Boolean = state.get(BERRIES) < 2
 

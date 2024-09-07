@@ -1,16 +1,14 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import org.teamvoided.dusk_autumn.util.DnDItemLists
 import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemGroups
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusk_autumn.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -86,7 +84,7 @@ object DnDItemGroups {
 //    )
 //    val OVERLAY_BLOCKS_TAB: ItemGroup = register("overlay_blocks",
 //        FabricItemGroup.builder()
-//            .icon { ItemStack(DnDBlocks.ROCKY_GRASS.asItem()) }
+//            .icon { ItemStack(DnDOverlayBlocks.ROCKY_GRASS.asItem()) }
 //            .name(Text.translatable("itemGroup.dusk_autumn.overlay_blocks"))
 //            .entries { _, entries ->
 //                entries.addLists(
@@ -96,7 +94,7 @@ object DnDItemGroups {
 //    )
     val DUSKS_AND_DUNGEONS_EXCEPT_DEBUG: ItemGroup = register("dnd_everything",
         FabricItemGroup.builder()
-            .icon { ItemStack(DnDBlocks.STONE_PILLAR.asItem()) }
+            .icon { ItemStack(DnDStoneBlocks.STONE_PILLAR.asItem()) }
             .name(Text.translatable("itemGroup.dusk_autumn.everything"))
             .entries { _, entries ->
                 entries.addLists(DnDItems.ITEMS)

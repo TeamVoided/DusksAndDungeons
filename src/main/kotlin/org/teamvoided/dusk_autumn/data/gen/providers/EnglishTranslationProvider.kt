@@ -12,13 +12,14 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItemGroups.DUSKS_AND_DUNGEONS_EXCEPT_DEBUG
 import org.teamvoided.dusk_autumn.init.DnDItemGroups.getKey
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
 class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricLanguageProvider(o, r) {
     val blocks = listOf(
-        DnDBlocks.GOLDEN_BEETROOTS
+        DnDFloraBlocks.GOLDEN_BEETROOTS
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {

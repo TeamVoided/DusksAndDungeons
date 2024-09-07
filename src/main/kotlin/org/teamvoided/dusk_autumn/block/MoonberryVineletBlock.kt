@@ -15,6 +15,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 
 class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
     override fun getCodec(): MapCodec<MoonberryVineletBlock> = CODEC
@@ -32,7 +33,7 @@ class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
     override fun getSeedsItem(): ItemConvertible = DnDItems.MOONBERRY_VINELET
 
     override fun withAge(age: Int): BlockState {
-        return if (age == MAX_AGE) DnDBlocks.MOONBERRY_VINE.defaultState
+        return if (age == MAX_AGE) DnDFloraBlocks.MOONBERRY_VINE.defaultState
             .with(AbstractLichenBlock.getProperty(Direction.DOWN), true)
             .with(MoonberryVineBlock.BERRIES, 1)
         else super.withAge(age)

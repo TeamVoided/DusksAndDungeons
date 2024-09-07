@@ -10,6 +10,8 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.item.ChillChargeItem
 import org.teamvoided.dusk_autumn.item.DnDFoodComponents
 import org.teamvoided.dusk_autumn.item.HeadDecorationItem
@@ -19,34 +21,34 @@ import org.teamvoided.dusk_autumn.item.HeadDecorationItem
 object DnDItems {
     val ITEMS = mutableListOf<Item>()
 
-    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDBlocks.CASCADE_DOOR, Item.Settings()))
-    val BLUE_DOOR = register("blue_door", TallBlockItem(DnDBlocks.BLUE_DOOR, Item.Settings()))
+    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDWoodBlocks.CASCADE_DOOR, Item.Settings()))
+    val BLUE_DOOR = register("blue_door", TallBlockItem(DnDWoodBlocks.BLUE_DOOR, Item.Settings()))
     val CASCADE_SIGN = register(
         "cascade_sign",
-        SignItem(Item.Settings().maxCount(16), DnDBlocks.CASCADE_SIGN, DnDBlocks.CASCADE_WALL_SIGN)
+        SignItem(Item.Settings().maxCount(16), DnDWoodBlocks.CASCADE_SIGN, DnDWoodBlocks.CASCADE_WALL_SIGN)
     )
     val CASCADE_HANGING_SIGN = register(
         "cascade_hanging_sign",
         HangingSignItem(
-            DnDBlocks.CASCADE_HANGING_SIGN, DnDBlocks.CASCADE_WALL_HANGING_SIGN,
+            DnDWoodBlocks.CASCADE_HANGING_SIGN, DnDWoodBlocks.CASCADE_WALL_HANGING_SIGN,
             Item.Settings().maxCount(16)
         )
     )
-    val GALLERY_MAPLE_DOOR = register("gallery_maple_door", TallBlockItem(DnDBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
+    val GALLERY_MAPLE_DOOR = register("gallery_maple_door", TallBlockItem(DnDWoodBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
     val GALLERY_MAPLE_SIGN = register(
         "gallery_maple_sign",
-        SignItem(Item.Settings().maxCount(16), DnDBlocks.GALLERY_MAPLE_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_SIGN)
+        SignItem(Item.Settings().maxCount(16), DnDWoodBlocks.GALLERY_MAPLE_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_SIGN)
     )
     val GALLERY_MAPLE_HANGING_SIGN = register(
         "gallery_maple_hanging_sign",
         HangingSignItem(
-            DnDBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN,
+            DnDWoodBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN,
             Item.Settings().maxCount(16)
         )
     )
-    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDBlocks.BONEWOOD_DOOR, Item.Settings()))
+    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDWoodBlocks.BONEWOOD_DOOR, Item.Settings()))
     val WITHERING_BONEWOOD_DOOR =
-        register("withering_bonewood_door", TallBlockItem(DnDBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))
+        register("withering_bonewood_door", TallBlockItem(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))
 
     val FARMERS_HAT = register(
         "farmers_hat",
@@ -54,15 +56,15 @@ object DnDItems {
             Item.Settings().maxCount(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
-    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, Item.Settings()))
+    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
         AliasedBlockItem(
-            DnDBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT)
+            DnDFloraBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT)
         )
     )
     val MOONBERRY_VINELET =
-        register("moonberry_vinelet", AliasedBlockItem(DnDBlocks.MOONBERRY_VINELET, Item.Settings()))
+        register("moonberry_vinelet", AliasedBlockItem(DnDFloraBlocks.MOONBERRY_VINELET, Item.Settings()))
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DnDFoodComponents.MOONBERRIES)))
 
     @JvmField

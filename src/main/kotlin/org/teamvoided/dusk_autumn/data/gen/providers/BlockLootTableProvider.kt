@@ -28,6 +28,8 @@ import org.teamvoided.dusk_autumn.block.LogPileBlock
 import org.teamvoided.dusk_autumn.block.TallCrystalBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.util.DnDBlockLists
 import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigCandles
 import org.teamvoided.dusk_autumn.util.DnDBlockLists.bigSoulCandles
@@ -39,16 +41,16 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     FabricBlockLootTableProvider(o, r) {
     private val excludeList =
         listOf(
-            DnDBlocks.CASCADE_LEAVES,
-            DnDBlocks.GOLDEN_BIRCH_LEAVES,
+            DnDWoodBlocks.CASCADE_LEAVES,
+            DnDWoodBlocks.GOLDEN_BIRCH_LEAVES,
             DnDBlocks.ICE_STAIRS,
             DnDBlocks.ICE_SLAB,
             DnDBlocks.ICE_WALL,
 //            DnDBlocks.TALL_REDSTONE_CRYSTAL,
-            DnDBlocks.WARPED_WART,
-            DnDBlocks.GOLDEN_BEETROOTS,
-            DnDBlocks.WILD_WHEAT,
-            DnDBlocks.MOONBERRY_VINE
+            DnDFloraBlocks.WARPED_WART,
+            DnDFloraBlocks.GOLDEN_BEETROOTS,
+            DnDFloraBlocks.WILD_WHEAT,
+            DnDFloraBlocks.MOONBERRY_VINE
         ) +
                 bigCandles.map { it.second } +
                 soulCandles.map { it.second } +
@@ -80,25 +82,25 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         leafPiles.forEachIndexed { idx, pile ->
             add(pile) { leafPile(it, DnDBlockLists.leaves[idx]) }
         }
-        add(DnDBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDBlocks.CASCADE_SAPLING) }
-        add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
-        add(DnDBlocks.CASCADE_LEAVES) {
-            oakLeavesDrops(it, DnDBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES)
+        add(DnDWoodBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDWoodBlocks.CASCADE_SAPLING) }
+        add(DnDWoodBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDWoodBlocks.GOLDEN_BIRCH_SAPLING) }
+        add(DnDWoodBlocks.CASCADE_LEAVES) {
+            oakLeavesDrops(it, DnDWoodBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES)
         }
-        add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
-            leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
+        add(DnDWoodBlocks.GOLDEN_BIRCH_LEAVES) {
+            leavesDrops(it, DnDWoodBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
-        twoTallDrop(DnDBlocks.SPIDERLILY)
+        twoTallDrop(DnDFloraBlocks.SPIDERLILY)
         addDropWithSilkTouch(DnDBlocks.ICE_STAIRS)
         addIceSlab(DnDBlocks.ICE_SLAB)
         addDropWithSilkTouch(DnDBlocks.ICE_WALL)
         add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
-        add(DnDBlocks.WARPED_WART) { block: Block ->
+        add(DnDFloraBlocks.WARPED_WART) { block: Block ->
             LootTable.builder().pool(
                 applyExplosionDecay(
                     block,
                     LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
-                        ItemEntry.builder(DnDBlocks.WARPED_WART)
+                        ItemEntry.builder(DnDFloraBlocks.WARPED_WART)
                             .apply(
                                 SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))
                                     .conditionally(
@@ -120,9 +122,9 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             )
         }
         add(
-            DnDBlocks.GOLDEN_BEETROOTS,
+            DnDFloraBlocks.GOLDEN_BEETROOTS,
             this.cropDrops(
-                DnDBlocks.GOLDEN_BEETROOTS,
+                DnDFloraBlocks.GOLDEN_BEETROOTS,
                 DnDItems.GOLDEN_BEETROOT,
                 DnDItems.GOLDEN_BEETROOT,
                 BlockStatePropertyLootCondition.builder(Blocks.BEETROOTS).properties(
@@ -130,7 +132,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 )
             )
         )
-        twoTallDrop(DnDBlocks.WILD_WHEAT)
+        twoTallDrop(DnDFloraBlocks.WILD_WHEAT)
     }
 
     private fun constantLootNumber(i: Number): ConstantLootNumberProvider =

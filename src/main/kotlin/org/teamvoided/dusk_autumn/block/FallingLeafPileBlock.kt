@@ -8,7 +8,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
 
-class FallingLeafPileBlock(settings: Settings, val particle: DefaultParticleType) : LeafPileBlock(settings) {
+class FallingLeafPileBlock(val particle: DefaultParticleType, settings: Settings) : LeafPileBlock(settings) {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
         super.randomDisplayTick(state, world, pos, random)
         if (random.nextInt(10) == 0) {

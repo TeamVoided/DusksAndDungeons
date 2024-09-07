@@ -10,19 +10,21 @@ import net.minecraft.recipe.RecipeCategory
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object AutumnRecipes {
     fun generateAutumnRecipes(e: RecipeExporter) {
-        e.createPiles(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK)
-        e.createPiles(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK)
+        e.createPiles(DnDWoodBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK)
+        e.createPiles(DnDWoodBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK)
         (DnDBlockLists.logPiles).forEachIndexed { idx, pile ->
             e.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
         (DnDBlockLists.leafPiles).forEachIndexed { idx, pile ->
             e.createPiles(pile, DnDBlockLists.leaves[idx])
         }
-        FabricRecipeProvider.offerShapelessRecipe(e, Items.BLUE_DYE, DnDBlocks.BLUE_PETALS, "blue_dye")
+        FabricRecipeProvider.offerShapelessRecipe(e, Items.BLUE_DYE, DnDFloraBlocks.BLUE_PETALS, "blue_dye")
         ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DnDItems.FARMERS_HAT, 1)
             .ingredient('#', Ingredient.ofItems(Items.WHEAT))
             .ingredient('@', Ingredient.ofItems(Items.STRING))

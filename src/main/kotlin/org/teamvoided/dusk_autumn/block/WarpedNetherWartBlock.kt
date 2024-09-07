@@ -10,6 +10,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldView
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 
 class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
@@ -26,7 +27,7 @@ class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
     }
 
     override fun getPickStack(world: WorldView, pos: BlockPos, state: BlockState): ItemStack {
-        return ItemStack(DnDBlocks.WARPED_WART)
+        return ItemStack(DnDFloraBlocks.WARPED_WART)
     }
 
     companion object {

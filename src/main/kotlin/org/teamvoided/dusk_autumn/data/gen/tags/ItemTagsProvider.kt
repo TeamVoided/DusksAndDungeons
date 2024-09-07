@@ -13,6 +13,8 @@ import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import java.util.concurrent.CompletableFuture
 
 class ItemTagsProvider(
@@ -40,7 +42,7 @@ class ItemTagsProvider(
         copy(DnDBlockTags.CRACKED_NETHER_BRICKS, DnDItemTags.CRACKED_NETHER_BRICKS)
         copy(DnDBlockTags.POLISHED_NETHER_BRICKS, DnDItemTags.POLISHED_NETHER_BRICKS)
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS)
-            .add(DnDBlocks.WARPED_WART.asItem())
+            .add(DnDFloraBlocks.WARPED_WART.asItem())
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
             .addOptional(id("supplementaries","ash_pile"))
             .add(Items.BASALT)
@@ -66,8 +68,8 @@ class ItemTagsProvider(
 
         copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS)
         getOrCreateTagBuilder(ItemTags.LEAVES)
-            .add(DnDBlocks.CASCADE_LEAVES.asItem())
-            .add(DnDBlocks.GOLDEN_BIRCH_LEAVES.asItem())
+            .add(DnDWoodBlocks.CASCADE_LEAVES.asItem())
+            .add(DnDWoodBlocks.GOLDEN_BIRCH_LEAVES.asItem())
         copy(BlockTags.FLOWERS, ItemTags.FLOWERS)
 
         copy(BlockTags.STAIRS, ItemTags.STAIRS)

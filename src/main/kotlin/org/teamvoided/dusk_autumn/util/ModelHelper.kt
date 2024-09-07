@@ -20,6 +20,7 @@ import org.teamvoided.dusk_autumn.DuskAutumns.mc
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
 import java.util.*
 
 val ALL_KRY: TextureKey = TextureKey.of("all")
@@ -805,12 +806,12 @@ fun bigCandleCakeModel(): Model {
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {
     val texture1 = Texture()
         .put(TextureKey.SIDE, Texture.getId(block))
-        .put(TextureKey.TOP, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(TextureKey.TOP, Texture.getSubId(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR, "_top"))
         .put(TextureKey.BOTTOM, Texture.getSubId(mix, "_top"))
     val texture2 = Texture()
         .put(TextureKey.SIDE, Texture.getSubId(block, "_inverse"))
         .put(TextureKey.TOP, Texture.getSubId(mix, "_top"))
-        .put(TextureKey.BOTTOM, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(TextureKey.BOTTOM, Texture.getSubId(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR, "_top"))
     val model1 = Models.CUBE_BOTTOM_TOP.upload(block, texture1, this.modelCollector)
     val model2 = Models.CUBE_BOTTOM_TOP.upload(block, "_inverse", texture2, this.modelCollector)
     this.blockStateCollector.accept(

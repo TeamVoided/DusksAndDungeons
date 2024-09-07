@@ -5,7 +5,10 @@ import net.minecraft.registry.Registry
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.FeatureConfig
 import org.teamvoided.dusk_autumn.DuskAutumns
-import org.teamvoided.dusk_autumn.world.gen.configured_feature.*
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.BoulderFeature
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.FairyRingFeature
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.FallenTreeFeature
+import org.teamvoided.dusk_autumn.world.gen.configured_feature.FarmlandFeature
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.BoulderConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FairyRingConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FallenTreeConfig

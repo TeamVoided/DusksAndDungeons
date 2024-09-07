@@ -10,6 +10,7 @@ import net.minecraft.structure.rule.AlwaysTrueRuleTest
 import net.minecraft.structure.rule.RandomBlockMatchRuleTest
 import org.teamvoided.dusk_autumn.data.structure.DnDStructureProcessorLists
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 
 
 @Suppress("MagicNumber")
@@ -39,7 +40,7 @@ object StructureProcessorCreator {
         StructureProcessorRule(
             RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
             AlwaysTrueRuleTest.INSTANCE,
-            DnDBlocks.POTTED_CASCADE_SAPLING.defaultState
+            DnDWoodBlocks.POTTED_CASCADE_SAPLING.defaultState
         ),
         StructureProcessorRule(
             RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),

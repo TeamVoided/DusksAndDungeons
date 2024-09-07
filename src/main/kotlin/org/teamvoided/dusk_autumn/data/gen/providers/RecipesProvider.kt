@@ -16,6 +16,7 @@ import org.teamvoided.dusk_autumn.data.gen.providers.recipes.NetherRecipes
 import org.teamvoided.dusk_autumn.data.gen.providers.recipes.OtherStoneRecipes
 import org.teamvoided.dusk_autumn.data.gen.providers.recipes.WoodRecipes
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.util.*
 import java.util.concurrent.CompletableFuture
 
@@ -29,14 +30,14 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         NetherRecipes.generateNetherRecipes(e)
         AutumnRecipes.generateAutumnRecipes(e)
 
-        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.ROOT_BLOCK, 1)
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDFloraBlocks.ROOT_BLOCK, 1)
             .ingredient('#', Blocks.HANGING_ROOTS)
             .pattern("##")
             .pattern("##")
             .criterion(Blocks.HANGING_ROOTS).offerTo(e)
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Blocks.HANGING_ROOTS, 4)
-            .ingredient(DnDBlocks.ROOT_BLOCK, 1)
-            .criterion(DnDBlocks.ROOT_BLOCK).offerTo(e)
+            .ingredient(DnDFloraBlocks.ROOT_BLOCK, 1)
+            .criterion(DnDFloraBlocks.ROOT_BLOCK).offerTo(e)
         e.cobbled()
     }
 

@@ -36,9 +36,11 @@ import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusk_autumn.data.worldgen.DnDPlacedFeature
-import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDOverlayBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
-import org.teamvoided.dusk_autumn.world.gen.configured_feature.BoulderFeature
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.BoulderConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FairyRingConfig
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.config.FallenTreeConfig
@@ -63,9 +65,9 @@ object ConfiguredFeatureCreator {
         val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
 
         val cascadeTree = TreeFeatureConfig.Builder(
-            BlockStateProvider.of(DnDBlocks.CASCADE_LOG),
+            BlockStateProvider.of(DnDWoodBlocks.CASCADE_LOG),
             ThreeWideTrunkPlacer(9, 2, 1),
-            BlockStateProvider.of(DnDBlocks.CASCADE_LEAVES),
+            BlockStateProvider.of(DnDWoodBlocks.CASCADE_LEAVES),
             CascadeFoliagePlacer(
                 ConstantIntProvider.create(3),
                 ConstantIntProvider.create(0),
@@ -75,7 +77,7 @@ object ConfiguredFeatureCreator {
             Optional.of(
                 CascadeRootPlacer(
                     BiasedToBottomIntProvider.create(0, 2),
-                    BlockStateProvider.of(DnDBlocks.CASCADE_LOG),
+                    BlockStateProvider.of(DnDWoodBlocks.CASCADE_LOG),
                     Optional.empty(),
                     CascadeRootConfig(
                         blockTags.getTagOrThrow(BlockTags.REPLACEABLE_BY_TREES),
@@ -87,7 +89,7 @@ object ConfiguredFeatureCreator {
             ),
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
-        val goldenBirchTree = builder(Blocks.BIRCH_LOG, DnDBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
+        val goldenBirchTree = builder(Blocks.BIRCH_LOG, DnDWoodBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
         val birchDecorator1 = AttachedToTrunkTreeDecorator(
             0.14f,
             1,
@@ -119,7 +121,7 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
             DnDFeatures.BOULDER,
             BoulderConfig(
-                BlockStateProvider.of(DnDBlocks.OVERGROWN_COBBLESTONE.defaultState),
+                BlockStateProvider.of(DnDStoneBlocks.OVERGROWN_COBBLESTONE.defaultState),
                 UniformIntProvider.create(2, 5),
                 UniformIntProvider.create(1, 4),
                 UniformIntProvider.create(1, 2),
@@ -130,7 +132,7 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.FAIRY_RING_RED,
             DnDFeatures.FAIRY_RING,
             FairyRingConfig(
-                BlockStateProvider.of(DnDBlocks.RED_PETALS.defaultState),
+                BlockStateProvider.of(DnDFloraBlocks.RED_PETALS.defaultState),
                 DnDBlockTags.FALLEN_TREE_REPLACEABLE,
                 3,
                 UniformIntProvider.create(1, 3)
@@ -140,7 +142,7 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.FAIRY_RING_CRIMSON,
             DnDFeatures.FAIRY_RING,
             FairyRingConfig(
-                BlockStateProvider.of(DnDBlocks.CRIMSON_VIVIONS.defaultState),
+                BlockStateProvider.of(DnDFloraBlocks.CRIMSON_VIVIONS.defaultState),
                 DnDBlockTags.FALLEN_TREE_REPLACEABLE,
                 5,
                 UniformIntProvider.create(1, 3)
@@ -150,7 +152,7 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.FAIRY_RING_WARPED,
             DnDFeatures.FAIRY_RING,
             FairyRingConfig(
-                BlockStateProvider.of(DnDBlocks.WARPED_VIVIONS.defaultState),
+                BlockStateProvider.of(DnDFloraBlocks.WARPED_VIVIONS.defaultState),
                 DnDBlockTags.FALLEN_TREE_REPLACEABLE,
                 5,
                 UniformIntProvider.create(1, 3)
@@ -159,12 +161,12 @@ object ConfiguredFeatureCreator {
 
         c.registerConfiguredFeature(
             DnDConfiguredFeature.CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
-                ImmutableList.of(leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags))
+                ImmutableList.of(leafPiles(DnDWoodBlocks.CASCADE_LEAF_PILE, blockTags))
             ).build()
         )
         c.registerConfiguredFeature(
             DnDConfiguredFeature.CASCADE_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
-                ImmutableList.of(BeehiveBigTreeDecorator(0.1F), leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags))
+                ImmutableList.of(BeehiveBigTreeDecorator(0.1F), leafPiles(DnDWoodBlocks.CASCADE_LEAF_PILE, blockTags))
             ).build()
         )
         c.registerConfiguredFeature(
@@ -172,7 +174,7 @@ object ConfiguredFeatureCreator {
                 ImmutableList.of(
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -182,7 +184,7 @@ object ConfiguredFeatureCreator {
                     BeehiveBigTreeDecorator(0.1F),
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -195,7 +197,7 @@ object ConfiguredFeatureCreator {
                         2, 5,
                         blockTags.getTagOrThrow(BlockTags.DIRT)
                     ),
-                    leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags)
+                    leafPiles(DnDWoodBlocks.CASCADE_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -209,7 +211,7 @@ object ConfiguredFeatureCreator {
                     ),
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -228,7 +230,7 @@ object ConfiguredFeatureCreator {
                             BlockStateProvider.of(Blocks.PODZOL), 2, 5,
                             blockTags.getTagOrThrow(BlockTags.DIRT)
                         ),
-                        leafPiles(DnDBlocks.DARK_OAK_LEAF_PILE, blockTags)
+                        leafPiles(DnDWoodBlocks.DARK_OAK_LEAF_PILE, blockTags)
                     )
                 ).build()
         )
@@ -241,7 +243,7 @@ object ConfiguredFeatureCreator {
                 TwoLayersFeatureSize(1, 0, 1)
             )
                 .forceDirt().ignoreVines().decorators(
-                    ImmutableList.of<TreeDecorator>(leafPiles(DnDBlocks.ACACIA_LEAF_PILE, blockTags))
+                    ImmutableList.of<TreeDecorator>(leafPiles(DnDWoodBlocks.ACACIA_LEAF_PILE, blockTags))
                 ).build()
         )
         c.registerConfiguredFeature(
@@ -409,7 +411,7 @@ object ConfiguredFeatureCreator {
                             DataPool.builder<BlockState>()
                                 .addWeighted(Blocks.CORNFLOWER.defaultState, 5)
                                 .addWeighted(Blocks.POPPY.defaultState, 5)
-                                .addWeighted(DnDBlocks.CASCADE_SAPLING.defaultState, 1)
+                                .addWeighted(DnDWoodBlocks.CASCADE_SAPLING.defaultState, 1)
                         )
                     )
                 )
@@ -427,7 +429,7 @@ object ConfiguredFeatureCreator {
                 96, 6, 2,
                 PlacedFeatureUtil.onlyWhenEmpty(
                     Feature.SIMPLE_BLOCK,
-                    SimpleBlockFeatureConfig(WeightedBlockStateProvider(petalBuilder(DnDBlocks.BLUE_PETALS)))
+                    SimpleBlockFeatureConfig(WeightedBlockStateProvider(petalBuilder(DnDFloraBlocks.BLUE_PETALS)))
                 )
             )
         )
@@ -505,7 +507,7 @@ object ConfiguredFeatureCreator {
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockFeatureConfig(
                     BlockStateProvider.of(
-                        DnDBlocks.WILD_WHEAT.defaultState
+                        DnDFloraBlocks.WILD_WHEAT.defaultState
                     )
                 ), ImmutableList.of(Blocks.PODZOL, Blocks.GRASS_BLOCK, Blocks.FARMLAND), 32
             )
@@ -568,8 +570,8 @@ object ConfiguredFeatureCreator {
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
-                            .addWeighted(DnDBlocks.GOLDEN_BEETROOTS.defaultState, 1)
-                            .addWeighted(DnDBlocks.GOLDEN_BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 1)
+                            .addWeighted(DnDFloraBlocks.GOLDEN_BEETROOTS.defaultState, 1)
+                            .addWeighted(DnDFloraBlocks.GOLDEN_BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 1)
                             .addWeighted(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 3), 1)
                     )
                 )
@@ -590,7 +592,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.OAK_FALLEN_TREE,
             Blocks.OAK_LOG,
-            DnDBlocks.HOLLOW_OAK_LOG,
+            DnDWoodBlocks.HOLLOW_OAK_LOG,
             5,
             3,
             mushrooms,
@@ -600,7 +602,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.SPRUCE_FALLEN_TREE,
             Blocks.SPRUCE_LOG,
-            DnDBlocks.HOLLOW_SPRUCE_LOG,
+            DnDWoodBlocks.HOLLOW_SPRUCE_LOG,
             5,
             5,
             mushrooms,
@@ -612,7 +614,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.BIRCH_FALLEN_TREE,
             Blocks.BIRCH_LOG,
-            DnDBlocks.HOLLOW_BIRCH_LOG,
+            DnDWoodBlocks.HOLLOW_BIRCH_LOG,
             5,
             null,
             mushrooms
@@ -621,7 +623,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.BIRCH_TALL_FALLEN_TREE,
             Blocks.BIRCH_LOG,
-            DnDBlocks.HOLLOW_BIRCH_LOG,
+            DnDWoodBlocks.HOLLOW_BIRCH_LOG,
             5,
             null,
             mushrooms,
@@ -634,7 +636,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.JUNGLE_FALLEN_TREE,
             Blocks.JUNGLE_LOG,
-            DnDBlocks.HOLLOW_JUNGLE_LOG,
+            DnDWoodBlocks.HOLLOW_JUNGLE_LOG,
             5,
             0,
             mushrooms,
@@ -647,7 +649,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.ACACIA_FALLEN_TREE,
             Blocks.ACACIA_LOG,
-            DnDBlocks.HOLLOW_ACACIA_LOG,
+            DnDWoodBlocks.HOLLOW_ACACIA_LOG,
             5,
             5,
             mushrooms,
@@ -657,7 +659,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.DARK_OAK_FALLEN_TREE,
             Blocks.DARK_OAK_LOG,
-            DnDBlocks.HOLLOW_DARK_OAK_LOG,
+            DnDWoodBlocks.HOLLOW_DARK_OAK_LOG,
             5,
             3,
             mushrooms,
@@ -668,13 +670,13 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.CHERRY_FALLEN_TREE,
             Blocks.CHERRY_LOG,
-            DnDBlocks.HOLLOW_CHERRY_LOG
+            DnDWoodBlocks.HOLLOW_CHERRY_LOG
         )
         createFallenTree(
             c,
             DnDConfiguredFeature.CASCADE_FALLEN_TREE,
-            DnDBlocks.CASCADE_LOG,
-            DnDBlocks.HOLLOW_CASCADE_LOG,
+            DnDWoodBlocks.CASCADE_LOG,
+            DnDWoodBlocks.HOLLOW_CASCADE_LOG,
             5,
             3,
             mushrooms,
@@ -685,7 +687,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.CRIMSON_FALLEN_STEM,
             Blocks.CRIMSON_STEM,
-            DnDBlocks.HOLLOW_CRIMSON_STEM,
+            DnDWoodBlocks.HOLLOW_CRIMSON_STEM,
             16,
             null,
             mushrooms,
@@ -698,7 +700,7 @@ object ConfiguredFeatureCreator {
             c,
             DnDConfiguredFeature.WARPED_FALLEN_STEM,
             Blocks.WARPED_STEM,
-            DnDBlocks.HOLLOW_WARPED_STEM,
+            DnDWoodBlocks.HOLLOW_WARPED_STEM,
             16,
             null,
             mushrooms,
@@ -752,27 +754,27 @@ object ConfiguredFeatureCreator {
                 listOf<OreFeatureConfig.Target>(
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES),
-                        DnDBlocks.ROCKY_DIRT.defaultState
+                        DnDOverlayBlocks.ROCKY_DIRT.defaultState
                     ),
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.DIRT),
-                        DnDBlocks.ROCKY_DIRT.defaultState
+                        DnDOverlayBlocks.ROCKY_DIRT.defaultState
                     ),
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.GRASS_BLOCK),
-                        DnDBlocks.ROCKY_GRASS.defaultState
+                        DnDOverlayBlocks.ROCKY_GRASS.defaultState
                     ),
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.PODZOL),
-                        DnDBlocks.ROCKY_PODZOL.defaultState
+                        DnDOverlayBlocks.ROCKY_PODZOL.defaultState
                     ),
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.GRAVEL),
-                        DnDBlocks.ROCKY_GRAVEL.defaultState
+                        DnDOverlayBlocks.ROCKY_GRAVEL.defaultState
                     ),
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.DIRT_PATH),
-                        DnDBlocks.ROCKY_DIRT_PATH.defaultState
+                        DnDOverlayBlocks.ROCKY_DIRT_PATH.defaultState
                     )
                 ), 33
             )
@@ -784,11 +786,11 @@ object ConfiguredFeatureCreator {
                 listOf<OreFeatureConfig.Target>(
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-                        DnDBlocks.SLATED_DIRT.defaultState
+                        DnDOverlayBlocks.SLATED_DIRT.defaultState
                     ),
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.GRAVEL),
-                        DnDBlocks.SLATED_GRAVEL.defaultState
+                        DnDOverlayBlocks.SLATED_GRAVEL.defaultState
                     ),
                 ), 33
             )
@@ -800,15 +802,15 @@ object ConfiguredFeatureCreator {
                 listOf<OreFeatureConfig.Target>(
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.NETHERRACK),
-                        DnDBlocks.BLACKSTONE_SOUL_SAND.defaultState
+                        DnDOverlayBlocks.BLACKSTONE_SOUL_SAND.defaultState
                     ),
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.SOUL_SAND),
-                        DnDBlocks.BLACKSTONE_SOUL_SAND.defaultState
+                        DnDOverlayBlocks.BLACKSTONE_SOUL_SAND.defaultState
                     ),
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.SOUL_SOIL),
-                        DnDBlocks.BLACKSTONE_SOUL_SOIL.defaultState
+                        DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL.defaultState
                     ),
                 ), 33
             )
