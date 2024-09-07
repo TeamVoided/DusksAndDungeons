@@ -32,6 +32,18 @@ object DnDItems {
             Item.Settings().maxCount(16)
         )
     )
+    val GALLERY_MAPLE_DOOR = register("gallery_maple_door", TallBlockItem(DnDBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
+    val GALLERY_MAPLE_SIGN = register(
+        "gallery_maple_sign",
+        SignItem(Item.Settings().maxCount(16), DnDBlocks.GALLERY_MAPLE_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_SIGN)
+    )
+    val GALLERY_MAPLE_HANGING_SIGN = register(
+        "gallery_maple_hanging_sign",
+        HangingSignItem(
+            DnDBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN,
+            Item.Settings().maxCount(16)
+        )
+    )
     val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDBlocks.BONEWOOD_DOOR, Item.Settings()))
     val WITHERING_BONEWOOD_DOOR =
         register("withering_bonewood_door", TallBlockItem(DnDBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))

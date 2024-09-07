@@ -18,6 +18,7 @@ import net.minecraft.util.math.Direction
 import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.DuskAutumns.mc
 import org.teamvoided.dusk_autumn.block.*
+import org.teamvoided.dusk_autumn.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import java.util.*
 
@@ -469,6 +470,29 @@ fun createWallBlockStateWithOverlay(
         )
     }
     return model
+}
+
+fun BlockStateModelGenerator.registerGalleryRose(block: Block, tintType: TintType) {
+    this.registerItemModel(block, "_top")
+    val top = this.createSubModel(block, "_top", tintType.crossModel, Texture::cross)
+    val middle = this.createSubModel(block, "_middle", tintType.crossModel, Texture::cross)
+    val bottom = this.createSubModel(block, "_bottom", tintType.crossModel, Texture::cross)
+    blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(block).coordinate(
+            BlockStateVariantMap.create(
+                PaintedRoseBlock.SECTION
+            ).register(
+                TripleBlockSection.TOP,
+                BlockStateVariant.create().put(VariantSettings.MODEL, top)
+            ).register(
+                TripleBlockSection.MIDDLE,
+                BlockStateVariant.create().put(VariantSettings.MODEL, middle)
+            ).register(
+                TripleBlockSection.BOTTOM,
+                BlockStateVariant.create().put(VariantSettings.MODEL, bottom)
+            )
+        )
+    )
 }
 
 fun BlockStateModelGenerator.registerTreeMushroom(block: Block, parentModel: String) {

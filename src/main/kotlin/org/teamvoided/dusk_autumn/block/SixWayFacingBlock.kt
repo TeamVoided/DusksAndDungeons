@@ -36,11 +36,7 @@ class SixWayFacingBlock(settings: Settings) : Block(settings) {
     }
 
     companion object {
-        val CODEC: MapCodec<SixWayFacingBlock> = createCodec { settings: Settings ->
-            SixWayFacingBlock(
-                settings
-            )
-        }
+        val CODEC: MapCodec<SixWayFacingBlock> = createCodec(::SixWayFacingBlock)
         val FACING: DirectionProperty = Properties.FACING
     }
 }

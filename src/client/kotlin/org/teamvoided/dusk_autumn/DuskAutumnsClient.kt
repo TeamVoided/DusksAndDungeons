@@ -24,10 +24,7 @@ import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDEntities
 import org.teamvoided.dusk_autumn.init.DnDItems
-import org.teamvoided.dusk_autumn.init.DnDParticles.CASCADE_LEAF_PARTICLE
-import org.teamvoided.dusk_autumn.init.DnDParticles.SMALL_SOUL_FLAME_PARTICLE
-import org.teamvoided.dusk_autumn.init.DnDParticles.SNOWFLAKE
-import org.teamvoided.dusk_autumn.init.DnDParticles.SPIDERLILY
+import org.teamvoided.dusk_autumn.init.DnDParticles
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
 import org.teamvoided.dusk_autumn.particle.SpiderlilyPetalParticle
 import org.teamvoided.dusk_autumn.particle.SnowflakeParticle
@@ -47,10 +44,11 @@ object DuskAutumnsClient {
         DnDEntityModelLayers.init()
         initBlocks()
         initItems()
-        ParticleFactoryRegistry.getInstance().register(CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
-        ParticleFactoryRegistry.getInstance().register(SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
-        ParticleFactoryRegistry.getInstance().register(SPIDERLILY, SpiderlilyPetalParticle::Factory)
-        ParticleFactoryRegistry.getInstance().register(SNOWFLAKE, SnowflakeParticle::Factory)
+        ParticleFactoryRegistry.getInstance().register(DnDParticles.CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
+        ParticleFactoryRegistry.getInstance()
+            .register(DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
+        ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIDERLILY, SpiderlilyPetalParticle::Factory)
+        ParticleFactoryRegistry.getInstance().register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
 
         EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
         EntityRendererRegistry.register(DnDEntities.BIRD_TEST, ::BirdEntityRenderer)

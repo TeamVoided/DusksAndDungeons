@@ -21,15 +21,28 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private val ALL_KRY: TextureKey = TextureKey.of("all")
 
-//    val blockFamily = listOf(
-//    )
+//    var woodStates =
+//        BlockStateModelGenerator.StateFactory { block, identifier, texture, biConsumer ->
+//            println("45642")
+////            val model = Models.CUBE_COLUMN.create(block, texture, biConsumer)
+//            val model1 = TexturedModel.END_FOR_TOP_CUBE_COLUMN.create(block, biConsumer)
+//            val model2 = TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL.create(block, biConsumer)
+//            BlockStateModelGenerator.createAxisRotatedBlockState(block, model1, model2)
+//        }
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
+        gen.stoneStateFactories = mapOf(
+//            DnDBlocks.CASCADE_WOOD to woodStates,
+//            DnDBlocks.GALLERY_MAPLE_WOOD to woodStates
+        )
         gen.sandstoneModels = mapOf(
-//            DuskBlocks.MIXED_NETHER_BRICKS to TexturedModel.SIDE_TOP_BOTTOM_WALL[DuskBlocks.MIXED_NETHER_BRICKS].texture { texture: Texture ->
+//            DnDBlocks.CASCADE_WOOD to TexturedModel.SIDE_END_WALL.get(DnDBlocks.CASCADE_WOOD),
+//            DnDBlocks.GALLERY_MAPLE_WOOD to TexturedModel.SIDE_END_WALL.get(DnDBlocks.GALLERY_MAPLE_WOOD)
+
+//            DnDBlocks.MIXED_NETHER_BRICKS to TexturedModel.SIDE_TOP_BOTTOM_WALL[DnDBlocks.MIXED_NETHER_BRICKS].texture { texture: Texture ->
 //                texture.put(TextureKey.TOP, Texture.getId(Blocks.NETHER_BRICKS))
 //                texture.put(TextureKey.BOTTOM, Texture.getId(Blocks.RED_NETHER_BRICKS))
-//                texture.put(TextureKey.SIDE, Texture.getId(DuskBlocks.MIXED_NETHER_BRICKS))
+//                texture.put(TextureKey.SIDE, Texture.getId(DnDBlocks.MIXED_NETHER_BRICKS))
 //            }
         )
         DnDFamilies.modelsBlockFamilies.forEach {
@@ -40,12 +53,13 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DnDBlocks.POTTED_CASCADE_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
+
         gen.registerLog(DnDBlocks.CASCADE_LOG)
             .log(DnDBlocks.CASCADE_LOG)
             .wood(DnDBlocks.CASCADE_WOOD)
         gen.registerLog(DnDBlocks.STRIPPED_CASCADE_LOG)
             .log(DnDBlocks.STRIPPED_CASCADE_LOG)
-            .wood(DnDBlocks.STRIPPED_CASCADE_WOOD)
+            .log(DnDBlocks.STRIPPED_CASCADE_WOOD)
         gen.registerHangingSign(
             DnDBlocks.STRIPPED_CASCADE_LOG,
             DnDBlocks.CASCADE_HANGING_SIGN,
@@ -58,6 +72,20 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
             BlockStateModelGenerator.TintType.NOT_TINTED
         )
+        gen.registerLog(DnDBlocks.GALLERY_MAPLE_LOG)
+            .log(DnDBlocks.GALLERY_MAPLE_LOG)
+            .wood(DnDBlocks.GALLERY_MAPLE_WOOD)
+        gen.registerLog(DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG)
+            .log(DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG)
+            .wood(DnDBlocks.STRIPPED_GALLERY_MAPLE_WOOD)
+        gen.registerHangingSign(
+            DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG,
+            DnDBlocks.GALLERY_MAPLE_HANGING_SIGN,
+            DnDBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN
+        )
+        gen.registerSingleton(DnDBlocks.GALLERY_MAPLE_LEAVES, TexturedModel.LEAVES)
+        gen.registerGalleryRose(DnDBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
+
         gen.registerSpiderlilly(DnDBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerFlowerbed2(DnDBlocks.WHITE_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.RED_PETALS, false)
@@ -218,6 +246,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.genPsudoFamily(
             DnDBlocks.CASCADE_WOOD_STAIRS, DnDBlocks.CASCADE_WOOD_SLAB, DnDBlocks.CASCADE_WOOD_WALL,
             DnDBlocks.CASCADE_LOG, DnDBlocks.CASCADE_WOOD
+        )
+        gen.genPsudoFamily(
+            DnDBlocks.GALLERY_MAPLE_WOOD_STAIRS, DnDBlocks.GALLERY_MAPLE_WOOD_SLAB, DnDBlocks.GALLERY_MAPLE_WOOD_WALL,
+            DnDBlocks.GALLERY_MAPLE_LOG, DnDBlocks.GALLERY_MAPLE_WOOD
         )
         gen.genPsudoFamily(
             DnDBlocks.CRIMSON_HYPHAE_STAIRS, DnDBlocks.CRIMSON_HYPHAE_SLAB, DnDBlocks.CRIMSON_HYPHAE_WALL,

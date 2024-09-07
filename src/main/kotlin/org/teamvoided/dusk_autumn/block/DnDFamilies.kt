@@ -21,6 +21,20 @@ object DnDFamilies {
             .group("wooden")
             .unlockCriterionName("has_planks")
             .build()
+    val GALLERY_MAPLE_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.GALLERY_MAPLE_PLANKS)
+            .stairs(DnDBlocks.GALLERY_MAPLE_STAIRS)
+            .slab(DnDBlocks.GALLERY_MAPLE_SLAB)
+            .fence(DnDBlocks.GALLERY_MAPLE_FENCE)
+            .fenceGate(DnDBlocks.GALLERY_MAPLE_FENCE_GATE)
+            .door(DnDBlocks.GALLERY_MAPLE_DOOR)
+            .trapdoor(DnDBlocks.GALLERY_MAPLE_TRAPDOOR)
+            .button(DnDBlocks.GALLERY_MAPLE_BUTTON)
+            .pressurePlate(DnDBlocks.GALLERY_MAPLE_PRESSURE_PLATE)
+            .sign(DnDBlocks.GALLERY_MAPLE_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_SIGN)
+            .group("wooden")
+            .unlockCriterionName("has_gallery_planks")
+            .build()
 
     //    val PINE_FAMILY: BlockFamily =
 //        BlockFamilies.register(DnDBlocks.PINE_PLANKS)
@@ -118,6 +132,12 @@ object DnDFamilies {
             .stairs(DnDBlocks.CASCADE_WOOD_STAIRS)
             .slab(DnDBlocks.CASCADE_WOOD_SLAB)
             .wall(DnDBlocks.CASCADE_WOOD_WALL)
+            .build()
+    val GALLERY_MAPLE_WOOD_FAMILY: BlockFamily =
+        BlockFamilies.register(DnDBlocks.GALLERY_MAPLE_WOOD)
+            .stairs(DnDBlocks.GALLERY_MAPLE_WOOD_STAIRS)
+            .slab(DnDBlocks.GALLERY_MAPLE_WOOD_SLAB)
+            .wall(DnDBlocks.GALLERY_MAPLE_WOOD_WALL)
             .build()
     val CRIMSON_HYPHAE_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.CRIMSON_HYPHAE)
@@ -281,6 +301,7 @@ object DnDFamilies {
 
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
+        GALLERY_MAPLE_FAMILY,
 //        PINE_FAMILY,
         BONEWOOD_FAMILY,
         WITHERING_BONEWOOD_FAMILY,
@@ -309,6 +330,7 @@ object DnDFamilies {
         MANGROVE_WOOD_FAMILY,
         CHERRY_WOOD_FAMILY,
         CASCADE_WOOD_FAMILY,
+        GALLERY_MAPLE_WOOD_FAMILY,
         CRIMSON_HYPHAE_FAMILY,
         WARPED_HYPHAE_FAMILY,
         ICE_BRICKS_FAMILY,

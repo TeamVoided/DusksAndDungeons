@@ -44,11 +44,7 @@ open class TwoWayFacingBlock(settings: Settings) : Block(settings) {
     }
 
     companion object {
-        val CODEC: MapCodec<TwoWayFacingBlock> = createCodec { settings: Settings ->
-            TwoWayFacingBlock(
-                settings
-            )
-        }
+        val CODEC: MapCodec<TwoWayFacingBlock> = createCodec(::TwoWayFacingBlock)
         val AXIS: EnumProperty<Direction.Axis> = Properties.HORIZONTAL_AXIS
 
         fun changeRotation(state: BlockState, rotation: BlockRotation?): BlockState {

@@ -14,6 +14,10 @@ import org.teamvoided.dusk_autumn.block.big.BigCandleCakeBlock
 import org.teamvoided.dusk_autumn.block.big.BigSoulCandleBlock
 import org.teamvoided.dusk_autumn.block.big.BigSoulCandleCakeBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
+import org.teamvoided.voidmill.sign.VoidSignBlock
+import org.teamvoided.voidmill.sign.VoidWallHangingSignBlock
+import org.teamvoided.voidmill.sign.VoidWallSignBlock
 
 val bonewoodSound = BlockSoundGroup(
     1.0F,
@@ -81,6 +85,36 @@ fun fenceOf(block: Block): Block = FenceBlock(AbstractBlock.Settings.copy(block)
 fun fenceGateOf(woodType: WoodType, block: Block): Block =
     FenceGateBlock(woodType, AbstractBlock.Settings.copy(block).solid())
 
+fun doorOf(blockSetType: BlockSetType, block: Block): Block =
+    DoorBlock(blockSetType, AbstractBlock.Settings.copy(block).strength(3.0f).nonOpaque())
+
+fun trapdoorOf(blockSetType: BlockSetType, block: Block): Block =
+    TrapdoorBlock(blockSetType, AbstractBlock.Settings.copy(block).allowsSpawning(Blocks::nonSpawnable))
+
+fun pressurePlateOf(blockSetType: BlockSetType, block: Block): Block =
+    PressurePlateBlock(
+        blockSetType,
+        AbstractBlock.Settings.copy(block).noCollision().strength(0.5f).solid().pistonBehavior(PistonBehavior.DESTROY)
+    )
+
+fun signOf(woodType: WoodType, block: Block): Block =
+    VoidSignBlock(woodType, AbstractBlock.Settings.copy(block).solid().noCollision().strength(1.0f))
+
+fun wallSignOf(woodType: WoodType, block: Block, sign: Block): Block =
+    VoidWallSignBlock(
+        woodType, AbstractBlock.Settings.copy(block).solid().noCollision().strength(1.0f)
+            .dropsLike(sign)
+    )
+
+fun hangingSignOf(woodType: WoodType, block: Block): Block =
+    VoidCeilingHangingSignBlock(woodType, AbstractBlock.Settings.copy(block).solid().noCollision().strength(1.0f))
+
+fun wallHangingSignOf(woodType: WoodType, block: Block, hangingSign: Block): Block =
+    VoidWallHangingSignBlock(
+        woodType, AbstractBlock.Settings.copy(block).solid().noCollision().strength(1.0f)
+            .dropsLike(hangingSign)
+    )
+
 fun candleSettings(): AbstractBlock.Settings = AbstractBlock.Settings.create().nonOpaque().strength(0.1f)
     .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
 
@@ -125,6 +159,10 @@ fun leafPile(mapColor: MapColor, soundGroup: BlockSoundGroup): Block {
             .blockVision(Blocks::nonSolid).solidBlock(Blocks::nonSolid).lavaIgnitable().noCollision().nonSolid()
             .pistonBehavior(PistonBehavior.DESTROY)
     )
+}
+
+fun fallingLeafPile(mapColor: MapColor): AbstractBlock.Settings {
+    return fallingLeafPile(mapColor, BlockSoundGroup.GRASS)
 }
 
 fun fallingLeafPile(mapColor: MapColor, soundGroup: BlockSoundGroup): AbstractBlock.Settings {

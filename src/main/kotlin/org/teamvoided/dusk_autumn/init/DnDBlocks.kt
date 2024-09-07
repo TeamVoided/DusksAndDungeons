@@ -1,5 +1,6 @@
 package org.teamvoided.dusk_autumn.init
 
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
@@ -28,6 +29,7 @@ import org.teamvoided.dusk_autumn.block.rocky.RockyGrassBlock
 import org.teamvoided.dusk_autumn.block.rocky.RockyMyceliumBlock
 import org.teamvoided.dusk_autumn.block.sapling.SaplingGenerators
 import org.teamvoided.dusk_autumn.block.sapling.ThreeWideTreeSaplingBlock
+import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDItems.BlockItem
 import org.teamvoided.dusk_autumn.util.*
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
@@ -43,7 +45,9 @@ object DnDBlocks {
     val TRANSLUCENT_BLOCKS = mutableSetOf<Block>()
     val GRASS_TINT_BLOCKS = mutableSetOf<Block>()
     val FOLIAGE_TINT_BLOCKS = mutableSetOf<Block>()
-    val WALLS = mutableSetOf<Block>()
+    val FLAMMABLE_PLANKS = mutableSetOf<Block>()
+    val FLAMMABLE_LOGS = mutableSetOf<Block>()
+    val FLAMMABLE_LEAVES = mutableSetOf<Block>()
     val SWORDABLE = mutableSetOf<Block>()
     val PICKAXABLE = mutableSetOf<Block>()
     val AXABLE = mutableSetOf<Block>()
@@ -85,19 +89,20 @@ object DnDBlocks {
                 .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
                 .sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
         )
+    ).flammablePlanks()
+    val CASCADE_STAIRS = register("cascade_stairs", stairsOf(CASCADE_PLANKS).axe().flammablePlanks())
+    val CASCADE_SLAB = register("cascade_slab", slabOf(CASCADE_PLANKS).axe().flammablePlanks())
+    val CASCADE_FENCE = register("cascade_fence", fenceOf(CASCADE_PLANKS).axe().flammablePlanks())
+    val CASCADE_FENCE_GATE = register(
+        "cascade_fence_gate", fenceGateOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).axe().flammablePlanks()
     )
-    val CASCADE_STAIRS = register("cascade_stairs", stairsOf(CASCADE_PLANKS).axe())
-    val CASCADE_SLAB = register("cascade_slab", slabOf(CASCADE_PLANKS).axe())
-    val CASCADE_FENCE = register("cascade_fence", fenceOf(CASCADE_PLANKS).axe())
-    val CASCADE_FENCE_GATE =
-        register("cascade_fence_gate", fenceGateOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).axe())
     val CASCADE_DOOR = registerNoItem(
         "cascade_door", DoorBlock(
             DnDWoodTypes.CASCADE_BLOCK_SET_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
-        ).axe()
+        ).axe().flammablePlanks()
     )
     val BLUE_DOOR = registerNoItem(
         "blue_door", DoorBlock(
@@ -105,7 +110,7 @@ object DnDBlocks {
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor)
                 .instrument(NoteBlockInstrument.BASS).strength(3.0f).nonOpaque().lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
-        ).axe()
+        ).axe().flammablePlanks()
     )
     val CASCADE_TRAPDOOR = register(
         "cascade_trapdoor", TrapdoorBlock(
@@ -114,7 +119,7 @@ object DnDBlocks {
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0f).nonOpaque()
                 .allowsSpawning(Blocks::nonSpawnable).lavaIgnitable(),
-        ).axe()
+        ).axe().flammablePlanks()
     )
     val CASCADE_PRESSURE_PLATE = register(
         "cascade_pressure_plate",
@@ -123,9 +128,10 @@ object DnDBlocks {
             Settings.create()
                 .mapColor(CASCADE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS).noCollision()
                 .strength(0.5f).solid().lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
-        ).axe()
+        ).axe().flammablePlanks()
     )
-    val CASCADE_BUTTON = register("cascade_button", buttonOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE).axe())
+    val CASCADE_BUTTON =
+        register("cascade_button", buttonOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE).axe().flammablePlanks())
     val CASCADE_LEAVES = register(
         "cascade_leaves", FallingLeavesBlock(
             Settings.create().strength(0.2f).ticksRandomly()
@@ -134,14 +140,14 @@ object DnDBlocks {
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
                 .sounds(BlockSoundGroup.AZALEA_LEAVES)
                 .mapColor(MapColor.RED), DnDParticles.CASCADE_LEAF_PARTICLE
-        ).cutout().axe()
+        ).cutout().flammableLeaves().axe()
     )
     val CASCADE_SIGN = registerNoItem(
         "cascade_sign", VoidSignBlock(
             DnDWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(CASCADE_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
-        ).axe()
+        ).axe().flammablePlanks()
     )
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", VoidWallSignBlock(
@@ -149,14 +155,14 @@ object DnDBlocks {
             Settings.create().mapColor(CASCADE_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).dropsLike(CASCADE_SIGN)
                 .lavaIgnitable(),
-        ).axe()
+        ).axe().flammablePlanks()
     )
     val CASCADE_HANGING_SIGN = registerNoItem(
         "cascade_hanging_sign", VoidCeilingHangingSignBlock(
             DnDWoodTypes.CASCADE_WOOD_TYPE,
             Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
-        ).axe()
+        ).axe().flammablePlanks()
     )
     val CASCADE_WALL_HANGING_SIGN = registerNoItem(
         "cascade_wall_hanging_sign", VoidWallHangingSignBlock(
@@ -164,7 +170,7 @@ object DnDBlocks {
             Settings.create().mapColor(MapColor.BLUE_TERRACOTTA).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable()
                 .dropsLike(CASCADE_HANGING_SIGN),
-        ).axe()
+        ).axe().flammablePlanks()
     )
 
     val GOLDEN_BIRCH_LEAVES = register(
@@ -175,7 +181,7 @@ object DnDBlocks {
                 .suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY)
                 .solidBlock(Blocks::nonSolid)
-        ).cutout()
+        ).cutout().flammableLeaves()
     )
     val GOLDEN_BIRCH_SAPLING = register(
         "golden_birch_sapling", SaplingBlock(
@@ -207,6 +213,92 @@ object DnDBlocks {
 //                .strength(2.0f, 3.0f).solid()
 //        ).axe()
 //    )
+
+    val GALLERY_MAPLE_SAPLING = register(
+        "gallery_maple_sapling", ThreeWideTreeSaplingBlock(
+            SaplingGenerators.CASCADE,
+            Settings.create()
+                .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly()
+                .sounds(BlockSoundGroup.AZALEA).pistonBehavior(PistonBehavior.DESTROY)
+        )
+    ).cutout()
+    val POTTED_GALLERY_MAPLE_SAPLING =
+        registerNoItem("potted_gallery_maple_sapling", pottedVariant(GALLERY_MAPLE_SAPLING)).cutout()
+    val GALLERY_MAPLE_LOG = register(
+        "gallery_maple_log", logOf(MapColor.GRAY, MapColor.BROWN, BlockSoundGroup.WOOD)
+    )
+    val GALLERY_MAPLE_WOOD = register(
+        "gallery_maple_wood", PillarBlock(
+            Settings.create().mapColor(MapColor.BROWN).instrument(NoteBlockInstrument.BASS).strength(2.0f)
+                .sounds(BlockSoundGroup.WOOD)
+        )
+    )
+    val STRIPPED_GALLERY_MAPLE_LOG = register(
+        "stripped_gallery_maple_log", logOf(MapColor.GRAY, MapColor.GRAY, BlockSoundGroup.WOOD)
+    )
+    val STRIPPED_GALLERY_MAPLE_WOOD = register(
+        "stripped_gallery_maple_wood", PillarBlock(
+            copy(GALLERY_MAPLE_WOOD).mapColor(MapColor.GRAY)
+        )
+    )
+    val GALLERY_MAPLE_PLANKS = register(
+        "gallery_maple_planks", Block(
+            Settings.create()
+                .mapColor(MapColor.GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
+                .sounds(BlockSoundGroup.WOOD)
+        ).axe()
+    )
+    val GALLERY_MAPLE_STAIRS = register("gallery_maple_stairs", stairsOf(GALLERY_MAPLE_PLANKS).axe())
+    val GALLERY_MAPLE_SLAB = register("gallery_maple_slab", slabOf(GALLERY_MAPLE_PLANKS).axe())
+    val GALLERY_MAPLE_FENCE = register("gallery_maple_fence", fenceOf(GALLERY_MAPLE_PLANKS).axe())
+    val GALLERY_MAPLE_FENCE_GATE =
+        register(
+            "gallery_maple_fence_gate",
+            fenceGateOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
+        )
+    val GALLERY_MAPLE_DOOR = registerNoItem(
+        "gallery_maple_door", doorOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_PLANKS).cutout().axe()
+    )
+    val GALLERY_MAPLE_TRAPDOOR = register(
+        "gallery_maple_trapdoor",
+        trapdoorOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_DOOR).cutout().axe()
+    )
+    val GALLERY_MAPLE_PRESSURE_PLATE = register(
+        "gallery_maple_pressure_plate",
+        pressurePlateOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_PLANKS).axe()
+    )
+    val GALLERY_MAPLE_BUTTON =
+        register("gallery_maple_button", buttonOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE).axe())
+    val GALLERY_MAPLE_SIGN = registerNoItem(
+        "gallery_maple_sign", signOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
+    )
+    val GALLERY_MAPLE_WALL_SIGN = registerNoItem(
+        "gallery_maple_wall_sign",
+        wallSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS, GALLERY_MAPLE_SIGN).axe()
+    )
+    val GALLERY_MAPLE_HANGING_SIGN = registerNoItem(
+        "gallery_maple_hanging_sign", hangingSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
+    )
+    val GALLERY_MAPLE_WALL_HANGING_SIGN = registerNoItem(
+        "gallery_maple_wall_hanging_sign",
+        wallHangingSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS, GALLERY_MAPLE_HANGING_SIGN).axe()
+    )
+    val GALLERY_MAPLE_LEAVES = register(
+        "gallery_maple_leaves", LeavesBlock(
+            Settings.create().strength(0.2f).ticksRandomly()
+                .nonOpaque().allowsSpawning(Blocks::allowOcelotsAndParrots).suffocates(Blocks::nonSolid)
+                .blockVision(Blocks::nonSolid).pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
+                .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.RED)
+        ).cutout().axe()
+    )
+
+    val PAINTED_ROSE = register(
+        "painted_rose", PaintedRoseBlock(
+            Settings.create()
+                .mapColor(MapColor.BLUE).noCollision().ticksRandomly().breakInstantly().offsetType(OffsetType.XZ)
+                .sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    )
 
     val BONEWOOD_PLANKS = register(
         "bonewood_planks", Block(
@@ -285,6 +377,9 @@ object DnDBlocks {
     val HOLLOW_STRIPPED_CHERRY_LOG = register("hollow_stripped_cherry_log", hollowLog(STRIPPED_CHERRY_WOOD))
     val HOLLOW_CASCADE_LOG = register("hollow_cascade_log", hollowLog(CASCADE_WOOD))
     val HOLLOW_STRIPPED_CASCADE_LOG = register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_WOOD))
+    val HOLLOW_GALLERY_MAPLE_LOG = register("hollow_gallery_maple_log", hollowLog(GALLERY_MAPLE_LOG))
+    val HOLLOW_STRIPPED_GALLERY_MAPLE_LOG =
+        register("hollow_stripped_gallery_maple_log", hollowLog(STRIPPED_GALLERY_MAPLE_LOG))
     val HOLLOW_BAMBOO_BLOCK = register("hollow_bamboo_block", hollowBambooBlock(BAMBOO_BLOCK))
     val HOLLOW_STRIPPED_BAMBOO_BLOCK =
         register("hollow_stripped_bamboo_block", hollowBambooBlock(STRIPPED_BAMBOO_BLOCK))
@@ -320,6 +415,9 @@ object DnDBlocks {
     val CASCADE_WOOD_STAIRS = register("cascade_wood_stairs", stairsOf(CASCADE_WOOD))
     val CASCADE_WOOD_SLAB = register("cascade_wood_slab", slabOf(CASCADE_WOOD))
     val CASCADE_WOOD_WALL = register("cascade_wood_wall", wallOf(CASCADE_WOOD))
+    val GALLERY_MAPLE_WOOD_STAIRS = register("gallery_maple_wood_stairs", stairsOf(GALLERY_MAPLE_WOOD))
+    val GALLERY_MAPLE_WOOD_SLAB = register("gallery_maple_wood_slab", slabOf(GALLERY_MAPLE_WOOD))
+    val GALLERY_MAPLE_WOOD_WALL = register("gallery_maple_wood_wall", wallOf(GALLERY_MAPLE_WOOD))
     val CRIMSON_HYPHAE_STAIRS = register("crimson_hyphae_stairs", stairsOf(CRIMSON_HYPHAE))
     val CRIMSON_HYPHAE_SLAB = register("crimson_hyphae_slab", slabOf(CRIMSON_HYPHAE))
     val CRIMSON_HYPHAE_WALL = register("crimson_hyphae_wall", wallOf(CRIMSON_HYPHAE))
@@ -337,6 +435,7 @@ object DnDBlocks {
     val MANGROVE_LOG_PILE = register("mangrove_log_pile", logPile(MANGROVE_WOOD))
     val CHERRY_LOG_PILE = register("cherry_log_pile", logPile(CHERRY_WOOD))
     val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD))
+    val GALLERY_MAPLE_LOG_PILE = register("gallery_maple_log_pile", logPile(GALLERY_MAPLE_WOOD))
     val CRIMSON_STEM_PILE = register("crimson_stem_pile", logPile(CRIMSON_HYPHAE))
     val WARPED_STEM_PILE = register("warped_stem_pile", logPile(WARPED_HYPHAE))
     val BAMBOO_PILE = register("bamboo_pile", logPile(BAMBOO_PLANKS, MapColor.PLANT))
@@ -358,6 +457,12 @@ object DnDBlocks {
     val CASCADE_LEAF_PILE = register(
         "cascade_leaf_pile", FallingLeafPileBlock(
             fallingLeafPile(MapColor.RED, BlockSoundGroup.AZALEA_LEAVES),
+            DnDParticles.CASCADE_LEAF_PARTICLE
+        ).cutout()
+    )
+    val GALLERY_MAPLE_LEAF_PILE = register(
+        "gallery_maple_leaf_pile", FallingLeafPileBlock(
+            fallingLeafPile(MapColor.RED),
             DnDParticles.CASCADE_LEAF_PARTICLE
         ).cutout()
     )
@@ -752,7 +857,7 @@ object DnDBlocks {
             Settings.create().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS)
                 .strength(0.7f).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).nonOpaque()
                 .lavaIgnitable().sounds(rootBlockSound)
-        ).cutout().sword().axe()
+        ).cutout().flammableLeaves().sword().axe()
     )
 
     val WILD_WHEAT = registerNoItem(
@@ -775,14 +880,14 @@ object DnDBlocks {
             Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f)
                 .sounds(BlockSoundGroup.CAVE_VINES).luminance(MoonberryVineBlock.getLuminanceSupplier(8, 11))
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)
-        ).cutout().axe().sword()
+        ).cutout().flammableLogs().axe().sword()
     )
     val MOONBERRY_VINELET = registerNoItem(
         "moonberry_vinelet", MoonberryVineletBlock(
             Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f).ticksRandomly()
                 .breakInstantly().sounds(BlockSoundGroup.CAVE_VINES).lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY)
-        ).cutout().axe().sword()
+        ).cutout().flammableLogs().axe().sword()
     )
 
     val ROCKY_DIRT =
@@ -971,6 +1076,11 @@ object DnDBlocks {
 
     fun init() {
         DnDFamilies.init()
+
+        FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
+        FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
+        FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
+
         StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
         StrippableBlockRegistry.register(CASCADE_WOOD, STRIPPED_CASCADE_WOOD)
 
@@ -1052,6 +1162,21 @@ object DnDBlocks {
 
     fun Block.foliage(): Block {
         FOLIAGE_TINT_BLOCKS.add(this)
+        return this
+    }
+
+    fun Block.flammablePlanks(): Block {
+        FLAMMABLE_PLANKS.add(this)
+        return this
+    }
+
+    fun Block.flammableLogs(): Block {
+        FLAMMABLE_LOGS.add(this)
+        return this
+    }
+
+    fun Block.flammableLeaves(): Block {
+        FLAMMABLE_LEAVES.add(this)
         return this
     }
 

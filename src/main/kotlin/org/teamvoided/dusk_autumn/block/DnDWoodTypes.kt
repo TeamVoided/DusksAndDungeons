@@ -29,8 +29,12 @@ object DnDWoodTypes {
             .register(id("cascade"))
     val CASCADE_WOOD_TYPE = registerWoodType("cascade", WoodType.CHERRY, CASCADE_BLOCK_SET_TYPE)
 
-//    val PINE_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder().register(id("pine"))
-//    val PINE_WOOD_TYPE = registerWoodType("pine", WoodType.SPRUCE, PINE_BLOCK_SET_TYPE)
+    val GALLERY_MAPLE_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder().register(id("gallery_maple"))
+    val GALLERY_MAPLE_WOOD_TYPE = registerWoodType("gallery_maple", WoodType.MANGROVE, GALLERY_MAPLE_BLOCK_SET_TYPE)
+
+    //val PINE_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder().register(id("pine"))
+    //val PINE_WOOD_TYPE = registerWoodType("pine", WoodType.SPRUCE, PINE_BLOCK_SET_TYPE)
+
     val BONEWOOD_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder().register(id("bonewood"))
     val BONEWOOD_WOOD_TYPE = registerWoodType("bonewood", WoodType.SPRUCE, BONEWOOD_BLOCK_SET_TYPE)
     val WITHERING_BONEWOOD_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder().register(id("withering_bonewood"))
