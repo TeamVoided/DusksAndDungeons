@@ -3,21 +3,18 @@ package org.teamvoided.dusk_autumn
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
-import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.event.AddWanderingTrades
 import org.teamvoided.dusk_autumn.init.*
-import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
-import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
 import org.teamvoided.dusk_autumn.modules.BarteringInjection
 import org.teamvoided.dusk_autumn.modules.SnifferInjection
 
 @Suppress("unused")
-object DuskAutumns {
+object DusksAndDungeons {
     const val MODID = "dusk_autumn"
 
     @JvmField
-    val log = LoggerFactory.getLogger(DuskAutumns::class.java)
+    val log = LoggerFactory.getLogger(DusksAndDungeons::class.java)
 
     fun init() {
         log.info("Its DnD time!")

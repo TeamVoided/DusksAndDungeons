@@ -6,7 +6,7 @@ import net.minecraft.block.BlockSetType
 import net.minecraft.block.WoodType
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 
 
 object DnDWoodTypes {

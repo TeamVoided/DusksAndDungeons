@@ -3,7 +3,7 @@ package org.teamvoided.dusk_autumn.data.worldgen
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 
 object DnDNoise {
     val GLACIER_ICE_PICKER_OLD = create("glacier_ice_picker_old")

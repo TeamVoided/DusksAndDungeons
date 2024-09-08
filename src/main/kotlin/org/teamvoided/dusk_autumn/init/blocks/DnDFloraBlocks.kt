@@ -1,23 +1,48 @@
 package org.teamvoided.dusk_autumn.init.blocks
 
 import net.minecraft.block.*
-import net.minecraft.block.AbstractBlock.OffsetType
-import net.minecraft.block.AbstractBlock.Settings
+import net.minecraft.block.AbstractBlock.*
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.world.gen.feature.TreeConfiguredFeatures
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDFloraBlocks {
+    val VERDURE_BLOCK = DnDBlocks.register(
+        "verdure_block", Block(
+            copy(MOSS_BLOCK)
+        )
+    )
+    val VERDURE_DEEPSLATE = DnDBlocks.register(
+        "verdure_deepslate", Block(
+            copy(DEEPSLATE)
+        )
+    )
     val PAINTED_ROSE = DnDBlocks.register(
         "painted_rose", PaintedRoseBlock(
             Settings.create()
                 .mapColor(MapColor.BLUE).noCollision().ticksRandomly().breakInstantly().offsetType(OffsetType.XZ)
                 .sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    )
+    val GOLDEN_MUSHROOM = DnDBlocks.register(
+        "golden_mushroom", MushroomWithSporesPlantBlock(
+            TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM,
+            0xFFD800,
+            0.5,
+            Settings.create().mapColor(MapColor.GOLD).noCollision().ticksRandomly().breakInstantly()
+                .sounds(BlockSoundGroup.GRASS).luminance(light(11)).offsetType(OffsetType.XYZ)
+                .postProcess(Blocks::solid).pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    )
+    val BROWN_TREE_FUNGUS = DnDBlocks.register(
+        "brown_tree_fungus", TransparentBlock(
+            copy(BROWN_MUSHROOM)
         ).cutout()
     )
     val WARPED_WART = DnDBlocks.register(
@@ -26,11 +51,6 @@ object DnDFloraBlocks {
             Settings.create().mapColor(MapColor.WARPED_STEM).noCollision().ticksRandomly()
                 .sounds(BlockSoundGroup.NETHER_WART).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout().sword().axe()
-    )
-    val BROWN_TREE_FUNGUS = DnDBlocks.register(
-        "brown_tree_fungus", TransparentBlock(
-            copy(BROWN_MUSHROOM)
-        ).cutout()
     )
     val SPIDERLILY = DnDBlocks.register(
         "spiderlily", SpiderlilyBlock(

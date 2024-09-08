@@ -7,7 +7,7 @@ import net.minecraft.entity.effect.StatusEffectType
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import org.teamvoided.dusk_autumn.DuskAutumns
+import org.teamvoided.dusk_autumn.DusksAndDungeons
 import org.teamvoided.dusk_autumn.effect.DnDStatusEffect
 
 object DnDEffects {
@@ -51,18 +51,18 @@ object DnDEffects {
         "jump_reduce", DnDStatusEffect(StatusEffectType.HARMFUL, 0x99990F)
             .addAttributeModifier(
                 EntityAttributes.GENERIC_SAFE_FALL_DISTANCE,
-                DuskAutumns.id("effect.jump_reduce"),
+                DusksAndDungeons.id("effect.jump_reduce"),
                 -1.0, EntityAttributeModifier.Operation.ADD_VALUE
             )
             .addAttributeModifier(
                 EntityAttributes.GENERIC_JUMP_STRENGTH,
-                DuskAutumns.id("effect.jump_reduce"),
+                DusksAndDungeons.id("effect.jump_reduce"),
                 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
             )
     )
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> {
-        return Registry.registerHolder(Registries.STATUS_EFFECT, DuskAutumns.id(id), entry)
+        return Registry.registerHolder(Registries.STATUS_EFFECT, DusksAndDungeons.id(id), entry)
     }
 //    fun modifyDamage(entity: LivingEntity, damage: Float): Float {
 //        var output = damage

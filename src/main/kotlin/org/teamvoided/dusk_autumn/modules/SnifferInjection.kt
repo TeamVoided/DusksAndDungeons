@@ -6,7 +6,6 @@ import net.minecraft.loot.LootTables
 import net.minecraft.loot.entry.LootTableEntry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import org.teamvoided.dusk_autumn.DuskAutumns.id
 import org.teamvoided.dusk_autumn.data.DnDLootTables
 
 object SnifferInjection {

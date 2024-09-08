@@ -8,8 +8,8 @@ import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
-import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.DuskAutumns.isModLoaded
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.isModLoaded
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.init.DnDBlocks
@@ -91,7 +91,14 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DnDWoodBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN
         )
         gen.registerSingleton(DnDWoodBlocks.GALLERY_MAPLE_LEAVES, TexturedModel.LEAVES)
+        gen.registerRotatableAndSpinnable(DnDFloraBlocks.VERDURE_BLOCK)
+        gen.createVerdureGrowth(
+            DnDFloraBlocks.VERDURE_DEEPSLATE,
+            Texture.getId(DnDFloraBlocks.VERDURE_BLOCK),
+            Texture.getSubId(Blocks.DEEPSLATE, "_top")
+        )
         gen.registerGalleryRose(DnDFloraBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
+        gen.registerGoldenMushroomPlant(DnDFloraBlocks.GOLDEN_MUSHROOM)
 
         gen.registerSpiderlilly(DnDFloraBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerFlowerbed2(DnDFloraBlocks.WHITE_PETALS, false)
@@ -144,7 +151,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         }
 
         gen.genPsudoFamily(
-            DnDNetherBrickBlocks.NETHERRACK_STAIRS, DnDNetherBrickBlocks.NETHERRACK_SLAB, DnDNetherBrickBlocks.NETHERRACK_WALL,
+            DnDNetherBrickBlocks.NETHERRACK_STAIRS,
+            DnDNetherBrickBlocks.NETHERRACK_SLAB,
+            DnDNetherBrickBlocks.NETHERRACK_WALL,
             Blocks.NETHERRACK
         )
         gen.registerCropWithParent(DnDFloraBlocks.WARPED_WART, id("block/parent/crop"), Properties.AGE_3, 0, 1, 1, 2)
@@ -157,7 +166,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerSimpleCubeAll(DnDNetherBrickBlocks.CHISELED_RED_NETHER_BRICKS)
         gen.fence(DnDNetherBrickBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
         gen.fence(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_FENCE, DnDNetherBrickBlocks.MIXED_NETHER_BRICKS)
-        gen.registerMixedNetherBrickPillar(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_PILLAR, DnDNetherBrickBlocks.RED_NETHER_BRICK_PILLAR)
+        gen.registerMixedNetherBrickPillar(
+            DnDNetherBrickBlocks.MIXED_NETHER_BRICK_PILLAR,
+            DnDNetherBrickBlocks.RED_NETHER_BRICK_PILLAR
+        )
         gen.registerAxisRotated(
             DnDNetherBrickBlocks.RED_NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,
@@ -201,14 +213,26 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerTintedOverlay(mossyPolish)
         gen.registerTintedOverlay(mossyCobble)
         gen.registerTintedOverlay(mossyBrick)
-        gen.cubeAllWithTintedOverlay(DnDStoneBlocks.OVERGROWN_POLISHED_STONE, DnDStoneBlocks.MOSSY_POLISHED_STONE, mossyPolish)
+        gen.cubeAllWithTintedOverlay(
+            DnDStoneBlocks.OVERGROWN_POLISHED_STONE,
+            DnDStoneBlocks.MOSSY_POLISHED_STONE,
+            mossyPolish
+        )
         gen.stairsWithTintedOverlay(
             DnDStoneBlocks.OVERGROWN_POLISHED_STONE_STAIRS,
             DnDStoneBlocks.MOSSY_POLISHED_STONE,
             mossyPolish
         )
-        gen.slabWithTintedOverlay(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_SLAB, DnDStoneBlocks.MOSSY_POLISHED_STONE, mossyPolish)
-        gen.wallWithTintedOverlay(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_WALL, DnDStoneBlocks.MOSSY_POLISHED_STONE, mossyPolish)
+        gen.slabWithTintedOverlay(
+            DnDStoneBlocks.OVERGROWN_POLISHED_STONE_SLAB,
+            DnDStoneBlocks.MOSSY_POLISHED_STONE,
+            mossyPolish
+        )
+        gen.wallWithTintedOverlay(
+            DnDStoneBlocks.OVERGROWN_POLISHED_STONE_WALL,
+            DnDStoneBlocks.MOSSY_POLISHED_STONE,
+            mossyPolish
+        )
         gen.cubeAllWithTintedOverlay(DnDStoneBlocks.OVERGROWN_COBBLESTONE, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.stairsWithTintedOverlay(DnDStoneBlocks.OVERGROWN_COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.slabWithTintedOverlay(DnDStoneBlocks.OVERGROWN_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE, mossyCobble)
@@ -255,8 +279,11 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DnDWoodBlocks.CASCADE_LOG, DnDWoodBlocks.CASCADE_WOOD
         )
         gen.genPsudoFamily(
-            DnDWoodBlocks.GALLERY_MAPLE_WOOD_STAIRS, DnDWoodBlocks.GALLERY_MAPLE_WOOD_SLAB, DnDWoodBlocks.GALLERY_MAPLE_WOOD_WALL,
-            DnDWoodBlocks.GALLERY_MAPLE_LOG, DnDWoodBlocks.GALLERY_MAPLE_WOOD
+            DnDWoodBlocks.GALLERY_MAPLE_WOOD_STAIRS,
+            DnDWoodBlocks.GALLERY_MAPLE_WOOD_SLAB,
+            DnDWoodBlocks.GALLERY_MAPLE_WOOD_WALL,
+            DnDWoodBlocks.GALLERY_MAPLE_LOG,
+            DnDWoodBlocks.GALLERY_MAPLE_WOOD
         )
         gen.genPsudoFamily(
             DnDWoodBlocks.CRIMSON_HYPHAE_STAIRS, DnDWoodBlocks.CRIMSON_HYPHAE_SLAB, DnDWoodBlocks.CRIMSON_HYPHAE_WALL,

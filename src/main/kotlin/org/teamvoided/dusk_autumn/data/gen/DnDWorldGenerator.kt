@@ -6,7 +6,7 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import java.util.concurrent.CompletableFuture
 
-class DuskAutumnsWorldGenerator(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
+class DnDWorldGenerator(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricDynamicRegistryProvider(o, r) {
 
     override fun getName(): String = "Data Gen"

@@ -7,7 +7,6 @@ import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
 import net.minecraft.particle.DefaultParticleType
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
 import org.teamvoided.dusk_autumn.block.*
@@ -21,6 +20,7 @@ import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidSignBlock
 import org.teamvoided.voidmill.sign.VoidWallHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidWallSignBlock
+import java.util.function.ToIntFunction
 
 val bonewoodSound = BlockSoundGroup(
     1.0F,
@@ -76,6 +76,9 @@ val rootBlockSound = BlockSoundGroup(
     SoundEvents.BLOCK_HANGING_ROOTS_HIT,
     SoundEvents.BLOCK_HANGING_ROOTS_FALL
 )
+fun light(lightLevel: Int): ToIntFunction<BlockState> {
+    return ToIntFunction { lightLevel }
+}
 
 fun Block.cutout(): Block {
     DnDBlocks.CUTOUT_BLOCKS.add(this)

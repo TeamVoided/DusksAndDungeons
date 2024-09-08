@@ -16,8 +16,8 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
-import org.teamvoided.dusk_autumn.DuskAutumns.MODID
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.MODID
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
 import org.teamvoided.dusk_autumn.entity.bird.BirdEntityRenderer
 import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
@@ -26,13 +26,14 @@ import org.teamvoided.dusk_autumn.init.DnDEntities
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.DnDParticles
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
+import org.teamvoided.dusk_autumn.particle.ColorableOminousParticle
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
 import org.teamvoided.dusk_autumn.particle.SpiderlilyPetalParticle
 import org.teamvoided.dusk_autumn.particle.SnowflakeParticle
 import org.teamvoided.dusk_autumn.util.DnDBlockLists
 
 @Suppress("unused")
-object DuskAutumnsClient {
+object DusksAndDungeonsClient {
 
     //    val key = KeyBindingHelper.registerKeyBinding(KeyBind("debug", InputUtil.KEY_R_CODE, "debug"))
 //    const val CASCADE_LEAF_COLOR = 14701655
@@ -46,8 +47,12 @@ object DuskAutumnsClient {
         initBlocks()
         initItems()
         ParticleFactoryRegistry.getInstance().register(DnDParticles.CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
-        ParticleFactoryRegistry.getInstance()
-            .register(DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
+        ParticleFactoryRegistry.getInstance().register(
+            DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory
+        )
+        ParticleFactoryRegistry.getInstance().register(
+            DnDParticles.COLORABLE_OMINOUS_PARTICLE, ColorableOminousParticle::ColorableOminousParticleFactory
+        )
         ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIDERLILY, SpiderlilyPetalParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
 

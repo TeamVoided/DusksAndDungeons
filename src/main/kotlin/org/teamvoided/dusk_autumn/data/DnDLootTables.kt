@@ -1,7 +1,7 @@
 package org.teamvoided.dusk_autumn.data
 
 import net.minecraft.util.Identifier
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 
 object DnDLootTables {
     private val LOOT_TABLES: MutableSet<Identifier> = mutableSetOf()

@@ -11,7 +11,7 @@ import net.minecraft.structure.pool.StructurePools
 import net.minecraft.structure.processor.StructureProcessorList
 import net.minecraft.structure.processor.StructureProcessorLists
 import net.minecraft.world.gen.feature.PlacedFeature
-import org.teamvoided.dusk_autumn.DuskAutumns.MODID
+import org.teamvoided.dusk_autumn.DusksAndDungeons.MODID
 import org.teamvoided.dusk_autumn.data.structure.DnDStructurePools
 import org.teamvoided.dusk_autumn.data.structure.DnDStructureProcessorLists
 import java.util.function.Function

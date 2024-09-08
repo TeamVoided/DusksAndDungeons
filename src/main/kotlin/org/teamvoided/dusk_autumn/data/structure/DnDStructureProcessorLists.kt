@@ -3,7 +3,7 @@ package org.teamvoided.dusk_autumn.data.structure
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.structure.processor.StructureProcessorList
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 
 object DnDStructureProcessorLists {
 

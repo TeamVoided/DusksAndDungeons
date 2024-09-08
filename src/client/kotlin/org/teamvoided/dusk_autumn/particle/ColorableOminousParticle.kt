@@ -5,8 +5,8 @@ import net.fabricmc.api.Environment
 import net.minecraft.client.particle.*
 import net.minecraft.client.util.ColorUtil.Argb32
 import net.minecraft.client.world.ClientWorld
-import net.minecraft.particle.DefaultParticleType
 import net.minecraft.util.math.MathHelper
+import java.awt.Color
 
 @Environment(EnvType.CLIENT)
 class ColorableOminousParticle internal constructor(
@@ -17,15 +17,15 @@ class ColorableOminousParticle internal constructor(
     xVel: Double,
     yVel: Double,
     zVel: Double,
-    startColor: Int,
-    endColor: Int
+    startColor: Color,
+    endColor: Color
 ) :
     SpriteBillboardParticle(world, xPos, yPos, zPos) {
     private val positionX: Double
     private val positionY: Double
     private val positionZ: Double
-    private val startColor: Int
-    private val endColor: Int
+    private val startColor: Color
+    private val endColor: Color
 
     init {
         this.velocityX = xVel
@@ -67,7 +67,7 @@ class ColorableOminousParticle internal constructor(
             this.x = this.positionX + this.velocityX * g.toDouble()
             this.y = this.positionY + this.velocityY * g.toDouble()
             this.z = this.positionZ + this.velocityZ * g.toDouble()
-            val color = Argb32.lerp(f, this.startColor, this.endColor)
+            val color = Argb32.lerp(f, this.startColor.rgb, this.endColor.rgb)
             this.setColor(
                 Argb32.getRed(color).toFloat() / 255.0f,
                 Argb32.getGreen(color).toFloat() / 255.0f,
@@ -77,10 +77,11 @@ class ColorableOminousParticle internal constructor(
         }
     }
 
-    class ColorableFloatingParticleFactory(private val spriteProvider: SpriteProvider) :
-        ParticleFactory<DefaultParticleType> {
+    @Environment(EnvType.CLIENT)
+    class ColorableOminousParticleFactory(private val spriteProvider: SpriteProvider) :
+        ParticleFactory<ColorableParticleEffect> {
         override fun createParticle(
-            defaultParticleType: DefaultParticleType,
+            type: ColorableParticleEffect,
             world: ClientWorld,
             xPos: Double,
             yPos: Double,
@@ -89,7 +90,7 @@ class ColorableOminousParticle internal constructor(
             yVel: Double,
             zVel: Double
         ): Particle {
-            val particle = ColorableOminousParticle(world, xPos, yPos, zPos, xVel, yVel, zVel, -12210434, -1)
+            val particle = ColorableOminousParticle(world, xPos, yPos, zPos, xVel, yVel, zVel, type.color, Color.white)
             particle.scale(MathHelper.nextBetween(world.getRandom(), 3.0f, 5.0f))
             particle.setSprite(this.spriteProvider)
             return particle

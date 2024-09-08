@@ -10,8 +10,8 @@ import net.minecraft.registry.RegistrySetBuilder
 import net.minecraft.resource.ResourceType
 import net.minecraft.resource.pack.metadata.PackResourceMetadataSection
 import net.minecraft.text.Text
-import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.DuskAutumns.log
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.log
 import org.teamvoided.dusk_autumn.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusk_autumn.data.gen.providers.*
 import org.teamvoided.dusk_autumn.data.gen.structure.StructureFeatureCreator
@@ -29,14 +29,14 @@ import org.teamvoided.dusk_autumn.data.gen.worldgen.PlacedFeatureCreator
 import java.util.*
 
 @Suppress("unused")
-class DuskAutumnsData : DataGeneratorEntrypoint {
+class DnDData : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
         log.info("Hello from DataGen")
         val pack = gen.createPack()
 
         pack.addProvider(::AdvancementsProvider)
 
-        pack.addProvider(::DuskAutumnsWorldGenerator)
+        pack.addProvider(::DnDWorldGenerator)
         pack.addProvider(::ModelProvider)
         pack.addProvider(::EnglishTranslationProvider)
         pack.addProvider(::RecipesProvider)

@@ -1,7 +1,7 @@
 package org.teamvoided.dusk_autumn.block.sapling
 
 import net.minecraft.block.sapling.TreeGrower
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.data.worldgen.DnDConfiguredFeature
 import java.util.*
 

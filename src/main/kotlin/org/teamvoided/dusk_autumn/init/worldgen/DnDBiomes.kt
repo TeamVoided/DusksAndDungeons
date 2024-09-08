@@ -9,7 +9,7 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.Biomes
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
 object DnDBiomes {

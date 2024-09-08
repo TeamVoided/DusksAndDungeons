@@ -15,11 +15,10 @@ import net.minecraft.state.property.Properties
 import net.minecraft.state.property.Property
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
-import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.DuskAutumns.mc
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.mc
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.not_blocks.TripleBlockSection
-import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
 import java.util.*
 
@@ -473,6 +472,48 @@ fun createWallBlockStateWithOverlay(
     return model
 }
 
+
+fun BlockStateModelGenerator.registerRotatableAndSpinnable(block: Block) {
+    val identifier = TexturedModel.CUBE_ALL.create(block, this.modelCollector)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(
+            block, *getRandomRotations(identifier)
+        )
+    )
+}
+
+fun getRandomRotations(model: Identifier): Array<BlockStateVariant> {
+    var array = arrayOf<BlockStateVariant>()
+    VariantSettings.Rotation.entries.forEach { itY ->
+        VariantSettings.Rotation.entries.forEach { itX ->
+            val variant = BlockStateVariant.create().put(VariantSettings.MODEL, model)
+            if (itY != Rotation.R0) variant.put(VariantSettings.Y, itY)
+            if (itX != Rotation.R0) variant.put(VariantSettings.X, itX)
+            array += variant
+        }
+    }
+    return array
+}
+
+fun BlockStateModelGenerator.createVerdureGrowth(block: Block, top: Identifier, bottom: Identifier) {
+    val texture = Texture.texture(block)
+        .put(TextureKey.PARTICLE, Texture.getId(block))
+        .put(TextureKey.TOP, top)
+        .put(TextureKey.SIDE, Texture.getId(block))
+        .put(TextureKey.BOTTOM, bottom)
+    val model = Models.CUBE_BOTTOM_TOP.upload(block, texture, this.modelCollector)
+    val modelM = block(
+        "parent/cube_bottom_top_mirrored",
+        "_mirrored",
+        TextureKey.TOP,
+        TextureKey.SIDE,
+        TextureKey.BOTTOM
+    ).upload(block, texture, this.modelCollector)
+    blockStateCollector.accept(
+        BlockStateModelGenerator.createBlockStateWithTwoModelAndRandomInversion(block, model, modelM)
+    )
+}
+
 fun BlockStateModelGenerator.registerGalleryRose(block: Block, tintType: TintType) {
     this.registerItemModel(block, "_top")
     val top = this.createSubModel(block, "_top", tintType.crossModel, Texture::cross)
@@ -492,6 +533,23 @@ fun BlockStateModelGenerator.registerGalleryRose(block: Block, tintType: TintTyp
                 TripleBlockSection.BOTTOM,
                 BlockStateVariant.create().put(VariantSettings.MODEL, bottom)
             )
+        )
+    )
+}
+
+fun BlockStateModelGenerator.registerGoldenMushroomPlant(block: Block) {
+    this.registerItemModel(block, "_1")
+    var array = arrayOf<BlockStateVariant>()
+    var loop = 1
+    repeat(3) {
+        val texture = Texture.texture(block).put(TextureKey.CROSS, Texture.getSubId(block, "_$loop"))
+        val model = Models.CROSS.upload(block, "_$loop", texture, this.modelCollector)
+        array += BlockStateVariant.create().put(VariantSettings.MODEL, model)
+        loop += 1
+    }
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(
+            block, *array
         )
     )
 }

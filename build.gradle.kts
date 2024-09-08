@@ -27,9 +27,9 @@ repositories {
 }
 
 modSettings {
-    entrypoint("main", "org.teamvoided.dusk_autumn.DuskAutumns::init")
-    entrypoint("client", "org.teamvoided.dusk_autumn.DuskAutumnsClient::init")
-    entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.data.gen.DuskAutumnsData")
+    entrypoint("main", "org.teamvoided.dusk_autumn.DusksAndDungeons::init")
+    entrypoint("client", "org.teamvoided.dusk_autumn.DusksAndDungeonsClient::init")
+    entrypoint("fabric-datagen", "org.teamvoided.dusk_autumn.data.gen.DnDData")
 
     mixinFile("dusk_autumn.mixins.json")
     mixinFile("dusk_autumn.client.mixins.json")

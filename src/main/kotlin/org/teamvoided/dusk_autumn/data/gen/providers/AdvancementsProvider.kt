@@ -14,10 +14,9 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.HolderSet
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
-import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.DuskAutumns.mc
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.mc
 import org.teamvoided.dusk_autumn.data.DnDWolfVariants
-import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomes
 import java.util.concurrent.CompletableFuture

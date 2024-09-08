@@ -3,7 +3,7 @@ package org.teamvoided.dusk_autumn.data.tags
 import net.minecraft.block.Block
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 
 object DnDBlockTags {
     val HOLLOW_LOGS = create("hollow_logs")

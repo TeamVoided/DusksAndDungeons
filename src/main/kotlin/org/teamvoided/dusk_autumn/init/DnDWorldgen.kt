@@ -11,8 +11,8 @@ import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType
 import net.minecraft.world.gen.trunk.TrunkPlacer
 import net.minecraft.world.gen.trunk.TrunkPlacerType
-import org.teamvoided.dusk_autumn.DuskAutumns.id
-import org.teamvoided.dusk_autumn.DuskAutumns.isDev
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.isDev
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomes
 import org.teamvoided.dusk_autumn.init.worldgen.DnDFeatures
 import org.teamvoided.dusk_autumn.init.worldgen.DnDSurfaceBuilders

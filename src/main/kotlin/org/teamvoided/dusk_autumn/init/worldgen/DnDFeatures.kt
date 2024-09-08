@@ -4,7 +4,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.FeatureConfig
-import org.teamvoided.dusk_autumn.DuskAutumns
+import org.teamvoided.dusk_autumn.DusksAndDungeons
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.BoulderFeature
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.FairyRingFeature
 import org.teamvoided.dusk_autumn.world.gen.configured_feature.FallenTreeFeature
@@ -23,5 +23,5 @@ object DnDFeatures {
 
     fun init() = Unit
     private fun <C : FeatureConfig, F : Feature<C>> register(name: String, feature: F): F =
-        Registry.register(Registries.FEATURE, DuskAutumns.id(name), feature)
+        Registry.register(Registries.FEATURE, DusksAndDungeons.id(name), feature)
 }

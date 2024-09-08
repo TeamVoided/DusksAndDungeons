@@ -29,16 +29,15 @@ class CrytalClusterWithParticlesBlock(height: Float, aabbOffset: Float, settings
     companion object {
         fun getParticleDirections(direction: Direction, random: RandomGenerator): Vec3d {
             val velMain = (random.nextDouble() * 0.4) + 0.2
-            val vel1 = (random.nextDouble() - random.nextDouble()) * 0.125
-            val vel2 = (random.nextDouble() - random.nextDouble()) * 0.125
+            val velSec = (random.nextDouble() - random.nextDouble()) * 0.125
             return (when (direction) {
-                Direction.UP -> Vec3d(vel1, -velMain, vel2)
-                Direction.DOWN -> Vec3d(vel1, velMain, vel2)
-                Direction.NORTH -> Vec3d(vel1, vel2, velMain)
-                Direction.SOUTH -> Vec3d(vel1, vel2,-velMain)
-                Direction.WEST -> Vec3d(velMain, vel1, vel2)
-                Direction.EAST -> Vec3d(-velMain, vel1, vel2)
-                else -> Vec3d(vel1, velMain, vel2)
+                Direction.UP -> Vec3d(velSec, -velMain, velSec)
+                Direction.DOWN -> Vec3d(velSec, velMain, velSec)
+                Direction.NORTH -> Vec3d(velSec, velSec, velMain)
+                Direction.SOUTH -> Vec3d(velSec, velSec,-velMain)
+                Direction.WEST -> Vec3d(velMain, velSec, velSec)
+                Direction.EAST -> Vec3d(-velMain, velSec, velSec)
+                else -> Vec3d(velSec, velMain, velSec)
             })
         }
     }

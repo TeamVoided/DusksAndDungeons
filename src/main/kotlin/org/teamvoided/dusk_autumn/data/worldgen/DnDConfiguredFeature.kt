@@ -3,7 +3,7 @@ package org.teamvoided.dusk_autumn.data.worldgen
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.world.gen.feature.ConfiguredFeature
-import org.teamvoided.dusk_autumn.DuskAutumns.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 
 @Suppress("MemberVisibilityCanBePrivate")
 object DnDConfiguredFeature {
