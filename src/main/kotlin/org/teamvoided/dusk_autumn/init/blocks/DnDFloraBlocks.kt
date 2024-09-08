@@ -13,16 +13,11 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDFloraBlocks {
-    val VERDURE_BLOCK = DnDBlocks.register(
-        "verdure_block", Block(
-            copy(MOSS_BLOCK)
-        )
-    )
-    val VERDURE_DEEPSLATE = DnDBlocks.register(
-        "verdure_deepslate", Block(
-            copy(DEEPSLATE)
-        )
-    )
+//    val VERDURE_DEEPSLATE = DnDBlocks.register(
+//        "verdure_deepslate", Block(
+//            copy(DEEPSLATE).luminance(light(1))
+//        )
+//    )
     val PAINTED_ROSE = DnDBlocks.register(
         "painted_rose", PaintedRoseBlock(
             Settings.create()
@@ -46,8 +41,7 @@ object DnDFloraBlocks {
         ).cutout()
     )
     val WARPED_WART = DnDBlocks.register(
-        "warped_wart",
-        WarpedNetherWartBlock(
+        "warped_wart", WarpedNetherWartBlock(
             Settings.create().mapColor(MapColor.WARPED_STEM).noCollision().ticksRandomly()
                 .sounds(BlockSoundGroup.NETHER_WART).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout().sword().axe()
@@ -93,8 +87,7 @@ object DnDFloraBlocks {
         ).cutout().sword().hoe()
     )
     val ROOT_BLOCK = DnDBlocks.register(
-        "root_block",
-        MangroveRootsBlock(
+        "root_block", MangroveRootsBlock(
             Settings.create().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS)
                 .strength(0.7f).nonOpaque().suffocates(Blocks::nonSolid).blockVision(Blocks::nonSolid).nonOpaque()
                 .lavaIgnitable().sounds(rootBlockSound)
@@ -102,22 +95,19 @@ object DnDFloraBlocks {
     )
 
     val WILD_WHEAT = DnDBlocks.registerNoItem(
-        "wild_wheat",
-        TallPlantBlock(
+        "wild_wheat", TallPlantBlock(
             Settings.create().mapColor(MapColor.PLANT).noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).offsetType(OffsetType.XZ).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout().axe()
     )
     val GOLDEN_BEETROOTS = DnDBlocks.registerNoItem(
-        "golden_beetroots",
-        GoldenBeetrootsBlock(
+        "golden_beetroots", GoldenBeetrootsBlock(
             Settings.create().mapColor(MapColor.GOLD).noCollision().ticksRandomly().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout().axe()
     )
     val MOONBERRY_VINE = DnDBlocks.register(
-        "moonberry_vine",
-        MoonberryVineBlock(
+        "moonberry_vine", MoonberryVineBlock(
             Settings.create().mapColor(MapColor.PURPLE).noCollision().strength(0.2f)
                 .sounds(BlockSoundGroup.CAVE_VINES).luminance(MoonberryVineBlock.getLuminanceSupplier(8, 11))
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY)

@@ -91,12 +91,21 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DnDWoodBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN
         )
         gen.registerSingleton(DnDWoodBlocks.GALLERY_MAPLE_LEAVES, TexturedModel.LEAVES)
-        gen.registerRotatableAndSpinnable(DnDFloraBlocks.VERDURE_BLOCK)
-        gen.createVerdureGrowth(
-            DnDFloraBlocks.VERDURE_DEEPSLATE,
-            Texture.getId(DnDFloraBlocks.VERDURE_BLOCK),
-            Texture.getSubId(Blocks.DEEPSLATE, "_top")
-        )
+//        gen.registerCoral(
+//            DnDBlocks.CLUB_CORAL,
+//            DnDBlocks.DEAD_CLUB_CORAL,
+//            DnDBlocks.CLUB_CORAL_BLOCK,
+//            DnDBlocks.DEAD_CLUB_CORAL_BLOCK,
+//            DnDBlocks.CLUB_CORAL_FAN,
+//            DnDBlocks.DEAD_CLUB_CORAL_FAN,
+//            DnDBlocks.CLUB_CORAL_WALL_FAN,
+//            DnDBlocks.DEAD_CLUB_CORAL_WALL_FAN
+//        )
+//        gen.createVerdureGrowth(
+//            DnDFloraBlocks.VERDURE_DEEPSLATE,
+//            Texture.getId(DnDFloraBlocks.VERDURE_BLOCK),
+//            Texture.getSubId(Blocks.DEEPSLATE, "_top")
+//        )
         gen.registerGalleryRose(DnDFloraBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerGoldenMushroomPlant(DnDFloraBlocks.GOLDEN_MUSHROOM)
 

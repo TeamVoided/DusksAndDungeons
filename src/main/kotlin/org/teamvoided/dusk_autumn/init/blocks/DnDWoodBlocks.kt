@@ -18,107 +18,6 @@ import org.teamvoided.dusk_autumn.init.DnDParticles
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDWoodBlocks {
-
-    val HOLLOW_OAK_LOG = DnDBlocks.register("hollow_oak_log", hollowLog(Blocks.OAK_LOG))
-    val HOLLOW_STRIPPED_OAK_LOG = DnDBlocks.register("hollow_stripped_oak_log", hollowLog(Blocks.STRIPPED_OAK_LOG))
-    val HOLLOW_SPRUCE_LOG = DnDBlocks.register("hollow_spruce_log", hollowLog(Blocks.SPRUCE_LOG))
-    val HOLLOW_STRIPPED_SPRUCE_LOG =
-        DnDBlocks.register("hollow_stripped_spruce_log", hollowLog(Blocks.STRIPPED_SPRUCE_LOG))
-    val HOLLOW_BIRCH_LOG = DnDBlocks.register("hollow_birch_log", hollowLog(Blocks.BIRCH_LOG))
-    val HOLLOW_STRIPPED_BIRCH_LOG =
-        DnDBlocks.register("hollow_stripped_birch_log", hollowLog(Blocks.STRIPPED_BIRCH_LOG))
-    val HOLLOW_JUNGLE_LOG = DnDBlocks.register("hollow_jungle_log", hollowLog(Blocks.JUNGLE_LOG))
-    val HOLLOW_STRIPPED_JUNGLE_LOG =
-        DnDBlocks.register("hollow_stripped_jungle_log", hollowLog(Blocks.STRIPPED_JUNGLE_LOG))
-    val HOLLOW_ACACIA_LOG = DnDBlocks.register("hollow_acacia_log", hollowLog(Blocks.ACACIA_LOG))
-    val HOLLOW_STRIPPED_ACACIA_LOG =
-        DnDBlocks.register("hollow_stripped_acacia_log", hollowLog(Blocks.STRIPPED_ACACIA_LOG))
-    val HOLLOW_DARK_OAK_LOG = DnDBlocks.register("hollow_dark_oak_log", hollowLog(Blocks.DARK_OAK_LOG))
-    val HOLLOW_STRIPPED_DARK_OAK_LOG =
-        DnDBlocks.register("hollow_stripped_dark_oak_log", hollowLog(Blocks.STRIPPED_DARK_OAK_LOG))
-    val HOLLOW_MANGROVE_LOG = DnDBlocks.register("hollow_mangrove_log", hollowLog(Blocks.MANGROVE_LOG))
-    val HOLLOW_STRIPPED_MANGROVE_LOG =
-        DnDBlocks.register("hollow_stripped_mangrove_log", hollowLog(Blocks.STRIPPED_MANGROVE_LOG))
-    val HOLLOW_CHERRY_LOG = DnDBlocks.register("hollow_cherry_log", hollowLog(Blocks.CHERRY_LOG))
-    val HOLLOW_STRIPPED_CHERRY_LOG =
-        DnDBlocks.register("hollow_stripped_cherry_log", hollowLog(Blocks.STRIPPED_CHERRY_LOG))
-    val HOLLOW_BAMBOO_BLOCK = DnDBlocks.register("hollow_bamboo_block", hollowBambooBlock(Blocks.BAMBOO_BLOCK))
-    val HOLLOW_STRIPPED_BAMBOO_BLOCK =
-        DnDBlocks.register("hollow_stripped_bamboo_block", hollowBambooBlock(Blocks.STRIPPED_BAMBOO_BLOCK))
-    val HOLLOW_CRIMSON_STEM = DnDBlocks.register("hollow_crimson_stem", hollowLog(Blocks.CRIMSON_HYPHAE))
-    val HOLLOW_STRIPPED_CRIMSON_STEM =
-        DnDBlocks.register("hollow_stripped_crimson_stem", hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE))
-    val HOLLOW_WARPED_STEM = DnDBlocks.register("hollow_warped_stem", hollowLog(Blocks.WARPED_HYPHAE))
-    val HOLLOW_STRIPPED_WARPED_STEM =
-        DnDBlocks.register("hollow_stripped_warped_stem", hollowLog(Blocks.STRIPPED_WARPED_HYPHAE))
-
-    val OAK_WOOD_STAIRS = DnDBlocks.register("oak_wood_stairs", stairsOf(Blocks.OAK_WOOD))
-    val OAK_WOOD_SLAB = DnDBlocks.register("oak_wood_slab", slabOf(Blocks.OAK_WOOD))
-    val OAK_WOOD_WALL = DnDBlocks.register("oak_wood_wall", wallOf(Blocks.OAK_WOOD))
-    val SPRUCE_WOOD_STAIRS = DnDBlocks.register("spruce_wood_stairs", stairsOf(Blocks.SPRUCE_WOOD))
-    val SPRUCE_WOOD_SLAB = DnDBlocks.register("spruce_wood_slab", slabOf(Blocks.SPRUCE_WOOD))
-    val SPRUCE_WOOD_WALL = DnDBlocks.register("spruce_wood_wall", wallOf(Blocks.SPRUCE_WOOD))
-    val BIRCH_WOOD_STAIRS = DnDBlocks.register("birch_wood_stairs", stairsOf(Blocks.BIRCH_WOOD))
-    val BIRCH_WOOD_SLAB = DnDBlocks.register("birch_wood_slab", slabOf(Blocks.BIRCH_WOOD))
-    val BIRCH_WOOD_WALL = DnDBlocks.register("birch_wood_wall", wallOf(Blocks.BIRCH_WOOD))
-    val JUNGLE_WOOD_STAIRS = DnDBlocks.register("jungle_wood_stairs", stairsOf(Blocks.JUNGLE_WOOD))
-    val JUNGLE_WOOD_SLAB = DnDBlocks.register("jungle_wood_slab", slabOf(Blocks.JUNGLE_WOOD))
-    val JUNGLE_WOOD_WALL = DnDBlocks.register("jungle_wood_wall", wallOf(Blocks.JUNGLE_WOOD))
-    val ACACIA_WOOD_STAIRS = DnDBlocks.register("acacia_wood_stairs", stairsOf(Blocks.ACACIA_WOOD))
-    val ACACIA_WOOD_SLAB = DnDBlocks.register("acacia_wood_slab", slabOf(Blocks.ACACIA_WOOD))
-    val ACACIA_WOOD_WALL = DnDBlocks.register("acacia_wood_wall", wallOf(Blocks.ACACIA_WOOD))
-    val DARK_OAK_WOOD_STAIRS = DnDBlocks.register("dark_oak_wood_stairs", stairsOf(Blocks.DARK_OAK_WOOD))
-    val DARK_OAK_WOOD_SLAB = DnDBlocks.register("dark_oak_wood_slab", slabOf(Blocks.DARK_OAK_WOOD))
-    val DARK_OAK_WOOD_WALL = DnDBlocks.register("dark_oak_wood_wall", wallOf(Blocks.DARK_OAK_WOOD))
-    val MANGROVE_WOOD_STAIRS = DnDBlocks.register("mangrove_wood_stairs", stairsOf(Blocks.MANGROVE_WOOD))
-    val MANGROVE_WOOD_SLAB = DnDBlocks.register("mangrove_wood_slab", slabOf(Blocks.MANGROVE_WOOD))
-    val MANGROVE_WOOD_WALL = DnDBlocks.register("mangrove_wood_wall", wallOf(Blocks.MANGROVE_WOOD))
-    val CHERRY_WOOD_STAIRS = DnDBlocks.register("cherry_wood_stairs", stairsOf(Blocks.CHERRY_WOOD))
-    val CHERRY_WOOD_SLAB = DnDBlocks.register("cherry_wood_slab", slabOf(Blocks.CHERRY_WOOD))
-    val CHERRY_WOOD_WALL = DnDBlocks.register("cherry_wood_wall", wallOf(Blocks.CHERRY_WOOD))
-    val CRIMSON_HYPHAE_STAIRS = DnDBlocks.register("crimson_hyphae_stairs", stairsOf(Blocks.CRIMSON_HYPHAE))
-    val CRIMSON_HYPHAE_SLAB = DnDBlocks.register("crimson_hyphae_slab", slabOf(Blocks.CRIMSON_HYPHAE))
-    val CRIMSON_HYPHAE_WALL = DnDBlocks.register("crimson_hyphae_wall", wallOf(Blocks.CRIMSON_HYPHAE))
-    val WARPED_HYPHAE_STAIRS = DnDBlocks.register("warped_hyphae_stairs", stairsOf(Blocks.WARPED_HYPHAE))
-    val WARPED_HYPHAE_SLAB = DnDBlocks.register("warped_hyphae_slab", slabOf(Blocks.WARPED_HYPHAE))
-    val WARPED_HYPHAE_WALL = DnDBlocks.register("warped_hyphae_wall", wallOf(Blocks.WARPED_HYPHAE))
-
-    //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
-    val OAK_LOG_PILE = DnDBlocks.register("oak_log_pile", logPile(Blocks.OAK_WOOD))
-    val SPRUCE_LOG_PILE = DnDBlocks.register("spruce_log_pile", logPile(Blocks.SPRUCE_WOOD))
-    val BIRCH_LOG_PILE = DnDBlocks.register("birch_log_pile", logPile(Blocks.BIRCH_WOOD))
-    val JUNGLE_LOG_PILE = DnDBlocks.register("jungle_log_pile", logPile(Blocks.JUNGLE_WOOD))
-    val ACACIA_LOG_PILE = DnDBlocks.register("acacia_log_pile", logPile(Blocks.ACACIA_WOOD))
-    val DARK_OAK_LOG_PILE = DnDBlocks.register("dark_oak_log_pile", logPile(Blocks.DARK_OAK_WOOD))
-    val MANGROVE_LOG_PILE = DnDBlocks.register("mangrove_log_pile", logPile(Blocks.MANGROVE_WOOD))
-    val CHERRY_LOG_PILE = DnDBlocks.register("cherry_log_pile", logPile(Blocks.CHERRY_WOOD))
-    val CRIMSON_STEM_PILE = DnDBlocks.register("crimson_stem_pile", logPile(Blocks.CRIMSON_HYPHAE))
-    val WARPED_STEM_PILE = DnDBlocks.register("warped_stem_pile", logPile(Blocks.WARPED_HYPHAE))
-    val BAMBOO_PILE = DnDBlocks.register("bamboo_pile", logPile(Blocks.BAMBOO_PLANKS, MapColor.PLANT))
-    val STRIPPED_BAMBOO_PILE = DnDBlocks.register("stripped_bamboo_pile", logPile(Blocks.BAMBOO_PLANKS))
-
-
-    val OAK_LEAF_PILE = DnDBlocks.register("oak_leaf_pile", leafPile().cutout())
-    val SPRUCE_LEAF_PILE = DnDBlocks.register("spruce_leaf_pile", leafPile().cutout())
-    val BIRCH_LEAF_PILE = DnDBlocks.register("birch_leaf_pile", leafPile().cutout())
-    val JUNGLE_LEAF_PILE = DnDBlocks.register("jungle_leaf_pile", leafPile().cutout())
-    val ACACIA_LEAF_PILE = DnDBlocks.register("acacia_leaf_pile", leafPile().cutout())
-    val DARK_OAK_LEAF_PILE = DnDBlocks.register("dark_oak_leaf_pile", leafPile().cutout())
-    val MANGROVE_LEAF_PILE = DnDBlocks.register("mangrove_leaf_pile", leafPile().cutout())
-    val CHERRY_LEAF_PILE = DnDBlocks.register(
-        "cherry_leaf_pile",
-        fallingLeafPile(ParticleTypes.CHERRY_LEAVES, MapColor.PINK, BlockSoundGroup.CHERRY_LEAVES).cutout()
-    )
-    val AZALEA_LEAF_PILE = DnDBlocks.register(
-        "azalea_leaf_pile",
-        leafPile(BlockSoundGroup.AZALEA_LEAVES).cutout()
-    )
-    val FLOWERING_AZALEA_LEAF_PILE = DnDBlocks.register(
-        "flowering_azalea_leaf_pile",
-        leafPile(BlockSoundGroup.AZALEA_LEAVES).cutout()
-    )
-
-
     val CASCADE_SAPLING = DnDBlocks.register(
         "cascade_sapling", ThreeWideTreeSaplingBlock(
             SaplingGenerators.CASCADE,
@@ -408,6 +307,105 @@ object DnDWoodBlocks {
             DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
             copy(WITHERING_BONEWOOD_DOOR).allowsSpawning(Blocks::nonSpawnable),
         ).cutout().axe()
+    )
+
+    val HOLLOW_OAK_LOG = DnDBlocks.register("hollow_oak_log", hollowLog(Blocks.OAK_LOG))
+    val HOLLOW_STRIPPED_OAK_LOG = DnDBlocks.register("hollow_stripped_oak_log", hollowLog(Blocks.STRIPPED_OAK_LOG))
+    val HOLLOW_SPRUCE_LOG = DnDBlocks.register("hollow_spruce_log", hollowLog(Blocks.SPRUCE_LOG))
+    val HOLLOW_STRIPPED_SPRUCE_LOG =
+        DnDBlocks.register("hollow_stripped_spruce_log", hollowLog(Blocks.STRIPPED_SPRUCE_LOG))
+    val HOLLOW_BIRCH_LOG = DnDBlocks.register("hollow_birch_log", hollowLog(Blocks.BIRCH_LOG))
+    val HOLLOW_STRIPPED_BIRCH_LOG =
+        DnDBlocks.register("hollow_stripped_birch_log", hollowLog(Blocks.STRIPPED_BIRCH_LOG))
+    val HOLLOW_JUNGLE_LOG = DnDBlocks.register("hollow_jungle_log", hollowLog(Blocks.JUNGLE_LOG))
+    val HOLLOW_STRIPPED_JUNGLE_LOG =
+        DnDBlocks.register("hollow_stripped_jungle_log", hollowLog(Blocks.STRIPPED_JUNGLE_LOG))
+    val HOLLOW_ACACIA_LOG = DnDBlocks.register("hollow_acacia_log", hollowLog(Blocks.ACACIA_LOG))
+    val HOLLOW_STRIPPED_ACACIA_LOG =
+        DnDBlocks.register("hollow_stripped_acacia_log", hollowLog(Blocks.STRIPPED_ACACIA_LOG))
+    val HOLLOW_DARK_OAK_LOG = DnDBlocks.register("hollow_dark_oak_log", hollowLog(Blocks.DARK_OAK_LOG))
+    val HOLLOW_STRIPPED_DARK_OAK_LOG =
+        DnDBlocks.register("hollow_stripped_dark_oak_log", hollowLog(Blocks.STRIPPED_DARK_OAK_LOG))
+    val HOLLOW_MANGROVE_LOG = DnDBlocks.register("hollow_mangrove_log", hollowLog(Blocks.MANGROVE_LOG))
+    val HOLLOW_STRIPPED_MANGROVE_LOG =
+        DnDBlocks.register("hollow_stripped_mangrove_log", hollowLog(Blocks.STRIPPED_MANGROVE_LOG))
+    val HOLLOW_CHERRY_LOG = DnDBlocks.register("hollow_cherry_log", hollowLog(Blocks.CHERRY_LOG))
+    val HOLLOW_STRIPPED_CHERRY_LOG =
+        DnDBlocks.register("hollow_stripped_cherry_log", hollowLog(Blocks.STRIPPED_CHERRY_LOG))
+    val HOLLOW_BAMBOO_BLOCK = DnDBlocks.register("hollow_bamboo_block", hollowBambooBlock(Blocks.BAMBOO_BLOCK))
+    val HOLLOW_STRIPPED_BAMBOO_BLOCK =
+        DnDBlocks.register("hollow_stripped_bamboo_block", hollowBambooBlock(Blocks.STRIPPED_BAMBOO_BLOCK))
+    val HOLLOW_CRIMSON_STEM = DnDBlocks.register("hollow_crimson_stem", hollowLog(Blocks.CRIMSON_HYPHAE))
+    val HOLLOW_STRIPPED_CRIMSON_STEM =
+        DnDBlocks.register("hollow_stripped_crimson_stem", hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE))
+    val HOLLOW_WARPED_STEM = DnDBlocks.register("hollow_warped_stem", hollowLog(Blocks.WARPED_HYPHAE))
+    val HOLLOW_STRIPPED_WARPED_STEM =
+        DnDBlocks.register("hollow_stripped_warped_stem", hollowLog(Blocks.STRIPPED_WARPED_HYPHAE))
+
+    val OAK_WOOD_STAIRS = DnDBlocks.register("oak_wood_stairs", stairsOf(Blocks.OAK_WOOD))
+    val OAK_WOOD_SLAB = DnDBlocks.register("oak_wood_slab", slabOf(Blocks.OAK_WOOD))
+    val OAK_WOOD_WALL = DnDBlocks.register("oak_wood_wall", wallOf(Blocks.OAK_WOOD))
+    val SPRUCE_WOOD_STAIRS = DnDBlocks.register("spruce_wood_stairs", stairsOf(Blocks.SPRUCE_WOOD))
+    val SPRUCE_WOOD_SLAB = DnDBlocks.register("spruce_wood_slab", slabOf(Blocks.SPRUCE_WOOD))
+    val SPRUCE_WOOD_WALL = DnDBlocks.register("spruce_wood_wall", wallOf(Blocks.SPRUCE_WOOD))
+    val BIRCH_WOOD_STAIRS = DnDBlocks.register("birch_wood_stairs", stairsOf(Blocks.BIRCH_WOOD))
+    val BIRCH_WOOD_SLAB = DnDBlocks.register("birch_wood_slab", slabOf(Blocks.BIRCH_WOOD))
+    val BIRCH_WOOD_WALL = DnDBlocks.register("birch_wood_wall", wallOf(Blocks.BIRCH_WOOD))
+    val JUNGLE_WOOD_STAIRS = DnDBlocks.register("jungle_wood_stairs", stairsOf(Blocks.JUNGLE_WOOD))
+    val JUNGLE_WOOD_SLAB = DnDBlocks.register("jungle_wood_slab", slabOf(Blocks.JUNGLE_WOOD))
+    val JUNGLE_WOOD_WALL = DnDBlocks.register("jungle_wood_wall", wallOf(Blocks.JUNGLE_WOOD))
+    val ACACIA_WOOD_STAIRS = DnDBlocks.register("acacia_wood_stairs", stairsOf(Blocks.ACACIA_WOOD))
+    val ACACIA_WOOD_SLAB = DnDBlocks.register("acacia_wood_slab", slabOf(Blocks.ACACIA_WOOD))
+    val ACACIA_WOOD_WALL = DnDBlocks.register("acacia_wood_wall", wallOf(Blocks.ACACIA_WOOD))
+    val DARK_OAK_WOOD_STAIRS = DnDBlocks.register("dark_oak_wood_stairs", stairsOf(Blocks.DARK_OAK_WOOD))
+    val DARK_OAK_WOOD_SLAB = DnDBlocks.register("dark_oak_wood_slab", slabOf(Blocks.DARK_OAK_WOOD))
+    val DARK_OAK_WOOD_WALL = DnDBlocks.register("dark_oak_wood_wall", wallOf(Blocks.DARK_OAK_WOOD))
+    val MANGROVE_WOOD_STAIRS = DnDBlocks.register("mangrove_wood_stairs", stairsOf(Blocks.MANGROVE_WOOD))
+    val MANGROVE_WOOD_SLAB = DnDBlocks.register("mangrove_wood_slab", slabOf(Blocks.MANGROVE_WOOD))
+    val MANGROVE_WOOD_WALL = DnDBlocks.register("mangrove_wood_wall", wallOf(Blocks.MANGROVE_WOOD))
+    val CHERRY_WOOD_STAIRS = DnDBlocks.register("cherry_wood_stairs", stairsOf(Blocks.CHERRY_WOOD))
+    val CHERRY_WOOD_SLAB = DnDBlocks.register("cherry_wood_slab", slabOf(Blocks.CHERRY_WOOD))
+    val CHERRY_WOOD_WALL = DnDBlocks.register("cherry_wood_wall", wallOf(Blocks.CHERRY_WOOD))
+    val CRIMSON_HYPHAE_STAIRS = DnDBlocks.register("crimson_hyphae_stairs", stairsOf(Blocks.CRIMSON_HYPHAE))
+    val CRIMSON_HYPHAE_SLAB = DnDBlocks.register("crimson_hyphae_slab", slabOf(Blocks.CRIMSON_HYPHAE))
+    val CRIMSON_HYPHAE_WALL = DnDBlocks.register("crimson_hyphae_wall", wallOf(Blocks.CRIMSON_HYPHAE))
+    val WARPED_HYPHAE_STAIRS = DnDBlocks.register("warped_hyphae_stairs", stairsOf(Blocks.WARPED_HYPHAE))
+    val WARPED_HYPHAE_SLAB = DnDBlocks.register("warped_hyphae_slab", slabOf(Blocks.WARPED_HYPHAE))
+    val WARPED_HYPHAE_WALL = DnDBlocks.register("warped_hyphae_wall", wallOf(Blocks.WARPED_HYPHAE))
+
+    //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
+    val OAK_LOG_PILE = DnDBlocks.register("oak_log_pile", logPile(Blocks.OAK_WOOD))
+    val SPRUCE_LOG_PILE = DnDBlocks.register("spruce_log_pile", logPile(Blocks.SPRUCE_WOOD))
+    val BIRCH_LOG_PILE = DnDBlocks.register("birch_log_pile", logPile(Blocks.BIRCH_WOOD))
+    val JUNGLE_LOG_PILE = DnDBlocks.register("jungle_log_pile", logPile(Blocks.JUNGLE_WOOD))
+    val ACACIA_LOG_PILE = DnDBlocks.register("acacia_log_pile", logPile(Blocks.ACACIA_WOOD))
+    val DARK_OAK_LOG_PILE = DnDBlocks.register("dark_oak_log_pile", logPile(Blocks.DARK_OAK_WOOD))
+    val MANGROVE_LOG_PILE = DnDBlocks.register("mangrove_log_pile", logPile(Blocks.MANGROVE_WOOD))
+    val CHERRY_LOG_PILE = DnDBlocks.register("cherry_log_pile", logPile(Blocks.CHERRY_WOOD))
+    val CRIMSON_STEM_PILE = DnDBlocks.register("crimson_stem_pile", logPile(Blocks.CRIMSON_HYPHAE))
+    val WARPED_STEM_PILE = DnDBlocks.register("warped_stem_pile", logPile(Blocks.WARPED_HYPHAE))
+    val BAMBOO_PILE = DnDBlocks.register("bamboo_pile", logPile(Blocks.BAMBOO_PLANKS, MapColor.PLANT))
+    val STRIPPED_BAMBOO_PILE = DnDBlocks.register("stripped_bamboo_pile", logPile(Blocks.BAMBOO_PLANKS))
+
+
+    val OAK_LEAF_PILE = DnDBlocks.register("oak_leaf_pile", leafPile().cutout())
+    val SPRUCE_LEAF_PILE = DnDBlocks.register("spruce_leaf_pile", leafPile().cutout())
+    val BIRCH_LEAF_PILE = DnDBlocks.register("birch_leaf_pile", leafPile().cutout())
+    val JUNGLE_LEAF_PILE = DnDBlocks.register("jungle_leaf_pile", leafPile().cutout())
+    val ACACIA_LEAF_PILE = DnDBlocks.register("acacia_leaf_pile", leafPile().cutout())
+    val DARK_OAK_LEAF_PILE = DnDBlocks.register("dark_oak_leaf_pile", leafPile().cutout())
+    val MANGROVE_LEAF_PILE = DnDBlocks.register("mangrove_leaf_pile", leafPile().cutout())
+    val CHERRY_LEAF_PILE = DnDBlocks.register(
+        "cherry_leaf_pile",
+        fallingLeafPile(ParticleTypes.CHERRY_LEAVES, MapColor.PINK, BlockSoundGroup.CHERRY_LEAVES).cutout()
+    )
+    val AZALEA_LEAF_PILE = DnDBlocks.register(
+        "azalea_leaf_pile",
+        leafPile(BlockSoundGroup.AZALEA_LEAVES).cutout()
+    )
+    val FLOWERING_AZALEA_LEAF_PILE = DnDBlocks.register(
+        "flowering_azalea_leaf_pile",
+        leafPile(BlockSoundGroup.AZALEA_LEAVES).cutout()
     )
 
     fun init() {

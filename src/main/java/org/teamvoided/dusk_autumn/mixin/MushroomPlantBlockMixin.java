@@ -23,7 +23,7 @@ public abstract class MushroomPlantBlockMixin extends AbstractPlantBlock impleme
     private void canPlaceAt(BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir,
                             @Local(ordinal = 1) BlockState blockState, @Local(ordinal = 1) BlockPos blockPos) {
         if (blockState.isIn(BlockTags.MUSHROOM_GROW_BLOCK)) {
-            cir.setReturnValue(this.canPlantOnTop(blockState, world, blockPos));
+            cir.setReturnValue(sideCoversSmallSquare(world, pos.down(), Direction.UP));
         }
     }
 }

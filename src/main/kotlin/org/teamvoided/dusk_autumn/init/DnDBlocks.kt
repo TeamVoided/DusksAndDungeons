@@ -4,8 +4,8 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Block
-import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks.*
+import net.minecraft.block.CoralBlockBlock
 import net.minecraft.block.IceBlock
 import net.minecraft.block.MapColor
 import net.minecraft.block.piston.PistonBehavior
@@ -71,7 +71,7 @@ object DnDBlocks {
         "mooncore", CrytalClusterWithParticlesBlock(
             12.0f, 2.0f,
             Settings.create().mapColor(MapColor.LIGHT_BLUE).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
-                .strength(1.5f).ticksRandomly().luminance { _: BlockState -> 15 }
+                .strength(1.5f).ticksRandomly().luminance(light(15))
                 .pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
     )
@@ -82,6 +82,48 @@ object DnDBlocks {
                 .pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
     )
+
+//    val CLUB_CORAL = register(
+//        "club_coral", Block(
+//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+//        )
+//    )
+//    val DEAD_CLUB_CORAL = register(
+//        "dead_club_coral", Block(
+//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+//        )
+//    )
+//    val DEAD_CLUB_CORAL_BLOCK = DeadCoralBlock(
+//        "dead_club_coral_block", Block(
+//            copy(DEAD_TUBE_CORAL_BLOCK)
+//        )
+//    )
+//    val CLUB_CORAL_BLOCK = CoralBlockBlock(
+//        DEAD_CLUB_CORAL_BLOCK,
+//        "club_coral_block", Block(
+//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+//        )
+//    )
+//    val CLUB_CORAL_FAN = register(
+//        "club_coral_fan", Block(
+//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+//        )
+//    )
+//    val DEAD_CLUB_CORAL_FAN = register(
+//        "dead_club_coral_fan", Block(
+//            copy(DEAD_TUBE_CORAL_BLOCK)
+//        )
+//    )
+//    val CLUB_CORAL_WALL_FAN = register(
+//        "club_coral_wall_fan", Block(
+//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+//        )
+//    )
+//    val DEAD_CLUB_CORAL_WALL_FAN = register(
+//        "dead_club_coral_wall_fan", Block(
+//            copy(DEAD_TUBE_CORAL_BLOCK)
+//        )
+//    )
 
     fun init() {
         DnDFamilies.init()

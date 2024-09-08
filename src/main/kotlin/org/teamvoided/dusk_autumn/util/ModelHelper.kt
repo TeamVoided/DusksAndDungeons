@@ -472,17 +472,17 @@ fun createWallBlockStateWithOverlay(
     return model
 }
 
-
-fun BlockStateModelGenerator.registerRotatableAndSpinnable(block: Block) {
-    val identifier = TexturedModel.CUBE_ALL.create(block, this.modelCollector)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(
-            block, *getRandomRotations(identifier)
-        )
-    )
+fun getRandomYRotations(model: Identifier): Array<BlockStateVariant> {
+    var array = arrayOf<BlockStateVariant>()
+    VariantSettings.Rotation.entries.forEach {
+        val variant = BlockStateVariant.create().put(VariantSettings.MODEL, model)
+        if (it != Rotation.R0) variant.put(VariantSettings.Y, it)
+        array += variant
+    }
+    return array
 }
 
-fun getRandomRotations(model: Identifier): Array<BlockStateVariant> {
+fun getRandomYXRotations(model: Identifier): Array<BlockStateVariant> {
     var array = arrayOf<BlockStateVariant>()
     VariantSettings.Rotation.entries.forEach { itY ->
         VariantSettings.Rotation.entries.forEach { itX ->
@@ -502,15 +502,8 @@ fun BlockStateModelGenerator.createVerdureGrowth(block: Block, top: Identifier, 
         .put(TextureKey.SIDE, Texture.getId(block))
         .put(TextureKey.BOTTOM, bottom)
     val model = Models.CUBE_BOTTOM_TOP.upload(block, texture, this.modelCollector)
-    val modelM = block(
-        "parent/cube_bottom_top_mirrored",
-        "_mirrored",
-        TextureKey.TOP,
-        TextureKey.SIDE,
-        TextureKey.BOTTOM
-    ).upload(block, texture, this.modelCollector)
     blockStateCollector.accept(
-        BlockStateModelGenerator.createBlockStateWithTwoModelAndRandomInversion(block, model, modelM)
+        BlockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(block, model)
     )
 }
 
