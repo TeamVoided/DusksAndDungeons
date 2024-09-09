@@ -30,6 +30,7 @@ import org.teamvoided.dusk_autumn.particle.ColorableOminousParticle
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
 import org.teamvoided.dusk_autumn.particle.SpiderlilyPetalParticle
 import org.teamvoided.dusk_autumn.particle.SnowflakeParticle
+import org.teamvoided.dusk_autumn.particle.SpiralParticle
 import org.teamvoided.dusk_autumn.util.DnDBlockLists
 
 @Suppress("unused")
@@ -51,10 +52,12 @@ object DusksAndDungeonsClient {
             DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory
         )
         ParticleFactoryRegistry.getInstance().register(
-            DnDParticles.COLORABLE_OMINOUS_PARTICLE, ColorableOminousParticle::ColorableOminousParticleFactory
+            DnDParticles.COLORABLE_OMINOUS_PARTICLE, ColorableOminousParticle::Factory
         )
         ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIDERLILY, SpiderlilyPetalParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
+
+        ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIRAL, SpiralParticle::Factory)
 
         EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
         EntityRendererRegistry.register(DnDEntities.BIRD_TEST, ::BirdEntityRenderer)

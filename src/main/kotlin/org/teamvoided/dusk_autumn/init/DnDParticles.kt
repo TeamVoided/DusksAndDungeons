@@ -18,6 +18,8 @@ object DnDParticles {
     val SPIDERLILY: DefaultParticleType = FabricParticleTypes.simple()
     val SNOWFLAKE: DefaultParticleType = FabricParticleTypes.simple()
 
+    val SPIRAL: DefaultParticleType = FabricParticleTypes.simple()
+
     fun init() {
         register("small_soul_flame", SMALL_SOUL_FLAME_PARTICLE)
 //        register("autumn_leaf", AUTUMN_LEAF_PARTICLE)
@@ -25,6 +27,9 @@ object DnDParticles {
         register("colorable_ominous_spawning", COLORABLE_OMINOUS_PARTICLE)
         register("spiderlily", SPIDERLILY)
         register("snowflake", SNOWFLAKE)
+
+        register("spiral", SPIRAL)
+
     }
 
     fun register(id: String, particleType: ParticleType<*>) =

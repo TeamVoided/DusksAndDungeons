@@ -78,8 +78,7 @@ class ColorableOminousParticle internal constructor(
     }
 
     @Environment(EnvType.CLIENT)
-    class ColorableOminousParticleFactory(private val spriteProvider: SpriteProvider) :
-        ParticleFactory<ColorableParticleEffect> {
+    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<ColorableParticleEffect> {
         override fun createParticle(
             type: ColorableParticleEffect,
             world: ClientWorld,
