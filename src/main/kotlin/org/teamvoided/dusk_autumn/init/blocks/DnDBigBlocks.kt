@@ -3,9 +3,11 @@ package org.teamvoided.dusk_autumn.init.blocks
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.MapColor
+import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.block.big.BigChainBlock
 import org.teamvoided.dusk_autumn.block.big.BigLanternBlock
 import org.teamvoided.dusk_autumn.block.big.BigRedstoneLanternBlock
+import org.teamvoided.dusk_autumn.block.big.MoonscribeLanternBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
 
@@ -13,13 +15,17 @@ object DnDBigBlocks {
     val BIG_CHAIN = DnDBlocks.register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
     val BIG_LANTERN =
         DnDBlocks.register("big_lantern", BigLanternBlock(copy(LANTERN).sounds(bigLanternSound)).pickaxe())
-    val BIG_REDSTONE_LANTERN =
-        DnDBlocks.register(
-            "big_redstone_lantern",
-            BigRedstoneLanternBlock(copy(LANTERN).sounds(bigLanternSound).luminance(luminanceOf(8))).pickaxe()
-        )
+    val BIG_REDSTONE_LANTERN = DnDBlocks.register(
+        "big_redstone_lantern",
+        BigRedstoneLanternBlock(copy(LANTERN).sounds(bigLanternSound).luminance(luminanceOf(8))).pickaxe()
+    )
     val BIG_SOUL_LANTERN =
         DnDBlocks.register("big_soul_lantern", BigLanternBlock(copy(SOUL_LANTERN).sounds(bigLanternSound)).pickaxe())
+    val BIG_MOONSCRIBE_LANTERN = DnDBlocks.register(
+        "big_moonscribe_lantern",
+        MoonscribeLanternBlock(copy(SOUL_LANTERN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)).pickaxe()
+    )
+
     val BIG_CANDLE = DnDBlocks.register("big_candle", bigCandleOf(MapColor.SAND))
     val BIG_WHITE_CANDLE = DnDBlocks.register("big_white_candle", bigCandleOf(MapColor.WOOL))
     val BIG_LIGHT_GRAY_CANDLE = DnDBlocks.register("big_light_gray_candle", bigCandleOf(MapColor.LIGHT_GRAY))

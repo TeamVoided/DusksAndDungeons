@@ -164,8 +164,8 @@ object DnDWoodBlocks {
         "gallery_maple_sapling", ThreeWideTreeSaplingBlock(
             SaplingGenerators.CASCADE,
             Settings.create()
-                .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly()
-                .sounds(BlockSoundGroup.AZALEA).pistonBehavior(PistonBehavior.DESTROY)
+                .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.AZALEA)
+                .pistonBehavior(PistonBehavior.DESTROY).luminance(light(1))
         )
     ).cutout()
     val POTTED_GALLERY_MAPLE_SAPLING =

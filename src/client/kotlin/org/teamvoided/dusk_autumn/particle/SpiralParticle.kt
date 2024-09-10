@@ -5,6 +5,9 @@ import net.fabricmc.api.Environment
 import net.minecraft.client.particle.*
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.particle.DefaultParticleType
+import net.minecraft.util.math.MathHelper.lerp
+import org.joml.Vector3f
+import java.awt.Color
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -19,58 +22,99 @@ class SpiralParticle internal constructor(
     zVel: Double
 ) : SpriteBillboardParticle(world, xPos, yPos, zPos) {
     val scaleBase: Float
+    val offsetterXZ: Float
+    val yVelocity2: Double
 
     init {
-        this.velocityX = xVel
-        this.velocityY = yVel + 0.0005
-        this.velocityZ = zVel
-        this.x = xPos
-        this.y = yPos
-        this.z = zPos
-        this.colorRed = 0.5f
-        this.colorGreen = 0f
-        this.colorBlue = 0f
-        this.scaleBase = (random.nextFloat() * 0.2f + 0.1f)
-        this.scale = this.scaleBase
-        this.collidesWithWorld = false
-        this.maxAge = 6000 + (random.nextFloat() * 1000).toInt()
+        velocityX = xVel
+        velocityY = yVel
+        velocityZ = zVel
+        yVelocity2 = 0.0001 + (random.nextFloat() - random.nextFloat()) * 0.0000075
+        x = xPos
+        y = yPos
+        z = zPos
+        colorRed = 1f
+        colorGreen = 1f
+        colorBlue = 1f
+        colorAlpha = 0f
+        scaleBase = (random.nextFloat() * 0.2f + 0.1f)
+        offsetterXZ = (random.nextFloat()) * 0.005f
+        scale = scaleBase
+        prevAngle = random.nextFloat()
+        angle = prevAngle
+        collidesWithWorld = false
+        val age2 = 2500
+        maxAge = age2 + (random.nextFloat() * (age2 / 3f)).toInt()
     }
 
     override fun getType(): ParticleTextureSheet {
-        return ParticleTextureSheet.PARTICLE_SHEET_LIT
+        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT
     }
 
     override fun move(dx: Double, dy: Double, dz: Double) {}
 
-    public override fun getBrightness(tint: Float): Int = 240
-
-    override fun tick() {
-        this.prevPosX = this.x
-        this.prevPosY = this.y
-        this.prevPosZ = this.z
-        if (age++ >= this.maxAge) {
-            this.markDead()
-        } else {
-            val g = (age.toDouble() / maxAge)
-            val strength = g / 75
-            val math = age / 200.0
-            this.velocityX = cos(math)
-            this.velocityZ = sin(math)
-//            this.x = this.positionX + this.velocityX * f
-//            this.y = this.positionY + this.velocityY * f
-//            this.z = this.positionZ + this.velocityZ * f
-            this.x += this.velocityX * strength
-            this.y += this.velocityY * strength + 0.001
-            this.z += this.velocityZ * strength
-            this.scale = this.scaleBase + (g.toFloat() * 0.2f)
-            this.colorRed = 0.5f - (g.toFloat() / 2.0f)
-            this.colorBlue = (g.toFloat() / 2.0f) - 0.5f
-        }
+    public override fun getBrightness(tint: Float): Int {
+        return 240
     }
 
+    override fun tick() {
+        prevPosX = x
+        prevPosY = y
+        prevPosZ = z
+        if (age++ >= maxAge) {
+            colorAlpha += -0.01f
+            if (colorAlpha < 0)
+                markDead()
+        } else if (colorAlpha < 1) {
+            colorAlpha += 0.002f
+        }
+        val frac = (age.toFloat() / maxAge)
+        val speed = 50.0
+        val strength = (frac + offsetterXZ) / speed
+        val fhte = age / (speed * 2.5)
+        val width = 3
+//            val fhte = age / (speed * 1.5)
+//            val width = (fhte / 2) * 0.4
+        velocityX = cos(fhte) * width
+//        velocityY = sin(fhte * 0.35)
+        velocityY = sin(fhte * 3.5) * 0.5
+        velocityZ = sin(fhte) * width
+        x += velocityX * strength
+        y += velocityY * strength + yVelocity2 * speed
+        z += velocityZ * strength
+        scale += 0.0001f
+        colorLerp(frac)
+    }
+
+    fun colorLerp(frac: Float) {
+        val color1 = Color(0xFFFFFF)
+        val color2 = Color(0x24CADA)
+        val color3 = Color(0x52D973)
+        val colorOption1 = Vector3f(color1.red / 255f, color1.green / 255f, color1.blue / 255f)
+        val colorOption2 = Vector3f(color2.red / 255f, color2.green / 255f, color2.blue / 255f)
+        val colorOption3 = Vector3f(color3.red / 255f, color3.green / 255f, color3.blue / 255f)
+        val colorChoice: Vector3f =
+            if (frac < 1f / 5f) colorOption1.lerp(colorOption2, frac * 5f)
+            else if (frac < 1f / 2f) colorOption2
+            else colorOption2.lerp(colorOption3, 2f * (frac - (1f / 2f)))
+        colorRed = colorChoice.x()
+        colorGreen = colorChoice.y()
+        colorBlue = colorChoice.z()
+    }
+
+//    fun colorLerp(frac: Float) {
+//        val color1 = Color(0xD11950)
+//        val color2 = Color(0xCA3E84)
+//        val colorOption1 = Vector3f(color1.red / 255f, color1.green / 255f, color1.blue / 255f)
+//        val colorOption2 = Vector3f(color2.red / 255f, color2.green / 255f, color2.blue / 255f)
+//        val colorChoice: Vector3f = colorOption1.lerp(colorOption2, frac)
+//        colorRed = colorChoice.x()
+//        colorGreen = colorChoice.y()
+//        colorBlue = colorChoice.z()
+//    }
+
     @Environment(EnvType.CLIENT)
-    class Factory(private val spriteProvider: SpriteProvider) :
-        ParticleFactory<DefaultParticleType> {
+    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<DefaultParticleType> {
         override fun createParticle(
             type: DefaultParticleType,
             world: ClientWorld,
