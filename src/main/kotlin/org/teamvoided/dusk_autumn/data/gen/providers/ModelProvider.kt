@@ -149,6 +149,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerBigLantern(DnDBigBlocks.BIG_LANTERN)
         gen.registerBigLantern(DnDBigBlocks.BIG_REDSTONE_LANTERN, true)
         gen.registerBigLantern(DnDBigBlocks.BIG_SOUL_LANTERN)
+        gen.registerBigChain(DnDBigBlocks.BIG_CHAIN)
         gen.registerBigLantern(DnDBigBlocks.BIG_MOONSCRIBE_LANTERN, false, "block/big_metal_lantern_bottom")
         DnDBlockLists.bigCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)

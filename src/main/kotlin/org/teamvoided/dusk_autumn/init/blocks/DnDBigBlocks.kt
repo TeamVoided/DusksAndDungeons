@@ -21,6 +21,10 @@ object DnDBigBlocks {
     )
     val BIG_SOUL_LANTERN =
         DnDBlocks.register("big_soul_lantern", BigLanternBlock(copy(SOUL_LANTERN).sounds(bigLanternSound)).pickaxe())
+    val BIG_METAL_CHAIN = DnDBlocks.register(
+        "big_metal_chain",
+        BigChainBlock(copy(CHAIN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)).cutout().pickaxe()
+    )
     val BIG_MOONSCRIBE_LANTERN = DnDBlocks.register(
         "big_moonscribe_lantern",
         MoonscribeLanternBlock(copy(SOUL_LANTERN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)).pickaxe()
