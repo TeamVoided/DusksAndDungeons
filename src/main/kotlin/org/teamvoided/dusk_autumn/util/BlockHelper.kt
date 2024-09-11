@@ -10,10 +10,7 @@ import net.minecraft.particle.DefaultParticleType
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
 import org.teamvoided.dusk_autumn.block.*
-import org.teamvoided.dusk_autumn.block.big.BigCandleBlock
-import org.teamvoided.dusk_autumn.block.big.BigCandleCakeBlock
-import org.teamvoided.dusk_autumn.block.big.BigSoulCandleBlock
-import org.teamvoided.dusk_autumn.block.big.BigSoulCandleCakeBlock
+import org.teamvoided.dusk_autumn.block.big.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock

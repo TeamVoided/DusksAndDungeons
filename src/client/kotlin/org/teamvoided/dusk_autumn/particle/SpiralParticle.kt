@@ -5,7 +5,6 @@ import net.fabricmc.api.Environment
 import net.minecraft.client.particle.*
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.particle.DefaultParticleType
-import net.minecraft.util.math.MathHelper.lerp
 import org.joml.Vector3f
 import java.awt.Color
 import kotlin.math.cos
@@ -19,7 +18,9 @@ class SpiralParticle internal constructor(
     zPos: Double,
     xVel: Double,
     yVel: Double,
-    zVel: Double
+    zVel: Double,
+    val color1: Color,
+    val color2: Color
 ) : SpriteBillboardParticle(world, xPos, yPos, zPos) {
     val scaleBase: Float
     val offsetterXZ: Float
@@ -71,32 +72,29 @@ class SpiralParticle internal constructor(
         val frac = (age.toFloat() / maxAge)
         val speed = 50.0
         val strength = (frac + offsetterXZ) / speed
-        val fhte = age / (speed * 2.5)
+        val amplitude = age / (speed * 2.5)
         val width = 3
 //            val fhte = age / (speed * 1.5)
 //            val width = (fhte / 2) * 0.4
-        velocityX = cos(fhte) * width
-//        velocityY = sin(fhte * 0.35)
-        velocityY = sin(fhte * 3.5) * 0.5
-        velocityZ = sin(fhte) * width
-        x += velocityX * strength
-        y += velocityY * strength + yVelocity2 * speed
-        z += velocityZ * strength
+//        velocityY = sin(fhte * 0.35) this i think did something cool?
+        x += (cos(amplitude) * width * strength) * velocityX
+        y += (sin(amplitude * 3.5) * 0.5 * strength + yVelocity2 * speed) * velocityY
+        z += (sin(amplitude) * width * strength) * velocityZ
         scale += 0.0001f
         colorLerp(frac)
     }
 
     fun colorLerp(frac: Float) {
-        val color1 = Color(0xFFFFFF)
-        val color2 = Color(0x24CADA)
-        val color3 = Color(0x52D973)
-        val colorOption1 = Vector3f(color1.red / 255f, color1.green / 255f, color1.blue / 255f)
-        val colorOption2 = Vector3f(color2.red / 255f, color2.green / 255f, color2.blue / 255f)
-        val colorOption3 = Vector3f(color3.red / 255f, color3.green / 255f, color3.blue / 255f)
+//        val color2 = Color(0x16E5E5)
+//        val color3 = Color(0x16E57E)
+        val colorOption1 = Vector3f(1f, 1f, 1f)
+        val colorOption2 = Vector3f(color1.red / 255f, color1.green / 255f, color1.blue / 255f)
+        val colorOption3 = Vector3f(color2.red / 255f, color2.green / 255f, color2.blue / 255f)
         val colorChoice: Vector3f =
-            if (frac < 1f / 5f) colorOption1.lerp(colorOption2, frac * 5f)
-            else if (frac < 1f / 2f) colorOption2
-            else colorOption2.lerp(colorOption3, 2f * (frac - (1f / 2f)))
+            if (frac < 0.2f) colorOption1.lerp(colorOption2, frac * 5f)
+            else if (frac < 0.4f) colorOption2
+            else if (frac < 0.8f) colorOption2.lerp(colorOption3, 2.5f * (frac - 0.4f))
+        else colorOption3
         colorRed = colorChoice.x()
         colorGreen = colorChoice.y()
         colorBlue = colorChoice.z()
@@ -114,9 +112,9 @@ class SpiralParticle internal constructor(
 //    }
 
     @Environment(EnvType.CLIENT)
-    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<DefaultParticleType> {
+    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<TwoColorParticleEffect> {
         override fun createParticle(
-            type: DefaultParticleType,
+            type: TwoColorParticleEffect,
             world: ClientWorld,
             xPos: Double,
             yPos: Double,
@@ -125,7 +123,7 @@ class SpiralParticle internal constructor(
             yVel: Double,
             zVel: Double
         ): Particle {
-            val particle = SpiralParticle(world, xPos, yPos, zPos, xVel, yVel, zVel)
+            val particle = SpiralParticle(world, xPos, yPos, zPos, xVel, yVel, zVel, type.color1, type.color2)
             particle.setSprite(this.spriteProvider)
             return particle
         }

@@ -7,10 +7,12 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.particle.ColorableParticleEffect
+import org.teamvoided.dusk_autumn.particle.TwoColorParticleEffect
 
 
 object DnDParticles {
     val SMALL_SOUL_FLAME_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
+
     //    val AUTUMN_LEAF_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
     val CASCADE_LEAF_PARTICLE: DefaultParticleType = FabricParticleTypes.simple()
     val COLORABLE_OMINOUS_PARTICLE: ParticleType<ColorableParticleEffect> =
@@ -18,7 +20,8 @@ object DnDParticles {
     val SPIDERLILY: DefaultParticleType = FabricParticleTypes.simple()
     val SNOWFLAKE: DefaultParticleType = FabricParticleTypes.simple()
 
-    val SPIRAL: DefaultParticleType = FabricParticleTypes.simple()
+    val SPIRAL: ParticleType<TwoColorParticleEffect> =
+        FabricParticleTypes.complex(TwoColorParticleEffect.CODEC, TwoColorParticleEffect.PACKET_CODEC)
 
     fun init() {
         register("small_soul_flame", SMALL_SOUL_FLAME_PARTICLE)
@@ -29,7 +32,6 @@ object DnDParticles {
         register("snowflake", SNOWFLAKE)
 
         register("spiral", SPIRAL)
-
     }
 
     fun register(id: String, particleType: ParticleType<*>) =

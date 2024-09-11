@@ -7,7 +7,7 @@ import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.block.big.BigChainBlock
 import org.teamvoided.dusk_autumn.block.big.BigLanternBlock
 import org.teamvoided.dusk_autumn.block.big.BigRedstoneLanternBlock
-import org.teamvoided.dusk_autumn.block.big.MoonscribeLanternBlock
+import org.teamvoided.dusk_autumn.block.big.BigLanternWithSpiralBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
 
@@ -21,13 +21,65 @@ object DnDBigBlocks {
     )
     val BIG_SOUL_LANTERN =
         DnDBlocks.register("big_soul_lantern", BigLanternBlock(copy(SOUL_LANTERN).sounds(bigLanternSound)).pickaxe())
-    val BIG_METAL_CHAIN = DnDBlocks.register(
-        "big_metal_chain",
-        BigChainBlock(copy(CHAIN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)).cutout().pickaxe()
+    val BIG_CELESTAL_CHAIN = DnDBlocks.register(
+        "big_celestal_chain",
+        BigChainBlock(copy(CHAIN).sounds(BlockSoundGroup.BLOCK_VAULT_BREAK)).cutout().pickaxe()
     )
-    val BIG_MOONSCRIBE_LANTERN = DnDBlocks.register(
-        "big_moonscribe_lantern",
-        MoonscribeLanternBlock(copy(SOUL_LANTERN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)).pickaxe()
+    val BIG_MOON_LANTERN = DnDBlocks.register(
+        "big_moon_lantern",
+        BigLanternWithSpiralBlock(
+            0xE01638,
+            0xCC3D78,
+            copy(BIG_SOUL_LANTERN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)
+        ).pickaxe()
+    )
+    val BIG_EARTH_LANTERN = DnDBlocks.register(
+        "big_earth_lantern",
+        BigLanternWithSpiralBlock(
+            0xE5AE16,
+            0xE5B816,
+            copy(BIG_MOON_LANTERN)
+        ).pickaxe()
+    )
+    val BIG_COMET_LANTERN = DnDBlocks.register(
+        "big_comet_lantern",
+        BigLanternWithSpiralBlock(
+            0xE57716,
+            0xCC6C28,
+            copy(BIG_MOON_LANTERN)
+        ).pickaxe()
+    )
+    val BIG_SUN_LANTERN = DnDBlocks.register(
+        "big_sun_lantern",
+        BigLanternWithSpiralBlock(
+            0x16E5E5,
+            0x1470CC,
+            copy(BIG_MOON_LANTERN)
+        ).pickaxe()
+    )
+    val BIG_STAR_LANTERN = DnDBlocks.register(
+        "big_star_lantern",
+        BigLanternWithSpiralBlock(
+            0x7E16E5,
+            0xE52DE5,
+            copy(BIG_MOON_LANTERN)
+        ).pickaxe()
+    )
+    val BIG_NEBULAE_LANTERN = DnDBlocks.register(
+        "big_nebulae_lantern",
+        BigLanternWithSpiralBlock(
+            0x24CADA,
+            0x52D973,
+            copy(BIG_MOON_LANTERN)
+        ).pickaxe()
+    )
+    val BIG_ECLIPSE_LANTERN = DnDBlocks.register(
+        "big_eclipse_lantern",
+        BigLanternWithSpiralBlock(
+            0xE5E5E5,
+            0xBFBFBF,
+            copy(BIG_MOON_LANTERN)
+        ).pickaxe()
     )
 
     val BIG_CANDLE = DnDBlocks.register("big_candle", bigCandleOf(MapColor.SAND))

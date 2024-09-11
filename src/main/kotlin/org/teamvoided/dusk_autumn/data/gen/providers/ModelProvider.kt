@@ -149,8 +149,15 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerBigLantern(DnDBigBlocks.BIG_LANTERN)
         gen.registerBigLantern(DnDBigBlocks.BIG_REDSTONE_LANTERN, true)
         gen.registerBigLantern(DnDBigBlocks.BIG_SOUL_LANTERN)
-        gen.registerBigChain(DnDBigBlocks.BIG_CHAIN)
-        gen.registerBigLantern(DnDBigBlocks.BIG_MOONSCRIBE_LANTERN, false, "block/big_metal_lantern_bottom")
+        gen.registerBigChain(DnDBigBlocks.BIG_CELESTAL_CHAIN)
+        val mLB = "block/big_celestal_lantern_bottom"
+        gen.registerBigLantern(DnDBigBlocks.BIG_MOON_LANTERN, false, mLB)
+        gen.registerBigLantern(DnDBigBlocks.BIG_EARTH_LANTERN, false, mLB)
+        gen.registerBigLantern(DnDBigBlocks.BIG_COMET_LANTERN, false, mLB)
+        gen.registerBigLantern(DnDBigBlocks.BIG_SUN_LANTERN, false, mLB)
+        gen.registerBigLantern(DnDBigBlocks.BIG_STAR_LANTERN, false, mLB)
+        gen.registerBigLantern(DnDBigBlocks.BIG_NEBULAE_LANTERN, false, mLB)
+        gen.registerBigLantern(DnDBigBlocks.BIG_ECLIPSE_LANTERN, false, mLB)
         DnDBlockLists.bigCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
         }

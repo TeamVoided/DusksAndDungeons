@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.block
+package org.teamvoided.dusk_autumn.block.big
 
 import net.minecraft.block.AbstractCandleBlock
 import net.minecraft.block.Block
