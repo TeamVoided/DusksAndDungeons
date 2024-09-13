@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.block.dispenser.DispenserBlock
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.DyedColorComponent
@@ -34,7 +35,8 @@ object DnDItems {
             Item.Settings().maxCount(16)
         )
     )
-    val GALLERY_MAPLE_DOOR = register("gallery_maple_door", TallBlockItem(DnDWoodBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
+    val GALLERY_MAPLE_DOOR =
+        register("gallery_maple_door", TallBlockItem(DnDWoodBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
     val GALLERY_MAPLE_SIGN = register(
         "gallery_maple_sign",
         SignItem(Item.Settings().maxCount(16), DnDWoodBlocks.GALLERY_MAPLE_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_SIGN)
@@ -56,6 +58,8 @@ object DnDItems {
             Item.Settings().maxCount(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
+
+    val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",

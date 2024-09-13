@@ -86,6 +86,11 @@ object DnDFloraBlocks {
             copy(PINK_PETALS).mapColor(MapColor.PURPLE)
         ).cutout().sword().hoe()
     )
+    val WATER_FERN = DnDBlocks.registerNoItem(
+        "water_fern", WaterFernBlock(
+            copy(LILY_PAD)
+        ).cutout()
+    )
     val ROOT_BLOCK = DnDBlocks.register(
         "root_block", MangroveRootsBlock(
             Settings.create().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS)

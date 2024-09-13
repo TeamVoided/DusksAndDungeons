@@ -669,6 +669,21 @@ fun BlockStateModelGenerator.registerTallCrystal(block: Block) {
     )
 }
 
+fun BlockStateModelGenerator.registerWaterFern(block: Block) {
+//    this.registerItemModel(block.asItem())
+    val texture = Texture()
+        .put(TextureKey.PARTICLE, Texture.getId(block))
+        .put(TextureKey.TOP, Texture.getSubId(block, "_roots"))
+        .put(TextureKey.PLANT, Texture.getSubId(block, "_roots"))
+    val model = block(
+        "parent/water_plant",
+        TextureKey.PARTICLE,
+        TextureKey.TOP,
+        TextureKey.PLANT
+    ).upload(block, texture, this.modelCollector)
+    this.registerAxisRotated(block, model)
+}
+
 fun BlockStateModelGenerator.registerBigChain(block: Block) {
     this.registerItemModel(block.asItem())
     val texture = Texture()
