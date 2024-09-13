@@ -37,7 +37,7 @@ class SpiralParticle internal constructor(
         colorRed = 1f
         colorGreen = 1f
         colorBlue = 1f
-        colorAlpha = 0f
+        colorAlpha = 0.01f
         scaleBase = (random.nextFloat() * 0.2f + 0.1f)
         offsetterXZ = (random.nextFloat()) * 0.005f
         scale = scaleBase
@@ -46,16 +46,6 @@ class SpiralParticle internal constructor(
         collidesWithWorld = false
         val age2 = 2500
         maxAge = age2 + (random.nextFloat() * (age2 / 3f)).toInt()
-    }
-
-    override fun getType(): ParticleTextureSheet {
-        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT
-    }
-
-    override fun move(dx: Double, dy: Double, dz: Double) {}
-
-    public override fun getBrightness(tint: Float): Int {
-        return 240
     }
 
     override fun tick() {
@@ -74,9 +64,9 @@ class SpiralParticle internal constructor(
         val strength = (frac + offsetterXZ) / speed
         val amplitude = age / (speed * 2.5)
         val width = 3
-//            val fhte = age / (speed * 1.5)
-//            val width = (fhte / 2) * 0.4
-//        velocityY = sin(fhte * 0.35) this i think did something cool?
+        //val fhte = age / (speed * 1.5)
+        //val width = (fhte / 2) * 0.4
+        //velocityY = sin(fhte * 0.35) this i think did something cool?
         x += (cos(amplitude) * width * strength) * velocityX
         y += (sin(amplitude * 3.5) * 0.5 * strength + yVelocity2 * speed) * velocityY
         z += (sin(amplitude) * width * strength) * velocityZ
@@ -98,6 +88,16 @@ class SpiralParticle internal constructor(
         colorRed = colorChoice.x()
         colorGreen = colorChoice.y()
         colorBlue = colorChoice.z()
+    }
+
+    override fun getType(): ParticleTextureSheet {
+        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT
+    }
+
+    override fun move(dx: Double, dy: Double, dz: Double) {}
+
+    public override fun getBrightness(tint: Float): Int {
+        return 240
     }
 
 //    fun colorLerp(frac: Float) {

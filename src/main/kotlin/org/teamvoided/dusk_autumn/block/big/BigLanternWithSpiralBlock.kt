@@ -14,7 +14,7 @@ class BigLanternWithSpiralBlock(private val color1: Int, private val color2: Int
             world.addParticle(
                 TwoColorParticleEffect(color1, color2),
                 pos.x + 0.5,
-                pos.y - 0.2,
+                pos.y.toDouble(),
                 pos.z + 0.5,
                 1.0,
                 -1.0,
@@ -24,7 +24,7 @@ class BigLanternWithSpiralBlock(private val color1: Int, private val color2: Int
             world.addParticle(
                 TwoColorParticleEffect(color1, color2),
                 pos.x + 0.5,
-                pos.y + 0.8,
+                pos.y + 1.0,
                 pos.z + 0.5,
                 1.0,
                 1.0,
