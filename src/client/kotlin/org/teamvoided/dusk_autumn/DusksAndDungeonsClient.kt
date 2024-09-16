@@ -45,22 +45,11 @@ object DusksAndDungeonsClient {
 
     fun init() {
         DnDEntityModelLayers.init()
-        initBlocks()
-        initItems()
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.CASCADE_LEAF_PARTICLE, ::FallingLeafFactory)
-        ParticleFactoryRegistry.getInstance().register(
-            DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory
-        )
-        ParticleFactoryRegistry.getInstance().register(
-            DnDParticles.COLORABLE_OMINOUS_PARTICLE, ColorableOminousParticle::Factory
-        )
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIDERLILY, SpiderlilyPetalParticle::Factory)
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
-
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIRAL, SpiralParticle::Factory)
-
-        EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
-        EntityRendererRegistry.register(DnDEntities.BIRD_TEST, ::BirdEntityRenderer)
+        DnDBlocksClient.init()
+        DnDItemsClient.init()
+        DnDParticlesClient.init()
+        DnDEntitiesClient.init()
+        DnDBlockEntitiesClient.init()
 
 //        ClientTickEvents.END_CLIENT_TICK.register {
 //            if (key.isPressed && cooldown < 1) {
@@ -71,94 +60,9 @@ object DusksAndDungeonsClient {
 //            if (cooldown > 0) cooldown--
 //        }
 
-        ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT.register { blockState, _, _ ->
-            blockState.block !in DnDBlocks.GRASS_TINT_BLOCKS
-        }
-
-        BlockEntityRendererFactories.register(DnDBlockEntities.CELESTAL_BELL) { context: BlockEntityRendererFactory.Context ->
-            CelestalBellBlockEntityRenderer(
-                context, context.renderManager, DnDBlocks.CELESTAL_BELL
-            )
-        }
-
 
         FabricLoader.getInstance().getModContainer(MODID).ifPresent {
             ResourceManagerHelper.registerBuiltinResourcePack(id("fancy_names"), it, ResourcePackActivationType.NORMAL)
         }
-    }
-
-
-    private fun initBlocks() {
-
-        ColorProviderRegistry.BLOCK.register(
-            { _, world, pos, _ ->
-                foliageColorOrDefault(world, pos)
-            },
-            DnDWoodBlocks.OAK_LEAF_PILE,
-            DnDWoodBlocks.JUNGLE_LEAF_PILE,
-            DnDWoodBlocks.ACACIA_LEAF_PILE,
-            DnDWoodBlocks.DARK_OAK_LEAF_PILE,
-            DnDWoodBlocks.MANGROVE_LEAF_PILE
-        )
-        ColorProviderRegistry.BLOCK.register(
-            { _, world, pos, tintIndex ->
-                if (tintIndex != 0) {
-                    grassColorOrDefault(world, pos)
-                } else -1
-            },
-            *DnDBlockLists.flowerbedBlocks.toTypedArray()
-        )
-        ColorProviderRegistry.BLOCK.register(
-            { _, world, pos, _ -> grassColorOrDefault(world, pos) },
-            *DnDBlocks.GRASS_TINT_BLOCKS.toTypedArray()
-        )
-        ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> FoliageColors.getSpruceColor() }, DnDWoodBlocks.SPRUCE_LEAF_PILE
-        )
-        ColorProviderRegistry.BLOCK.register(
-            { _, _, _, _ -> FoliageColors.getBirchColor() }, DnDWoodBlocks.BIRCH_LEAF_PILE
-        )
-
-        DnDBlocks.CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
-        DnDBlocks.TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getTranslucent()) }
-    }
-
-    private fun initItems() {
-        ColorProviderRegistry.ITEM.register(
-            { _, _ -> GrassColors.getDefault() },
-            *DnDBlocks.GRASS_TINT_BLOCKS.map { it.asItem() }.toTypedArray()
-        )
-        ColorProviderRegistry.ITEM.register(
-            { _, _ -> FoliageColors.getDefaultColor() },
-            DnDWoodBlocks.OAK_LEAF_PILE.asItem(),
-            DnDWoodBlocks.JUNGLE_LEAF_PILE.asItem(),
-            DnDWoodBlocks.ACACIA_LEAF_PILE.asItem(),
-            DnDWoodBlocks.DARK_OAK_LEAF_PILE.asItem()
-        )
-        ColorProviderRegistry.ITEM.register(
-            { _, _ -> FoliageColors.getSpruceColor() },
-            DnDWoodBlocks.SPRUCE_LEAF_PILE.asItem()
-        )
-        ColorProviderRegistry.ITEM.register(
-            { _, _ -> FoliageColors.getBirchColor() },
-            DnDWoodBlocks.BIRCH_LEAF_PILE.asItem()
-        )
-        ColorProviderRegistry.ITEM.register(
-            { _, _ -> FoliageColors.getMangroveColor() },
-            DnDWoodBlocks.MANGROVE_LEAF_PILE.asItem()
-        )
-        ColorProviderRegistry.ITEM.register(
-            { stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) }, DnDItems.FARMERS_HAT
-        )
-    }
-
-    fun grassColorOrDefault(world: BlockRenderView?, pos: BlockPos?): Int {
-        return if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
-        else GrassColors.getDefault()
-    }
-
-    fun foliageColorOrDefault(world: BlockRenderView?, pos: BlockPos?): Int {
-        return if (world != null && pos != null) BiomeColors.getFoliageColor(world, pos)
-        else FoliageColors.getColor(0.8, 0.4)
     }
 }
