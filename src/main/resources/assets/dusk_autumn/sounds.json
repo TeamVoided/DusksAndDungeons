@@ -1,0 +1,35 @@
+{
+  "block.celestal_bell.use": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "dusk_autumn:blocks/celestal_bell/used_1",
+        "attenuation_distance": 16
+      },
+      {
+        "name": "dusk_autumn:blocks/celestal_bell/used_2",
+        "attenuation_distance": 16
+      },
+      {
+        "name": "dusk_autumn:blocks/celestal_bell/used_1",
+        "attenuation_distance": 16,
+        "pitch": 0.98
+      },
+      {
+        "name": "dusk_autumn:blocks/celestal_bell/used_2",
+        "attenuation_distance": 16,
+        "pitch": 0.98
+      },
+      {
+        "name": "dusk_autumn:blocks/celestal_bell/used_1",
+        "attenuation_distance": 16,
+        "pitch": 0.96
+      },
+      {
+        "name": "dusk_autumn:blocks/celestal_bell/used_2",
+        "attenuation_distance": 16,
+        "pitch": 0.96
+      }
+    ]
+  }
+}

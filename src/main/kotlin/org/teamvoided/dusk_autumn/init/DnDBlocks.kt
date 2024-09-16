@@ -13,6 +13,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.block.CelestalBellBlock
 import org.teamvoided.dusk_autumn.block.CrytalClusterWithParticlesBlock
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.block.TallRedstoneCrystalBlock
@@ -41,6 +42,8 @@ object DnDBlocks {
     val AXABLE = mutableSetOf<Block>()
     val SHOVELABLE = mutableSetOf<Block>()
     val HOEABLE = mutableSetOf<Block>()
+
+    val CELESTAL_BELL = register("celestal_bell", CelestalBellBlock(copy(BELL)))
 
     val ICE_STAIRS = register("ice_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe())
     val ICE_SLAB = register("ice_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe())

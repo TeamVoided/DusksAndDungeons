@@ -13,6 +13,8 @@ import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.client.color.world.GrassColors
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
@@ -20,16 +22,14 @@ import org.teamvoided.dusk_autumn.DusksAndDungeons.MODID
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
 import org.teamvoided.dusk_autumn.entity.bird.BirdEntityRenderer
+import org.teamvoided.dusk_autumn.entity.block.CelestalBellBlockEntityRenderer
 import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
-import org.teamvoided.dusk_autumn.init.DnDBlocks
-import org.teamvoided.dusk_autumn.init.DnDEntities
-import org.teamvoided.dusk_autumn.init.DnDItems
-import org.teamvoided.dusk_autumn.init.DnDParticles
+import org.teamvoided.dusk_autumn.init.*
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.particle.ColorableOminousParticle
 import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
-import org.teamvoided.dusk_autumn.particle.SpiderlilyPetalParticle
 import org.teamvoided.dusk_autumn.particle.SnowflakeParticle
+import org.teamvoided.dusk_autumn.particle.SpiderlilyPetalParticle
 import org.teamvoided.dusk_autumn.particle.SpiralParticle
 import org.teamvoided.dusk_autumn.util.DnDBlockLists
 
@@ -74,6 +74,13 @@ object DusksAndDungeonsClient {
         ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT.register { blockState, _, _ ->
             blockState.block !in DnDBlocks.GRASS_TINT_BLOCKS
         }
+
+        BlockEntityRendererFactories.register(DnDBlockEntities.CELESTAL_BELL) { context: BlockEntityRendererFactory.Context ->
+            CelestalBellBlockEntityRenderer(
+                context, context.renderManager, DnDBlocks.CELESTAL_BELL
+            )
+        }
+
 
         FabricLoader.getInstance().getModContainer(MODID).ifPresent {
             ResourceManagerHelper.registerBuiltinResourcePack(id("fancy_names"), it, ResourcePackActivationType.NORMAL)

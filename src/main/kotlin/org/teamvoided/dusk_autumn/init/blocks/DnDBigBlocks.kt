@@ -29,7 +29,7 @@ object DnDBigBlocks {
         "big_moon_lantern",
         BigLanternWithSpiralBlock(
             0xE01638,
-            0xCC3D78,
+            0x8B3DB5,
             copy(BIG_SOUL_LANTERN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)
         ).pickaxe()
     )

@@ -10,6 +10,7 @@ import net.minecraft.data.client.model.BlockStateModelGenerator.TintType
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
+import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.state.property.Properties
 import net.minecraft.state.property.Property
@@ -25,6 +26,9 @@ import java.util.*
 val ALL_KRY: TextureKey = TextureKey.of("all")
 val INNER: TextureKey = TextureKey.of("inner")
 val SMALL: TextureKey = TextureKey.of("small")
+
+val BAR: TextureKey = TextureKey.of("bar")
+val POST: TextureKey = TextureKey.of("post")
 
 fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
     val texture = Texture().put(TextureKey.ALL, overlay)
@@ -871,6 +875,49 @@ fun bigCandleModel(suffix: String): Model {
 
 fun bigCandleCakeModel(): Model {
     return block("parent/cake_with_big_candle", TextureKey.CANDLE, TextureKey.PARTICLE)
+}
+
+fun BlockStateModelGenerator.registerBell(
+    block: Block,
+    bar: Identifier = Texture.getId(Blocks.DARK_OAK_PLANKS),
+    post: Identifier = Texture.getId(Blocks.STONE)
+) {
+    this.registerItemModel(block.asItem())
+    val variants = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, Properties.ATTACHMENT)
+    val texture1 = Texture()
+        .put(TextureKey.PARTICLE, Texture.getId(block))
+        .put(BAR, bar)
+    val texture2 = texture1.put(POST, post)
+
+    Properties.ATTACHMENT.values.forEach { attachment ->
+        val attach = attachment.toString().lowercase()
+        if (attachment == Attachment.FLOOR) {
+            block("parent/bell_$attach", TextureKey.PARTICLE, BAR, POST)
+                .upload(block, "_$attach", texture2, this.modelCollector)
+        } else {
+            block("parent/bell_$attach", TextureKey.PARTICLE, BAR)
+                .upload(block, "_$attach", texture1, this.modelCollector)
+        }
+        Properties.HORIZONTAL_FACING.values.forEach { direction ->
+            val variant = BlockStateVariant.create()
+                .put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(block, "_$attach"))
+            val variant2 = when (direction) {
+                Direction.EAST -> variant.put(VariantSettings.Y, Rotation.R90)
+                Direction.SOUTH -> variant.put(VariantSettings.Y, Rotation.R180)
+                Direction.WEST -> variant.put(VariantSettings.Y, Rotation.R270)
+                else -> variant
+            }
+            variants.register(
+                direction, attachment,
+                variant2
+            )
+        }
+    }
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(block).coordinate(
+            variants
+        )
+    )
 }
 
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {

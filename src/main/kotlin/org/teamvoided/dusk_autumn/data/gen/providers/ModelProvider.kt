@@ -167,6 +167,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDBlockLists.bigSoulCandles.forEach { (candle, cake) ->
             gen.registerBigCandle(candle, cake)
         }
+        gen.registerBell(DnDBlocks.CELESTAL_BELL)
 
         gen.genPsudoFamily(
             DnDNetherBrickBlocks.NETHERRACK_STAIRS,
