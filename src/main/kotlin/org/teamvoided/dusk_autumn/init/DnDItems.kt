@@ -16,6 +16,7 @@ import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.item.ChillChargeItem
 import org.teamvoided.dusk_autumn.item.DnDFoodComponents
 import org.teamvoided.dusk_autumn.item.HeadDecorationItem
+import org.teamvoided.dusk_autumn.item.ScarecrowItem
 
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -56,6 +57,12 @@ object DnDItems {
         "farmers_hat",
         HeadDecorationItem(
             Item.Settings().maxCount(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
+        )
+    )
+    val SCARECROW_ITEM = register(
+        "scarecrow",
+        ScarecrowItem(
+            Item.Settings().maxCount(16)
         )
     )
 

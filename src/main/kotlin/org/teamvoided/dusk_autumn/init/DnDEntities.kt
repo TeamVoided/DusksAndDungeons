@@ -9,6 +9,7 @@ import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.BirdEntity
 import org.teamvoided.dusk_autumn.entity.ChillChargeEntity
+import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
 
 object DnDEntities {
 
@@ -29,8 +30,18 @@ object DnDEntities {
             .trackingTickInterval(10)
     )
 
+    val SCARECROW = register(
+        "scarecrow",
+        EntityType.Builder.create(EntityType.EntityFactory(::ScarecrowEntity), SpawnGroup.MISC)
+            .setDimensions(0.5F, 2.375F)
+            .setEyeHeight(2.175F)
+            .maxTrackingRange(10)
+    )
+
     fun init() {
         FabricDefaultAttributeRegistry.register(BIRD_TEST, BirdEntity.createAttributes().build())
+
+        FabricDefaultAttributeRegistry.register(SCARECROW, ScarecrowEntity.createAttributes().build())
     }
 
     fun <T : Entity> register(id: String, entityType: EntityType.Builder<T>): EntityType<T> =

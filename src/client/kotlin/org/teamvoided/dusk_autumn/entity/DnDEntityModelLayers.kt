@@ -5,14 +5,19 @@ import net.minecraft.client.render.entity.model.EntityModelLayer
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.chill_charge.render.ChillChargeEntityModel
 import org.teamvoided.dusk_autumn.entity.bird.render.BirdEntityModel
+import org.teamvoided.dusk_autumn.entity.scarecrow.render.ScarecrowEntityModel
 
 object DnDEntityModelLayers {
     val CHILL_CHARGE: EntityModelLayer = registerMain("chill_charge")
     val BIRD: EntityModelLayer = registerMain("bird")
 
+    val SCARECROW: EntityModelLayer = registerMain("scarecrow")
+
     fun init() {
         EntityModelLayerRegistry.registerModelLayer(CHILL_CHARGE, ChillChargeEntityModel::texturedModelData)
         EntityModelLayerRegistry.registerModelLayer(BIRD, BirdEntityModel::texturedModelData)
+
+        EntityModelLayerRegistry.registerModelLayer(SCARECROW, ScarecrowEntityModel::texturedModelData)
     }
 
     private fun registerMain(id: String): EntityModelLayer {
