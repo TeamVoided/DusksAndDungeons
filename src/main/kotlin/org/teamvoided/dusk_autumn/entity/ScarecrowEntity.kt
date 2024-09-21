@@ -32,6 +32,7 @@ import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
 import net.minecraft.world.explosion.Explosion
 import org.teamvoided.dusk_autumn.init.DnDEntities
+import org.teamvoided.dusk_autumn.init.DnDItems
 import java.util.function.Predicate
 
 
@@ -39,20 +40,26 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
     private val heldItems: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
     private val armorItems: DefaultedList<ItemStack> = DefaultedList.ofSize(4, ItemStack.EMPTY)
     var lastHitTime: Long = 0
+    private var postRotation: EulerAngle
     private var headRotation: EulerAngle
     private var bodyRotation: EulerAngle
     private var leftArmRotation: EulerAngle
     private var rightArmRotation: EulerAngle
+    private var leftLegRotation: EulerAngle
+    private var rightLegRotation: EulerAngle
 
     constructor(world: World, x: Double, y: Double, z: Double) : this(DnDEntities.SCARECROW, world) {
         this.setPosition(x, y, z)
     }
 
     init {
+        this.postRotation = DEFAULT_POST_ROTATION
         this.headRotation = DEFAULT_HEAD_ROTATION
         this.bodyRotation = DEFAULT_BODY_ROTATION
         this.leftArmRotation = DEFAULT_LEFT_ARM_ROTATION
         this.rightArmRotation = DEFAULT_RIGHT_ARM_ROTATION
+        this.leftLegRotation = DEFAULT_LEFT_LEG_ROTATION
+        this.rightLegRotation = DEFAULT_RIGHT_LEG_ROTATION
     }
 
     override fun calculateDimensions() {
@@ -74,52 +81,14 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
         builder.add(TRACKER_IS_SMALL, false)
+        builder.add(TRACKER_HAS_LEGS, false)
+        builder.add(TRACKER_POST_ROTATION, DEFAULT_POST_ROTATION)
         builder.add(TRACKER_HEAD_ROTATION, DEFAULT_HEAD_ROTATION)
         builder.add(TRACKER_BODY_ROTATION, DEFAULT_BODY_ROTATION)
         builder.add(TRACKER_LEFT_ARM_ROTATION, DEFAULT_LEFT_ARM_ROTATION)
         builder.add(TRACKER_RIGHT_ARM_ROTATION, DEFAULT_RIGHT_ARM_ROTATION)
-    }
-
-    override fun getHandItems(): Iterable<ItemStack> {
-        return this.heldItems
-    }
-
-    override fun getArmorItems(): Iterable<ItemStack> {
-        return this.armorItems
-    }
-
-    override fun getEquippedStack(slot: EquipmentSlot): ItemStack {
-        return when (slot.type) {
-            EquipmentSlot.Type.HAND -> heldItems[slot.entitySlotId]
-            EquipmentSlot.Type.HUMANOID_ARMOR -> armorItems[slot.entitySlotId]
-            else -> ItemStack.EMPTY
-        }
-    }
-
-    override fun canUseSlot(slot: EquipmentSlot): Boolean {
-        return slot != EquipmentSlot.BODY
-    }
-
-    override fun equipStack(slot: EquipmentSlot, stack: ItemStack) {
-        this.processEquippedStack(stack)
-        when (slot) {
-            EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND -> this.onEquipItem(
-                slot,
-                heldItems.set(slot.entitySlotId, stack), stack
-            )
-
-            EquipmentSlot.HEAD, EquipmentSlot.CHEST -> this.onEquipItem(
-                slot,
-                armorItems.set(slot.entitySlotId, stack), stack
-            )
-
-            else -> null
-        }
-    }
-
-    override fun canEquip(stack: ItemStack): Boolean {
-        val equipmentSlot = this.getPreferredEquipmentSlot(stack)
-        return getEquippedStack(equipmentSlot).isEmpty
+        builder.add(TRACKER_LEFT_LEG_ROTATION, DEFAULT_LEFT_LEG_ROTATION)
+        builder.add(TRACKER_RIGHT_LEG_ROTATION, DEFAULT_RIGHT_LEG_ROTATION)
     }
 
     override fun writeCustomDataToNbt(nbt: NbtCompound) {
@@ -130,7 +99,6 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             val armorItemStack = armorItems.next() as ItemStack
             armorItemList.add(armorItemStack.getEncoded(this.registryManager))
         }
-
         val heldItemList = NbtList()
         val heldItems: Iterator<*> = heldItems.iterator()
         while (heldItems.hasNext()) {
@@ -143,6 +111,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         nbt.put("HandItems", heldItemList)
         nbt.putBoolean("Invisible", this.isInvisible)
         nbt.putBoolean("Small", this.isSmall)
+        nbt.putBoolean("Legs", this.hasLegs)
 
         nbt.put("Pose", this.poseToNbt())
     }
@@ -176,12 +145,15 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
 
         this.isInvisible = nbt.getBoolean("Invisible")
         this.isSmall = nbt.getBoolean("Small")
+        this.hasLegs = nbt.getBoolean("Legs")
         this.noClip = !this.canClip()
         val nbtCompound2 = nbt.getCompound("Pose")
         this.readPoseNbt(nbtCompound2)
     }
 
     private fun readPoseNbt(nbt: NbtCompound) {
+        val postPose = nbt.getList("Post", 5)
+        this.setPostRotation(if (postPose.isEmpty()) DEFAULT_POST_ROTATION else EulerAngle(postPose))
         val headPose = nbt.getList("Head", 5)
         this.setHeadRotation(if (headPose.isEmpty()) DEFAULT_HEAD_ROTATION else EulerAngle(headPose))
         val bodyPose = nbt.getList("Body", 5)
@@ -190,26 +162,35 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         this.setLeftArmRotation(if (leftArmPose.isEmpty()) DEFAULT_LEFT_ARM_ROTATION else EulerAngle(leftArmPose))
         val rightArmPose = nbt.getList("RightArm", 5)
         this.setRightArmRotation(if (rightArmPose.isEmpty()) DEFAULT_RIGHT_ARM_ROTATION else EulerAngle(rightArmPose))
+        val leftLegPose = nbt.getList("LeftLeg", 5)
+        this.setLeftLegRotation(if (leftLegPose.isEmpty()) DEFAULT_LEFT_LEG_ROTATION else EulerAngle(leftLegPose))
+        val rightLegPose = nbt.getList("RightLeg", 5)
+        this.setRightLegRotation(if (rightLegPose.isEmpty()) DEFAULT_RIGHT_LEG_ROTATION else EulerAngle(rightLegPose))
     }
 
     private fun poseToNbt(): NbtCompound {
         val nbtCompound = NbtCompound()
+        if (DEFAULT_POST_ROTATION != postRotation) {
+            nbtCompound.put("Post", postRotation.toNbt())
+        }
         if (DEFAULT_HEAD_ROTATION != headRotation) {
             nbtCompound.put("Head", headRotation.toNbt())
         }
-
         if (DEFAULT_BODY_ROTATION != bodyRotation) {
             nbtCompound.put("Body", bodyRotation.toNbt())
         }
-
         if (DEFAULT_LEFT_ARM_ROTATION != leftArmRotation) {
             nbtCompound.put("LeftArm", leftArmRotation.toNbt())
         }
-
         if (DEFAULT_RIGHT_ARM_ROTATION != rightArmRotation) {
             nbtCompound.put("RightArm", rightArmRotation.toNbt())
         }
-
+        if (DEFAULT_LEFT_LEG_ROTATION != leftLegRotation) {
+            nbtCompound.put("LeftLeg", leftLegRotation.toNbt())
+        }
+        if (DEFAULT_RIGHT_LEG_ROTATION != rightLegRotation) {
+            nbtCompound.put("RightLeg", rightLegRotation.toNbt())
+        }
         return nbtCompound
     }
 
@@ -232,56 +213,107 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         }
     }
 
+    override fun getHandItems(): Iterable<ItemStack> {
+        return this.heldItems
+    }
+
+    override fun getArmorItems(): Iterable<ItemStack> {
+        return this.armorItems
+    }
+
+    override fun canUseSlot(slot: EquipmentSlot): Boolean {
+        return slot != EquipmentSlot.BODY
+    }
+
     override fun interactAt(player: PlayerEntity, hitPos: Vec3d, hand: Hand): ActionResult {
-        val itemStack = player.getStackInHand(hand)
-        if (!itemStack.isOf(Items.NAME_TAG)) {
-            if (player.isSpectator) {
-                return ActionResult.SUCCESS
-            } else if (player.world.isClient) {
-                return ActionResult.CONSUME
-            } else {
-                val equipmentSlot = this.getPreferredEquipmentSlot(itemStack)
-                if (itemStack.isEmpty) {
-                    if (this.hasStackEquipped(equipmentSlot) && this.equip(player, equipmentSlot, itemStack, hand)) {
-                        return ActionResult.SUCCESS
-                    }
-                } else {
-                    if (equipmentSlot.type == EquipmentSlot.Type.HAND) {
-                        return ActionResult.FAIL
-                    }
-
-                    if (this.equip(player, equipmentSlot, itemStack, hand)) {
-                        return ActionResult.SUCCESS
-                    }
-                }
-
-                return ActionResult.PASS
-            }
+        super.interactAt(player, hitPos, hand)
+        val playerHandStack = player.getStackInHand(hand)
+        if (player.isSpectator) {
+            return ActionResult.SUCCESS
+        } else if (player.world.isClient) {
+            return ActionResult.CONSUME
         } else {
-            return ActionResult.PASS
+            if (!playerHandStack.isEmpty) {
+                //the below is done for ordering
+                val perferEquipmentSlot = this.getPreferredEquipmentSlot(playerHandStack)
+                if (perferEquipmentSlot.type == EquipmentSlot.Type.HUMANOID_ARMOR &&
+                    equip(player, perferEquipmentSlot, playerHandStack)
+                ) {
+                    return ActionResult.SUCCESS
+                } else if (
+                    equip(player, EquipmentSlot.MAINHAND, playerHandStack) ||
+                    equip(player, EquipmentSlot.OFFHAND, playerHandStack)
+                ) {
+                    return ActionResult.SUCCESS
+                }
+            } else {
+                if (
+                    unequip(player, EquipmentSlot.OFFHAND) ||
+                    unequip(player, EquipmentSlot.MAINHAND)||
+                    unequip(player, EquipmentSlot.FEET) ||
+                    unequip(player, EquipmentSlot.LEGS) ||
+                    unequip(player, EquipmentSlot.CHEST) ||
+                    unequip(player, EquipmentSlot.HEAD)
+                ) {
+                    return ActionResult.SUCCESS
+                }
+            }
+        }
+        return super.interactAt(player, hitPos, hand)
+    }
+
+    fun equip(player: PlayerEntity, slot: EquipmentSlot, playerHandStack: ItemStack): Boolean {
+        if (getEquippedStack(slot).isEmpty && !isSlotDisabled(slot)) {
+            this.equipStack(slot, playerHandStack.copyWithCount(1))
+            playerHandStack.consume(1, player)
+            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 0f)
+            return true
+        }
+        return false
+    }
+
+    fun unequip(player: PlayerEntity, equipmentSlot: EquipmentSlot): Boolean {
+        val equippedStack = getEquippedStack(equipmentSlot)
+        if (!equippedStack.isEmpty) {
+            this.equipStack(equipmentSlot, ItemStack.EMPTY)
+            player.giveItemStack(equippedStack)
+            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 1f)
+            return true
+        }
+        return false
+    }
+
+    fun isSlotDisabled(slot: EquipmentSlot): Boolean {
+        return (!this.hasLegs && (slot == EquipmentSlot.FEET || slot == EquipmentSlot.LEGS))
+    }
+
+    override fun equipStack(slot: EquipmentSlot, stack: ItemStack) {
+        this.processEquippedStack(stack)
+        when (slot.type) {
+            EquipmentSlot.Type.HAND -> this.onEquipItem(
+                slot,
+                heldItems.set(slot.entitySlotId, stack), stack
+            )
+
+            EquipmentSlot.Type.HUMANOID_ARMOR -> this.onEquipItem(
+                slot,
+                armorItems.set(slot.entitySlotId, stack), stack
+            )
+
+            else -> null
         }
     }
 
-    private fun equip(player: PlayerEntity, slot: EquipmentSlot, stack: ItemStack, hand: Hand): Boolean {
-        val itemStack = this.getEquippedStack(slot)
-        if (!itemStack.isEmpty) {
-            return false
-        } else if (itemStack.isEmpty) {
-            return false
-        } else if (player.isInCreativeMode && itemStack.isEmpty && !stack.isEmpty) {
-            this.equipStack(slot, stack.copyWithCount(1))
-            return true
-        } else if (!stack.isEmpty && stack.count > 1) {
-            if (!itemStack.isEmpty) {
-                return false
-            } else {
-                this.equipStack(slot, stack.split(1))
-                return true
-            }
-        } else {
-            this.equipStack(slot, stack)
-            player.setStackInHand(hand, itemStack)
-            return true
+    override fun canEquip(stack: ItemStack): Boolean {
+        val equipmentSlot = this.getPreferredEquipmentSlot(stack)
+        return getEquippedStack(equipmentSlot).isEmpty
+    }
+
+    override fun getEquippedStack(slot: EquipmentSlot): ItemStack {
+        return when (slot.type) {
+            EquipmentSlot.Type.HAND -> heldItems[slot.entitySlotId]
+            EquipmentSlot.Type.HUMANOID_ARMOR -> armorItems[slot.entitySlotId]
+            else -> ItemStack.EMPTY
         }
     }
 
@@ -339,7 +371,6 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
                                     this.spawnBreakParticles()
                                     this.kill()
                                 }
-
                                 return true
                             }
                         }
@@ -390,7 +421,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
     }
 
     private fun breakAndDropItem(world: ServerWorld, damageSource: DamageSource) {
-        val itemStack = ItemStack(Items.ARMOR_STAND)
+        val itemStack = ItemStack(DnDItems.SCARECROW_ITEM)
         itemStack.set(DataComponentTypes.CUSTOM_NAME, this.customName)
         Block.dropStack(this.world, this.blockPos, itemStack)
         this.onBreak(world, damageSource)
@@ -478,6 +509,16 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         if (rightArmRotation != rightArmAngle) {
             this.setRightArmRotation(rightArmAngle)
         }
+
+        val leftLegAngle = dataTracker.get(TRACKER_LEFT_LEG_ROTATION) as EulerAngle
+        if (leftLegRotation != leftLegAngle) {
+            this.setLeftLegRotation(leftLegAngle)
+        }
+
+        val rightLegAngle = dataTracker.get(TRACKER_RIGHT_LEG_ROTATION) as EulerAngle
+        if (rightLegRotation != rightLegAngle) {
+            this.setRightLegRotation(rightLegAngle)
+        }
     }
 
     override fun isBaby(): Boolean {
@@ -499,6 +540,17 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             dataTracker[TRACKER_IS_SMALL] = isBaby
         }
 
+    var hasLegs: Boolean
+        get() = dataTracker[TRACKER_HAS_LEGS]
+        set(hasLegs) {
+            dataTracker[TRACKER_HAS_LEGS] = hasLegs
+        }
+
+    fun setPostRotation(angle: EulerAngle) {
+        this.postRotation = angle
+        dataTracker.set(TRACKER_POST_ROTATION, angle)
+    }
+
     fun setHeadRotation(angle: EulerAngle) {
         this.headRotation = angle
         dataTracker.set(TRACKER_HEAD_ROTATION, angle)
@@ -519,6 +571,20 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         dataTracker.set(TRACKER_RIGHT_ARM_ROTATION, angle)
     }
 
+    fun setLeftLegRotation(angle: EulerAngle) {
+        this.leftLegRotation = angle
+        dataTracker.set(TRACKER_LEFT_LEG_ROTATION, angle)
+    }
+
+    fun setRightLegRotation(angle: EulerAngle) {
+        this.rightLegRotation = angle
+        dataTracker.set(TRACKER_RIGHT_LEG_ROTATION, angle)
+    }
+
+    fun getPostRotation(): EulerAngle {
+        return this.postRotation
+    }
+
     fun getHeadRotation(): EulerAngle {
         return this.headRotation
     }
@@ -533,6 +599,14 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
 
     fun getRightArmRotation(): EulerAngle {
         return this.rightArmRotation
+    }
+
+    fun getLeftLegRotation(): EulerAngle {
+        return this.leftLegRotation
+    }
+
+    fun getRightLegRotation(): EulerAngle {
+        return this.rightLegRotation
     }
 
     override fun handleAttack(attacker: Entity): Boolean {
@@ -575,19 +649,28 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
     }
 
     override fun getPickBlockStack(): ItemStack {
-        return ItemStack(Items.ARMOR_STAND)
+        return ItemStack(DnDItems.SCARECROW_ITEM)
     }
 
     companion object {
         const val WOBBLE_DURATION: Float = 5f
         private val DEFAULT_HEAD_ROTATION = EulerAngle(0f, 0f, 0f)
+        private val DEFAULT_POST_ROTATION = EulerAngle(0f, 0f, 0f)
         private val DEFAULT_BODY_ROTATION = EulerAngle(0f, 0f, 0f)
         private val DEFAULT_LEFT_ARM_ROTATION = EulerAngle(0f, 0f, 0f)
         private val DEFAULT_RIGHT_ARM_ROTATION = EulerAngle(0f, 0f, 0f)
+        private val DEFAULT_LEFT_LEG_ROTATION = EulerAngle(0f, 0f, 0f)
+        private val DEFAULT_RIGHT_LEG_ROTATION = EulerAngle(0f, 0f, 0f)
         private val SMALL_DIMENSIONS: EntityDimensions =
             DnDEntities.SCARECROW.dimensions.scaled(0.5f).withEyeHeight(0.9875f)
         val TRACKER_IS_SMALL: TrackedData<Boolean> = DataTracker.registerData(
             ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN
+        )
+        val TRACKER_HAS_LEGS: TrackedData<Boolean> = DataTracker.registerData(
+            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN
+        )
+        val TRACKER_POST_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
+            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
         )
         val TRACKER_HEAD_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
             ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
@@ -599,6 +682,12 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
         )
         val TRACKER_RIGHT_ARM_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
+            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
+        )
+        val TRACKER_LEFT_LEG_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
+            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
+        )
+        val TRACKER_RIGHT_LEG_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
             ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
         )
         private val RIDEABLE_MINECART_PREDICATE =

@@ -2,6 +2,8 @@ package org.teamvoided.dusk_autumn.entity.scarecrow
 
 import net.minecraft.client.render.entity.EntityRendererFactory
 import net.minecraft.client.render.entity.LivingEntityRenderer
+import net.minecraft.client.render.entity.feature.HeadFeatureRenderer
+import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Axis
@@ -9,7 +11,9 @@ import net.minecraft.util.math.MathHelper
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
 import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
-import org.teamvoided.dusk_autumn.entity.scarecrow.render.ScarecrowEntityModel
+import org.teamvoided.dusk_autumn.entity.scarecrow.render.ScarecrowArmorFeatureRenderer
+import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowArmorEntityModel
+import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusk_autumn.util.pi
 
 class ScarecrowEntityRenderer(context: EntityRendererFactory.Context) :
@@ -18,6 +22,20 @@ class ScarecrowEntityRenderer(context: EntityRendererFactory.Context) :
         ScarecrowEntityModel(context.getPart(DnDEntityModelLayers.SCARECROW)),
         0f
     ) {
+
+    init {
+        this.addFeature(HeldItemFeatureRenderer(this, context.heldItemRenderer))
+        this.addFeature(HeadFeatureRenderer(this, context.modelLoader, context.heldItemRenderer))
+        this.addFeature(
+            ScarecrowArmorFeatureRenderer(
+                this,
+                ScarecrowArmorEntityModel(context.getPart(DnDEntityModelLayers.SCARECROW_INNER_ARMOR)),
+                ScarecrowArmorEntityModel(context.getPart(DnDEntityModelLayers.SCARECROW_OUTER_ARMOR)),
+                context.modelManager
+            )
+        )
+    }
+
     override fun setupTransforms(
         scarecrowEntity: ScarecrowEntity,
         matrices: MatrixStack,
@@ -42,6 +60,6 @@ class ScarecrowEntityRenderer(context: EntityRendererFactory.Context) :
     override fun getTexture(scarecrowEntity: ScarecrowEntity): Identifier = TEXTURE
 
     companion object {
-        private val TEXTURE: Identifier = id("minecraft", "textures/block/white_concrete.png")
+        private val TEXTURE: Identifier = id("minecraft", "textures/block/red_wool.png")
     }
 }
