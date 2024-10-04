@@ -249,7 +249,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             } else {
                 if (
                     unequip(player, EquipmentSlot.OFFHAND) ||
-                    unequip(player, EquipmentSlot.MAINHAND)||
+                    unequip(player, EquipmentSlot.MAINHAND) ||
                     unequip(player, EquipmentSlot.FEET) ||
                     unequip(player, EquipmentSlot.LEGS) ||
                     unequip(player, EquipmentSlot.CHEST) ||
@@ -300,7 +300,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
                 armorItems.set(slot.entitySlotId, stack), stack
             )
 
-            else -> null
+            else -> {}
         }
     }
 

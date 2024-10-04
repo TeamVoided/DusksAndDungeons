@@ -1,6 +1,11 @@
 package org.teamvoided.dusk_autumn
 
+import com.mojang.serialization.JsonOps
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.loot.LootTable
+import net.minecraft.loot.LootTables
+import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumn.event.AddWanderingTrades
@@ -8,6 +13,7 @@ import org.teamvoided.dusk_autumn.init.*
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
 import org.teamvoided.dusk_autumn.modules.BarteringInjection
 import org.teamvoided.dusk_autumn.modules.SnifferInjection
+import org.teamvoided.dusk_autumn.util.getLootTable
 
 @Suppress("unused")
 object DusksAndDungeons {
@@ -31,12 +37,21 @@ object DusksAndDungeons {
         SnifferInjection.init()
         BarteringInjection.init()
         AddWanderingTrades.init()
-       /* CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
+        CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
             val test = literal("end").executes {
+                val src = it.source
+                val z = src.world.getLootTable(LootTables.PIGLIN_BARTERING_GAMEPLAY)
+                val lookup = src.world.registryManager.getLookupOrThrow()
+                val x = LootTable.field_45796.encodeStart(JsonOps.INSTANCE, z)
+                if (x.isError) {
+                    println("Problēma! $x")
+                } else {
+                    println(x.resultOrPartial().get().toString())
+                }
                 0
             }.build()
             dispatcher.root.addChild(test)
-        }*/
+        }
 
 //        if (isModLoaded("dramaticdoors") && isDev()) DramaticDoorsCompat.initCompat()
     }

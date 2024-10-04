@@ -45,7 +45,7 @@ object DnDWorldgen {
         DnDBiomes.init()
         DnDFeatures.init()
 
-        if (isDev()) DnDSurfaceBuilders.init()
+//        if (isDev()) DnDSurfaceBuilders.init()
     }
 
     private fun <P : TreeDecorator> registerTreeDecorator(id: String, codec: MapCodec<P>): TreeDecoratorType<P> {

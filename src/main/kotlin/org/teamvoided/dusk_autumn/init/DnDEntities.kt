@@ -21,14 +21,14 @@ object DnDEntities {
             .maxTrackingRange(4)
             .trackingTickInterval(10)
     )
-    val BIRD_TEST = register(
-        "bird",
-        EntityType.Builder.create(EntityType.EntityFactory(::BirdEntity), SpawnGroup.CREATURE)
-            .setDimensions(0.3125F, 0.625F)
-            .setEyeHeight(0.55F)
-            .maxTrackingRange(4)
-            .trackingTickInterval(10)
-    )
+//    val BIRD_TEST = register(
+//        "bird",
+//        EntityType.Builder.create(EntityType.EntityFactory(::BirdEntity), SpawnGroup.CREATURE)
+//            .setDimensions(0.3125F, 0.625F)
+//            .setEyeHeight(0.55F)
+//            .maxTrackingRange(4)
+//            .trackingTickInterval(10)
+//    )
 
     val SCARECROW = register(
         "scarecrow",
@@ -39,7 +39,7 @@ object DnDEntities {
     )
 
     fun init() {
-        FabricDefaultAttributeRegistry.register(BIRD_TEST, BirdEntity.createAttributes().build())
+//        FabricDefaultAttributeRegistry.register(BIRD_TEST, BirdEntity.createAttributes().build())
 
         FabricDefaultAttributeRegistry.register(SCARECROW, ScarecrowEntity.createAttributes().build())
     }

@@ -1,7 +1,9 @@
 package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.ConnectingBlock
+import net.minecraft.loot.LootTable
 import net.minecraft.particle.ParticleEffect
+import net.minecraft.registry.RegistryKey
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
@@ -89,3 +91,5 @@ fun VoxelShape.rotateColumn(axis: Direction.Axis): VoxelShape {
 
     return shapes[0]
 }
+
+fun ServerWorld.getLootTable(key: RegistryKey<LootTable>): LootTable = this.server.method_58576().getLootTable(key)

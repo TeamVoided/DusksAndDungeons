@@ -8,7 +8,7 @@ import org.teamvoided.dusk_autumn.entity.scarecrow.ScarecrowEntityRenderer
 object DnDEntitiesClient {
     fun init() {
         EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
-        EntityRendererRegistry.register(DnDEntities.BIRD_TEST, ::BirdEntityRenderer)
+//        EntityRendererRegistry.register(DnDEntities.BIRD_TEST, ::BirdEntityRenderer)
 
         EntityRendererRegistry.register(DnDEntities.SCARECROW, ::ScarecrowEntityRenderer)
     }
