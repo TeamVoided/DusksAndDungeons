@@ -32,11 +32,11 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //        }
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
-        gen.stoneStateFactories = mapOf(
+//        gen.stoneStateFactories = mapOf(
 //            DnDBlocks.CASCADE_WOOD to woodStates,
 //            DnDBlocks.GALLERY_MAPLE_WOOD to woodStates
-        )
-        gen.sandstoneModels = mapOf(
+//        )
+//        gen.sandstoneModels = mapOf(
 //            DnDBlocks.CASCADE_WOOD to TexturedModel.SIDE_END_WALL.get(DnDBlocks.CASCADE_WOOD),
 //            DnDBlocks.GALLERY_MAPLE_WOOD to TexturedModel.SIDE_END_WALL.get(DnDBlocks.GALLERY_MAPLE_WOOD)
 
@@ -45,7 +45,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //                texture.put(TextureKey.BOTTOM, Texture.getId(Blocks.RED_NETHER_BRICKS))
 //                texture.put(TextureKey.SIDE, Texture.getId(DnDBlocks.MIXED_NETHER_BRICKS))
 //            }
-        )
+//        )
+
         DnDFamilies.modelsBlockFamilies.forEach {
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
         }

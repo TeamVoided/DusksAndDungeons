@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumn
 
-import com.mojang.serialization.JsonOps
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.loot.LootTable
@@ -15,7 +14,6 @@ import org.teamvoided.dusk_autumn.init.*
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
 import org.teamvoided.dusk_autumn.modules.BarteringInjection
 import org.teamvoided.dusk_autumn.modules.SnifferInjection
-import org.teamvoided.dusk_autumn.util.getLootTable
 
 @Suppress("unused")
 object DusksAndDungeons {
@@ -39,7 +37,7 @@ object DusksAndDungeons {
         SnifferInjection.init()
         BarteringInjection.init()
         AddWanderingTrades.init()
-        CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
+        if (isDev()) CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
             val test = literal("end").executes { scc ->
                 val src = scc.source
 //                val z = src.world.getLootTable(LootTables.PIGLIN_BARTERING_GAMEPLAY)
