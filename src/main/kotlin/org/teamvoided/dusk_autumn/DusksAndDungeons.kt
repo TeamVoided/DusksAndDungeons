@@ -9,6 +9,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
+import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.event.AddWanderingTrades
 import org.teamvoided.dusk_autumn.init.*
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
@@ -26,6 +27,9 @@ object DusksAndDungeons {
         log.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()
+
+        DnDFamilies.init()
+
         DnDBlockEntities.init()
         DnDEffects.init()
         DnDEntities.init()

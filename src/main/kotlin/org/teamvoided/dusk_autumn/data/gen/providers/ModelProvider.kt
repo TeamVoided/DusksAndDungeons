@@ -48,6 +48,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //        )
 
         DnDFamilies.modelsBlockFamilies.forEach {
+            println(it.baseBlock)
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
         }
         gen.registerFlowerPotPlant(

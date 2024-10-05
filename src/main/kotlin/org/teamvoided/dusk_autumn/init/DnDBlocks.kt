@@ -13,10 +13,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
-import org.teamvoided.dusk_autumn.block.CelestalBellBlock
-import org.teamvoided.dusk_autumn.block.CrytalClusterWithParticlesBlock
-import org.teamvoided.dusk_autumn.block.DnDFamilies
-import org.teamvoided.dusk_autumn.block.TallRedstoneCrystalBlock
+import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableWallBlock
@@ -128,6 +125,8 @@ object DnDBlocks {
 //    )
 
     fun init() {
+        DnDWoodTypes.init()
+
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
@@ -139,7 +138,6 @@ object DnDBlocks {
         DnDStoneBlocks.init()
         DnDWoodBlocks.init()
 
-        DnDFamilies.init()
     }
 
     fun register(id: String, block: Block): Block {

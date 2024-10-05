@@ -10,7 +10,7 @@ import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 
 
 object DnDFamilies {
-    val CASCADE_FAMILY: BlockFamily =
+   private val CASCADE_FAMILY: BlockFamily =
         BlockFamilies.register(DnDWoodBlocks.CASCADE_PLANKS)
             .stairs(DnDWoodBlocks.CASCADE_STAIRS)
             .slab(DnDWoodBlocks.CASCADE_SLAB)
@@ -24,7 +24,7 @@ object DnDFamilies {
             .group("wooden")
             .unlockCriterionName("has_planks")
             .build()
-    val GALLERY_MAPLE_FAMILY: BlockFamily =
+    private val GALLERY_MAPLE_FAMILY: BlockFamily =
         BlockFamilies.register(DnDWoodBlocks.GALLERY_MAPLE_PLANKS)
             .stairs(DnDWoodBlocks.GALLERY_MAPLE_STAIRS)
             .slab(DnDWoodBlocks.GALLERY_MAPLE_SLAB)
@@ -53,7 +53,7 @@ object DnDFamilies {
 //            .group("wooden")
 //            .unlockCriterionName("has_planks")
 //            .build()
-    val BONEWOOD_FAMILY: BlockFamily =
+    private val BONEWOOD_FAMILY: BlockFamily =
         BlockFamilies.register(DnDWoodBlocks.BONEWOOD_PLANKS)
             .stairs(DnDWoodBlocks.BONEWOOD_STAIRS)
             .slab(DnDWoodBlocks.BONEWOOD_SLAB)
@@ -67,7 +67,7 @@ object DnDFamilies {
             .group("bonewood")
             .unlockCriterionName("has_bonewood")
             .build()
-    val WITHERING_BONEWOOD_FAMILY: BlockFamily =
+    private val WITHERING_BONEWOOD_FAMILY: BlockFamily =
         BlockFamilies.register(DnDWoodBlocks.WITHERING_BONEWOOD_PLANKS)
             .stairs(DnDWoodBlocks.WITHERING_BONEWOOD_STAIRS)
             .slab(DnDWoodBlocks.WITHERING_BONEWOOD_SLAB)
@@ -82,166 +82,166 @@ object DnDFamilies {
             .unlockCriterionName("has_bonewood")
             .build()
 
-    val OAK_WOOD_FAMILY: BlockFamily =
+    private val OAK_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.OAK_WOOD)
             .stairs(DnDWoodBlocks.OAK_WOOD_STAIRS)
             .slab(DnDWoodBlocks.OAK_WOOD_SLAB)
             .wall(DnDWoodBlocks.OAK_WOOD_WALL)
             .build()
-    val SPRUCE_WOOD_FAMILY: BlockFamily =
+    private val SPRUCE_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.SPRUCE_WOOD)
             .stairs(DnDWoodBlocks.SPRUCE_WOOD_STAIRS)
             .slab(DnDWoodBlocks.SPRUCE_WOOD_SLAB)
             .wall(DnDWoodBlocks.SPRUCE_WOOD_WALL)
             .build()
-    val BIRCH_WOOD_FAMILY: BlockFamily =
+    private val BIRCH_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.BIRCH_WOOD)
             .stairs(DnDWoodBlocks.BIRCH_WOOD_STAIRS)
             .slab(DnDWoodBlocks.BIRCH_WOOD_SLAB)
             .wall(DnDWoodBlocks.BIRCH_WOOD_WALL)
             .build()
-    val JUNGLE_WOOD_FAMILY: BlockFamily =
+    private val JUNGLE_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.JUNGLE_WOOD)
             .stairs(DnDWoodBlocks.JUNGLE_WOOD_STAIRS)
             .slab(DnDWoodBlocks.JUNGLE_WOOD_SLAB)
             .wall(DnDWoodBlocks.JUNGLE_WOOD_WALL)
             .build()
-    val ACACIA_WOOD_FAMILY: BlockFamily =
+    private val ACACIA_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.ACACIA_WOOD)
             .stairs(DnDWoodBlocks.ACACIA_WOOD_STAIRS)
             .slab(DnDWoodBlocks.ACACIA_WOOD_SLAB)
             .wall(DnDWoodBlocks.ACACIA_WOOD_WALL)
             .build()
-    val DARK_OAK_WOOD_FAMILY: BlockFamily =
+    private val DARK_OAK_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.DARK_OAK_WOOD)
             .stairs(DnDWoodBlocks.DARK_OAK_WOOD_STAIRS)
             .slab(DnDWoodBlocks.DARK_OAK_WOOD_SLAB)
             .wall(DnDWoodBlocks.DARK_OAK_WOOD_WALL)
             .build()
-    val MANGROVE_WOOD_FAMILY: BlockFamily =
+    private val MANGROVE_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.MANGROVE_WOOD)
             .stairs(DnDWoodBlocks.MANGROVE_WOOD_STAIRS)
             .slab(DnDWoodBlocks.MANGROVE_WOOD_SLAB)
             .wall(DnDWoodBlocks.MANGROVE_WOOD_WALL)
             .build()
-    val CHERRY_WOOD_FAMILY: BlockFamily =
+    private val CHERRY_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.CHERRY_WOOD)
             .stairs(DnDWoodBlocks.CHERRY_WOOD_STAIRS)
             .slab(DnDWoodBlocks.CHERRY_WOOD_SLAB)
             .wall(DnDWoodBlocks.CHERRY_WOOD_WALL)
             .build()
-    val CASCADE_WOOD_FAMILY: BlockFamily =
+    private val CASCADE_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(DnDWoodBlocks.CASCADE_WOOD)
             .stairs(DnDWoodBlocks.CASCADE_WOOD_STAIRS)
             .slab(DnDWoodBlocks.CASCADE_WOOD_SLAB)
             .wall(DnDWoodBlocks.CASCADE_WOOD_WALL)
             .build()
-    val GALLERY_MAPLE_WOOD_FAMILY: BlockFamily =
+    private val GALLERY_MAPLE_WOOD_FAMILY: BlockFamily =
         BlockFamilies.register(DnDWoodBlocks.GALLERY_MAPLE_WOOD)
             .stairs(DnDWoodBlocks.GALLERY_MAPLE_WOOD_STAIRS)
             .slab(DnDWoodBlocks.GALLERY_MAPLE_WOOD_SLAB)
             .wall(DnDWoodBlocks.GALLERY_MAPLE_WOOD_WALL)
             .build()
-    val CRIMSON_HYPHAE_FAMILY: BlockFamily =
+    private val CRIMSON_HYPHAE_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.CRIMSON_HYPHAE)
             .stairs(DnDWoodBlocks.CRIMSON_HYPHAE_STAIRS)
             .slab(DnDWoodBlocks.CRIMSON_HYPHAE_SLAB)
             .wall(DnDWoodBlocks.CRIMSON_HYPHAE_WALL)
             .build()
-    val WARPED_HYPHAE_FAMILY: BlockFamily =
+    private val WARPED_HYPHAE_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.WARPED_HYPHAE)
             .stairs(DnDWoodBlocks.WARPED_HYPHAE_STAIRS)
             .slab(DnDWoodBlocks.WARPED_HYPHAE_SLAB)
             .wall(DnDWoodBlocks.WARPED_HYPHAE_WALL)
             .build()
 
-    val POLISHED_STONE_FAMILY: BlockFamily =
+    private val POLISHED_STONE_FAMILY: BlockFamily =
         BlockFamilies.register(DnDStoneBlocks.POLISHED_STONE)
             .stairs(DnDStoneBlocks.POLISHED_STONE_STAIRS)
             .slab(DnDStoneBlocks.POLISHED_STONE_SLAB)
             .wall(DnDStoneBlocks.POLISHED_STONE_WALL)
             .build()
-    val MOSSY_POLISHED_STONE_FAMILY: BlockFamily =
+    private val MOSSY_POLISHED_STONE_FAMILY: BlockFamily =
         BlockFamilies.register(DnDStoneBlocks.MOSSY_POLISHED_STONE)
             .stairs(DnDStoneBlocks.MOSSY_POLISHED_STONE_STAIRS)
             .slab(DnDStoneBlocks.MOSSY_POLISHED_STONE_SLAB)
             .wall(DnDStoneBlocks.MOSSY_POLISHED_STONE_WALL)
             .build()
-    val OVERGROWN_POLISHED_STONE_FAMILY: BlockFamily =
+    private val OVERGROWN_POLISHED_STONE_FAMILY: BlockFamily =
         BlockFamilies.register(DnDStoneBlocks.OVERGROWN_POLISHED_STONE)
             .stairs(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_STAIRS)
             .slab(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_SLAB)
             .wall(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_WALL)
             .build()
-    val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
+    private val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
         BlockFamilies.register(DnDStoneBlocks.OVERGROWN_COBBLESTONE)
             .stairs(DnDStoneBlocks.OVERGROWN_COBBLESTONE_STAIRS)
             .slab(DnDStoneBlocks.OVERGROWN_COBBLESTONE_SLAB)
             .wall(DnDStoneBlocks.OVERGROWN_COBBLESTONE_WALL)
             .build()
-    val OVERGROWN_STONE_BRICKS_FAMILY: BlockFamily =
+    private val OVERGROWN_STONE_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDStoneBlocks.OVERGROWN_STONE_BRICKS)
             .stairs(DnDStoneBlocks.OVERGROWN_STONE_BRICK_STAIRS)
             .slab(DnDStoneBlocks.OVERGROWN_STONE_BRICK_SLAB)
             .wall(DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL)
             .build()
-    val SNOWY_STONE_BRICKS_FAMILY: BlockFamily =
+    private val SNOWY_STONE_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDStoneBlocks.SNOWY_STONE_BRICKS)
             .stairs(DnDStoneBlocks.SNOWY_STONE_BRICK_STAIRS)
             .slab(DnDStoneBlocks.SNOWY_STONE_BRICK_SLAB)
             .wall(DnDStoneBlocks.SNOWY_STONE_BRICK_WALL)
             .build()
 
-    val ICE_BRICKS_FAMILY: BlockFamily =
+    private val ICE_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDBlocks.ICE_BRICKS)
             .stairs(DnDBlocks.ICE_BRICK_STAIRS)
             .slab(DnDBlocks.ICE_BRICK_SLAB)
             .wall(DnDBlocks.ICE_BRICK_WALL)
             .build()
-    val ICE_FAMILY: BlockFamily =
+    private val ICE_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.ICE)
             .stairs(DnDBlocks.ICE_STAIRS)
             .slab(DnDBlocks.ICE_SLAB)
             .wall(DnDBlocks.ICE_WALL)
             .build()
-    val PACKED_ICE_BRICKS_FAMILY: BlockFamily =
+    private val PACKED_ICE_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDBlocks.PACKED_ICE_BRICKS)
             .stairs(DnDBlocks.PACKED_ICE_BRICK_STAIRS)
             .slab(DnDBlocks.PACKED_ICE_BRICK_SLAB)
             .wall(DnDBlocks.PACKED_ICE_BRICK_WALL)
             .build()
-    val PACKED_ICE_FAMILY: BlockFamily =
+    private val PACKED_ICE_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.PACKED_ICE)
             .stairs(DnDBlocks.PACKED_ICE_STAIRS)
             .slab(DnDBlocks.PACKED_ICE_SLAB)
             .wall(DnDBlocks.PACKED_ICE_WALL)
             .build()
-    val BLUE_ICE_BRICKS_FAMILY: BlockFamily =
+    private val BLUE_ICE_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDBlocks.BLUE_ICE_BRICKS)
             .stairs(DnDBlocks.BLUE_ICE_BRICK_STAIRS)
             .slab(DnDBlocks.BLUE_ICE_BRICK_SLAB)
             .wall(DnDBlocks.BLUE_ICE_BRICK_WALL)
             .build()
-    val BLUE_ICE_FAMILY: BlockFamily =
+    private val BLUE_ICE_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.BLUE_ICE)
             .stairs(DnDBlocks.BLUE_ICE_STAIRS)
             .slab(DnDBlocks.BLUE_ICE_SLAB)
             .wall(DnDBlocks.BLUE_ICE_WALL)
             .build()
 
-    val NETHERRACK_FAMILY: BlockFamily =
+    private val NETHERRACK_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.NETHERRACK)
             .stairs(DnDNetherBrickBlocks.NETHERRACK_STAIRS)
             .slab(DnDNetherBrickBlocks.NETHERRACK_SLAB)
             .wall(DnDNetherBrickBlocks.NETHERRACK_WALL)
             .build()
-    val POLISHED_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val POLISHED_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.POLISHED_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.POLISHED_NETHER_BRICK_STAIRS)
             .slab(DnDNetherBrickBlocks.POLISHED_NETHER_BRICK_SLAB)
             .wall(DnDNetherBrickBlocks.POLISHED_NETHER_BRICK_WALL)
             .build()
-    val MIXED_RED_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val MIXED_RED_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.MIXED_NETHER_BRICKS)
             .cracked(DnDNetherBrickBlocks.CRACKED_MIXED_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_STAIRS)
@@ -249,13 +249,13 @@ object DnDFamilies {
             .wall(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_WALL)
             .chiseled(DnDNetherBrickBlocks.CHISELED_MIXED_NETHER_BRICKS)
             .build()
-    val POLISHED_RED_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val POLISHED_RED_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICK_STAIRS)
             .slab(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICK_SLAB)
             .wall(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICK_WALL)
             .build()
-    val BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.BLUE_NETHER_BRICKS)
             .cracked(DnDNetherBrickBlocks.CRACKED_BLUE_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_STAIRS)
@@ -264,7 +264,7 @@ object DnDFamilies {
             .polished(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICKS)
             .chiseled(DnDNetherBrickBlocks.CHISELED_BLUE_NETHER_BRICKS)
             .build()
-    val MIXED_BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val MIXED_BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICKS)
             .cracked(DnDNetherBrickBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_STAIRS)
@@ -272,13 +272,13 @@ object DnDFamilies {
             .wall(DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_WALL)
             .chiseled(DnDNetherBrickBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS)
             .build()
-    val POLISHED_BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val POLISHED_BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICK_STAIRS)
             .slab(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICK_SLAB)
             .wall(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICK_WALL)
             .build()
-    val GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.GRAY_NETHER_BRICKS)
             .cracked(DnDNetherBrickBlocks.CRACKED_GRAY_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_STAIRS)
@@ -287,7 +287,7 @@ object DnDFamilies {
             .polished(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICKS)
             .chiseled(DnDNetherBrickBlocks.CHISELED_GRAY_NETHER_BRICKS)
             .build()
-    val MIXED_GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val MIXED_GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICKS)
             .cracked(DnDNetherBrickBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_STAIRS)
@@ -295,7 +295,7 @@ object DnDFamilies {
             .wall(DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_WALL)
             .chiseled(DnDNetherBrickBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS)
             .build()
-    val POLISHED_GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
+    private val POLISHED_GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
         BlockFamilies.register(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICKS)
             .stairs(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS)
             .slab(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB)
@@ -304,10 +304,8 @@ object DnDFamilies {
 
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
-        GALLERY_MAPLE_FAMILY,
 //        PINE_FAMILY,
         BONEWOOD_FAMILY,
-        WITHERING_BONEWOOD_FAMILY,
         POLISHED_STONE_FAMILY,
         MOSSY_POLISHED_STONE_FAMILY,
         SNOWY_STONE_BRICKS_FAMILY,
@@ -322,6 +320,9 @@ object DnDFamilies {
         GRAY_NETHER_BRICKS_FAMILY,
         MIXED_GRAY_NETHER_BRICKS_FAMILY,
         POLISHED_GRAY_NETHER_BRICKS_FAMILY,
+        
+        WITHERING_BONEWOOD_FAMILY,
+        GALLERY_MAPLE_FAMILY,
     )
     val recipesBlockFamilies = modelsBlockFamilies + listOf(
         OAK_WOOD_FAMILY,
@@ -347,9 +348,9 @@ object DnDFamilies {
     )
 
     fun init() {
-        modelsBlockFamilies.forEach{
-            it.variants.forEach(::println)
-        }
+//        modelsBlockFamilies.forEach{
+//            it.variants.forEach(::println)
+//        }
 
     }
 }

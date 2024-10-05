@@ -299,13 +299,13 @@ object DnDWoodBlocks {
     ).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_DOOR = DnDBlocks.registerNoItem(
         "withering_bonewood_door", DoorBlock(
-            DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
+            DnDWoodTypes.WITHERING_BONEWOOD_BLOCK_SET_TYPE,
             copy(WITHERING_BONEWOOD_PLANKS).strength(3.0f).nonOpaque(),
         ).cutout().axe()
     ).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_TRAPDOOR = DnDBlocks.register(
         "withering_bonewood_trapdoor", TrapdoorBlock(
-            DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
+            DnDWoodTypes.WITHERING_BONEWOOD_BLOCK_SET_TYPE,
             copy(WITHERING_BONEWOOD_DOOR).allowsSpawning(Blocks::nonSpawnable),
         ).cutout().axe()
     ).tellWitnessesThatIWasMurdered()
