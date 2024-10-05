@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.item.ItemConvertible
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.LootTables
 import net.minecraft.nbt.NbtOps
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.event.AddWanderingTrades
 import org.teamvoided.dusk_autumn.init.*
-import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
 import org.teamvoided.dusk_autumn.modules.BarteringInjection
 import org.teamvoided.dusk_autumn.modules.SnifferInjection
@@ -28,9 +28,7 @@ object DusksAndDungeons {
         log.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()
-        println(DnDWoodBlocks.BONEWOOD_DOOR.asItem())
-        println(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR.asItem())
-
+        DnDItems.EVIL_ITEMS.addAll(DnDBlocks.EVIL_BLOCKS.map(ItemConvertible::asItem))
         DnDFamilies.init()
 
         DnDBlockEntities.init()

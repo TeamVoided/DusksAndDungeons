@@ -5,7 +5,6 @@ import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks.*
-import net.minecraft.block.CoralBlockBlock
 import net.minecraft.block.IceBlock
 import net.minecraft.block.MapColor
 import net.minecraft.block.piston.PistonBehavior
@@ -13,7 +12,10 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
-import org.teamvoided.dusk_autumn.block.*
+import org.teamvoided.dusk_autumn.block.CelestalBellBlock
+import org.teamvoided.dusk_autumn.block.CrytalClusterWithParticlesBlock
+import org.teamvoided.dusk_autumn.block.DnDWoodTypes
+import org.teamvoided.dusk_autumn.block.TallRedstoneCrystalBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableWallBlock
@@ -38,6 +40,8 @@ object DnDBlocks {
     val AXABLE = mutableSetOf<Block>()
     val SHOVELABLE = mutableSetOf<Block>()
     val HOEABLE = mutableSetOf<Block>()
+
+    val EVIL_BLOCKS = mutableSetOf<Block>()
 
     val CELESTAL_BELL = register("celestal_bell", CelestalBellBlock(copy(BELL))).tellWitnessesThatIWasMurdered()
 
