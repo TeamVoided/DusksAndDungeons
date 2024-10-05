@@ -18,7 +18,6 @@ import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ArmorMaterial
-import net.minecraft.item.trim.ArmorTrimPattern
 import net.minecraft.item.trim.ArmorTrimPermutation
 import net.minecraft.registry.Holder
 import net.minecraft.registry.tag.ItemTags
@@ -94,20 +93,23 @@ class ScarecrowArmorFeatureRenderer(
         val item = itemStack.item
         if (item is ArmorItem) {
             if (item.preferredSlot == armorSlot) {
+
                 this.contextModel.setAttributes(model)
+//                this.leggingsModel.setAttributesM(model)
+//                this.bodyModel.setAttributesM(model)
+
                 this.setVisible(model, armorSlot)
+
                 val useSecondLayer = this.usesSecondLayer(armorSlot)
-                val armorMaterial = item.material.value() as ArmorMaterial
+
+                val armorMaterial = item.material.value()
                 val dyeTint = if (itemStack.isIn(ItemTags.DYEABLE)) Argb32.toOpaque(
                     DyedColorComponent.getColorOrDefault(
                         itemStack,
                         -6265536
                     )
                 ) else -1
-                val armorLayers: Iterator<*> = armorMaterial.layers().iterator()
-
-                while (armorLayers.hasNext()) {
-                    val layer = armorLayers.next() as ArmorMaterial.Layer
+                armorMaterial.layers().forEach { layer ->
                     val tint = if (layer.isDyeable) dyeTint else -1
                     this.renderArmorParts(matrices, vertexConsumers, light, model, tint, layer.texture(useSecondLayer))
                 }
@@ -132,7 +134,7 @@ class ScarecrowArmorFeatureRenderer(
         }
     }
 
-    protected fun setVisible(scarecrowArmor: ScarecrowArmorEntityModel, slot: EquipmentSlot?) {
+    fun setVisible(scarecrowArmor: ScarecrowArmorEntityModel, slot: EquipmentSlot) {
         scarecrowArmor.setArmorVisible(false)
         when (slot) {
             EquipmentSlot.HEAD -> {
@@ -157,7 +159,7 @@ class ScarecrowArmorFeatureRenderer(
                 scarecrowArmor.leftLeg.visible = true
             }
 
-            else -> println("hiya-------------------------------------------------------------------------------------------------")
+            else -> Unit
         }
     }
 
@@ -186,11 +188,7 @@ class ScarecrowArmorFeatureRenderer(
             if (hasGlint) permutation.getLeggingsTexture(holder) else permutation.getBodyTexture(holder)
         )
         val vertexConsumer = sprite.getTextureSpecificVertexConsumer(
-            vertexConsumers.getBuffer(
-                TexturedRenderLayers.getArmorTrim(
-                    (permutation.pattern.value() as ArmorTrimPattern).decal()
-                )
-            )
+            vertexConsumers.getBuffer(TexturedRenderLayers.getArmorTrim(permutation.pattern.value().decal()))
         )
         model.method_60879(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV)
     }
@@ -202,10 +200,7 @@ class ScarecrowArmorFeatureRenderer(
         model: ScarecrowArmorEntityModel
     ) {
         model.method_60879(
-            matrices,
-            vertexConsumers.getBuffer(RenderLayer.getArmorEntityGlint()),
-            light,
-            OverlayTexture.DEFAULT_UV
+            matrices, vertexConsumers.getBuffer(RenderLayer.getArmorEntityGlint()), light, OverlayTexture.DEFAULT_UV
         )
     }
 

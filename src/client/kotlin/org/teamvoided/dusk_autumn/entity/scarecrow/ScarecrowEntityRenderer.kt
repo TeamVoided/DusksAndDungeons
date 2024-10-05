@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.entity.scarecrow
 
 import net.minecraft.client.render.entity.EntityRendererFactory
 import net.minecraft.client.render.entity.LivingEntityRenderer
+import net.minecraft.client.render.entity.feature.ElytraFeatureRenderer
 import net.minecraft.client.render.entity.feature.HeadFeatureRenderer
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer
 import net.minecraft.client.util.math.MatrixStack
@@ -34,6 +35,7 @@ class ScarecrowEntityRenderer(context: EntityRendererFactory.Context) :
                 context.modelManager
             )
         )
+        this.addFeature(ElytraFeatureRenderer(this, context.modelLoader))
     }
 
     override fun setupTransforms(
