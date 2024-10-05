@@ -8,6 +8,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusk_autumn.util.*
 import kotlin.jvm.optionals.getOrNull
@@ -96,9 +97,8 @@ object DnDItemGroups {
         FabricItemGroup.builder()
             .icon { ItemStack(DnDStoneBlocks.STONE_PILLAR.asItem()) }
             .name(Text.translatable("itemGroup.dusk_autumn.everything"))
-            .entries { _, entries ->
-                entries.addLists(DnDItems.ITEMS)
-            }.build()
+            .entries { _, entries -> entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains)) }
+            .build()
     )
 
     fun init() {
