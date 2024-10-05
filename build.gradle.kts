@@ -55,7 +55,7 @@ dependencies {
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
 
-    modImplementation(libs.dev.tools.unlocker)
+//    modImplementation(libs.dev.tools.unlocker)
 
 
     // Compat
