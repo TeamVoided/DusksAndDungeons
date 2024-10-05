@@ -57,7 +57,7 @@ class ScarecrowArmorEntityModel(root: ModelPart) : ScarecrowEntityModel(root) {
                 ModelPartBuilder.create()
                     .uv(16, 16)
                     .cuboid(
-                        -4f, -12f, -2f,
+                        -4f, -6f, -2f,
                         8f, 12f, 4f,
                         dilation
                     ),
@@ -68,11 +68,11 @@ class ScarecrowArmorEntityModel(root: ModelPart) : ScarecrowEntityModel(root) {
                 ModelPartBuilder.create()
                     .uv(0, 0)
                     .cuboid(
-                        -4f, 0f, -4f,
+                        -4f, -8f, -4f,
                         8f, 8f, 8f,
                         dilation
                     ),
-                ModelTransform.pivot(0f, 1f, 0f)
+                ModelTransform.pivot(0f, -6f, 0f)
             ).addChild(
                 "hat",
                 ModelPartBuilder.create()
@@ -93,7 +93,7 @@ class ScarecrowArmorEntityModel(root: ModelPart) : ScarecrowEntityModel(root) {
                         4f, 12f, 4f,
                         dilation.add(-0.1f)
                     ),
-                ModelTransform.pivot(-8f, 10f, 0f)
+                ModelTransform.pivot(-6f, -4f, 0f)
             )
             body.addChild(
                 "left_arm",
@@ -104,7 +104,7 @@ class ScarecrowArmorEntityModel(root: ModelPart) : ScarecrowEntityModel(root) {
                         4f, 12f, 4f,
                         dilation.add(-0.1f)
                     ),
-                ModelTransform.pivot(8f, 30f, 0f)
+                ModelTransform.pivot(6f, -4f, 0f)
             )
             body.addChild(
                 "right_leg",
@@ -115,7 +115,7 @@ class ScarecrowArmorEntityModel(root: ModelPart) : ScarecrowEntityModel(root) {
                         4f, 12f, 4f,
                         dilation.add(-0.1f)
                     ),
-                ModelTransform.pivot(-1.9f, 0f, 0f)
+                ModelTransform.pivot(-1.9f, 6f, 0f)
             )
             body.addChild(
                 "left_leg",
@@ -126,7 +126,7 @@ class ScarecrowArmorEntityModel(root: ModelPart) : ScarecrowEntityModel(root) {
                         4f, 12f, 4f,
                         dilation.add(-0.1f)
                     ),
-                ModelTransform.pivot(1.9f, 0f, 0f)
+                ModelTransform.pivot(1.9f, 6f, 0f)
             )
             return modelData
         }

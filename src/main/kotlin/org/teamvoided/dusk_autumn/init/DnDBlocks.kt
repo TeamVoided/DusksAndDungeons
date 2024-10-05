@@ -43,32 +43,32 @@ object DnDBlocks {
     val SHOVELABLE = mutableSetOf<Block>()
     val HOEABLE = mutableSetOf<Block>()
 
-    val CELESTAL_BELL = register("celestal_bell", CelestalBellBlock(copy(BELL)))
+    val CELESTAL_BELL = register("celestal_bell", CelestalBellBlock(copy(BELL))).tellWitnessesThatIWasMurdered()
 
     val ICE_STAIRS = register("ice_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe())
     val ICE_SLAB = register("ice_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe())
     val ICE_WALL = register("ice_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe())
-    val ICE_BRICKS = register("ice_bricks", IceBlock(copy(ICE)).translucent().pickaxe())
+    val ICE_BRICKS = register("ice_bricks", IceBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
     val ICE_BRICK_STAIRS =
-        register("ice_brick_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe())
-    val ICE_BRICK_SLAB = register("ice_brick_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe())
-    val ICE_BRICK_WALL = register("ice_brick_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe())
+        register("ice_brick_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
+    val ICE_BRICK_SLAB = register("ice_brick_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
+    val ICE_BRICK_WALL = register("ice_brick_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
 
     val PACKED_ICE_STAIRS = register("packed_ice_stairs", stairsOf(PACKED_ICE).pickaxe())
     val PACKED_ICE_SLAB = register("packed_ice_slab", slabOf(PACKED_ICE).pickaxe())
     val PACKED_ICE_WALL = register("packed_ice_wall", wallOf(PACKED_ICE).pickaxe())
-    val PACKED_ICE_BRICKS = register("packed_ice_bricks", Block(copy(PACKED_ICE)).pickaxe())
-    val PACKED_ICE_BRICK_STAIRS = register("packed_ice_brick_stairs", stairsOf(PACKED_ICE).pickaxe())
-    val PACKED_ICE_BRICK_SLAB = register("packed_ice_brick_slab", slabOf(PACKED_ICE).pickaxe())
-    val PACKED_ICE_BRICK_WALL = register("packed_ice_brick_wall", wallOf(PACKED_ICE).pickaxe())
+    val PACKED_ICE_BRICKS = register("packed_ice_bricks", Block(copy(PACKED_ICE)).pickaxe()).tellWitnessesThatIWasMurdered()
+    val PACKED_ICE_BRICK_STAIRS = register("packed_ice_brick_stairs", stairsOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val PACKED_ICE_BRICK_SLAB = register("packed_ice_brick_slab", slabOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val PACKED_ICE_BRICK_WALL = register("packed_ice_brick_wall", wallOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
 
     val BLUE_ICE_STAIRS = register("blue_ice_stairs", stairsOf(BLUE_ICE).pickaxe())
     val BLUE_ICE_SLAB = register("blue_ice_slab", slabOf(BLUE_ICE).pickaxe())
     val BLUE_ICE_WALL = register("blue_ice_wall", wallOf(BLUE_ICE).pickaxe())
-    val BLUE_ICE_BRICKS = register("blue_ice_bricks", Block(copy(BLUE_ICE)).pickaxe())
-    val BLUE_ICE_BRICK_STAIRS = register("blue_ice_brick_stairs", stairsOf(BLUE_ICE).pickaxe())
-    val BLUE_ICE_BRICK_SLAB = register("blue_ice_brick_slab", slabOf(BLUE_ICE).pickaxe())
-    val BLUE_ICE_BRICK_WALL = register("blue_ice_brick_wall", wallOf(BLUE_ICE).pickaxe())
+    val BLUE_ICE_BRICKS = register("blue_ice_bricks", Block(copy(BLUE_ICE)).pickaxe()).tellWitnessesThatIWasMurdered()
+    val BLUE_ICE_BRICK_STAIRS = register("blue_ice_brick_stairs", stairsOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val BLUE_ICE_BRICK_SLAB = register("blue_ice_brick_slab", slabOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val BLUE_ICE_BRICK_WALL = register("blue_ice_brick_wall", wallOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
 
     val MOONCORE = register(
         "mooncore", CrytalClusterWithParticlesBlock(
@@ -77,14 +77,14 @@ object DnDBlocks {
                 .strength(1.5f).ticksRandomly().luminance(light(15))
                 .pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val TALL_REDSTONE_CRYSTAL = register(
         "tall_redstone_crystal", TallRedstoneCrystalBlock(
             Settings.create().mapColor(MapColor.RED).solid().nonOpaque().sounds(BlockSoundGroup.AMETHYST_CLUSTER)
                 .strength(1.5f).ticksRandomly().luminance(luminanceOf(9))
                 .pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
-    )
+    ).tellWitnessesThatIWasMurdered()
 
 //    val CLUB_CORAL = register(
 //        "club_coral", Block(

@@ -61,7 +61,6 @@ open class ScarecrowEntityModel(private val root: ModelPart) :
         setRotation(leftArm, scarecrowEntity.getLeftArmRotation())
         setRotation(rightLeg, scarecrowEntity.getRightLegRotation())
         setRotation(leftLeg, scarecrowEntity.getLeftLegRotation())
-        body.roll = 0.017453292f * scarecrowEntity.age
     }
 
     fun setRotation(part: ModelPart, angle: EulerAngle) {
@@ -76,8 +75,8 @@ open class ScarecrowEntityModel(private val root: ModelPart) :
     }
 
     companion object {
-        const val POST_OFFSET = 20f
-        const val BODY_OFFSET = -6f
+        const val POST_OFFSET = 24f
+        const val BODY_OFFSET = -25f
         val texturedModelData: TexturedModelData
             get() {
                 val modelData = ModelData()
@@ -85,8 +84,8 @@ open class ScarecrowEntityModel(private val root: ModelPart) :
                 val post = modelPartData.addChild(
                     "post",
                     ModelPartBuilder.create().uv(0, 0).cuboid(
-                        -2f, -14f, -2f,
-                        4f, 24f, 4f
+                        -2f, -25f, -2f,
+                        4f, 27f, 4f
                     ),
                     ModelTransform.pivot(0f, POST_OFFSET, 0f)
                 )
@@ -107,15 +106,15 @@ open class ScarecrowEntityModel(private val root: ModelPart) :
                             -4f, -8f, -4f,
                             8f, 8f, 8f
                         ),
-                    ModelTransform.pivot(0f, -12f, 0f)
+                    ModelTransform.pivot(0f, -6f, 0f)
                 )
                 body.addChild(
                     "right_arm",
                     ModelPartBuilder.create().uv(0, 0).cuboid(
-                        -2f, -4f, -2f,
+                        -2f, -2f, -2f,
                         4f, 12f, 4f
                     ),
-                    ModelTransform.pivot(-6f, -8f, 0f)
+                    ModelTransform.pivot(-6f, -4f, 0f)
                 )
                 body.addChild(
                     "left_arm",
@@ -125,7 +124,7 @@ open class ScarecrowEntityModel(private val root: ModelPart) :
                             -2f, -2f, -2f,
                             4f, 12f, 4f
                         ),
-                    ModelTransform.pivot(6f, -10f, 0f)
+                    ModelTransform.pivot(6f, -4f, 0f)
                 )
                 body.addChild(
                     "right_leg",
@@ -136,7 +135,7 @@ open class ScarecrowEntityModel(private val root: ModelPart) :
                             4f, 12f, 4f,
                             Dilation(0.01f)
                         ),
-                    ModelTransform.pivot(-1.9f, 0f, 0f)
+                    ModelTransform.pivot(-1.9f, 6f, 0f)
                 )
                 body.addChild(
                     "left_leg",
@@ -147,7 +146,7 @@ open class ScarecrowEntityModel(private val root: ModelPart) :
                             4f, 12f, 4f,
                             Dilation(0.01f)
                         ),
-                    ModelTransform.pivot(1.9f, 0f, 0f)
+                    ModelTransform.pivot(1.9f, 6f, 0f)
                 )
 
 //                bale.addChild(

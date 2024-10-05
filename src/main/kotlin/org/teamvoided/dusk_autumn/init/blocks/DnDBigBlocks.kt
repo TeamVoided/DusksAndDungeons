@@ -25,7 +25,7 @@ object DnDBigBlocks {
     val BIG_CELESTAL_CHAIN = DnDBlocks.register(
         "big_celestal_chain",
         BigChainBlock(copy(CHAIN).sounds(BlockSoundGroup.BLOCK_VAULT_BREAK)).cutout().pickaxe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BIG_MOON_LANTERN = DnDBlocks.register(
         "big_moon_lantern",
         BigLanternWithSpiralBlock(
@@ -33,7 +33,7 @@ object DnDBigBlocks {
             0x8B3DB5,
             copy(BIG_SOUL_LANTERN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)
         ).pickaxe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BIG_EARTH_LANTERN = DnDBlocks.register(
         "big_earth_lantern",
         BigLanternWithSpiralBlock(
@@ -41,7 +41,7 @@ object DnDBigBlocks {
             0xE5B816,
             copy(BIG_MOON_LANTERN)
         ).pickaxe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BIG_COMET_LANTERN = DnDBlocks.register(
         "big_comet_lantern",
         BigLanternWithSpiralBlock(
@@ -49,7 +49,7 @@ object DnDBigBlocks {
             0xCC6C28,
             copy(BIG_MOON_LANTERN)
         ).pickaxe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BIG_SUN_LANTERN = DnDBlocks.register(
         "big_sun_lantern",
         BigLanternWithSpiralBlock(
@@ -57,7 +57,7 @@ object DnDBigBlocks {
             0x1470CC,
             copy(BIG_MOON_LANTERN)
         ).pickaxe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BIG_STAR_LANTERN = DnDBlocks.register(
         "big_star_lantern",
         BigLanternWithSpiralBlock(
@@ -65,7 +65,7 @@ object DnDBigBlocks {
             0xE52DE5,
             copy(BIG_MOON_LANTERN)
         ).pickaxe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BIG_NEBULAE_LANTERN = DnDBlocks.register(
         "big_nebulae_lantern",
         BigLanternWithSpiralBlock(
@@ -73,7 +73,7 @@ object DnDBigBlocks {
             0x52D973,
             copy(BIG_MOON_LANTERN)
         ).pickaxe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BIG_ECLIPSE_LANTERN = DnDBlocks.register(
         "big_eclipse_lantern",
         BigLanternWithSpiralBlock(
@@ -81,7 +81,7 @@ object DnDBigBlocks {
             0xBFBFBF,
             copy(BIG_MOON_LANTERN)
         ).pickaxe()
-    )
+    ).tellWitnessesThatIWasMurdered()
 
     val BIG_CANDLE = DnDBlocks.register("big_candle", bigCandleOf(MapColor.SAND))
     val BIG_WHITE_CANDLE = DnDBlocks.register("big_white_candle", bigCandleOf(MapColor.WOOL))

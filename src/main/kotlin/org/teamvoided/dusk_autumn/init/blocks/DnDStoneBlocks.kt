@@ -48,8 +48,8 @@ object DnDStoneBlocks {
         DnDBlocks.register("overgrown_stone_brick_slab", slabOf(MOSSY_STONE_BRICK_SLAB).cutout().grass().pickaxe())
     val OVERGROWN_STONE_BRICK_WALL =
         DnDBlocks.register("overgrown_stone_brick_wall", wallOf(MOSSY_STONE_BRICK_WALL).cutout().grass().pickaxe())
-    val SNOWY_STONE_BRICKS = DnDBlocks.register("snowy_stone_bricks", Block(copy(STONE_BRICKS)).pickaxe())
-    val SNOWY_STONE_BRICK_STAIRS = DnDBlocks.register("snowy_stone_brick_stairs", stairsOf(STONE_BRICKS).pickaxe())
-    val SNOWY_STONE_BRICK_SLAB = DnDBlocks.register("snowy_stone_brick_slab", slabOf(STONE_BRICK_SLAB).pickaxe())
-    val SNOWY_STONE_BRICK_WALL = DnDBlocks.register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe())
+    val SNOWY_STONE_BRICKS = DnDBlocks.register("snowy_stone_bricks", Block(copy(STONE_BRICKS)).pickaxe()).tellWitnessesThatIWasMurdered()
+    val SNOWY_STONE_BRICK_STAIRS = DnDBlocks.register("snowy_stone_brick_stairs", stairsOf(STONE_BRICKS).pickaxe()).tellWitnessesThatIWasMurdered()
+    val SNOWY_STONE_BRICK_SLAB = DnDBlocks.register("snowy_stone_brick_slab", slabOf(STONE_BRICK_SLAB).pickaxe()).tellWitnessesThatIWasMurdered()
+    val SNOWY_STONE_BRICK_WALL = DnDBlocks.register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe()).tellWitnessesThatIWasMurdered()
 }

@@ -24,7 +24,7 @@ object DnDFloraBlocks {
                 .mapColor(MapColor.BLUE).noCollision().ticksRandomly().breakInstantly().offsetType(OffsetType.XZ)
                 .sounds(BlockSoundGroup.GRASS).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GOLDEN_MUSHROOM = DnDBlocks.register(
         "golden_mushroom", MushroomWithSporesPlantBlock(
             TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM,
@@ -50,7 +50,7 @@ object DnDFloraBlocks {
         "spiderlily", SpiderlilyBlock(
             copy(ROSE_BUSH).ticksRandomly()
         ).cutout().sword().hoe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val WHITE_PETALS = DnDBlocks.register(
         "white_petals", PinkPetalsBlock(
             copy(PINK_PETALS).mapColor(MapColor.SNOW)
@@ -90,7 +90,7 @@ object DnDFloraBlocks {
         "water_fern", WaterFernBlock(
             copy(LILY_PAD)
         ).cutout()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val ROOT_BLOCK = DnDBlocks.register(
         "root_block", MangroveRootsBlock(
             Settings.create().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS)

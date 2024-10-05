@@ -48,7 +48,7 @@ object DnDWoodBlocks {
     val CASCADE_LOG = DnDBlocks.register(
         "cascade_log", Blocks.logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD)
     )
-    val HOLLOW_CASCADE_LOG = DnDBlocks.register("hollow_cascade_log", hollowLog(CASCADE_LOG))
+    val HOLLOW_CASCADE_LOG = DnDBlocks.register("hollow_cascade_log", hollowLog(CASCADE_LOG)).tellWitnessesThatIWasMurdered()
     val CASCADE_WOOD = DnDBlocks.register(
         "cascade_wood", PillarBlock(
             Settings.create().mapColor(MapColor.BROWN).instrument(NoteBlockInstrument.BASS).strength(2.0f)
@@ -63,7 +63,7 @@ object DnDWoodBlocks {
         "stripped_cascade_log", Blocks.logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD)
     )
     val HOLLOW_STRIPPED_CASCADE_LOG =
-        DnDBlocks.register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_LOG))
+        DnDBlocks.register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_LOG)).tellWitnessesThatIWasMurdered()
     val STRIPPED_CASCADE_WOOD = DnDBlocks.register(
         "stripped_cascade_wood",
         PillarBlock(copy(CASCADE_WOOD).mapColor(MapColor.BLUE))
@@ -167,8 +167,8 @@ object DnDWoodBlocks {
             Settings.create()
                 .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.AZALEA)
                 .pistonBehavior(PistonBehavior.DESTROY).luminance(light(1))
-        )
-    ).cutout()
+        ).cutout()
+    ).tellWitnessesThatIWasMurdered()
     val POTTED_GALLERY_MAPLE_SAPLING =
         DnDBlocks.registerNoItem("potted_gallery_maple_sapling", Blocks.pottedVariant(GALLERY_MAPLE_SAPLING)).cutout()
     val GALLERY_MAPLE_LEAVES = DnDBlocks.register(
@@ -178,77 +178,77 @@ object DnDWoodBlocks {
                 .blockVision(Blocks::nonSolid).pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
                 .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.RED)
         ).cutout().axe().hoe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_LEAF_PILE = DnDBlocks.register(
         "gallery_maple_leaf_pile",
         fallingLeafPile(DnDParticles.CASCADE_LEAF_PARTICLE, MapColor.RED).cutout()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_LOG = DnDBlocks.register(
         "gallery_maple_log", Blocks.logOf(MapColor.GRAY, MapColor.BROWN, BlockSoundGroup.WOOD)
-    )
-    val HOLLOW_GALLERY_MAPLE_LOG = DnDBlocks.register("hollow_gallery_maple_log", hollowLog(GALLERY_MAPLE_LOG))
+    ).tellWitnessesThatIWasMurdered()
+    val HOLLOW_GALLERY_MAPLE_LOG = DnDBlocks.register("hollow_gallery_maple_log", hollowLog(GALLERY_MAPLE_LOG)).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_WOOD = DnDBlocks.register(
         "gallery_maple_wood", PillarBlock(
             Settings.create().mapColor(MapColor.BROWN).instrument(NoteBlockInstrument.BASS).strength(2.0f)
                 .sounds(BlockSoundGroup.WOOD)
         )
-    )
-    val GALLERY_MAPLE_WOOD_STAIRS = DnDBlocks.register("gallery_maple_wood_stairs", stairsOf(GALLERY_MAPLE_WOOD))
-    val GALLERY_MAPLE_WOOD_SLAB = DnDBlocks.register("gallery_maple_wood_slab", slabOf(GALLERY_MAPLE_WOOD))
-    val GALLERY_MAPLE_WOOD_WALL = DnDBlocks.register("gallery_maple_wood_wall", wallOf(GALLERY_MAPLE_WOOD))
-    val GALLERY_MAPLE_LOG_PILE = DnDBlocks.register("gallery_maple_log_pile", logPile(GALLERY_MAPLE_WOOD))
+    ).tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_WOOD_STAIRS = DnDBlocks.register("gallery_maple_wood_stairs", stairsOf(GALLERY_MAPLE_WOOD)).tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_WOOD_SLAB = DnDBlocks.register("gallery_maple_wood_slab", slabOf(GALLERY_MAPLE_WOOD)).tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_WOOD_WALL = DnDBlocks.register("gallery_maple_wood_wall", wallOf(GALLERY_MAPLE_WOOD)).tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_LOG_PILE = DnDBlocks.register("gallery_maple_log_pile", logPile(GALLERY_MAPLE_WOOD)).tellWitnessesThatIWasMurdered()
     val STRIPPED_GALLERY_MAPLE_LOG = DnDBlocks.register(
         "stripped_gallery_maple_log", Blocks.logOf(MapColor.GRAY, MapColor.GRAY, BlockSoundGroup.WOOD)
-    )
+    ).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_GALLERY_MAPLE_LOG =
-        DnDBlocks.register("hollow_stripped_gallery_maple_log", hollowLog(STRIPPED_GALLERY_MAPLE_LOG))
+        DnDBlocks.register("hollow_stripped_gallery_maple_log", hollowLog(STRIPPED_GALLERY_MAPLE_LOG)).tellWitnessesThatIWasMurdered()
     val STRIPPED_GALLERY_MAPLE_WOOD = DnDBlocks.register(
         "stripped_gallery_maple_wood", PillarBlock(
             copy(GALLERY_MAPLE_WOOD).mapColor(MapColor.GRAY)
         )
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_PLANKS = DnDBlocks.register(
         "gallery_maple_planks", Block(
             Settings.create()
                 .mapColor(MapColor.GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
                 .sounds(BlockSoundGroup.WOOD)
         ).axe()
-    )
-    val GALLERY_MAPLE_STAIRS = DnDBlocks.register("gallery_maple_stairs", stairsOf(GALLERY_MAPLE_PLANKS).axe())
-    val GALLERY_MAPLE_SLAB = DnDBlocks.register("gallery_maple_slab", slabOf(GALLERY_MAPLE_PLANKS).axe())
-    val GALLERY_MAPLE_FENCE = DnDBlocks.register("gallery_maple_fence", fenceOf(GALLERY_MAPLE_PLANKS).axe())
+    ).tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_STAIRS = DnDBlocks.register("gallery_maple_stairs", stairsOf(GALLERY_MAPLE_PLANKS).axe()).tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_SLAB = DnDBlocks.register("gallery_maple_slab", slabOf(GALLERY_MAPLE_PLANKS).axe()).tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_FENCE = DnDBlocks.register("gallery_maple_fence", fenceOf(GALLERY_MAPLE_PLANKS).axe()).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_FENCE_GATE = DnDBlocks.register(
         "gallery_maple_fence_gate",
         fenceGateOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_DOOR = DnDBlocks.registerNoItem(
         "gallery_maple_door",
         doorOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_PLANKS).cutout().axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_TRAPDOOR = DnDBlocks.register(
         "gallery_maple_trapdoor",
         trapdoorOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_DOOR).cutout().axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_PRESSURE_PLATE = DnDBlocks.register(
         "gallery_maple_pressure_plate",
         pressurePlateOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_PLANKS).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_BUTTON =
         DnDBlocks.register("gallery_maple_button", Blocks.buttonOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE).axe())
     val GALLERY_MAPLE_SIGN = DnDBlocks.registerNoItem(
         "gallery_maple_sign", signOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_WALL_SIGN = DnDBlocks.registerNoItem(
         "gallery_maple_wall_sign",
         wallSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS, GALLERY_MAPLE_SIGN).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_HANGING_SIGN = DnDBlocks.registerNoItem(
         "gallery_maple_hanging_sign", hangingSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_WALL_HANGING_SIGN = DnDBlocks.registerNoItem(
         "gallery_maple_wall_hanging_sign",
         wallHangingSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS, GALLERY_MAPLE_HANGING_SIGN).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
 
     val BONEWOOD_PLANKS = DnDBlocks.register(
         "bonewood_planks", Block(
@@ -256,10 +256,10 @@ object DnDWoodBlocks {
                 .mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.XYLOPHONE).strength(2.0F, 3.0F)
                 .sounds(bonewoodSound)
         ).axe()
-    )
-    val BONEWOOD_STAIRS = DnDBlocks.register("bonewood_stairs", stairsOf(BONEWOOD_PLANKS).axe())
-    val BONEWOOD_SLAB = DnDBlocks.register("bonewood_slab", slabOf(BONEWOOD_PLANKS).axe())
-    val BONEWOOD_FENCE = DnDBlocks.register("bonewood_fence", fenceOf(BONEWOOD_PLANKS).axe())
+    ).tellWitnessesThatIWasMurdered()
+    val BONEWOOD_STAIRS = DnDBlocks.register("bonewood_stairs", stairsOf(BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
+    val BONEWOOD_SLAB = DnDBlocks.register("bonewood_slab", slabOf(BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
+    val BONEWOOD_FENCE = DnDBlocks.register("bonewood_fence", fenceOf(BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
     val BONEWOOD_FENCE_GATE = DnDBlocks.register(
         "bonewood_fence_gate",
         FenceGateBlock(
@@ -267,81 +267,81 @@ object DnDWoodBlocks {
             copy(BONEWOOD_PLANKS).solid()
 
         ).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BONEWOOD_DOOR = DnDBlocks.registerNoItem(
         "bonewood_door", DoorBlock(
             DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
             copy(BONEWOOD_PLANKS).strength(3.0f).nonOpaque(),
         ).cutout().axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val BONEWOOD_TRAPDOOR = DnDBlocks.register(
         "bonewood_trapdoor", TrapdoorBlock(
             DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
             copy(BONEWOOD_DOOR).allowsSpawning(Blocks::nonSpawnable),
         ).cutout().axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_PLANKS = DnDBlocks.register(
         "withering_bonewood_planks", Block(
             copy(BONEWOOD_PLANKS).mapColor(MapColor.BLACK).sounds(witheringBonewoodSound)
         ).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_STAIRS =
-        DnDBlocks.register("withering_bonewood_stairs", stairsOf(WITHERING_BONEWOOD_PLANKS).axe())
-    val WITHERING_BONEWOOD_SLAB = DnDBlocks.register("withering_bonewood_slab", slabOf(WITHERING_BONEWOOD_PLANKS).axe())
+        DnDBlocks.register("withering_bonewood_stairs", stairsOf(WITHERING_BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
+    val WITHERING_BONEWOOD_SLAB = DnDBlocks.register("withering_bonewood_slab", slabOf(WITHERING_BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_FENCE =
-        DnDBlocks.register("withering_bonewood_fence", fenceOf(WITHERING_BONEWOOD_PLANKS).axe())
+        DnDBlocks.register("withering_bonewood_fence", fenceOf(WITHERING_BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_FENCE_GATE = DnDBlocks.register(
         "withering_bonewood_fence_gate",
         FenceGateBlock(
             DnDWoodTypes.WITHERING_BONEWOOD_WOOD_TYPE,
             copy(WITHERING_BONEWOOD_PLANKS).solid()
         ).axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_DOOR = DnDBlocks.registerNoItem(
         "withering_bonewood_door", DoorBlock(
             DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
             copy(WITHERING_BONEWOOD_PLANKS).strength(3.0f).nonOpaque(),
         ).cutout().axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_TRAPDOOR = DnDBlocks.register(
         "withering_bonewood_trapdoor", TrapdoorBlock(
             DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE,
             copy(WITHERING_BONEWOOD_DOOR).allowsSpawning(Blocks::nonSpawnable),
         ).cutout().axe()
-    )
+    ).tellWitnessesThatIWasMurdered()
 
-    val HOLLOW_OAK_LOG = DnDBlocks.register("hollow_oak_log", hollowLog(Blocks.OAK_LOG))
-    val HOLLOW_STRIPPED_OAK_LOG = DnDBlocks.register("hollow_stripped_oak_log", hollowLog(Blocks.STRIPPED_OAK_LOG))
-    val HOLLOW_SPRUCE_LOG = DnDBlocks.register("hollow_spruce_log", hollowLog(Blocks.SPRUCE_LOG))
+    val HOLLOW_OAK_LOG = DnDBlocks.register("hollow_oak_log", hollowLog(Blocks.OAK_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_STRIPPED_OAK_LOG = DnDBlocks.register("hollow_stripped_oak_log", hollowLog(Blocks.STRIPPED_OAK_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_SPRUCE_LOG = DnDBlocks.register("hollow_spruce_log", hollowLog(Blocks.SPRUCE_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_SPRUCE_LOG =
-        DnDBlocks.register("hollow_stripped_spruce_log", hollowLog(Blocks.STRIPPED_SPRUCE_LOG))
-    val HOLLOW_BIRCH_LOG = DnDBlocks.register("hollow_birch_log", hollowLog(Blocks.BIRCH_LOG))
+        DnDBlocks.register("hollow_stripped_spruce_log", hollowLog(Blocks.STRIPPED_SPRUCE_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_BIRCH_LOG = DnDBlocks.register("hollow_birch_log", hollowLog(Blocks.BIRCH_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_BIRCH_LOG =
-        DnDBlocks.register("hollow_stripped_birch_log", hollowLog(Blocks.STRIPPED_BIRCH_LOG))
-    val HOLLOW_JUNGLE_LOG = DnDBlocks.register("hollow_jungle_log", hollowLog(Blocks.JUNGLE_LOG))
+        DnDBlocks.register("hollow_stripped_birch_log", hollowLog(Blocks.STRIPPED_BIRCH_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_JUNGLE_LOG = DnDBlocks.register("hollow_jungle_log", hollowLog(Blocks.JUNGLE_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_JUNGLE_LOG =
-        DnDBlocks.register("hollow_stripped_jungle_log", hollowLog(Blocks.STRIPPED_JUNGLE_LOG))
-    val HOLLOW_ACACIA_LOG = DnDBlocks.register("hollow_acacia_log", hollowLog(Blocks.ACACIA_LOG))
+        DnDBlocks.register("hollow_stripped_jungle_log", hollowLog(Blocks.STRIPPED_JUNGLE_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_ACACIA_LOG = DnDBlocks.register("hollow_acacia_log", hollowLog(Blocks.ACACIA_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_ACACIA_LOG =
-        DnDBlocks.register("hollow_stripped_acacia_log", hollowLog(Blocks.STRIPPED_ACACIA_LOG))
-    val HOLLOW_DARK_OAK_LOG = DnDBlocks.register("hollow_dark_oak_log", hollowLog(Blocks.DARK_OAK_LOG))
+        DnDBlocks.register("hollow_stripped_acacia_log", hollowLog(Blocks.STRIPPED_ACACIA_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_DARK_OAK_LOG = DnDBlocks.register("hollow_dark_oak_log", hollowLog(Blocks.DARK_OAK_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_DARK_OAK_LOG =
-        DnDBlocks.register("hollow_stripped_dark_oak_log", hollowLog(Blocks.STRIPPED_DARK_OAK_LOG))
-    val HOLLOW_MANGROVE_LOG = DnDBlocks.register("hollow_mangrove_log", hollowLog(Blocks.MANGROVE_LOG))
+        DnDBlocks.register("hollow_stripped_dark_oak_log", hollowLog(Blocks.STRIPPED_DARK_OAK_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_MANGROVE_LOG = DnDBlocks.register("hollow_mangrove_log", hollowLog(Blocks.MANGROVE_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_MANGROVE_LOG =
-        DnDBlocks.register("hollow_stripped_mangrove_log", hollowLog(Blocks.STRIPPED_MANGROVE_LOG))
-    val HOLLOW_CHERRY_LOG = DnDBlocks.register("hollow_cherry_log", hollowLog(Blocks.CHERRY_LOG))
+        DnDBlocks.register("hollow_stripped_mangrove_log", hollowLog(Blocks.STRIPPED_MANGROVE_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_CHERRY_LOG = DnDBlocks.register("hollow_cherry_log", hollowLog(Blocks.CHERRY_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_CHERRY_LOG =
-        DnDBlocks.register("hollow_stripped_cherry_log", hollowLog(Blocks.STRIPPED_CHERRY_LOG))
-    val HOLLOW_BAMBOO_BLOCK = DnDBlocks.register("hollow_bamboo_block", hollowBambooBlock(Blocks.BAMBOO_BLOCK))
+        DnDBlocks.register("hollow_stripped_cherry_log", hollowLog(Blocks.STRIPPED_CHERRY_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_BAMBOO_BLOCK = DnDBlocks.register("hollow_bamboo_block", hollowBambooBlock(Blocks.BAMBOO_BLOCK)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_BAMBOO_BLOCK =
-        DnDBlocks.register("hollow_stripped_bamboo_block", hollowBambooBlock(Blocks.STRIPPED_BAMBOO_BLOCK))
-    val HOLLOW_CRIMSON_STEM = DnDBlocks.register("hollow_crimson_stem", hollowLog(Blocks.CRIMSON_HYPHAE))
+        DnDBlocks.register("hollow_stripped_bamboo_block", hollowBambooBlock(Blocks.STRIPPED_BAMBOO_BLOCK)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_CRIMSON_STEM = DnDBlocks.register("hollow_crimson_stem", hollowLog(Blocks.CRIMSON_HYPHAE)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_CRIMSON_STEM =
-        DnDBlocks.register("hollow_stripped_crimson_stem", hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE))
-    val HOLLOW_WARPED_STEM = DnDBlocks.register("hollow_warped_stem", hollowLog(Blocks.WARPED_HYPHAE))
+        DnDBlocks.register("hollow_stripped_crimson_stem", hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_WARPED_STEM = DnDBlocks.register("hollow_warped_stem", hollowLog(Blocks.WARPED_HYPHAE)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_WARPED_STEM =
-        DnDBlocks.register("hollow_stripped_warped_stem", hollowLog(Blocks.STRIPPED_WARPED_HYPHAE))
+        DnDBlocks.register("hollow_stripped_warped_stem", hollowLog(Blocks.STRIPPED_WARPED_HYPHAE)).tellWitnessesThatIWasMurdered()
 
     val OAK_WOOD_STAIRS = DnDBlocks.register("oak_wood_stairs", stairsOf(Blocks.OAK_WOOD))
     val OAK_WOOD_SLAB = DnDBlocks.register("oak_wood_slab", slabOf(Blocks.OAK_WOOD))

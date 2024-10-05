@@ -11,6 +11,7 @@ import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.*
 import org.teamvoided.dusk_autumn.util.DnDBlockLists
+import org.teamvoided.dusk_autumn.util.addAll
 import java.util.concurrent.CompletableFuture
 
 @Suppress("LongMethod")
@@ -494,9 +495,4 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE)
         getOrCreateTagBuilder(ConventionalBlockTags.CHAINS)
     }
-}
-
-private fun <T> FabricTagProvider<T>.FabricTagBuilder.addAll(list: Collection<T>): FabricTagProvider<T>.FabricTagBuilder {
-    list.forEach { this.add(it) }
-    return this
 }

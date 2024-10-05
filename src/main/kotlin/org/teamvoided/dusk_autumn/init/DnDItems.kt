@@ -17,11 +17,13 @@ import org.teamvoided.dusk_autumn.item.ChillChargeItem
 import org.teamvoided.dusk_autumn.item.DnDFoodComponents
 import org.teamvoided.dusk_autumn.item.HeadDecorationItem
 import org.teamvoided.dusk_autumn.item.ScarecrowItem
+import org.teamvoided.dusk_autumn.util.tellWitnessesThatIWasMurdered
 
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object DnDItems {
     val ITEMS = mutableListOf<Item>()
+    val EVIL_ITEMS = mutableSetOf<Item>()
 
     val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDWoodBlocks.CASCADE_DOOR, Item.Settings()))
     val BLUE_DOOR = register("blue_door", TallBlockItem(DnDWoodBlocks.BLUE_DOOR, Item.Settings()))
@@ -37,21 +39,21 @@ object DnDItems {
         )
     )
     val GALLERY_MAPLE_DOOR =
-        register("gallery_maple_door", TallBlockItem(DnDWoodBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
+        register("gallery_maple_door", TallBlockItem(DnDWoodBlocks.GALLERY_MAPLE_DOOR, Item.Settings())).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_SIGN = register(
         "gallery_maple_sign",
         SignItem(Item.Settings().maxCount(16), DnDWoodBlocks.GALLERY_MAPLE_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_SIGN)
-    )
+    ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_HANGING_SIGN = register(
         "gallery_maple_hanging_sign",
         HangingSignItem(
             DnDWoodBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN,
             Item.Settings().maxCount(16)
         )
-    )
-    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDWoodBlocks.BONEWOOD_DOOR, Item.Settings()))
+    ).tellWitnessesThatIWasMurdered()
+    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDWoodBlocks.BONEWOOD_DOOR, Item.Settings())).tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_DOOR =
-        register("withering_bonewood_door", TallBlockItem(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))
+        register("withering_bonewood_door", TallBlockItem(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings())).tellWitnessesThatIWasMurdered()
 
     val FARMERS_HAT = register(
         "farmers_hat",
@@ -66,7 +68,7 @@ object DnDItems {
         )
     )
 
-    val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
+    val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings())).tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
@@ -142,8 +144,8 @@ object DnDItems {
         ))
     )
 
-    val FREEZE_ROD = register("freeze_rod", Item(Item.Settings()))
-    val CHILL_CHARGE = register("chill_charge", ChillChargeItem(Item.Settings()))
+    val FREEZE_ROD = register("freeze_rod", Item(Item.Settings())).tellWitnessesThatIWasMurdered()
+    val CHILL_CHARGE = register("chill_charge", ChillChargeItem(Item.Settings())).tellWitnessesThatIWasMurdered()
 //    val ICE_SWORD = register(
 //        "ice_sword", FunnyIceSword(
 //            Item.Settings().rarity(Rarity.EPIC)
