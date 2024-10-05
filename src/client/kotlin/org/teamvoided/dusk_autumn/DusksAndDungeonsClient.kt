@@ -1,16 +1,12 @@
 package org.teamvoided.dusk_autumn
 
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 import org.teamvoided.dusk_autumn.DusksAndDungeons.MODID
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
 import org.teamvoided.dusk_autumn.init.*
-import org.teamvoided.dusk_autumn.util.id
 
 @Suppress("unused")
 object DusksAndDungeonsClient {
@@ -42,14 +38,6 @@ object DusksAndDungeonsClient {
 
         FabricLoader.getInstance().getModContainer(MODID).ifPresent {
             ResourceManagerHelper.registerBuiltinResourcePack(id("fancy_names"), it, ResourcePackActivationType.NORMAL)
-        }
-
-        ItemTooltipCallback.EVENT.register { stack, tooltipContext, tooltipType, lines ->
-            if (stack.item.id.namespace == MODID && DnDItems.EVIL_ITEMS.contains(stack.item)) {
-                lines.addLast(
-                    Text.literal("Experimental item, may disappear in future updates!").formatted(Formatting.RED)
-                )
-            }
         }
     }
 }
