@@ -1,7 +1,8 @@
 package org.teamvoided.dusk_autumn.init.blocks
 
 import net.minecraft.block.*
-import net.minecraft.block.AbstractBlock.*
+import net.minecraft.block.AbstractBlock.OffsetType
+import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
@@ -13,7 +14,9 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDFloraBlocks {
-//    val VERDURE_DEEPSLATE = DnDBlocks.register(
+    fun init() = Unit
+
+    //    val VERDURE_DEEPSLATE = DnDBlocks.register(
 //        "verdure_deepslate", Block(
 //            copy(DEEPSLATE).luminance(light(1))
 //        )

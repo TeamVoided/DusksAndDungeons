@@ -15,6 +15,7 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDNetherBrickBlocks {
+    fun init() = Unit
     val NETHERRACK_STAIRS =
         DnDBlocks.register("netherrack_stairs", stairsOf(NETHERRACK).pickaxe())
     val NETHERRACK_SLAB = DnDBlocks.register("netherrack_slab", slabOf(NETHERRACK).pickaxe())

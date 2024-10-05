@@ -346,5 +346,10 @@ object DnDFamilies {
         OVERGROWN_STONE_BRICKS_FAMILY
     )
 
-    fun init() {}
+    fun init() {
+        modelsBlockFamilies.forEach{
+            it.variants.forEach(::println)
+        }
+
+    }
 }

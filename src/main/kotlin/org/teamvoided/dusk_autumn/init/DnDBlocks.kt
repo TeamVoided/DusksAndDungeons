@@ -22,8 +22,7 @@ import org.teamvoided.dusk_autumn.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableWallBlock
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDItems.BlockItem
-import org.teamvoided.dusk_autumn.init.blocks.DnDOverlayBlocks
-import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
+import org.teamvoided.dusk_autumn.init.blocks.*
 import org.teamvoided.dusk_autumn.util.*
 
 
@@ -129,14 +128,18 @@ object DnDBlocks {
 //    )
 
     fun init() {
-        DnDFamilies.init()
-
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
 
-        DnDWoodBlocks.init()
+        DnDBigBlocks.init()
+        DnDFloraBlocks.init()
+        DnDNetherBrickBlocks.init()
         DnDOverlayBlocks.init()
+        DnDStoneBlocks.init()
+        DnDWoodBlocks.init()
+
+        DnDFamilies.init()
     }
 
     fun register(id: String, block: Block): Block {

@@ -6,12 +6,13 @@ import net.minecraft.block.MapColor
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.block.big.BigChainBlock
 import org.teamvoided.dusk_autumn.block.big.BigLanternBlock
-import org.teamvoided.dusk_autumn.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusk_autumn.block.big.BigLanternWithSpiralBlock
+import org.teamvoided.dusk_autumn.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDBigBlocks {
+    fun init() = Unit
     val BIG_CHAIN = DnDBlocks.register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
     val BIG_LANTERN =
         DnDBlocks.register("big_lantern", BigLanternBlock(copy(LANTERN).sounds(bigLanternSound)).pickaxe())

@@ -8,6 +8,7 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDStoneBlocks {
+    fun init() = Unit
     val STONE_PILLAR = DnDBlocks.register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = DnDBlocks.register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
     val POLISHED_STONE = DnDBlocks.register("polished_stone", Block(copy(SMOOTH_STONE)).pickaxe())
