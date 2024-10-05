@@ -9,7 +9,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
 
-open class FallingLeavesBlock(settings: Settings, val particle: DefaultParticleType) : LeavesBlock(settings) {
+open class FallingLeavesBlock(val particle: DefaultParticleType, settings: Settings) : LeavesBlock(settings) {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
         super.randomDisplayTick(state, world, pos, random)
         if (random.nextInt(10) == 0) {

@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.LootTables
+import net.minecraft.nbt.NbtOps
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.server.command.CommandManager.literal
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
@@ -38,16 +40,18 @@ object DusksAndDungeons {
         BarteringInjection.init()
         AddWanderingTrades.init()
         CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
-            val test = literal("end").executes {
-                val src = it.source
-                val z = src.world.getLootTable(LootTables.PIGLIN_BARTERING_GAMEPLAY)
-                val lookup = src.world.registryManager.getLookupOrThrow()
-                val x = LootTable.field_45796.encodeStart(JsonOps.INSTANCE, z)
-                if (x.isError) {
-                    println("Problēma! $x")
-                } else {
-                    println(x.resultOrPartial().get().toString())
-                }
+            val test = literal("end").executes { scc ->
+                val src = scc.source
+//                val z = src.world.getLootTable(LootTables.PIGLIN_BARTERING_GAMEPLAY)
+                val lookup = src.world.registryManager
+                val tableLookup = lookup.getLookupOrThrow(RegistryKeys.LOOT_TABLE)
+                val table = tableLookup.getHolderOrThrow(LootTables.PIGLIN_BARTERING_GAMEPLAY)
+
+                val registryOps = lookup.createSerializationContext(NbtOps.INSTANCE)
+                LootTable.field_50021.encodeStart(registryOps, table.value())
+                    .ifError(::println)
+                    .ifSuccess(::println)
+
                 0
             }.build()
             dispatcher.root.addChild(test)

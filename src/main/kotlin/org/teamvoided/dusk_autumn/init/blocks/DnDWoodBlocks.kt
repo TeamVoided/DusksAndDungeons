@@ -32,13 +32,14 @@ object DnDWoodBlocks {
     ).cutout()
     val CASCADE_LEAVES = DnDBlocks.register(
         "cascade_leaves", FallingLeavesBlock(
+            DnDParticles.CASCADE_LEAF_PARTICLE,
             Settings.create().strength(0.2f).ticksRandomly()
                 .nonOpaque().allowsSpawning(Blocks::allowOcelotsAndParrots).suffocates(Blocks::nonSolid)
                 .blockVision(Blocks::nonSolid)
                 .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
                 .sounds(BlockSoundGroup.AZALEA_LEAVES)
-                .mapColor(MapColor.RED), DnDParticles.CASCADE_LEAF_PARTICLE
-        ).cutout().flammableLeaves().axe()
+                .mapColor(MapColor.RED)
+        ).cutout().flammableLeaves().axe().hoe()
     )
     val CASCADE_LEAF_PILE = DnDBlocks.register(
         "cascade_leaf_pile",
@@ -133,7 +134,7 @@ object DnDWoodBlocks {
     val GOLDEN_BIRCH_LEAVES = DnDBlocks.register(
         "golden_birch_leaves", LeavesBlock(
             copy(Blocks.BIRCH_LEAVES).mapColor(MapColor.YELLOW)
-        ).cutout().flammableLeaves()
+        ).cutout().flammableLeaves().axe().hoe()
     )
     val GOLDEN_BIRCH_LEAF_PILE = DnDBlocks.register(
         "golden_birch_leaf_pile",
@@ -176,7 +177,7 @@ object DnDWoodBlocks {
                 .nonOpaque().allowsSpawning(Blocks::allowOcelotsAndParrots).suffocates(Blocks::nonSolid)
                 .blockVision(Blocks::nonSolid).pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
                 .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.RED)
-        ).cutout().axe()
+        ).cutout().axe().hoe()
     )
     val GALLERY_MAPLE_LEAF_PILE = DnDBlocks.register(
         "gallery_maple_leaf_pile",
