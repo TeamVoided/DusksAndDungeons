@@ -6,6 +6,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
+import net.minecraft.item.Items
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
@@ -46,7 +47,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //                texture.put(TextureKey.SIDE, Texture.getId(DnDBlocks.MIXED_NETHER_BRICKS))
 //            }
 //        )
-
+        gen.registerItemModel(Items.AIR) //fer debug porpoises
         DnDFamilies.modelsBlockFamilies.forEach {
             println(it.baseBlock)
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
