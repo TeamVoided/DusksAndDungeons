@@ -1,37 +1,16 @@
 package org.teamvoided.dusk_autumn
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
-import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.color.world.BiomeColors
-import net.minecraft.client.color.world.FoliageColors
-import net.minecraft.client.color.world.GrassColors
-import net.minecraft.client.particle.FlameParticle
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
-import net.minecraft.component.type.DyedColorComponent
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.BlockRenderView
+import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import org.teamvoided.dusk_autumn.DusksAndDungeons.MODID
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
-import org.teamvoided.dusk_autumn.entity.bird.BirdEntityRenderer
-import org.teamvoided.dusk_autumn.entity.block.CelestalBellBlockEntityRenderer
-import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.init.*
-import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
-import org.teamvoided.dusk_autumn.particle.ColorableOminousParticle
-import org.teamvoided.dusk_autumn.particle.FallingLeafParticle.Companion.FallingLeafFactory
-import org.teamvoided.dusk_autumn.particle.SnowflakeParticle
-import org.teamvoided.dusk_autumn.particle.SpiderlilyPetalParticle
-import org.teamvoided.dusk_autumn.particle.SpiralParticle
-import org.teamvoided.dusk_autumn.util.DnDBlockLists
+import org.teamvoided.dusk_autumn.util.id
 
 @Suppress("unused")
 object DusksAndDungeonsClient {
@@ -63,6 +42,14 @@ object DusksAndDungeonsClient {
 
         FabricLoader.getInstance().getModContainer(MODID).ifPresent {
             ResourceManagerHelper.registerBuiltinResourcePack(id("fancy_names"), it, ResourcePackActivationType.NORMAL)
+        }
+
+        ItemTooltipCallback.EVENT.register { stack, tooltipContext, tooltipType, lines ->
+            if (stack.item.id.namespace == MODID && DnDItems.EVIL_ITEMS.contains(stack.item)) {
+                lines.addLast(
+                    Text.literal("Experimental item, may disappear in future updates!").formatted(Formatting.RED)
+                )
+            }
         }
     }
 }
