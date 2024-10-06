@@ -12,13 +12,15 @@ import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.vehicle.AbstractMinecartEntity
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtList
 import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.tag.DamageTypeTags
+import net.minecraft.registry.tag.ItemTags
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
@@ -31,6 +33,7 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
 import net.minecraft.world.explosion.Explosion
+import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.DnDEntities
 import org.teamvoided.dusk_autumn.init.DnDItems
 import java.util.function.Predicate
@@ -39,6 +42,7 @@ import java.util.function.Predicate
 class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World) : LivingEntity(entityType, world) {
     private val heldItems: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
     private val armorItems: DefaultedList<ItemStack> = DefaultedList.ofSize(4, ItemStack.EMPTY)
+    private val decorationItems: DefaultedList<ItemStack> = DefaultedList.ofSize(4, ItemStack.EMPTY)
     var lastHitTime: Long = 0
     private var postRotation: EulerAngle
     private var headRotation: EulerAngle
@@ -105,10 +109,17 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             val heldItemStack = heldItems.next() as ItemStack
             heldItemList.add(heldItemStack.getEncoded(this.registryManager))
         }
+        val decorationItemList = NbtList()
+        val decorationItems: Iterator<*> = decorationItems.iterator()
+        while (decorationItems.hasNext()) {
+            val decorationItemStack = decorationItems.next() as ItemStack
+            heldItemList.add(decorationItemStack.getEncoded(this.registryManager))
+        }
 
 
         nbt.put("ArmorItems", armorItemList)
         nbt.put("HandItems", heldItemList)
+        nbt.put("DecorationItems", decorationItemList)
         nbt.putBoolean("Invisible", this.isInvisible)
         nbt.putBoolean("Small", this.isSmall)
         nbt.putBoolean("Legs", this.hasLegs)
@@ -119,27 +130,38 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
     override fun readCustomDataFromNbt(nbt: NbtCompound) {
         super.readCustomDataFromNbt(nbt)
         var nbtList: NbtList
-        var i: Int
+        var iterator: Int
         var nbtCompound: NbtCompound?
         if (nbt.contains("ArmorItems", 9)) {
             nbtList = nbt.getList("ArmorItems", 10)
 
-            i = 0
-            while (i < armorItems.size) {
-                nbtCompound = nbtList.getCompound(i)
-                armorItems[i] = ItemStack.fromNbt(this.registryManager, nbtCompound)
-                ++i
+            iterator = 0
+            while (iterator < armorItems.size) {
+                nbtCompound = nbtList.getCompound(iterator)
+                armorItems[iterator] = ItemStack.fromNbt(this.registryManager, nbtCompound)
+                ++iterator
             }
         }
 
         if (nbt.contains("HandItems", 9)) {
             nbtList = nbt.getList("HandItems", 10)
 
-            i = 0
-            while (i < heldItems.size) {
-                nbtCompound = nbtList.getCompound(i)
-                heldItems[i] = ItemStack.fromNbt(this.registryManager, nbtCompound)
-                ++i
+            iterator = 0
+            while (iterator < heldItems.size) {
+                nbtCompound = nbtList.getCompound(iterator)
+                heldItems[iterator] = ItemStack.fromNbt(this.registryManager, nbtCompound)
+                ++iterator
+            }
+        }
+
+        if (nbt.contains("DecorationItems", 9)) {
+            nbtList = nbt.getList("DecorationItems", 10)
+
+            iterator = 0
+            while (iterator < decorationItems.size) {
+                nbtCompound = nbtList.getCompound(iterator)
+                decorationItems[iterator] = ItemStack.fromNbt(this.registryManager, nbtCompound)
+                ++iterator
             }
         }
 
@@ -213,12 +235,16 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         }
     }
 
+    override fun getArmorItems(): Iterable<ItemStack> {
+        return this.armorItems
+    }
+
     override fun getHandItems(): Iterable<ItemStack> {
         return this.heldItems
     }
 
-    override fun getArmorItems(): Iterable<ItemStack> {
-        return this.armorItems
+    fun getDecorationItems(): Iterable<ItemStack> {
+        return this.decorationItems
     }
 
     override fun canUseSlot(slot: EquipmentSlot): Boolean {
@@ -245,6 +271,13 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
                     equip(player, EquipmentSlot.OFFHAND, playerHandStack)
                 ) {
                     return ActionResult.SUCCESS
+                } else if (
+                    equipDecor(player, 0, playerHandStack, DnDItemTags.SCARECROW_WOOD_ITEMS) ||
+                    equipDecor(player, 1, playerHandStack, DnDItemTags.SCARECROW_BALE_ITEMS) ||
+                    equipDecor(player, 2, playerHandStack, DnDItemTags.SCARECROW_HEAD_ITEMS) ||
+                    equipDecor(player, 3, playerHandStack, DnDItemTags.SCARECROW_CLOTHES_ITEMS)
+                ) {
+                    return ActionResult.SUCCESS
                 }
             } else {
                 if (
@@ -253,7 +286,11 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
                     unequip(player, EquipmentSlot.FEET) ||
                     unequip(player, EquipmentSlot.LEGS) ||
                     unequip(player, EquipmentSlot.CHEST) ||
-                    unequip(player, EquipmentSlot.HEAD)
+                    unequip(player, EquipmentSlot.HEAD) ||
+                    unequipDecor(player, 0) ||
+                    unequipDecor(player, 1) ||
+                    unequipDecor(player, 2) ||
+                    unequipDecor(player, 3)
                 ) {
                     return ActionResult.SUCCESS
                 }
@@ -276,6 +313,28 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         val equippedStack = getEquippedStack(equipmentSlot)
         if (!equippedStack.isEmpty) {
             this.equipStack(equipmentSlot, ItemStack.EMPTY)
+            player.giveItemStack(equippedStack)
+            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 1f)
+            return true
+        }
+        return false
+    }
+
+    fun equipDecor(player: PlayerEntity, slot: Int, playerHandStack: ItemStack, tag: TagKey<Item>): Boolean {
+        val equippedStack = decorationItems[slot]
+        if (equippedStack.isEmpty && playerHandStack.isIn(tag)) {
+            decorationItems.set(slot, playerHandStack.copyWithCount(1))
+            playerHandStack.consume(1, player)
+            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 0f)
+            return true
+        }
+        return false
+    }
+
+    fun unequipDecor(player: PlayerEntity, equipmentSlot: Int): Boolean {
+        val equippedStack = decorationItems[equipmentSlot]
+        if (!equippedStack.isEmpty) {
+            decorationItems.set(equipmentSlot, ItemStack.EMPTY)
             player.giveItemStack(equippedStack)
             this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 1f)
             return true
@@ -431,24 +490,34 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         this.playBreakSound()
         this.drop(world, damageSource)
         var itemStack: ItemStack
-        var i = 0
-        while (i < heldItems.size) {
-            itemStack = heldItems[i]
+        var iterator = 0
+        while (iterator < heldItems.size) {
+            itemStack = heldItems[iterator]
             if (!itemStack.isEmpty) {
                 Block.dropStack(this.world, blockPos.up(), itemStack)
-                heldItems[i] = ItemStack.EMPTY
+                heldItems[iterator] = ItemStack.EMPTY
             }
-            ++i
+            ++iterator
         }
 
-        i = 0
-        while (i < armorItems.size) {
-            itemStack = armorItems[i]
+        iterator = 0
+        while (iterator < armorItems.size) {
+            itemStack = armorItems[iterator]
             if (!itemStack.isEmpty) {
                 Block.dropStack(this.world, blockPos.up(), itemStack)
-                armorItems[i] = ItemStack.EMPTY
+                armorItems[iterator] = ItemStack.EMPTY
             }
-            ++i
+            ++iterator
+        }
+
+        iterator = 0
+        while (iterator < decorationItems.size) {
+            itemStack = decorationItems[iterator]
+            if (!itemStack.isEmpty) {
+                Block.dropStack(this.world, blockPos.up(), itemStack)
+                decorationItems[iterator] = ItemStack.EMPTY
+            }
+            ++iterator
         }
     }
 

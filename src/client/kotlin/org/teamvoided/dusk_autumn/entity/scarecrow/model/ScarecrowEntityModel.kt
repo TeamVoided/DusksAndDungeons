@@ -85,7 +85,7 @@ open class ScarecrowEntityModel(private val root: ModelPart) :
                     "post",
                     ModelPartBuilder.create().uv(0, 0).cuboid(
                         -2f, -25f, -2f,
-                        4f, 27f, 4f
+                        4f, 26f, 4f
                     ),
                     ModelTransform.pivot(0f, POST_OFFSET, 0f)
                 )

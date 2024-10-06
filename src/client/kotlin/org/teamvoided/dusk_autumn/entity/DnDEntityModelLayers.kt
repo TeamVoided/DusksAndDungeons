@@ -10,6 +10,7 @@ import org.teamvoided.dusk_autumn.entity.chill_charge.render.ChillChargeEntityMo
 import org.teamvoided.dusk_autumn.entity.bird.render.BirdEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowEntityModel
+import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowWoodModel
 
 object DnDEntityModelLayers {
     val CHILL_CHARGE: EntityModelLayer = registerMain("chill_charge")
@@ -18,6 +19,8 @@ object DnDEntityModelLayers {
     val SCARECROW: EntityModelLayer = registerMain("scarecrow")
     val SCARECROW_INNER_ARMOR: EntityModelLayer = createInnerArmor("scarecrow")
     val SCARECROW_OUTER_ARMOR: EntityModelLayer = createOuterArmor("scarecrow")
+    val SCARECROW_WOOD: EntityModelLayer = register("scarecrow", "wood")
+    val DICE: EntityModelLayer = registerMain("dice")
 
     fun init() {
         EntityModelLayerRegistry.registerModelLayer(CHILL_CHARGE, ChillChargeEntityModel::texturedModelData)
@@ -26,6 +29,7 @@ object DnDEntityModelLayers {
         EntityModelLayerRegistry.registerModelLayer(SCARECROW, ScarecrowEntityModel::texturedModelData)
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_INNER_ARMOR, ::createScarecrowInnerArmor)
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_OUTER_ARMOR, ::createScarecrowOuterArmor)
+        EntityModelLayerRegistry.registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
     }
 
     private fun createScarecrowInnerArmor(): TexturedModelData =

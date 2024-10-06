@@ -34,6 +34,7 @@ class ItemTagsProvider(
         copy(DnDBlockTags.CASCADE_LOGS, DnDItemTags.CASCADE_LOGS)
         copy(DnDBlockTags.LEAF_PILES, DnDItemTags.LEAF_PILES)
         copy(DnDBlockTags.LOG_PILES, DnDItemTags.LOG_PILES)
+        copy(DnDBlockTags.LOG_PILES_THAT_BURN, DnDItemTags.LOG_PILES_THAT_BURN)
         copy(DnDBlockTags.FLOWERBEDS, DnDItemTags.FLOWERBEDS)
         copy(DnDBlockTags.VIVIONBEDS, DnDItemTags.VIVIONBEDS)
         copy(DnDBlockTags.BIG_CANDLES, DnDItemTags.BIG_CANDLES)
@@ -47,6 +48,15 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
             .addOptional(id("supplementaries","ash_pile"))
             .add(Items.BASALT)
+        getOrCreateTagBuilder(DnDItemTags.SCARECROW_WOOD_ITEMS)
+            .add(Items.OAK_PLANKS)
+            .add(Items.DARK_OAK_PLANKS)
+        getOrCreateTagBuilder(DnDItemTags.SCARECROW_BALE_ITEMS)
+            .add(Items.HAY_BLOCK)
+        getOrCreateTagBuilder(DnDItemTags.SCARECROW_HEAD_ITEMS)
+            .add(Items.HAY_BLOCK)
+        getOrCreateTagBuilder(DnDItemTags.SCARECROW_CLOTHES_ITEMS)
+            .add(Items.LEATHER)
     }
 
     fun vanillaTags() {

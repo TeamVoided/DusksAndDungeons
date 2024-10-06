@@ -90,18 +90,18 @@ object DnDFloraBlocks {
             copy(PINK_PETALS).mapColor(MapColor.PURPLE)
         ).cutout().sword().hoe()
     )
-    val CARVED_PALE_PUMPKIN = DnDBlocks.register(
-        "carved_pale_pumpkin", CarvedPumpkin2Block(
-            copy(CARVED_PUMPKIN)
-        )
-    )
-    val PALE_PUMPKIN = DnDBlocks.register(
-        "pale_pumpkin", Pumpkin2Block(
-            CARVED_PALE_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
-            copy(PUMPKIN)
-        )
-    )
+//    val CARVED_PALE_PUMPKIN = DnDBlocks.register(
+//        "carved_pale_pumpkin", CarvedPumpkin2Block(
+//            copy(CARVED_PUMPKIN)
+//        )
+//    )
+//    val PALE_PUMPKIN = DnDBlocks.register(
+//        "pale_pumpkin", Pumpkin2Block(
+//            CARVED_PALE_PUMPKIN,
+//            Items.PUMPKIN_SEEDS,
+//            copy(PUMPKIN)
+//        )
+//    )
     val WATER_FERN = DnDBlocks.registerNoItem(
         "water_fern", WaterFernBlock(
             copy(LILY_PAD)

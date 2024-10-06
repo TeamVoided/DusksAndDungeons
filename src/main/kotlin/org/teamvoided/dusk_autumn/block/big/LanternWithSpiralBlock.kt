@@ -5,7 +5,7 @@ import net.minecraft.block.LanternBlock
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
-import org.teamvoided.dusk_autumn.particle.TwoColorParticleEffect
+import org.teamvoided.dusk_autumn.particle.SpiralParticleEffect
 
 class LanternWithSpiralBlock(private val color1: Int, private val color2: Int, settings: Settings) :
     LanternBlock(settings) {
@@ -13,7 +13,7 @@ class LanternWithSpiralBlock(private val color1: Int, private val color2: Int, s
         super.randomDisplayTick(state, world, pos, random)
         if (state.get(HANGING)) {
             world.addParticle(
-                TwoColorParticleEffect(color1, color2),
+                SpiralParticleEffect(color1, color2),
                 pos.x + 0.5,
                 pos.y + 0.8,
                 pos.z + 0.5,
@@ -23,7 +23,7 @@ class LanternWithSpiralBlock(private val color1: Int, private val color2: Int, s
             )
         } else {
             world.addParticle(
-                TwoColorParticleEffect(color1, color2),
+                SpiralParticleEffect(color1, color2),
                 pos.x + 0.5,
                 pos.y + 0.6,
                 pos.z + 0.5,

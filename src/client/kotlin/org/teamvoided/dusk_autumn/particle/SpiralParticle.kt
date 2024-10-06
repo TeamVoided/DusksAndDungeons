@@ -4,7 +4,6 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.particle.*
 import net.minecraft.client.world.ClientWorld
-import net.minecraft.particle.DefaultParticleType
 import org.joml.Vector3f
 import java.awt.Color
 import kotlin.math.cos
@@ -112,9 +111,9 @@ class SpiralParticle internal constructor(
 //    }
 
     @Environment(EnvType.CLIENT)
-    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<TwoColorParticleEffect> {
+    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<SpiralParticleEffect> {
         override fun createParticle(
-            type: TwoColorParticleEffect,
+            type: SpiralParticleEffect,
             world: ClientWorld,
             xPos: Double,
             yPos: Double,

@@ -15,6 +15,7 @@ import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
 import org.teamvoided.dusk_autumn.entity.scarecrow.render.ScarecrowArmorFeatureRenderer
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowEntityModel
+import org.teamvoided.dusk_autumn.entity.scarecrow.render.ScarecrowWoodFeatureRenderer
 import org.teamvoided.dusk_autumn.util.pi
 
 class ScarecrowEntityRenderer(context: EntityRendererFactory.Context) :
@@ -36,6 +37,7 @@ class ScarecrowEntityRenderer(context: EntityRendererFactory.Context) :
             )
         )
         this.addFeature(ElytraFeatureRenderer(this, context.modelLoader))
+        this.addFeature(ScarecrowWoodFeatureRenderer(this, context.modelLoader))
     }
 
     override fun setupTransforms(

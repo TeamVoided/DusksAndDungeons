@@ -11,7 +11,7 @@ import net.minecraft.particle.ParticleType
 import org.teamvoided.dusk_autumn.init.DnDParticles
 import java.awt.Color
 
-class TwoColorParticleEffect(
+class SpiralParticleEffect(
     val color1: Color,
     val color2: Color
 ) : ParticleEffect {
@@ -20,22 +20,22 @@ class TwoColorParticleEffect(
         color2: Int
     ) : this(Color(color1),Color(color2))
 
-    override fun getType(): ParticleType<TwoColorParticleEffect> =
+    override fun getType(): ParticleType<SpiralParticleEffect> =
         DnDParticles.SPIRAL
 
     companion object {
-        val CODEC: MapCodec<TwoColorParticleEffect> =
+        val CODEC: MapCodec<SpiralParticleEffect> =
             RecordCodecBuilder.mapCodec { instance ->
                 instance.group(
                     Codec.INT.fieldOf("color1").forGetter { it.color1.rgb },
                     Codec.INT.fieldOf("color2").forGetter { it.color2.rgb }
-                ).apply(instance, ::TwoColorParticleEffect)
+                ).apply(instance, ::SpiralParticleEffect)
             }
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, TwoColorParticleEffect> =
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, SpiralParticleEffect> =
             PacketCodec.tuple(
                 PacketCodecs.INT, { it.color1.rgb },
                 PacketCodecs.INT, { it.color2.rgb },
-                ::TwoColorParticleEffect
+                ::SpiralParticleEffect
             )
     }
 }
