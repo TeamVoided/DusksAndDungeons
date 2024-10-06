@@ -234,7 +234,7 @@ object DnDWoodBlocks {
         pressurePlateOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_PLANKS).axe()
     ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_BUTTON =
-        DnDBlocks.register("gallery_maple_button", Blocks.buttonOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE).axe())
+        DnDBlocks.register("gallery_maple_button", Blocks.buttonOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE).axe()).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_SIGN = DnDBlocks.registerNoItem(
         "gallery_maple_sign", signOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
     ).tellWitnessesThatIWasMurdered()

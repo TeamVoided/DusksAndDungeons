@@ -1,0 +1,93 @@
+{
+	"parent": "block/block",
+	"elements": [
+		{
+			"name": "big_candle",
+			"from": [9, 8, 5],
+			"to": [14, 24, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"east": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"south": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"west": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"up": {"uv": [5, 11, 10, 16], "texture": "#all"}
+			}
+		},
+		{
+			"name": "big_candle_low",
+			"from": [9, 0, 5],
+			"to": [14, 8, 10],
+			"faces": {
+				"north": {"uv": [5, 0, 10, 8], "texture": "#all"},
+				"east": {"uv": [5, 0, 10, 8], "texture": "#all"},
+				"south": {"uv": [5, 0, 10, 8], "texture": "#all"},
+				"west": {"uv": [5, 0, 10, 8], "texture": "#all"},
+				"down": {"uv": [10, 11, 15, 16], "texture": "#all"}
+			}
+		},
+		{
+			"name": "big_wick_1",
+			"from": [11, 24, 7.5],
+			"to": [12, 25, 7.5],
+			"rotation": {"angle": 45, "axis": "y", "origin": [11.5, 24, 7.5]},
+			"faces": {
+				"north": {"uv": [10, 0, 11, 1], "texture": "#all"},
+				"south": {"uv": [10, 0, 11, 1], "texture": "#all"}
+			}
+		},
+		{
+			"name": "big_wick_2",
+			"from": [11, 24, 7.5],
+			"to": [12, 25, 7.5],
+			"rotation": {"angle": -45, "axis": "y", "origin": [11.5, 24, 7.5]},
+			"faces": {
+				"north": {"uv": [10, 0, 11, 1], "texture": "#all"},
+				"south": {"uv": [10, 0, 11, 1], "texture": "#all"}
+			}
+		},
+		{
+			"name": "med_candle_1",
+			"from": [2, 4, 6],
+			"to": [7, 20, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"east": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"south": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"west": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"up": {"uv": [5, 11, 10, 16], "texture": "#all"}
+			}
+		},
+		{
+			"name": "med_candle_1_low",
+			"from": [2, 0, 6],
+			"to": [7, 4, 11],
+			"faces": {
+				"north": {"uv": [5, 0, 10, 4], "texture": "#all"},
+				"east": {"uv": [5, 0, 10, 4], "texture": "#all"},
+				"south": {"uv": [5, 0, 10, 4], "texture": "#all"},
+				"west": {"uv": [5, 0, 10, 4], "texture": "#all"},
+				"down": {"uv": [10, 11, 15, 16], "texture": "#all"}
+			}
+		},
+		{
+			"name": "med_wick_1_2",
+			"from": [4, 20, 8.5],
+			"to": [5, 21, 8.5],
+			"rotation": {"angle": -45, "axis": "y", "origin": [4.5, 20, 8.5]},
+			"faces": {
+				"north": {"uv": [10, 0, 11, 1], "texture": "#all"},
+				"south": {"uv": [11, 0, 10, 1], "texture": "#all"}
+			}
+		},
+		{
+			"name": "med_wick_1_1",
+			"from": [4, 20, 8.5],
+			"to": [5, 21, 8.5],
+			"rotation": {"angle": 45, "axis": "y", "origin": [4.5, 20, 8.5]},
+			"faces": {
+				"north": {"uv": [10, 0, 11, 1], "texture": "#all"},
+				"south": {"uv": [11, 0, 10, 1], "texture": "#all"}
+			}
+		}
+	]
+}

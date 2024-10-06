@@ -205,6 +205,13 @@ fun bigSoulCandleCakeOf(block: Block): Block = bigSoulCandleCakeOf(block, DnDBig
 fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block =
     BigSoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
 
+
+fun bigTallCandleOf(color: MapColor): Block = BigTallCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+
+fun bigTallSoulCandleOf(color: MapColor): Block =
+    BigTallSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+
+
 fun hollowLog(log: Block): Block = HollowLogWithCuttingBlock(AbstractBlock.Settings.copy(log))
 fun hollowBambooBlock(bambooBlock: Block): Block = HollowBambooBlock(AbstractBlock.Settings.copy(bambooBlock))
 fun logPile(log: Block): Block = LogPileBlock(AbstractBlock.Settings.copy(log).nonOpaque())

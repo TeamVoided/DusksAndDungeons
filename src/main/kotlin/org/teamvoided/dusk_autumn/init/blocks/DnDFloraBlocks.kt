@@ -7,6 +7,7 @@ import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
+import net.minecraft.item.Items
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures
 import org.teamvoided.dusk_autumn.block.*
@@ -88,6 +89,18 @@ object DnDFloraBlocks {
         "wild_petals", PinkPetalsBlock(
             copy(PINK_PETALS).mapColor(MapColor.PURPLE)
         ).cutout().sword().hoe()
+    )
+    val CARVED_PALE_PUMPKIN = DnDBlocks.register(
+        "carved_pale_pumpkin", CarvedPumpkin2Block(
+            copy(CARVED_PUMPKIN)
+        )
+    )
+    val PALE_PUMPKIN = DnDBlocks.register(
+        "pale_pumpkin", Pumpkin2Block(
+            CARVED_PALE_PUMPKIN,
+            Items.PUMPKIN_SEEDS,
+            copy(PUMPKIN)
+        )
     )
     val WATER_FERN = DnDBlocks.registerNoItem(
         "water_fern", WaterFernBlock(

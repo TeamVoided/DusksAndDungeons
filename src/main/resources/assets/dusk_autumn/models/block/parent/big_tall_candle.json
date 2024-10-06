@@ -1,0 +1,49 @@
+{
+	"parent": "block/block",
+	"elements": [
+		{
+			"name": "big_candle",
+			"from": [5.5, 8, 5.5],
+			"to": [10.5, 24, 10.5],
+			"faces": {
+				"north": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"east": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"south": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"west": {"uv": [0, 0, 5, 16], "texture": "#all"},
+				"up": {"uv": [5, 11, 10, 16], "texture": "#all"}
+			}
+		},
+		{
+			"name": "big_candle_low",
+			"from": [5.5, 0, 5.5],
+			"to": [10.5, 8, 10.5],
+			"faces": {
+				"north": {"uv": [5, 0, 10, 8], "texture": "#all"},
+				"east": {"uv": [5, 0, 10, 8], "texture": "#all"},
+				"south": {"uv": [5, 0, 10, 8], "texture": "#all"},
+				"west": {"uv": [5, 0, 10, 8], "texture": "#all"},
+				"down": {"uv": [10, 11, 15, 16], "texture": "#all"}
+			}
+		},
+		{
+			"name": "big_wick_1",
+			"from": [7.5, 24, 8],
+			"to": [8.5, 25, 8],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 24, 8]},
+			"faces": {
+				"north": {"uv": [10, 0, 11, 1], "texture": "#all"},
+				"south": {"uv": [10, 0, 11, 1], "texture": "#all"}
+			}
+		},
+		{
+			"name": "big_wick_2",
+			"from": [7.5, 24, 8],
+			"to": [8.5, 25, 8],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 24, 8]},
+			"faces": {
+				"north": {"uv": [10, 0, 11, 1], "texture": "#all"},
+				"south": {"uv": [10, 0, 11, 1], "texture": "#all"}
+			}
+		}
+	]
+}
