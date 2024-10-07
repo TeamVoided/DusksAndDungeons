@@ -32,9 +32,8 @@ class DiceItem(settings: Settings) : Item(settings), ProjectileItem {
             0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
         )
         if (!world.isClient) {
-            val diceEntity = DiceEntity(world, user, getDiceColor(itemStack))
-            diceEntity.setItem(itemStack)
-            diceEntity.setProperties(user, user.pitch, user.yaw, 0.0f, 1.5f, 1.0f)
+            val diceEntity = DiceEntity(world, user, itemStack.copyWithCount(1))
+            diceEntity.setProperties(user, user.pitch, user.yaw, 0.0f, 0.5f, 1.0f)
             world.spawnEntity(diceEntity)
         }
 
@@ -44,17 +43,11 @@ class DiceItem(settings: Settings) : Item(settings), ProjectileItem {
     }
 
     override fun createEntity(world: World, pos: Position, stack: ItemStack, direction: Direction): ProjectileEntity {
-        val diceEntity = DiceEntity(world, pos.x, pos.y, pos.z, getDiceColor(stack))
-        diceEntity.setItem(stack)
+        val diceEntity = DiceEntity(world, pos.x, pos.y, pos.z, stack)
         return diceEntity
     }
 
-    private fun getDiceColor(itemStack: ItemStack):Int{
-        return ColorUtil.Argb32.toOpaque(
-            DyedColorComponent.getColorOrDefault(
-                itemStack,
-                0xFFFFFF
-            )
-        )
+    companion object {
     }
+
 }

@@ -156,8 +156,6 @@ object DnDItems {
 
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)
-        println(BONEWOOD_DOOR)
-        println(WITHERING_BONEWOOD_DOOR)
     }
 
     fun register(id: String, item: Item): Item {
