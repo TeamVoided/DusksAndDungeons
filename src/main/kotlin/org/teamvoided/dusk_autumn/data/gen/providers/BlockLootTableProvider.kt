@@ -41,8 +41,6 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     FabricBlockLootTableProvider(o, r) {
     private val excludeList =
         listOf(
-            DnDWoodBlocks.CASCADE_LEAVES,
-            DnDWoodBlocks.GOLDEN_BIRCH_LEAVES,
             DnDBlocks.ICE_STAIRS,
             DnDBlocks.ICE_SLAB,
             DnDBlocks.ICE_WALL,
@@ -51,16 +49,18 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             DnDFloraBlocks.GOLDEN_BEETROOTS,
             DnDFloraBlocks.WILD_WHEAT,
             DnDFloraBlocks.MOONBERRY_VINE
-        ) +
-                bigCandles.map { it.second } +
-                soulCandles.map { it.second } +
-                bigSoulCandles.map { it.second } +
-                leafPiles.map { it }
+        )
 
     override fun generate() {
         val enchantmentLookup = field_51845.getLookupOrThrow(RegistryKeys.ENCHANTMENT)
 
-        DnDBlocks.BLOCKS.filter { (it !in excludeList && it !is FlowerPotBlock) }.forEach {
+        DnDBlocks.BLOCKS.filter {
+            (it !in excludeList &&
+                    it !is LeavesBlock &&
+                    it !is LeafPileBlock &&
+                    it !is FlowerPotBlock &&
+                    it !is CandleCakeBlock)
+        }.forEach {
             when (it) {
                 is SlabBlock -> add(it, ::slabDrops)
                 is DoorBlock -> add(it, ::doorDrops)

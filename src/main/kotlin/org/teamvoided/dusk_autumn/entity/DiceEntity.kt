@@ -8,21 +8,25 @@ import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.data.TrackedDataHandlerRegistry
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
-import net.minecraft.item.Items
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.math.EulerAngle
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.joml.Math.lerp
 import org.teamvoided.dusk_autumn.init.DnDEntities
+import org.teamvoided.dusk_autumn.init.DnDItems
 
 class DiceEntity : ThrownItemEntity {
 
     constructor(entityType: EntityType<out DiceEntity>, world: World) : super(entityType, world)
 
-    constructor(world: World, owner: LivingEntity) : super(DnDEntities.DIE, owner, world)
+    constructor(world: World, owner: LivingEntity, color: Int) : super(DnDEntities.DIE, owner, world) {
+        this.color = color
+    }
 
-    constructor(world: World, x: Double, y: Double, z: Double) : super(DnDEntities.DIE, x, y, z, world)
+    constructor(world: World, x: Double, y: Double, z: Double, color: Int) : super(DnDEntities.DIE, x, y, z, world) {
+        this.color = color
+    }
 
     var stop: Boolean
         get() = dataTracker[TRACKER_STOP]
@@ -47,6 +51,12 @@ class DiceEntity : ThrownItemEntity {
             dataTracker[TRACKER_TIME_SINCE_LAST_FALL] = timeSinceLastFall
         }
 
+    var color: Int
+        get() = dataTracker[TRACKER_COLOR]
+        set(color) {
+            dataTracker[TRACKER_COLOR] = color
+        }
+
     init {
         stop = false
         sideUp = 1
@@ -55,25 +65,47 @@ class DiceEntity : ThrownItemEntity {
     }
 
     override fun initDataTracker(builder: DataTracker.Builder) {
+        println("SUPER")
         super.initDataTracker(builder)
+        println("TRACKER_STOP")
+        builder.add(TRACKER_STOP, false)
+        println("TRACKER_SIDE_UP")
         builder.add(TRACKER_SIDE_UP, 1)
+        println("TRACKER_ROTATION")
+        builder.add(TRACKER_ROTATION, DEFAULT_ROTATION)
+        println("TRACKER_TIME_SINCE_LAST_FALL")
+        builder.add(TRACKER_TIME_SINCE_LAST_FALL, 0)
+        println("TRACKER_COLOR")
+        builder.add(TRACKER_COLOR, 0xFFFFFF)
     }
 
     override fun writeCustomDataToNbt(nbt: NbtCompound) {
         super.writeCustomDataToNbt(nbt)
+
+        nbt.putBoolean("Stop", this.stop)
         nbt.putInt("SideUp", this.sideUp)
+        nbt.put("RotationVector", rotationVec.toNbt())
+        nbt.putInt("TimeSinceLastFall", this.timeSinceLastFall)
+        nbt.putInt("Color", this.color)
     }
 
     override fun readCustomDataFromNbt(nbt: NbtCompound) {
         super.readCustomDataFromNbt(nbt)
+
+        val rotation = nbt.getList("RotationVector", 5)
+
+        this.stop = nbt.getBoolean("Stop")
         this.sideUp = nbt.getInt("SideUp")
+        this.rotationVec = (if (rotation.isEmpty()) DEFAULT_ROTATION else EulerAngle(rotation))
+        this.timeSinceLastFall = nbt.getInt("TimeSinceLastFall")
+        this.color = nbt.getInt("Color")
     }
 
-    override fun getDefaultItem(): Item = Items.SNOWBALL
+    override fun getDefaultItem(): Item = DnDItems.DIE_ITEM
 
     override fun onBlockCollision(state: BlockState) {
         super.onBlockCollision(state)
-        if (timeSinceLastFall < 10 && this.velocity.y < 0.1) {
+        if (age > 60 && timeSinceLastFall < 10 && this.velocity.y < 0.1) {
             stop = true
         } else {
             sideUp = random.nextInt(5) + 1
@@ -110,6 +142,7 @@ class DiceEntity : ThrownItemEntity {
     fun lerpRotationValues(side: Int): EulerAngle {
         if (!(side >= 1 && side <= 6)) {
             println("oopsie :) --------------------------------------------------------------")
+            println(side)
         }
         return when (side) {
             1 -> EulerAngle(0f, 0f, 0f)
@@ -121,6 +154,7 @@ class DiceEntity : ThrownItemEntity {
             else -> EulerAngle(0f, 0f, 0f)
         }
     }
+    override fun isPushable(): Boolean = false
 
 //    private val particleParameters: ParticleEffect
 //        get() {
@@ -148,7 +182,6 @@ class DiceEntity : ThrownItemEntity {
 //        entity.damage(this.damageSources.thrown(this, this.owner), i.toFloat())
 //    }
 
-    override fun isPushable(): Boolean = false
 
 
 //    override fun onCollision(hitResult: HitResult) {
@@ -163,6 +196,7 @@ class DiceEntity : ThrownItemEntity {
         val theEvil = 0.9
         val theEvilY = -0.5
         val tickRotateMult = 0.99f
+        private val DEFAULT_ROTATION = EulerAngle(0f, 0f, 0f)
         val TRACKER_STOP: TrackedData<Boolean> = DataTracker.registerData(
             ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN
         )
@@ -173,6 +207,9 @@ class DiceEntity : ThrownItemEntity {
             ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
         )
         val TRACKER_TIME_SINCE_LAST_FALL: TrackedData<Int> = DataTracker.registerData(
+            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.INTEGER
+        )
+        val TRACKER_COLOR: TrackedData<Int> = DataTracker.registerData(
             ScarecrowEntity::class.java, TrackedDataHandlerRegistry.INTEGER
         )
     }

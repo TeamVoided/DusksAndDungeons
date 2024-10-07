@@ -24,21 +24,15 @@ class DiceEntityModel(root: ModelPart) :
 
     override fun getPart(): ModelPart = this.root
 
-
     companion object {
         val texturedModelData: TexturedModelData
             get() {
                 val modelData = ModelData()
                 val modelPartData: ModelPartData = modelData.root
-                val bone: ModelPartData = modelPartData.addChild(
-                    "bone",
-                    ModelPartBuilder.create(),
-                    ModelTransform.pivot(0.0f, 0.0f, 0.0f)
-                )
-                bone.addChild(
+                modelPartData.addChild(
                     "die",
                     ModelPartBuilder.create()
-                        .uv(0, 9).cuboid(
+                        .uv(0, 0).cuboid(
                             -2.0f, -2.0f, -2.0f,
                             4.0f, 4.0f, 4.0f
                         ),

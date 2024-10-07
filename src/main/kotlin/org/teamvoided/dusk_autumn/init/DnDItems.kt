@@ -13,10 +13,7 @@ import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
-import org.teamvoided.dusk_autumn.item.ChillChargeItem
-import org.teamvoided.dusk_autumn.item.DnDFoodComponents
-import org.teamvoided.dusk_autumn.item.HeadDecorationItem
-import org.teamvoided.dusk_autumn.item.ScarecrowItem
+import org.teamvoided.dusk_autumn.item.*
 import org.teamvoided.dusk_autumn.util.tellWitnessesThatIWasMurdered
 
 
@@ -56,15 +53,18 @@ object DnDItems {
         register("withering_bonewood_door", TallBlockItem(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings())).tellWitnessesThatIWasMurdered()
 
     val FARMERS_HAT = register(
-        "farmers_hat",
-        HeadDecorationItem(
+        "farmers_hat", HeadDecorationItem(
             Item.Settings().maxCount(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
     val SCARECROW_ITEM = register(
-        "scarecrow",
-        ScarecrowItem(
+        "scarecrow", ScarecrowItem(
             Item.Settings().maxCount(16)
+        )
+    )
+    val DIE_ITEM = register(
+        "die", DiceItem(
+            Item.Settings().maxCount(16).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xFFFFFF, true))
         )
     )
 

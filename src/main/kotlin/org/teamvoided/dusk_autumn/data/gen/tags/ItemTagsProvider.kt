@@ -62,6 +62,7 @@ class ItemTagsProvider(
     fun vanillaTags() {
         getOrCreateTagBuilder(ItemTags.DYEABLE)
             .add(DnDItems.FARMERS_HAT)
+            .add(DnDItems.DIE_ITEM)
 
         copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN)
         copy(BlockTags.PLANKS, ItemTags.PLANKS)

@@ -40,6 +40,11 @@ class ScarecrowWoodModel(root: ModelPart) : ScarecrowEntityModel(root) {
                     ModelTransform.pivot(0f, BODY_OFFSET, 0f)
                 )
                 body.addChild(
+                    "head",
+                    ModelPartBuilder.create(),
+                    ModelTransform.pivot(0f, 0f, 0f)
+                )
+                body.addChild(
                     "right_arm",
                     ModelPartBuilder.create()
                         .uv(16, 16)

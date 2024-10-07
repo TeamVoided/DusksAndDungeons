@@ -8,6 +8,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.chill_charge.render.ChillChargeEntityModel
 import org.teamvoided.dusk_autumn.entity.bird.render.BirdEntityModel
+import org.teamvoided.dusk_autumn.entity.dice.render.DiceEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowWoodModel
@@ -30,6 +31,7 @@ object DnDEntityModelLayers {
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_INNER_ARMOR, ::createScarecrowInnerArmor)
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_OUTER_ARMOR, ::createScarecrowOuterArmor)
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
+        EntityModelLayerRegistry.registerModelLayer(DICE, DiceEntityModel::texturedModelData)
     }
 
     private fun createScarecrowInnerArmor(): TexturedModelData =
