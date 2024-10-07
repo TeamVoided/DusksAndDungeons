@@ -1,5 +1,7 @@
 package org.teamvoided.dusk_autumn.entity.dice
 
+import net.minecraft.client.render.OverlayTexture
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.EntityRenderer
 import net.minecraft.client.render.entity.EntityRendererFactory
@@ -30,8 +32,15 @@ class DiceEntityRenderer(context: EntityRendererFactory.Context) :
             val age = entity.age.toFloat() + tickDelta
             model.animateModel(entity, 0f, 0f, tickDelta)
             model.setAngles(entity, 0f, 0f, age, 0f, 0f)
-            super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light)
+            model.method_2828(
+                matrices,
+                vertexConsumers.getBuffer(RenderLayer.getEntitySolid(TEXTURE)),
+                light,
+                OverlayTexture.DEFAULT_UV,
+                -1
+            )
             matrices.pop()
+            super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light)
         }
     }
 
@@ -40,7 +49,6 @@ class DiceEntityRenderer(context: EntityRendererFactory.Context) :
     }
 
     companion object {
-        //distance val is for an overide to render the charge
         private val distance = MathHelper.square(3.5f)
         private val TEXTURE: Identifier = id("textures/entity/dice/die.png")
     }

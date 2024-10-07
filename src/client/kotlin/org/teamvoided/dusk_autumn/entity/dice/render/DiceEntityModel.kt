@@ -1,11 +1,10 @@
 package org.teamvoided.dusk_autumn.entity.dice.render
 
 import net.minecraft.client.model.*
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.entity.model.SinglePartEntityModel
-import net.minecraft.util.math.MathHelper
 import org.joml.Math.lerp
 import org.teamvoided.dusk_autumn.entity.DiceEntity
+import java.lang.Float.min
 
 class DiceEntityModel(root: ModelPart) : SinglePartEntityModel<DiceEntity>() {
     private val root: ModelPart = root.getChild("die")
@@ -24,10 +23,10 @@ class DiceEntityModel(root: ModelPart) : SinglePartEntityModel<DiceEntity>() {
 //        root.roll = animationProgress * entity.rotationVec.roll
 //        root.yaw = animationProgress * entity.rotationVec.yaw
 
-        val lerp = entity.timeSinceLastFall.toFloat() / 100f
-        root.pitch = lerp(lerp, entity.lerpRotationValues(entity.sideUp).pitch, root.pitch)
-        root.roll = lerp(lerp, entity.lerpRotationValues(entity.sideUp).roll, root.roll)
-        root.yaw = lerp(lerp, entity.lerpRotationValues(entity.sideUp).yaw, root.yaw)
+        val lerp = min(1f, entity.timeSinceLastFall.toFloat() / 100f)
+        root.pitch = entity.rotationVec.pitch
+        root.roll = entity.rotationVec.roll
+        root.yaw = entity.rotationVec.yaw
     }
 
     companion object {

@@ -10,6 +10,13 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.StructureWorldAccess
 
 val pi = 3.1415927f
+val rotate45 = 0.785f
+val rotate90 = 1.571f
+val rotate135 = 2.356f
+val rotate180 = 3.142f
+val rotate225 = 3.927f
+val rotate270 = 4.712f
+val rotate315 = 5.498f
 
 fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, y))
 

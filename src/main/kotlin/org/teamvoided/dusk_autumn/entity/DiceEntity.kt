@@ -14,10 +14,14 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.EulerAngle
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.init.DnDEntities
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.util.rotate180
+import org.teamvoided.dusk_autumn.util.rotate270
+import org.teamvoided.dusk_autumn.util.rotate90
 
 class DiceEntity : PersistentProjectileEntity {
 
@@ -109,18 +113,22 @@ class DiceEntity : PersistentProjectileEntity {
     }
 
     override fun onBlockHit(blockHitResult: BlockHitResult) {
-        sideUp = random.nextInt(5) + 1
-        if (timeSinceLastFall > 4) {
-//            rotationVec = EulerAngle(random.nextFloat(), random.nextFloat(), random.nextFloat())
-            this.velocity = velocity.multiply(theEvil, theEvilY, theEvil)
-        } else {
-            rotationVec = EulerAngle(
-                lerpRotationValues(sideUp).pitch,
-                lerpRotationValues(sideUp).yaw,
-                lerpRotationValues(sideUp).roll
-            )
-            println(sideUp)
+        if (world.isClient)
+            sideUp = random.nextInt(5) + 1
+        if (timeSinceLastFall < 4 && blockHitResult.side == Direction.UP) {
+            rotationVec = rotationValues(sideUp)
             super.onBlockHit(blockHitResult)
+        } else {
+            //            rotationVec = EulerAngle(random.nextFloat(), random.nextFloat(), random.nextFloat())
+            velocity = when (blockHitResult.side) {
+                Direction.UP -> velocity.multiply(theEvil, theEvilY, theEvil)
+                Direction.DOWN -> velocity.multiply(theEvil, -theEvil, theEvil)
+                Direction.NORTH -> velocity.multiply(theEvil, theEvil, -theEvil)
+                Direction.SOUTH -> velocity.multiply(theEvil, theEvil, -theEvil)
+                Direction.EAST -> velocity.multiply(-theEvil, theEvil, theEvil)
+                Direction.WEST -> velocity.multiply(-theEvil, theEvil, theEvil)
+                else -> velocity
+            }
         }
         timeSinceLastFall = 0
     }
@@ -150,19 +158,22 @@ class DiceEntity : PersistentProjectileEntity {
     }
 
     override fun tryPickup(player: PlayerEntity?): Boolean = false
+    override fun checkDespawn() {
+        super.checkDespawn()
+    }
 
-    fun lerpRotationValues(side: Int): EulerAngle {
+    fun rotationValues(side: Int): EulerAngle {
         if (!(side >= 1 && side <= 6)) {
             println("oopsie :) --------------------------------------------------------------")
             println(side)
         }
         return when (side) {
-            1 -> EulerAngle(0f, 0f, 0f)
-            2 -> EulerAngle(0f, 0f, 90f)
-            3 -> EulerAngle(90f, 0f, 0f)
-            4 -> EulerAngle(0f, 0f, -90f)
-            5 -> EulerAngle(-90f, 0f, 0f)
-            6 -> EulerAngle(180f, 0f, 0f)
+            1 -> EulerAngle(rotate180, 0f, 0f)
+            2 -> EulerAngle(0f, 0f, rotate270)
+            3 -> EulerAngle(rotate90, 0f, 0f)
+            4 -> EulerAngle(rotate270, 0f, 0f)
+            5 -> EulerAngle(0f, 0f, rotate90)
+            6 -> EulerAngle(0f, 0f, 0f)
             else -> EulerAngle(0f, 0f, 0f)
         }
     }
