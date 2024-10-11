@@ -125,6 +125,7 @@ object DnDItems {
 //        )
 //    )
     val WEBSLINGER = register("webslinger", BowItem(Item.Settings().maxDamage(404)))
+        .tellWitnessesThatIWasMurdered()
     val HARVESTER_SCYTHE = register(
         "harvester_scythe", HarvesterScytheItem(
             AttributeSettings(
@@ -149,7 +150,7 @@ object DnDItems {
                     )
             )
         )
-    )
+    ).tellWitnessesThatIWasMurdered()
 
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)
@@ -173,4 +174,7 @@ object DnDItems {
 
     @Suppress("FunctionName")
     fun CountSettings(count: Int): Item.Settings = Item.Settings().maxCount(count)
+
+    @JvmField
+    val CUSTOM_STATS = listOf(id("base_block_range"), id("base_entity_range"))
 }

@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "FoxEntityVariantMixin",
+    "ItemStackMixin",
     "MushroomPlantBlockMixin",
     "NyliumBlockMixin",
     "WallBlockMixin",
