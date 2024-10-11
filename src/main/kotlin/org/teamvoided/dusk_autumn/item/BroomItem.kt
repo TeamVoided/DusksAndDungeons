@@ -118,27 +118,14 @@ class BroomItem(settings: Settings?) : Item(settings) {
                 hitPos.x - (if (direction == Direction.WEST) 1.0E-6 else 0.0),
                 hitPos.y,
                 hitPos.z - (if (direction == Direction.NORTH) 1.0E-6 else 0.0),
-                dustParticleDelta.xd() * armDir.toDouble() * velMult * world.getRandom().nextDouble(),
+                dustParticleDelta.xd * armDir.toDouble() * velMult * world.getRandom().nextDouble(),
                 0.0,
-                dustParticleDelta.zd() * armDir.toDouble() * velMult * world.getRandom().nextDouble()
+                dustParticleDelta.zd * armDir.toDouble() * velMult * world.getRandom().nextDouble()
             )
         }
     }
 
-    @JvmRecord
-    private data class DustParticleDelta private constructor(val xd: Double, val yd: Double, val zd: Double) {
-        fun xd(): Double {
-            return this.xd
-        }
-
-        fun yd(): Double {
-            return this.yd
-        }
-
-        fun zd(): Double {
-            return this.zd
-        }
-
+    private data class DustParticleDelta(val xd: Double, val yd: Double, val zd: Double) {
         companion object {
             private const val ALONG_SIDE_DELTA = 1.0
             private const val OUT_FROM_SIDE_DELTA = 0.1
