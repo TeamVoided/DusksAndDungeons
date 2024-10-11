@@ -7,16 +7,13 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
 import net.minecraft.item.Items
-import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
-import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.DusksAndDungeons.isModLoaded
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.data.gen.providers.models.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
-import org.teamvoided.dusk_autumn.init.blocks.*
 import org.teamvoided.dusk_autumn.util.*
 import java.util.*
 
@@ -50,7 +47,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //        )
         gen.registerItemModel(Items.AIR) //fer debug porpoises
         DnDFamilies.modelsBlockFamilies.forEach {
-            println(it.baseBlock)
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
         }
 
@@ -61,8 +57,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         StoneModels.stoneModels(gen)
         WoodModels.woodModels(gen)
 
-        gen.registerItemModel(DnDItems.SCARECROW_ITEM)
-        gen.registerItemModel(DnDItems.DIE_ITEM)
 
         gen.iceStairs(DnDBlocks.ICE_STAIRS, Blocks.ICE)
         gen.slab(DnDBlocks.ICE_SLAB, Blocks.ICE)
@@ -80,10 +74,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
 
-        gen.registerItemModel(DnDItems.CHILL_CHARGE)
-        gen.registerHandheldItem(DnDItems.FREEZE_ROD)
-//        gen.registerHandheldItem(DnDItems.ICE_SWORD)
-
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),
             BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
@@ -92,7 +82,16 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         if (isModLoaded("dramaticdoors")) DramaticDoorsCompat.datagen(gen)
     }
 
-    override fun generateItemModels(gen: ItemModelGenerator) = Unit
+    private val single = listOf(DnDItems.SCARECROW_ITEM, DnDItems.DIE_ITEM, DnDItems.CHILL_CHARGE)
+
+    override fun generateItemModels(gen: ItemModelGenerator) {
+        single.forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }
+        gen.register(DnDItems.FREEZE_ROD, Models.HANDHELD_ROD)
+//        gen.register(DnDItems.ICE_SWORD, Models.HANDHELD)
+        gen.register(DnDItems.WEBSLINGER, Models.HANDHELD)
+        gen.register(DnDItems.HARVESTER_SCYTHE, Models.HANDHELD)
+
+    }
 
     private fun BlockStateModelGenerator.parentedModel(
         block: Block, textBlock: Block, parent: Identifier

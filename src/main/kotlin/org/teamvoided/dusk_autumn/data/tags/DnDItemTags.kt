@@ -27,6 +27,8 @@ object DnDItemTags {
     val CRAFTS_WARPED_NETHER_BRICKS = create("crafts_warped_nether_bricks")
     val CRAFTS_ASHEN_NETHER_BRICKS = create("crafts_ashen_nether_bricks")
 
+    val REPAIR_HARVESTER_SCYTHE = create("repair_harvester_scythe")
+
 
     fun create(id: String): TagKey<Item> {
         val regTag = TagKey.of(RegistryKeys.ITEM, id(id))
