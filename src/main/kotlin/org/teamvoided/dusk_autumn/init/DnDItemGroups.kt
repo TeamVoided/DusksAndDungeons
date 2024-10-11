@@ -8,9 +8,10 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.DusksAndDungeons.isDev
 import org.teamvoided.dusk_autumn.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
-import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.addLists
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -102,6 +103,14 @@ object DnDItemGroups {
     )
 
     fun init() {
+        if (isDev()) register("dnd_debug",
+            FabricItemGroup.builder()
+                .icon { ItemStack(DnDItems.GALLERY_MAPLE_DOOR) }
+                .name(Text.literal("DnD Debug Items"))
+                .entries { _, entries -> entries.addLists(EVIL_ITEMS) }
+                .build()
+        )
+
 
 //        addToTab(ItemGroups.BUILDING_BLOCKS) {
 //            it.addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
