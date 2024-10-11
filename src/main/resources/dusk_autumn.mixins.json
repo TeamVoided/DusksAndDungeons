@@ -7,7 +7,6 @@
     "FoxEntityVariantMixin",
     "MushroomPlantBlockMixin",
     "NyliumBlockMixin",
-    "UtilMixin",
     "WallBlockMixin",
     "WitherSkeletonEntityMixin"
   ],
