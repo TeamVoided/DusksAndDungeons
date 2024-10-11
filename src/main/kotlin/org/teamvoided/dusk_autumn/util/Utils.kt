@@ -1,12 +1,13 @@
 package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.Blocks
+import net.minecraft.entity.EquipmentSlot
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
+import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.world.StructureWorldAccess
 
 val pi = 3.1415927f
@@ -52,3 +53,6 @@ fun StructureWorldAccess.placeDebug(
 
 fun Collection<ItemConvertible>.toItems() = this.map(ItemConvertible::asItem)
 fun Collection<ItemConvertible>.toStacks() = this.toItems().map(Item::getDefaultStack)
+
+
+fun Hand.toSlot() = if (this == Hand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
