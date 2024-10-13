@@ -1,31 +1,28 @@
 package org.teamvoided.dusk_autumn.entity.block
 
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BellBlockEntity
+import net.minecraft.client.model.*
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
-import net.minecraft.client.render.block.BlockRenderManager
-import net.minecraft.client.render.block.entity.BellBlockEntityRenderer
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
-import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.resource.Material
-import net.minecraft.client.texture.SpriteAtlasTexture
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.screen.PlayerScreenHandler
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
-import org.teamvoided.dusk_autumn.block.entity.CelestalBellBlockEntity
-import org.teamvoided.dusk_autumn.util.id
-import org.teamvoided.dusk_autumn.util.suffix
+import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers.CELESTAL_BELL
 
 class CelestalBellBlockEntityRenderer(
     ctx: BlockEntityRendererFactory.Context,
-    private val blockRenderManager: BlockRenderManager,
-    private val block: Block
-//) : BlockEntityRenderer<CelestalBellBlockEntity> {
-) : BellBlockEntityRenderer(ctx) {
+) : BlockEntityRenderer<BellBlockEntity> {
+    private val bellBody: ModelPart
+    init {
+        val modelPart = ctx.getLayerModelPart(CELESTAL_BELL)
+        this.bellBody = modelPart.getChild("bell_body")
+    }
+
     override fun render(
         bellBlockEntity: BellBlockEntity,
         f: Float,
@@ -38,53 +35,39 @@ class CelestalBellBlockEntityRenderer(
         var h = 0.0f
         var k = 0.0f
         if (bellBlockEntity.ringing) {
-            val l = MathHelper.sin(g / 3.1415927f) / (4.0f + g / 3.0f)
+            val l = MathHelper.sin(g / Math.PI.toFloat()) / (4.0f + g / 3.0f)
             when (bellBlockEntity.lastSideHit) {
                 Direction.NORTH -> h = -l
                 Direction.SOUTH -> h = l
                 Direction.EAST -> k = -l
                 Direction.WEST -> k = l
-                else -> null
+                else -> Unit
             }
-
-            bellBody.pitch = h
-            bellBody.roll = k
         }
-        val vertexConsumer =
-            Material(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, block.id.suffix("_body"))
-                .getVertexConsumer(vertexConsumers, RenderLayer::getEntitySolid)
+        bellBody.pitch = h
+        bellBody.roll = k
+        val vertexConsumer = CELESTAL_BELL_TEXTURE.getVertexConsumer(vertexConsumers, RenderLayer::getEntitySolid)
         bellBody.render(matrices, vertexConsumer, i, j)
-
-
-//            matrices.push()
-//            matrices.translate(0.2f, -0.35f, 0.5f)
-////            matrices.rotate(Axis.Y_POSITIVE.rotationDegrees(-48.0f))
-//            matrices.scale(-1.0f, -1.0f, 1.0f)
-//            matrices.translate(-0.5f, -0.5f, -0.5f)
-//            this.renderBell(matrices, vertexConsumers, i)
     }
 
-    //    private fun renderBell(
-//        matrices: MatrixStack,
-//        vertexConsumers: VertexConsumerProvider,
-//        light: Int
-//    ) {
-//        val blockState = Blocks.AMETHYST_BLOCK.defaultState
-//        val bakedModel: BakedModel = blockRenderManager.getModel(blockState)
-//        if (true) {
-//            blockRenderManager.modelRenderer.render(
-//                matrices.peek(),
-//                vertexConsumers.getBuffer(RenderLayer.getOutline(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE)),
-//                blockState,
-//                bakedModel,
-//                0.0f,
-//                0.0f,
-//                0.0f,
-//                light,
-//                0
-//            )
-//        } else {
-//            blockRenderManager.renderBlockAsEntity(blockState, matrices, vertexConsumers, light, 0)
-//        }
-//    }
+    companion object {
+        val CELESTAL_BELL_TEXTURE: Material =
+            Material(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, id("entity/celestal_bell/celestal_bell_body"))
+
+        fun getTexturedModelData(): TexturedModelData {
+            val modelData = ModelData()
+            val modelPartData = modelData.root
+            val modelPartData2 = modelPartData.addChild(
+                "bell_body",
+                ModelPartBuilder.create().uv(0, 0).cuboid(-3.0f, -6.0f, -3.0f, 6.0f, 7.0f, 6.0f),
+                ModelTransform.pivot(8.0f, 12.0f, 8.0f)
+            )
+            modelPartData2.addChild(
+                "bell_base",
+                ModelPartBuilder.create().uv(0, 13).cuboid(4.0f, 4.0f, 4.0f, 8.0f, 2.0f, 8.0f),
+                ModelTransform.pivot(-8.0f, -12.0f, -8.0f)
+            )
+            return TexturedModelData.of(modelData, 32, 32)
+        }
+    }
 }

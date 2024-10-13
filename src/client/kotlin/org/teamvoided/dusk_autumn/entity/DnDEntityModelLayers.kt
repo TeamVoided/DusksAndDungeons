@@ -6,13 +6,15 @@ import net.minecraft.client.model.TexturedModelData
 import net.minecraft.client.render.entity.model.BipedArmorEntityModel
 import net.minecraft.client.render.entity.model.EntityModelLayer
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
-import org.teamvoided.dusk_autumn.entity.chill_charge.render.ChillChargeEntityModel
 import org.teamvoided.dusk_autumn.entity.bird.render.BirdEntityModel
+import org.teamvoided.dusk_autumn.entity.block.CelestalBellBlockEntityRenderer
+import org.teamvoided.dusk_autumn.entity.chill_charge.render.ChillChargeEntityModel
 import org.teamvoided.dusk_autumn.entity.dice.render.DiceEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowWoodModel
 
+@Suppress("SameParameterValue")
 object DnDEntityModelLayers {
     val CHILL_CHARGE: EntityModelLayer = registerMain("chill_charge")
     val BIRD: EntityModelLayer = registerMain("bird")
@@ -23,6 +25,7 @@ object DnDEntityModelLayers {
     val SCARECROW_WOOD: EntityModelLayer = register("scarecrow", "wood")
     val DICE: EntityModelLayer = registerMain("dice")
 
+    val CELESTAL_BELL = registerMain("celestal_bell")
     fun init() {
         EntityModelLayerRegistry.registerModelLayer(CHILL_CHARGE, ChillChargeEntityModel::texturedModelData)
         EntityModelLayerRegistry.registerModelLayer(BIRD, BirdEntityModel::texturedModelData)
@@ -32,6 +35,11 @@ object DnDEntityModelLayers {
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_OUTER_ARMOR, ::createScarecrowOuterArmor)
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
         EntityModelLayerRegistry.registerModelLayer(DICE, DiceEntityModel::texturedModelData)
+
+        EntityModelLayerRegistry.registerModelLayer(
+            CELESTAL_BELL,
+            CelestalBellBlockEntityRenderer::getTexturedModelData
+        )
     }
 
     private fun createScarecrowInnerArmor(): TexturedModelData =
