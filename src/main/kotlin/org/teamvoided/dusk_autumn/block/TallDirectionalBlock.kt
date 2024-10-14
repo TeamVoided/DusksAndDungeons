@@ -24,19 +24,19 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
-open class TallCrystalBlock(settings: Settings) :
+open class TallDirectionalBlock(settings: Settings) :
     Block(settings), Waterloggable {
 
     init {
         this.defaultState =
             defaultState
                 .with(FACING, Direction.UP)
-                .with(CRYSTAL_HALF, DoubleBlockHalf.LOWER)
+                .with(HALF, DoubleBlockHalf.LOWER)
                 .with(WATERLOGGED, false)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(FACING, CRYSTAL_HALF, WATERLOGGED)
+        builder.add(FACING, HALF, WATERLOGGED)
     }
 
     override fun getOutlineShape(
@@ -59,10 +59,10 @@ open class TallCrystalBlock(settings: Settings) :
         val blockPos = pos.offset(direction.opposite)
         val blockState = world.getBlockState(blockPos)
 
-        return if (state.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER) {
+        return if (state.get(HALF) == DoubleBlockHalf.LOWER) {
             blockState.isSideSolidFullSquare(world, blockPos, direction)
         } else {
-            blockState.isOf(this) && blockState.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER
+            blockState.isOf(this) && blockState.get(HALF) == DoubleBlockHalf.LOWER
         }
     }
 
@@ -79,7 +79,7 @@ open class TallCrystalBlock(settings: Settings) :
         }
         val blockstate = state.get(FACING)
         val blockstateOther =
-            world.getBlockState(pos.offset(getDirectionTowardsOtherPart(state.get(CRYSTAL_HALF), blockstate)))
+            world.getBlockState(pos.offset(getDirectionTowardsOtherPart(state.get(HALF), blockstate)))
         return if (
             blockstateOther.isOf(this) &&
             state.canPlaceAt(world, pos)
@@ -90,13 +90,13 @@ open class TallCrystalBlock(settings: Settings) :
 
     override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity): BlockState {
         if (!world.isClient && player.isCreative) {
-            val crystalHalf = state.get(CRYSTAL_HALF)
+            val crystalHalf = state.get(HALF)
             if (crystalHalf == DoubleBlockHalf.LOWER) {
                 val blockPos = pos.offset(
                     getDirectionTowardsOtherPart(crystalHalf, state.get(FACING))
                 )
                 val blockState = world.getBlockState(blockPos)
-                if (blockState.isOf(this) && blockState.get(CRYSTAL_HALF) == DoubleBlockHalf.UPPER) {
+                if (blockState.isOf(this) && blockState.get(HALF) == DoubleBlockHalf.UPPER) {
                     world.setBlockState(blockPos, Blocks.AIR.defaultState, 35)
                     world.syncWorldEvent(player, 2001, blockPos, getRawIdFromState(blockState))
                 }
@@ -126,7 +126,7 @@ open class TallCrystalBlock(settings: Settings) :
             world.setBlockState(
                 blockPos,
                 state
-                    .with(CRYSTAL_HALF, DoubleBlockHalf.UPPER)
+                    .with(HALF, DoubleBlockHalf.UPPER)
                     .with(WATERLOGGED, world.getFluidState(blockPos).fluid == Fluids.WATER),
                 3
             )
@@ -149,7 +149,7 @@ open class TallCrystalBlock(settings: Settings) :
 
     companion object {
         val FACING: DirectionProperty = Properties.FACING
-        val CRYSTAL_HALF: EnumProperty<DoubleBlockHalf> = Properties.DOUBLE_BLOCK_HALF
+        val HALF: EnumProperty<DoubleBlockHalf> = Properties.DOUBLE_BLOCK_HALF
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
 
         val yShape = createCuboidShape(
@@ -170,7 +170,7 @@ open class TallCrystalBlock(settings: Settings) :
         }
 
         fun getOppositeCrystalState(part: BlockState): DoubleBlockHalf {
-            return if (part.get(CRYSTAL_HALF) == DoubleBlockHalf.LOWER) DoubleBlockHalf.UPPER else DoubleBlockHalf.LOWER
+            return if (part.get(HALF) == DoubleBlockHalf.LOWER) DoubleBlockHalf.UPPER else DoubleBlockHalf.LOWER
         }
     }
 }

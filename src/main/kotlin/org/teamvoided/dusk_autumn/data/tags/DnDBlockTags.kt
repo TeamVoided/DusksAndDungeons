@@ -40,5 +40,8 @@ object DnDBlockTags {
     val REPLACEABLE_OR_DIRT = create("replaceable_or_dirt")
     val FALLEN_TREE_REPLACEABLE = create("fallen_tree_replaceable")
 
+    @JvmField
+    val BLOCKS_CANNOT_CONNECT_TO = create("blocks_cannot_connect_to")
+
     fun create(id: String): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id(id))
 }

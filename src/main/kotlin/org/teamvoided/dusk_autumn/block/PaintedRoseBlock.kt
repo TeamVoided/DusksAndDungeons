@@ -24,7 +24,7 @@ class PaintedRoseBlock(settings: Settings) : AbstractPlantBlock(settings), Water
     init {
         this.defaultState = stateManager.defaultState
             .with(SECTION, TripleBlockSection.TOP)
-            .with(TallCrystalBlock.WATERLOGGED, false)
+            .with(WATERLOGGED, false)
     }
 
     override fun getCodec(): MapCodec<out AbstractPlantBlock> = CODEC

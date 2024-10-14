@@ -263,6 +263,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DnDBlockTags.FALLEN_TREE_REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE_BY_TREES)
+
+
+        getOrCreateTagBuilder(DnDBlockTags.BLOCKS_CANNOT_CONNECT_TO)
     }
 
     private fun vanillaTags() {

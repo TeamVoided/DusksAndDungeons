@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.block.dispenser.DispenserBlock
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
@@ -71,6 +72,9 @@ object DnDItems {
         "golden_beetroot",
         AliasedBlockItem(DnDFloraBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))
     )
+//    val LANTERN_PUMPKIN_SEEDS =
+//        register("lantern_pumpkin_seeds", (AliasedBlockItem(Blocks.PUMPKIN_STEM, Item.Settings())))
+
     val MOONBERRY_VINELET =
         register("moonberry_vinelet", AliasedBlockItem(DnDFloraBlocks.MOONBERRY_VINELET, Item.Settings()))
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DnDFoodComponents.MOONBERRIES)))

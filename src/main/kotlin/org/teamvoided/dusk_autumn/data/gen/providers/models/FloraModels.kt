@@ -1,9 +1,7 @@
 package org.teamvoided.dusk_autumn.data.gen.providers.models
 
-import net.minecraft.data.client.model.BlockStateModelGenerator
-import net.minecraft.data.client.model.Texture
-import net.minecraft.data.client.model.TextureKey
-import net.minecraft.data.client.model.TexturedModel
+import net.minecraft.block.Blocks
+import net.minecraft.data.client.model.*
 import net.minecraft.state.property.Properties
 import org.teamvoided.dusk_autumn.DusksAndDungeons
 import org.teamvoided.dusk_autumn.init.DnDItems
@@ -11,7 +9,7 @@ import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object FloraModels {
-    fun floraModels(gen: BlockStateModelGenerator){
+    fun floraModels(gen: BlockStateModelGenerator) {
         gen.registerGalleryRose(DnDFloraBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerGoldenMushroomPlant(DnDFloraBlocks.GOLDEN_MUSHROOM)
 
@@ -33,6 +31,33 @@ object FloraModels {
         )
         gen.createMoonberryVine(DnDFloraBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DnDItems.MOONBERRIES)
+
+        gen.registerPumpkins(
+            DnDFloraBlocks.LANTERN_PUMPKIN,
+            DnDFloraBlocks.CARVED_LANTERN_PUMPKIN,
+            DnDFloraBlocks.GLOWING_LANTERN_PUMPKIN
+        )
+        gen.registerPumpkins(
+            DnDFloraBlocks.PALE_PUMPKIN,
+            DnDFloraBlocks.CARVED_PALE_PUMPKIN,
+            DnDFloraBlocks.GLOWING_PALE_PUMPKIN
+        )
+        gen.registerPumpkins(
+            DnDFloraBlocks.GLOOM_PUMPKIN,
+            DnDFloraBlocks.CARVED_GLOOM_PUMPKIN,
+            DnDFloraBlocks.GLOWING_GLOOM_PUMPKIN
+        )
+        gen.registerSmallPumpkins(
+            DnDFloraBlocks.SMALL_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
+            Blocks.PUMPKIN
+        )
+
+        gen.registerSingleton(
+            DnDFloraBlocks.JOUNCESHROOM_BLOCK,
+            TexturedModel.makeFactory(Texture::sideEnd, Models.CUBE_COLUMN)
+        )
 
         gen.registerSingleton(
             DnDFloraBlocks.ROOT_BLOCK,

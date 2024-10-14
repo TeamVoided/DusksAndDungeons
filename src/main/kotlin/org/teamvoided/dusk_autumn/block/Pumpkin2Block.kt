@@ -20,7 +20,8 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
 
-class Pumpkin2Block(private val carvedBlock:Block, private val seedsItem: Item, settings: Settings) : Block(settings) {
+open class Pumpkin2Block(private val carvedBlock:Block, private val seedsItem: Item, settings: Settings) : Block(settings) {
+    open val seeds = 4
     override fun onInteract(
         stack: ItemStack,
         state: BlockState,
@@ -53,7 +54,7 @@ class Pumpkin2Block(private val carvedBlock:Block, private val seedsItem: Item, 
             val itemEntity = ItemEntity(
                 world,
                 pos.x.toDouble() + 0.5 + direction2.offsetX.toDouble() * 0.65, pos.y.toDouble() + 0.1,
-                pos.z.toDouble() + 0.5 + direction2.offsetZ.toDouble() * 0.65, ItemStack(seedsItem, 4)
+                pos.z.toDouble() + 0.5 + direction2.offsetZ.toDouble() * 0.65, ItemStack(seedsItem, seeds)
             )
             itemEntity.setVelocity(
                 0.05 * direction2.offsetX.toDouble() + world.random.nextDouble() * 0.02,

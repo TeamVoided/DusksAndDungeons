@@ -10,7 +10,6 @@ import net.minecraft.data.client.model.BlockStateModelGenerator.TintType
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
-import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.state.property.Properties
 import net.minecraft.state.property.Property
@@ -686,6 +685,44 @@ fun BlockStateModelGenerator.registerWaterFern(block: Block) {
         TextureKey.PLANT
     ).upload(block, texture, this.modelCollector)
     this.registerAxisRotated(block, model)
+}
+
+fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glowing: Block) {
+    val texture = Texture()
+        .put(TextureKey.END, Texture.getSubId(pumpkin, "_top"))
+        .put(TextureKey.SIDE, Texture.getSubId(pumpkin, "_side"))
+    val model = Models.CUBE_COLUMN.upload(pumpkin, texture, this.modelCollector)
+    Models.ORIENTABLE.upload(carved, texture.put(TextureKey.FRONT, Texture.getId(carved)), this.modelCollector)
+    Models.ORIENTABLE.upload(glowing, texture.put(TextureKey.FRONT, Texture.getId(glowing)), this.modelCollector)
+
+    blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
+    this.registerNorthDefaultHorizontalRotation(carved)
+    this.registerNorthDefaultHorizontalRotation(glowing)
+}
+
+fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
+    val texture = Texture()
+        .put(TextureKey.PARTICLE, Texture.getId(particle))
+        .put(TextureKey.ALL, Texture.getId(pumpkin))
+    val model = block(
+        "parent/small_pumpkin",
+        TextureKey.PARTICLE,
+        TextureKey.ALL
+    ).upload(pumpkin, texture, this.modelCollector)
+    block(
+        "parent/small_carved_pumpkin",
+        TextureKey.PARTICLE,
+        TextureKey.ALL
+    ).upload(carved, texture, this.modelCollector)
+    block(
+        "parent/small_glowing_pumpkin",
+        TextureKey.PARTICLE,
+        TextureKey.ALL
+    ).upload(glowing, texture, this.modelCollector)
+
+    blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
+    this.registerNorthDefaultHorizontalRotation(carved)
+    this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
 fun BlockStateModelGenerator.registerBigChain(block: Block) {

@@ -7,8 +7,11 @@ import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
+import net.minecraft.entity.EntityType
 import net.minecraft.item.Items
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.BlockView
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
@@ -90,18 +93,81 @@ object DnDFloraBlocks {
             copy(PINK_PETALS).mapColor(MapColor.PURPLE)
         ).cutout().sword().hoe()
     )
-//    val CARVED_PALE_PUMPKIN = DnDBlocks.register(
-//        "carved_pale_pumpkin", CarvedPumpkin2Block(
-//            copy(CARVED_PUMPKIN)
-//        )
-//    )
-//    val PALE_PUMPKIN = DnDBlocks.register(
-//        "pale_pumpkin", Pumpkin2Block(
-//            CARVED_PALE_PUMPKIN,
-//            Items.PUMPKIN_SEEDS,
-//            copy(PUMPKIN)
-//        )
-//    )
+
+    val CARVED_LANTERN_PUMPKIN = DnDBlocks.register(
+        "carved_lantern_pumpkin", CarvedPumpkin2Block(
+            copy(CARVED_PUMPKIN)
+        )
+    )
+    val GLOWING_LANTERN_PUMPKIN = DnDBlocks.register(
+        "glowing_lantern_pumpkin", CarvedPumpkin2Block(
+            copy(CARVED_LANTERN_PUMPKIN).luminance(light(15))
+        )
+    )
+    val LANTERN_PUMPKIN = DnDBlocks.register(
+        "lantern_pumpkin", Pumpkin2Block(
+            CARVED_LANTERN_PUMPKIN,
+            Items.PUMPKIN_SEEDS,
+            copy(CARVED_LANTERN_PUMPKIN)
+        )
+    )
+    val CARVED_PALE_PUMPKIN = DnDBlocks.register(
+        "carved_pale_pumpkin", CarvedPumpkin2Block(
+            copy(CARVED_PUMPKIN)
+        )
+    )
+    val GLOWING_PALE_PUMPKIN = DnDBlocks.register(
+        "glowing_pale_pumpkin", CarvedPumpkin2Block(
+            copy(CARVED_PALE_PUMPKIN).luminance(light(15))
+        )
+    )
+    val PALE_PUMPKIN = DnDBlocks.register(
+        "pale_pumpkin", Pumpkin2Block(
+            CARVED_PALE_PUMPKIN,
+            Items.PUMPKIN_SEEDS,
+            copy(CARVED_PALE_PUMPKIN)
+        )
+    )
+    val CARVED_GLOOM_PUMPKIN = DnDBlocks.register(
+        "carved_gloom_pumpkin", CarvedPumpkin2Block(
+            copy(CARVED_PUMPKIN)
+        )
+    )
+    val GLOWING_GLOOM_PUMPKIN = DnDBlocks.register(
+        "glowing_gloom_pumpkin", CarvedPumpkin2Block(
+            copy(CARVED_GLOOM_PUMPKIN).luminance(light(15))
+        )
+    )
+    val GLOOM_PUMPKIN = DnDBlocks.register(
+        "gloom_pumpkin", Pumpkin2Block(
+            CARVED_GLOOM_PUMPKIN,
+            Items.PUMPKIN_SEEDS,
+            copy(CARVED_GLOOM_PUMPKIN)
+        )
+    )
+    val SMALL_CARVED_PUMPKIN = DnDBlocks.register(
+        "small_carved_pumpkin", SmallCarvedPumpkinBlock(
+            Settings.create().mapColor(MapColor.ORANGE).strength(1.0f).sounds(BlockSoundGroup.WOOD)
+                .pistonBehavior(PistonBehavior.DESTROY)
+        )
+    )
+    val SMALL_GLOWING_PUMPKIN = DnDBlocks.register(
+        "small_jack_o_lantern", SmallCarvedPumpkinBlock(
+            copy(SMALL_CARVED_PUMPKIN).luminance(light(15))
+        )
+    )
+    val SMALL_PUMPKIN = DnDBlocks.register(
+        "small_pumpkin", SmallPumpkinBlock(
+            SMALL_CARVED_PUMPKIN,
+            Items.PUMPKIN_SEEDS,
+            copy(SMALL_CARVED_PUMPKIN)
+        )
+    )
+    val JOUNCESHROOM_BLOCK = DnDBlocks.register(
+        "jounceshroom_block", MushroomLaunchBlock(
+            copy(BROWN_MUSHROOM_BLOCK).mapColor(MapColor.PURPLE_TERRACOTTA)
+        )
+    ).tellWitnessesThatIWasMurdered()
     val WATER_FERN = DnDBlocks.registerNoItem(
         "water_fern", WaterFernBlock(
             copy(LILY_PAD)

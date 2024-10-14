@@ -4,6 +4,7 @@
   "package": "org.teamvoided.dusk_autumn.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BlockMixin",
     "FoxEntityVariantMixin",
     "ItemStackMixin",
     "MushroomPlantBlockMixin",

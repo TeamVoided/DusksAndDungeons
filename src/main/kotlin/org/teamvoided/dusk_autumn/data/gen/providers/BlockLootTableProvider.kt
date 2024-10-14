@@ -25,7 +25,7 @@ import net.minecraft.state.property.Property
 import net.minecraft.util.StringIdentifiable
 import org.teamvoided.dusk_autumn.block.LeafPileBlock
 import org.teamvoided.dusk_autumn.block.LogPileBlock
-import org.teamvoided.dusk_autumn.block.TallCrystalBlock
+import org.teamvoided.dusk_autumn.block.TallDirectionalBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
@@ -187,7 +187,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         val blockstateCondition = BlockStatePropertyLootCondition.builder(fullBlock)
             .properties(
                 StatePredicate.Builder.create()
-                    .exactMatch(TallCrystalBlock.CRYSTAL_HALF, DoubleBlockHalf.LOWER)
+                    .exactMatch(TallDirectionalBlock.HALF, DoubleBlockHalf.LOWER)
             )
         return dropsConditionally(
             fullBlock,

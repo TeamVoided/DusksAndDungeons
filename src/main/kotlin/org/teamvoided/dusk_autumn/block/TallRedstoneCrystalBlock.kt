@@ -22,17 +22,17 @@ import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
 
-class TallRedstoneCrystalBlock(settings: Settings) : TallCrystalBlock(settings) {
+class TallRedstoneCrystalBlock(settings: Settings) : TallDirectionalBlock(settings) {
     init {
         this.defaultState = defaultState
             .with(FACING, Direction.UP)
-            .with(CRYSTAL_HALF, DoubleBlockHalf.LOWER)
+            .with(HALF, DoubleBlockHalf.LOWER)
             .with(LIT, false)
             .with(WATERLOGGED, false)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(FACING, CRYSTAL_HALF, LIT, WATERLOGGED)
+        builder.add(FACING, HALF, LIT, WATERLOGGED)
     }
 
     override fun onBlockBreakStart(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity) {
@@ -117,14 +117,14 @@ class TallRedstoneCrystalBlock(settings: Settings) : TallCrystalBlock(settings) 
             world.setBlockState(
                 pos,
                 state
-                    .with(CRYSTAL_HALF, state.get(CRYSTAL_HALF))
+                    .with(HALF, state.get(HALF))
                     .with(LIT, light),
                 3
             )
             world.setBlockState(
-                pos.offset(getDirectionTowardsOtherPart(state.get(CRYSTAL_HALF), state.get(FACING))),
+                pos.offset(getDirectionTowardsOtherPart(state.get(HALF), state.get(FACING))),
                 state
-                    .with(CRYSTAL_HALF, getOppositeCrystalState(state))
+                    .with(HALF, getOppositeCrystalState(state))
                     .with(LIT, light),
                 3
             )
