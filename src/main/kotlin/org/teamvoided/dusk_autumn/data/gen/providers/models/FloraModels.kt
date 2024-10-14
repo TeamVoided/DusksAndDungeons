@@ -53,6 +53,24 @@ object FloraModels {
             DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
             Blocks.PUMPKIN
         )
+        gen.registerSmallPumpkins(
+            DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
+            DnDFloraBlocks.LANTERN_PUMPKIN
+        )
+        gen.registerSmallPumpkins(
+            DnDFloraBlocks.SMALL_PALE_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_PALE_PUMPKIN,
+            DnDFloraBlocks.PALE_PUMPKIN
+        )
+        gen.registerSmallPumpkins(
+            DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
+            DnDFloraBlocks.GLOOM_PUMPKIN
+        )
 
         gen.registerSingleton(
             DnDFloraBlocks.JOUNCESHROOM_BLOCK,

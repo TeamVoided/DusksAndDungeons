@@ -96,7 +96,7 @@ object DnDFloraBlocks {
 
     val CARVED_LANTERN_PUMPKIN = DnDBlocks.register(
         "carved_lantern_pumpkin", CarvedPumpkin2Block(
-            copy(CARVED_PUMPKIN)
+            copy(CARVED_PUMPKIN).mapColor(MapColor.YELLOW)
         )
     )
     val GLOWING_LANTERN_PUMPKIN = DnDBlocks.register(
@@ -113,7 +113,7 @@ object DnDFloraBlocks {
     )
     val CARVED_PALE_PUMPKIN = DnDBlocks.register(
         "carved_pale_pumpkin", CarvedPumpkin2Block(
-            copy(CARVED_PUMPKIN)
+            copy(CARVED_PUMPKIN).mapColor(MapColor.SNOW)
         )
     )
     val GLOWING_PALE_PUMPKIN = DnDBlocks.register(
@@ -130,7 +130,7 @@ object DnDFloraBlocks {
     )
     val CARVED_GLOOM_PUMPKIN = DnDBlocks.register(
         "carved_gloom_pumpkin", CarvedPumpkin2Block(
-            copy(CARVED_PUMPKIN)
+            copy(CARVED_PUMPKIN).mapColor(MapColor.PURPLE_TERRACOTTA)
         )
     )
     val GLOWING_GLOOM_PUMPKIN = DnDBlocks.register(
@@ -161,6 +161,57 @@ object DnDFloraBlocks {
             SMALL_CARVED_PUMPKIN,
             Items.PUMPKIN_SEEDS,
             copy(SMALL_CARVED_PUMPKIN)
+        )
+    )
+    val SMALL_CARVED_LANTERN_PUMPKIN = DnDBlocks.register(
+        "small_carved_lantern_pumpkin", SmallCarvedPumpkinBlock(
+            copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_LANTERN_PUMPKIN.defaultMapColor)
+        )
+    )
+    val SMALL_GLOWING_LANTERN_PUMPKIN = DnDBlocks.register(
+        "small_glowing_lantern_pumpkin", SmallCarvedPumpkinBlock(
+            copy(SMALL_CARVED_LANTERN_PUMPKIN).luminance(light(15))
+        )
+    )
+    val SMALL_LANTERN_PUMPKIN = DnDBlocks.register(
+        "small_lantern_pumpkin", SmallPumpkinBlock(
+            SMALL_CARVED_LANTERN_PUMPKIN,
+            Items.PUMPKIN_SEEDS,
+            copy(SMALL_CARVED_LANTERN_PUMPKIN)
+        )
+    )
+    val SMALL_CARVED_PALE_PUMPKIN = DnDBlocks.register(
+        "small_carved_pale_pumpkin", SmallCarvedPumpkinBlock(
+            copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_PALE_PUMPKIN.defaultMapColor)
+        )
+    )
+    val SMALL_GLOWING_PALE_PUMPKIN = DnDBlocks.register(
+        "small_glowing_pale_pumpkin", SmallCarvedPumpkinBlock(
+            copy(SMALL_CARVED_PALE_PUMPKIN).luminance(light(15))
+        )
+    )
+    val SMALL_PALE_PUMPKIN = DnDBlocks.register(
+        "small_pale_pumpkin", SmallPumpkinBlock(
+            SMALL_CARVED_PALE_PUMPKIN,
+            Items.PUMPKIN_SEEDS,
+            copy(SMALL_CARVED_PALE_PUMPKIN)
+        )
+    )
+    val SMALL_CARVED_GLOOM_PUMPKIN = DnDBlocks.register(
+        "small_carved_gloom_pumpkin", SmallCarvedPumpkinBlock(
+            copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_GLOOM_PUMPKIN.defaultMapColor)
+        )
+    )
+    val SMALL_GLOWING_GLOOM_PUMPKIN = DnDBlocks.register(
+        "small_glowing_gloom_pumpkin", SmallCarvedPumpkinBlock(
+            copy(SMALL_CARVED_GLOOM_PUMPKIN).luminance(light(15))
+        )
+    )
+    val SMALL_GLOOM_PUMPKIN = DnDBlocks.register(
+        "small_gloom_pumpkin", SmallPumpkinBlock(
+            SMALL_CARVED_GLOOM_PUMPKIN,
+            Items.PUMPKIN_SEEDS,
+            copy(SMALL_CARVED_GLOOM_PUMPKIN)
         )
     )
     val JOUNCESHROOM_BLOCK = DnDBlocks.register(

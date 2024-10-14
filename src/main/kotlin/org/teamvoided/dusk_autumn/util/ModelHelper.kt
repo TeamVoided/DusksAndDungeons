@@ -702,7 +702,7 @@ fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glo
 
 fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
     val texture = Texture()
-        .put(TextureKey.PARTICLE, Texture.getId(particle))
+        .put(TextureKey.PARTICLE, Texture.getSubId(particle, "_side"))
         .put(TextureKey.ALL, Texture.getId(pumpkin))
     val model = block(
         "parent/small_pumpkin",
