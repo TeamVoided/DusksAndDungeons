@@ -14,6 +14,7 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.projectile.FlyingPumpkinProjectile
+import org.teamvoided.dusk_autumn.util.setShootVelocity
 import org.teamvoided.dusk_autumn.util.toSlot
 
 class HarvesterScytheItem(toolMaterial: ToolMaterial, settings: Settings) : SwordItem(toolMaterial, settings) {
@@ -23,12 +24,16 @@ class HarvesterScytheItem(toolMaterial: ToolMaterial, settings: Settings) : Swor
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val itemStack = user.getStackInHand(hand)
         if (!world.isClient) {
-            val flyingPumpkin = FlyingPumpkinProjectile(world, user.eyePos)
-            flyingPumpkin.setProperties(user, user.pitch, user.yaw, 0.0f, 0.5f, 1.0f)
+            val flyingPumpkin = FlyingPumpkinProjectile(user, user.eyePos, world)
+            flyingPumpkin.setShootVelocity(user.pitch, user.yaw, 0.0f, 0.3f, 0.0f)
+            flyingPumpkin.pitch = user.pitch
+            flyingPumpkin.yaw = user.yaw
+
             world.spawnEntity(flyingPumpkin)
         }
         user.incrementStat(Stats.USED.getOrCreateStat(this))
         itemStack.damageEquipment(1, user, hand.toSlot())
+        if (!user.isCreative) user.itemCooldownManager.set(this, 60)
         return TypedActionResult.success(itemStack, world.isClient())
     }
 

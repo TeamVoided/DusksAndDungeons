@@ -1,7 +1,7 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
-import net.minecraft.client.render.entity.FlyingItemEntityRenderer
+import org.teamvoided.dusk_autumn.entity.BB.FlyingBlockItemEntityRenderer
 import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.entity.dice.DiceEntityRenderer
 import org.teamvoided.dusk_autumn.entity.scarecrow.ScarecrowEntityRenderer
@@ -14,6 +14,6 @@ object DnDEntitiesClient {
         EntityRendererRegistry.register(DnDEntities.SCARECROW, ::ScarecrowEntityRenderer)
         EntityRendererRegistry.register(DnDEntities.DIE, ::DiceEntityRenderer)
 
-        EntityRendererRegistry.register(DnDEntities.FLYING_PUMPKIN, ::FlyingItemEntityRenderer)
+        EntityRendererRegistry.register(DnDEntities.FLYING_PUMPKIN, ::FlyingBlockItemEntityRenderer)
     }
 }

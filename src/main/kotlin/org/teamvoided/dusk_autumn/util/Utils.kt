@@ -2,12 +2,14 @@ package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.Blocks
 import net.minecraft.entity.EquipmentSlot
+import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.MathHelper
 import net.minecraft.world.StructureWorldAccess
 
 val pi = 3.1415927f
@@ -57,3 +59,10 @@ fun Collection<ItemConvertible>.toStacks() = this.toItems().map(Item::getDefault
 
 
 fun Hand.toSlot() = if (this == Hand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
+
+fun ProjectileEntity.setShootVelocity(pitch: Float, yaw: Float, roll: Float, speed: Float, modifierXYZ: Float) {
+    val f = -MathHelper.sin(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
+    val g = -MathHelper.sin((pitch + roll) * (Math.PI.toFloat() / 180))
+    val h = MathHelper.cos(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
+    this.setVelocity(f.toDouble(), g.toDouble(), h.toDouble(), speed, modifierXYZ)
+}
