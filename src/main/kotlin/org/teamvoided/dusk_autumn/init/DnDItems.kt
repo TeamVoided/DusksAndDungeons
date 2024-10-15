@@ -128,7 +128,7 @@ object DnDItems {
 //                .attributeModifiersComponent(FunnyIceSword.createAttributes())
 //        )
 //    )
-    val WEBSLINGER = register("webslinger", BowItem(Item.Settings().maxDamage(404)))
+    val WEB_WEAVER = register("web_weaver", BowItem(Item.Settings().maxDamage(404)))
         .tellWitnessesThatIWasMurdered()
     val HARVESTER_SCYTHE = register(
         "harvester_scythe", HarvesterScytheItem(
