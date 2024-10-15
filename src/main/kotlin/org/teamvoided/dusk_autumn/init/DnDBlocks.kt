@@ -3,7 +3,9 @@ package org.teamvoided.dusk_autumn.init
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
+import net.minecraft.block.AbstractBlock.Settings.create
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.IceBlock
 import net.minecraft.block.MapColor
@@ -12,10 +14,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
-import org.teamvoided.dusk_autumn.block.CelestalBellBlock
-import org.teamvoided.dusk_autumn.block.CrytalClusterWithParticlesBlock
-import org.teamvoided.dusk_autumn.block.DnDWoodTypes
-import org.teamvoided.dusk_autumn.block.TallRedstoneCrystalBlock
+import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableWallBlock
@@ -85,6 +84,9 @@ object DnDBlocks {
                 .pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
     ).tellWitnessesThatIWasMurdered()
+
+    val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT)))
+        .tellWitnessesThatIWasMurdered()
 
 //    val CLUB_CORAL = register(
 //        "club_coral", Block(

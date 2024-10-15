@@ -1,8 +1,12 @@
 package org.teamvoided.dusk_autumn
 
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.block.entity.DecoratedPotBlockEntity
+import net.minecraft.client.MinecraftClient
+import net.minecraft.util.math.BlockPos
 import org.teamvoided.dusk_autumn.DusksAndDungeons.MODID
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
@@ -18,6 +22,8 @@ object DusksAndDungeonsClient {
 
 //    var cooldown = 0
 
+    private var decoratedPotBlockEntity = DecoratedPotBlockEntity(BlockPos.ORIGIN, DnDBlocks.POT_O_SCREAMS.defaultState)
+
     fun init() {
         DnDEntityModelLayers.init()
         DnDBlocksClient.init()
@@ -25,6 +31,11 @@ object DusksAndDungeonsClient {
         DnDParticlesClient.init()
         DnDEntitiesClient.init()
         DnDBlockEntitiesClient.init()
+        BuiltinItemRendererRegistry.INSTANCE.register(DnDBlocks.POT_O_SCREAMS) { stack, mode, matrices, vertexConsumers, light, overlay ->
+            MinecraftClient.getInstance().blockEntityRenderDispatcher.renderEntity(
+                decoratedPotBlockEntity, matrices, vertexConsumers, light, overlay
+            )
+        }
 
 //        ClientTickEvents.END_CLIENT_TICK.register {
 //            if (key.isPressed && cooldown < 1) {

@@ -73,6 +73,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.wall(DnDBlocks.ICE_BRICK_WALL, DnDBlocks.ICE_BRICKS)
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
+        gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("decorated_pot"), Blocks.TERRACOTTA).includeWithoutItem(DnDBlocks.POT_O_SCREAMS)
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),
@@ -90,7 +91,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //        gen.register(DnDItems.ICE_SWORD, Models.HANDHELD)
         gen.register(DnDItems.WEB_WEAVER, Models.HANDHELD)
         gen.register(DnDItems.HARVESTER_SCYTHE, Models.HANDHELD)
-
     }
 
     private fun BlockStateModelGenerator.parentedModel(
