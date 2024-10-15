@@ -54,6 +54,10 @@ object DnDItems {
             CountSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
+    val WITCH_HAT = register(
+        "witch_hat", HeadDecorationItem(
+            CountSettings(1))
+        )
     val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16)))
     val DIE_ITEM = register(
         "die", DiceItem(

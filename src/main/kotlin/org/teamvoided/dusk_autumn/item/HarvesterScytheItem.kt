@@ -14,6 +14,7 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.projectile.FlyingPumpkinProjectile
+import org.teamvoided.dusk_autumn.init.DnDEntities
 import org.teamvoided.dusk_autumn.util.setShootVelocity
 import org.teamvoided.dusk_autumn.util.toSlot
 
@@ -24,10 +25,10 @@ class HarvesterScytheItem(toolMaterial: ToolMaterial, settings: Settings) : Swor
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val itemStack = user.getStackInHand(hand)
         if (!world.isClient) {
-            val flyingPumpkin = FlyingPumpkinProjectile(user, user.eyePos, world)
-            flyingPumpkin.setShootVelocity(user.pitch, user.yaw, 0.0f, 0.3f, 0.0f)
-            flyingPumpkin.pitch = user.pitch
-            flyingPumpkin.yaw = user.yaw
+            val flyingPumpkin = FlyingPumpkinProjectile(user, world, itemStack, null)
+            flyingPumpkin.setShootVelocity(user.pitch, user.yaw, 0.0f, 1f, 0.0f)
+//            flyingPumpkin.pitch = user.pitch
+//            flyingPumpkin.yaw = user.yaw
 
             world.spawnEntity(flyingPumpkin)
         }
