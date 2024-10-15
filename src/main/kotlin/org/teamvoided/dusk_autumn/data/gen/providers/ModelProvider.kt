@@ -88,7 +88,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         single.forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }
         gen.register(DnDItems.FREEZE_ROD, Models.HANDHELD_ROD)
 //        gen.register(DnDItems.ICE_SWORD, Models.HANDHELD)
-        gen.register(DnDItems.WEBSLINGER, Models.HANDHELD)
+        gen.register(DnDItems.WEB_WEAVER, Models.HANDHELD)
         gen.register(DnDItems.HARVESTER_SCYTHE, Models.HANDHELD)
 
     }

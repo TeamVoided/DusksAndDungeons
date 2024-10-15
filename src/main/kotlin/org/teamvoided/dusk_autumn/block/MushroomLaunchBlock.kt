@@ -13,6 +13,7 @@ import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ProjectileItem
+import net.minecraft.registry.tag.ItemTags
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
@@ -62,23 +63,35 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
     ): ItemInteractionResult {
         if (stack.item !is BlockItem && stack.item !is ProjectileItem) {
             if (entity.velocity.y < 0.1) {
-                val cooldown = entity.getAttackCooldownProgress(0.5f)
-                val mult: Float = if (cooldown > 0.9f) getAttackDamageWith(entity, stack).toFloat() * 0.2f
-                else 0.05f
-                playBounce(mult - 0.1f, world, pos)
-                launchFromFacing(entity, -(mult + 0.5))
-                onLandedUpon(world, state, pos, entity, entity.fallDistance)
-                if (mult > 3) {
-                    explodeBlock(world, pos, state)
-                } else if (mult > 0.5) {
-                    launchParticles(world, pos, world.random.nextInt((mult * 50).toInt()), mult.toDouble())
-                }
-                entity.resetLastAttackedTicks()
+                super.onBlockBreakStart(state, world, pos, entity)
                 return ItemInteractionResult.SUCCESS
             }
             entity.resetLastAttackedTicks()
         }
         return super.onInteract(stack, state, world, pos, entity, hand, hitResult)
+    }
+
+    override fun onBlockBreakStart(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity) {
+        val stack = player.mainHandStack
+        if (stack.isIn(ItemTags.WEAPON_ENCHANTABLE)) {
+            launch(stack, state, world, pos, player)
+        }
+        super.onBlockBreakStart(state, world, pos, player)
+    }
+
+    fun launch(stack: ItemStack, state: BlockState, world: World, pos: BlockPos, entity: PlayerEntity) {
+        val cooldown = entity.getAttackCooldownProgress(0.5f)
+        val mult: Float = if (cooldown > 0.9f) getAttackDamageWith(entity, stack).toFloat() * 0.2f
+        else 0.05f
+        playBounce(mult - 0.1f, world, pos)
+        launchFromFacing(entity, -(mult + 0.5))
+        onLandedUpon(world, state, pos, entity, entity.fallDistance)
+        if (mult > 3) {
+            explodeBlock(world, pos, state)
+        } else if (mult > 0.5) {
+            launchParticles(world, pos, world.random.nextInt((mult * 50).toInt()), mult.toDouble())
+        }
+        entity.resetLastAttackedTicks()
     }
 
     private fun getAttackDamageWith(entity: LivingEntity, weapon: ItemStack): Double {
