@@ -4,7 +4,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
-import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -13,9 +12,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
-import net.minecraft.particle.BlockStateParticleEffect
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.server.world.ServerWorld
+import net.minecraft.item.ProjectileItem
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
@@ -26,12 +23,17 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
+import org.teamvoided.dusk_autumn.init.DnDParticles
 import org.teamvoided.dusk_autumn.util.radToDeg
 
 class MushroomLaunchBlock(settings: Settings) : Block(settings) {
     override fun onLandedUpon(world: World, state: BlockState, pos: BlockPos, entity: Entity, fallDistance: Float) {
-        entity.handleFallDamage(fallDistance, 0.0f, world.damageSources.fall())
-        playBounce(entity.velocity.y.toFloat(), world, entity.blockPos)
+        if (entity.bypassesLandingEffects() && !entity.isSneaking) {
+            super.onLandedUpon(world, state, pos, entity, fallDistance)
+        } else {
+            entity.handleFallDamage(fallDistance, 0f, world.damageSources.fall())
+            playBounce(entity.velocity.y.toFloat(), world, entity.blockPos)
+        }
     }
 
     override fun onEntityLand(world: BlockView, entity: Entity) {
@@ -39,7 +41,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
             super.onEntityLand(world, entity)
         } else {
             this.bounce(entity)
-            if (entity is PlayerEntity) {
+            if (entity is PlayerEntity && entity.attackCooldownProgressPerTick > 5) {
                 entity.resetLastAttackedTicks()
             }
         }
@@ -58,8 +60,8 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
         hand: Hand,
         hitResult: BlockHitResult
     ): ItemInteractionResult {
-        if (stack.item !is BlockItem) {
-            if (entity.velocity.y < 1) {
+        if (stack.item !is BlockItem && stack.item !is ProjectileItem) {
+            if (entity.velocity.y < 0.1) {
                 val cooldown = entity.getAttackCooldownProgress(0.5f)
                 val mult: Float = if (cooldown > 0.9f) getAttackDamageWith(entity, stack).toFloat() * 0.2f
                 else 0.05f
@@ -68,16 +70,14 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
                 onLandedUpon(world, state, pos, entity, entity.fallDistance)
                 if (mult > 3) {
                     explodeBlock(world, pos, state)
+                } else if (mult > 0.5) {
+                    launchParticles(world, pos, world.random.nextInt((mult * 50).toInt()), mult.toDouble())
                 }
                 entity.resetLastAttackedTicks()
                 return ItemInteractionResult.SUCCESS
             }
             entity.resetLastAttackedTicks()
         }
-
-//        val vec3d = entity.velocity
-//        entity.setVelocity(vec3d.x, vec3d.y + 1.75, vec3d.z)
-//        entity.velocityModified = true
         return super.onInteract(stack, state, world, pos, entity, hand, hitResult)
     }
 
@@ -109,33 +109,37 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
         val yawCos: Double = MathHelper.cos(entity.yaw * radToDeg).toDouble()
         entity.addVelocity(
             -yawSin * pitchCos * mult,
-            (-pitchSin * mult),
+            -pitchSin * mult,
             yawCos * pitchCos * mult
         )
     }
 
-    fun explodeBlock(world: World, pos: BlockPos, state: BlockState, multiplier: Double = 1.0) {
+    fun explodeBlock(world: World, pos: BlockPos, state: BlockState) {
+        val rand = world.random
+        if (rand.nextInt(5) == 0) world.breakBlock(pos, rand.nextInt(5) != 0)
+        launchParticles(world, pos, rand.nextInt(50) + 50)
+    }
+
+    fun launchParticles(world: World, pos: BlockPos, count: Int, multiplier: Double = 1.0) {
         val rand = world.random
         val centerBlock: Vec3d = pos.ofCenter()
-        if (rand.nextInt(5) == 0) world.breakBlock(pos, rand.nextInt(5) != 0)
-        repeat(rand.nextInt(50) + 50) {
+        repeat(count) {
             val velocity: Vec3d = Vec3d(
-                rand.nextDouble() * multiplier,
-                rand.nextDouble() * multiplier,
-                rand.nextDouble() * multiplier
+                (rand.nextDouble() - rand.nextDouble()) * multiplier,
+                (rand.nextDouble() - rand.nextDouble()) * multiplier,
+                (rand.nextDouble() - rand.nextDouble()) * multiplier,
             )
             world.addParticle(
-                BlockStateParticleEffect(ParticleTypes.BLOCK, state),
+                DnDParticles.MUSHROOM_LAUNCH,
                 centerBlock.x,
                 centerBlock.y,
                 centerBlock.z,
                 velocity.x,
                 velocity.y,
-                velocity.z
+                velocity.z,
             )
         }
     }
-
 
     fun playBounce(pitch: Float, world: World, pos: BlockPos) {
         world.playSound(

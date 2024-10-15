@@ -19,6 +19,7 @@ object DnDParticles {
         FabricParticleTypes.complex(ColorableParticleEffect.CODEC, ColorableParticleEffect.PACKET_CODEC)
     val SPIDERLILY: DefaultParticleType = FabricParticleTypes.simple()
     val SNOWFLAKE: DefaultParticleType = FabricParticleTypes.simple()
+    val MUSHROOM_LAUNCH: DefaultParticleType = FabricParticleTypes.simple()
 
     val SPIRAL: ParticleType<SpiralParticleEffect> =
         FabricParticleTypes.complex(SpiralParticleEffect.CODEC, SpiralParticleEffect.PACKET_CODEC)
@@ -30,6 +31,7 @@ object DnDParticles {
         register("colorable_ominous_spawning", COLORABLE_OMINOUS_PARTICLE)
         register("spiderlily", SPIDERLILY)
         register("snowflake", SNOWFLAKE)
+        register("mushroom_launch", MUSHROOM_LAUNCH)
 
         register("spiral", SPIRAL)
     }
