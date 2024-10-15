@@ -700,6 +700,46 @@ fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glo
     this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
+fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
+    val texture = Texture()
+        .put(TextureKey.FRONT, Texture.getSubId(gravestone, "_front"))
+        .put(TextureKey.SIDE, Texture.getSubId(gravestone, "_side"))
+    block(
+        "parent/gravestone",
+        TextureKey.FRONT,
+        TextureKey.SIDE
+    ).upload(gravestone, texture, this.modelCollector)
+    block(
+        "parent/gravestone_centered",
+        TextureKey.FRONT,
+        TextureKey.SIDE
+    ).upload(gravestone, "_centered", texture, this.modelCollector)
+    val variants = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, GravestoneBlock.CENTERED)
+    GravestoneBlock.CENTERED.values.forEach {
+        Properties.HORIZONTAL_FACING.values.forEach { direction ->
+            val string = if (it) "_centered" else ""
+            val variant = BlockStateVariant.create()
+                .put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(gravestone, string))
+            val variant2 = when (direction) {
+                Direction.NORTH -> variant.put(VariantSettings.Y, Rotation.R180)
+                Direction.EAST -> variant.put(VariantSettings.Y, Rotation.R270)
+                Direction.WEST -> variant.put(VariantSettings.Y, Rotation.R90)
+                else -> variant
+            }
+            variants.register(
+                direction,
+                it,
+                variant2
+            )
+        }
+    }
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(gravestone).coordinate(
+            variants
+        )
+    )
+}
+
 fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
     val texture = Texture()
         .put(TextureKey.PARTICLE, Texture.getSubId(particle, "_side"))

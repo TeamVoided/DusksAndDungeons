@@ -4,11 +4,15 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.client.model.BlockStateModelGenerator
 import net.minecraft.data.client.model.TexturedModel
 import org.teamvoided.dusk_autumn.DusksAndDungeons
+import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object StoneModels {
     fun stoneModels(gen: BlockStateModelGenerator){
+
+        gen.registerGravestone(DnDStoneBlocks.GRAVESTONE)
+
         gen.registerAxisRotated(
             DnDStoneBlocks.STONE_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN,

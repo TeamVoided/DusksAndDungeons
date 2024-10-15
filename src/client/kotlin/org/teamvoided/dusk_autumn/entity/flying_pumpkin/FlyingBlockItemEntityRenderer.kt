@@ -1,16 +1,18 @@
-package org.teamvoided.dusk_autumn.entity.BB
+package org.teamvoided.dusk_autumn.entity.flying_pumpkin
 
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.EntityRenderer
 import net.minecraft.client.render.entity.EntityRendererFactory
-import net.minecraft.client.render.item.ItemRenderer
 import net.minecraft.client.texture.SpriteAtlasTexture
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.Entity
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Axis
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.MathHelper
 import org.joml.Math.lerp
 import org.teamvoided.dusk_autumn.entity.FlyingBlockItemEntity
 
@@ -37,21 +39,22 @@ class FlyingBlockItemEntityRenderer<T>(
         if (entity.age >= 2) {
             matrices.push()
             matrices.scale(this.scale, this.scale, this.scale)
-            matrices.translate(-OFFSET, 0f, -OFFSET)
-
-            matrices.rotateAround(
-                Axis.Y_POSITIVE.rotationDegrees(lerp(tickDelta, entity.prevYaw, entity.yaw)), OFFSET, 0f, OFFSET
+            matrices.rotate(
+                Axis.Y_POSITIVE.rotationDegrees(
+                    MathHelper.lerp(tickDelta, entity.prevYaw, entity.yaw) + 180f
+                )
             )
-            matrices.rotateAround(
-                Axis.X_NEGATIVE.rotationDegrees(lerp(tickDelta, entity.prevPitch, entity.pitch) + 90),
-                OFFSET,
-                0f,
-                OFFSET
+            matrices.rotate(
+                Axis.Z_POSITIVE.rotationDegrees(
+                    MathHelper.lerp(tickDelta, entity.prevPitch, entity.pitch)
+                )
             )
+            matrices.translate(-OFFSET, -OFFSET, -OFFSET)
             blockRenderer.renderBlockAsEntity(
                 entity.getState(), matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV
             )
             matrices.pop()
+            MinecraftClient.getInstance().player?.sendMessage(Text.literal(entity.yaw.toString()), true)
             super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light)
         }
     }
@@ -59,6 +62,7 @@ class FlyingBlockItemEntityRenderer<T>(
     override fun getTexture(entity: T): Identifier = SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE
 
     companion object {
+        private val distance = MathHelper.square(3.5f)
         const val OFFSET = 0.5f
     }
 }

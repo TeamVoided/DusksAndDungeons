@@ -83,12 +83,12 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
     fun launch(stack: ItemStack, state: BlockState, world: World, pos: BlockPos, entity: PlayerEntity) {
         val cooldown = entity.getAttackCooldownProgress(0.5f)
         val mult: Float = if (cooldown > 0.9f) getAttackDamageWith(entity, stack).toFloat() * 0.2f
-        else 0.05f
+        else 0.001f
         playBounce(mult - 0.1f, world, pos)
         launchFromFacing(entity, -(mult + 0.5))
         onLandedUpon(world, state, pos, entity, entity.fallDistance)
         if (mult > 3) {
-            explodeBlock(world, pos, state)
+            explodeBlock(world, pos)
         } else if (mult > 0.75) {
             launchParticles(world, pos, world.random.nextInt((mult * 50).toInt()), mult.toDouble())
         }
@@ -128,7 +128,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
         )
     }
 
-    fun explodeBlock(world: World, pos: BlockPos, state: BlockState) {
+    fun explodeBlock(world: World, pos: BlockPos) {
         val rand = world.random
         if (rand.nextInt(5) == 0) world.breakBlock(pos, rand.nextInt(5) != 0)
         launchParticles(world, pos, rand.nextInt(50) + 50)
@@ -142,7 +142,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
-            ).normalize()
+            )
             world.addParticle(
                 DnDParticles.MUSHROOM_LAUNCH,
                 centerBlock.x,

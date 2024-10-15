@@ -27,23 +27,13 @@ class DiceEntity : PersistentProjectileEntity {
 
     constructor(entityType: EntityType<out DiceEntity>, world: World) : super(entityType, world)
 
-    constructor(world: World, owner: LivingEntity, stack: ItemStack) : super(
-        DnDEntities.DIE,
-        owner,
-        world,
-        stack,
-        null as ItemStack?
-    ) {
+    constructor(world: World, owner: LivingEntity, stack: ItemStack) :
+            super(DnDEntities.DIE, owner, world, stack, null as ItemStack?) {
         this.color = getDiceColor(stack)
     }
 
-    constructor(world: World, x: Double, y: Double, z: Double, stack: ItemStack) : super(
-        DnDEntities.DIE,
-        x, y, z,
-        world,
-        stack,
-        stack
-    ) {
+    constructor(world: World, x: Double, y: Double, z: Double, stack: ItemStack) :
+            super(DnDEntities.DIE, x, y, z, world, stack, stack) {
         this.color = getDiceColor(stack)
     }
 
