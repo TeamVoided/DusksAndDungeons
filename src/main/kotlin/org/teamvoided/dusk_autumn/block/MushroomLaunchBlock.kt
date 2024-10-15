@@ -42,7 +42,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
             super.onEntityLand(world, entity)
         } else {
             this.bounce(entity)
-            if (entity is PlayerEntity && entity.attackCooldownProgressPerTick > 5) {
+            if (entity is PlayerEntity && !entity.mainHandStack.isEmpty && entity.getAttackCooldownProgress(0f) >= 1) {
                 entity.resetLastAttackedTicks()
             }
         }
@@ -63,7 +63,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
     ): ItemInteractionResult {
         if (stack.item !is BlockItem && stack.item !is ProjectileItem) {
             if (entity.velocity.y < 0.1) {
-                super.onBlockBreakStart(state, world, pos, entity)
+                launch(stack, state, world, pos, entity)
                 return ItemInteractionResult.SUCCESS
             }
             entity.resetLastAttackedTicks()
@@ -73,8 +73,9 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
 
     override fun onBlockBreakStart(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity) {
         val stack = player.mainHandStack
-        if (stack.isIn(ItemTags.WEAPON_ENCHANTABLE)) {
+        if (stack.isIn(ItemTags.WEAPON_ENCHANTABLE) || stack.isEmpty) {
             launch(stack, state, world, pos, player)
+            player.resetLastAttackedTicks()
         }
         super.onBlockBreakStart(state, world, pos, player)
     }
@@ -88,7 +89,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
         onLandedUpon(world, state, pos, entity, entity.fallDistance)
         if (mult > 3) {
             explodeBlock(world, pos, state)
-        } else if (mult > 0.5) {
+        } else if (mult > 0.75) {
             launchParticles(world, pos, world.random.nextInt((mult * 50).toInt()), mult.toDouble())
         }
         entity.resetLastAttackedTicks()
@@ -141,7 +142,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
-            )
+            ).normalize()
             world.addParticle(
                 DnDParticles.MUSHROOM_LAUNCH,
                 centerBlock.x,
