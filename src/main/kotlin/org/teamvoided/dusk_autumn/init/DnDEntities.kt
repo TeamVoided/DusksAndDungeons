@@ -10,6 +10,7 @@ import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.ChillChargeEntity
 import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
+import org.teamvoided.dusk_autumn.entity.projectile.FlyingPumpkinProjectile
 
 object DnDEntities {
 
@@ -45,6 +46,15 @@ object DnDEntities {
             .setEyeHeight(0F)
             .maxTrackingRange(4)
             .trackingTickInterval(10)
+    )
+    val FLYING_PUMPKIN = register(
+        "flying_pumpkin",
+        EntityType.Builder.create(EntityType.EntityFactory(::FlyingPumpkinProjectile), SpawnGroup.MISC)
+            .setDimensions(0.5F, 0.5F)
+            .setEyeHeight(0.25F)
+            .maxTrackingRange(4)
+            .trackingTickInterval(10)
+
     )
 
     fun init() {

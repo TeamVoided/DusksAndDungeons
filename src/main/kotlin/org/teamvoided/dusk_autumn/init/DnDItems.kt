@@ -1,14 +1,10 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.block.dispenser.DispenserBlock
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.DyedColorComponent
-import net.minecraft.entity.EquipmentSlotGroup
-import net.minecraft.entity.attribute.EntityAttributeModifier
-import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -131,29 +127,7 @@ object DnDItems {
     val WEB_WEAVER = register("web_weaver", BowItem(Item.Settings().maxDamage(404)))
         .tellWitnessesThatIWasMurdered()
     val HARVESTER_SCYTHE = register(
-        "harvester_scythe", HarvesterScytheItem(
-            AttributeSettings(
-                SwordItem.createAttributes(DnDToolMaterials.HARVESTER_SCYTHE, 3, -2.4f)
-                    .with(
-                        EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE,
-                        EntityAttributeModifier(
-                            id("base_block_range"),
-                            3.0,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                        ),
-                        EquipmentSlotGroup.MAINHAND
-                    )
-                    .with(
-                        EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                        EntityAttributeModifier(
-                            id("base_entity_range"),
-                            1.5,
-                            EntityAttributeModifier.Operation.ADD_VALUE
-                        ),
-                        EquipmentSlotGroup.MAINHAND
-                    )
-            )
-        )
+        "harvester_scythe", HarvesterScytheItem(AttributeSettings(HarvesterScytheItem.makeAttributes()))
     ).tellWitnessesThatIWasMurdered()
 
     fun init() {
