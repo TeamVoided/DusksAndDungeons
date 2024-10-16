@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.init
 
 import net.minecraft.block.Block
 import net.minecraft.block.dispenser.DispenserBlock
+import net.minecraft.block.org.teamvoided.dusk_autumn.item.TripleTallBlockItem
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.DyedColorComponent
@@ -72,6 +73,7 @@ object DnDItems {
     val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
         .tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
+    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings()))
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
         AliasedBlockItem(DnDFloraBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))

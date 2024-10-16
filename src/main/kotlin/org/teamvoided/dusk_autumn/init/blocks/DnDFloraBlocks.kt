@@ -214,6 +214,14 @@ object DnDFloraBlocks {
             copy(SMALL_CARVED_GLOOM_PUMPKIN)
         )
     )
+    val CORN = DnDBlocks.registerNoItem(
+        "corn", TripleTallPlantBlock(
+            Settings.create().mapColor(MapColor.PLANT).offsetType(OffsetType.XYZ).noCollision().breakInstantly()
+                .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
+        )
+    )
+
+
     val JOUNCESHROOM_BLOCK = DnDBlocks.register(
         "jounceshroom_block", MushroomLaunchBlock(
             copy(BROWN_MUSHROOM_BLOCK).mapColor(MapColor.PURPLE_TERRACOTTA)

@@ -17,4 +17,10 @@ enum class TripleBlockSection(val direction: Direction) : StringIdentifiable {
     fun getSection(): TripleBlockSection {
         return if (this == TOP) TOP else if (this == MIDDLE) MIDDLE else BOTTOM
     }
+
+    companion object {
+        fun getBelowSection(section: TripleBlockSection): TripleBlockSection? {
+            return if (section == TOP) MIDDLE else if (section == MIDDLE) BOTTOM else null
+        }
+    }
 }
