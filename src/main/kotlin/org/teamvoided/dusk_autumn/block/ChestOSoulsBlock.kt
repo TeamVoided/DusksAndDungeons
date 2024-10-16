@@ -30,9 +30,7 @@ class ChestOSoulsBlock(
         defaultState = stateManager.defaultState.with(FACING, Direction.NORTH)
     }
 
-    override fun getCodec(): MapCodec<out AbstractChestBlock<ChestOSoulsBlockEntity>>? {
-        TODO("Not yet implemented")
-    }
+    override fun getCodec(): MapCodec<out AbstractChestBlock<ChestOSoulsBlockEntity>> = CODEC
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
         return defaultState.with(EnderChestBlock.FACING, ctx.playerFacing.opposite)
@@ -61,8 +59,14 @@ class ChestOSoulsBlock(
 
     override fun getBlockEntitySource(
         state: BlockState, world: World, pos: BlockPos, ignoreBlocked: Boolean
-    ): PropertySource.Single<ChestBlockEntity?>? {
+    ): PropertySource<out ChestBlockEntity>? {
         return null
+//        return object : PropertySource<ChestBlockEntity> {
+//
+//            override fun <T : Any?> apply(propertyRetriever: DoubleBlockProperties.PropertyRetriever<in ChestBlockEntity, T>?): T {
+//                TODO("Not yet implemented")
+//            }
+//        }
 //        return PropertySource.Single(BlockEntityType.CHEST.get(world, pos))
     }
 
@@ -84,5 +88,6 @@ class ChestOSoulsBlock(
 
     companion object {
         val FACING: DirectionProperty = HorizontalFacingBlock.FACING;
+        val CODEC: MapCodec<ChestOSoulsBlock> = createCodec(::ChestOSoulsBlock)
     }
 }
