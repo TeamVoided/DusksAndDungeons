@@ -9,6 +9,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.util.math.BlockPos
 import org.teamvoided.dusk_autumn.DusksAndDungeons.MODID
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.block.entity.ChestOSoulsBlockEntity
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
 import org.teamvoided.dusk_autumn.init.*
 
@@ -23,6 +24,7 @@ object DusksAndDungeonsClient {
 //    var cooldown = 0
 
     private var decoratedPotBlockEntity = DecoratedPotBlockEntity(BlockPos.ORIGIN, DnDBlocks.POT_O_SCREAMS.defaultState)
+    private var chestOSoulsBlockEntity = ChestOSoulsBlockEntity(BlockPos.ORIGIN, DnDBlocks.CHEST_O_SOULS.defaultState)
 
     fun init() {
         DnDEntityModelLayers.init()
@@ -34,6 +36,11 @@ object DusksAndDungeonsClient {
         BuiltinItemRendererRegistry.INSTANCE.register(DnDBlocks.POT_O_SCREAMS) { stack, mode, matrices, vertexConsumers, light, overlay ->
             MinecraftClient.getInstance().blockEntityRenderDispatcher.renderEntity(
                 decoratedPotBlockEntity, matrices, vertexConsumers, light, overlay
+            )
+        }
+        BuiltinItemRendererRegistry.INSTANCE.register(DnDBlocks.CHEST_O_SOULS) { stack, mode, matrices, vertextConsumers, light, overlay ->
+            MinecraftClient.getInstance().blockEntityRenderDispatcher.renderEntity(
+                chestOSoulsBlockEntity, matrices, vertextConsumers, light, overlay
             )
         }
 

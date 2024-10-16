@@ -7,8 +7,10 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.block.entity.ChestBlockEntity
+import net.minecraft.entity.ai.pathing.NavigationType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.DirectionProperty
 import net.minecraft.util.ActionResult
@@ -17,6 +19,9 @@ import net.minecraft.util.BlockRotation
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.random.RandomGenerator
+import net.minecraft.util.shape.VoxelShape
+import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.block.entity.ChestOSoulsBlockEntity
 import org.teamvoided.dusk_autumn.init.DnDBlockEntities
@@ -32,27 +37,40 @@ class ChestOSoulsBlock(
 
     override fun getCodec(): MapCodec<out AbstractChestBlock<ChestOSoulsBlockEntity>> = CODEC
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        return defaultState.with(EnderChestBlock.FACING, ctx.playerFacing.opposite)
-    }
+    override fun getOutlineShape(
+        state: BlockState?,
+        world: BlockView?,
+        pos: BlockPos?,
+        context: ShapeContext?
+    ): VoxelShape = SHAPE
+
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
+        defaultState.with(EnderChestBlock.FACING, ctx.playerFacing.opposite)
 
     override fun onUse(
         state: BlockState?,
-        world: World?,
+        world: World,
         pos: BlockPos?,
-        entity: PlayerEntity?,
+        player: PlayerEntity,
         hitResult: BlockHitResult?
     ): ActionResult {
-//        val block
-//        if () {
-//
-//        }
-        return super.onUse(state, world, pos, entity, hitResult)
+        val blockEntity = world.getBlockEntity(pos)
+        if (blockEntity is ChestOSoulsBlockEntity) {
+            if (blockEntity.isOpen()) {
+                return ActionResult.PASS
+            }
+
+            if (world.isClient) {
+                return ActionResult.CONSUME
+            }
+
+            blockEntity.open(player)
+            return ActionResult.SUCCESS
+        }
+        return super.onUse(state, world, pos, player, hitResult)
     }
 
-    override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity? {
-        return ChestOSoulsBlockEntity(pos, state)
-    }
+    override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity = ChestOSoulsBlockEntity(pos, state)
 
     override fun <T : BlockEntity?> getTicker(
         world: World,
@@ -64,34 +82,39 @@ class ChestOSoulsBlock(
     override fun getBlockEntitySource(
         state: BlockState, world: World, pos: BlockPos, ignoreBlocked: Boolean
     ): PropertySource<out ChestBlockEntity>? {
-        return null
-//        return object : PropertySource<ChestBlockEntity> {
-//
-//            override fun <T : Any?> apply(propertyRetriever: DoubleBlockProperties.PropertyRetriever<in ChestBlockEntity, T>?): T {
-//                TODO("Not yet implemented")
-//            }
-//        }
-//        return PropertySource.Single(BlockEntityType.CHEST.get(world, pos))
+        return object : PropertySource<ChestBlockEntity> {
+
+            override fun <T : Any?> apply(propertyRetriever: DoubleBlockProperties.PropertyRetriever<in ChestBlockEntity, T>): T {
+                return propertyRetriever.fallback
+            }
+        }
     }
 
-    override fun getRenderType(state: BlockState?): BlockRenderType {
-        return BlockRenderType.ANIMATED
+    override fun scheduledTick(state: BlockState?, world: ServerWorld, pos: BlockPos?, random: RandomGenerator?) {
+        val blockEntity = world.getBlockEntity(pos)
+
+        if (blockEntity is ChestOSoulsBlockEntity) {
+            blockEntity.onScheduledTick()
+        }
     }
 
-    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState {
-        return state.with(FACING, rotation.rotate(state.get(FACING)))
-    }
+    override fun getRenderType(state: BlockState?): BlockRenderType = BlockRenderType.ANIMATED
 
-    override fun mirror(state: BlockState, mirror: BlockMirror): BlockState {
-        return state.rotate(mirror.getRotation(state.get(FACING)))
-    }
+    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
+        state.with(FACING, rotation.rotate(state.get(FACING)))
+
+    override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
+        state.rotate(mirror.getRotation(state.get(FACING)))
 
     override fun appendProperties(builder: StateManager.Builder<Block?, BlockState?>) {
         builder.add(FACING)
     }
 
+    override fun canPathfindThrough(state: BlockState?, navigationType: NavigationType?): Boolean = false
+
     companion object {
         val FACING: DirectionProperty = HorizontalFacingBlock.FACING;
         val CODEC: MapCodec<ChestOSoulsBlock> = createCodec(::ChestOSoulsBlock)
+        val SHAPE: VoxelShape = createCuboidShape(1.0, 0.0, 1.0, 15.0, 14.0, 15.0)
     }
 }

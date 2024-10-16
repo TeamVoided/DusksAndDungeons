@@ -81,6 +81,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
         gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("decorated_pot"), Blocks.TERRACOTTA)
             .includeWithoutItem(DnDBlocks.POT_O_SCREAMS)
+        gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("chest"), Blocks.OAK_PLANKS)
+            .includeWithoutItem(DnDBlocks.CHEST_O_SOULS)
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),
