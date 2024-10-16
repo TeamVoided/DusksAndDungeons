@@ -77,6 +77,27 @@ fun RecipeExporter.createDyed(
         .offerTo(this)
 }
 
+fun RecipeExporter.createGravestone(output: ItemConvertible, input: ItemConvertible) {
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+        .ingredient('#', input)
+        .ingredient('0', ItemTags.SOUL_FIRE_BASE_BLOCKS)
+        .pattern("###")
+        .pattern("#0#")
+        .criterion(input)
+        .criterion(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+        .offerTo(this)
+}
+
+fun RecipeExporter.createPumpkinPie(output: ItemConvertible, pumpkin: ItemConvertible, carvedPumpkin: ItemConvertible) {
+    ShapelessRecipeJsonFactory.create(RecipeCategory.FOOD, output)
+        .ingredient(pumpkin)
+        .ingredient(Items.SUGAR)
+        .ingredient(Items.EGG)
+        .criterion(carvedPumpkin)
+        .criterion(pumpkin)
+        .offerTo(this)
+}
+
 fun RecipeExporter.smeltDefault(
     output: ItemConvertible,
     input: ItemConvertible
@@ -121,6 +142,7 @@ fun RecipeExporter.createTwoPiece(
         .criterion(input2)
         .offerTo(this)
 }
+
 fun RecipeExporter.createSmallSquare(output: ItemConvertible, input: ItemConvertible) {
     ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
         .ingredient('#', input)

@@ -34,7 +34,7 @@ class HarvesterScytheItem(toolMaterial: ToolMaterial, settings: Settings) : Swor
         }
         user.incrementStat(Stats.USED.getOrCreateStat(this))
         itemStack.damageEquipment(1, user, hand.toSlot())
-        if (!user.isCreative) user.itemCooldownManager.set(this, 60)
+        if (!user.isCreative) user.itemCooldownManager.set(this, 20)
         return TypedActionResult.success(itemStack, world.isClient())
     }
 

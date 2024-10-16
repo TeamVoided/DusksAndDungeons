@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumn.util
 
-import net.minecraft.block.ConnectingBlock
 import net.minecraft.loot.LootTable
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.registry.RegistryKey
