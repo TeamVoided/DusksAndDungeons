@@ -5,6 +5,7 @@ import net.minecraft.block.entity.ChestLidAnimator
 import net.minecraft.block.entity.LootableContainerBlockEntity
 import net.minecraft.block.entity.ViewerCountManager
 import net.minecraft.client.block.ChestAnimationProgress
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventories
 import net.minecraft.item.ItemStack
@@ -16,13 +17,33 @@ import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.init.DnDBlockEntities
+import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.util.block
 
 class ChestOSoulsBlockEntity(pos: BlockPos?, state: BlockState?) :
     LootableContainerBlockEntity(DnDBlockEntities.CHEST_O_SOULS, pos, state), ChestAnimationProgress {
 
+    private var isOpen = false
+    private var openTicks = 0
     private val lidAnimator = ChestLidAnimator()
     private var inventory = DefaultedList.ofSize(1, ItemStack.EMPTY)
-//    private val stateManager = ViewerCountManager()
+    private val stateManager = object : ViewerCountManager() {
+        override fun onContainerOpen(world: World?, pos: BlockPos?, state: BlockState?) {}
+
+        override fun onContainerClose(world: World?, pos: BlockPos?, state: BlockState?) {}
+
+        override fun onViewerCountUpdate(
+            world: World,
+            pos: BlockPos,
+            state: BlockState,
+            oldViewerCount: Int,
+            newViewerCount: Int
+        ) {
+            world.addSyncedBlockEvent(pos, DnDBlocks.CHEST_O_SOULS, 1, newViewerCount)
+        }
+
+        override fun isPlayerViewing(player: PlayerEntity?): Boolean = isOpen
+    }
 
     override fun size(): Int = inventory.size
 
@@ -40,13 +61,17 @@ class ChestOSoulsBlockEntity(pos: BlockPos?, state: BlockState?) :
         return null
     }
 
-    override fun writeNbt(nbt: NbtCompound?, lookupProvider: HolderLookup.Provider?) {
+    override fun writeNbt(nbt: NbtCompound, lookupProvider: HolderLookup.Provider?) {
         super.writeNbt(nbt, lookupProvider)
+        nbt.putBoolean("isOpen", isOpen)
+        nbt.putInt("openTicks", openTicks)
         Inventories.writeNbt(nbt, inventory, lookupProvider)
     }
 
-    override fun method_11014(nbt: NbtCompound?, lookupProvider: HolderLookup.Provider?) {
+    override fun method_11014(nbt: NbtCompound, lookupProvider: HolderLookup.Provider?) {
         super.method_11014(nbt, lookupProvider)
+        isOpen = nbt.getBoolean("isOpen")
+        openTicks = nbt.getInt("openTicks")
         Inventories.readNbt(nbt, inventory, lookupProvider)
     }
 
@@ -54,9 +79,22 @@ class ChestOSoulsBlockEntity(pos: BlockPos?, state: BlockState?) :
         return lidAnimator.getProgress(tickDelta)
     }
 
+    fun open(player: PlayerEntity) {
+        if (!removed && !player.isSpectator) {
+            stateManager.openContainer(player, world, pos, cachedState)
+        }
+    }
+
     companion object {
         fun tick(world: World, pos: BlockPos, state: BlockState, blockEntity: ChestOSoulsBlockEntity) {
-            blockEntity.lidAnimator.step()
+            if (world.isClient) {
+                blockEntity.lidAnimator.step()
+                return
+            }
+
+            if (blockEntity.openTicks > 0) {
+                blockEntity.openTicks--
+            }
         }
     }
 }

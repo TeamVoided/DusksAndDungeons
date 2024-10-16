@@ -24,7 +24,7 @@ import org.teamvoided.dusk_autumn.init.DnDBlockEntities
 class ChestOSoulsBlock(
     settings: Settings?,
 ) :
-    AbstractChestBlock<ChestOSoulsBlockEntity>(settings, DnDBlockEntities::CHEST_O_SOULS) {
+    AbstractChestBlock<ChestOSoulsBlockEntity>(settings, { DnDBlockEntities.CHEST_O_SOULS }) {
 
     init {
         defaultState = stateManager.defaultState.with(FACING, Direction.NORTH)
@@ -43,6 +43,10 @@ class ChestOSoulsBlock(
         entity: PlayerEntity?,
         hitResult: BlockHitResult?
     ): ActionResult {
+//        val block
+//        if () {
+//
+//        }
         return super.onUse(state, world, pos, entity, hitResult)
     }
 
@@ -55,7 +59,7 @@ class ChestOSoulsBlock(
         state: BlockState?,
         type: BlockEntityType<T>?
     ): BlockEntityTicker<T>? =
-        if (world.isClient()) checkType(type, DnDBlockEntities.CHEST_O_SOULS, ChestOSoulsBlockEntity::tick) else null
+        checkType(type, DnDBlockEntities.CHEST_O_SOULS, ChestOSoulsBlockEntity::tick)
 
     override fun getBlockEntitySource(
         state: BlockState, world: World, pos: BlockPos, ignoreBlocked: Boolean
