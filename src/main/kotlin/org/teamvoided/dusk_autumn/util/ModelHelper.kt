@@ -700,6 +700,11 @@ fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glo
     this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
+fun BlockStateModelGenerator.registerGravestone(gravestone: Block, smallGravestone: Block) {
+    this.registerGravestone(gravestone)
+    this.registerSmallGravestone(smallGravestone, gravestone)
+}
+
 fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
     val texture = Texture()
         .put(TextureKey.FRONT, Texture.getSubId(gravestone, "_front"))
@@ -714,6 +719,31 @@ fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
         TextureKey.FRONT,
         TextureKey.SIDE
     ).upload(gravestone, "_centered", texture, this.modelCollector)
+
+    this.registerParentedItemModel(gravestone, centerModel)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(gravestone).coordinate(
+            gravestoneBlockstates(gravestone)
+        )
+    )
+}
+
+fun BlockStateModelGenerator.registerSmallGravestone(gravestone: Block, texture: Block) {
+    val texture = Texture()
+        .put(TextureKey.FRONT, Texture.getSubId(texture, "_front"))
+    block("parent/small_gravestone", TextureKey.FRONT)
+        .upload(gravestone, texture, this.modelCollector)
+    val centerModel = block("parent/small_gravestone_centered", TextureKey.FRONT)
+        .upload(gravestone, "_centered", texture, this.modelCollector)
+    this.registerParentedItemModel(gravestone, centerModel)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(gravestone).coordinate(
+            gravestoneBlockstates(gravestone)
+        )
+    )
+}
+
+fun gravestoneBlockstates(gravestone: Block): BlockStateVariantMap.DoubleProperty<Direction, Boolean> {
     val variants = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, GravestoneBlock.CENTERED)
     GravestoneBlock.CENTERED.values.forEach {
         Properties.HORIZONTAL_FACING.values.forEach { direction ->
@@ -733,12 +763,7 @@ fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
             )
         }
     }
-    this.registerParentedItemModel(gravestone, centerModel)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(gravestone).coordinate(
-            variants
-        )
-    )
+    return variants
 }
 
 fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {

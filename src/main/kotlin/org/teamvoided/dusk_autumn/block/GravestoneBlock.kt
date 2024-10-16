@@ -21,7 +21,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 import org.teamvoided.dusk_autumn.util.rotate
 
-class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings), Waterloggable {
+open class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings), Waterloggable {
     init {
         this.defaultState = stateManager.defaultState
             .with(Properties.WATERLOGGED, false)

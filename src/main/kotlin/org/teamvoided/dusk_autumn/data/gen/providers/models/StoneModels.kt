@@ -11,10 +11,10 @@ import org.teamvoided.dusk_autumn.util.*
 object StoneModels {
     fun stoneModels(gen: BlockStateModelGenerator){
 
-        gen.registerGravestone(DnDStoneBlocks.GRAVESTONE)
-        gen.registerGravestone(DnDStoneBlocks.DEEPSLATE_GRAVESTONE)
-        gen.registerGravestone(DnDStoneBlocks.TUFF_GRAVESTONE)
-        gen.registerGravestone(DnDStoneBlocks.BLACKSTONE_GRAVESTONE)
+        gen.registerGravestone(DnDStoneBlocks.GRAVESTONE, DnDStoneBlocks.SMALL_GRAVESTONE)
+        gen.registerGravestone(DnDStoneBlocks.DEEPSLATE_GRAVESTONE, DnDStoneBlocks.SMALL_DEEPSLATE_GRAVESTONE)
+        gen.registerGravestone(DnDStoneBlocks.TUFF_GRAVESTONE, DnDStoneBlocks.SMALL_TUFF_GRAVESTONE)
+        gen.registerGravestone(DnDStoneBlocks.BLACKSTONE_GRAVESTONE, DnDStoneBlocks.SMALL_BLACKSTONE_GRAVESTONE)
 
         gen.registerAxisRotated(
             DnDStoneBlocks.STONE_PILLAR,
