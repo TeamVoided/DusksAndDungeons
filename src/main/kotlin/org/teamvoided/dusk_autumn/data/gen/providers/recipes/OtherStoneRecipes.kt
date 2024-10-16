@@ -8,6 +8,11 @@ import org.teamvoided.dusk_autumn.util.*
 
 object OtherStoneRecipes {
     fun generateOtherStoneRecipes(e: RecipeExporter) {
+
+        e.createGravestone(DnDStoneBlocks.GRAVESTONE, Blocks.STONE_BRICKS)
+        e.createGravestone(DnDStoneBlocks.TUFF_GRAVESTONE, Blocks.TUFF_BRICKS)
+        e.createGravestone(DnDStoneBlocks.BLACKSTONE_GRAVESTONE, Blocks.POLISHED_BLACKSTONE_BRICKS)
+
         e.createSmallSquare(DnDStoneBlocks.POLISHED_STONE, Blocks.STONE)
         e.createStackedCraft(DnDStoneBlocks.STONE_PILLAR, Blocks.STONE_BRICKS, ItemTags.STONE_BRICKS)
         e.createStackedCraft(DnDStoneBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)

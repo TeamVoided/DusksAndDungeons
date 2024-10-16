@@ -30,13 +30,13 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         NetherRecipes.generateNetherRecipes(e)
         AutumnRecipes.generateAutumnRecipes(e)
 
-        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDFloraBlocks.ROOT_BLOCK, 1)
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDFloraBlocks.ROOT_BLOCK)
             .ingredient('#', Blocks.HANGING_ROOTS)
             .pattern("##")
             .pattern("##")
             .criterion(Blocks.HANGING_ROOTS).offerTo(e)
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Blocks.HANGING_ROOTS, 4)
-            .ingredient(DnDFloraBlocks.ROOT_BLOCK, 1)
+            .ingredient(DnDFloraBlocks.ROOT_BLOCK)
             .criterion(DnDFloraBlocks.ROOT_BLOCK).offerTo(e)
         e.cobbled()
     }

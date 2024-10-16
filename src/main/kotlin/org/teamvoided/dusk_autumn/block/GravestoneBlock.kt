@@ -5,6 +5,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.HorizontalFacingBlock
 import net.minecraft.block.ShapeContext
+import net.minecraft.block.Waterloggable
 import net.minecraft.entity.ai.pathing.NavigationType
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
@@ -15,11 +16,12 @@ import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
+import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 import org.teamvoided.dusk_autumn.util.rotate
 
-class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings) {
+class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings), Waterloggable {
     init {
         this.defaultState = stateManager.defaultState
             .with(Properties.WATERLOGGED, false)
@@ -62,7 +64,7 @@ class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings) {
         val player = ctx.player?.isSneaking ?: false
         return defaultState
             .with(Properties.WATERLOGGED, fluidState.isOf(Fluids.WATER))
-            .with(CENTERED, player)
+            .with(CENTERED, !player)
             .with(FACING, ctx.playerFacing.opposite)
     }
 
@@ -84,7 +86,20 @@ class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings) {
     companion object {
         val CODEC: MapCodec<GravestoneBlock> = createCodec(::GravestoneBlock)
         val CENTERED: BooleanProperty = BooleanProperty.of("centered")
-        private val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
-        private val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
+
+        //private val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
+        //private val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
+        private val SHAPE: VoxelShape = VoxelShapes.union(
+            createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 6.0), //left
+            createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 6.0), //right
+            createCuboidShape(0.0, 13.0, 0.0, 16.0, 16.0, 6.0), //top
+            createCuboidShape(2.0, 0.0, 1.0, 14.0, 13.0, 5.0) //center
+        )
+        private val CENTER_SHAPE: VoxelShape = VoxelShapes.union(
+            createCuboidShape(0.0, 0.0, 5.0, 2.0, 16.0, 11.0), //left
+            createCuboidShape(14.0, 0.0, 5.0, 16.0, 16.0, 11.0), //right
+            createCuboidShape(0.0, 13.0, 5.0, 16.0, 16.0, 11.0), //top
+            createCuboidShape(2.0, 0.0, 6.0, 14.0, 13.0, 10.0) //center
+        )
     }
 }

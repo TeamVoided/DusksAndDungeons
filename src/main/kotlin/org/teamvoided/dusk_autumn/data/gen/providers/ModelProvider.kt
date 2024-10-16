@@ -61,19 +61,26 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.iceStairs(DnDBlocks.ICE_STAIRS, Blocks.ICE)
         gen.slab(DnDBlocks.ICE_SLAB, Blocks.ICE)
         gen.wall(DnDBlocks.ICE_WALL, Blocks.ICE)
-        gen.stairs(DnDBlocks.PACKED_ICE_STAIRS, Blocks.PACKED_ICE)
-        gen.slab(DnDBlocks.PACKED_ICE_SLAB, Blocks.PACKED_ICE)
-        gen.wall(DnDBlocks.PACKED_ICE_WALL, Blocks.PACKED_ICE)
-        gen.stairs(DnDBlocks.BLUE_ICE_STAIRS, Blocks.BLUE_ICE)
-        gen.slab(DnDBlocks.BLUE_ICE_SLAB, Blocks.BLUE_ICE)
-        gen.wall(DnDBlocks.BLUE_ICE_WALL, Blocks.BLUE_ICE)
+        gen.genPsudoFamily(
+            DnDBlocks.PACKED_ICE_STAIRS,
+            DnDBlocks.PACKED_ICE_SLAB,
+            DnDBlocks.PACKED_ICE_WALL,
+            Blocks.PACKED_ICE
+        )
+        gen.genPsudoFamily(
+            DnDBlocks.BLUE_ICE_STAIRS,
+            DnDBlocks.BLUE_ICE_SLAB,
+            DnDBlocks.BLUE_ICE_WALL,
+            Blocks.BLUE_ICE
+        )
         gen.registerSimpleCubeAll(DnDBlocks.ICE_BRICKS)
         gen.iceStairs(DnDBlocks.ICE_BRICK_STAIRS, DnDBlocks.ICE_BRICKS)
         gen.slab(DnDBlocks.ICE_BRICK_SLAB, DnDBlocks.ICE_BRICKS)
         gen.wall(DnDBlocks.ICE_BRICK_WALL, DnDBlocks.ICE_BRICKS)
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
-        gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("decorated_pot"), Blocks.TERRACOTTA).includeWithoutItem(DnDBlocks.POT_O_SCREAMS)
+        gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("decorated_pot"), Blocks.TERRACOTTA)
+            .includeWithoutItem(DnDBlocks.POT_O_SCREAMS)
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),

@@ -709,7 +709,7 @@ fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
         TextureKey.FRONT,
         TextureKey.SIDE
     ).upload(gravestone, texture, this.modelCollector)
-    block(
+    val centerModel = block(
         "parent/gravestone_centered",
         TextureKey.FRONT,
         TextureKey.SIDE
@@ -733,6 +733,7 @@ fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
             )
         }
     }
+    this.registerParentedItemModel(gravestone, centerModel)
     this.blockStateCollector.accept(
         VariantsBlockStateSupplier.create(gravestone).coordinate(
             variants

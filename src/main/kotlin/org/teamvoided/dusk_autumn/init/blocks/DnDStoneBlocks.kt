@@ -11,7 +11,12 @@ import org.teamvoided.dusk_autumn.util.*
 object DnDStoneBlocks {
     fun init() = Unit
 
-    val GRAVESTONE = DnDBlocks.register("gravestone", GravestoneBlock(copy(CHISELED_STONE_BRICKS).solid()))
+    val GRAVESTONE = DnDBlocks.register("gravestone", GravestoneBlock(copy(CHISELED_STONE_BRICKS).solid()).pickaxe())
+    val TUFF_GRAVESTONE =
+        DnDBlocks.register("tuff_gravestone", GravestoneBlock(copy(CHISELED_TUFF_BRICKS).solid()).pickaxe())
+    val BLACKSTONE_GRAVESTONE = DnDBlocks.register(
+        "blackstone_gravestone", GravestoneBlock(copy(CHISELED_POLISHED_BLACKSTONE).solid()).pickaxe()
+    )
 
     val STONE_PILLAR = DnDBlocks.register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = DnDBlocks.register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
@@ -53,8 +58,12 @@ object DnDStoneBlocks {
         DnDBlocks.register("overgrown_stone_brick_slab", slabOf(MOSSY_STONE_BRICK_SLAB).cutout().grass().pickaxe())
     val OVERGROWN_STONE_BRICK_WALL =
         DnDBlocks.register("overgrown_stone_brick_wall", wallOf(MOSSY_STONE_BRICK_WALL).cutout().grass().pickaxe())
-    val SNOWY_STONE_BRICKS = DnDBlocks.register("snowy_stone_bricks", Block(copy(STONE_BRICKS)).pickaxe()).tellWitnessesThatIWasMurdered()
-    val SNOWY_STONE_BRICK_STAIRS = DnDBlocks.register("snowy_stone_brick_stairs", stairsOf(STONE_BRICKS).pickaxe()).tellWitnessesThatIWasMurdered()
-    val SNOWY_STONE_BRICK_SLAB = DnDBlocks.register("snowy_stone_brick_slab", slabOf(STONE_BRICK_SLAB).pickaxe()).tellWitnessesThatIWasMurdered()
-    val SNOWY_STONE_BRICK_WALL = DnDBlocks.register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe()).tellWitnessesThatIWasMurdered()
+    val SNOWY_STONE_BRICKS =
+        DnDBlocks.register("snowy_stone_bricks", Block(copy(STONE_BRICKS)).pickaxe()).tellWitnessesThatIWasMurdered()
+    val SNOWY_STONE_BRICK_STAIRS =
+        DnDBlocks.register("snowy_stone_brick_stairs", stairsOf(STONE_BRICKS).pickaxe()).tellWitnessesThatIWasMurdered()
+    val SNOWY_STONE_BRICK_SLAB =
+        DnDBlocks.register("snowy_stone_brick_slab", slabOf(STONE_BRICK_SLAB).pickaxe()).tellWitnessesThatIWasMurdered()
+    val SNOWY_STONE_BRICK_WALL =
+        DnDBlocks.register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe()).tellWitnessesThatIWasMurdered()
 }
