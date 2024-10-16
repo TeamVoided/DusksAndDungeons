@@ -56,14 +56,18 @@ object DnDItems {
     )
     val WITCH_HAT = register(
         "witch_hat", HeadDecorationItem(
-            CountSettings(1))
+            CountSettings(1)
         )
+    )
     val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16)))
     val DIE_ITEM = register(
         "die", DiceItem(
             CountSettings(16).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xFFFFFF, true))
         )
     )
+    val LANTERN_PUMPKIN_PIE = register("lantern_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE)))
+    val PALE_PUMPKIN_PIE = register("pale_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE)))
+    val GLOOM_PUMPKIN_PIE = register("gloom_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE)))
 
     val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
         .tellWitnessesThatIWasMurdered()

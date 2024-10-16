@@ -90,7 +90,14 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         if (isModLoaded("dramaticdoors")) DramaticDoorsCompat.datagen(gen)
     }
 
-    private val single = listOf(DnDItems.SCARECROW_ITEM, DnDItems.DIE_ITEM, DnDItems.CHILL_CHARGE)
+    private val single = listOf(
+        DnDItems.SCARECROW_ITEM,
+        DnDItems.DIE_ITEM,
+        DnDItems.LANTERN_PUMPKIN_PIE,
+        DnDItems.PALE_PUMPKIN_PIE,
+        DnDItems.GLOOM_PUMPKIN_PIE,
+        DnDItems.CHILL_CHARGE
+    )
 
     override fun generateItemModels(gen: ItemModelGenerator) {
         single.forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }

@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import org.joml.Math.lerp
 import org.teamvoided.dusk_autumn.entity.FlyingBlockItemEntity
+import org.teamvoided.dusk_autumn.util.sendMessageIngame
 
 
 class FlyingBlockItemEntityRenderer<T>(
@@ -41,7 +42,7 @@ class FlyingBlockItemEntityRenderer<T>(
             matrices.scale(this.scale, this.scale, this.scale)
             matrices.rotate(
                 Axis.Y_POSITIVE.rotationDegrees(
-                    MathHelper.lerp(tickDelta, entity.prevYaw, entity.yaw) + 180f
+                    MathHelper.lerp(tickDelta, entity.prevYaw, entity.yaw) + 90f
                 )
             )
             matrices.rotate(
@@ -54,7 +55,7 @@ class FlyingBlockItemEntityRenderer<T>(
                 entity.getState(), matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV
             )
             matrices.pop()
-            MinecraftClient.getInstance().player?.sendMessage(Text.literal(entity.yaw.toString()), true)
+            sendMessageIngame(entity.yaw.toString())
             super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light)
         }
     }

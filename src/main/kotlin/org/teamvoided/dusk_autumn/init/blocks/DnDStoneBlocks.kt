@@ -12,6 +12,9 @@ object DnDStoneBlocks {
     fun init() = Unit
 
     val GRAVESTONE = DnDBlocks.register("gravestone", GravestoneBlock(copy(CHISELED_STONE_BRICKS).solid()).pickaxe())
+    val DEEPSLATE_GRAVESTONE = DnDBlocks.register(
+        "deepslate_gravestone", GravestoneBlock(copy(CHISELED_DEEPSLATE).solid()).pickaxe()
+    )
     val TUFF_GRAVESTONE =
         DnDBlocks.register("tuff_gravestone", GravestoneBlock(copy(CHISELED_TUFF_BRICKS).solid()).pickaxe())
     val BLACKSTONE_GRAVESTONE = DnDBlocks.register(

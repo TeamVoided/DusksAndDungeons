@@ -6,10 +6,11 @@ import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusk_autumn.util.*
 
-object OtherStoneRecipes {
-    fun generateOtherStoneRecipes(e: RecipeExporter) {
+object StoneRecipes {
+    fun generateStoneRecipes(e: RecipeExporter) {
 
         e.createGravestone(DnDStoneBlocks.GRAVESTONE, Blocks.STONE_BRICKS)
+        e.createGravestone(DnDStoneBlocks.DEEPSLATE_GRAVESTONE, Blocks.DEEPSLATE_BRICKS)
         e.createGravestone(DnDStoneBlocks.TUFF_GRAVESTONE, Blocks.TUFF_BRICKS)
         e.createGravestone(DnDStoneBlocks.BLACKSTONE_GRAVESTONE, Blocks.POLISHED_BLACKSTONE_BRICKS)
 
