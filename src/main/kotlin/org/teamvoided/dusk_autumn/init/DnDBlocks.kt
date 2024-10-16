@@ -88,6 +88,9 @@ object DnDBlocks {
     val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT)))
         .tellWitnessesThatIWasMurdered()
 
+    val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST)))
+        .tellWitnessesThatIWasMurdered()
+
 //    val CLUB_CORAL = register(
 //        "club_coral", Block(
 //            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
