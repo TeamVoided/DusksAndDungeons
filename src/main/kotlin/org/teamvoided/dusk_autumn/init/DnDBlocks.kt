@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.IceBlock
 import net.minecraft.block.MapColor
@@ -103,7 +104,14 @@ object DnDBlocks {
     val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST)))
         .tellWitnessesThatIWasMurdered()
 
-    val QUARTER_BLOCK_PILE = registerNoItem("quarter_block_pile", QuarterBlockPileBlock(copy(DnDFloraBlocks.SMALL_PUMPKIN)))
+    val QUARTER_BLOCK_PILE = registerNoItem(
+        "quarter_block_pile", QuarterBlockPileBlock(
+            Settings.create()
+                .mapColor(MapColor.NONE)
+                .nonOpaque()
+                .allowsSpawning(Blocks::nonSpawnable)
+        )
+    ).cutout()
 
 //    val CLUB_CORAL = register(
 //        "club_coral", Block(
