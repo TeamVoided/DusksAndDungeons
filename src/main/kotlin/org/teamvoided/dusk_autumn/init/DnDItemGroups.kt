@@ -112,66 +112,66 @@ object DnDItemGroups {
         )
 
 
-//        addToTab(ItemGroups.BUILDING_BLOCKS) {
-//            it.addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
-//            it.addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
-//            it.addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
-//            it.addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
-//            it.addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
-//            it.addAfter(
-//                Items.RED_NETHER_BRICK_WALL,
-//                DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedRedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff +
-//                        DnDItemLists.mixedBlueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
-//            )
-//            it.addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
-//            it.addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks + DnDItemLists.snowyStoneBricks)
-//            it.addWoodStuffAndLeafPiles()
-//        }
-//
-//        addToTab(ItemGroups.COLORED_BLOCKS) { it.addCandles() }
-//
-//        addToTab(ItemGroups.FUNCTIONAL_BLOCKS) {
-//            it.addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
-//            it.addAfter(Items.LANTERN, DnDBlocks.BIG_LANTERN)
-//            it.addAfter(Items.SOUL_LANTERN, DnDBlocks.BIG_SOUL_LANTERN)
-//
-//            it.addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
-//
-//            it.addCandles()
-//        }
-//
-//        addToTab(ItemGroups.NATURAL_BLOCKS) {
-//            it.addAfter(Items.CHERRY_LOG, DnDBlocks.CASCADE_LOG)
-//            it.addBefore(Items.PINK_PETALS, DnDBlockLists.flowerbedBlocks)
-//            it.addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
-//
-//            it.addAfter(
-//                Items.FLOWERING_AZALEA_LEAVES,
-//                listOf(DnDBlocks.CASCADE_LEAVES, DnDBlocks.GOLDEN_BIRCH_LEAVES)
-//            )
-//            it.addAfter(Items.FLOWERING_AZALEA, DnDBlocks.CASCADE_SAPLING, DnDBlocks.GOLDEN_BIRCH_SAPLING)
-//            it.addAfter(Items.VINE, DnDItemLists.moonberry)
-//            DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
-//                it.addAfter(DnDBlockLists.leaves[idx], leafPile)
-//            }
-//        }
-//
-//        addToTab(ItemGroups.COMBAT) {
-//            it.addAfter(Items.STONE_SWORD, DnDItems.BLACKSTONE_SWORD)
-//            it.addAfter(Items.STONE_AXE, DnDItems.BLACKSTONE_AXE)
-//        }
-//
-//        addToTab(ItemGroups.TOOLS_AND_UTILITIES) {
-//            it.addAfter( // this is what you should have done dusk >:( // L plus M N O P =)
-//                Items.STONE_HOE,
-//                DnDItems.BLACKSTONE_SHOVEL, DnDItems.BLACKSTONE_PICKAXE,
-//                DnDItems.BLACKSTONE_AXE, DnDItems.BLACKSTONE_HOE
-//            )
-//        }
+        /*  addToTab(ItemGroups.BUILDING_BLOCKS) {
+              it.addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
+              it.addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
+              it.addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
+              it.addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
+              it.addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
+              it.addAfter(
+                  Items.RED_NETHER_BRICK_WALL,
+                  DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedRedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff +
+                          DnDItemLists.mixedBlueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
+              )
+              it.addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
+              it.addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks + DnDItemLists.snowyStoneBricks)
+              it.addWoodStuffAndLeafPiles()
+          }
+
+          addToTab(ItemGroups.COLORED_BLOCKS) { it.addCandles() }
+
+          addToTab(ItemGroups.FUNCTIONAL_BLOCKS) {
+              it.addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
+              it.addAfter(Items.LANTERN, DnDBlocks.BIG_LANTERN)
+              it.addAfter(Items.SOUL_LANTERN, DnDBlocks.BIG_SOUL_LANTERN)
+
+              it.addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
+
+              it.addCandles()
+          }
+
+          addToTab(ItemGroups.NATURAL_BLOCKS) {
+              it.addAfter(Items.CHERRY_LOG, DnDBlocks.CASCADE_LOG)
+              it.addBefore(Items.PINK_PETALS, DnDBlockLists.flowerbedBlocks)
+              it.addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
+
+              it.addAfter(
+                  Items.FLOWERING_AZALEA_LEAVES,
+                  listOf(DnDBlocks.CASCADE_LEAVES, DnDBlocks.GOLDEN_BIRCH_LEAVES)
+              )
+              it.addAfter(Items.FLOWERING_AZALEA, DnDBlocks.CASCADE_SAPLING, DnDBlocks.GOLDEN_BIRCH_SAPLING)
+              it.addAfter(Items.VINE, DnDItemLists.moonberry)
+              DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
+                  it.addAfter(DnDBlockLists.leaves[idx], leafPile)
+              }
+          }
+
+          addToTab(ItemGroups.COMBAT) {
+              it.addAfter(Items.STONE_SWORD, DnDItems.BLACKSTONE_SWORD)
+              it.addAfter(Items.STONE_AXE, DnDItems.BLACKSTONE_AXE)
+          }
+
+          addToTab(ItemGroups.TOOLS_AND_UTILITIES) {
+              it.addAfter( // this is what you should have done dusk >:( // L plus M N O P =)
+                  Items.STONE_HOE,
+                  DnDItems.BLACKSTONE_SHOVEL, DnDItems.BLACKSTONE_PICKAXE,
+                  DnDItems.BLACKSTONE_AXE, DnDItems.BLACKSTONE_HOE
+              )
+          }*/
     }
 
     @Suppress("SameParameterValue")
-    private fun register(name: String, itemGroup: ItemGroup): ItemGroup {
+    fun register(name: String, itemGroup: ItemGroup): ItemGroup {
         return Registry.register(Registries.ITEM_GROUP, id(name), itemGroup)
     }
 
