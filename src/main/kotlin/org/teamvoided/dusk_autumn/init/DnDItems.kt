@@ -55,6 +55,7 @@ object DnDItems {
         )
     )
     val WITCH_HAT = register("witch_hat", HeadDecorationItem(CountSettings(1)))
+    @JvmField
     val VILE_WITCH_HAT = register("vile_witch_hat", HeadDecorationItem(CountSettings(1)))
     val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16)))
     val DIE_ITEM = register(
