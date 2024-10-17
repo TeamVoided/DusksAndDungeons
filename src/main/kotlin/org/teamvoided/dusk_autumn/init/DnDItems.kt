@@ -139,6 +139,8 @@ object DnDItems {
     val HARVESTER_SCYTHE = register(
         "harvester_scythe", HarvesterScytheItem(AttributeSettings(HarvesterScytheItem.makeAttributes()))
     ).tellWitnessesThatIWasMurdered()
+    val BROOM = register("broom", BroomItem(CountSettings(1)))
+        .tellWitnessesThatIWasMurdered()
 
     val ROCK_CANDY_SHARD = register("rock_candy_shard", Item(Item.Settings()))
 
