@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumn.block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
 import net.minecraft.entity.Entity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.shape.VoxelShape
@@ -11,9 +12,10 @@ import net.minecraft.world.World
 
 class CornMazeBlock(settings: Settings) : TripleTallPlantBlock(settings) {
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
-        val y = if (entity.velocity.y > 0) 0.9 else 1.0
-        val vec3d = Vec3d(0.2, y, 0.2)
-        entity.setMovementMultiplier(state, vec3d)
+        if (entity is PlayerEntity && !entity.isCreative) {
+            val vec3d = Vec3d(0.2, 1.0, 0.2)
+            entity.setMovementMultiplier(state, vec3d)
+        }
     }
 
     override fun getOutlineShape(

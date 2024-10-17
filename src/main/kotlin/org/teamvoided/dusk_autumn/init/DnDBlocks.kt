@@ -8,6 +8,8 @@ import net.minecraft.block.Blocks.*
 import net.minecraft.block.IceBlock
 import net.minecraft.block.MapColor
 import net.minecraft.block.piston.PistonBehavior
+import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
@@ -17,8 +19,8 @@ import org.teamvoided.dusk_autumn.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableWallBlock
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
-import org.teamvoided.dusk_autumn.init.DnDItems.BlockItem
 import org.teamvoided.dusk_autumn.init.blocks.*
+import org.teamvoided.dusk_autumn.item.HeadDecorationBlockItem
 import org.teamvoided.dusk_autumn.util.*
 
 
@@ -47,25 +49,37 @@ object DnDBlocks {
     val ICE_WALL = register("ice_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe())
     val ICE_BRICKS = register("ice_bricks", IceBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
     val ICE_BRICK_STAIRS =
-        register("ice_brick_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
-    val ICE_BRICK_SLAB = register("ice_brick_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
-    val ICE_BRICK_WALL = register("ice_brick_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
+        register(
+            "ice_brick_stairs",
+            MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe()
+        ).tellWitnessesThatIWasMurdered()
+    val ICE_BRICK_SLAB =
+        register("ice_brick_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
+    val ICE_BRICK_WALL =
+        register("ice_brick_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
 
     val PACKED_ICE_STAIRS = register("packed_ice_stairs", stairsOf(PACKED_ICE).pickaxe())
     val PACKED_ICE_SLAB = register("packed_ice_slab", slabOf(PACKED_ICE).pickaxe())
     val PACKED_ICE_WALL = register("packed_ice_wall", wallOf(PACKED_ICE).pickaxe())
-    val PACKED_ICE_BRICKS = register("packed_ice_bricks", Block(copy(PACKED_ICE)).pickaxe()).tellWitnessesThatIWasMurdered()
-    val PACKED_ICE_BRICK_STAIRS = register("packed_ice_brick_stairs", stairsOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-    val PACKED_ICE_BRICK_SLAB = register("packed_ice_brick_slab", slabOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-    val PACKED_ICE_BRICK_WALL = register("packed_ice_brick_wall", wallOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val PACKED_ICE_BRICKS =
+        register("packed_ice_bricks", Block(copy(PACKED_ICE)).pickaxe()).tellWitnessesThatIWasMurdered()
+    val PACKED_ICE_BRICK_STAIRS =
+        register("packed_ice_brick_stairs", stairsOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val PACKED_ICE_BRICK_SLAB =
+        register("packed_ice_brick_slab", slabOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val PACKED_ICE_BRICK_WALL =
+        register("packed_ice_brick_wall", wallOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
 
     val BLUE_ICE_STAIRS = register("blue_ice_stairs", stairsOf(BLUE_ICE).pickaxe())
     val BLUE_ICE_SLAB = register("blue_ice_slab", slabOf(BLUE_ICE).pickaxe())
     val BLUE_ICE_WALL = register("blue_ice_wall", wallOf(BLUE_ICE).pickaxe())
     val BLUE_ICE_BRICKS = register("blue_ice_bricks", Block(copy(BLUE_ICE)).pickaxe()).tellWitnessesThatIWasMurdered()
-    val BLUE_ICE_BRICK_STAIRS = register("blue_ice_brick_stairs", stairsOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-    val BLUE_ICE_BRICK_SLAB = register("blue_ice_brick_slab", slabOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-    val BLUE_ICE_BRICK_WALL = register("blue_ice_brick_wall", wallOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val BLUE_ICE_BRICK_STAIRS =
+        register("blue_ice_brick_stairs", stairsOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val BLUE_ICE_BRICK_SLAB =
+        register("blue_ice_brick_slab", slabOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
+    val BLUE_ICE_BRICK_WALL =
+        register("blue_ice_brick_wall", wallOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
 
     val MOONCORE = register(
         "mooncore", CrytalClusterWithParticlesBlock(
@@ -151,7 +165,13 @@ object DnDBlocks {
 
     fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
-        DnDItems.register(id, BlockItem(regBlock))
+        DnDItems.register(id, BlockItem(regBlock, Item.Settings()))
+        return regBlock
+    }
+
+    fun registerHeadEquipable(id: String, block: Block): Block {
+        val regBlock = registerNoItem(id, block)
+        DnDItems.register(id, HeadDecorationBlockItem(regBlock, Item.Settings()))
         return regBlock
     }
 

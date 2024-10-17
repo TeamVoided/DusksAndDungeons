@@ -1,8 +1,7 @@
 package org.teamvoided.dusk_autumn.init
 
-import net.minecraft.block.Block
 import net.minecraft.block.dispenser.DispenserBlock
-import net.minecraft.block.org.teamvoided.dusk_autumn.item.TripleTallBlockItem
+import org.teamvoided.dusk_autumn.item.TripleTallBlockItem
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.DyedColorComponent
@@ -71,6 +70,8 @@ object DnDItems {
         .tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
     val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings()))
+    val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDFloraBlocks.CORN_CROP, Item.Settings()))
+
     val CORN = register("corn", Item((Item.Settings()).food(DnDFoodComponents.CORN)))
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
@@ -147,8 +148,6 @@ object DnDItems {
         ITEMS.add(regItem)
         return regItem
     }
-
-    fun BlockItem(block: Block) = BlockItem(block, Item.Settings())
 
     private fun createRegistryKey(name: String): RegistryKey<ItemGroup> {
         return RegistryKey.of(RegistryKeys.ITEM_GROUP, id(name))

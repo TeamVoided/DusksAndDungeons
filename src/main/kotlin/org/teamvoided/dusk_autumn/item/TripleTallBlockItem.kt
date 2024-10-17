@@ -1,4 +1,4 @@
-package net.minecraft.block.org.teamvoided.dusk_autumn.item
+package org.teamvoided.dusk_autumn.item
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

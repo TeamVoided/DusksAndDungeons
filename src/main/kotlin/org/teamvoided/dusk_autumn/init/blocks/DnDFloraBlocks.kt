@@ -94,7 +94,7 @@ object DnDFloraBlocks {
         ).cutout().sword().hoe()
     )
 
-    val CARVED_LANTERN_PUMPKIN = DnDBlocks.register(
+    val CARVED_LANTERN_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "carved_lantern_pumpkin", CarvedPumpkin2Block(
             copy(CARVED_PUMPKIN).mapColor(MapColor.YELLOW)
         )
@@ -111,7 +111,7 @@ object DnDFloraBlocks {
             copy(CARVED_LANTERN_PUMPKIN)
         )
     )
-    val CARVED_PALE_PUMPKIN = DnDBlocks.register(
+    val CARVED_PALE_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "carved_pale_pumpkin", CarvedPumpkin2Block(
             copy(CARVED_PUMPKIN).mapColor(MapColor.SNOW)
         )
@@ -128,7 +128,7 @@ object DnDFloraBlocks {
             copy(CARVED_PALE_PUMPKIN)
         )
     )
-    val CARVED_GLOOM_PUMPKIN = DnDBlocks.register(
+    val CARVED_GLOOM_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "carved_gloom_pumpkin", CarvedPumpkin2Block(
             copy(CARVED_PUMPKIN).mapColor(MapColor.PURPLE_TERRACOTTA)
         )
@@ -145,7 +145,7 @@ object DnDFloraBlocks {
             copy(CARVED_GLOOM_PUMPKIN)
         )
     )
-    val SMALL_CARVED_PUMPKIN = DnDBlocks.register(
+    val SMALL_CARVED_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "small_carved_pumpkin", SmallCarvedPumpkinBlock(
             Settings.create().mapColor(MapColor.ORANGE).strength(1.0f).sounds(BlockSoundGroup.WOOD)
                 .pistonBehavior(PistonBehavior.DESTROY)
@@ -163,7 +163,7 @@ object DnDFloraBlocks {
             copy(SMALL_CARVED_PUMPKIN)
         )
     )
-    val SMALL_CARVED_LANTERN_PUMPKIN = DnDBlocks.register(
+    val SMALL_CARVED_LANTERN_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "small_carved_lantern_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_LANTERN_PUMPKIN.defaultMapColor)
         )
@@ -180,7 +180,7 @@ object DnDFloraBlocks {
             copy(SMALL_CARVED_LANTERN_PUMPKIN)
         )
     )
-    val SMALL_CARVED_PALE_PUMPKIN = DnDBlocks.register(
+    val SMALL_CARVED_PALE_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "small_carved_pale_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_PALE_PUMPKIN.defaultMapColor)
         )
@@ -197,7 +197,7 @@ object DnDFloraBlocks {
             copy(SMALL_CARVED_PALE_PUMPKIN)
         )
     )
-    val SMALL_CARVED_GLOOM_PUMPKIN = DnDBlocks.register(
+    val SMALL_CARVED_GLOOM_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "small_carved_gloom_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_GLOOM_PUMPKIN.defaultMapColor)
         )
@@ -220,7 +220,17 @@ object DnDFloraBlocks {
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
     )
-
+    val CORN_CROP = DnDBlocks.registerNoItem(
+        "corn_crop", CornCropBlock(
+            Settings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().breakInstantly()
+                .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    )
+    val CORN_SYRUP_BLOCK = DnDBlocks.register(
+        "corn_syrup_block", CornSyrupBlock(
+            copy(HONEY_BLOCK).mapColor(PODZOL.defaultMapColor).sounds(cornSyrupBlockSound)
+        ).cutout()
+    )
 
     val JOUNCESHROOM_BLOCK = DnDBlocks.register(
         "jounceshroom_block", MushroomLaunchBlock(

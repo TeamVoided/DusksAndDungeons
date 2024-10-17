@@ -64,6 +64,15 @@ val bigCandleSound = BlockSoundGroup(
     SoundEvents.BLOCK_CANDLE_HIT,
     SoundEvents.BLOCK_CANDLE_FALL
 )
+val cornSyrupBlockSound = BlockSoundGroup(
+    1f,
+    0.8f,
+    SoundEvents.BLOCK_HONEY_BLOCK_BREAK,
+    SoundEvents.BLOCK_HONEY_BLOCK_STEP,
+    SoundEvents.BLOCK_HONEY_BLOCK_PLACE,
+    SoundEvents.BLOCK_HONEY_BLOCK_HIT,
+    SoundEvents.BLOCK_HONEY_BLOCK_FALL
+)
 val rootBlockSound = BlockSoundGroup(
     1f,
     0.8f,
@@ -73,6 +82,7 @@ val rootBlockSound = BlockSoundGroup(
     SoundEvents.BLOCK_HANGING_ROOTS_HIT,
     SoundEvents.BLOCK_HANGING_ROOTS_FALL
 )
+
 fun light(lightLevel: Int): ToIntFunction<BlockState> {
     return ToIntFunction { lightLevel }
 }
@@ -206,7 +216,8 @@ fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block =
     BigSoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
 
 
-fun bigTallCandleOf(color: MapColor): Block = BigTallCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+fun bigTallCandleOf(color: MapColor): Block =
+    BigTallCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
 
 fun bigTallSoulCandleOf(color: MapColor): Block =
     BigTallSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
