@@ -152,6 +152,12 @@ fun RecipeExporter.createSmallSquare(output: ItemConvertible, input: ItemConvert
         .offerTo(this)
 }
 
+fun RecipeExporter.createCount(output: ItemConvertible, input: ItemConvertible, countOutput: Int) {
+    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, countOutput)
+        .criterion(input)
+        .offerTo(this)
+}
+
 fun RecipeExporter.createStonecuttedSet(
     input: List<Block>,
     polish: ItemConvertible?,

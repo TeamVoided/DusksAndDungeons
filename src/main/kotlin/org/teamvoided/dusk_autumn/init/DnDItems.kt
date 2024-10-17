@@ -140,6 +140,8 @@ object DnDItems {
         "harvester_scythe", HarvesterScytheItem(AttributeSettings(HarvesterScytheItem.makeAttributes()))
     ).tellWitnessesThatIWasMurdered()
 
+    val ROCK_CANDY_SHARD = register("rock_candy_shard", Item(Item.Settings()))
+
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)
     }

@@ -7,6 +7,8 @@ import net.minecraft.item.Items
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
+import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusk_autumn.util.*
 
@@ -91,5 +93,10 @@ object StoneRecipes {
             DnDStoneBlocks.OVERGROWN_STONE_BRICK_SLAB,
             DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL
         )
+
+        e.smeltDefault(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
+        e.createSmallSquare(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDItems.ROCK_CANDY_SHARD)
+        e.createCount(DnDItems.ROCK_CANDY_SHARD, DnDStoneBlocks.ROCK_CANDY_BLOCK, 4)
+
     }
 }
