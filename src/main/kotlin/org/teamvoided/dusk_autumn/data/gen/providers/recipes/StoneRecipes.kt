@@ -95,7 +95,8 @@ object StoneRecipes {
         )
 
         e.smeltDefault(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
-        e.createSmallSquare(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDItems.ROCK_CANDY_SHARD)
+            // needs diff id
+//        e.createSmallSquare(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDItems.ROCK_CANDY_SHARD)
         e.createCount(DnDItems.ROCK_CANDY_SHARD, DnDStoneBlocks.ROCK_CANDY_BLOCK, 4)
 
     }

@@ -8,6 +8,7 @@ import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
 import net.minecraft.item.Items
 import net.minecraft.util.Identifier
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.DusksAndDungeons.isModLoaded
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
@@ -107,10 +108,15 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.register(DnDItems.FREEZE_ROD, Models.HANDHELD_ROD)
 //        gen.register(DnDItems.ICE_SWORD, Models.HANDHELD)
         gen.register(DnDItems.HARVESTER_SCYTHE, Models.HANDHELD)
-        gen.register(DnDItems.WEB_WEAVER, "_0", Models.HANDHELD)
-        gen.register(DnDItems.WEB_WEAVER, "_1", Models.HANDHELD)
-        gen.register(DnDItems.WEB_WEAVER, "_2", Models.HANDHELD)
+
+        val webWeaver = item("web_weaver", TextureKey.LAYER0)
+        gen.register(DnDItems.WEB_WEAVER, "_0", webWeaver)
+        gen.register(DnDItems.WEB_WEAVER, "_1", webWeaver)
+        gen.register(DnDItems.WEB_WEAVER, "_2", webWeaver)
     }
+
+    private fun item(parent: String, vararg requiredTextures: TextureKey): Model =
+        Model(Optional.of(id("item/$parent")), Optional.empty(), *requiredTextures)
 
     private fun BlockStateModelGenerator.parentedModel(
         block: Block, textBlock: Block, parent: Identifier
