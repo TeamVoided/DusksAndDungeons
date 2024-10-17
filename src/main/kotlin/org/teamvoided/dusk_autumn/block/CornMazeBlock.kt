@@ -13,8 +13,7 @@ import net.minecraft.world.World
 class CornMazeBlock(settings: Settings) : TripleTallPlantBlock(settings) {
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
         if (entity is PlayerEntity && !entity.isCreative) {
-            val vec3d = Vec3d(0.2, 1.0, 0.2)
-            entity.setMovementMultiplier(state, vec3d)
+            entity.setMovementMultiplier(state, cornMovementMultiplier)
         }
     }
 
@@ -27,5 +26,9 @@ class CornMazeBlock(settings: Settings) : TripleTallPlantBlock(settings) {
         val voxelShape = super.getOutlineShape(state, world, pos, context)
         val vec3d = state.getModelOffset(world, pos)
         return voxelShape.offset(vec3d.x, vec3d.y, vec3d.z)
+    }
+
+    companion object {
+        val cornMovementMultiplier = Vec3d(0.1, 1.0, 0.1)
     }
 }

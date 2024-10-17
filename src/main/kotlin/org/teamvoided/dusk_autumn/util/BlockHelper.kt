@@ -66,7 +66,7 @@ val bigCandleSound = BlockSoundGroup(
 )
 val cornSyrupBlockSound = BlockSoundGroup(
     1f,
-    0.8f,
+    0.5f,
     SoundEvents.BLOCK_HONEY_BLOCK_BREAK,
     SoundEvents.BLOCK_HONEY_BLOCK_STEP,
     SoundEvents.BLOCK_HONEY_BLOCK_PLACE,

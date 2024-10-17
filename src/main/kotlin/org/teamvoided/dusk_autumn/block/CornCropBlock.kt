@@ -4,11 +4,13 @@ import net.minecraft.block.*
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.RavagerEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.IntProperty
+import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
@@ -16,6 +18,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.*
 import org.teamvoided.dusk_autumn.block.not_blocks.TripleBlockSection
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import java.lang.Integer.min
 
 class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertilizable {
@@ -40,7 +43,7 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         context: ShapeContext
     ): VoxelShape {
         val age = state.get(AGE)
-        if (age % 2 != 0 || age == MAX_AGE) {
+        if (age % 2 != 0) {
             return FULL_SHAPE
         }
         val section = state.get(SECTION)
@@ -88,6 +91,9 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         if (entity is RavagerEntity && world.gameRules.getBooleanValue(GameRules.DO_MOB_GRIEFING)) {
             world.breakBlock(pos, true, entity)
         }
+        if (entity is PlayerEntity && !entity.isCreative) {
+            entity.setMovementMultiplier(state, CornMazeBlock.cornMovementMultiplier)
+        }
 
         super.onEntityCollision(state, world, pos, entity)
     }
@@ -114,10 +120,15 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         }
     }
 
+    fun withAge(age: Int): BlockState {
+        return if (age == 6) defaultCornPlant().defaultState else defaultCornCrop().defaultState
+    }
+
+
     private fun grow(world: ServerWorld, state: BlockState, pos: BlockPos, amount: Int) {
         val newAge = min((state.get(AGE) + amount), MAX_AGE)
         if (this.canGrow(world, pos, state, newAge)) {
-            val blockState = state.with(AGE, newAge)
+            val blockState = withAge(newAge).withIfExists(AGE, newAge)
             world.setBlockState(pos, blockState, 2)
             val height = heightAtAge(newAge)
             if (height >= 2) {
@@ -132,7 +143,7 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
     private fun canGrow(world: WorldView, pos: BlockPos, state: BlockState, age: Int): Boolean {
         return !this.isMaxAge(state) &&
                 hasEnoughLight(world, pos) &&
-                (heightAtAge(age, 1) || canGrowInto(world, pos.up()))
+                (age > 1 || canGrowInto(world, pos.up()))
     }
 
     private fun isMaxAge(state: BlockState): Boolean {
@@ -177,13 +188,14 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
 
     companion object {
         const val MAX_AGE: Int = 6
-        val AGE: IntProperty = IntProperty.of("age", 0, MAX_AGE)
+        val AGE: IntProperty = Properties.AGE_5
         private val FULL_SHAPE =
             VoxelShapes.fullCube()
         private val HALF_SHAPE =
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)
 
-        private fun defaultCornCrop(): Block = Blocks.PITCHER_CROP
+        private fun defaultCornCrop(): Block = DnDFloraBlocks.CORN_CROP
+        private fun defaultCornPlant(): Block = DnDFloraBlocks.CORN
 
         private fun canGrowInto(world: WorldView, pos: BlockPos): Boolean {
             val blockState = world.getBlockState(pos)
