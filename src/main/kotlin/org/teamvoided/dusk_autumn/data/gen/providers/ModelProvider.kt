@@ -106,8 +106,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         single.forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }
         gen.register(DnDItems.FREEZE_ROD, Models.HANDHELD_ROD)
 //        gen.register(DnDItems.ICE_SWORD, Models.HANDHELD)
-        gen.register(DnDItems.WEB_WEAVER, Models.HANDHELD)
         gen.register(DnDItems.HARVESTER_SCYTHE, Models.HANDHELD)
+        gen.register(DnDItems.WEB_WEAVER, "_0", Models.HANDHELD)
+        gen.register(DnDItems.WEB_WEAVER, "_1", Models.HANDHELD)
+        gen.register(DnDItems.WEB_WEAVER, "_2", Models.HANDHELD)
     }
 
     private fun BlockStateModelGenerator.parentedModel(

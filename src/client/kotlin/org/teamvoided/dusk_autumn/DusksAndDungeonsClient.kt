@@ -6,6 +6,8 @@ import net.fabricmc.fabric.api.resource.ResourcePackActivationType
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.block.entity.DecoratedPotBlockEntity
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.item.ModelPredicateProviderRegistry
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import org.teamvoided.dusk_autumn.DusksAndDungeons.MODID
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
@@ -43,6 +45,14 @@ object DusksAndDungeonsClient {
                 chestOSoulsBlockEntity, matrices, vertextConsumers, light, overlay
             )
         }
+
+        ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, Identifier.ofDefault("pull"))
+        { stack, _, entity, _ ->
+            if (entity == null || entity.activeItem != stack) 0.0f
+            else (stack.method_7935(entity) - entity.itemUseTimeLeft).toFloat() / 20.0f
+        }
+        ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, Identifier.ofDefault("pulling"))
+        { stack, _, entity, _ -> if (entity != null && entity.isUsingItem && entity.activeItem == stack) 1.0f else 0.0f }
 
 //        ClientTickEvents.END_CLIENT_TICK.register {
 //            if (key.isPressed && cooldown < 1) {
