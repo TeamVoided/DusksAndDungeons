@@ -15,6 +15,7 @@ object StoneModels {
         gen.registerGravestone(DnDStoneBlocks.DEEPSLATE_GRAVESTONE, DnDStoneBlocks.SMALL_DEEPSLATE_GRAVESTONE)
         gen.registerGravestone(DnDStoneBlocks.TUFF_GRAVESTONE, DnDStoneBlocks.SMALL_TUFF_GRAVESTONE)
         gen.registerGravestone(DnDStoneBlocks.BLACKSTONE_GRAVESTONE, DnDStoneBlocks.SMALL_BLACKSTONE_GRAVESTONE)
+        gen.registerHeadstone(DnDStoneBlocks.HEADSTONE)
 
         gen.registerAxisRotated(
             DnDStoneBlocks.STONE_PILLAR,

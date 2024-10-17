@@ -2,7 +2,11 @@ package org.teamvoided.dusk_autumn.data.gen.providers.recipes
 
 import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
+import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
+import net.minecraft.item.Items
+import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.tag.ItemTags
+import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusk_autumn.util.*
 
@@ -13,6 +17,15 @@ object StoneRecipes {
         e.createGravestone(DnDStoneBlocks.DEEPSLATE_GRAVESTONE, Blocks.DEEPSLATE_BRICKS)
         e.createGravestone(DnDStoneBlocks.TUFF_GRAVESTONE, Blocks.TUFF_BRICKS)
         e.createGravestone(DnDStoneBlocks.BLACKSTONE_GRAVESTONE, Blocks.POLISHED_BLACKSTONE_BRICKS)
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDStoneBlocks.HEADSTONE)
+            .ingredient('#', Items.IRON_BARS)
+            .ingredient('%', Items.IRON_NUGGET)
+            .pattern("%#%")
+            .pattern("###")
+            .pattern("%#%")
+            .criterion(Items.IRON_BARS)
+            .criterion(DnDItemTags.GRAVESTONES)
+            .offerTo(e)
 
         e.createSmallSquare(DnDStoneBlocks.POLISHED_STONE, Blocks.STONE)
         e.createStackedCraft(DnDStoneBlocks.STONE_PILLAR, Blocks.STONE_BRICKS, ItemTags.STONE_BRICKS)

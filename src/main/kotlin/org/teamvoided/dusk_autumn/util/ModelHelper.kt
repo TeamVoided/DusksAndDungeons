@@ -743,6 +743,20 @@ fun BlockStateModelGenerator.registerSmallGravestone(gravestone: Block, texture:
     )
 }
 
+fun BlockStateModelGenerator.registerHeadstone(headstone: Block) {
+    val texture = Texture().put(TextureKey.ALL, Texture.getId(headstone))
+    block("parent/headstone", TextureKey.ALL)
+        .upload(headstone, texture, this.modelCollector)
+    block("parent/headstone_centered", TextureKey.ALL)
+        .upload(headstone, "_centered", texture, this.modelCollector)
+    this.registerItemModel(headstone)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(headstone).coordinate(
+            gravestoneBlockstates(headstone)
+        )
+    )
+}
+
 fun gravestoneBlockstates(gravestone: Block): BlockStateVariantMap.DoubleProperty<Direction, Boolean> {
     val variants = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, GravestoneBlock.CENTERED)
     GravestoneBlock.CENTERED.values.forEach {
@@ -789,6 +803,40 @@ fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block
     blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
     this.registerNorthDefaultHorizontalRotation(carved)
     this.registerNorthDefaultHorizontalRotation(glowing)
+}
+
+fun BlockStateModelGenerator.registerCorn(block: Block, item:Item) {
+//    this.registerItemModel(block, "_top") //this one is for if the names are the same, they are not
+    Models.SINGLE_LAYER_ITEM.upload(
+        ModelIds.getItemModelId(item), Texture.layer0(Texture.getSubId(block, "_top")),
+        this.modelCollector
+    )
+    val textureTop = Texture().put(TextureKey.ALL, Texture.getSubId(block, "_top"))
+    val textureMiddle = Texture().put(TextureKey.ALL, Texture.getSubId(block, "_middle"))
+    val textureBottom = Texture().put(TextureKey.ALL, Texture.getSubId(block, "_bottom"))
+    val model = block(
+        "parent/corn",
+        TextureKey.ALL
+    )
+    val top = model.upload(block, "_top", textureTop, this.modelCollector)
+    val middle = model.upload(block, "_middle", textureMiddle, this.modelCollector)
+    val bottom = model.upload(block, "_bottom", textureBottom, this.modelCollector)
+    blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(block).coordinate(
+            BlockStateVariantMap.create(
+                TripleTallPlantBlock.SECTION
+            ).register(
+                TripleBlockSection.TOP,
+                BlockStateVariant.create().put(VariantSettings.MODEL, top)
+            ).register(
+                TripleBlockSection.MIDDLE,
+                BlockStateVariant.create().put(VariantSettings.MODEL, middle)
+            ).register(
+                TripleBlockSection.BOTTOM,
+                BlockStateVariant.create().put(VariantSettings.MODEL, bottom)
+            )
+        )
+    )
 }
 
 fun BlockStateModelGenerator.registerBigChain(block: Block) {

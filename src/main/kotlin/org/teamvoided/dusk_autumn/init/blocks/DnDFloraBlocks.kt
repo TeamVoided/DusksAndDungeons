@@ -215,16 +215,16 @@ object DnDFloraBlocks {
         )
     )
     val CORN = DnDBlocks.registerNoItem(
-        "corn", TripleTallPlantBlock(
+        "corn", CornMazeBlock(
             Settings.create().mapColor(MapColor.PLANT).offsetType(OffsetType.XYZ).noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
-        )
+        ).cutout()
     )
 
 
     val JOUNCESHROOM_BLOCK = DnDBlocks.register(
         "jounceshroom_block", MushroomLaunchBlock(
-            copy(BROWN_MUSHROOM_BLOCK).mapColor(MapColor.PURPLE_TERRACOTTA)
+            copy(BROWN_MUSHROOM_BLOCK).sounds(BlockSoundGroup.SHROOMLIGHT).mapColor(MapColor.PURPLE_TERRACOTTA)
         )
     ).tellWitnessesThatIWasMurdered()
     val WATER_FERN = DnDBlocks.registerNoItem(

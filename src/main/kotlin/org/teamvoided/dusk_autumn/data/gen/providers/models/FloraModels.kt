@@ -71,6 +71,7 @@ object FloraModels {
             DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
             DnDFloraBlocks.GLOOM_PUMPKIN
         )
+        gen.registerCorn(DnDFloraBlocks.CORN, DnDItems.CORN_STALK)
 
         gen.registerSingleton(
             DnDFloraBlocks.JOUNCESHROOM_BLOCK,

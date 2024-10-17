@@ -19,10 +19,10 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import org.teamvoided.dusk_autumn.block.not_blocks.TripleBlockSection
 
-class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(settings) {
+open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(settings) {
 
     init {
-        this.defaultState = stateManager.defaultState.with(SECTION, TripleBlockSection.TOP)
+        this.defaultState = stateManager.defaultState.with(SECTION, TripleBlockSection.BOTTOM)
     }
 
     override fun getCodec(): MapCodec<out AbstractPlantBlock> = CODEC
@@ -34,12 +34,14 @@ class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(settings) {
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
         val blockPos = ctx.blockPos
         val world = ctx.world
-        return if (
+        if (
             blockPos.y < world.topY - 2 &&
             world.getBlockState(blockPos.up()).canReplace(ctx) &&
             world.getBlockState(blockPos.up(2)).canReplace(ctx)
-        ) super.getPlacementState(ctx)
-        else null
+        ) return super.getPlacementState(ctx)
+        else {
+            return null
+        }
     }
 
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
@@ -64,7 +66,7 @@ class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(settings) {
         return if (
             (direction.axis == Direction.Axis.Y) &&
             !(blockSection == TripleBlockSection.TOP && direction == Direction.UP) &&
-            state.canPlaceAt(world, pos)
+            !state.canPlaceAt(world, pos)
         ) Blocks.AIR.defaultState
         else super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
@@ -118,15 +120,12 @@ class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(settings) {
 
     companion object {
         private val CODEC: MapCodec<TripleTallPlantBlock> = createCodec(::TripleTallPlantBlock)
-        val SECTION: EnumProperty<TripleBlockSection> =
-            EnumProperty.of("section", TripleBlockSection::class.java)
+        val SECTION: EnumProperty<TripleBlockSection> = EnumProperty.of("section", TripleBlockSection::class.java)
 
-
-        fun withWaterloggedState(world: WorldView, pos: BlockPos?, state: BlockState): BlockState {
-            return if (state.contains(Properties.WATERLOGGED)) state.with(
-                Properties.WATERLOGGED,
-                world.isWater(pos)
-            ) else state
+        fun withWaterloggedState(world: WorldView, pos: BlockPos, state: BlockState): BlockState {
+            return if (state.contains(Properties.WATERLOGGED))
+                state.with(Properties.WATERLOGGED, world.isWater(pos))
+            else state
         }
 
         fun breakOthers(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity?) {

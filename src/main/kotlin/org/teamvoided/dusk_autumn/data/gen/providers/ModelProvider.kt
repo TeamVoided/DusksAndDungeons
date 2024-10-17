@@ -98,6 +98,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDItems.LANTERN_PUMPKIN_PIE,
         DnDItems.PALE_PUMPKIN_PIE,
         DnDItems.GLOOM_PUMPKIN_PIE,
+        DnDItems.CORN,
         DnDItems.CHILL_CHARGE
     )
 

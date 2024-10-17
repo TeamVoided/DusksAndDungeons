@@ -4,7 +4,9 @@ import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.PillarBlock
+import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.block.GravestoneBlock
+import org.teamvoided.dusk_autumn.block.HeadstoneBlock
 import org.teamvoided.dusk_autumn.block.SmallGravestoneBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
@@ -28,6 +30,8 @@ object DnDStoneBlocks {
     val SMALL_BLACKSTONE_GRAVESTONE = DnDBlocks.register(
         "small_blackstone_gravestone", SmallGravestoneBlock(copy(BLACKSTONE_GRAVESTONE)).pickaxe()
     )
+    val HEADSTONE =
+        DnDBlocks.register("headstone", HeadstoneBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
 
     val STONE_PILLAR = DnDBlocks.register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = DnDBlocks.register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))

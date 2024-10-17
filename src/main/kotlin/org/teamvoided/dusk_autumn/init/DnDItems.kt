@@ -55,11 +55,8 @@ object DnDItems {
             CountSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
-    val WITCH_HAT = register(
-        "witch_hat", HeadDecorationItem(
-            CountSettings(1)
-        )
-    )
+    val WITCH_HAT = register("witch_hat", HeadDecorationItem(CountSettings(1)))
+    val VILE_WITCH_HAT = register("vile_witch_hat", HeadDecorationItem(CountSettings(1)))
     val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16)))
     val DIE_ITEM = register(
         "die", DiceItem(
@@ -74,6 +71,7 @@ object DnDItems {
         .tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
     val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings()))
+    val CORN = register("corn", Item((Item.Settings()).food(DnDFoodComponents.CORN)))
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
         AliasedBlockItem(DnDFloraBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))
