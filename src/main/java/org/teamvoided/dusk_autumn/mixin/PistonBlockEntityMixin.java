@@ -11,6 +11,7 @@ import net.minecraft.block.entity.PistonBlockEntity;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -19,7 +20,8 @@ import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks;
 
 @Mixin(PistonBlockEntity.class)
 public abstract class PistonBlockEntityMixin extends BlockEntity {
-    private BlockState movedState; // this should be the one in PistonBlockEntity
+
+    @Shadow private BlockState movedState;
 
     public PistonBlockEntityMixin(BlockEntityType type, BlockPos pos, BlockState state) {
         super(type, pos, state);

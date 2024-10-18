@@ -77,6 +77,12 @@ object DnDItems {
     val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDFloraBlocks.CORN_CROP, Item.Settings())).shh()
     val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings())).shh()
     val CORN = register("corn", Item((Item.Settings()).food(DnDFoodComponents.CORN))).shh()
+    val CORN_SYRUP_BOTTLE = register(
+        "corn_syrup_bottle", HoneyBottleItem(
+            Item.Settings().recipeRemainder(Items.GLASS_BOTTLE).food(FoodComponents.HONEY_BOTTLE).maxCount(16)
+        )
+    )
+
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
         AliasedBlockItem(DnDFloraBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))

@@ -10,6 +10,8 @@
     "ItemStackMixin",
     "MushroomPlantBlockMixin",
     "NyliumBlockMixin",
+    "PistonBlockEntityMixin",
+    "PistonHandlerMixin",
     "WallBlockMixin",
     "WitherSkeletonEntityMixin"
   ],
