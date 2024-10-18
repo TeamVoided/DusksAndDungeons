@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.teamvoided.dusk_autumn.DusksAndDungeons;
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks;
 
 @Mixin(PistonHandler.class)
@@ -29,7 +30,7 @@ public abstract class PistonHandlerMixin {
 
     @Inject(at = @At("HEAD"), method = "isAdjacentBlockStuck", cancellable = true)
     private static void isAdjacentBlockStuck(BlockState state, BlockState adjacentState, CallbackInfoReturnable<Boolean> cir) {
-        if (isBlockSticky(state) && (adjacentState == state || !isBlockSticky(adjacentState)))
-            cir.setReturnValue(true);
+        if (isBlockSticky(state) && (state != adjacentState && isBlockSticky(adjacentState)))
+            cir.setReturnValue(false);
     }
 }

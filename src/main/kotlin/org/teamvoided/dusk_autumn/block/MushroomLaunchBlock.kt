@@ -2,6 +2,8 @@ package org.teamvoided.dusk_autumn.block
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.EntityShapeContext
+import net.minecraft.block.ShapeContext
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.entity.Entity
@@ -9,6 +11,7 @@ import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
@@ -22,9 +25,13 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
+import net.minecraft.util.shape.VoxelShape
+import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
+import org.teamvoided.dusk_autumn.data.tags.DnDEntityTypeTags
 import org.teamvoided.dusk_autumn.init.DnDParticles
+import org.teamvoided.dusk_autumn.mixin.PersistentProjectileEntityAccessor
 import org.teamvoided.dusk_autumn.util.radToDeg
 
 class MushroomLaunchBlock(settings: Settings) : Block(settings) {
@@ -48,8 +55,26 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
         }
     }
 
-    override fun onProjectileHit(world: World, state: BlockState, hit: BlockHitResult, projectile: ProjectileEntity) {
-        super.onProjectileHit(world, state, hit, projectile)
+    override fun getCollisionShape(
+        state: BlockState,
+        world: BlockView,
+        pos: BlockPos,
+        context: ShapeContext
+    ): VoxelShape {
+        val entity = (context as EntityShapeContext).entity
+        return if (entity != null && (entity is PersistentProjectileEntity)) {
+            VoxelShapes.empty()
+        } else {
+            super.getCollisionShape(state, world, pos, context)
+        }
+    }
+
+    override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
+        if ((entity is PersistentProjectileEntity)) {
+            entity.isOnGround = false
+            (entity as PersistentProjectileEntityAccessor).setInGround(false)
+            entity.addVelocity(0.0, 1.0, 0.0)
+        } else super.onEntityCollision(state, world, pos, entity)
     }
 
     override fun onInteract(
