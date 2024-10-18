@@ -1,17 +1,17 @@
 [versions]
-kotlin = "2.0.0"
+kotlin = "2.0.21"
 fabric-loom = "1.7-SNAPSHOT"
 iridium = "3.3.1"
 
 #farrow = "1.0.0+arrow.1.2.4"
 
-biolith = "3.0.0-beta.1"
+biolith = "3.0.0"
 reef = "0.2.0-beta.2"
 voidmill = "1.0.4"
 
 # dev
-modmenu = "11.0.1"
-emi = "1.1.10+1.21"
+modmenu = "11.0.2"
+emi = "1.1.16+1.21.1"
 dev-tools-unlocker = "1.0.0"
 
 # compat
@@ -27,10 +27,10 @@ voidmill = { module = "org.teamvoided:voidmill", version.ref = "voidmill" }
 # dev
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 emi = { module = "dev.emi:emi-fabric", version.ref = "emi" }
-dev-tools-unlocker = { module = "maven.modrinth:dev-tools-unlocker", version.ref = "dev-tools-unlocker" }
+#dev-tools-unlocker = { module = "maven.modrinth:dev-tools-unlocker", version.ref = "dev-tools-unlocker" }
 
 # compat
-dramatic-doors = { module = "maven.modrinth:dramatic-doors", version.ref = "dramatic-doors" }
+#dramatic-doors = { module = "maven.modrinth:dramatic-doors", version.ref = "dramatic-doors" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
