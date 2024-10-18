@@ -7,5 +7,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(PersistentProjectileEntity.class)
 public interface PersistentProjectileEntityAccessor {
     @Accessor("inGround")
-    public void setInGround(Boolean inGround);
+    public void setInGround(boolean inGround);
 }
