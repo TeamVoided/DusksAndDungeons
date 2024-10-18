@@ -19,7 +19,6 @@ import net.minecraft.nbt.NbtList
 import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.tag.DamageTypeTags
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvent
@@ -394,7 +393,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
                         if (this.isOnFire) {
                             this.updateHealth(serverWorld, source, 0.15f)
                         } else {
-                            this.method_5639(5f)
+                            this.setOnFireForSeconds(5f)
                         }
 
                         return false

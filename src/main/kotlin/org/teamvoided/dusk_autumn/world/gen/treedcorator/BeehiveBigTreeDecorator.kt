@@ -44,7 +44,7 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
                     placer.world.getBlockEntity(finalPos, BlockEntityType.BEEHIVE)
                         .ifPresent {
                             for (ignored in 0 until 2 + randomGenerator.nextInt(2)) {
-                                it.addBee(Occupant.method_57584(randomGenerator.nextInt(599)))
+                                it.addBee(Occupant.create(randomGenerator.nextInt(599)))
                             }
                         }
                     return

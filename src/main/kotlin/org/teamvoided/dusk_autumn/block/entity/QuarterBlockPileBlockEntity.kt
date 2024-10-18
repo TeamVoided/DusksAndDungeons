@@ -72,8 +72,8 @@ class QuarterBlockPileBlockEntity(pos: BlockPos?, state: BlockState?) :
         nbt.put("blocks", list)
     }
 
-    override fun method_11014(nbt: NbtCompound, lookupProvider: HolderLookup.Provider?) {
-        super.method_11014(nbt, lookupProvider)
+    override fun readNbtImpl(nbt: NbtCompound, lookupProvider: HolderLookup.Provider?) {
+        super.readNbtImpl(nbt, lookupProvider)
 
         val list = nbt.getList("blocks", NbtElement.STRING_TYPE.toInt())
         list.forEachIndexed { index, blockNbt ->

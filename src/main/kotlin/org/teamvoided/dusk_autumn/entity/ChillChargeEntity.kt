@@ -37,7 +37,7 @@ import kotlin.math.max
 
 class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
     constructor(entityType: EntityType<out ChillChargeEntity>, world: World) : super(entityType, world) {
-        this.field_51893 = 0.0
+        this.accelerationPower = 0.0
     }
 
     constructor(
@@ -49,7 +49,7 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
         z: Double
     ) : super(type, x, y, z, world) {
         this.owner = entity
-        this.field_51893 = 0.0
+        this.accelerationPower = 0.0
     }
 
     constructor(world: World, d: Double, e: Double, f: Double, vec3d: Vec3d) : super(

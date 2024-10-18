@@ -21,7 +21,7 @@ import static org.teamvoided.dusk_autumn.init.DnDItems.CUSTOM_STATS;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
-    @Inject(method = "appendModifierTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/attribute/EntityAttributeModifier;method_60718(Lnet/minecraft/util/Identifier;)Z", ordinal = 0))
+    @Inject(method = "appendModifierTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/attribute/EntityAttributeModifier;matches(Lnet/minecraft/util/Identifier;)Z", ordinal = 0))
     void modifyTooltipContent(Consumer<Text> textConsumer, @Nullable PlayerEntity player, Holder<EntityAttribute> attribute, EntityAttributeModifier modifier, CallbackInfo ci,
                               @Local(ordinal = 0) LocalDoubleRef d, @Local(ordinal = 0) LocalBooleanRef bl) {
         if (CUSTOM_STATS.contains(modifier.id())) {

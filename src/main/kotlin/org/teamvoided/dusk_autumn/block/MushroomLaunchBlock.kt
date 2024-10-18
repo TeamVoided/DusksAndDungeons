@@ -101,7 +101,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
             AttributeModifiersComponent.DEFAULT
         )
         val extra = //literally just the mace
-            weapon.item.method_58403(entity, 0f, entity.damageSources.mobAttack(entity)) // .playerAttack(entity)
+            weapon.item.getAttackDamage(entity, 0f, entity.damageSources.mobAttack(entity)) // .playerAttack(entity)
         return attributeModifiersComponent.compute(
             entity.getAttributeBaseValue(EntityAttributes.GENERIC_ATTACK_DAMAGE),
             EquipmentSlot.MAINHAND
@@ -138,7 +138,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
         val rand = world.random
         val centerBlock: Vec3d = pos.ofCenter()
         repeat(count) {
-            val velocity: Vec3d = Vec3d(
+            val velocity = Vec3d(
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,

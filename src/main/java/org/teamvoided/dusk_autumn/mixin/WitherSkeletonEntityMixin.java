@@ -27,9 +27,9 @@ public abstract class WitherSkeletonEntityMixin extends AbstractSkeletonEntity {
         super(entityType, world);
     }
 
-    @Inject(at = @At("RETURN"), method = "method_6996", cancellable = true)
+    @Inject(at = @At("RETURN"), method = "createArrowProjectile", cancellable = true)
     private void applyWitherToArrow(ItemStack itemStack, float f, ItemStack itemStack2, CallbackInfoReturnable<PersistentProjectileEntity> cir) {
-        PersistentProjectileEntity persistentProjectileEntity = super.method_6996(itemStack, f, itemStack2);
+        PersistentProjectileEntity persistentProjectileEntity = super.createArrowProjectile(itemStack, f, itemStack2);
         if (persistentProjectileEntity instanceof ArrowEntity arrowEntity) {
             arrowEntity.addEffect(new StatusEffectInstance(StatusEffects.WITHER, 160));
         }

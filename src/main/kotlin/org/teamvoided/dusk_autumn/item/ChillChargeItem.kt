@@ -67,11 +67,7 @@ class ChillChargeItem(settings: Settings) : Item(settings), ProjectileItem {
 
     override fun createDispenserConfig(): DispenserConfig {
         return DispenserConfig.builder().positionFunction { blockPointer: BlockPointer, direction: Direction ->
-            DispenserBlock.method_10010(
-                blockPointer,
-                1.0,
-                Vec3d.ZERO
-            )
+            DispenserBlock.getDispensePos(blockPointer, 1.0, Vec3d.ZERO)
         }.uncertainty(6.6666665f).power(1.0f).overrideDispenseEvent(1051).build()
     }
 

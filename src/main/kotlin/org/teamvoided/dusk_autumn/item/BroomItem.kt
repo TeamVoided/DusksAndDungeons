@@ -38,20 +38,15 @@ class BroomItem(settings: Settings?) : Item(settings) {
         return ActionResult.CONSUME
     }
 
-    override fun getUseAction(stack: ItemStack): UseAction {
-        return UseAction.BRUSH
-    }
-
-    override fun method_7881(stack: ItemStack, livingEntity: LivingEntity): Int {
-        return USE_DURATION
-    }
+    override fun getUseAction(stack: ItemStack): UseAction = UseAction.BRUSH
+    override fun getUseTicks(stack: ItemStack, livingEntity: LivingEntity): Int = USE_DURATION
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
         if (remainingUseTicks >= 0 && user is PlayerEntity) {
             val hitResult = this.getHitResult(user)
             if (hitResult is BlockHitResult) {
                 if (hitResult.getType() == HitResult.Type.BLOCK) {
-                    val ticks = this.method_7881(stack, user) - remainingUseTicks + 1
+                    val ticks = this.getUseTicks(stack, user) - remainingUseTicks + 1
                     if (ticks % ANIMATION_DURATION == ANIMATION_INTERVAL) {
                         val blockPos: BlockPos = hitResult.blockPos
                         val blockState = world.getBlockState(blockPos)

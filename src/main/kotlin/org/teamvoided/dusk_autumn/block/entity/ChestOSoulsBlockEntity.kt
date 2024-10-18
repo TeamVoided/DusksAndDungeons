@@ -51,16 +51,14 @@ class ChestOSoulsBlockEntity(pos: BlockPos?, state: BlockState?) :
 
     override fun getContainerName(): Text = Text.translatable("container.dusk_autumn.chest_o_souls")
 
-    override fun method_11282(): DefaultedList<ItemStack> = inventory
+    override fun getInventory(): DefaultedList<ItemStack> = inventory
 
-    override fun method_11281(newInventory: DefaultedList<ItemStack>?) {
+    override fun setInventory(newInventory: DefaultedList<ItemStack>) {
         inventory = newInventory
     }
 
     override fun createScreenHandler(syncId: Int, playerInventory: PlayerInventory?): ScreenHandler? = null
-
     override fun toUpdatePacket(): BlockEntityUpdateS2CPacket = BlockEntityUpdateS2CPacket.of(this)
-
     override fun toSyncedNbt(lookupProvider: HolderLookup.Provider?): NbtCompound {
         val nbt = NbtCompound()
         nbt.putInt("openTicks", openTicks)
@@ -73,8 +71,8 @@ class ChestOSoulsBlockEntity(pos: BlockPos?, state: BlockState?) :
         Inventories.writeNbt(nbt, inventory, lookupProvider)
     }
 
-    override fun method_11014(nbt: NbtCompound, lookupProvider: HolderLookup.Provider?) {
-        super.method_11014(nbt, lookupProvider)
+    override fun readNbtImpl(nbt: NbtCompound, lookupProvider: HolderLookup.Provider?) {
+        super.readNbtImpl(nbt, lookupProvider)
         openTicks = nbt.getInt("openTicks")
         Inventories.readNbt(nbt, inventory, lookupProvider)
     }

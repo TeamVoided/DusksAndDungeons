@@ -30,7 +30,7 @@ object StructureFeatureCreator {
                 structureSettings(
                     biomeTags.getTagOrThrow(DnDBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS),
                     GenerationStep.Feature.SURFACE_STRUCTURES,
-                    TerrainAdjustment.STRUCTURE_WEIGHT_THIN
+                    TerrainAdjustment.BEARD_THIN
                 ),
                 structurePools.getHolderOrThrow(DnDStructurePools.AUTUMN_RUINS_SINGLE),
                 7,

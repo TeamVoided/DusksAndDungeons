@@ -67,7 +67,7 @@ object DusksAndDungeonsClient {
         ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, Identifier.ofDefault("pull"))
         { stack, _, entity, _ ->
             if (entity == null || entity.activeItem != stack) 0.0f
-            else (stack.method_7935(entity) - entity.itemUseTimeLeft).toFloat() / 20.0f
+            else (stack.getUseTicks(entity) - entity.itemUseTimeLeft).toFloat() / 20.0f
         }
         ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, Identifier.ofDefault("pulling"))
         { stack, _, entity, _ -> if (entity != null && entity.isUsingItem && entity.activeItem == stack) 1.0f else 0.0f }

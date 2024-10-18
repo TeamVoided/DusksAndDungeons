@@ -48,32 +48,46 @@ object BiomeCreator {
     private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder) {
         generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DnDPlacedFeature.AUTUMN_FARMLANDS)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.ORE_LAPIS_EXTRA)
-        generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER)
+        generationSettings.feature(
+            GenerationStep.Feature.LOCAL_MODIFICATIONS,
+            DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER
+        )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.PATCH_PUMPKIN_EXTRA)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.FLOWER_AUTUMN)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.BLUE_PETALS)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.CROPS_WILD_WHEAT)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_MUD)
     }
+
     private fun addAutumnSwampFeatures(generationSettings: GenerationSettings.Builder) {
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_GRASS_NORMAL)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            VegetationPlacedFeatures.PATCH_GRASS_NORMAL
+        )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_WATERLILY)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.BROWN_MUSHROOM_SWAMP)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.RED_MUSHROOM_SWAMP)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            VegetationPlacedFeatures.BROWN_MUSHROOM_SWAMP
+        )
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            VegetationPlacedFeatures.RED_MUSHROOM_SWAMP
+        )
     }
-
-
 
 
     fun createAutumnForest(c: BootstrapContext<Biome>): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
-        DefaultBiomeFeatures.method_30581(spawnSettings)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
 
         val generationSettings = GenerationSettings
-            .Builder(c.getRegistryLookup(RegistryKeys.PLACED_FEATURE), c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
+            .Builder(
+                c.getRegistryLookup(RegistryKeys.PLACED_FEATURE),
+                c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
+            )
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
@@ -114,10 +128,13 @@ object BiomeCreator {
     fun createAutumnPlains(c: BootstrapContext<Biome>): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
-        DefaultBiomeFeatures.method_30581(spawnSettings)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
 
         val generationSettings = GenerationSettings
-            .Builder(c.getRegistryLookup(RegistryKeys.PLACED_FEATURE), c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
+            .Builder(
+                c.getRegistryLookup(RegistryKeys.PLACED_FEATURE),
+                c.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
+            )
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
@@ -155,11 +172,14 @@ object BiomeCreator {
         val spawnSettings = SpawnSettings.Builder()
         spawnSettings.spawn(SpawnGroup.WATER_CREATURE, SpawnEntry(EntityType.SQUID, 2, 1, 4))
             .spawn(SpawnGroup.WATER_AMBIENT, SpawnEntry(EntityType.SALMON, 5, 1, 5))
-        DefaultBiomeFeatures.method_30581(spawnSettings)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
         spawnSettings.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.DROWNED, 100, 1, 1))
 
         val generationSettings = GenerationSettings
-            .Builder(context.getRegistryLookup(RegistryKeys.PLACED_FEATURE), context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
+            .Builder(
+                context.getRegistryLookup(RegistryKeys.PLACED_FEATURE),
+                context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
+            )
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
@@ -192,11 +212,14 @@ object BiomeCreator {
     fun createAutumnWetlands(context: BootstrapContext<Biome>): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
-        DefaultBiomeFeatures.method_30581(spawnSettings)
+        DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
         spawnSettings.spawn(SpawnGroup.MONSTER, SpawnEntry(EntityType.SLIME, 1, 1, 1))
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.FROG, 10, 2, 5))
         val generationSettings = GenerationSettings
-            .Builder(context.getRegistryLookup(RegistryKeys.PLACED_FEATURE),context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER))
+            .Builder(
+                context.getRegistryLookup(RegistryKeys.PLACED_FEATURE),
+                context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER)
+            )
         DefaultBiomeFeatures.addFossils(generationSettings)
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)

@@ -17,9 +17,9 @@ class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) :
         return DnDWorldgen.MANHATTAN_FOLIAGE_PLACER
     }
 
-    override fun method_23448(
+    override fun createFoliage(
         world: TestableWorld,
-        c_pwcqvmho: C_pwcqvmho,
+        placer: Placer,
         random: RandomGenerator,
         treeFeatureConfig: TreeFeatureConfig,
         i: Int,
@@ -33,7 +33,7 @@ class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) :
         for (n in l downTo l - j) {
             this.generateSquare(
                 world,
-                c_pwcqvmho,
+                placer,
                 random,
                 treeFeatureConfig,
                 treeNode.center,

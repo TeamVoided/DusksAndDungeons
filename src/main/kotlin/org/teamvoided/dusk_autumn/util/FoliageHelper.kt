@@ -10,7 +10,7 @@ import kotlin.math.abs
 import kotlin.math.min
 
 
-typealias FoliageSetter = FoliagePlacer.C_pwcqvmho
+typealias FoliageSetter = FoliagePlacer.Placer
 
 typealias ShapePredicate = (dx: Int, dz: Int) -> Boolean
 
@@ -116,6 +116,7 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
             }
         }
     }
+
     override fun isInvalidForLeaves(
         random: RandomGenerator, dx: Int, y: Int, dz: Int, radius: Int, giantTrunk: Boolean
     ): Boolean = false
