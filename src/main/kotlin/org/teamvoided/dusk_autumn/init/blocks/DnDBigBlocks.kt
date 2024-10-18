@@ -102,25 +102,27 @@ object DnDBigBlocks {
     val BIG_MAGENTA_CANDLE = DnDBlocks.register("big_magenta_candle", bigCandleOf(MapColor.MAGENTA))
     val BIG_PINK_CANDLE = DnDBlocks.register("big_pink_candle", bigCandleOf(MapColor.PINK))
 
-    val BIG_TALL_CANDLE = DnDBlocks.register("big_tall_candle", bigTallCandleOf(MapColor.SAND))
-    val BIG_TALL_WHITE_CANDLE = DnDBlocks.register("big_tall_white_candle", bigTallCandleOf(MapColor.WOOL))
-    val BIG_TALL_LIGHT_GRAY_CANDLE =
-        DnDBlocks.register("big_tall_light_gray_candle", bigTallCandleOf(MapColor.LIGHT_GRAY))
-    val BIG_TALL_GRAY_CANDLE = DnDBlocks.register("big_tall_gray_candle", bigTallCandleOf(MapColor.GRAY))
-    val BIG_TALL_BLACK_CANDLE = DnDBlocks.register("big_tall_black_candle", bigTallCandleOf(MapColor.BLACK))
-    val BIG_TALL_BROWN_CANDLE = DnDBlocks.register("big_tall_brown_candle", bigTallCandleOf(MapColor.BROWN))
-    val BIG_TALL_RED_CANDLE = DnDBlocks.register("big_tall_red_candle", bigTallCandleOf(MapColor.RED))
-    val BIG_TALL_ORANGE_CANDLE = DnDBlocks.register("big_tall_orange_candle", bigTallCandleOf(MapColor.ORANGE))
-    val BIG_TALL_YELLOW_CANDLE = DnDBlocks.register("big_tall_yellow_candle", bigTallCandleOf(MapColor.YELLOW))
-    val BIG_TALL_LIME_CANDLE = DnDBlocks.register("big_tall_lime_candle", bigTallCandleOf(MapColor.LIME))
-    val BIG_TALL_GREEN_CANDLE = DnDBlocks.register("big_tall_green_candle", bigTallCandleOf(MapColor.GREEN))
-    val BIG_TALL_CYAN_CANDLE = DnDBlocks.register("big_tall_cyan_candle", bigTallCandleOf(MapColor.CYAN))
-    val BIG_TALL_LIGHT_BLUE_CANDLE =
-        DnDBlocks.register("big_tall_light_blue_candle", bigTallCandleOf(MapColor.LIGHT_BLUE))
-    val BIG_TALL_BLUE_CANDLE = DnDBlocks.register("big_tall_blue_candle", bigTallCandleOf(MapColor.BLUE))
-    val BIG_TALL_PURPLE_CANDLE = DnDBlocks.register("big_tall_purple_candle", bigTallCandleOf(MapColor.PURPLE))
-    val BIG_TALL_MAGENTA_CANDLE = DnDBlocks.register("big_tall_magenta_candle", bigTallCandleOf(MapColor.MAGENTA))
-    val BIG_TALL_PINK_CANDLE = DnDBlocks.register("big_tall_pink_candle", bigTallCandleOf(MapColor.PINK))
+    /*
+        val BIG_TALL_CANDLE = DnDBlocks.register("big_tall_candle", bigTallCandleOf(MapColor.SAND))
+        val BIG_TALL_WHITE_CANDLE = DnDBlocks.register("big_tall_white_candle", bigTallCandleOf(MapColor.WOOL))
+        val BIG_TALL_LIGHT_GRAY_CANDLE =
+            DnDBlocks.register("big_tall_light_gray_candle", bigTallCandleOf(MapColor.LIGHT_GRAY))
+        val BIG_TALL_GRAY_CANDLE = DnDBlocks.register("big_tall_gray_candle", bigTallCandleOf(MapColor.GRAY))
+        val BIG_TALL_BLACK_CANDLE = DnDBlocks.register("big_tall_black_candle", bigTallCandleOf(MapColor.BLACK))
+        val BIG_TALL_BROWN_CANDLE = DnDBlocks.register("big_tall_brown_candle", bigTallCandleOf(MapColor.BROWN))
+        val BIG_TALL_RED_CANDLE = DnDBlocks.register("big_tall_red_candle", bigTallCandleOf(MapColor.RED))
+        val BIG_TALL_ORANGE_CANDLE = DnDBlocks.register("big_tall_orange_candle", bigTallCandleOf(MapColor.ORANGE))
+        val BIG_TALL_YELLOW_CANDLE = DnDBlocks.register("big_tall_yellow_candle", bigTallCandleOf(MapColor.YELLOW))
+        val BIG_TALL_LIME_CANDLE = DnDBlocks.register("big_tall_lime_candle", bigTallCandleOf(MapColor.LIME))
+        val BIG_TALL_GREEN_CANDLE = DnDBlocks.register("big_tall_green_candle", bigTallCandleOf(MapColor.GREEN))
+        val BIG_TALL_CYAN_CANDLE = DnDBlocks.register("big_tall_cyan_candle", bigTallCandleOf(MapColor.CYAN))
+        val BIG_TALL_LIGHT_BLUE_CANDLE =
+            DnDBlocks.register("big_tall_light_blue_candle", bigTallCandleOf(MapColor.LIGHT_BLUE))
+        val BIG_TALL_BLUE_CANDLE = DnDBlocks.register("big_tall_blue_candle", bigTallCandleOf(MapColor.BLUE))
+        val BIG_TALL_PURPLE_CANDLE = DnDBlocks.register("big_tall_purple_candle", bigTallCandleOf(MapColor.PURPLE))
+        val BIG_TALL_MAGENTA_CANDLE = DnDBlocks.register("big_tall_magenta_candle", bigTallCandleOf(MapColor.MAGENTA))
+        val BIG_TALL_PINK_CANDLE = DnDBlocks.register("big_tall_pink_candle", bigTallCandleOf(MapColor.PINK))
+    */
 
     // soul candles
     val SOUL_CANDLE = DnDBlocks.register("soul_candle", soulCandleOf(MapColor.SAND))
@@ -161,7 +163,7 @@ object DnDBigBlocks {
     val BIG_MAGENTA_SOUL_CANDLE = DnDBlocks.register("big_magenta_soul_candle", bigSoulCandleOf(MapColor.MAGENTA))
     val BIG_PINK_SOUL_CANDLE = DnDBlocks.register("big_pink_soul_candle", bigSoulCandleOf(MapColor.PINK))
 
-    val BIG_TALL_SOUL_CANDLE = DnDBlocks.register("big_tall_soul_candle", bigTallSoulCandleOf(MapColor.SAND))
+    /*val BIG_TALL_SOUL_CANDLE = DnDBlocks.register("big_tall_soul_candle", bigTallSoulCandleOf(MapColor.SAND))
     val BIG_TALL_WHITE_SOUL_CANDLE =
         DnDBlocks.register("big_tall_white_soul_candle", bigTallSoulCandleOf(MapColor.WOOL))
     val BIG_TALL_LIGHT_GRAY_SOUL_CANDLE =
@@ -188,7 +190,7 @@ object DnDBigBlocks {
     val BIG_TALL_MAGENTA_SOUL_CANDLE =
         DnDBlocks.register("big_tall_magenta_soul_candle", bigTallSoulCandleOf(MapColor.MAGENTA))
     val BIG_TALL_PINK_SOUL_CANDLE = DnDBlocks.register("big_tall_pink_soul_candle", bigTallSoulCandleOf(MapColor.PINK))
-
+*/
     //candle cakes
     val BIG_CANDLE_CAKE = DnDBlocks.registerNoItem("big_candle_cake", bigCandleCakeOf(BIG_CANDLE, CANDLE_CAKE))
     val BIG_WHITE_CANDLE_CAKE = DnDBlocks.registerNoItem("big_white_candle_cake", bigCandleCakeOf(BIG_WHITE_CANDLE))

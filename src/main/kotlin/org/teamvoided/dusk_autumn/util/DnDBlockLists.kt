@@ -1,8 +1,8 @@
 package org.teamvoided.dusk_autumn.util
 
+import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.Items
-import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
@@ -126,8 +126,8 @@ object DnDBlockLists {
         (DnDBigBlocks.BIG_MAGENTA_SOUL_CANDLE to DnDBigBlocks.BIG_MAGENTA_SOUL_CANDLE_CAKE),
         (DnDBigBlocks.BIG_PINK_SOUL_CANDLE to DnDBigBlocks.BIG_PINK_SOUL_CANDLE_CAKE),
     )
-    val bigTallCandles = listOf(
-        DnDBigBlocks.BIG_TALL_CANDLE,
+    val bigTallCandles = listOf<Block>(
+      /*  DnDBigBlocks.BIG_TALL_CANDLE,
         DnDBigBlocks.BIG_TALL_WHITE_CANDLE,
         DnDBigBlocks.BIG_TALL_LIGHT_GRAY_CANDLE,
         DnDBigBlocks.BIG_TALL_GRAY_CANDLE,
@@ -143,10 +143,10 @@ object DnDBlockLists {
         DnDBigBlocks.BIG_TALL_BLUE_CANDLE,
         DnDBigBlocks.BIG_TALL_PURPLE_CANDLE,
         DnDBigBlocks.BIG_TALL_MAGENTA_CANDLE,
-        DnDBigBlocks.BIG_TALL_PINK_CANDLE
+        DnDBigBlocks.BIG_TALL_PINK_CANDLE*/
     )
-    val bigTallSoulCandles = listOf(
-        DnDBigBlocks.BIG_TALL_SOUL_CANDLE,
+    val bigTallSoulCandles = listOf<Block>(
+      /*  DnDBigBlocks.BIG_TALL_SOUL_CANDLE,
         DnDBigBlocks.BIG_TALL_WHITE_SOUL_CANDLE,
         DnDBigBlocks.BIG_TALL_LIGHT_GRAY_SOUL_CANDLE,
         DnDBigBlocks.BIG_TALL_GRAY_SOUL_CANDLE,
@@ -162,7 +162,7 @@ object DnDBlockLists {
         DnDBigBlocks.BIG_TALL_BLUE_SOUL_CANDLE,
         DnDBigBlocks.BIG_TALL_PURPLE_SOUL_CANDLE,
         DnDBigBlocks.BIG_TALL_MAGENTA_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_PINK_SOUL_CANDLE
+        DnDBigBlocks.BIG_TALL_PINK_SOUL_CANDLE*/
     )
     val hollowLogs = listOf(
         DnDWoodBlocks.HOLLOW_OAK_LOG,
