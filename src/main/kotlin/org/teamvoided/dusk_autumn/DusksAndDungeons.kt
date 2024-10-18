@@ -2,7 +2,6 @@ package org.teamvoided.dusk_autumn
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.item.ItemConvertible
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.LootTables
 import net.minecraft.nbt.NbtOps
@@ -13,9 +12,12 @@ import org.slf4j.LoggerFactory
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.event.AddWanderingTrades
 import org.teamvoided.dusk_autumn.init.*
+import org.teamvoided.dusk_autumn.init.DnDBlocks.EVIL_BLOCKS
+import org.teamvoided.dusk_autumn.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
 import org.teamvoided.dusk_autumn.modules.BarteringInjection
 import org.teamvoided.dusk_autumn.modules.SnifferInjection
+import org.teamvoided.dusk_autumn.util.mergeSecrets
 
 @Suppress("unused")
 object DusksAndDungeons {
@@ -28,7 +30,7 @@ object DusksAndDungeons {
         log.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()
-        DnDItems.EVIL_ITEMS.addAll(DnDBlocks.EVIL_BLOCKS.map(ItemConvertible::asItem))
+        EVIL_ITEMS.addAll(EVIL_BLOCKS.map { it.asItem() })
         DnDFamilies.init()
 
         DnDBlockEntities.init()
@@ -60,6 +62,7 @@ object DusksAndDungeons {
             dispatcher.root.addChild(test)
         }
 
+        mergeSecrets()
 //        if (isModLoaded("dramaticdoors") && isDev()) DramaticDoorsCompat.initCompat()
     }
 

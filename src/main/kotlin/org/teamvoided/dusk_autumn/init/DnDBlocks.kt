@@ -98,11 +98,8 @@ object DnDBlocks {
         ).cutout()
     ).tellWitnessesThatIWasMurdered()
 
-    val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT)))
-        .tellWitnessesThatIWasMurdered()
-
-    val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST)))
-        .tellWitnessesThatIWasMurdered()
+    val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT))).shh()
+    val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST))).shh()
 
     val QUARTER_BLOCK_PILE = registerNoItem(
         "quarter_block_pile", QuarterBlockPileBlock(

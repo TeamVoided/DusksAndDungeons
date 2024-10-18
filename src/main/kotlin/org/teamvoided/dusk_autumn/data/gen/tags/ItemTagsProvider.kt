@@ -11,10 +11,10 @@ import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
-import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
+import org.teamvoided.dusk_autumn.util.SECRET_ITEMS
 import org.teamvoided.dusk_autumn.util.addAll
 import java.util.concurrent.CompletableFuture
 
@@ -49,7 +49,7 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS)
             .add(DnDFloraBlocks.WARPED_WART.asItem())
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
-            .addOptional(id("supplementaries","ash_pile"))
+            .addOptional(id("supplementaries", "ash_pile"))
             .add(Items.BASALT)
         getOrCreateTagBuilder(DnDItemTags.SCARECROW_WOOD_ITEMS)
             .add(Items.OAK_PLANKS)
@@ -125,5 +125,6 @@ class ItemTagsProvider(
 
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
             .addAll(DnDItems.EVIL_ITEMS)
+            .addAll(SECRET_ITEMS)
     }
 }

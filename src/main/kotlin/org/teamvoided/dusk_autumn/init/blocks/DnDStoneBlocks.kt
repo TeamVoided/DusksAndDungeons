@@ -14,24 +14,24 @@ import org.teamvoided.dusk_autumn.util.*
 object DnDStoneBlocks {
     fun init() = Unit
 
-    val GRAVESTONE = DnDBlocks.register("gravestone", GravestoneBlock(copy(CHISELED_STONE_BRICKS).solid()).pickaxe())
-    val SMALL_GRAVESTONE = DnDBlocks.register("small_gravestone", SmallGravestoneBlock(copy(GRAVESTONE)).pickaxe())
+    val GRAVESTONE = DnDBlocks.register("gravestone", GravestoneBlock(copy(CHISELED_STONE_BRICKS).solid()).pickaxe()).shh()
+    val SMALL_GRAVESTONE = DnDBlocks.register("small_gravestone", SmallGravestoneBlock(copy(GRAVESTONE)).pickaxe()).shh()
     val DEEPSLATE_GRAVESTONE =
-        DnDBlocks.register("deepslate_gravestone", GravestoneBlock(copy(CHISELED_DEEPSLATE).solid()).pickaxe())
+        DnDBlocks.register("deepslate_gravestone", GravestoneBlock(copy(CHISELED_DEEPSLATE).solid()).pickaxe()).shh()
     val SMALL_DEEPSLATE_GRAVESTONE =
-        DnDBlocks.register("small_deepslate_gravestone", SmallGravestoneBlock(copy(DEEPSLATE_GRAVESTONE)).pickaxe())
+        DnDBlocks.register("small_deepslate_gravestone", SmallGravestoneBlock(copy(DEEPSLATE_GRAVESTONE)).pickaxe()).shh()
     val TUFF_GRAVESTONE =
-        DnDBlocks.register("tuff_gravestone", GravestoneBlock(copy(CHISELED_TUFF_BRICKS).solid()).pickaxe())
+        DnDBlocks.register("tuff_gravestone", GravestoneBlock(copy(CHISELED_TUFF_BRICKS).solid()).pickaxe()).shh()
     val SMALL_TUFF_GRAVESTONE =
-        DnDBlocks.register("small_tuff_gravestone", SmallGravestoneBlock(copy(TUFF_GRAVESTONE)).pickaxe())
+        DnDBlocks.register("small_tuff_gravestone", SmallGravestoneBlock(copy(TUFF_GRAVESTONE)).pickaxe()).shh()
     val BLACKSTONE_GRAVESTONE = DnDBlocks.register(
-        "blackstone_gravestone", GravestoneBlock(copy(CHISELED_POLISHED_BLACKSTONE).solid()).pickaxe()
+        "blackstone_gravestone", GravestoneBlock(copy(CHISELED_POLISHED_BLACKSTONE).solid()).pickaxe().shh()
     )
     val SMALL_BLACKSTONE_GRAVESTONE = DnDBlocks.register(
-        "small_blackstone_gravestone", SmallGravestoneBlock(copy(BLACKSTONE_GRAVESTONE)).pickaxe()
+        "small_blackstone_gravestone", SmallGravestoneBlock(copy(BLACKSTONE_GRAVESTONE)).pickaxe().shh()
     )
     val HEADSTONE =
-        DnDBlocks.register("headstone", HeadstoneBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
+        DnDBlocks.register("headstone", HeadstoneBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe()).shh()
 
     val STONE_PILLAR = DnDBlocks.register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = DnDBlocks.register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
@@ -83,8 +83,8 @@ object DnDStoneBlocks {
         DnDBlocks.register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe()).tellWitnessesThatIWasMurdered()
 
     val ROCK_CANDY_BLOCK =
-        DnDBlocks.register("rock_candy_block", Block(copy(DEEPSLATE).sounds(BlockSoundGroup.CALCITE)).pickaxe())
-    val ROCK_CANDY_STAIRS = DnDBlocks.register("rock_candy_stairs", stairsOf(ROCK_CANDY_BLOCK).pickaxe())
-    val ROCK_CANDY_SLAB = DnDBlocks.register("rock_candy_slab", slabOf(ROCK_CANDY_BLOCK).pickaxe())
-    val ROCK_CANDY_WALL = DnDBlocks.register("rock_candy_wall", wallOf(ROCK_CANDY_BLOCK).pickaxe())
+        DnDBlocks.register("rock_candy_block", Block(copy(DEEPSLATE).sounds(BlockSoundGroup.CALCITE)).pickaxe()).shh()
+    val ROCK_CANDY_STAIRS = DnDBlocks.register("rock_candy_stairs", stairsOf(ROCK_CANDY_BLOCK).pickaxe()).shh()
+    val ROCK_CANDY_SLAB = DnDBlocks.register("rock_candy_slab", slabOf(ROCK_CANDY_BLOCK).pickaxe()).shh()
+    val ROCK_CANDY_WALL = DnDBlocks.register("rock_candy_wall", wallOf(ROCK_CANDY_BLOCK).pickaxe()).shh()
 }

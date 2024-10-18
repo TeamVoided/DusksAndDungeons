@@ -11,12 +11,13 @@ import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.DusksAndDungeons.isDev
 import org.teamvoided.dusk_autumn.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
+import org.teamvoided.dusk_autumn.util.SECRET_ITEMS
 import org.teamvoided.dusk_autumn.util.addLists
 import kotlin.jvm.optionals.getOrNull
 
 
 object DnDItemGroups {
-//    val DUSK_AUTUMN_TAB: ItemGroup = register("dusk_items",
+    //    val DUSK_AUTUMN_TAB: ItemGroup = register("dusk_items",
 //        FabricItemGroup.builder()
 //            .icon { ItemStack(DnDBlocks.CASCADE_SAPLING.asItem()) }
 //            .name(Text.translatable("itemGroup.dusk_autumn.dusk_items"))
@@ -98,7 +99,9 @@ object DnDItemGroups {
         FabricItemGroup.builder()
             .icon { ItemStack(DnDStoneBlocks.STONE_PILLAR.asItem()) }
             .name(Text.translatable("itemGroup.dusk_autumn.everything"))
-            .entries { _, entries -> entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains)) }
+            .entries { _, entries ->
+                entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains))
+            }
             .build()
     )
 
