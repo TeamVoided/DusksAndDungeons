@@ -74,9 +74,8 @@ object DnDItems {
     val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
         .tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
-    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings())).shh()
     val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDFloraBlocks.CORN_CROP, Item.Settings())).shh()
-
+    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings())).shh()
     val CORN = register("corn", Item((Item.Settings()).food(DnDFoodComponents.CORN))).shh()
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",

@@ -15,7 +15,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import org.joml.Math.lerp
 import org.teamvoided.dusk_autumn.entity.FlyingBlockItemEntity
+import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.util.sendMessageIngame
+import kotlin.math.cos
 
 
 class FlyingBlockItemEntityRenderer<T>(
@@ -37,9 +39,11 @@ class FlyingBlockItemEntityRenderer<T>(
         vertexConsumers: VertexConsumerProvider,
         light: Int
     ) {
-        if (entity.age >= 2) {
+        if (entity.age >= 2 ||
+            !(dispatcher.camera.focusedEntity.squaredDistanceTo(entity) < distance)) {
             matrices.push()
             matrices.scale(this.scale, this.scale, this.scale)
+            matrices.translate(0f, 0.25f, 0f)
             matrices.rotate(
                 Axis.Y_POSITIVE.rotationDegrees(
                     MathHelper.lerp(tickDelta, entity.prevYaw, entity.yaw) + 90f
@@ -50,7 +54,32 @@ class FlyingBlockItemEntityRenderer<T>(
                     -MathHelper.lerp(tickDelta, entity.prevPitch, entity.pitch)
                 )
             )
-            matrices.translate(-OFFSET, -OFFSET, -OFFSET)
+            matrices.rotate(Axis.Y_POSITIVE.rotationDegrees(90f))
+
+            //funny rotation//
+//            matrices.rotate(
+//                Axis.Y_POSITIVE.rotation(
+//                    MathHelper.lerp(tickDelta, (entity.age - 1) * yRotatorMult, entity.age * yRotatorMult)
+//                )
+//            )
+//            matrices.rotate(
+//                Axis.Z_POSITIVE.rotation(
+//                    MathHelper.lerp(tickDelta, (entity.age - 1) * zRotatorMult, entity.age * zRotatorMult)
+//                )
+//            )
+            //                 //
+
+
+            //funny rotation2//
+            matrices.rotate(
+                Axis.Z_POSITIVE.rotation(
+                    MathHelper.lerp(tickDelta, (entity.age - 1) * 0.3f, entity.age * 0.3f)
+                )
+            )
+            //                 //
+
+
+            matrices.translate(-OFFSET, -0.25f, -OFFSET)
             blockRenderer.renderBlockAsEntity(
                 entity.getState(), matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV
             )
@@ -63,7 +92,10 @@ class FlyingBlockItemEntityRenderer<T>(
     override fun getTexture(entity: T): Identifier = SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE
 
     companion object {
-        private val distance = MathHelper.square(3.5f)
+        private val xRotatorMult = 0.3f
+        private val yRotatorMult = 0.3f
+        private val zRotatorMult = 0.1f
+        private val distance = MathHelper.square(3.5f).toDouble()
         const val OFFSET = 0.5f
     }
 }

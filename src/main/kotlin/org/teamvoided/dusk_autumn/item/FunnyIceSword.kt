@@ -26,8 +26,8 @@ class FunnyIceSword(settings: Settings) : Item(settings) {
 //    groundslam slash? - hit ground, projectile runs forward emitted from ground
 //    snowgrave? - imprison in ice
 //    HELICOPTER HELICOPTER - spin attack
-//    throw sword and it returns? - idea already implemented with the trident and loyalty
-//    lifesteal? - no not the other survival server type, life leach
+//    throw sword and it returns? - idea already implemented with the trident and loyalty, could fly like boomerang instead
+//    lifesteal? - no not the survival server type, life leach
 
 
     //damage based on speed, ice skating?

@@ -839,47 +839,37 @@ fun BlockStateModelGenerator.registerCorn(block: Block, item: Item) {
     )
 }
 
-fun BlockStateModelGenerator.registerCornCrop(block: Block, item: Item) {
-    Models.SINGLE_LAYER_ITEM.upload(
-        ModelIds.getItemModelId(item), Texture.layer0(Texture.getSubId(block, "_top")),
-        this.modelCollector
-    )
-    val texture = Texture().put(TextureKey.ALL, Texture.getSubId(block, "_top"))
+fun BlockStateModelGenerator.registerCornCrop(block: Block) {
     val model = block(
         "parent/corn_crop",
-        TextureKey.ALL
+        TextureKey.CROP
     )
-    CornCropBlock.AGE.values.forEach { age ->
-        val top = "_top_stage_$age"
-        val middle = "_middle_stage_$age"
-        val bottom = "_bottom_stage_$age"
-        if (age > 3) {
-            val textureTop = Texture().put(TextureKey.ALL, Texture.getSubId(block, top))
-            model.upload(block, top, textureTop, this.modelCollector)
-        }
-        if (age > 1) {
-            val textureMiddle = Texture().put(TextureKey.ALL, Texture.getSubId(block, middle))
-            model.upload(block, middle, textureMiddle, this.modelCollector)
-        }
-        val textureBottom = Texture().put(TextureKey.ALL, Texture.getSubId(block, bottom))
-        model.upload(block, bottom, textureBottom, this.modelCollector)
-    }
     val blockStateVariantMap = BlockStateVariantMap.create(CornCropBlock.AGE, TripleTallPlantBlock.SECTION)
         .register { age: Int, section: TripleBlockSection ->
-            when (section) {
-                TripleBlockSection.TOP -> BlockStateVariant.create().put(
+            val suffix = "_$section" + "_stage_$age"
+            val texture = Texture().put(TextureKey.CROP, Texture.getSubId(block, suffix))
+            if (section == TripleBlockSection.BOTTOM) {
+                val modelBottom = model.upload(block, suffix, texture, this.modelCollector)
+                BlockStateVariant.create().put(
                     VariantSettings.MODEL,
-                    ModelIds.getBlockSubModelId(block, "_top_stage_$age")
+                    modelBottom
                 )
-
-                TripleBlockSection.MIDDLE -> BlockStateVariant.create().put(
+            } else if (age > 1 && section == TripleBlockSection.MIDDLE) {
+                val modelMiddle = model.upload(block, suffix, texture, this.modelCollector)
+                BlockStateVariant.create().put(
                     VariantSettings.MODEL,
-                    ModelIds.getBlockSubModelId(block, "_middle_stage_$age")
+                    modelMiddle
                 )
-
-                TripleBlockSection.BOTTOM -> BlockStateVariant.create().put(
+            } else if (age > 3 && section == TripleBlockSection.TOP) {
+                val modelTop = model.upload(block, suffix, texture, this.modelCollector)
+                BlockStateVariant.create().put(
                     VariantSettings.MODEL,
-                    ModelIds.getBlockSubModelId(block, "_bottom_stage_$age")
+                    modelTop
+                )
+            } else {
+                BlockStateVariant.create().put(
+                    VariantSettings.MODEL,
+                    ModelIds.getBlockModelId(Blocks.AIR)
                 )
             }
         }

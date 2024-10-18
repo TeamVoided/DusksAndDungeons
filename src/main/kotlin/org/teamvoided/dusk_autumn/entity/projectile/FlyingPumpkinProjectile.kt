@@ -7,6 +7,7 @@ import net.minecraft.entity.data.DataTracker
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
+import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
@@ -27,13 +28,9 @@ import org.teamvoided.dusk_autumn.util.spawnParticles
 open class FlyingPumpkinProjectile : PersistentProjectileEntity, FlyingBlockItemEntity {
     constructor(entityType: EntityType<out FlyingPumpkinProjectile>, world: World) : super(entityType, world)
     constructor(owner: PlayerEntity, world: World, stack: ItemStack, weapon: ItemStack?) :
-            super(
-                DnDEntities.FLYING_PUMPKIN,
-                owner,
-                world,
-                DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack,
-                weapon
-            )
+            super(DnDEntities.FLYING_PUMPKIN, owner, world, stack, weapon) {
+        state = stack
+    }
 
     override fun onBlockHit(blockHitResult: BlockHitResult) {
         super.onBlockHit(blockHitResult)
@@ -62,5 +59,13 @@ open class FlyingPumpkinProjectile : PersistentProjectileEntity, FlyingBlockItem
 
     override fun getHitSound(): SoundEvent = SoundEvents.BLOCK_WOOD_BREAK
     override fun getDefaultItemStack(): ItemStack = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
-    override fun getState(): BlockState = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.defaultState
+    override fun getState(): BlockState {
+        return if (state.item is BlockItem) {
+            (state.item as BlockItem).block.defaultState
+        } else DnDFloraBlocks.SMALL_CARVED_PUMPKIN.defaultState
+    }
+
+    companion object {
+        var state: ItemStack = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
+    }
 }

@@ -61,9 +61,7 @@ object DnDEffects {
                 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
             )
     )
-    val MADNESS = register(
-        "madness", MadnessEffect(StatusEffectType.HARMFUL, 0x2B1DC6)
-    )
+    val MADNESS = register("madness", MadnessEffect(StatusEffectType.HARMFUL, 0x3E1663))
 
     private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> {
         return Registry.registerHolder(Registries.STATUS_EFFECT, DusksAndDungeons.id(id), entry)

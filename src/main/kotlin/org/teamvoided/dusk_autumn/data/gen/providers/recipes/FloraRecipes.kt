@@ -4,10 +4,12 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Blocks
 import net.minecraft.data.server.RecipesProvider
 import net.minecraft.data.server.recipe.RecipeExporter
+import net.minecraft.data.server.recipe.RecipeJsonFactory.getItemId
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
 import net.minecraft.item.Items
 import net.minecraft.recipe.RecipeCategory
+import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
@@ -53,7 +55,8 @@ object FloraRecipes {
         e.smeltDefault(DnDFloraBlocks.CORN_SYRUP_BLOCK, DnDFloraBlocks.CORN_BLOCK)
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDItems.CORN, 8)
             .ingredient(DnDFloraBlocks.CORN)
-            .criterion(DnDFloraBlocks.CORN).offerTo(e)
+            .criterion(DnDFloraBlocks.CORN)
+            .offerTo(e, getItemId(DnDItems.CORN).suffix("_from_plant"))
         RecipesProvider.offerReversibleCompactingRecipes(
             e,
             RecipeCategory.MISC, DnDItems.CORN,

@@ -44,20 +44,32 @@ class PotOScreamsBlock(settings: Settings) : DecoratedPotBlock(settings) {
         return super.onUse(state, world, pos, entity, hitResult)
     }
 
-    private fun scare(world: World, pos: BlockPos) {
+    override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity): BlockState {
+        scare(world, pos, 0.25, 0.1, 0.4, 3)
+        return super.onBreak(world, pos, state, player)
+    }
+
+    private fun scare(
+        world: World,
+        pos: BlockPos,
+        offsetY: Double = 1.25,
+        velXZ: Double = 0.03,
+        velYMax: Double = 0.2,
+        countMult: Int = 1
+    ) {
         val random = world.getRandom()
-        repeat(random.rangeInclusive(2, 5)) {
+        repeat(random.rangeInclusive(2, 5 * countMult)) {
             world.playSound(null, pos, SoundEvents.ENTITY_ENDERMAN_SCREAM, SoundCategory.BLOCKS, 1f, 0f)
         }
-        repeat(random.rangeInclusive(25, 100)) {
+        repeat(random.rangeInclusive(25 * countMult, 100 * countMult)) {
             world.addParticle(
                 ParticleTypes.SOUL,
                 pos.x + 0.5 + (MathHelper.nextDouble(random, -0.125, 0.125)),
-                pos.y + 1.25,
+                pos.y + offsetY,
                 pos.z + 0.5 + (MathHelper.nextDouble(random, -0.125, 0.125)),
-                MathHelper.nextDouble(random, -0.03, 0.03),
-                MathHelper.nextDouble(random, 0.01, 0.2),
-                MathHelper.nextDouble(random, -0.03, 0.03)
+                MathHelper.nextDouble(random, -velXZ, velXZ),
+                MathHelper.nextDouble(random, 0.01, velYMax),
+                MathHelper.nextDouble(random, -velXZ, velXZ)
             )
         }
     }

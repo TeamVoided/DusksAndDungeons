@@ -211,15 +211,15 @@ object DnDFloraBlocks {
             copy(SMALL_CARVED_GLOOM_PUMPKIN)
         )
     ).shh()
-    val CORN = DnDBlocks.registerNoItem(
-        "corn", CornMazeBlock(
-            Settings.create().mapColor(MapColor.PLANT).offsetType(OffsetType.XYZ).noCollision().breakInstantly()
-                .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
-        ).cutout()
-    ).shh()
     val CORN_CROP = DnDBlocks.registerNoItem(
         "corn_crop", CornCropBlock(
             Settings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().breakInstantly()
+                .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
+        ).cutout()
+    ).shh()
+    val CORN = DnDBlocks.registerNoItem(
+        "corn", CornMazeBlock(
+            Settings.create().mapColor(MapColor.PLANT).offsetType(OffsetType.XYZ).noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
     ).shh()
@@ -228,6 +228,7 @@ object DnDFloraBlocks {
             copy(OAK_PLANKS).mapColor(GOLD_BLOCK.defaultMapColor)
         ).axe()
     ).shh()
+    @JvmField
     val CORN_SYRUP_BLOCK = DnDBlocks.register(
         "corn_syrup_block", CornSyrupBlock(
             copy(HONEY_BLOCK).mapColor(PODZOL.defaultMapColor).sounds(cornSyrupBlockSound)

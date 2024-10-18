@@ -99,6 +99,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDItems.LANTERN_PUMPKIN_PIE,
         DnDItems.PALE_PUMPKIN_PIE,
         DnDItems.GLOOM_PUMPKIN_PIE,
+        DnDItems.CORN_KERNELS,
         DnDItems.CORN,
         DnDItems.ROCK_CANDY_SHARD,
         DnDItems.CHILL_CHARGE
@@ -108,7 +109,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         single.forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }
         gen.register(DnDItems.FREEZE_ROD, Models.HANDHELD_ROD)
 //        gen.register(DnDItems.ICE_SWORD, Models.HANDHELD)
-        gen.register(DnDItems.HARVESTER_SCYTHE, Models.HANDHELD)
+        gen.register(DnDItems.HARVESTER_SCYTHE, item("parent/handheld_32", TextureKey.LAYER0))
 
         val webWeaver = item("web_weaver", TextureKey.LAYER0)
         gen.register(DnDItems.WEB_WEAVER, "_0", webWeaver)

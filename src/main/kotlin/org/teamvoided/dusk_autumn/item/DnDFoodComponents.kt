@@ -14,8 +14,8 @@ object DnDFoodComponents {
 //    val ROCK_CANDY_6 = FoodComponent.Builder().hunger(6).saturation(0.6f).build() //stair and wall block
 //    val ROCK_CANDY_4 = FoodComponent.Builder().hunger(4).saturation(0.4f).build() //slab block
 
-    val ROCK_CANDY_8 = foodComponent(8, 0.8f, 3.6f) //full block
-    val ROCK_CANDY_6 = foodComponent(6, 0.6f, 2.4f) //stair and wall block
+    val ROCK_CANDY_8 = foodComponent(8, 0.8f, 3f) //full block
+    val ROCK_CANDY_6 = foodComponent(6, 0.6f, 2f) //stair and wall block
     val ROCK_CANDY_4 = foodComponent(4, 0.4f, 1.6f) //slab block
     val ROCK_CANDY_2 = foodComponent(2, 0.2f, 0.8f) //shard item
     //YOU CANT CUSTOMIZE EAT TIME AAAAAAAAAAAAAAA
