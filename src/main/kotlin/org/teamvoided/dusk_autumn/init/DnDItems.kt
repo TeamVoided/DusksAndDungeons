@@ -56,6 +56,7 @@ object DnDItems {
         )
     )
     val WITCH_HAT = register("witch_hat", HeadDecorationItem(CountSettings(1))).shh()
+
     @JvmField
     val VILE_WITCH_HAT = register("vile_witch_hat", HeadDecorationItem(CountSettings(1))).shh()
     val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16))).tellWitnessesThatIWasMurdered()
@@ -64,9 +65,11 @@ object DnDItems {
             CountSettings(16).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xFFFFFF, true))
         )
     ).tellWitnessesThatIWasMurdered()
-    val LANTERN_PUMPKIN_PIE = register("lantern_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
+    val LANTERN_PUMPKIN_PIE =
+        register("lantern_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
     val PALE_PUMPKIN_PIE = register("pale_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
-    val GLOOM_PUMPKIN_PIE = register("gloom_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
+    val GLOOM_PUMPKIN_PIE =
+        register("gloom_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
 
     val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
         .tellWitnessesThatIWasMurdered()
@@ -141,7 +144,8 @@ object DnDItems {
     ).shh()
     val BROOM = register("broom", BroomItem(CountSettings(1))).shh()
 
-    val ROCK_CANDY_SHARD = register("rock_candy_shard", Item(Item.Settings())).shh()
+    val ROCK_CANDY_SHARD =
+        register("rock_candy_shard", Item(Item.Settings().food(DnDFoodComponents.ROCK_CANDY_2))).shh()
 
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)

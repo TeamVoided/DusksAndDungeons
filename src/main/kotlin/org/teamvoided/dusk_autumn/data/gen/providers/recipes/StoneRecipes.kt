@@ -29,7 +29,7 @@ object StoneRecipes {
             .criterion(DnDItemTags.GRAVESTONES)
             .offerTo(e)
 
-        e.createSmallSquare(DnDStoneBlocks.POLISHED_STONE, Blocks.STONE)
+        e.createSmallSquare(DnDStoneBlocks.POLISHED_STONE, Blocks.STONE, 4)
         e.createStackedCraft(DnDStoneBlocks.STONE_PILLAR, Blocks.STONE_BRICKS, ItemTags.STONE_BRICKS)
         e.createStackedCraft(DnDStoneBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
         e.createStonecuttedFromList(
@@ -95,9 +95,9 @@ object StoneRecipes {
         )
 
         e.smeltDefault(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
-            // needs diff id
-//        e.createSmallSquare(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDItems.ROCK_CANDY_SHARD)
-        e.createCount(DnDItems.ROCK_CANDY_SHARD, DnDStoneBlocks.ROCK_CANDY_BLOCK, 4)
+        e.offerReversibleCompactingRecipes4(
+            RecipeCategory.MISC, DnDItems.ROCK_CANDY_SHARD,
+            RecipeCategory.BUILDING_BLOCKS, DnDStoneBlocks.ROCK_CANDY_BLOCK)
 
     }
 }

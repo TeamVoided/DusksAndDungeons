@@ -2,11 +2,11 @@ package org.teamvoided.dusk_autumn.data.gen.providers.recipes
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Blocks
+import net.minecraft.data.server.RecipesProvider
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
 import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
@@ -34,6 +34,30 @@ object FloraRecipes {
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Blocks.HANGING_ROOTS, 4)
             .ingredient(DnDFloraBlocks.ROOT_BLOCK)
             .criterion(DnDFloraBlocks.ROOT_BLOCK).offerTo(e)
-        e.cobbled()
+
+        e.createPumpkinPie(
+            DnDItems.LANTERN_PUMPKIN_PIE,
+            DnDFloraBlocks.LANTERN_PUMPKIN,
+            DnDFloraBlocks.CARVED_LANTERN_PUMPKIN
+        )
+        e.createPumpkinPie(
+            DnDItems.PALE_PUMPKIN_PIE,
+            DnDFloraBlocks.PALE_PUMPKIN,
+            DnDFloraBlocks.CARVED_PALE_PUMPKIN
+        )
+        e.createPumpkinPie(
+            DnDItems.GLOOM_PUMPKIN_PIE,
+            DnDFloraBlocks.GLOOM_PUMPKIN,
+            DnDFloraBlocks.CARVED_GLOOM_PUMPKIN
+        )
+        e.smeltDefault(DnDFloraBlocks.CORN_SYRUP_BLOCK, DnDFloraBlocks.CORN_BLOCK)
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDItems.CORN, 8)
+            .ingredient(DnDFloraBlocks.CORN)
+            .criterion(DnDFloraBlocks.CORN).offerTo(e)
+        RecipesProvider.offerReversibleCompactingRecipes(
+            e,
+            RecipeCategory.MISC, DnDItems.CORN,
+            RecipeCategory.BUILDING_BLOCKS, DnDFloraBlocks.CORN_BLOCK
+        )
     }
 }

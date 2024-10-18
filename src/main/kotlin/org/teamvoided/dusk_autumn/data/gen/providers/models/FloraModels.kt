@@ -72,6 +72,11 @@ object FloraModels {
             DnDFloraBlocks.GLOOM_PUMPKIN
         )
         gen.registerCorn(DnDFloraBlocks.CORN, DnDItems.CORN_STALK)
+        gen.registerAxisRotated(
+            DnDFloraBlocks.CORN_BLOCK,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN,
+            TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+        )
         gen.registerParentedItemModel(DnDFloraBlocks.CORN_SYRUP_BLOCK)
 
         gen.registerSingleton(

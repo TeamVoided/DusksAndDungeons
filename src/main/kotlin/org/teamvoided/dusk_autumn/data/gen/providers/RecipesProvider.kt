@@ -27,6 +27,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         StoneRecipes.generateStoneRecipes(e)
         NetherRecipes.generateNetherRecipes(e)
         FloraRecipes.generateFloraRecipes(e)
+        e.cobbled()
 
         temporaryRecipes(e)
 
@@ -38,22 +39,6 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("@%@")
             .pattern("# #")
             .criterion(DnDItems.FARMERS_HAT).offerTo(e)
-
-        e.createPumpkinPie(
-            DnDItems.LANTERN_PUMPKIN_PIE,
-            DnDFloraBlocks.LANTERN_PUMPKIN,
-            DnDFloraBlocks.CARVED_LANTERN_PUMPKIN
-        )
-        e.createPumpkinPie(
-            DnDItems.PALE_PUMPKIN_PIE,
-            DnDFloraBlocks.PALE_PUMPKIN,
-            DnDFloraBlocks.CARVED_PALE_PUMPKIN
-        )
-        e.createPumpkinPie(
-            DnDItems.GLOOM_PUMPKIN_PIE,
-            DnDFloraBlocks.GLOOM_PUMPKIN,
-            DnDFloraBlocks.CARVED_GLOOM_PUMPKIN
-        )
     }
 
     private fun temporaryRecipes(e: RecipeExporter) {

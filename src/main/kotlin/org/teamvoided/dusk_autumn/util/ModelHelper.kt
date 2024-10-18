@@ -805,7 +805,7 @@ fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block
     this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
-fun BlockStateModelGenerator.registerCorn(block: Block, item:Item) {
+fun BlockStateModelGenerator.registerCorn(block: Block, item: Item) {
 //    this.registerItemModel(block, "_top") //this one is for if the names are the same, they are not
     Models.SINGLE_LAYER_ITEM.upload(
         ModelIds.getItemModelId(item), Texture.layer0(Texture.getSubId(block, "_top")),
@@ -837,6 +837,53 @@ fun BlockStateModelGenerator.registerCorn(block: Block, item:Item) {
             )
         )
     )
+}
+
+fun BlockStateModelGenerator.registerCornCrop(block: Block, item: Item) {
+    Models.SINGLE_LAYER_ITEM.upload(
+        ModelIds.getItemModelId(item), Texture.layer0(Texture.getSubId(block, "_top")),
+        this.modelCollector
+    )
+    val texture = Texture().put(TextureKey.ALL, Texture.getSubId(block, "_top"))
+    val model = block(
+        "parent/corn_crop",
+        TextureKey.ALL
+    )
+    CornCropBlock.AGE.values.forEach { age ->
+        val top = "_top_stage_$age"
+        val middle = "_middle_stage_$age"
+        val bottom = "_bottom_stage_$age"
+        if (age > 3) {
+            val textureTop = Texture().put(TextureKey.ALL, Texture.getSubId(block, top))
+            model.upload(block, top, textureTop, this.modelCollector)
+        }
+        if (age > 1) {
+            val textureMiddle = Texture().put(TextureKey.ALL, Texture.getSubId(block, middle))
+            model.upload(block, middle, textureMiddle, this.modelCollector)
+        }
+        val textureBottom = Texture().put(TextureKey.ALL, Texture.getSubId(block, bottom))
+        model.upload(block, bottom, textureBottom, this.modelCollector)
+    }
+    val blockStateVariantMap = BlockStateVariantMap.create(CornCropBlock.AGE, TripleTallPlantBlock.SECTION)
+        .register { age: Int, section: TripleBlockSection ->
+            when (section) {
+                TripleBlockSection.TOP -> BlockStateVariant.create().put(
+                    VariantSettings.MODEL,
+                    ModelIds.getBlockSubModelId(block, "_top_stage_$age")
+                )
+
+                TripleBlockSection.MIDDLE -> BlockStateVariant.create().put(
+                    VariantSettings.MODEL,
+                    ModelIds.getBlockSubModelId(block, "_middle_stage_$age")
+                )
+
+                TripleBlockSection.BOTTOM -> BlockStateVariant.create().put(
+                    VariantSettings.MODEL,
+                    ModelIds.getBlockSubModelId(block, "_bottom_stage_$age")
+                )
+            }
+        }
+    this.blockStateCollector.accept(VariantsBlockStateSupplier.create(block).coordinate(blockStateVariantMap))
 }
 
 fun BlockStateModelGenerator.registerBigChain(block: Block) {

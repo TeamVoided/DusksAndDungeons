@@ -223,10 +223,15 @@ object DnDFloraBlocks {
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
     ).shh()
+    val CORN_BLOCK = DnDBlocks.register(
+        "corn_block", PillarBlock(
+            copy(OAK_PLANKS).mapColor(GOLD_BLOCK.defaultMapColor)
+        ).axe()
+    ).shh()
     val CORN_SYRUP_BLOCK = DnDBlocks.register(
         "corn_syrup_block", CornSyrupBlock(
             copy(HONEY_BLOCK).mapColor(PODZOL.defaultMapColor).sounds(cornSyrupBlockSound)
-        ).cutout()
+        ).translucent()
     ).shh()
 
     val JOUNCESHROOM_BLOCK = DnDBlocks.register(

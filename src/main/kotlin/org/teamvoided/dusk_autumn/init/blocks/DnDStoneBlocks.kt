@@ -3,12 +3,14 @@ package org.teamvoided.dusk_autumn.init.blocks
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks.*
+import net.minecraft.block.MapColor
 import net.minecraft.block.PillarBlock
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.dusk_autumn.block.GravestoneBlock
 import org.teamvoided.dusk_autumn.block.HeadstoneBlock
 import org.teamvoided.dusk_autumn.block.SmallGravestoneBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.item.DnDFoodComponents
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDStoneBlocks {
@@ -83,8 +85,24 @@ object DnDStoneBlocks {
         DnDBlocks.register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe()).tellWitnessesThatIWasMurdered()
 
     val ROCK_CANDY_BLOCK =
-        DnDBlocks.register("rock_candy_block", Block(copy(DEEPSLATE).sounds(BlockSoundGroup.CALCITE)).pickaxe()).shh()
-    val ROCK_CANDY_STAIRS = DnDBlocks.register("rock_candy_stairs", stairsOf(ROCK_CANDY_BLOCK).pickaxe()).shh()
-    val ROCK_CANDY_SLAB = DnDBlocks.register("rock_candy_slab", slabOf(ROCK_CANDY_BLOCK).pickaxe()).shh()
-    val ROCK_CANDY_WALL = DnDBlocks.register("rock_candy_wall", wallOf(ROCK_CANDY_BLOCK).pickaxe()).shh()
+        DnDBlocks.registerEdible(
+            "rock_candy_block",
+            DnDFoodComponents.ROCK_CANDY_8,
+            Block(copy(CALCITE).mapColor(MapColor.BLUE)).pickaxe().shh()
+        )
+    val ROCK_CANDY_STAIRS = DnDBlocks.registerEdible(
+        "rock_candy_stairs",
+        DnDFoodComponents.ROCK_CANDY_6,
+        stairsOf(ROCK_CANDY_BLOCK).pickaxe().shh()
+    )
+    val ROCK_CANDY_SLAB = DnDBlocks.registerEdible(
+        "rock_candy_slab",
+        DnDFoodComponents.ROCK_CANDY_4,
+        slabOf(ROCK_CANDY_BLOCK).pickaxe().shh()
+    )
+    val ROCK_CANDY_WALL = DnDBlocks.registerEdible(
+        "rock_candy_wall",
+        DnDFoodComponents.ROCK_CANDY_6,
+        wallOf(ROCK_CANDY_BLOCK).pickaxe().shh()
+    )
 }

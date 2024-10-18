@@ -3,6 +3,7 @@ package org.teamvoided.dusk_autumn.util
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.data.server.RecipesProvider
 import net.minecraft.data.server.RecipesProvider.*
 import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
@@ -12,6 +13,7 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDOverlayBlocks
 
@@ -107,7 +109,7 @@ fun RecipeExporter.smeltDefault(
         RecipeCategory.BUILDING_BLOCKS, output.asItem(), 0.1f, 200
     )
         .criterion(input)
-        .offerTo(this)
+        .offerTo(this, Identifier.parse(getRecipeName(output)).toString() + "_smelt")
 }
 
 fun RecipeExporter.createOvergrown(
@@ -143,8 +145,17 @@ fun RecipeExporter.createTwoPiece(
         .offerTo(this)
 }
 
-fun RecipeExporter.createSmallSquare(output: ItemConvertible, input: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
+fun RecipeExporter.createSmallSquare(output: ItemConvertible, input: ItemConvertible, count: Int = 1) {
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+        .ingredient('#', input)
+        .pattern("##")
+        .pattern("##")
+        .criterion(input)
+        .offerTo(this)
+}
+
+fun RecipeExporter.createFullSquare(output: ItemConvertible, input: ItemConvertible) {
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
         .ingredient('#', input)
         .pattern("##")
         .pattern("##")
@@ -156,6 +167,50 @@ fun RecipeExporter.createCount(output: ItemConvertible, input: ItemConvertible, 
     ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, countOutput)
         .criterion(input)
         .offerTo(this)
+}
+
+
+
+fun RecipeExporter.offerReversibleCompactingRecipes4(
+    reverseCategory: RecipeCategory,
+    baseItem: ItemConvertible,
+    compactingCategory: RecipeCategory,
+    compactedItem: ItemConvertible
+) {
+    offerReversibleCompactingRecipes4(
+        reverseCategory,
+        baseItem,
+        compactingCategory,
+        compactedItem,
+        getRecipeName(compactedItem),
+        null as String?,
+        getRecipeName(baseItem),
+        null as String?
+    )
+}
+
+fun RecipeExporter.offerReversibleCompactingRecipes4(
+    reverseCategory: RecipeCategory,
+    baseItem: ItemConvertible,
+    compactingCategory: RecipeCategory,
+    compactedItem: ItemConvertible,
+    compactingId: String,
+    compactingGroup: String?,
+    reverseId: String,
+    reverseGroup: String?
+) {
+    ShapelessRecipeJsonFactory.create(reverseCategory, baseItem, 4)
+        .ingredient(compactedItem)
+        .group(reverseGroup)
+        .criterion(hasItem(compactedItem), conditionsFromItem(compactedItem))
+        .offerTo(this, Identifier.parse(reverseId))
+    ShapedRecipeJsonFactory.create(compactingCategory, compactedItem)
+        .ingredient('#', baseItem)
+        .pattern("##")
+        .pattern("##")
+        .group(compactingGroup)
+        .criterion(hasItem(baseItem), conditionsFromItem(baseItem))
+        .offerTo(this, Identifier.parse(compactingId))
 }
 
 fun RecipeExporter.createStonecuttedSet(

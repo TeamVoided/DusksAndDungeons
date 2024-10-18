@@ -47,7 +47,7 @@ class FlyingBlockItemEntityRenderer<T>(
             )
             matrices.rotate(
                 Axis.Z_POSITIVE.rotationDegrees(
-                    MathHelper.lerp(tickDelta, entity.prevPitch, entity.pitch)
+                    -MathHelper.lerp(tickDelta, entity.prevPitch, entity.pitch)
                 )
             )
             matrices.translate(-OFFSET, -OFFSET, -OFFSET)

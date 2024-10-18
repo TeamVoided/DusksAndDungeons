@@ -10,6 +10,7 @@ import net.minecraft.block.IceBlock
 import net.minecraft.block.MapColor
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.BlockItem
+import net.minecraft.item.FoodComponent
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -177,6 +178,12 @@ object DnDBlocks {
     fun registerHeadEquipable(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
         DnDItems.register(id, HeadDecorationBlockItem(regBlock, Item.Settings()))
+        return regBlock
+    }
+
+    fun registerEdible(id: String, foodComponent: FoodComponent, block: Block): Block {
+        val regBlock = registerNoItem(id, block)
+        DnDItems.register(id, BlockItem(regBlock, Item.Settings().food(foodComponent)))
         return regBlock
     }
 
