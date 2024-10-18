@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumn.item
 
 import net.minecraft.block.BlockState
+import net.minecraft.block.CropBlock
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.entity.EquipmentSlotGroup
 import net.minecraft.entity.attribute.EntityAttributeModifier
@@ -29,22 +30,24 @@ class HarvesterScytheItem(toolMaterial: ToolMaterial, settings: Settings) : Swor
     override fun canMine(state: BlockState, world: World, pos: BlockPos, miner: PlayerEntity): Boolean {
         return if (miner.isCreative)
             false
-        else if (!state.getOrEmpty(Properties.AGE_1).isEmpty)
-            state.get(Properties.AGE_1) >= Properties.AGE_1_MAX
-        else if (!state.getOrEmpty(Properties.AGE_2).isEmpty)
-            state.get(Properties.AGE_2) >= Properties.AGE_2_MAX
-        else if (!state.getOrEmpty(Properties.AGE_3).isEmpty)
-            state.get(Properties.AGE_3) >= Properties.AGE_3_MAX
-        else if (!state.getOrEmpty(Properties.AGE_4).isEmpty)
-            state.get(Properties.AGE_4) >= Properties.AGE_4_MAX
-        else if (!state.getOrEmpty(Properties.AGE_5).isEmpty)
-            state.get(Properties.AGE_5) >= Properties.AGE_5_MAX
-        else if (!state.getOrEmpty(Properties.AGE_7).isEmpty)
-            state.get(Properties.AGE_7) >= Properties.AGE_7_MAX
-        else if (!state.getOrEmpty(Properties.AGE_15).isEmpty)
-            state.get(Properties.AGE_15) >= Properties.AGE_15_MAX
-        else if (!state.getOrEmpty(Properties.AGE_25).isEmpty)
-            state.get(Properties.AGE_25) >= Properties.AGE_25_MAX
+        else if (state.block is CropBlock)
+            (state.block as CropBlock).isMature(state)
+//        else if (!state.getOrEmpty(Properties.AGE_1).isEmpty)
+//            state.get(Properties.AGE_1) >= Properties.AGE_1_MAX
+//        else if (!state.getOrEmpty(Properties.AGE_2).isEmpty)
+//            state.get(Properties.AGE_2) >= Properties.AGE_2_MAX
+//        else if (!state.getOrEmpty(Properties.AGE_3).isEmpty)
+//            state.get(Properties.AGE_3) >= Properties.AGE_3_MAX
+//        else if (!state.getOrEmpty(Properties.AGE_4).isEmpty)
+//            state.get(Properties.AGE_4) >= Properties.AGE_4_MAX
+//        else if (!state.getOrEmpty(Properties.AGE_5).isEmpty)
+//            state.get(Properties.AGE_5) >= Properties.AGE_5_MAX
+//        else if (!state.getOrEmpty(Properties.AGE_7).isEmpty)
+//            state.get(Properties.AGE_7) >= Properties.AGE_7_MAX
+//        else if (!state.getOrEmpty(Properties.AGE_15).isEmpty)
+//            state.get(Properties.AGE_15) >= Properties.AGE_15_MAX
+//        else if (!state.getOrEmpty(Properties.AGE_25).isEmpty)
+//            state.get(Properties.AGE_25) >= Properties.AGE_25_MAX
         else
             true
     }
