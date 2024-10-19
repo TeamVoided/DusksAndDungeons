@@ -111,6 +111,11 @@ object DnDBlocks {
         )
     ).cutout()
 
+    val MOLTEN_LAVASPONGE = register("molten_lavasponge", MoltenBlock(copy(BASALT), LAVA)).pickaxe()
+    val WEAK_LAVASPONGE = register("weak_lavasponge", LavaSpongeBlock(copy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
+    val GLOWING_LAVASPONGE = register("glowing_lavasponge", Block(copy(BASALT))).pickaxe()
+    val LAVASPONGE = register("lavasponge", LavaSpongeBlock(copy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
+
 //    val CLUB_CORAL = register(
 //        "club_coral", Block(
 //            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)

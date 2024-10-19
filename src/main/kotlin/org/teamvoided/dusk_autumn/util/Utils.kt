@@ -1,12 +1,15 @@
 package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.Blocks
+import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.item.ItemStack
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
+import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
@@ -66,3 +69,6 @@ fun ProjectileEntity.setShootVelocity(pitch: Float, yaw: Float, roll: Float, spe
     val h = MathHelper.cos(yaw * (Math.PI.toFloat() / 180)) * MathHelper.cos(pitch * (Math.PI.toFloat() / 180))
     this.setVelocity(f.toDouble(), g.toDouble(), h.toDouble(), speed, modifierXYZ)
 }
+
+fun ItemStack.hasEnchantment(enchantment: RegistryKey<Enchantment>): Boolean =
+    this.enchantments.enchantments.any { it.isRegistryKey(enchantment) }

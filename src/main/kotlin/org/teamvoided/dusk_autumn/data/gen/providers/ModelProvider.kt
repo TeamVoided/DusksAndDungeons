@@ -85,6 +85,12 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("chest"), Blocks.OAK_PLANKS)
             .includeWithoutItem(DnDBlocks.CHEST_O_SOULS)
 
+        gen.registerSimpleCubeAll(DnDBlocks.MOLTEN_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.WEAK_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.GLOWING_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)
+
+
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),
             BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
