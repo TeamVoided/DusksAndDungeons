@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumn.block
 
-import com.mojang.serialization.MapCodec
 import net.minecraft.block.*
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.SoundCategory
@@ -12,7 +11,6 @@ import net.minecraft.world.World
 @Suppress("MemberVisibilityCanBePrivate")
 class LavaSpongeBlock(settings: Settings, val maxDepth: Int, val maxIterations: Int, val turnInTo: Block) :
     Block(settings) {
-    public override fun getCodec(): MapCodec<LavaSpongeBlock> = CODEC
     override fun onBlockAdded(state: BlockState, world: World, pos: BlockPos, oldState: BlockState, notify: Boolean) {
         if (!oldState.isOf(state.block)) this.update(world, pos)
     }
@@ -58,9 +56,5 @@ class LavaSpongeBlock(settings: Settings, val maxDepth: Int, val maxIterations: 
                 }
             }
         }) > 1
-    }
-
-    companion object {
-        val CODEC: MapCodec<LavaSpongeBlock> = createCodec { LavaSpongeBlock(it, 6, 64, Blocks.BASALT) }
     }
 }

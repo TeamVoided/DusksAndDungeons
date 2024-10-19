@@ -111,52 +111,54 @@ object DnDBlocks {
         )
     ).cutout()
 
-    val MOLTEN_LAVASPONGE = register("molten_lavasponge", MoltenBlock(copy(BASALT), LAVA)).pickaxe()
-    val WEAK_LAVASPONGE = register("weak_lavasponge", LavaSpongeBlock(copy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
+    val MOLTEN_LAVASPONGE = register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe()
+    val BRITTLE_LAVASPONGE =
+        register("brittle_lavasponge", LavaSpongeBlock(copy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
     val GLOWING_LAVASPONGE = register("glowing_lavasponge", Block(copy(BASALT))).pickaxe()
-    val LAVASPONGE = register("lavasponge", LavaSpongeBlock(copy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
+    val LAVASPONGE =
+        register("lavasponge", LavaSpongeBlock(copy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
 
-//    val CLUB_CORAL = register(
-//        "club_coral", Block(
-//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-//        )
-//    )
-//    val DEAD_CLUB_CORAL = register(
-//        "dead_club_coral", Block(
-//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-//        )
-//    )
-//    val DEAD_CLUB_CORAL_BLOCK = DeadCoralBlock(
-//        "dead_club_coral_block", Block(
-//            copy(DEAD_TUBE_CORAL_BLOCK)
-//        )
-//    )
-//    val CLUB_CORAL_BLOCK = CoralBlockBlock(
-//        DEAD_CLUB_CORAL_BLOCK,
-//        "club_coral_block", Block(
-//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-//        )
-//    )
-//    val CLUB_CORAL_FAN = register(
-//        "club_coral_fan", Block(
-//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-//        )
-//    )
-//    val DEAD_CLUB_CORAL_FAN = register(
-//        "dead_club_coral_fan", Block(
-//            copy(DEAD_TUBE_CORAL_BLOCK)
-//        )
-//    )
-//    val CLUB_CORAL_WALL_FAN = register(
-//        "club_coral_wall_fan", Block(
-//            copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-//        )
-//    )
-//    val DEAD_CLUB_CORAL_WALL_FAN = register(
-//        "dead_club_coral_wall_fan", Block(
-//            copy(DEAD_TUBE_CORAL_BLOCK)
-//        )
-//    )
+    /*   val CLUB_CORAL = register(
+           "club_coral", Block(
+               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+           )
+       )
+       val DEAD_CLUB_CORAL = register(
+           "dead_club_coral", Block(
+               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+           )
+       )
+       val DEAD_CLUB_CORAL_BLOCK = DeadCoralBlock(
+           "dead_club_coral_block", Block(
+               copy(DEAD_TUBE_CORAL_BLOCK)
+           )
+       )
+       val CLUB_CORAL_BLOCK = CoralBlockBlock(
+           DEAD_CLUB_CORAL_BLOCK,
+           "club_coral_block", Block(
+               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+           )
+       )
+       val CLUB_CORAL_FAN = register(
+           "club_coral_fan", Block(
+               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+           )
+       )
+       val DEAD_CLUB_CORAL_FAN = register(
+           "dead_club_coral_fan", Block(
+               copy(DEAD_TUBE_CORAL_BLOCK)
+           )
+       )
+       val CLUB_CORAL_WALL_FAN = register(
+           "club_coral_wall_fan", Block(
+               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
+           )
+       )
+       val DEAD_CLUB_CORAL_WALL_FAN = register(
+           "dead_club_coral_wall_fan", Block(
+               copy(DEAD_TUBE_CORAL_BLOCK)
+           )
+       )*/
 
     fun init() {
         DnDWoodTypes.init()

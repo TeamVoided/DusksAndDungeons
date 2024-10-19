@@ -86,7 +86,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             .includeWithoutItem(DnDBlocks.CHEST_O_SOULS)
 
         gen.registerSimpleCubeAll(DnDBlocks.MOLTEN_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDBlocks.WEAK_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.BRITTLE_LAVASPONGE)
         gen.registerSimpleCubeAll(DnDBlocks.GLOWING_LAVASPONGE)
         gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)
 
