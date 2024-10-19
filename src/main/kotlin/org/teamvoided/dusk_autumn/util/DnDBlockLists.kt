@@ -36,7 +36,7 @@ object DnDBlockLists {
         (Blocks.MANGROVE_LOG to Blocks.STRIPPED_MANGROVE_LOG),
         (Blocks.CHERRY_LOG to Blocks.STRIPPED_CHERRY_LOG),
         (DnDWoodBlocks.CASCADE_LOG to DnDWoodBlocks.STRIPPED_CASCADE_LOG),
-        (DnDWoodBlocks.GALLERY_MAPLE_LOG to DnDWoodBlocks.STRIPPED_GALLERY_MAPLE_LOG),
+//        (DnDWoodBlocks.GALLERY_MAPLE_LOG to DnDWoodBlocks.STRIPPED_GALLERY_MAPLE_LOG),
         (Blocks.CRIMSON_STEM to Blocks.STRIPPED_CRIMSON_STEM),
         (Blocks.WARPED_STEM to Blocks.STRIPPED_WARPED_STEM)
     )
@@ -50,7 +50,7 @@ object DnDBlockLists {
         (Blocks.MANGROVE_WOOD to Blocks.STRIPPED_MANGROVE_WOOD),
         (Blocks.CHERRY_WOOD to Blocks.STRIPPED_CHERRY_WOOD),
         (DnDWoodBlocks.CASCADE_WOOD to DnDWoodBlocks.STRIPPED_CASCADE_WOOD),
-        (DnDWoodBlocks.GALLERY_MAPLE_WOOD to DnDWoodBlocks.STRIPPED_GALLERY_MAPLE_WOOD),
+//        (DnDWoodBlocks.GALLERY_MAPLE_WOOD to DnDWoodBlocks.STRIPPED_GALLERY_MAPLE_WOOD),
         (Blocks.CRIMSON_HYPHAE to Blocks.STRIPPED_CRIMSON_HYPHAE),
         (Blocks.WARPED_HYPHAE to Blocks.STRIPPED_WARPED_HYPHAE)
     )
@@ -66,7 +66,7 @@ object DnDBlockLists {
         Blocks.AZALEA_LEAVES,
         Blocks.FLOWERING_AZALEA_LEAVES,
         DnDWoodBlocks.CASCADE_LEAVES,
-        DnDWoodBlocks.GALLERY_MAPLE_LEAVES,
+//        DnDWoodBlocks.GALLERY_MAPLE_LEAVES,
         DnDWoodBlocks.GOLDEN_BIRCH_LEAVES
     )
     val bigCandles = listOf(
@@ -174,7 +174,7 @@ object DnDBlockLists {
         DnDWoodBlocks.HOLLOW_MANGROVE_LOG,
         DnDWoodBlocks.HOLLOW_CHERRY_LOG,
         DnDWoodBlocks.HOLLOW_CASCADE_LOG,
-        DnDWoodBlocks.HOLLOW_GALLERY_MAPLE_LOG,
+//        DnDWoodBlocks.HOLLOW_GALLERY_MAPLE_LOG,
         DnDWoodBlocks.HOLLOW_CRIMSON_STEM,
         DnDWoodBlocks.HOLLOW_WARPED_STEM
     )
@@ -188,7 +188,7 @@ object DnDBlockLists {
         DnDWoodBlocks.HOLLOW_STRIPPED_MANGROVE_LOG,
         DnDWoodBlocks.HOLLOW_STRIPPED_CHERRY_LOG,
         DnDWoodBlocks.HOLLOW_STRIPPED_CASCADE_LOG,
-        DnDWoodBlocks.HOLLOW_STRIPPED_GALLERY_MAPLE_LOG,
+//        DnDWoodBlocks.HOLLOW_STRIPPED_GALLERY_MAPLE_LOG,
         DnDWoodBlocks.HOLLOW_STRIPPED_CRIMSON_STEM,
         DnDWoodBlocks.HOLLOW_STRIPPED_WARPED_STEM
     )
@@ -202,7 +202,7 @@ object DnDBlockLists {
         DnDWoodBlocks.MANGROVE_LOG_PILE,
         DnDWoodBlocks.CHERRY_LOG_PILE,
         DnDWoodBlocks.CASCADE_LOG_PILE,
-        DnDWoodBlocks.GALLERY_MAPLE_LOG_PILE,
+//        DnDWoodBlocks.GALLERY_MAPLE_LOG_PILE,
         DnDWoodBlocks.CRIMSON_STEM_PILE,
         DnDWoodBlocks.WARPED_STEM_PILE
     )
@@ -218,7 +218,7 @@ object DnDBlockLists {
         DnDWoodBlocks.AZALEA_LEAF_PILE,
         DnDWoodBlocks.FLOWERING_AZALEA_LEAF_PILE ,
         DnDWoodBlocks.CASCADE_LEAF_PILE,
-        DnDWoodBlocks.GALLERY_MAPLE_LEAF_PILE,
+//        DnDWoodBlocks.GALLERY_MAPLE_LEAF_PILE,
         DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE
     )
     val flowerbedBlocks = listOf(

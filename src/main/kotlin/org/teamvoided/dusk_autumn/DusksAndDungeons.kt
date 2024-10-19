@@ -40,7 +40,7 @@ object DusksAndDungeons {
         DnDBiomeModifications.init()
         DnDParticles.init()
         DnDSoundEvents.init()
-        DnDItemGroups.init()
+        DnDTabs.init()
         SnifferInjection.init()
         BarteringInjection.init()
         AddWanderingTrades.init()

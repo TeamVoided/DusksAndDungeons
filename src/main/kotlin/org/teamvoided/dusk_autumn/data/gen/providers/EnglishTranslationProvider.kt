@@ -8,10 +8,11 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
-import org.teamvoided.dusk_autumn.init.DnDBlocks
-import org.teamvoided.dusk_autumn.init.DnDItemGroups.DUSKS_AND_DUNGEONS_EXCEPT_DEBUG
-import org.teamvoided.dusk_autumn.init.DnDItemGroups.getKey
+import org.teamvoided.dusk_autumn.init.DnDTabs.DUSKS_AND_DUNGEONS_EXCEPT_DEBUG
+import org.teamvoided.dusk_autumn.init.DnDTabs.getKey
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.DnDTabs.DUSKS_AND_DUNGEONS
+import org.teamvoided.dusk_autumn.init.DnDTabs.OVERLAY_BLOCKS
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import java.util.concurrent.CompletableFuture
 
@@ -23,8 +24,8 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
     )
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
-//        getKey(DUSK_AUTUMN_TAB)?.let { gen.add(it, "Dusk Items") }
-//        getKey(OVERLAY_BLOCKS_TAB)?.let { gen.add(it, "Overlay Blocks") }
+        getKey(DUSKS_AND_DUNGEONS)?.let { gen.add(it, "Dusks and Dungeons") }
+        getKey(OVERLAY_BLOCKS)?.let { gen.add(it, "Rocky Blocks") }
         getKey(DUSKS_AND_DUNGEONS_EXCEPT_DEBUG)?.let { gen.add(it, "Dusk's and Dungeons Except Debug") }
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }

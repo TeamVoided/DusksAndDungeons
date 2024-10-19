@@ -19,7 +19,7 @@ import org.teamvoided.dusk_autumn.DusksAndDungeons.isDev
 import org.teamvoided.dusk_autumn.block.entity.ChestOSoulsBlockEntity
 import org.teamvoided.dusk_autumn.entity.DnDEntityModelLayers
 import org.teamvoided.dusk_autumn.init.*
-import org.teamvoided.dusk_autumn.init.DnDItemGroups.register
+import org.teamvoided.dusk_autumn.init.DnDTabs.register
 import org.teamvoided.dusk_autumn.util.SECRET_ITEMS
 import org.teamvoided.dusk_autumn.util.addLists
 
