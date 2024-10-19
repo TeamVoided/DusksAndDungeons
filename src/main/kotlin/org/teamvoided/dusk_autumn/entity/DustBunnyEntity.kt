@@ -18,6 +18,7 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
+import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
@@ -163,6 +164,7 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
             )
             world.addParticle(
                 DnDParticles.MUSHROOM_LAUNCH,
+                true,
                 entityPos.x + ((rand.nextDouble() - rand.nextDouble()) * entity.width),
                 entityPos.y + (rand.nextDouble() * entity.height),
                 entityPos.z + ((rand.nextDouble() - rand.nextDouble()) * entity.width),
@@ -182,7 +184,7 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
                     this.targetZ - this@DustBunnyEntity.z
                 )
                 val distance = vec3d.length()
-                if (distance < bounds.averageSideLength) {
+                if (distance < bounds.averageSideLength / 2) {
                     this.state = State.WAIT
                     this@DustBunnyEntity.velocity = velocity.multiply(0.5)
                 } else {
@@ -200,7 +202,6 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
                         this@DustBunnyEntity.yaw = -(MathHelper.atan2(e, f).toFloat()) * 57.295776f
                         this@DustBunnyEntity.bodyYaw = this@DustBunnyEntity.yaw
                     }
-//                    println(this@DustBunnyEntity.pos)
                 }
             }
         }

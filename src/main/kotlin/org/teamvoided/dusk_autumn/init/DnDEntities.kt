@@ -4,11 +4,11 @@ import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttribute
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
-import org.teamvoided.dusk_autumn.entity.DiceEntity
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.ChillChargeEntity
+import org.teamvoided.dusk_autumn.entity.DiceEntity
 import org.teamvoided.dusk_autumn.entity.DustBunnyEntity
 import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
 import org.teamvoided.dusk_autumn.entity.projectile.FlyingPumpkinProjectile
@@ -59,12 +59,13 @@ object DnDEntities {
     val DUST_BUNNY = register(
         "dust_bunny",
         EntityType.Builder.create(EntityType.EntityFactory(::DustBunnyEntity), SpawnGroup.MONSTER)
-            .setDimensions(2F, 2F)
-            .setEyeHeight(1F)
+            .setDimensions(0.8f, 0.8f)
+            .setEyeHeight(0.4f)
+            .passengerAttachments(0.7375f)
+            .vehicleAttachment(0.04f)
             .maxTrackingRange(8)
-            .trackingTickInterval(10)
             .makeFireImmune()
-    )
+        )
 
     fun init() {
 //        FabricDefaultAttributeRegistry.register(BIRD_TEST, BirdEntity.createAttributes().build())
