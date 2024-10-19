@@ -6,16 +6,21 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
+import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Items
+import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.Direction
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.DusksAndDungeons.isModLoaded
+import org.teamvoided.dusk_autumn.block.CandelabraBlock
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.data.gen.providers.models.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
@@ -89,6 +94,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerSimpleCubeAll(DnDBlocks.BRITTLE_LAVASPONGE)
         gen.registerSimpleCubeAll(DnDBlocks.GLOWING_LAVASPONGE)
         gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)
+        gen.registerCandelabra(DnDBlocks.CANDELABRA)
 
 
         /*.with(
@@ -97,6 +103,48 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                 .put(VariantSettings.UVLOCK, true)
         )*/
         if (isModLoaded("dramaticdoors")) DramaticDoorsCompat.datagen(gen)
+    }
+
+    private fun BlockStateModelGenerator.registerCandelabra(candelabra: Block) {
+        if (candelabra !is CandelabraBlock) error("Provided blocks is not a CandelabraBlock!")
+        val texture = Texture.texture(candelabra)
+            .put(TextureKey.CANDLE, candelabra.candle.model())
+            .put(TextureKey.TEXTURE, id("block/candelabra_iron"))
+
+        val models = listOf(
+            CANDELABRA_1.upload(candelabra, texture, this.modelCollector),
+            CANDELABRA_2.upload(candelabra, texture, this.modelCollector),
+            CANDELABRA_3.upload(candelabra, texture, this.modelCollector),
+            CANDELABRA_4.upload(candelabra, texture, this.modelCollector),
+            CANDELABRA_5.upload(candelabra, texture, this.modelCollector),
+        )
+
+        this.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(candelabra).coordinate(candelabraStates(models))
+        )
+        this.registerParentedItemModel(candelabra, models[0])
+    }
+
+    fun candelabraStates(models: List<Identifier>): BlockStateVariantMap.DoubleProperty<Direction, Int> {
+        val variants = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, CandelabraBlock.CANDLES)
+
+        models.forEachIndexed { idx, model ->
+            Properties.HORIZONTAL_FACING.values.forEach { direction ->
+                val variant = BlockStateVariant.create().put(VariantSettings.MODEL, model)
+
+                variants.register(
+                    direction,
+                    idx + 1,
+                    when (direction) {
+                        Direction.NORTH -> variant.put(VariantSettings.Y, Rotation.R180)
+                        Direction.EAST -> variant.put(VariantSettings.Y, Rotation.R270)
+                        Direction.WEST -> variant.put(VariantSettings.Y, Rotation.R90)
+                        else -> variant
+                    }
+                )
+            }
+        }
+        return variants
     }
 
     private val single = listOf(
@@ -147,3 +195,4 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     private fun Identifier.suffix(str: String) = Identifier.of(this.namespace, "${this.path}$str")
     private fun Block.model(): Identifier = ModelIds.getBlockModelId(this)
 }
+

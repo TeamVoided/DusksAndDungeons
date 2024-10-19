@@ -160,6 +160,8 @@ object DnDBlocks {
            )
        )*/
 
+    val CANDELABRA = register("candelabra", CandelabraBlock(CANDLE, copy(STONE)))
+
     fun init() {
         DnDWoodTypes.init()
 
@@ -176,7 +178,7 @@ object DnDBlocks {
 
     }
 
-    fun register(id: String, block: Block): Block {
+   fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
         DnDItems.register(id, BlockItem(regBlock, Item.Settings()))
         return regBlock
