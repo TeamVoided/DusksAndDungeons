@@ -8,7 +8,9 @@ import net.minecraft.registry.Registry
 import net.minecraft.util.Util
 import org.teamvoided.dusk_autumn.block.entity.CelestalBellBlockEntity
 import org.teamvoided.dusk_autumn.block.entity.ChestOSoulsBlockEntity
+import org.teamvoided.dusk_autumn.block.entity.HauntedBlockEntity
 import org.teamvoided.dusk_autumn.block.entity.QuarterBlockPileBlockEntity
+import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
 
 object DnDBlockEntities {
     fun init() {}
@@ -20,6 +22,22 @@ object DnDBlockEntities {
 
     val QUARTER_BLOCK_PILE: BlockEntityType<QuarterBlockPileBlockEntity> =
         register("quarter_block_pile", BlockEntityType.Builder.create(::QuarterBlockPileBlockEntity, DnDBlocks.QUARTER_BLOCK_PILE))
+
+    val HAUNTED_BLOCK: BlockEntityType<HauntedBlockEntity> =
+        register(
+            "hauted_block",
+            BlockEntityType.Builder.create(
+                ::HauntedBlockEntity,
+                DnDStoneBlocks.HAUNTED_GRAVESTONE,
+                DnDStoneBlocks.HAUNTED_SMALL_GRAVESTONE,
+                DnDStoneBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
+                DnDStoneBlocks.HAUNTED_SMALL_DEEPSLATE_GRAVESTONE,
+                DnDStoneBlocks.HAUNTED_TUFF_GRAVESTONE,
+                DnDStoneBlocks.HAUNTED_SMALL_TUFF_GRAVESTONE,
+                DnDStoneBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
+                DnDStoneBlocks.HAUNTED_SMALL_BLACKSTONE_GRAVESTONE
+            )
+        )
 
     private fun <T : BlockEntity> register(id: String, builder: BlockEntityType.Builder<T>): BlockEntityType<T> {
         val type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id)

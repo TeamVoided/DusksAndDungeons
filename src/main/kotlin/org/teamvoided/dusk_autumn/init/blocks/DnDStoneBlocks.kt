@@ -6,9 +6,7 @@ import net.minecraft.block.Blocks.*
 import net.minecraft.block.MapColor
 import net.minecraft.block.PillarBlock
 import net.minecraft.sound.BlockSoundGroup
-import org.teamvoided.dusk_autumn.block.GravestoneBlock
-import org.teamvoided.dusk_autumn.block.HeadstoneBlock
-import org.teamvoided.dusk_autumn.block.SmallGravestoneBlock
+import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.item.DnDFoodComponents
 import org.teamvoided.dusk_autumn.util.*
@@ -32,6 +30,22 @@ object DnDStoneBlocks {
     val SMALL_BLACKSTONE_GRAVESTONE = DnDBlocks.register(
         "small_blackstone_gravestone", SmallGravestoneBlock(copy(BLACKSTONE_GRAVESTONE)).pickaxe().shh()
     )
+
+    val HAUNTED_GRAVESTONE = DnDBlocks.register("haunted_gravestone", HauntedGravestoneBlock(copy(CHISELED_STONE_BRICKS).solid()).pickaxe()).shh()
+    val HAUNTED_SMALL_GRAVESTONE = DnDBlocks.register("small_haunted_gravestone", SmallHauntedGravestoneBlock(copy(GRAVESTONE)).pickaxe()).shh()
+    val HAUNTED_DEEPSLATE_GRAVESTONE =
+        DnDBlocks.register("haunted_deepslate_gravestone", HauntedGravestoneBlock(copy(CHISELED_DEEPSLATE).solid()).pickaxe()).shh()
+    val HAUNTED_SMALL_DEEPSLATE_GRAVESTONE =
+        DnDBlocks.register("small_haunted_deepslate_gravestone", SmallHauntedGravestoneBlock(copy(DEEPSLATE_GRAVESTONE)).pickaxe()).shh()
+    val HAUNTED_TUFF_GRAVESTONE =
+        DnDBlocks.register("haunted_tuff_gravestone", HauntedGravestoneBlock(copy(CHISELED_TUFF_BRICKS).solid()).pickaxe()).shh()
+    val HAUNTED_SMALL_TUFF_GRAVESTONE =
+        DnDBlocks.register("small_haunted_tuff_gravestone", SmallHauntedGravestoneBlock(copy(TUFF_GRAVESTONE)).pickaxe()).shh()
+    val HAUNTED_BLACKSTONE_GRAVESTONE = DnDBlocks.register(
+        "haunted_blackstone_gravestone", HauntedGravestoneBlock(copy(CHISELED_POLISHED_BLACKSTONE).solid()).pickaxe().shh())
+    val HAUNTED_SMALL_BLACKSTONE_GRAVESTONE = DnDBlocks.register(
+        "small_haunted_blackstone_gravestone", SmallHauntedGravestoneBlock(copy(BLACKSTONE_GRAVESTONE)).pickaxe().shh())
+
     val HEADSTONE =
         DnDBlocks.register("headstone", HeadstoneBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe()).shh()
 

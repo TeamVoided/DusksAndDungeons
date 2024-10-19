@@ -7,7 +7,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import org.teamvoided.dusk_autumn.util.rotate
 
-class SmallGravestoneBlock(settings: Settings) : GravestoneBlock(settings) {
+class SmallHauntedGravestoneBlock(settings: Settings) : HauntedGravestoneBlock(settings) {
 
     override fun getOutlineShape(
         state: BlockState,
@@ -16,12 +16,7 @@ class SmallGravestoneBlock(settings: Settings) : GravestoneBlock(settings) {
         context: ShapeContext
     ): VoxelShape {
         val rotations = state.get(FACING).horizontal
-        val shape = if (state.get(CENTERED)) CENTER_SHAPE else SHAPE
+        val shape = if (state.get(CENTERED)) SmallGravestoneBlock.CENTER_SHAPE else SmallGravestoneBlock.SHAPE
         return shape.rotate(rotations)
-    }
-
-    companion object {
-        val SHAPE: VoxelShape =  createCuboidShape(3.0, 0.0, 0.0, 13.0, 12.0, 2.0)
-        val CENTER_SHAPE: VoxelShape = createCuboidShape(3.0, 0.0, 7.0, 13.0, 12.0, 9.0)
     }
 }

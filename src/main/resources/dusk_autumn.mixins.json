@@ -6,6 +6,7 @@
   "mixins": [
     "BlockEntityTypeMixin",
     "BlockMixin",
+    "BlockWithEntityAccessor",
     "FoxEntityVariantMixin",
     "ItemStackMixin",
     "MushroomPlantBlockMixin",
