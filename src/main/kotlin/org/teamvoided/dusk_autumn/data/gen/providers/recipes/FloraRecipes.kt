@@ -53,6 +53,15 @@ object FloraRecipes {
             DnDItems.LANTERN_PUMPKIN_PIE
         )
         e.createPumpkinStuffs(
+            DnDFloraBlocks.MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.CARVED_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.GLOWING_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN,
+            DnDItems.MOSSKIN_PUMPKIN_PIE
+        )
+        e.createPumpkinStuffs(
             DnDFloraBlocks.PALE_PUMPKIN,
             DnDFloraBlocks.CARVED_PALE_PUMPKIN,
             DnDFloraBlocks.GLOWING_PALE_PUMPKIN,

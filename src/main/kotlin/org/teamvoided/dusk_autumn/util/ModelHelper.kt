@@ -687,6 +687,18 @@ fun BlockStateModelGenerator.registerWaterFern(block: Block) {
     this.registerAxisRotated(block, model)
 }
 
+fun BlockStateModelGenerator.registerPumpkinSet(
+    pumpkin: Block,
+    carved: Block,
+    glowing: Block,
+    smallPumpkin: Block,
+    smallCarved: Block,
+    smallGlowing: Block
+) {
+    this.registerPumpkins(pumpkin, carved, glowing)
+    this.registerSmallPumpkins(smallPumpkin, smallCarved, smallGlowing, pumpkin)
+}
+
 fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glowing: Block) {
     val texture = Texture()
         .put(TextureKey.END, Texture.getSubId(pumpkin, "_top"))
@@ -703,6 +715,31 @@ fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glo
 fun BlockStateModelGenerator.registerGravestone(gravestone: Block, smallGravestone: Block) {
     this.registerGravestone(gravestone)
     this.registerSmallGravestone(smallGravestone, gravestone)
+}
+
+fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
+    val texture = Texture()
+        .put(TextureKey.PARTICLE, Texture.getSubId(particle, "_side"))
+        .put(TextureKey.ALL, Texture.getId(pumpkin))
+    val model = block(
+        "parent/small_pumpkin",
+        TextureKey.PARTICLE,
+        TextureKey.ALL
+    ).upload(pumpkin, texture, this.modelCollector)
+    block(
+        "parent/small_carved_pumpkin",
+        TextureKey.PARTICLE,
+        TextureKey.ALL
+    ).upload(carved, texture, this.modelCollector)
+    block(
+        "parent/small_glowing_pumpkin",
+        TextureKey.PARTICLE,
+        TextureKey.ALL
+    ).upload(glowing, texture, this.modelCollector)
+
+    blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
+    this.registerNorthDefaultHorizontalRotation(carved)
+    this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
 fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
@@ -778,31 +815,6 @@ fun gravestoneBlockstates(gravestone: Block): BlockStateVariantMap.DoublePropert
         }
     }
     return variants
-}
-
-fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
-    val texture = Texture()
-        .put(TextureKey.PARTICLE, Texture.getSubId(particle, "_side"))
-        .put(TextureKey.ALL, Texture.getId(pumpkin))
-    val model = block(
-        "parent/small_pumpkin",
-        TextureKey.PARTICLE,
-        TextureKey.ALL
-    ).upload(pumpkin, texture, this.modelCollector)
-    block(
-        "parent/small_carved_pumpkin",
-        TextureKey.PARTICLE,
-        TextureKey.ALL
-    ).upload(carved, texture, this.modelCollector)
-    block(
-        "parent/small_glowing_pumpkin",
-        TextureKey.PARTICLE,
-        TextureKey.ALL
-    ).upload(glowing, texture, this.modelCollector)
-
-    blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
-    this.registerNorthDefaultHorizontalRotation(carved)
-    this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
 fun BlockStateModelGenerator.registerCorn(block: Block, item: Item) {

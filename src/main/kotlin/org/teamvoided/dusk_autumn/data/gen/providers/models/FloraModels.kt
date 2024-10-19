@@ -32,44 +32,44 @@ object FloraModels {
         gen.createMoonberryVine(DnDFloraBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DnDItems.MOONBERRIES)
 
-        gen.registerPumpkins(
-            DnDFloraBlocks.LANTERN_PUMPKIN,
-            DnDFloraBlocks.CARVED_LANTERN_PUMPKIN,
-            DnDFloraBlocks.GLOWING_LANTERN_PUMPKIN
-        )
-        gen.registerPumpkins(
-            DnDFloraBlocks.PALE_PUMPKIN,
-            DnDFloraBlocks.CARVED_PALE_PUMPKIN,
-            DnDFloraBlocks.GLOWING_PALE_PUMPKIN
-        )
-        gen.registerPumpkins(
-            DnDFloraBlocks.GLOOM_PUMPKIN,
-            DnDFloraBlocks.CARVED_GLOOM_PUMPKIN,
-            DnDFloraBlocks.GLOWING_GLOOM_PUMPKIN
-        )
+
         gen.registerSmallPumpkins(
             DnDFloraBlocks.SMALL_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
             Blocks.PUMPKIN
         )
-        gen.registerSmallPumpkins(
+        gen.registerPumpkinSet(
+            DnDFloraBlocks.LANTERN_PUMPKIN,
+            DnDFloraBlocks.CARVED_LANTERN_PUMPKIN,
+            DnDFloraBlocks.GLOWING_LANTERN_PUMPKIN,
             DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
-            DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
-            DnDFloraBlocks.LANTERN_PUMPKIN
+            DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN
         )
-        gen.registerSmallPumpkins(
+        gen.registerPumpkinSet(
+            DnDFloraBlocks.MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.CARVED_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.GLOWING_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN
+        )
+        gen.registerPumpkinSet(
+            DnDFloraBlocks.PALE_PUMPKIN,
+            DnDFloraBlocks.CARVED_PALE_PUMPKIN,
+            DnDFloraBlocks.GLOWING_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_PALE_PUMPKIN,
-            DnDFloraBlocks.PALE_PUMPKIN
         )
-        gen.registerSmallPumpkins(
+        gen.registerPumpkinSet(
+            DnDFloraBlocks.GLOOM_PUMPKIN,
+            DnDFloraBlocks.CARVED_GLOOM_PUMPKIN,
+            DnDFloraBlocks.GLOWING_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
-            DnDFloraBlocks.GLOOM_PUMPKIN
         )
         gen.registerCornCrop(DnDFloraBlocks.CORN_CROP)
         gen.registerCorn(DnDFloraBlocks.CORN, DnDItems.CORN_STALK)

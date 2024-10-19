@@ -10,6 +10,7 @@ import org.teamvoided.dusk_autumn.entity.bird.render.BirdEntityModel
 import org.teamvoided.dusk_autumn.entity.block.CelestalBellBlockEntityRenderer
 import org.teamvoided.dusk_autumn.entity.chill_charge.render.ChillChargeEntityModel
 import org.teamvoided.dusk_autumn.entity.dice.render.DiceEntityModel
+import org.teamvoided.dusk_autumn.entity.dust_bunny.render.DustBunnyEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowWoodModel
@@ -24,6 +25,7 @@ object DnDEntityModelLayers {
     val SCARECROW_OUTER_ARMOR: EntityModelLayer = createOuterArmor("scarecrow")
     val SCARECROW_WOOD: EntityModelLayer = register("scarecrow", "wood")
     val DICE: EntityModelLayer = registerMain("dice")
+    val DUST_BUNNY: EntityModelLayer = registerMain("dust_bunny")
 
     val CELESTAL_BELL = registerMain("celestal_bell")
     fun init() {
@@ -35,6 +37,7 @@ object DnDEntityModelLayers {
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_OUTER_ARMOR, ::createScarecrowOuterArmor)
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
         EntityModelLayerRegistry.registerModelLayer(DICE, DiceEntityModel::texturedModelData)
+        EntityModelLayerRegistry.registerModelLayer(DUST_BUNNY, DustBunnyEntityModel::texturedModelData)
 
         EntityModelLayerRegistry.registerModelLayer(
             CELESTAL_BELL,

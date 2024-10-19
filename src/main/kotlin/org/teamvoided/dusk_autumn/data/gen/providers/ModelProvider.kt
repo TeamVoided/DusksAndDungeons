@@ -103,6 +103,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDItems.SCARECROW_ITEM,
         DnDItems.DIE_ITEM,
         DnDItems.LANTERN_PUMPKIN_PIE,
+        DnDItems.MOSSKIN_PUMPKIN_PIE,
         DnDItems.PALE_PUMPKIN_PIE,
         DnDItems.GLOOM_PUMPKIN_PIE,
         DnDItems.CORN_KERNELS,

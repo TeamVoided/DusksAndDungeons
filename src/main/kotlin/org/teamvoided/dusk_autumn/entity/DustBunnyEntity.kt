@@ -117,6 +117,12 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
         return this.creator
     }
 
+    override fun isPushable(): Boolean = false
+
+    override fun pushAway(entity: Entity) {
+    }
+
+
     var isCharging: Boolean
         get() = dataTracker[TRACKER_CHARGING]
         set(charging) {
@@ -156,7 +162,7 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
             )
             world.addParticle(
-                ParticleTypes.GUST,
+                DnDParticles.MUSHROOM_LAUNCH,
                 entityPos.x + ((rand.nextDouble() - rand.nextDouble()) * entity.width),
                 entityPos.y + (rand.nextDouble() * entity.height),
                 entityPos.z + ((rand.nextDouble() - rand.nextDouble()) * entity.width),
@@ -167,7 +173,7 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
         }
     }
 
-    private inner class NoClipMoveControl(owner: DustBunnyEntity) : MoveControl(owner) {
+    private inner class NoClipMoveControl(bunnyEntity: DustBunnyEntity) : MoveControl(bunnyEntity) {
         override fun tick() {
             if (this.state == State.MOVE_TO) {
                 val vec3d = Vec3d(
@@ -180,7 +186,10 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
                     this.state = State.WAIT
                     this@DustBunnyEntity.velocity = velocity.multiply(0.5)
                 } else {
-                    this@DustBunnyEntity.velocity = velocity.add(vec3d.multiply(this.speed * 0.05 / distance))
+                    this@DustBunnyEntity.setVelocity(
+                        this@DustBunnyEntity.getVelocity().add(vec3d.multiply(this.speed * 0.05 / distance))
+                    )
+//                    this@DustBunnyEntity.velocity = velocity.add(vec3d.multiply(this.speed * 0.05 / distance))
                     if (this@DustBunnyEntity.target == null) {
                         val velocity = this@DustBunnyEntity.velocity
                         this@DustBunnyEntity.yaw = -(MathHelper.atan2(velocity.x, velocity.z).toFloat()) * 57.295776f
@@ -191,6 +200,7 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
                         this@DustBunnyEntity.yaw = -(MathHelper.atan2(e, f).toFloat()) * 57.295776f
                         this@DustBunnyEntity.bodyYaw = this@DustBunnyEntity.yaw
                     }
+//                    println(this@DustBunnyEntity.pos)
                 }
             }
         }

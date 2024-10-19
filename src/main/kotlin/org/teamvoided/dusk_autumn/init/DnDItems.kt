@@ -67,6 +67,8 @@ object DnDItems {
     ).tellWitnessesThatIWasMurdered()
     val LANTERN_PUMPKIN_PIE =
         register("lantern_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
+    val MOSSKIN_PUMPKIN_PIE =
+        register("mosskin_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
     val PALE_PUMPKIN_PIE = register("pale_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
     val GLOOM_PUMPKIN_PIE =
         register("gloom_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
