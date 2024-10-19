@@ -1,0 +1,173 @@
+{
+	"texture_size": [64, 32],
+	"elements": [
+		{
+			"name": "rearFootRight",
+			"from": [10, 2, 7],
+			"to": [12, 3, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -1]},
+			"faces": {
+				"north": {"uv": [8.75, 15.5, 8.25, 16], "texture": "#rabbit"},
+				"east": {"uv": [10.5, 15.5, 8.75, 16], "texture": "#rabbit"},
+				"south": {"uv": [11, 15.5, 10.5, 16], "texture": "#rabbit"},
+				"west": {"uv": [8.25, 15.5, 6.5, 16], "texture": "#rabbit"},
+				"up": {"uv": [8.25, 15.5, 8.75, 12], "texture": "#rabbit"},
+				"down": {"uv": [8.75, 12, 9.25, 15.5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "rearFootLeft",
+			"from": [4, 2, 7],
+			"to": [6, 3, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -1]},
+			"faces": {
+				"north": {"uv": [4.25, 15.5, 3.75, 16], "texture": "#rabbit"},
+				"east": {"uv": [6, 15.5, 4.25, 16], "texture": "#rabbit"},
+				"south": {"uv": [6.5, 15.5, 6, 16], "texture": "#rabbit"},
+				"west": {"uv": [3.75, 15.5, 2, 16], "texture": "#rabbit"},
+				"up": {"uv": [3.75, 15.5, 4.25, 12], "texture": "#rabbit"},
+				"down": {"uv": [4.25, 12, 4.75, 15.5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "body",
+			"from": [5, 3.90715, 4.61521],
+			"to": [11, 8.90715, 14.61521],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 7, 14]},
+			"faces": {
+				"north": {"uv": [4, 5, 2.5, 7.5], "texture": "#rabbit"},
+				"east": {"uv": [6.5, 5, 4, 7.5], "texture": "#rabbit"},
+				"south": {"uv": [8, 5, 6.5, 7.5], "texture": "#rabbit"},
+				"west": {"uv": [2.5, 5, 0, 7.5], "texture": "#rabbit"},
+				"up": {"uv": [2.5, 5, 4, 0], "texture": "#rabbit"},
+				"down": {"uv": [4, 0, 5.5, 5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "frontLegLeft",
+			"from": [4, 2, 4],
+			"to": [6, 9, 6],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -1]},
+			"faces": {
+				"north": {"uv": [3, 8.5, 2.5, 12], "texture": "#rabbit"},
+				"east": {"uv": [3.5, 8.5, 3, 12], "texture": "#rabbit"},
+				"south": {"uv": [4, 8.5, 3.5, 12], "texture": "#rabbit"},
+				"west": {"uv": [2.5, 8.5, 2, 12], "texture": "#rabbit"},
+				"up": {"uv": [2.5, 8.5, 3, 7.5], "texture": "#rabbit"},
+				"down": {"uv": [3, 7.5, 3.5, 8.5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "haunchLeft",
+			"from": [4, 4.65, 10.8],
+			"to": [6, 8.65, 15.8],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [4, 8.5, 10.7]},
+			"faces": {
+				"north": {"uv": [5.75, 10, 5.25, 12], "texture": "#rabbit"},
+				"east": {"uv": [7, 10, 5.75, 12], "texture": "#rabbit"},
+				"south": {"uv": [7.5, 10, 7, 12], "texture": "#rabbit"},
+				"west": {"uv": [5.25, 10, 4, 12], "texture": "#rabbit"},
+				"up": {"uv": [5.25, 10, 5.75, 7.5], "texture": "#rabbit"},
+				"down": {"uv": [5.75, 7.5, 6.25, 10], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "tail",
+			"from": [6.5, 7, 13],
+			"to": [9.5, 10, 15],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 5, 6]},
+			"faces": {
+				"north": {"uv": [14.25, 4, 13.5, 5.5], "texture": "#rabbit"},
+				"east": {"uv": [14.75, 4, 14.25, 5.5], "texture": "#rabbit"},
+				"south": {"uv": [15.5, 4, 14.75, 5.5], "texture": "#rabbit"},
+				"west": {"uv": [13.5, 4, 13, 5.5], "texture": "#rabbit"},
+				"up": {"uv": [13.5, 4, 14.25, 3], "texture": "#rabbit"},
+				"down": {"uv": [14.25, 3, 15, 4], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "nose",
+			"from": [7.5, 11.5, 0],
+			"to": [8.5, 12.5, 1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -1]},
+			"faces": {
+				"north": {"uv": [8.5, 5, 8.25, 5.5], "texture": "#rabbit"},
+				"east": {"uv": [8.75, 5, 8.5, 5.5], "texture": "#rabbit"},
+				"south": {"uv": [9, 5, 8.75, 5.5], "texture": "#rabbit"},
+				"west": {"uv": [8.25, 5, 8, 5.5], "texture": "#rabbit"},
+				"up": {"uv": [8.25, 5, 8.5, 4.5], "texture": "#rabbit"},
+				"down": {"uv": [8.5, 4.5, 8.75, 5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "earRight",
+			"from": [8.5, 14, 4.5],
+			"to": [10.5, 19, 5.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -1]},
+			"faces": {
+				"north": {"uv": [13.75, 0.5, 13.25, 3], "texture": "#rabbit"},
+				"east": {"uv": [14, 0.5, 13.75, 3], "texture": "#rabbit"},
+				"south": {"uv": [14.5, 0.5, 14, 3], "texture": "#rabbit"},
+				"west": {"uv": [13.25, 0.5, 13, 3], "texture": "#rabbit"},
+				"up": {"uv": [13.25, 0.5, 13.75, 0], "texture": "#rabbit"},
+				"down": {"uv": [13.75, 0, 14.25, 0.5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "head",
+			"from": [5.5, 10, 0.5],
+			"to": [10.5, 14, 5.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -1]},
+			"faces": {
+				"north": {"uv": [10.5, 2.5, 9.25, 4.5], "texture": "#rabbit"},
+				"east": {"uv": [11.75, 2.5, 10.5, 4.5], "texture": "#rabbit"},
+				"south": {"uv": [13, 2.5, 11.75, 4.5], "texture": "#rabbit"},
+				"west": {"uv": [9.25, 2.5, 8, 4.5], "texture": "#rabbit"},
+				"up": {"uv": [9.25, 2.5, 10.5, 0], "texture": "#rabbit"},
+				"down": {"uv": [10.5, 0, 11.75, 2.5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "earLeft",
+			"from": [5.5, 14, 4.5],
+			"to": [7.5, 19, 5.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -1]},
+			"faces": {
+				"north": {"uv": [15.25, 0.5, 14.75, 3], "texture": "#rabbit"},
+				"east": {"uv": [15.5, 0.5, 15.25, 3], "texture": "#rabbit"},
+				"south": {"uv": [16, 0.5, 15.5, 3], "texture": "#rabbit"},
+				"west": {"uv": [14.75, 0.5, 14.5, 3], "texture": "#rabbit"},
+				"up": {"uv": [14.75, 0.5, 15.25, 0], "texture": "#rabbit"},
+				"down": {"uv": [15.25, 0, 15.75, 0.5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "frontLegRight",
+			"from": [10, 2, 4],
+			"to": [12, 9, 6],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -1]},
+			"faces": {
+				"north": {"uv": [1, 8.5, 0.5, 12], "texture": "#rabbit"},
+				"east": {"uv": [1.5, 8.5, 1, 12], "texture": "#rabbit"},
+				"south": {"uv": [2, 8.5, 1.5, 12], "texture": "#rabbit"},
+				"west": {"uv": [0.5, 8.5, 0, 12], "texture": "#rabbit"},
+				"up": {"uv": [0.5, 8.5, 1, 7.5], "texture": "#rabbit"},
+				"down": {"uv": [1, 7.5, 1.5, 8.5], "texture": "#rabbit"}
+			}
+		},
+		{
+			"name": "haunchRight",
+			"from": [10, 4.65, 10.8],
+			"to": [12, 8.65, 15.8],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [10, 8.5, 10.7]},
+			"faces": {
+				"north": {"uv": [9.25, 10, 8.75, 12], "texture": "#rabbit"},
+				"east": {"uv": [10.5, 10, 9.25, 12], "texture": "#rabbit"},
+				"south": {"uv": [11, 10, 10.5, 12], "texture": "#rabbit"},
+				"west": {"uv": [8.75, 10, 7.5, 12], "texture": "#rabbit"},
+				"up": {"uv": [8.75, 10, 9.25, 7.5], "texture": "#rabbit"},
+				"down": {"uv": [9.25, 7.5, 9.75, 10], "texture": "#rabbit"}
+			}
+		}
+	]
+}

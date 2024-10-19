@@ -18,6 +18,7 @@ object DnDParticlesClient {
         ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIDERLILY, SpiderlilyPetalParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(DnDParticles.MUSHROOM_LAUNCH, MushroomLaunchParticle::Factory)
+        ParticleFactoryRegistry.getInstance().register(DnDParticles.DUST_BUNNY, DustBunnyParticle::Factory)
 
         ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIRAL, SpiralParticle::Factory)
     }

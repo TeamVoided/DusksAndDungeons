@@ -7,6 +7,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.particle.ColorableParticleEffect
+import org.teamvoided.dusk_autumn.particle.DustBunnyParticleEffect
 import org.teamvoided.dusk_autumn.particle.SpiralParticleEffect
 
 
@@ -20,6 +21,8 @@ object DnDParticles {
     val SPIDERLILY: DefaultParticleType = FabricParticleTypes.simple()
     val SNOWFLAKE: DefaultParticleType = FabricParticleTypes.simple()
     val MUSHROOM_LAUNCH: DefaultParticleType = FabricParticleTypes.simple()
+    val DUST_BUNNY: ParticleType<DustBunnyParticleEffect> =
+        FabricParticleTypes.complex(DustBunnyParticleEffect.CODEC, DustBunnyParticleEffect.PACKET_CODEC)
 
     val SPIRAL: ParticleType<SpiralParticleEffect> =
         FabricParticleTypes.complex(SpiralParticleEffect.CODEC, SpiralParticleEffect.PACKET_CODEC)
@@ -32,6 +35,7 @@ object DnDParticles {
         register("spiderlily", SPIDERLILY)
         register("snowflake", SNOWFLAKE)
         register("mushroom_launch", MUSHROOM_LAUNCH)
+        register("dust_bunny", DUST_BUNNY)
 
         register("spiral", SPIRAL)
     }

@@ -6,6 +6,10 @@ import net.minecraft.block.Blocks.*
 import net.minecraft.block.MapColor
 import net.minecraft.block.PillarBlock
 import net.minecraft.sound.BlockSoundGroup
+import org.teamvoided.dusk_autumn.block.BunnyGraveBlock
+import org.teamvoided.dusk_autumn.block.GravestoneBlock
+import org.teamvoided.dusk_autumn.block.HeadstoneBlock
+import org.teamvoided.dusk_autumn.block.SmallGravestoneBlock
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.item.DnDFoodComponents
@@ -14,12 +18,15 @@ import org.teamvoided.dusk_autumn.util.*
 object DnDStoneBlocks {
     fun init() = Unit
 
-    val GRAVESTONE = DnDBlocks.register("gravestone", GravestoneBlock(copy(CHISELED_STONE_BRICKS).solid()).pickaxe()).shh()
-    val SMALL_GRAVESTONE = DnDBlocks.register("small_gravestone", SmallGravestoneBlock(copy(GRAVESTONE)).pickaxe()).shh()
+    val GRAVESTONE =
+        DnDBlocks.register("gravestone", GravestoneBlock(copy(CHISELED_STONE_BRICKS).solid()).pickaxe()).shh()
+    val SMALL_GRAVESTONE =
+        DnDBlocks.register("small_gravestone", SmallGravestoneBlock(copy(GRAVESTONE)).pickaxe()).shh()
     val DEEPSLATE_GRAVESTONE =
         DnDBlocks.register("deepslate_gravestone", GravestoneBlock(copy(CHISELED_DEEPSLATE).solid()).pickaxe()).shh()
     val SMALL_DEEPSLATE_GRAVESTONE =
-        DnDBlocks.register("small_deepslate_gravestone", SmallGravestoneBlock(copy(DEEPSLATE_GRAVESTONE)).pickaxe()).shh()
+        DnDBlocks.register("small_deepslate_gravestone", SmallGravestoneBlock(copy(DEEPSLATE_GRAVESTONE)).pickaxe())
+            .shh()
     val TUFF_GRAVESTONE =
         DnDBlocks.register("tuff_gravestone", GravestoneBlock(copy(CHISELED_TUFF_BRICKS).solid()).pickaxe()).shh()
     val SMALL_TUFF_GRAVESTONE =
@@ -48,6 +55,7 @@ object DnDStoneBlocks {
 
     val HEADSTONE =
         DnDBlocks.register("headstone", HeadstoneBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe()).shh()
+    val BUNNY_GRAVE = DnDBlocks.register("bunny_grave", BunnyGraveBlock(copy(STONE_BRICK_WALL)).pickaxe()).shh()
 
     val STONE_PILLAR = DnDBlocks.register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = DnDBlocks.register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))

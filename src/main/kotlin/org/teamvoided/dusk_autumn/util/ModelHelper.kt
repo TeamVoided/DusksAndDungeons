@@ -25,6 +25,7 @@ import java.util.*
 val ALL_KRY: TextureKey = TextureKey.of("all")
 val INNER: TextureKey = TextureKey.of("inner")
 val SMALL: TextureKey = TextureKey.of("small")
+val RABBIT: TextureKey = TextureKey.of("rabbit")
 
 val BAR: TextureKey = TextureKey.of("bar")
 val POST: TextureKey = TextureKey.of("post")
@@ -816,6 +817,37 @@ fun gravestoneBlockstates(gravestone: Block): BlockStateVariantMap.DoublePropert
     }
     return variants
 }
+
+
+fun BlockStateModelGenerator.registerBunnyGrave(
+    block: Block, referenceTexture: Block, referenceTextureFront: Block
+) {
+    val model = MultipartBlockStateSupplier.create(block)
+    val textureBunny: Texture = Texture()
+        .put(RABBIT, Texture.getId(block))
+    val texturePlate: Texture = Texture()
+        .put(TextureKey.DOWN, Texture.getId(referenceTexture))
+        .put(TextureKey.FRONT, Texture.getId(referenceTextureFront))
+    val bunnyModel = block("parent/bunny_grave",RABBIT)
+        .upload(block, textureBunny, this.modelCollector)
+    val plateModel = block("parent/bunny_grave_base", TextureKey.DOWN, TextureKey.FRONT)
+        .upload(block, "_plate", texturePlate, this.modelCollector)
+    modelDirectionRotation.forEach {(direction, rotation)->
+        model.with(
+            When.create().set(Properties.HORIZONTAL_FACING, direction),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, bunnyModel)
+                .put(VariantSettings.Y, rotation)
+        ).with(
+            When.create().set(Properties.HORIZONTAL_FACING, direction),
+            BlockStateVariant.create()
+                .put(VariantSettings.MODEL, plateModel)
+                .put(VariantSettings.Y, rotation)
+        )
+    }
+    this.blockStateCollector.accept(model)
+}
+
 
 fun BlockStateModelGenerator.registerCorn(block: Block, item: Item) {
 //    this.registerItemModel(block, "_top") //this one is for if the names are the same, they are not

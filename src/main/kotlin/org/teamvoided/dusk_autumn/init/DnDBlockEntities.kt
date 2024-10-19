@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.init
 
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
+import org.teamvoided.dusk_autumn.block.entity.BunnyGraveBlockEntity
 import net.minecraft.datafixer.TypeReferences
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -22,6 +23,9 @@ object DnDBlockEntities {
 
     val QUARTER_BLOCK_PILE: BlockEntityType<QuarterBlockPileBlockEntity> =
         register("quarter_block_pile", BlockEntityType.Builder.create(::QuarterBlockPileBlockEntity, DnDBlocks.QUARTER_BLOCK_PILE))
+
+    val BUNNY_GRAVE: BlockEntityType<BunnyGraveBlockEntity> =
+        register("bunny_grave", BlockEntityType.Builder.create(::BunnyGraveBlockEntity, DnDStoneBlocks.BUNNY_GRAVE))
 
     val HAUNTED_BLOCK: BlockEntityType<HauntedBlockEntity> =
         register(

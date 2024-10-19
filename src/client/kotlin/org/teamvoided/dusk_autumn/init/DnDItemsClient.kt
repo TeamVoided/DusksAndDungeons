@@ -4,9 +4,11 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.client.color.world.FoliageColors
 import net.minecraft.client.color.world.GrassColors
+import net.minecraft.client.item.ModelPredicateProviderRegistry
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
+import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DusksAndDungeons
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.util.id
@@ -47,5 +49,15 @@ object DnDItemsClient {
                 )
             }
         }
+
+
+
+        ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, Identifier.ofDefault("pull"))
+        { stack, _, entity, _ ->
+            if (entity == null || entity.activeItem != stack) 0.0f
+            else (stack.getUseTicks(entity) - entity.itemUseTimeLeft).toFloat() / 20.0f
+        }
+        ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, Identifier.ofDefault("pulling"))
+        { stack, _, entity, _ -> if (entity != null && entity.isUsingItem && entity.activeItem == stack) 1.0f else 0.0f }
     }
 }

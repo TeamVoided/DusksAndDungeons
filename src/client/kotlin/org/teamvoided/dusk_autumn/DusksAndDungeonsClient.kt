@@ -43,9 +43,6 @@ object DusksAndDungeonsClient {
             .build()
     )
 
-    private var decoratedPotBlockEntity = DecoratedPotBlockEntity(BlockPos.ORIGIN, DnDBlocks.POT_O_SCREAMS.defaultState)
-    private var chestOSoulsBlockEntity = ChestOSoulsBlockEntity(BlockPos.ORIGIN, DnDBlocks.CHEST_O_SOULS.defaultState)
-
     fun init() {
         DnDEntityModelLayers.init()
         DnDBlocksClient.init()
@@ -53,24 +50,6 @@ object DusksAndDungeonsClient {
         DnDParticlesClient.init()
         DnDEntitiesClient.init()
         DnDBlockEntitiesClient.init()
-        BuiltinItemRendererRegistry.INSTANCE.register(DnDBlocks.POT_O_SCREAMS) { stack, mode, matrices, vertexConsumers, light, overlay ->
-            MinecraftClient.getInstance().blockEntityRenderDispatcher.renderEntity(
-                decoratedPotBlockEntity, matrices, vertexConsumers, light, overlay
-            )
-        }
-        BuiltinItemRendererRegistry.INSTANCE.register(DnDBlocks.CHEST_O_SOULS) { stack, mode, matrices, vertextConsumers, light, overlay ->
-            MinecraftClient.getInstance().blockEntityRenderDispatcher.renderEntity(
-                chestOSoulsBlockEntity, matrices, vertextConsumers, light, overlay
-            )
-        }
-
-        ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, Identifier.ofDefault("pull"))
-        { stack, _, entity, _ ->
-            if (entity == null || entity.activeItem != stack) 0.0f
-            else (stack.getUseTicks(entity) - entity.itemUseTimeLeft).toFloat() / 20.0f
-        }
-        ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, Identifier.ofDefault("pulling"))
-        { stack, _, entity, _ -> if (entity != null && entity.isUsingItem && entity.activeItem == stack) 1.0f else 0.0f }
 
 //        ClientTickEvents.END_CLIENT_TICK.register {
 //            if (key.isPressed && cooldown < 1) {

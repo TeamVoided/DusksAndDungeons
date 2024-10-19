@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.Blocks
+import net.minecraft.data.client.model.VariantSettings
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.projectile.ProjectileEntity
@@ -12,6 +13,7 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.StructureWorldAccess
 
@@ -24,6 +26,13 @@ val rotate180 = 3.142f
 val rotate225 = 3.927f
 val rotate270 = 4.712f
 val rotate315 = 5.498f
+
+val modelDirectionRotation = listOf(
+    (Direction.NORTH to VariantSettings.Rotation.R0),
+    (Direction.EAST to VariantSettings.Rotation.R90),
+    (Direction.SOUTH to VariantSettings.Rotation.R180),
+    (Direction.WEST to VariantSettings.Rotation.R270)
+)
 
 fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, y))
 

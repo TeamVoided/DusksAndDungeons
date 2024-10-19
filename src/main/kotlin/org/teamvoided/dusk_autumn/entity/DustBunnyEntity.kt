@@ -22,15 +22,17 @@ import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
+import net.minecraft.world.LocalDifficulty
+import net.minecraft.world.ServerWorldAccess
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.init.DnDParticles
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World) :
     HostileEntity(entityType, world), Ownable {
     var creator: MobEntity? = null
     private var alive = false
-    private var lifeTicks = 0
 
     init {
         this.moveControl = NoClipMoveControl(this)
@@ -66,23 +68,16 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
         builder.add(TRACKER_CHARGING, false)
+        builder.add(TRACKER_SUMMON_POSITION, Optional.empty())
     }
 
     override fun readCustomDataFromNbt(nbt: NbtCompound) {
         super.readCustomDataFromNbt(nbt)
-
-        if (nbt.contains("LifeTicks")) {
-            this.setLifeTicks(nbt.getInt("LifeTicks"))
-        }
         this.isCharging = nbt.getBoolean("Charging")
     }
 
     override fun writeCustomDataToNbt(nbt: NbtCompound) {
         super.writeCustomDataToNbt(nbt)
-
-        if (this.alive) {
-            nbt.putInt("LifeTicks", this.lifeTicks)
-        }
         nbt.putBoolean("Charging", this.isCharging)
     }
 
@@ -108,8 +103,7 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
         this.noClip = false
         this.setNoGravity(true)
         particles(world, this, 1)
-        if (this.alive && --this.lifeTicks <= 0) {
-            this.lifeTicks = 20
+        if (this.alive && this.hasCustomName() && this.age >= 72000 && age % 20 == 0) {
             this.damage(this.damageSources.starve(), 1.0f)
         }
     }
@@ -130,13 +124,15 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
             dataTracker[TRACKER_CHARGING] = charging
         }
 
+
+    var summonedPos: BlockPos?
+        get() = dataTracker[TRACKER_SUMMON_POSITION].getOrNull()
+        set(pos) {
+            dataTracker[TRACKER_SUMMON_POSITION] = Optional.ofNullable(pos)
+        }
+
     fun setOwner(owner: MobEntity?) {
         this.creator = owner
-    }
-
-    fun setLifeTicks(lifeTicks: Int) {
-        this.alive = true
-        this.lifeTicks = lifeTicks
     }
 
     override fun getAmbientSound(): SoundEvent {
@@ -333,6 +329,10 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
 
         val TRACKER_CHARGING: TrackedData<Boolean> = DataTracker.registerData(
             DustBunnyEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN
+        )
+
+        val TRACKER_SUMMON_POSITION: TrackedData<Optional<BlockPos>> = DataTracker.registerData(
+            DustBunnyEntity::class.java, TrackedDataHandlerRegistry.OPTIONAL_BLOCK_POS
         )
 
         fun createAttributes(): DefaultAttributeContainer.Builder {
