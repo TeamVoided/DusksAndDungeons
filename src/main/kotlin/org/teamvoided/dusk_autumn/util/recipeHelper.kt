@@ -100,6 +100,32 @@ fun RecipeExporter.createPumpkinPie(output: ItemConvertible, pumpkin: ItemConver
         .offerTo(this)
 }
 
+fun RecipeExporter.createPumpkinStuffs(
+    pumpkin: ItemConvertible,
+    carvedPumpkin: ItemConvertible,
+    glowingPumpkin: ItemConvertible,
+    smallPumpkin: ItemConvertible,
+    smallCarvedPumpkin: ItemConvertible,
+    smallGlowingPumpkin: ItemConvertible,
+    pumpkinPie: ItemConvertible
+) {
+    this.createDoubleCraft(
+        glowingPumpkin,
+        carvedPumpkin,
+        Items.TORCH
+    )
+    this.createDoubleCraft(
+        smallGlowingPumpkin,
+        smallCarvedPumpkin,
+        Items.TORCH
+    )
+    this.createPumpkinPie(
+        pumpkinPie,
+        pumpkin,
+        carvedPumpkin
+    )
+}
+
 fun RecipeExporter.smeltDefault(
     output: ItemConvertible,
     input: ItemConvertible
@@ -168,7 +194,6 @@ fun RecipeExporter.createCount(output: ItemConvertible, input: ItemConvertible, 
         .criterion(input)
         .offerTo(this)
 }
-
 
 
 fun RecipeExporter.offerReversibleCompactingRecipes4(
@@ -266,6 +291,14 @@ fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConver
         .pattern("#")
         .pattern("#")
         .criterion(itemTag)
+        .offerTo(this)
+}
+
+fun RecipeExporter.createDoubleCraft(output: ItemConvertible, input1: ItemConvertible, input2: ItemConvertible) {
+    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .ingredient(input1)
+        .ingredient(input2)
+        .criterion(input1)
         .offerTo(this)
 }
 

@@ -13,6 +13,7 @@ import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusk_autumn.block.DnDFamilies.recipesBlockFamilies
 import org.teamvoided.dusk_autumn.data.gen.providers.recipes.*
+import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.util.*
@@ -42,25 +43,34 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
     }
 
     private fun temporaryRecipes(e: RecipeExporter) {
+        ShapelessRecipeJsonFactory(RecipeCategory.MISC, DnDBlocks.CHEST_O_SOULS, 1)
+            .ingredient(Items.CHEST)
+            .ingredient(Items.SOUL_LANTERN)
+            .criterion(DnDBlocks.CHEST_O_SOULS).offerTo(e)
+
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
+            DnDFloraBlocks.SMALL_PUMPKIN,
             Blocks.PUMPKIN,
-            DnDFloraBlocks.SMALL_PUMPKIN
+            8
         )
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
+            DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
             DnDFloraBlocks.LANTERN_PUMPKIN,
-            DnDFloraBlocks.SMALL_LANTERN_PUMPKIN
+            8
         )
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
+            DnDFloraBlocks.SMALL_PALE_PUMPKIN,
             DnDFloraBlocks.PALE_PUMPKIN,
-            DnDFloraBlocks.SMALL_PALE_PUMPKIN
+            8
         )
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
+            DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
             DnDFloraBlocks.GLOOM_PUMPKIN,
-            DnDFloraBlocks.SMALL_GLOOM_PUMPKIN
+            8
         )
     }
 

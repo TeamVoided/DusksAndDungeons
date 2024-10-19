@@ -7,6 +7,7 @@ import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeJsonFactory.getItemId
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.util.Identifier
@@ -37,20 +38,37 @@ object FloraRecipes {
             .ingredient(DnDFloraBlocks.ROOT_BLOCK)
             .criterion(DnDFloraBlocks.ROOT_BLOCK).offerTo(e)
 
-        e.createPumpkinPie(
-            DnDItems.LANTERN_PUMPKIN_PIE,
+        e.createDoubleCraft(
+            DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_PUMPKIN,
+            Items.TORCH
+        )
+        e.createPumpkinStuffs(
             DnDFloraBlocks.LANTERN_PUMPKIN,
-            DnDFloraBlocks.CARVED_LANTERN_PUMPKIN
+            DnDFloraBlocks.CARVED_LANTERN_PUMPKIN,
+            DnDFloraBlocks.GLOWING_LANTERN_PUMPKIN,
+            DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
+            DnDItems.LANTERN_PUMPKIN_PIE
         )
-        e.createPumpkinPie(
-            DnDItems.PALE_PUMPKIN_PIE,
+        e.createPumpkinStuffs(
             DnDFloraBlocks.PALE_PUMPKIN,
-            DnDFloraBlocks.CARVED_PALE_PUMPKIN
+            DnDFloraBlocks.CARVED_PALE_PUMPKIN,
+            DnDFloraBlocks.GLOWING_PALE_PUMPKIN,
+            DnDFloraBlocks.SMALL_PALE_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_PALE_PUMPKIN,
+            DnDItems.PALE_PUMPKIN_PIE
         )
-        e.createPumpkinPie(
-            DnDItems.GLOOM_PUMPKIN_PIE,
+        e.createPumpkinStuffs(
             DnDFloraBlocks.GLOOM_PUMPKIN,
-            DnDFloraBlocks.CARVED_GLOOM_PUMPKIN
+            DnDFloraBlocks.CARVED_GLOOM_PUMPKIN,
+            DnDFloraBlocks.GLOWING_GLOOM_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
+            DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
+            DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
+            DnDItems.GLOOM_PUMPKIN_PIE
         )
         e.smeltDefault(DnDFloraBlocks.CORN_SYRUP_BLOCK, DnDFloraBlocks.CORN_BLOCK)
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDItems.CORN, 8)

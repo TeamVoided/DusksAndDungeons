@@ -9,6 +9,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.entity.ChillChargeEntity
+import org.teamvoided.dusk_autumn.entity.DustBunnyEntity
 import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
 import org.teamvoided.dusk_autumn.entity.projectile.FlyingPumpkinProjectile
 
@@ -54,13 +55,23 @@ object DnDEntities {
             .setEyeHeight(0.25F)
             .maxTrackingRange(4)
             .trackingTickInterval(10)
-
+    )
+    val DUST_BUNNY = register(
+        "dust_bunny",
+        EntityType.Builder.create(EntityType.EntityFactory(::DustBunnyEntity), SpawnGroup.MONSTER)
+            .setDimensions(2F, 2F)
+            .setEyeHeight(1F)
+            .maxTrackingRange(8)
+            .trackingTickInterval(10)
+            .makeFireImmune()
     )
 
     fun init() {
 //        FabricDefaultAttributeRegistry.register(BIRD_TEST, BirdEntity.createAttributes().build())
 
         FabricDefaultAttributeRegistry.register(SCARECROW, ScarecrowEntity.createAttributes().build())
+
+        FabricDefaultAttributeRegistry.register(DUST_BUNNY, DustBunnyEntity.createAttributes().build())
     }
 
     fun <T : Entity> register(id: String, entityType: EntityType.Builder<T>): EntityType<T> =

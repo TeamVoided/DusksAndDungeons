@@ -12,7 +12,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
-import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ProjectileItem
@@ -29,7 +28,6 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
-import org.teamvoided.dusk_autumn.data.tags.DnDEntityTypeTags
 import org.teamvoided.dusk_autumn.init.DnDParticles
 import org.teamvoided.dusk_autumn.mixin.PersistentProjectileEntityAccessor
 import org.teamvoided.dusk_autumn.util.radToDeg
@@ -65,7 +63,8 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
         return if (entity != null && (entity is PersistentProjectileEntity)) {
             VoxelShapes.empty()
         } else {
-            super.getCollisionShape(state, world, pos, context)
+            VoxelShapes.fullCube()
+//            COLLISION_SHAPE
         }
     }
 
@@ -73,6 +72,7 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
         if ((entity is PersistentProjectileEntity)) {
             entity.isOnGround = false
             (entity as PersistentProjectileEntityAccessor).setInGround(false)
+            entity.setVelocity(0.0,1.0,0.0)
             entity.addVelocity(0.0, 1.0, 0.0)
         } else super.onEntityCollision(state, world, pos, entity)
     }
@@ -189,5 +189,8 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
             1.0f,
             pitch
         )
+    }
+    companion object{
+        val COLLISION_SHAPE = createCuboidShape(4.0, 4.0, 4.0, 12.0, 12.0, 12.0)
     }
 }
