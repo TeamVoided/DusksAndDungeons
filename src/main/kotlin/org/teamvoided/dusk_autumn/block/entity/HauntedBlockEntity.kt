@@ -9,7 +9,7 @@ import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.block.HauntedGravestoneBlock
 import org.teamvoided.dusk_autumn.init.DnDBlockEntities
 
-class HauntedBlockEntity(pos: BlockPos?, state: BlockState?) :
+open class HauntedBlockEntity(pos: BlockPos?, state: BlockState?) :
     BlockEntity(DnDBlockEntities.HAUNTED_BLOCK, pos, state) {
 
     companion object {

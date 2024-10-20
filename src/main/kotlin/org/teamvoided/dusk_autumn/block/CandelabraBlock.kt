@@ -12,6 +12,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import net.minecraft.world.WorldView
 import org.teamvoided.dusk_autumn.util.rotate
 
 open class CandelabraBlock(val candle: Block, settings: Settings) : HorizontalWaterloggedBlock(settings) {
@@ -27,6 +28,10 @@ open class CandelabraBlock(val candle: Block, settings: Settings) : HorizontalWa
         return (!context.shouldCancelInteraction() && context.stack.item === asItem() && state.get(CANDLES) < 5) ||
                 super.canReplace(state, context)
     }
+
+//    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
+//        return sideCoversSmallSquare(world, pos.offset(Direction.DOWN), Direction.UP)
+//    }
 
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {

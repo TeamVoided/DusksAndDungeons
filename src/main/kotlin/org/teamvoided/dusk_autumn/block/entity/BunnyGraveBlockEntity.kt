@@ -14,7 +14,7 @@ import org.teamvoided.dusk_autumn.init.DnDEntities
 
 open class BunnyGraveBlockEntity(pos: BlockPos?, state: BlockState?) :
     BlockEntity(DnDBlockEntities.BUNNY_GRAVE, pos, state) {
-    var dustBunnies: List<LivingEntity>? = null
+    var dustBunnies: MutableList<LivingEntity> = mutableListOf()
     private var timeSinceLastBunny = 0
 
     override fun onSyncedBlockEvent(type: Int, data: Int): Boolean {
@@ -29,8 +29,8 @@ open class BunnyGraveBlockEntity(pos: BlockPos?, state: BlockState?) :
     fun summonBunny() {
         val blockPos = this.getPos()
         if (world != null) {
-            val entity: DustBunnyEntity = DustBunnyEntity(DnDEntities.DUST_BUNNY, world!!)
-            entity.refreshPositionAndAngles(blockPos, 0f, 0f)
+            val entity = DustBunnyEntity(DnDEntities.DUST_BUNNY, world!!)
+            entity.refreshPositionAndAngles(blockPos.ofCenter(), 0f, 0f)
             entity.summonedPos = blockPos
             entity.initialize(
                 world as ServerWorld,
@@ -39,7 +39,25 @@ open class BunnyGraveBlockEntity(pos: BlockPos?, state: BlockState?) :
                 null
             )
             world!!.spawnEntity(entity)
+            dustBunnies.addLast(entity)
             this.timeSinceLastBunny = 0
+            println(dustBunnies)
+        }
+    }
+
+    fun getDustBunniesFromBlock(): MutableList<LivingEntity> {
+        return dustBunnies
+    }
+
+    fun removeDustBunny(index: Int) {
+        dustBunnies.removeAt(index)
+    }
+
+    fun removeDustBunny(entity: LivingEntity) {
+        dustBunnies.forEachIndexed { idx, it ->
+            println(it)
+            if (it == entity)
+                dustBunnies.removeAt(idx)
         }
     }
 
@@ -54,15 +72,17 @@ open class BunnyGraveBlockEntity(pos: BlockPos?, state: BlockState?) :
             if (blockEntity.timeSinceLastBunny < 1200) {
                 ++blockEntity.timeSinceLastBunny
             }
-            val dustState = state.get(BunnyGraveBlock.DUST)
-            val dustBunniesAmount = blockEntity.dustBunnies?.size ?: 0
-            if (dustBunniesAmount < bunniesAmount(dustState)) {
-                if (world.random.nextFloat() < dustState * 0.7) {
-                    blockEntity.summonBunny()
+            if (blockEntity.timeSinceLastBunny % 20 == 0) {
+                val dustState = state.get(BunnyGraveBlock.DUST)
+                val dustBunniesAmount = blockEntity.dustBunnies.size
+                if (dustBunniesAmount < bunniesAmount(dustState)) {
+                    if (world.random.nextFloat() < dustState * 0.7) {
+                        blockEntity.onSyncedBlockEvent(1, 1)
+                    }
+                } else if (dustBunniesAmount > bunniesAmount(dustState)) {
+                    val entity = blockEntity.dustBunnies.first()
+                    entity.damage(entity.damageSources.starve(), 1.0f)
                 }
-            } else if (dustBunniesAmount > bunniesAmount(dustState) && world.time % 20 == 0L) {
-                val entity = blockEntity.dustBunnies?.first()
-                entity?.damage(entity.damageSources.starve(), 1.0f)
             }
         }
 

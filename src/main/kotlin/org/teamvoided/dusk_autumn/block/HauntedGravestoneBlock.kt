@@ -7,6 +7,8 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
@@ -14,12 +16,14 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.random.RandomGenerator
+import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.block.entity.HauntedBlockEntity
 import org.teamvoided.dusk_autumn.init.DnDBlockEntities
 import org.teamvoided.dusk_autumn.mixin.BlockWithEntityAccessor
 
-open class HauntedGravestoneBlock(settings: Settings) : GravestoneBlock(settings), BlockEntityProvider {
+open class HauntedGravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, settings: Settings) :
+    GravestoneBlock(shape, centerShape, settings), BlockEntityProvider {
 
     init {
         defaultState = stateManager.defaultState
@@ -52,18 +56,17 @@ open class HauntedGravestoneBlock(settings: Settings) : GravestoneBlock(settings
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
         if (state.get(IS_ACTIVE)) {
-//            world.playSound(); TODO
-            repeat(random.rangeInclusive(3, 5)) {
-                world.addParticle(
-                    ParticleTypes.SOUL,
-                    pos.x + 0.5 + MathHelper.nextDouble(random, -.5, .5),
-                    pos.y + 0.5 + MathHelper.nextDouble(random, -.5, .5),
-                    pos.z + 0.5 + MathHelper.nextDouble(random, -.5, .5),
-                    MathHelper.nextDouble(random, -0.03, 0.03),
-                    MathHelper.nextDouble(random, 0.0, 0.2),
-                    MathHelper.nextDouble(random, -0.03, 0.03)
-                )
-            }
+            if (world.isClient)//random.nextFloat() < 0.01)
+                world.playSound(null, pos, SoundEvents.ENTITY_VEX_AMBIENT, SoundCategory.BLOCKS, 2f, 1f)
+            world.addParticle(
+                ParticleTypes.SOUL,
+                pos.x + random.nextDouble(),
+                pos.y + random.nextDouble(),
+                pos.z + random.nextDouble(),
+                MathHelper.nextDouble(random, -0.03, 0.03),
+                MathHelper.nextDouble(random, 0.0, 0.2),
+                MathHelper.nextDouble(random, -0.03, 0.03)
+            )
         }
     }
 

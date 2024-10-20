@@ -9,6 +9,8 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.particle.DefaultParticleType
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
+import net.minecraft.util.shape.VoxelShape
+import net.minecraft.util.shape.VoxelShapes
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.big.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
@@ -82,6 +84,28 @@ val rootBlockSound = BlockSoundGroup(
     SoundEvents.BLOCK_HANGING_ROOTS_HIT,
     SoundEvents.BLOCK_HANGING_ROOTS_FALL
 )
+
+
+//private val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
+//private val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
+val gravestoneShape: VoxelShape = VoxelShapes.union(
+    Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 6.0), //left
+    Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 6.0), //right
+    Block.createCuboidShape(0.0, 13.0, 0.0, 16.0, 16.0, 6.0), //top
+    Block.createCuboidShape(2.0, 0.0, 1.0, 14.0, 13.0, 5.0) //center
+)
+val centerGravestoneShape: VoxelShape = VoxelShapes.union(
+    Block.createCuboidShape(0.0, 0.0, 5.0, 2.0, 16.0, 11.0), //left
+    Block.createCuboidShape(14.0, 0.0, 5.0, 16.0, 16.0, 11.0), //right
+    Block.createCuboidShape(0.0, 13.0, 5.0, 16.0, 16.0, 11.0), //top
+    Block.createCuboidShape(2.0, 0.0, 6.0, 14.0, 13.0, 10.0) //center
+)
+
+val smallGravestoneShape: VoxelShape = Block.createCuboidShape(3.0, 0.0, 0.0, 13.0, 12.0, 2.0)
+val centerSmallGravestoneShape: VoxelShape = Block.createCuboidShape(3.0, 0.0, 7.0, 13.0, 12.0, 9.0)
+
+val headstoneShape: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
+val centerHeadstoneShape: VoxelShape = Block.createCuboidShape(0.0, 0.0, 7.0, 16.0, 16.0, 9.0)
 
 fun light(lightLevel: Int): ToIntFunction<BlockState> {
     return ToIntFunction { lightLevel }

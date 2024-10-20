@@ -34,9 +34,10 @@ class DustBunnyParticle(
         colorRed = lerp(colorToVector(color1).x, colorToVector(color2).x, lerp)
         colorGreen = lerp(colorToVector(color1).y, colorToVector(color2).y, lerp)
         colorBlue = lerp(colorToVector(color1).z, colorToVector(color2).z, lerp)
+        this.colorAlpha = random.nextFloat() * 0.6f + 0.4f
     }
 
-    override fun getType(): ParticleTextureSheet = ParticleTextureSheet.PARTICLE_SHEET_OPAQUE
+    override fun getType(): ParticleTextureSheet = ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT
 
     override fun tick() {
         super.tick()
@@ -72,7 +73,7 @@ class DustBunnyParticle(
             yVel: Double,
             zVel: Double
         ): Particle {
-            val particle = SpiralParticle(world, xPos, yPos, zPos, xVel, yVel, zVel, type.color1, type.color2)
+            val particle = DustBunnyParticle(world, xPos, yPos, zPos, xVel, yVel, zVel, type.color1, type.color2)
             particle.setSprite(this.spriteProvider)
             return particle
         }

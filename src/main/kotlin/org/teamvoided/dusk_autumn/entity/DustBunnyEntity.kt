@@ -25,7 +25,10 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.LocalDifficulty
 import net.minecraft.world.ServerWorldAccess
 import net.minecraft.world.World
+import org.teamvoided.dusk_autumn.block.BunnyGraveBlock
+import org.teamvoided.dusk_autumn.block.entity.BunnyGraveBlockEntity
 import org.teamvoided.dusk_autumn.init.DnDParticles
+import org.teamvoided.dusk_autumn.particle.DustBunnyParticleEffect
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -94,6 +97,17 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
     }
 
     override fun onRemoved() {
+        println("was removed")
+        if (summonedPos != null) {
+            var summonGrave = world.getBlockEntity(summonedPos)
+            if (world.getBlockEntity(summonedPos) is BunnyGraveBlockEntity) {
+                println("yes")
+                println(this)
+                summonGrave = (summonGrave as BunnyGraveBlockEntity)
+                println(summonGrave.getDustBunniesFromBlock().size)
+                summonGrave.removeDustBunny(this)
+            }
+        }
         super.onRemoved()
     }
 
@@ -103,7 +117,7 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
         this.noClip = false
         this.setNoGravity(true)
         particles(world, this, 1)
-        if (this.alive && this.hasCustomName() && this.age >= 72000 && age % 20 == 0) {
+        if (this.alive && !this.hasCustomName() && this.age >= 72000 && age % 20 == 0) {
             this.damage(this.damageSources.starve(), 1.0f)
         }
     }
@@ -159,7 +173,7 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
                 (rand.nextDouble() - rand.nextDouble()) * multiplier,
             )
             world.addParticle(
-                DnDParticles.MUSHROOM_LAUNCH,
+                DustBunnyParticleEffect(0xCCBA76, 0x896230),
                 true,
                 entityPos.x + ((rand.nextDouble() - rand.nextDouble()) * entity.width),
                 entityPos.y + (rand.nextDouble() * entity.height),
@@ -184,10 +198,8 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
                     this.state = State.WAIT
                     this@DustBunnyEntity.velocity = velocity.multiply(0.5)
                 } else {
-                    this@DustBunnyEntity.setVelocity(
-                        this@DustBunnyEntity.getVelocity().add(vec3d.multiply(this.speed * 0.05 / distance))
-                    )
-//                    this@DustBunnyEntity.velocity = velocity.add(vec3d.multiply(this.speed * 0.05 / distance))
+                    this@DustBunnyEntity.velocity =
+                        velocity.add(vec3d.multiply((this.speed * 0.05 / distance)))
                     if (this@DustBunnyEntity.target == null) {
                         val velocity = this@DustBunnyEntity.velocity
                         this@DustBunnyEntity.yaw = -(MathHelper.atan2(velocity.x, velocity.z).toFloat()) * 57.295776f

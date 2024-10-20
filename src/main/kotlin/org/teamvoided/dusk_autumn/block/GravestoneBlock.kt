@@ -19,9 +19,15 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
+import org.teamvoided.dusk_autumn.util.centerGravestoneShape
+import org.teamvoided.dusk_autumn.util.gravestoneShape
 import org.teamvoided.dusk_autumn.util.rotate
 
-open class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings), Waterloggable {
+open class GravestoneBlock(
+    val shape: VoxelShape,
+    val centerShape: VoxelShape,
+    settings: Settings
+) : HorizontalFacingBlock(settings), Waterloggable {
     init {
         this.defaultState = stateManager.defaultState
             .with(Properties.WATERLOGGED, false)
@@ -75,7 +81,7 @@ open class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings)
         context: ShapeContext
     ): VoxelShape {
         val rotations = state.get(FACING).horizontal
-        val shape = if (state.get(CENTERED)) CENTER_SHAPE else SHAPE
+        val shape = if (state.get(CENTERED)) centerShape else shape
         return shape.rotate(rotations)
     }
 
@@ -84,22 +90,13 @@ open class GravestoneBlock(settings: Settings) : HorizontalFacingBlock(settings)
     }
 
     companion object {
-        val CODEC: MapCodec<GravestoneBlock> = createCodec(::GravestoneBlock)
         val CENTERED: BooleanProperty = BooleanProperty.of("centered")
-
-        //private val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
-        //private val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
-        private val SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 6.0), //left
-            createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 6.0), //right
-            createCuboidShape(0.0, 13.0, 0.0, 16.0, 16.0, 6.0), //top
-            createCuboidShape(2.0, 0.0, 1.0, 14.0, 13.0, 5.0) //center
-        )
-        private val CENTER_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(0.0, 0.0, 5.0, 2.0, 16.0, 11.0), //left
-            createCuboidShape(14.0, 0.0, 5.0, 16.0, 16.0, 11.0), //right
-            createCuboidShape(0.0, 13.0, 5.0, 16.0, 16.0, 11.0), //top
-            createCuboidShape(2.0, 0.0, 6.0, 14.0, 13.0, 10.0) //center
-        )
+        val CODEC: MapCodec<GravestoneBlock> = createCodec { settings: Settings ->
+            GravestoneBlock(
+                gravestoneShape,
+                centerGravestoneShape,
+                settings
+            )
+        }
     }
 }

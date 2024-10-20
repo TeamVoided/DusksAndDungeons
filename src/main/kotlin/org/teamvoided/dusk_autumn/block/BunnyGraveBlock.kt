@@ -5,6 +5,7 @@ import net.minecraft.block.*
 import net.minecraft.block.entity.*
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
+import net.minecraft.item.ItemPlacementContext
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.IntProperty
@@ -63,6 +64,13 @@ class BunnyGraveBlock(settings: Settings) : BlockWithEntity(settings), Waterlogg
         super.randomTick(state, world, pos, random)
     }
 
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
+        val waterlogged = ctx.world.getFluidState(ctx.blockPos).fluid === Fluids.WATER
+        return defaultState
+            .with(Properties.HORIZONTAL_FACING, ctx.playerFacing.opposite)
+            .with(Properties.WATERLOGGED, waterlogged)
+    }
+
     override fun getOutlineShape(
         state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
@@ -102,7 +110,7 @@ class BunnyGraveBlock(settings: Settings) : BlockWithEntity(settings), Waterlogg
         val DUST: IntProperty = IntProperty.of("dust", 0, maxDust)
         val SHAPE: VoxelShape = VoxelShapes.union(
             createCuboidShape(1.0, 0.0, 1.0, 15.0, 2.0, 15.0),
-            createCuboidShape(5.0, 2.0, 5.0, 11.0, 14.0, 15.0)
+            createCuboidShape(5.0, 2.0, 1.0, 11.0, 14.0, 11.0)
         )
     }
 }

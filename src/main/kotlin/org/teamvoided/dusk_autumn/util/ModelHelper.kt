@@ -713,11 +713,6 @@ fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glo
     this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
-fun BlockStateModelGenerator.registerGravestone(gravestone: Block, smallGravestone: Block) {
-    this.registerGravestone(gravestone)
-    this.registerSmallGravestone(smallGravestone, gravestone)
-}
-
 fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
     val texture = Texture()
         .put(TextureKey.PARTICLE, Texture.getSubId(particle, "_side"))
@@ -743,10 +738,24 @@ fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block
     this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
-fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
+fun BlockStateModelGenerator.registerGravestones(
+    gravestone: Block,
+    smallGravestone: Block,
+    hauntedGravestone: Block,
+    smallHauntedGravestone: Block
+) {
+    this.registerGravestone(gravestone, gravestone.model(), hauntedGravestone)
+    this.registerSmallGravestone(smallGravestone, gravestone.model(), smallHauntedGravestone)
+}
+
+fun BlockStateModelGenerator.registerGravestone(
+    gravestone: Block,
+    texture: Identifier = gravestone.model(),
+    hauntedGravestone: Block? = null
+) {
     val texture = Texture()
-        .put(TextureKey.FRONT, Texture.getSubId(gravestone, "_front"))
-        .put(TextureKey.SIDE, Texture.getSubId(gravestone, "_side"))
+        .put(TextureKey.FRONT, texture.suffix("_front"))
+        .put(TextureKey.SIDE, texture.suffix("_side"))
     block(
         "parent/gravestone",
         TextureKey.FRONT,
@@ -764,11 +773,17 @@ fun BlockStateModelGenerator.registerGravestone(gravestone: Block) {
             gravestoneBlockstates(gravestone)
         )
     )
+    if (hauntedGravestone != null)
+        this.registerHauntedGravestone(hauntedGravestone, gravestone, centerModel)
 }
 
-fun BlockStateModelGenerator.registerSmallGravestone(gravestone: Block, texture: Block) {
+fun BlockStateModelGenerator.registerSmallGravestone(
+    gravestone: Block,
+    texture: Identifier = gravestone.model(),
+    hauntedGravestone: Block? = null
+) {
     val texture = Texture()
-        .put(TextureKey.FRONT, Texture.getSubId(texture, "_front"))
+        .put(TextureKey.FRONT, texture.suffix("_front"))
     block("parent/small_gravestone", TextureKey.FRONT)
         .upload(gravestone, texture, this.modelCollector)
     val centerModel = block("parent/small_gravestone_centered", TextureKey.FRONT)
@@ -776,6 +791,21 @@ fun BlockStateModelGenerator.registerSmallGravestone(gravestone: Block, texture:
     this.registerParentedItemModel(gravestone, centerModel)
     this.blockStateCollector.accept(
         VariantsBlockStateSupplier.create(gravestone).coordinate(
+            gravestoneBlockstates(gravestone)
+        )
+    )
+    if (hauntedGravestone != null)
+        this.registerHauntedGravestone(hauntedGravestone, gravestone, centerModel)
+}
+
+fun BlockStateModelGenerator.registerHauntedGravestone(
+    hauntedGravestone: Block,
+    gravestone: Block,
+    centerModel: Identifier
+) {
+    this.registerParentedItemModel(hauntedGravestone, centerModel)
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(hauntedGravestone).coordinate(
             gravestoneBlockstates(gravestone)
         )
     )
@@ -808,11 +838,7 @@ fun gravestoneBlockstates(gravestone: Block): BlockStateVariantMap.DoublePropert
                 Direction.WEST -> variant.put(VariantSettings.Y, Rotation.R90)
                 else -> variant
             }
-            variants.register(
-                direction,
-                it,
-                variant2
-            )
+            variants.register(direction, it, variant2)
         }
     }
     return variants
@@ -820,28 +846,28 @@ fun gravestoneBlockstates(gravestone: Block): BlockStateVariantMap.DoublePropert
 
 
 fun BlockStateModelGenerator.registerBunnyGrave(
-    block: Block, referenceTexture: Block, referenceTextureFront: Block
+    block: Block, referenceTexture: Block, referenceTexture2: Block
 ) {
     val model = MultipartBlockStateSupplier.create(block)
     val textureBunny: Texture = Texture()
         .put(RABBIT, Texture.getId(block))
     val texturePlate: Texture = Texture()
         .put(TextureKey.DOWN, Texture.getId(referenceTexture))
-        .put(TextureKey.FRONT, Texture.getId(referenceTextureFront))
-    val bunnyModel = block("parent/bunny_grave",RABBIT)
+        .put(TextureKey.FRONT, Texture.getId(referenceTexture2))
+    val bunnyModel = block("parent/bunny_grave", RABBIT)
         .upload(block, textureBunny, this.modelCollector)
     val plateModel = block("parent/bunny_grave_base", TextureKey.DOWN, TextureKey.FRONT)
         .upload(block, "_plate", texturePlate, this.modelCollector)
-    modelDirectionRotation.forEach {(direction, rotation)->
+    modelDirectionRotation.forEach { (direction, rotation) ->
         model.with(
             When.create().set(Properties.HORIZONTAL_FACING, direction),
             BlockStateVariant.create()
-                .put(VariantSettings.MODEL, bunnyModel)
+                .put(VariantSettings.MODEL, plateModel)
                 .put(VariantSettings.Y, rotation)
         ).with(
             When.create().set(Properties.HORIZONTAL_FACING, direction),
             BlockStateVariant.create()
-                .put(VariantSettings.MODEL, plateModel)
+                .put(VariantSettings.MODEL, bunnyModel)
                 .put(VariantSettings.Y, rotation)
         )
     }
