@@ -42,11 +42,12 @@ open class HauntedGravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, se
         state: BlockState,
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
-        return if (world.isClient()) BlockWithEntityAccessor.checkType(
-            type,
-            DnDBlockEntities.HAUNTED_GRAVESTONE_BLOCK,
-            HauntedGravestoneBlockEntity::clientTick
-        )
+        return if (world.isClient()) null
+//            BlockWithEntityAccessor.checkType(
+//            type,
+//            DnDBlockEntities.HAUNTED_GRAVESTONE_BLOCK,
+//            HauntedGravestoneBlockEntity::clientTick
+//        )
         else BlockWithEntityAccessor.checkType(
             type,
             DnDBlockEntities.HAUNTED_GRAVESTONE_BLOCK,
