@@ -52,31 +52,31 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             e, RecipeCategory.BUILDING_BLOCKS,
             DnDFloraBlocks.SMALL_PUMPKIN,
             Blocks.PUMPKIN,
-            8
+            4
         )
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
             DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
             DnDFloraBlocks.LANTERN_PUMPKIN,
-            8
+            4
         )
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
             DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN,
             DnDFloraBlocks.MOSSKIN_PUMPKIN,
-            8
+            4
         )
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
             DnDFloraBlocks.SMALL_PALE_PUMPKIN,
             DnDFloraBlocks.PALE_PUMPKIN,
-            8
+            4
         )
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
             DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
             DnDFloraBlocks.GLOOM_PUMPKIN,
-            8
+            4
         )
     }
 

@@ -19,6 +19,7 @@ import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.data.gen.providers.models.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
+import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
 import org.teamvoided.dusk_autumn.util.*
 import org.teamvoided.dusk_autumn.util.datagen.*
 import java.util.*
@@ -90,10 +91,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("chest"), Blocks.OAK_PLANKS)
             .includeWithoutItem(DnDBlocks.CHEST_O_SOULS)
 
-        gen.registerSimpleCubeAll(DnDBlocks.MOLTEN_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDBlocks.BRITTLE_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDBlocks.GLOWING_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.MOLTEN_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.BRITTLE_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.GLOWING_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.LAVASPONGE)
         gen.registerCandelabra(DnDBlocks.CANDELABRA)
 
 

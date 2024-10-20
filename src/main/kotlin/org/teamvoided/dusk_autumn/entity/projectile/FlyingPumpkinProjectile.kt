@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.BlockHitResult
@@ -40,6 +41,20 @@ open class FlyingPumpkinProjectile : PersistentProjectileEntity, FlyingBlockItem
         }
     }
 
+    override fun onRemoved() {
+        world.playSound(
+            pos.x,
+            pos.y,
+            pos.z,
+            SoundEvents.BLOCK_SLIME_BLOCK_BREAK,
+            SoundCategory.NEUTRAL,
+            1f,
+            random.nextFloat() * 0.3f,
+            false
+        )
+        super.onRemoved()
+    }
+
     fun particles(world: World) {
         if (!world.isClient) {
             val serverWorld = world as ServerWorld
@@ -61,7 +76,7 @@ open class FlyingPumpkinProjectile : PersistentProjectileEntity, FlyingBlockItem
         return false
     }
 
-    override fun getHitSound(): SoundEvent = SoundEvents.BLOCK_WOOD_BREAK
+    override fun getHitSound(): SoundEvent? = null
     override fun getDefaultItemStack(): ItemStack = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
     override fun getState(): BlockState {
         return if (state.item is BlockItem) {

@@ -55,19 +55,28 @@ open class HauntedGravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, se
     }
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        if (state.get(IS_ACTIVE)) {
-            if (world.isClient)//random.nextFloat() < 0.01)
-                world.playSound(null, pos, SoundEvents.ENTITY_VEX_AMBIENT, SoundCategory.BLOCKS, 2f, 1f)
+        if (state.get(IS_ACTIVE) && random.nextInt(25) == 0) {
+            world.playSound(
+                pos.x + 0.5,
+                pos.y + 0.5,
+                pos.z + 0.5,
+                SoundEvents.ENTITY_VEX_AMBIENT,
+                SoundCategory.BLOCKS,
+                0.5f + random.nextFloat(),
+                random.nextFloat() * 0.3f,
+                false
+            )
             world.addParticle(
                 ParticleTypes.SOUL,
                 pos.x + random.nextDouble(),
                 pos.y + random.nextDouble(),
                 pos.z + random.nextDouble(),
-                MathHelper.nextDouble(random, -0.03, 0.03),
+                MathHelper.nextDouble(random, -0.01, 0.01),
                 MathHelper.nextDouble(random, 0.0, 0.2),
-                MathHelper.nextDouble(random, -0.03, 0.03)
+                MathHelper.nextDouble(random, -0.01, 0.01)
             )
         }
+        super.randomDisplayTick(state, world, pos, random)
     }
 
     companion object {

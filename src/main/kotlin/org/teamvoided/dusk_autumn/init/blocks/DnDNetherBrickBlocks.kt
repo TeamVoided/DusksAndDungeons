@@ -9,7 +9,9 @@ import net.minecraft.block.MapColor
 import net.minecraft.block.PillarBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.sound.BlockSoundGroup
+import org.teamvoided.dusk_autumn.block.LavaSpongeBlock
 import org.teamvoided.dusk_autumn.block.SixWayFacingBlock
+import org.teamvoided.dusk_autumn.block.TransformingBlock
 import org.teamvoided.dusk_autumn.block.WarpedNetherWartBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.util.*
@@ -135,4 +137,14 @@ object DnDNetherBrickBlocks {
         DnDBlocks.register("polished_gray_nether_brick_slab", slabOf(GRAY_NETHER_BRICK_SLAB).pickaxe())
     val POLISHED_GRAY_NETHER_BRICK_WALL =
         DnDBlocks.register("polished_gray_nether_brick_wall", wallOf(GRAY_NETHER_BRICK_WALL).pickaxe())
+
+    val MOLTEN_LAVASPONGE =
+        DnDBlocks.register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe().tellWitnessesThatIWasMurdered()
+    val BRITTLE_LAVASPONGE =
+        DnDBlocks.register("brittle_lavasponge", LavaSpongeBlock(copy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
+            .tellWitnessesThatIWasMurdered()
+    val GLOWING_LAVASPONGE =
+        DnDBlocks.register("glowing_lavasponge", Block(copy(BASALT))).pickaxe().tellWitnessesThatIWasMurdered()
+    val LAVASPONGE = DnDBlocks.register("lavasponge", LavaSpongeBlock(copy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
+        .tellWitnessesThatIWasMurdered()
 }

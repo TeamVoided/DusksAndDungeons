@@ -63,9 +63,6 @@ class ItemTagsProvider(
     }
 
     fun vanillaTags() {
-        getOrCreateTagBuilder(ItemTags.DYEABLE)
-            .add(DnDItems.FARMERS_HAT)
-            .add(DnDItems.DIE_ITEM)
 
         copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN)
         copy(BlockTags.PLANKS, ItemTags.PLANKS)
@@ -98,6 +95,17 @@ class ItemTagsProvider(
 
         copy(BlockTags.DIRT, ItemTags.DIRT)
 
+
+        getOrCreateTagBuilder(ItemTags.DYEABLE)
+            .add(DnDItems.FARMERS_HAT)
+            .add(DnDItems.DIE_ITEM)
+
+//        getOrCreateTagBuilder(ItemTags.)
+//            .add(DnDItems.CORN_KERNELS)
+        getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD)
+            .add(DnDItems.CORN_KERNELS)
+
+
         getOrCreateTagBuilder(ItemTags.SWORDS)
             .add(DnDItems.BLACKSTONE_SWORD)
         getOrCreateTagBuilder(ItemTags.PICKAXES)
@@ -122,6 +130,12 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS)
             .add(DnDItems.BLACKSTONE_SWORD)
             .add(DnDItems.BLACKSTONE_AXE)
+
+        getOrCreateTagBuilder(ConventionalItemTags.PIE_FOODS)
+            .add(DnDItems.LANTERN_PUMPKIN_PIE)
+            .add(DnDItems.MOSSKIN_PUMPKIN_PIE)
+            .add(DnDItems.PALE_PUMPKIN_PIE)
+            .add(DnDItems.GLOOM_PUMPKIN_PIE)
 
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
             .addAll(DnDItems.EVIL_ITEMS)

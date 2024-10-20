@@ -6,24 +6,28 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
+import kotlin.math.cos
+import kotlin.math.sin
 
 class HauntedGravestoneBlockEntity(pos: BlockPos, state: BlockState) : HauntedBlockEntity(pos, state) {
     var players: MutableList<PlayerEntity> = mutableListOf()
     var cursedPlayer: PlayerEntity? = null
     var cursePos: Vec3d? = null
     var curseTime = 0
+    var curseType: Int = 0
     var curseVelocity: Vec3d = Vec3d(0.0, 0.0, 0.0)
 
     override fun onSyncedBlockEvent(type: Int, data: Int): Boolean {
-        if (type == 1) {
-//            this.notifyMemoriesOfBell()
-//            this.resonateTime = 0
-//            this.lastSideHit = Direction.byId(data)
-//            this.ringTicks = 0
-//            this.ringing = true
-            return true
-        } else {
-            return super.onSyncedBlockEvent(type, data)
+        when (type) {
+            0 -> {
+                end()
+                return true
+            }
+            1 -> {
+                curseType = 1
+                return true
+            }
+            else -> return super.onSyncedBlockEvent(type, data)
         }
     }
 
@@ -42,6 +46,7 @@ class HauntedGravestoneBlockEntity(pos: BlockPos, state: BlockState) : HauntedBl
         cursedPlayer = null
         cursePos = null
         curseTime = 0
+        curseType = 0
         curseVelocity = Vec3d(0.0, 0.0, 0.0)
     }
 
@@ -67,16 +72,24 @@ class HauntedGravestoneBlockEntity(pos: BlockPos, state: BlockState) : HauntedBl
             oldPos.add(curseVelocity)
             val random = world?.random
             if (world != null && random != null && cursePos != null) {
+                val spinner: Double = curseTime / 10.0
+                val xSin = sin(spinner)
+                val ySin = sin(spinner / 7)
+                val zCos = cos(spinner)
+                val velocityX = (random.nextDouble() - random.nextDouble()) + xSin
+                val velocityy = (random.nextDouble() - random.nextDouble()) + ySin
+                val velocityZ = (random.nextDouble() - random.nextDouble()) + zCos
                 world?.addParticle(
                     ParticleTypes.SOUL,
-                    cursePos!!.x + random.nextDouble() - random.nextDouble(),
-                    cursePos!!.y + random.nextDouble() - random.nextDouble(),
-                    cursePos!!.z + random.nextDouble() - random.nextDouble(),
-                    MathHelper.nextDouble(random, -0.03, 0.03),
-                    MathHelper.nextDouble(random, -0.03, 0.03),
-                    MathHelper.nextDouble(random, -0.03, 0.03)
+                    cursePos!!.x + velocityX,
+                    cursePos!!.y + velocityy,
+                    cursePos!!.z + velocityZ,
+                    velocityX,
+                    velocityy,
+                    velocityZ
                 )
             }
         }
+        curseTime++
     }
 }
