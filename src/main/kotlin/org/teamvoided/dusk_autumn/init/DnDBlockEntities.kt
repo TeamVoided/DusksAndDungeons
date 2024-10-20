@@ -2,15 +2,11 @@ package org.teamvoided.dusk_autumn.init
 
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
-import org.teamvoided.dusk_autumn.block.entity.BunnyGraveBlockEntity
 import net.minecraft.datafixer.TypeReferences
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Util
-import org.teamvoided.dusk_autumn.block.entity.CelestalBellBlockEntity
-import org.teamvoided.dusk_autumn.block.entity.ChestOSoulsBlockEntity
-import org.teamvoided.dusk_autumn.block.entity.HauntedBlockEntity
-import org.teamvoided.dusk_autumn.block.entity.QuarterBlockPileBlockEntity
+import org.teamvoided.dusk_autumn.block.entity.*
 import org.teamvoided.dusk_autumn.init.blocks.DnDStoneBlocks
 
 object DnDBlockEntities {
@@ -32,6 +28,19 @@ object DnDBlockEntities {
     val HAUNTED_BLOCK: BlockEntityType<HauntedBlockEntity> = register(
         "hauted_block", BlockEntityType.Builder.create(
             ::HauntedBlockEntity,
+//            DnDStoneBlocks.HAUNTED_GRAVESTONE,
+//            DnDStoneBlocks.SMALL_HAUNTED_GRAVESTONE,
+//            DnDStoneBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
+//            DnDStoneBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE,
+//            DnDStoneBlocks.HAUNTED_TUFF_GRAVESTONE,
+//            DnDStoneBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE,
+//            DnDStoneBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
+//            DnDStoneBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE
+        )
+    )
+    val HAUNTED_GRAVESTONE_BLOCK: BlockEntityType<HauntedGravestoneBlockEntity> = register(
+        "haunted_gravestone_block", BlockEntityType.Builder.create(
+            ::HauntedGravestoneBlockEntity,
             DnDStoneBlocks.HAUNTED_GRAVESTONE,
             DnDStoneBlocks.SMALL_HAUNTED_GRAVESTONE,
             DnDStoneBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,

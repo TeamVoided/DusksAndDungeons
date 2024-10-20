@@ -34,9 +34,7 @@ object FloraRecipes {
             .pattern("##")
             .pattern("##")
             .criterion(Blocks.HANGING_ROOTS).offerTo(e)
-        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Blocks.HANGING_ROOTS, 4)
-            .ingredient(DnDFloraBlocks.ROOT_BLOCK)
-            .criterion(DnDFloraBlocks.ROOT_BLOCK).offerTo(e)
+        e.createCount(Blocks.HANGING_ROOTS, DnDFloraBlocks.ROOT_BLOCK, 4)
 
         e.createDoubleCraft(
             DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
@@ -79,8 +77,9 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
             DnDItems.GLOOM_PUMPKIN_PIE
         )
+        e.createCount(DnDItems.CORN_KERNELS, DnDItems.CORN, 1)
         e.smeltDefault(DnDFloraBlocks.CORN_SYRUP_BLOCK, DnDFloraBlocks.CORN_BLOCK)
-        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDItems.CORN, 8)
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDItems.CORN, 6)
             .ingredient(DnDFloraBlocks.CORN)
             .criterion(DnDFloraBlocks.CORN)
             .offerTo(e, getItemId(DnDItems.CORN).suffix("_from_plant"))

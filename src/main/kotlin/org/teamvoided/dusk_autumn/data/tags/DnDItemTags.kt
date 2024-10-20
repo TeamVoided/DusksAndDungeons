@@ -37,6 +37,7 @@ object DnDItemTags {
     val SMALL_PUMPKINS = create("small_pumpkins")
     val SMALL_CARVED_PUMPKINS = create("small_carved_pumpkins")
     val SMALL_GLOWING_PUMPKINS = create("small_glowing_pumpkins")
+    val HARVESTER_SCYTHE_AMMO = create("harvester_scythe_ammo")
 
     val REPAIR_HARVESTER_SCYTHE = create("repair_harvester_scythe")
 

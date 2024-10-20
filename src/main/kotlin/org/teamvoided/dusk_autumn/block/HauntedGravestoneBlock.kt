@@ -18,7 +18,7 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.World
-import org.teamvoided.dusk_autumn.block.entity.HauntedBlockEntity
+import org.teamvoided.dusk_autumn.block.entity.HauntedGravestoneBlockEntity
 import org.teamvoided.dusk_autumn.init.DnDBlockEntities
 import org.teamvoided.dusk_autumn.mixin.BlockWithEntityAccessor
 
@@ -33,19 +33,24 @@ open class HauntedGravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, se
             .with(IS_ACTIVE, false)
     }
 
-    override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity {
-        return HauntedBlockEntity(pos, state)
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
+        return HauntedGravestoneBlockEntity(pos, state)
     }
 
-    override fun <T : BlockEntity?> getTicker(
+    override fun <T : BlockEntity> getTicker(
         world: World,
-        state: BlockState?,
-        type: BlockEntityType<T>?
+        state: BlockState,
+        type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
-        return if (world.isClient()) null else BlockWithEntityAccessor.checkType(
+        return if (world.isClient()) BlockWithEntityAccessor.checkType(
             type,
-            DnDBlockEntities.HAUNTED_BLOCK,
-            HauntedBlockEntity::serverTick
+            DnDBlockEntities.HAUNTED_GRAVESTONE_BLOCK,
+            HauntedGravestoneBlockEntity::clientTick
+        )
+        else BlockWithEntityAccessor.checkType(
+            type,
+            DnDBlockEntities.HAUNTED_GRAVESTONE_BLOCK,
+            HauntedGravestoneBlockEntity::serverTick
         )
     }
 

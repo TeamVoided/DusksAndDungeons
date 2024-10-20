@@ -65,7 +65,6 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
         val blockSection = state.get(SECTION)
         return if (
             (direction.axis == Direction.Axis.Y) &&
-            !(blockSection == TripleBlockSection.TOP && direction == Direction.UP) &&
             !state.canPlaceAt(world, pos)
         ) Blocks.AIR.defaultState
         else super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
@@ -90,11 +89,10 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
 
     override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity): BlockState {
         if (!world.isClient) {
-            if (player.isCreative) {
-                breakOthers(world, pos, state, player)
-            } else {
-                dropStacks(state, world, pos, null as BlockEntity?, player, player.mainHandStack)
+            if (!player.isCreative) {
+                dropStacks(state, world, pos, null, player, player.mainHandStack)
             }
+            breakOthers(world, pos, state, player)
         }
         return super.onBreak(world, pos, state, player)
     }
@@ -131,19 +129,30 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
         fun breakOthers(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity?) {
             val blockSection = state.get(SECTION)
             when (blockSection) {
+
                 TripleBlockSection.TOP -> {
-                    breakOther(world, pos.down(), state, player)
-                    breakOther(world, pos.down(2), state, player)
+                    val posBottom = pos.down(2)
+                    val stateBottom = world.getBlockState(posBottom)
+                    breakOther(world, pos.down(), world.getBlockState(pos.down()), player)
+                    breakOther(world,posBottom, stateBottom, player)
+                    if (player != null && !player.isCreative) {
+                        dropStacks(stateBottom, world, posBottom, null, player, player.mainHandStack)
+                    }
                 }
 
                 TripleBlockSection.MIDDLE -> {
-                    breakOther(world, pos.up(), state, player)
-                    breakOther(world, pos.down(), state, player)
+                    val posBottom = pos.down()
+                    val stateBottom = world.getBlockState(posBottom)
+                    breakOther(world, pos.up(), world.getBlockState(pos.up()), player)
+                    breakOther(world, pos.down(), world.getBlockState(pos.down()), player)
+                    if (player != null && !player.isCreative) {
+                        dropStacks(stateBottom, world, posBottom, null, player, player.mainHandStack)
+                    }
                 }
 
                 TripleBlockSection.BOTTOM -> {
-                    breakOther(world, pos.up(2), state, player)
-                    breakOther(world, pos.up(), state, player)
+                    breakOther(world, pos.up(2), world.getBlockState(pos.up(2)), player)
+                    breakOther(world, pos.up(), world.getBlockState(pos.up()), player)
                 }
             }
         }

@@ -341,8 +341,8 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
 
         fun createAttributes(): DefaultAttributeContainer.Builder {
             return HostileEntity.createAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 5.0)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 5.0)
         }
     }

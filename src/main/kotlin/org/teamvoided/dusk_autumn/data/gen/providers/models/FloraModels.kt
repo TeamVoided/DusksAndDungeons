@@ -32,12 +32,20 @@ object FloraModels {
         gen.createMoonberryVine(DnDFloraBlocks.MOONBERRY_VINE)
         gen.registerItemModel(DnDItems.MOONBERRIES)
 
-
-        gen.registerSmallPumpkins(
+        gen.registerSmallPumpkin(
             DnDFloraBlocks.SMALL_PUMPKIN,
+            DnDFloraBlocks.SMALL_PUMPKIN,
+            Texture.getSubId(Blocks.PUMPKIN, "_side")
+        )
+        gen.registerSmallPumpkin(
             DnDFloraBlocks.SMALL_CARVED_PUMPKIN,
+            DnDFloraBlocks.SMALL_PUMPKIN,
+            Texture.getId(Blocks.CARVED_PUMPKIN)
+        )
+        gen.registerSmallPumpkin(
             DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
-            Blocks.PUMPKIN
+            DnDFloraBlocks.SMALL_PUMPKIN,
+            Texture.getId(Blocks.JACK_O_LANTERN)
         )
         gen.registerPumpkinSet(
             DnDFloraBlocks.LANTERN_PUMPKIN,

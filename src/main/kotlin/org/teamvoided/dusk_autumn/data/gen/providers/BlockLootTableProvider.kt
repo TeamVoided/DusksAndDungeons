@@ -5,16 +5,17 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.*
 import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.block.enums.SlabType
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
-import net.minecraft.loot.entry.AlternativeEntry
-import net.minecraft.loot.entry.ItemEntry
-import net.minecraft.loot.entry.LootTableEntry
+import net.minecraft.loot.entry.*
 import net.minecraft.loot.function.ApplyBonusLootFunction
+import net.minecraft.loot.function.CopyComponentsLootFunction
+import net.minecraft.loot.function.CopyComponentsLootFunction.C_zcqyfuyv
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
@@ -23,9 +24,8 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.state.property.Property
 import net.minecraft.util.StringIdentifiable
-import org.teamvoided.dusk_autumn.block.LeafPileBlock
-import org.teamvoided.dusk_autumn.block.LogPileBlock
-import org.teamvoided.dusk_autumn.block.TallDirectionalBlock
+import org.teamvoided.dusk_autumn.block.*
+import org.teamvoided.dusk_autumn.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
@@ -39,37 +39,22 @@ import java.util.concurrent.CompletableFuture
 
 class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricBlockLootTableProvider(o, r) {
-    private val excludeList =
-        listOf(
-            DnDBlocks.ICE_STAIRS,
-            DnDBlocks.ICE_SLAB,
-            DnDBlocks.ICE_WALL,
-//            DnDBlocks.TALL_REDSTONE_CRYSTAL,
-            DnDFloraBlocks.WARPED_WART,
-            DnDFloraBlocks.GOLDEN_BEETROOTS,
-            DnDFloraBlocks.WILD_WHEAT,
-            DnDFloraBlocks.MOONBERRY_VINE
-        )
-
+    val manualList: List<Block> = listOf(DnDFloraBlocks.MOONBERRY_VINE)
     override fun generate() {
         val enchantmentLookup = field_51845.getLookupOrThrow(RegistryKeys.ENCHANTMENT)
-
-        DnDBlocks.BLOCKS.filter {
-            (it !in excludeList &&
-                    it !is LeavesBlock &&
-                    it !is LeafPileBlock &&
-                    it !is FlowerPotBlock &&
-                    it !is CandleCakeBlock)
-        }.forEach {
+        DnDBlocks.BLOCKS.filterNot(manualList::contains).forEach {
             when (it) {
                 is SlabBlock -> add(it, ::slabDrops)
                 is DoorBlock -> add(it, ::doorDrops)
                 is LogPileBlock -> add(it, ::logPile)
                 is CandleBlock -> add(it, ::candleDrops)
+                is TripleTallPlantBlock -> add(it, ::threeTallDrop)
                 is PinkPetalsBlock -> add(it, ::flowerbedDrops)
+                is DecoratedPotBlock -> add(it, ::decoratedPotDrops)
                 else -> addDrop(it)
             }
         }
+
         bigCandles.forEach { (candle, cake) ->
             add(cake) { candleCakeDrops(candle) }
         }
@@ -121,6 +106,8 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 )
             )
         }
+
+//        add(DnDFloraBlocks.CORN_CROP) { block: Block -> cornCrop() }
         add(
             DnDFloraBlocks.GOLDEN_BEETROOTS,
             this.cropDrops(
@@ -163,6 +150,32 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 DoubleBlockHalf.LOWER
             )
         }
+    }
+
+    fun threeTallDrop(block: Block): LootTable.Builder {
+        return this.dropsWithPropertyValue(
+            block,
+            TripleTallPlantBlock.SECTION,
+            TripleBlockSection.BOTTOM
+        )
+    }
+
+    fun candelabraDrops(drop: Block): LootTable.Builder {
+        return LootTable.builder().pool(
+            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
+                applyExplosionDecay(drop, ItemEntry.builder(drop).apply(
+                    listOf(2, 3, 4, 5)
+                ) { count: Int ->
+                    SetCountLootFunction.builder(
+                        ConstantLootNumberProvider.create(count.toFloat())
+                    ).conditionally(
+                        BlockStatePropertyLootCondition.builder(drop).properties(
+                            StatePredicate.Builder.create().exactMatch(CandelabraBlock.CANDLES, count)
+                        )
+                    )
+                })
+            )
+        )
     }
 
     fun addIceSlab(block: Block) {
@@ -236,4 +249,52 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             )
         )
     }
+
+    private fun decoratedPotDrops(pot: Block): LootTable.Builder {
+        return LootTable.builder().pool(
+            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
+                (DynamicEntry.builder(DecoratedPotBlock.SHERDS).conditionally(
+                    BlockStatePropertyLootCondition.builder(pot).properties(
+                        StatePredicate.Builder.create().exactMatch(DecoratedPotBlock.CRACKED, true)
+                    )
+                ) as LeafEntry.Builder<*>).alternatively(
+                    ItemEntry.builder(pot).apply(
+                        CopyComponentsLootFunction.method_57637(C_zcqyfuyv.BLOCK_ENTITY)
+                            .method_58730(DataComponentTypes.POT_DECORATIONS)
+                    )
+                )
+            )
+        )
+    }
+
+//    private fun cornCrop(): LootTable.Builder {
+//        return applyExplosionDecay(
+//            DnDFloraBlocks.CORN_CROP, LootTable.builder().pool(
+//                LootPool.builder().with(AlternativeEntry.builder(
+//                    PitcherCropBlock.AGE.values
+//                ) { integer: Int ->
+//                    val builder =
+//                        BlockStatePropertyLootCondition.builder(DnDFloraBlocks.CORN_CROP).properties(
+//                            StatePredicate.Builder.create()
+//                                .exactMatch(TripleTallPlantBlock.SECTION, TripleBlockSection.BOTTOM)
+//                        )
+//                    val builder2 =
+//                        BlockStatePropertyLootCondition.builder(DnDFloraBlocks.CORN_CROP).properties(
+//                            StatePredicate.Builder.create().exactMatch(
+//                                Properties.AGE_7,
+//                                integer
+//                            )
+//                        )
+//                    if (integer == CornCropBlock.MAX_AGE) ItemEntry.builder(DnDItems.CORN_STALK)
+//                        .conditionally(builder2).conditionally(builder).apply(
+//                            SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f))
+//                        )
+//                    else ItemEntry.builder(DnDItems.CORN_KERNELS)
+//                        .conditionally(builder2).conditionally(builder).apply(
+//                            SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f))
+//                        )
+//                })
+//            )
+//        )
+//    }
 }

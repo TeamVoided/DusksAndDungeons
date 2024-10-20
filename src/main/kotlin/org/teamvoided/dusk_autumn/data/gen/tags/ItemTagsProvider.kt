@@ -60,6 +60,12 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
             .addOptional(id("supplementaries", "ash_pile"))
             .add(Items.BASALT)
+
+        getOrCreateTagBuilder(DnDItemTags.HARVESTER_SCYTHE_AMMO)
+            .forceAddTag(DnDItemTags.SMALL_PUMPKINS)
+            .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
+            .forceAddTag(DnDItemTags.SMALL_GLOWING_PUMPKINS)
+
         getOrCreateTagBuilder(DnDItemTags.SCARECROW_WOOD_ITEMS)
             .add(Items.OAK_PLANKS)
             .add(Items.DARK_OAK_PLANKS)
@@ -130,13 +136,15 @@ class ItemTagsProvider(
             .add(DnDItems.BLACKSTONE_HOE)
     }
 
-    fun vanillaEnchantingTags(){
+    fun vanillaEnchantingTags() {
         getOrCreateTagBuilder(ItemTags.EQUIPPABLE_ENCHANTABLE)
             .forceAddTag(DnDItemTags.CARVED_PUMPKINS)
             .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
         getOrCreateTagBuilder(ItemTags.VANISHING_ENCHANTABLE)
             .forceAddTag(DnDItemTags.CARVED_PUMPKINS)
             .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
+        getOrCreateTagBuilder(ItemTags.BOW_ENCHANTABLE)
+            .add(DnDItems.WEB_WEAVER)
     }
 
     fun conventionTags() {

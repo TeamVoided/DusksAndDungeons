@@ -92,7 +92,8 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
             world.breakBlock(pos, true, entity)
         }
         if (entity is PlayerEntity && !entity.isCreative) {
-            entity.setMovementMultiplier(state, CornMazeBlock.cornMovementMultiplier)
+            val mult = ((MAX_AGE - state.get(AGE)) / MAX_AGE.toDouble())
+            entity.setMovementMultiplier(state, CornMazeBlock.cornMovementMultiplier.multiply(mult))
         }
 
         super.onEntityCollision(state, world, pos, entity)
@@ -121,7 +122,7 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
     }
 
     fun withAge(age: Int): BlockState {
-        return if (age == 6) defaultCornPlant().defaultState else defaultCornCrop().defaultState
+        return if (age >= 6) defaultCornPlant().defaultState else defaultCornCrop().defaultState
     }
 
 
