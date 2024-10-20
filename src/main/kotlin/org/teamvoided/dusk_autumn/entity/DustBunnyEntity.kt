@@ -1,6 +1,9 @@
 package org.teamvoided.dusk_autumn.entity
 
-import net.minecraft.entity.*
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.MovementType
+import net.minecraft.entity.Ownable
 import net.minecraft.entity.ai.TargetPredicate
 import net.minecraft.entity.ai.control.MoveControl
 import net.minecraft.entity.ai.goal.*
@@ -15,19 +18,13 @@ import net.minecraft.entity.mob.MobEntity
 import net.minecraft.entity.mob.PathAwareEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
-import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
-import net.minecraft.world.LocalDifficulty
-import net.minecraft.world.ServerWorldAccess
 import net.minecraft.world.World
-import org.teamvoided.dusk_autumn.block.BunnyGraveBlock
 import org.teamvoided.dusk_autumn.block.entity.BunnyGraveBlockEntity
-import org.teamvoided.dusk_autumn.init.DnDParticles
 import org.teamvoided.dusk_autumn.particle.DustBunnyParticleEffect
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
@@ -96,19 +93,14 @@ class DustBunnyEntity(entityType: EntityType<out DustBunnyEntity>, world: World)
         this.checkBlockCollision()
     }
 
-    override fun onRemoved() {
-        println("was removed")
+    override fun onDeath(source: DamageSource) {
+        super.onDeath(source)
         if (summonedPos != null) {
-            var summonGrave = world.getBlockEntity(summonedPos)
-            if (world.getBlockEntity(summonedPos) is BunnyGraveBlockEntity) {
-                println("yes")
-                println(this)
-                summonGrave = (summonGrave as BunnyGraveBlockEntity)
-                println(summonGrave.getDustBunniesFromBlock().size)
+            val summonGrave = world.getBlockEntity(summonedPos)
+            if (summonGrave is BunnyGraveBlockEntity) {
                 summonGrave.removeDustBunny(this)
             }
         }
-        super.onRemoved()
     }
 
     override fun tick() {

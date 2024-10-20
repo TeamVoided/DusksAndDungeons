@@ -2,8 +2,14 @@ package org.teamvoided.dusk_autumn.block.entity
 
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.SpawnReason
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.NbtElement
+import net.minecraft.nbt.NbtList
+import net.minecraft.nbt.NbtString
+import net.minecraft.registry.HolderLookup
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -11,10 +17,19 @@ import org.teamvoided.dusk_autumn.block.BunnyGraveBlock
 import org.teamvoided.dusk_autumn.entity.DustBunnyEntity
 import org.teamvoided.dusk_autumn.init.DnDBlockEntities
 import org.teamvoided.dusk_autumn.init.DnDEntities
+import java.util.*
 
 open class BunnyGraveBlockEntity(pos: BlockPos?, state: BlockState?) :
     BlockEntity(DnDBlockEntities.BUNNY_GRAVE, pos, state) {
-    var dustBunnies: MutableList<LivingEntity> = mutableListOf()
+    private val bunnyIds = mutableListOf<UUID>()
+    var dustBunnies: MutableList<Entity> = mutableListOf()
+        get() {
+            if (world is ServerWorld && field.isEmpty() && bunnyIds.isNotEmpty()) {
+                field = bunnyIds.mapNotNull { uuid -> (world as ServerWorld).getEntity(uuid) }.toMutableList()
+            }
+            return field
+        }
+
     private var timeSinceLastBunny = 0
 
     override fun onSyncedBlockEvent(type: Int, data: Int): Boolean {
@@ -41,27 +56,46 @@ open class BunnyGraveBlockEntity(pos: BlockPos?, state: BlockState?) :
             world!!.spawnEntity(entity)
             dustBunnies.addLast(entity)
             this.timeSinceLastBunny = 0
-            println(dustBunnies)
+            this.markDirty()
         }
     }
 
-    fun getDustBunniesFromBlock(): MutableList<LivingEntity> {
+    fun getDustBunniesFromBlock(): MutableList<Entity> {
         return dustBunnies
     }
 
-    fun removeDustBunny(index: Int) {
-        dustBunnies.removeAt(index)
+    fun removeDustBunny(entity: LivingEntity) {
+        dustBunnies.removeIf { it.uuid == entity.uuid }
+        bunnyIds.remove(entity.uuid)
     }
 
-    fun removeDustBunny(entity: LivingEntity) {
-        dustBunnies.forEachIndexed { idx, it ->
-            println(it)
-            if (it == entity)
-                dustBunnies.removeAt(idx)
-        }
+    override fun toSyncedNbt(lookupProvider: HolderLookup.Provider): NbtCompound {
+        val nbt = NbtCompound()
+        writeBunnies(nbt)
+        return nbt
+    }
+
+    override fun writeNbt(nbt: NbtCompound, lookupProvider: HolderLookup.Provider) {
+        super.writeNbt(nbt, lookupProvider)
+        writeBunnies(nbt)
+    }
+
+    private fun writeBunnies(nbt: NbtCompound) {
+        val list = NbtList()
+        dustBunnies.forEach { entity -> list.add(NbtString.of(entity.uuidAsString)) }
+        nbt.put(TAG_KEY, list)
+    }
+
+    override fun readNbtImpl(nbt: NbtCompound, lookupProvider: HolderLookup.Provider) {
+        val list = nbt.getList(TAG_KEY, NbtElement.STRING_TYPE.toInt())
+        bunnyIds.clear()
+        bunnyIds.addAll(list.map { UUID.fromString(it.asString()) })
+        super.readNbtImpl(nbt, lookupProvider)
     }
 
     companion object {
+        val TAG_KEY = "dustBunnies"
+
         fun bunniesAmount(dustState: Int): Int = dustState * 3
         fun tick(
             world: World,
