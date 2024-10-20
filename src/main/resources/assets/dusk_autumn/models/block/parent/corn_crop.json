@@ -3,7 +3,6 @@
 	"textures": {
 		"particle": "#crop"
 	},
-	"ambientocclusion": false,
 	"elements": [
 		{
 			"from": [0, -1, 0],

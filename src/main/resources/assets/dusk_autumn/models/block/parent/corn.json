@@ -3,7 +3,6 @@
 	"textures": {
 		"particle": "#all"
 	},
-	"ambientocclusion": false,
 	"elements": [
 		{
 			"from": [0, 0, 0],
