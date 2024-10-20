@@ -15,6 +15,7 @@ import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDOverlayBlocks
 
 fun RecipeJsonFactory.criterion(item: ItemConvertible): RecipeJsonFactory =
@@ -79,6 +80,28 @@ fun RecipeExporter.createDyed(
         .offerTo(this)
 }
 
+fun RecipeExporter.createGragestones(
+    gravestone: ItemConvertible,
+    smallGravestone: ItemConvertible,
+    hauntedGravestone: ItemConvertible,
+    hauntedSmallGravestone: ItemConvertible,
+    block: ItemConvertible
+) {
+    this.createGravestone(gravestone, block)
+    FabricRecipeProvider.createStonecuttingRecipe(
+        this,
+        RecipeCategory.BUILDING_BLOCKS,
+        gravestone,
+        smallGravestone
+    )
+    FabricRecipeProvider.createStonecuttingRecipe(
+        this,
+        RecipeCategory.BUILDING_BLOCKS,
+        hauntedGravestone,
+        hauntedSmallGravestone
+    )
+}
+
 fun RecipeExporter.createGravestone(output: ItemConvertible, input: ItemConvertible) {
     ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
         .ingredient('#', input)
@@ -123,6 +146,12 @@ fun RecipeExporter.createPumpkinStuffs(
         pumpkinPie,
         pumpkin,
         carvedPumpkin
+    )
+    createStonecuttingRecipe(
+        this, RecipeCategory.BUILDING_BLOCKS,
+        smallPumpkin,
+        pumpkin,
+        4
     )
 }
 

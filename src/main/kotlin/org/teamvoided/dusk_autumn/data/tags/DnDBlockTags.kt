@@ -32,6 +32,8 @@ object DnDBlockTags {
     val BIG_SOUL_CANDLES = create("big_soul_candles")
     val GRAVESTONES = create("gravestones")
     val SMALL_GRAVESTONES = create("small_gravestones")
+    val HAUNTED_GRAVESTONES = create("haunted_gravestones")
+    val SMALL_HAUNTED_GRAVESTONES = create("small_haunted_gravestones")
     val HEADSTONES = create("headstones")
     val NETHER_BRICKS = create("nether_bricks")
     val POLISHED_NETHER_BRICKS = create("polished_nether_bricks")
@@ -42,6 +44,14 @@ object DnDBlockTags {
     val MOONBERRY_CAN_PLACE_ON = create("moonberry_can_place_on")
     val REPLACEABLE_OR_DIRT = create("replaceable_or_dirt")
     val FALLEN_TREE_REPLACEABLE = create("fallen_tree_replaceable")
+
+    val CORN_STORAGE = create("storage_blocks/corn")
+    val PUMPKINS = create("pumpkins")
+    val CARVED_PUMPKINS = create("carved_pumpkins")
+    val GLOWING_PUMPKINS = create("glowing_pumpkins")
+    val SMALL_PUMPKINS = create("small_pumpkins")
+    val SMALL_CARVED_PUMPKINS = create("small_carved_pumpkins")
+    val SMALL_GLOWING_PUMPKINS = create("small_glowing_pumpkins")
 
     @JvmField
     val BLOCKS_CANNOT_CONNECT_TO = create("blocks_cannot_connect_to")

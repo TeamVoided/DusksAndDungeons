@@ -46,6 +46,15 @@ class ItemTagsProvider(
         copy(DnDBlockTags.NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
         copy(DnDBlockTags.CRACKED_NETHER_BRICKS, DnDItemTags.CRACKED_NETHER_BRICKS)
         copy(DnDBlockTags.POLISHED_NETHER_BRICKS, DnDItemTags.POLISHED_NETHER_BRICKS)
+
+        copy(DnDBlockTags.CORN_STORAGE, DnDItemTags.CORN_STORAGE)
+        copy(DnDBlockTags.PUMPKINS, DnDItemTags.PUMPKINS)
+        copy(DnDBlockTags.CARVED_PUMPKINS, DnDItemTags.CARVED_PUMPKINS)
+        copy(DnDBlockTags.GLOWING_PUMPKINS, DnDItemTags.GLOWING_PUMPKINS)
+        copy(DnDBlockTags.SMALL_PUMPKINS, DnDItemTags.SMALL_PUMPKINS)
+        copy(DnDBlockTags.SMALL_CARVED_PUMPKINS, DnDItemTags.SMALL_CARVED_PUMPKINS)
+        copy(DnDBlockTags.SMALL_GLOWING_PUMPKINS, DnDItemTags.SMALL_GLOWING_PUMPKINS)
+
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS)
             .add(DnDFloraBlocks.WARPED_WART.asItem())
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
@@ -63,6 +72,7 @@ class ItemTagsProvider(
     }
 
     fun vanillaTags() {
+        vanillaEnchantingTags()
 
         copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN)
         copy(BlockTags.PLANKS, ItemTags.PLANKS)
@@ -100,9 +110,11 @@ class ItemTagsProvider(
             .add(DnDItems.FARMERS_HAT)
             .add(DnDItems.DIE_ITEM)
 
-//        getOrCreateTagBuilder(ItemTags.)
-//            .add(DnDItems.CORN_KERNELS)
+        getOrCreateTagBuilder(ItemTags.PARROT_FOOD)
+            .add(DnDItems.CORN_KERNELS)
         getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD)
+            .add(DnDItems.CORN_KERNELS)
+        getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS)
             .add(DnDItems.CORN_KERNELS)
 
 
@@ -118,24 +130,40 @@ class ItemTagsProvider(
             .add(DnDItems.BLACKSTONE_HOE)
     }
 
+    fun vanillaEnchantingTags(){
+        getOrCreateTagBuilder(ItemTags.EQUIPPABLE_ENCHANTABLE)
+            .forceAddTag(DnDItemTags.CARVED_PUMPKINS)
+            .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
+        getOrCreateTagBuilder(ItemTags.VANISHING_ENCHANTABLE)
+            .forceAddTag(DnDItemTags.CARVED_PUMPKINS)
+            .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
+    }
+
     fun conventionTags() {
         copy(ConventionalBlockTags.COBBLESTONES, ConventionalItemTags.COBBLESTONES)
         copy(ConventionalBlockTags.CHAINS, ConventionalItemTags.CHAINS)
 
+        getOrCreateTagBuilder(ConventionalItemTags.STORAGE_BLOCKS)
+            .forceAddTag(DnDItemTags.CORN_STORAGE)
+
+        getOrCreateTagBuilder(ConventionalItemTags.PUMPKIN_CROPS)
+            .forceAddTag(DnDItemTags.PUMPKINS)
+            .forceAddTag(DnDItemTags.SMALL_PUMPKINS)
+        getOrCreateTagBuilder(ConventionalItemTags.VEGETABLE_FOODS)
+            .add(DnDItems.CORN)
         getOrCreateTagBuilder(ConventionalItemTags.BERRY_FOODS)
             .add(DnDItems.MOONBERRIES)
+        getOrCreateTagBuilder(ConventionalItemTags.PIE_FOODS)
+            .add(DnDItems.LANTERN_PUMPKIN_PIE)
+            .add(DnDItems.MOSSKIN_PUMPKIN_PIE)
+            .add(DnDItems.PALE_PUMPKIN_PIE)
+            .add(DnDItems.GLOOM_PUMPKIN_PIE)
 
         getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
             .add(DnDItems.BLACKSTONE_PICKAXE)
         getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS)
             .add(DnDItems.BLACKSTONE_SWORD)
             .add(DnDItems.BLACKSTONE_AXE)
-
-        getOrCreateTagBuilder(ConventionalItemTags.PIE_FOODS)
-            .add(DnDItems.LANTERN_PUMPKIN_PIE)
-            .add(DnDItems.MOSSKIN_PUMPKIN_PIE)
-            .add(DnDItems.PALE_PUMPKIN_PIE)
-            .add(DnDItems.GLOOM_PUMPKIN_PIE)
 
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
             .addAll(DnDItems.EVIL_ITEMS)

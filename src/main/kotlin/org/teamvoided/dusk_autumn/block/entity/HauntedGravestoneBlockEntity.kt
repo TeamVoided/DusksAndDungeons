@@ -6,11 +6,12 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
+import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
 
 class HauntedGravestoneBlockEntity(pos: BlockPos, state: BlockState) : HauntedBlockEntity(pos, state) {
-    var players: MutableList<PlayerEntity> = mutableListOf()
+    var players: MutableList<UUID> = mutableListOf()
     var cursedPlayer: PlayerEntity? = null
     var cursePos: Vec3d? = null
     var curseTime = 0
@@ -23,10 +24,13 @@ class HauntedGravestoneBlockEntity(pos: BlockPos, state: BlockState) : HauntedBl
                 end()
                 return true
             }
+
             1 -> {
                 curseType = 1
+                cursedPlayer = world?.getPlayerByUuid(players.random())
                 return true
             }
+
             else -> return super.onSyncedBlockEvent(type, data)
         }
     }

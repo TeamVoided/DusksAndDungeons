@@ -30,6 +30,14 @@ object DnDItemTags {
     val CRAFTS_WARPED_NETHER_BRICKS = create("crafts_warped_nether_bricks")
     val CRAFTS_ASHEN_NETHER_BRICKS = create("crafts_ashen_nether_bricks")
 
+    val CORN_STORAGE = create("storage_blocks/corn")
+    val PUMPKINS = create("pumpkins")
+    val CARVED_PUMPKINS = create("carved_pumpkins")
+    val GLOWING_PUMPKINS = create("glowing_pumpkins")
+    val SMALL_PUMPKINS = create("small_pumpkins")
+    val SMALL_CARVED_PUMPKINS = create("small_carved_pumpkins")
+    val SMALL_GLOWING_PUMPKINS = create("small_glowing_pumpkins")
+
     val REPAIR_HARVESTER_SCYTHE = create("repair_harvester_scythe")
 
 

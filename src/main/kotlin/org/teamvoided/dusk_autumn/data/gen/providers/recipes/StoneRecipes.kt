@@ -14,11 +14,34 @@ import org.teamvoided.dusk_autumn.util.*
 
 object StoneRecipes {
     fun generateStoneRecipes(e: RecipeExporter) {
-
-        e.createGravestone(DnDStoneBlocks.GRAVESTONE, Blocks.STONE_BRICKS)
-        e.createGravestone(DnDStoneBlocks.DEEPSLATE_GRAVESTONE, Blocks.DEEPSLATE_BRICKS)
-        e.createGravestone(DnDStoneBlocks.TUFF_GRAVESTONE, Blocks.TUFF_BRICKS)
-        e.createGravestone(DnDStoneBlocks.BLACKSTONE_GRAVESTONE, Blocks.POLISHED_BLACKSTONE_BRICKS)
+        e.createGragestones(
+            DnDStoneBlocks.GRAVESTONE,
+            DnDStoneBlocks.SMALL_GRAVESTONE,
+            DnDStoneBlocks.HAUNTED_GRAVESTONE,
+            DnDStoneBlocks.SMALL_HAUNTED_GRAVESTONE,
+            Blocks.STONE_BRICKS
+        )
+        e.createGragestones(
+            DnDStoneBlocks.DEEPSLATE_GRAVESTONE,
+            DnDStoneBlocks.SMALL_DEEPSLATE_GRAVESTONE,
+            DnDStoneBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
+            DnDStoneBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE,
+            Blocks.DEEPSLATE_BRICKS
+        )
+        e.createGragestones(
+            DnDStoneBlocks.TUFF_GRAVESTONE,
+            DnDStoneBlocks.SMALL_TUFF_GRAVESTONE,
+            DnDStoneBlocks.HAUNTED_TUFF_GRAVESTONE,
+            DnDStoneBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE,
+            Blocks.TUFF_BRICKS
+        )
+        e.createGragestones(
+            DnDStoneBlocks.BLACKSTONE_GRAVESTONE,
+            DnDStoneBlocks.SMALL_BLACKSTONE_GRAVESTONE,
+            DnDStoneBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
+            DnDStoneBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE,
+            Blocks.POLISHED_BLACKSTONE_BRICKS
+        )
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDStoneBlocks.HEADSTONE)
             .ingredient('#', Items.IRON_BARS)
             .ingredient('%', Items.IRON_NUGGET)
@@ -97,7 +120,8 @@ object StoneRecipes {
         e.smeltDefault(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
         e.offerReversibleCompactingRecipes4(
             RecipeCategory.MISC, DnDItems.ROCK_CANDY_SHARD,
-            RecipeCategory.BUILDING_BLOCKS, DnDStoneBlocks.ROCK_CANDY_BLOCK)
+            RecipeCategory.BUILDING_BLOCKS, DnDStoneBlocks.ROCK_CANDY_BLOCK
+        )
 
     }
 }

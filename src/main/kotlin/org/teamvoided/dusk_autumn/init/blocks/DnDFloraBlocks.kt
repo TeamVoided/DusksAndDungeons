@@ -251,17 +251,17 @@ object DnDFloraBlocks {
         "corn_crop", CornCropBlock(
             Settings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
-        ).cutout()
+        ).sword().axe().cutout()
     ).shh()
     val CORN = DnDBlocks.registerNoItem(
         "corn", CornMazeBlock(
             Settings.create().mapColor(MapColor.PLANT).offsetType(OffsetType.XYZ).noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
-        ).cutout()
+        ).sword().axe().cutout()
     ).shh()
     val CORN_BLOCK = DnDBlocks.register(
         "corn_block", PillarBlock(
-            copy(OAK_PLANKS).mapColor(GOLD_BLOCK.defaultMapColor)
+            copy(CHERRY_PLANKS).mapColor(GOLD_BLOCK.defaultMapColor)
         ).axe()
     ).shh()
     @JvmField
