@@ -37,18 +37,18 @@ open class HauntedGravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, se
         return HauntedGravestoneBlockEntity(pos, state)
     }
 
+    override fun onSyncedBlockEvent(state: BlockState?, world: World, pos: BlockPos?, type: Int, data: Int): Boolean {
+        super.onSyncedBlockEvent(state, world, pos, type, data)
+        val blockEntity: BlockEntity? = world.getBlockEntity(pos)
+        return if (blockEntity == null) false else blockEntity.onSyncedBlockEvent(type, data)
+    }
+
     override fun <T : BlockEntity> getTicker(
         world: World,
         state: BlockState,
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
-        return if (world.isClient()) null
-//            BlockWithEntityAccessor.checkType(
-//            type,
-//            DnDBlockEntities.HAUNTED_GRAVESTONE_BLOCK,
-//            HauntedGravestoneBlockEntity::clientTick
-//        )
-        else BlockWithEntityAccessor.checkType(
+        return BlockWithEntityAccessor.checkType(
             type,
             DnDBlockEntities.HAUNTED_GRAVESTONE_BLOCK,
             HauntedGravestoneBlockEntity::serverTick
