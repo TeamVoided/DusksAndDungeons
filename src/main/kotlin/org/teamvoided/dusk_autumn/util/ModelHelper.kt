@@ -698,8 +698,8 @@ fun BlockStateModelGenerator.registerPumpkinSet(
 ) {
     this.registerPumpkins(pumpkin, carved, glowing)
     this.registerSmallPumpkin(smallPumpkin, smallPumpkin, Texture.getSubId(pumpkin, "_side"))
-    this.registerSmallPumpkin(smallCarved, smallPumpkin, Texture.getId(carved))
-    this.registerSmallPumpkin(smallGlowing, smallPumpkin, Texture.getId(glowing))
+    this.registerSmallPumpkin(smallCarved, smallPumpkin, Texture.getId(carved), "carved_")
+    this.registerSmallPumpkin(smallGlowing, smallPumpkin, Texture.getId(glowing), "glowing_")
 }
 
 fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glowing: Block) {
@@ -740,12 +740,17 @@ fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block
     this.registerNorthDefaultHorizontalRotation(glowing)
 }
 
-fun BlockStateModelGenerator.registerSmallPumpkin(pumpkin: Block, texture: Block, particle: Identifier) {
+fun BlockStateModelGenerator.registerSmallPumpkin(
+    pumpkin: Block,
+    texture: Block,
+    particle: Identifier,
+    modelString: String = ""
+) {
     val modelTexture = Texture()
         .put(TextureKey.ALL, Texture.getId(texture))
         .put(TextureKey.PARTICLE, particle)
     val model = block(
-        "parent/small_pumpkin",
+        "parent/small_" + modelString + "pumpkin",
         TextureKey.PARTICLE,
         TextureKey.ALL
     ).upload(pumpkin, modelTexture, this.modelCollector)

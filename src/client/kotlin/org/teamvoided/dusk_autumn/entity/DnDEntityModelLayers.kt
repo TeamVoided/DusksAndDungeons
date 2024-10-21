@@ -11,6 +11,7 @@ import org.teamvoided.dusk_autumn.entity.block.CelestalBellBlockEntityRenderer
 import org.teamvoided.dusk_autumn.entity.chill_charge.render.ChillChargeEntityModel
 import org.teamvoided.dusk_autumn.entity.dice.render.DiceEntityModel
 import org.teamvoided.dusk_autumn.entity.dust_bunny.render.DustBunnyEntityModel
+import org.teamvoided.dusk_autumn.entity.pumpkin.piffling.model.PifflingPumpkinModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowWoodModel
@@ -26,6 +27,7 @@ object DnDEntityModelLayers {
     val SCARECROW_WOOD: EntityModelLayer = register("scarecrow", "wood")
     val DICE: EntityModelLayer = registerMain("dice")
     val DUST_BUNNY: EntityModelLayer = registerMain("dust_bunny")
+    val PIFFLING_PUMPKIN: EntityModelLayer = registerMain("piffling_pumpkin")
 
     val CELESTAL_BELL = registerMain("celestal_bell")
     fun init() {
@@ -38,6 +40,7 @@ object DnDEntityModelLayers {
         EntityModelLayerRegistry.registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
         EntityModelLayerRegistry.registerModelLayer(DICE, DiceEntityModel::texturedModelData)
         EntityModelLayerRegistry.registerModelLayer(DUST_BUNNY, DustBunnyEntityModel::texturedModelData)
+        EntityModelLayerRegistry.registerModelLayer(PIFFLING_PUMPKIN, PifflingPumpkinModel::texturedModelData)
 
         EntityModelLayerRegistry.registerModelLayer(
             CELESTAL_BELL,

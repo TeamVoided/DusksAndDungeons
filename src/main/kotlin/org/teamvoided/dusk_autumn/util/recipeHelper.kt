@@ -220,6 +220,7 @@ fun RecipeExporter.createFullSquare(output: ItemConvertible, input: ItemConverti
 
 fun RecipeExporter.createCount(output: ItemConvertible, input: ItemConvertible, countOutput: Int) {
     ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, countOutput)
+        .ingredient(input)
         .criterion(input)
         .offerTo(this)
 }

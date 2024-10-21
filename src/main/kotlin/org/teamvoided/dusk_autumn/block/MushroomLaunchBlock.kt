@@ -30,7 +30,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.init.DnDParticles
 import org.teamvoided.dusk_autumn.mixin.PersistentProjectileEntityAccessor
-import org.teamvoided.dusk_autumn.util.radToDeg
+import org.teamvoided.dusk_autumn.util.degToRad
 
 class MushroomLaunchBlock(settings: Settings) : Block(settings) {
     override fun onLandedUpon(world: World, state: BlockState, pos: BlockPos, entity: Entity, fallDistance: Float) {
@@ -142,10 +142,10 @@ class MushroomLaunchBlock(settings: Settings) : Block(settings) {
     }
 
     private fun launchFromFacing(entity: Entity, mult: Double) {
-        val pitchSin: Double = MathHelper.sin(entity.pitch * radToDeg).toDouble()
-        val pitchCos: Double = MathHelper.cos(entity.pitch * radToDeg).toDouble()
-        val yawSin: Double = MathHelper.sin(entity.yaw * radToDeg).toDouble()
-        val yawCos: Double = MathHelper.cos(entity.yaw * radToDeg).toDouble()
+        val pitchSin: Double = MathHelper.sin(entity.pitch * degToRad).toDouble()
+        val pitchCos: Double = MathHelper.cos(entity.pitch * degToRad).toDouble()
+        val yawSin: Double = MathHelper.sin(entity.yaw * degToRad).toDouble()
+        val yawCos: Double = MathHelper.cos(entity.yaw * degToRad).toDouble()
         entity.addVelocity(
             -yawSin * pitchCos * mult,
             -pitchSin * mult,

@@ -5,6 +5,7 @@ import org.teamvoided.dusk_autumn.entity.flying_pumpkin.FlyingBlockItemEntityRen
 import org.teamvoided.dusk_autumn.entity.chill_charge.ChillChargeEntityRenderer
 import org.teamvoided.dusk_autumn.entity.dice.DiceEntityRenderer
 import org.teamvoided.dusk_autumn.entity.dust_bunny.DustBunnyEntityRenderer
+import org.teamvoided.dusk_autumn.entity.pumpkin.piffling.PifflingPumpkinEntityRenderer
 import org.teamvoided.dusk_autumn.entity.scarecrow.ScarecrowEntityRenderer
 
 object DnDEntitiesClient {
@@ -17,5 +18,6 @@ object DnDEntitiesClient {
 
         EntityRendererRegistry.register(DnDEntities.FLYING_PUMPKIN, ::FlyingBlockItemEntityRenderer)
         EntityRendererRegistry.register(DnDEntities.DUST_BUNNY, ::DustBunnyEntityRenderer)
+        EntityRendererRegistry.register(DnDEntities.PIFFLING_PUMPKIN, ::PifflingPumpkinEntityRenderer)
     }
 }

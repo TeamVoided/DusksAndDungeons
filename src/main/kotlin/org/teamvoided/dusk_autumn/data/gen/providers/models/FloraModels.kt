@@ -40,12 +40,14 @@ object FloraModels {
         gen.registerSmallPumpkin(
             DnDFloraBlocks.SMALL_CARVED_PUMPKIN,
             DnDFloraBlocks.SMALL_PUMPKIN,
-            Texture.getId(Blocks.CARVED_PUMPKIN)
+            Texture.getId(Blocks.CARVED_PUMPKIN),
+            "carved_"
         )
         gen.registerSmallPumpkin(
             DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
             DnDFloraBlocks.SMALL_PUMPKIN,
-            Texture.getId(Blocks.JACK_O_LANTERN)
+            Texture.getId(Blocks.JACK_O_LANTERN),
+            "glowing_"
         )
         gen.registerPumpkinSet(
             DnDFloraBlocks.LANTERN_PUMPKIN,

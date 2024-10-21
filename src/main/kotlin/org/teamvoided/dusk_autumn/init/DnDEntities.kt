@@ -7,10 +7,7 @@ import net.minecraft.entity.SpawnGroup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
-import org.teamvoided.dusk_autumn.entity.ChillChargeEntity
-import org.teamvoided.dusk_autumn.entity.DiceEntity
-import org.teamvoided.dusk_autumn.entity.DustBunnyEntity
-import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
+import org.teamvoided.dusk_autumn.entity.*
 import org.teamvoided.dusk_autumn.entity.projectile.FlyingPumpkinProjectile
 
 object DnDEntities {
@@ -65,14 +62,21 @@ object DnDEntities {
             .vehicleAttachment(0.04f)
             .maxTrackingRange(8)
             .makeFireImmune()
-        )
+    )
+    val PIFFLING_PUMPKIN = register(
+        "piffling_pumpkin",
+        EntityType.Builder.create(EntityType.EntityFactory(::PifflingPumpkinEntity), SpawnGroup.MONSTER)
+            .setDimensions(0.5f, 0.9f)
+            .setEyeHeight(0.6f)
+            .maxTrackingRange(8)
+    )
 
     fun init() {
 //        FabricDefaultAttributeRegistry.register(BIRD_TEST, BirdEntity.createAttributes().build())
 
         FabricDefaultAttributeRegistry.register(SCARECROW, ScarecrowEntity.createAttributes().build())
-
         FabricDefaultAttributeRegistry.register(DUST_BUNNY, DustBunnyEntity.createAttributes().build())
+        FabricDefaultAttributeRegistry.register(PIFFLING_PUMPKIN, PifflingPumpkinEntity.createAttributes().build())
     }
 
     fun <T : Entity> register(id: String, entityType: EntityType.Builder<T>): EntityType<T> =

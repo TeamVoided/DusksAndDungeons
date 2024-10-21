@@ -18,7 +18,8 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.world.StructureWorldAccess
 
 val pi = 3.1415927f
-val radToDeg = 0.017453292f
+val degToRad = 0.017453292f
+val radToDeg = 57.29578f
 val rotate45 = 0.785f
 val rotate90 = 1.571f
 val rotate135 = 2.356f
