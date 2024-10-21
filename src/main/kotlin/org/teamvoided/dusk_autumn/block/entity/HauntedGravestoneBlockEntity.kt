@@ -5,6 +5,8 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.EntityDetector
@@ -49,10 +51,8 @@ class HauntedGravestoneBlockEntity(pos: BlockPos, state: BlockState) :
                 if (blockEntity.cursedPlayer == null) {
                     return
                 }
-
-                val random = world.random
                 val oldPos: Vec3d = blockEntity.cursePos
-                val playerPos: Vec3d = blockEntity.cursedPlayer!!.pos
+                val playerPos: Vec3d = blockEntity.cursedPlayer!!.pos.add(0.0, 1.0, 0.0)
                 val distanceVec = Vec3d(
                     playerPos.x - oldPos.x,
                     playerPos.y - oldPos.y,
@@ -60,28 +60,25 @@ class HauntedGravestoneBlockEntity(pos: BlockPos, state: BlockState) :
                 )
                 val distance = distanceVec.length()
                 blockEntity.curseVelocity = if (distance < 0.5) {
-                    blockEntity.curseVelocity.multiply(0.5)
+                    blockEntity.curseVelocity.multiply(0.8)
                 } else {
-                    blockEntity.curseVelocity.add(distanceVec.multiply((0.05 / distance)))
+                    blockEntity.curseVelocity.add(distanceVec.multiply((0.075 / distance)))
                 }
                 blockEntity.cursePos = blockEntity.cursePos.add(blockEntity.curseVelocity)
                 blockEntity.curseTime++
                 val spinner: Double = blockEntity.curseTime / 10.0
                 val xSin = sin(spinner)
-                val ySin = sin(spinner / 7)
+                val ySin = sin(spinner / 3)
                 val zCos = cos(spinner)
-                val velocityX = (random.nextDouble() - random.nextDouble()) + xSin
-                val velocityY = (random.nextDouble() - random.nextDouble()) + ySin
-                val velocityZ = (random.nextDouble() - random.nextDouble()) + zCos
 
                 world.addParticle(
                     ParticleTypes.SOUL,
-                    blockEntity.cursePos.x,
-                    blockEntity.cursePos.y,
-                    blockEntity.cursePos.z,
-                    velocityX,
-                    velocityY,
-                    velocityZ
+                    blockEntity.cursePos.x + xSin,
+                    blockEntity.cursePos.y + ySin,
+                    blockEntity.cursePos.z + zCos,
+                    xSin / 10,
+                    ySin / 10,
+                    zCos / 10
                 )
                 return
             }
@@ -96,9 +93,23 @@ class HauntedGravestoneBlockEntity(pos: BlockPos, state: BlockState) :
                 )
 
                 val isActive = state.get(HauntedGravestoneBlock.IS_ACTIVE)
+                if (isActive && world.random.nextInt(1000) == 0) {
+                    world.addSyncedBlockEvent(pos, state.block, 1, 0)
+                    world.playSound(
+                        pos.x + 0.5,
+                        pos.y + 0.5,
+                        pos.z + 0.5,
+                        SoundEvents.ENTITY_VEX_CHARGE,
+                        SoundCategory.BLOCKS,
+                        1f,
+                        world.random.nextFloat() * 0.3f,
+                        false
+                    )
+                }
                 if ((isActive && players.isEmpty()) || (!isActive && players.isNotEmpty())) {
                     world.setBlockState(pos, state.with(HauntedGravestoneBlock.IS_ACTIVE, !isActive))
-                    world.addSyncedBlockEvent(pos, state.block, if (isActive) 0 else 1, 0)
+                    if (isActive)
+                        world.addSyncedBlockEvent(pos, state.block, 0, 0)
                 }
             }
         }

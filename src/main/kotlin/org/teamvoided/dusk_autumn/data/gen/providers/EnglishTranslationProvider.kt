@@ -37,5 +37,4 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
 
     val Item.id get() = Registries.ITEM.getId(this)
     val Block.id get() = Registries.BLOCK.getId(this)
-
 }

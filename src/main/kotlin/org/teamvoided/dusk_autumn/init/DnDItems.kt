@@ -151,9 +151,6 @@ object DnDItems {
     ).shh()
     val BROOM = register("broom", BroomItem(CountSettings(1))).shh()
 
-    val ROCK_CANDY_SHARD =
-        register("rock_candy_shard", Item(Item.Settings().food(DnDFoodComponents.ROCK_CANDY_2))).shh()
-
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)
     }

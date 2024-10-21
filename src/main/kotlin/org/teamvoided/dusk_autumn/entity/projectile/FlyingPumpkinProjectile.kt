@@ -76,7 +76,7 @@ open class FlyingPumpkinProjectile : PersistentProjectileEntity, FlyingBlockItem
         return false
     }
 
-    override fun getHitSound(): SoundEvent? = null
+    override fun getHitSound(): SoundEvent = SoundEvents.BLOCK_WOOD_BREAK
     override fun getDefaultItemStack(): ItemStack = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
     override fun getState(): BlockState {
         return if (state.item is BlockItem) {

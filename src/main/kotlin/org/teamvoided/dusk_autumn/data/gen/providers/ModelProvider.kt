@@ -117,7 +117,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDItems.CORN_KERNELS,
         DnDItems.CORN,
         DnDItems.CORN_SYRUP_BOTTLE,
-        DnDItems.ROCK_CANDY_SHARD,
         DnDItems.CHILL_CHARGE
     )
 
