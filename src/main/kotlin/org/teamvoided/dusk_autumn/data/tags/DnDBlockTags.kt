@@ -53,6 +53,8 @@ object DnDBlockTags {
     val SMALL_CARVED_PUMPKINS = create("small_carved_pumpkins")
     val SMALL_GLOWING_PUMPKINS = create("small_glowing_pumpkins")
 
+    val CANDELABRAS = create("candelabras")
+
     @JvmField
     val BLOCKS_CANNOT_CONNECT_TO = create("blocks_cannot_connect_to")
 

@@ -235,6 +235,7 @@ object DnDBigBlocks {
     val MAGENTA_SOUL_CANDLE_CAKE =
         DnDBlocks.registerNoItem("magenta_soul_candle_cake", soulCandleCakeOf(MAGENTA_SOUL_CANDLE))
     val PINK_SOUL_CANDLE_CAKE = DnDBlocks.registerNoItem("pink_soul_candle_cake", soulCandleCakeOf(PINK_SOUL_CANDLE))
+
     val BIG_SOUL_CANDLE_CAKE =
         DnDBlocks.registerNoItem("big_soul_candle_cake", bigSoulCandleCakeOf(BIG_SOUL_CANDLE, SOUL_CANDLE_CAKE))
     val BIG_WHITE_SOUL_CANDLE_CAKE =
@@ -269,4 +270,44 @@ object DnDBigBlocks {
         DnDBlocks.registerNoItem("big_magenta_soul_candle_cake", bigSoulCandleCakeOf(BIG_MAGENTA_SOUL_CANDLE))
     val BIG_PINK_SOUL_CANDLE_CAKE =
         DnDBlocks.registerNoItem("big_pink_soul_candle_cake", bigSoulCandleCakeOf(BIG_PINK_SOUL_CANDLE))
+
+
+    val CANDELABRA = DnDBlocks.register("candelabra", candelabraOf(CANDLE))
+    val WHITE_CANDELABRA = DnDBlocks.register("white_candelabra", candelabraOf(WHITE_CANDLE))
+    val LIGHT_GRAY_CANDELABRA = DnDBlocks.register("light_gray_candelabra", candelabraOf(LIGHT_GRAY_CANDLE))
+    val GRAY_CANDELABRA = DnDBlocks.register("gray_candelabra", candelabraOf(GRAY_CANDLE))
+    val BLACK_CANDELABRA = DnDBlocks.register("black_candelabra", candelabraOf(BLACK_CANDLE))
+    val BROWN_CANDELABRA = DnDBlocks.register("brown_candelabra", candelabraOf(BROWN_CANDLE))
+    val RED_CANDELABRA = DnDBlocks.register("red_candelabra", candelabraOf(RED_CANDLE))
+    val ORANGE_CANDELABRA = DnDBlocks.register("orange_candelabra", candelabraOf(ORANGE_CANDLE))
+    val YELLOW_CANDELABRA = DnDBlocks.register("yellow_candelabra", candelabraOf(YELLOW_CANDLE))
+    val LIME_CANDELABRA = DnDBlocks.register("lime_candelabra", candelabraOf(LIME_CANDLE))
+    val GREEN_CANDELABRA = DnDBlocks.register("green_candelabra", candelabraOf(GREEN_CANDLE))
+    val CYAN_CANDELABRA = DnDBlocks.register("cyan_candelabra", candelabraOf(CYAN_CANDLE))
+    val LIGHT_BLUE_CANDELABRA = DnDBlocks.register("light_blue_candelabra", candelabraOf(LIGHT_BLUE_CANDLE))
+    val BLUE_CANDELABRA = DnDBlocks.register("blue_candelabra", candelabraOf(BLUE_CANDLE))
+    val PURPLE_CANDELABRA = DnDBlocks.register("purple_candelabra", candelabraOf(PURPLE_CANDLE))
+    val MAGENTA_CANDELABRA = DnDBlocks.register("magenta_candelabra", candelabraOf(MAGENTA_CANDLE))
+    val PINK_CANDELABRA = DnDBlocks.register("pink_candelabra", candelabraOf(PINK_CANDLE))
+
+    val SOUL_CANDELABRA = DnDBlocks.register("soul_candelabra", candelabraOf(SOUL_CANDLE))
+    val WHITE_SOUL_CANDELABRA = DnDBlocks.register("white_soul_candelabra", candelabraOf(WHITE_SOUL_CANDLE))
+    val LIGHT_GRAY_SOUL_CANDELABRA =
+        DnDBlocks.register("light_gray_soul_candelabra", candelabraOf(LIGHT_GRAY_SOUL_CANDLE))
+    val GRAY_SOUL_CANDELABRA = DnDBlocks.register("gray_soul_candelabra", candelabraOf(GRAY_SOUL_CANDLE))
+    val BLACK_SOUL_CANDELABRA = DnDBlocks.register("black_soul_candelabra", candelabraOf(BLACK_SOUL_CANDLE))
+    val BROWN_SOUL_CANDELABRA = DnDBlocks.register("brown_soul_candelabra", candelabraOf(BROWN_SOUL_CANDLE))
+    val RED_SOUL_CANDELABRA = DnDBlocks.register("red_soul_candelabra", candelabraOf(RED_SOUL_CANDLE))
+    val ORANGE_SOUL_CANDELABRA = DnDBlocks.register("orange_soul_candelabra", candelabraOf(ORANGE_SOUL_CANDLE))
+    val YELLOW_SOUL_CANDELABRA = DnDBlocks.register("yellow_soul_candelabra", candelabraOf(YELLOW_SOUL_CANDLE))
+    val LIME_SOUL_CANDELABRA = DnDBlocks.register("lime_soul_candelabra", candelabraOf(LIME_SOUL_CANDLE))
+    val GREEN_SOUL_CANDELABRA = DnDBlocks.register("green_soul_candelabra", candelabraOf(GREEN_SOUL_CANDLE))
+    val CYAN_SOUL_CANDELABRA = DnDBlocks.register("cyan_soul_candelabra", candelabraOf(CYAN_SOUL_CANDLE))
+    val LIGHT_BLUE_SOUL_CANDELABRA =
+        DnDBlocks.register("light_blue_soul_candelabra", candelabraOf(LIGHT_BLUE_SOUL_CANDLE))
+    val BLUE_SOUL_CANDELABRA = DnDBlocks.register("blue_soul_candelabra", candelabraOf(BLUE_SOUL_CANDLE))
+    val PURPLE_SOUL_CANDELABRA = DnDBlocks.register("purple_soul_candelabra", candelabraOf(PURPLE_SOUL_CANDLE))
+    val MAGENTA_SOUL_CANDELABRA = DnDBlocks.register("magenta_soul_candelabra", candelabraOf(MAGENTA_SOUL_CANDLE))
+    val PINK_SOUL_CANDELABRA = DnDBlocks.register("pink_soul_candelabra", candelabraOf(PINK_SOUL_CANDLE))
+
 }

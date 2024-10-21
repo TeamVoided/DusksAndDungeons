@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
@@ -14,8 +13,6 @@ import org.teamvoided.dusk_autumn.init.blocks.*
 import org.teamvoided.dusk_autumn.util.DnDBlockLists
 import org.teamvoided.dusk_autumn.util.addAll
 import java.util.concurrent.CompletableFuture
-import java.util.function.Function
-import java.util.stream.Stream
 
 @Suppress("LongMethod")
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
@@ -218,6 +215,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBigBlocks.BIG_PURPLE_SOUL_CANDLE)
             .add(DnDBigBlocks.BIG_MAGENTA_SOUL_CANDLE)
             .add(DnDBigBlocks.BIG_PINK_SOUL_CANDLE)
+
+        getOrCreateTagBuilder(DnDBlockTags.CANDELABRAS)
+            .addAll(DnDBlockLists.candelabras)
+            .addAll(DnDBlockLists.soulCandelabras)
+
         getOrCreateTagBuilder(DnDBlockTags.GRAVESTONES)
             .forceAddTag(DnDBlockTags.SMALL_GRAVESTONES)
             .add(DnDStoneBlocks.GRAVESTONE)

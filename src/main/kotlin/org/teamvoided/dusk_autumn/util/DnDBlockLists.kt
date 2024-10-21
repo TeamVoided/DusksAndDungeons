@@ -164,6 +164,44 @@ object DnDBlockLists {
         DnDBigBlocks.BIG_TALL_MAGENTA_SOUL_CANDLE,
         DnDBigBlocks.BIG_TALL_PINK_SOUL_CANDLE*/
     )
+    val candelabras = listOf(
+        DnDBigBlocks.CANDELABRA,
+        DnDBigBlocks.WHITE_CANDELABRA,
+        DnDBigBlocks.LIGHT_GRAY_CANDELABRA,
+        DnDBigBlocks.GRAY_CANDELABRA,
+        DnDBigBlocks.BLACK_CANDELABRA,
+        DnDBigBlocks.BROWN_CANDELABRA,
+        DnDBigBlocks.RED_CANDELABRA,
+        DnDBigBlocks.ORANGE_CANDELABRA,
+        DnDBigBlocks.YELLOW_CANDELABRA,
+        DnDBigBlocks.LIME_CANDELABRA,
+        DnDBigBlocks.GREEN_CANDELABRA,
+        DnDBigBlocks.CYAN_CANDELABRA,
+        DnDBigBlocks.LIGHT_BLUE_CANDELABRA,
+        DnDBigBlocks.BLUE_CANDELABRA,
+        DnDBigBlocks.PURPLE_CANDELABRA,
+        DnDBigBlocks.MAGENTA_CANDELABRA,
+        DnDBigBlocks.PINK_CANDELABRA
+    )
+    val soulCandelabras = listOf(
+        DnDBigBlocks.SOUL_CANDELABRA,
+        DnDBigBlocks.WHITE_SOUL_CANDELABRA,
+        DnDBigBlocks.LIGHT_GRAY_SOUL_CANDELABRA,
+        DnDBigBlocks.GRAY_SOUL_CANDELABRA,
+        DnDBigBlocks.BLACK_SOUL_CANDELABRA,
+        DnDBigBlocks.BROWN_SOUL_CANDELABRA,
+        DnDBigBlocks.RED_SOUL_CANDELABRA,
+        DnDBigBlocks.ORANGE_SOUL_CANDELABRA,
+        DnDBigBlocks.YELLOW_SOUL_CANDELABRA,
+        DnDBigBlocks.LIME_SOUL_CANDELABRA,
+        DnDBigBlocks.GREEN_SOUL_CANDELABRA,
+        DnDBigBlocks.CYAN_SOUL_CANDELABRA,
+        DnDBigBlocks.LIGHT_BLUE_SOUL_CANDELABRA,
+        DnDBigBlocks.BLUE_SOUL_CANDELABRA,
+        DnDBigBlocks.PURPLE_SOUL_CANDELABRA,
+        DnDBigBlocks.MAGENTA_SOUL_CANDELABRA,
+        DnDBigBlocks.PINK_SOUL_CANDELABRA
+    )
     val hollowLogs = listOf(
         DnDWoodBlocks.HOLLOW_OAK_LOG,
         DnDWoodBlocks.HOLLOW_SPRUCE_LOG,

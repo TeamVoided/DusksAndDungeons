@@ -20,6 +20,7 @@ import org.teamvoided.dusk_autumn.DusksAndDungeons.mc
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
+import org.teamvoided.dusk_autumn.util.datagen.*
 import java.util.*
 
 val ALL_KRY: TextureKey = TextureKey.of("all")
@@ -1689,6 +1690,45 @@ fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
         )
     }
     this.blockStateCollector.accept(model)
+}
+
+fun BlockStateModelGenerator.registerDnDCandelabra(candelabra: Block) =
+    this.registerCandelabra(candelabra, true)
+
+fun BlockStateModelGenerator.registerCandelabra(candelabra: Block, isDnD: Boolean = false) {
+    if (candelabra !is CandelabraBlock) error("Provided blocks is not a CandelabraBlock!")
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(candelabra)
+            .coordinate(
+                BlockStateVariantMap.create(Properties.HORIZONTAL_AXIS)
+                    .register(Direction.Axis.X, BlockStateVariant.create())
+                    .register(Direction.Axis.Z, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90)))
+            .coordinate(this.candelabraStates(candelabra, isDnD))
+    )
+    this.registerParentedItemModel(candelabra, candelabra.model("_1"))
+}
+
+fun BlockStateModelGenerator.candelabraStates(
+    candelabra: CandelabraBlock, isDnD: Boolean
+): BlockStateVariantMap {
+    val candle = candelabra.candle.prefixed(if (isDnD) "candle/" else "")
+
+    val texture = Texture.texture(candelabra)
+        .put(TextureKey.CANDLE, candle)
+        .put(TextureKey.TEXTURE, id("block/candelabra_iron"))
+    val textureLit = Texture.texture(candelabra)
+        .put(TextureKey.CANDLE, candle.suffix("_lit"))
+        .put(TextureKey.TEXTURE, id("block/candelabra_iron"))
+    val models = listOf(CANDELABRA_1, CANDELABRA_2, CANDELABRA_3, CANDELABRA_4, CANDELABRA_5)
+
+    return BlockStateVariantMap.create(Properties.LIT, CandelabraBlock.CANDLES).register { isLit, candles ->
+        val model = models[candles - 1]
+        BlockStateVariant.create().put(
+            VariantSettings.MODEL,
+            if (isLit) model.upload(candelabra, "_lit", textureLit, this.modelCollector)
+            else model.upload(candelabra, texture, this.modelCollector)
+        )
+    }
 }
 
 fun parentedItemModel(id: Identifier) = Model(Optional.of(id.withPrefix("item/")), Optional.empty())

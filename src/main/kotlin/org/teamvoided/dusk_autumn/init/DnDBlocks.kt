@@ -152,12 +152,7 @@ object DnDBlocks {
            )
        )*/
 
-    val CANDELABRA = register("candelabra", candelabraOf(CANDLE))
-    val WHITE_CANDELABRA = register("white_candelabra", candelabraOf(WHITE_CANDLE))
-    val RED_CANDELABRA = register("red_candelabra", candelabraOf(RED_CANDLE))
-    val BLACK_CANDELABRA = register("black_candelabra", candelabraOf(BLACK_CANDLE))
 
-    val BLACK_SOUL_CANDELABRA = register("black_soul_candelabra", candelabraOf(BLACK_SOUL_CANDLE))
 
 
     fun init() {
