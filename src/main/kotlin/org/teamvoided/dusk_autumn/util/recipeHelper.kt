@@ -91,14 +91,14 @@ fun RecipeExporter.createGragestones(
     FabricRecipeProvider.createStonecuttingRecipe(
         this,
         RecipeCategory.BUILDING_BLOCKS,
-        gravestone,
-        smallGravestone
+        smallGravestone,
+        gravestone
     )
     FabricRecipeProvider.createStonecuttingRecipe(
         this,
         RecipeCategory.BUILDING_BLOCKS,
-        hauntedGravestone,
-        hauntedSmallGravestone
+        hauntedSmallGravestone,
+        hauntedGravestone
     )
 }
 
