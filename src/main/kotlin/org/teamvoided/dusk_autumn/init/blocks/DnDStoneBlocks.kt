@@ -187,26 +187,4 @@ object DnDStoneBlocks {
         DnDBlocks.register("snowy_stone_brick_slab", slabOf(STONE_BRICK_SLAB).pickaxe()).tellWitnessesThatIWasMurdered()
     val SNOWY_STONE_BRICK_WALL =
         DnDBlocks.register("snowy_stone_brick_wall", wallOf(STONE_BRICK_WALL).pickaxe()).tellWitnessesThatIWasMurdered()
-
-    val ROCK_CANDY_BLOCK =
-        DnDBlocks.registerEdible(
-            "rock_candy_block",
-            DnDFoodComponents.ROCK_CANDY_8,
-            Block(copy(CALCITE).mapColor(MapColor.BLUE)).pickaxe().shh()
-        )
-    val ROCK_CANDY_STAIRS = DnDBlocks.registerEdible(
-        "rock_candy_stairs",
-        DnDFoodComponents.ROCK_CANDY_6,
-        stairsOf(ROCK_CANDY_BLOCK).pickaxe().shh()
-    )
-    val ROCK_CANDY_SLAB = DnDBlocks.registerEdible(
-        "rock_candy_slab",
-        DnDFoodComponents.ROCK_CANDY_4,
-        slabOf(ROCK_CANDY_BLOCK).pickaxe().shh()
-    )
-    val ROCK_CANDY_WALL = DnDBlocks.registerEdible(
-        "rock_candy_wall",
-        DnDFoodComponents.ROCK_CANDY_6,
-        wallOf(ROCK_CANDY_BLOCK).pickaxe().shh()
-    )
 }

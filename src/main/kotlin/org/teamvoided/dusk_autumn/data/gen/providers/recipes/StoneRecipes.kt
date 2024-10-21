@@ -116,12 +116,5 @@ object StoneRecipes {
             DnDStoneBlocks.OVERGROWN_STONE_BRICK_SLAB,
             DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL
         )
-
-        e.smeltDefault(DnDStoneBlocks.ROCK_CANDY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
-        e.offerReversibleCompactingRecipes4(
-            RecipeCategory.MISC, DnDItems.ROCK_CANDY_SHARD,
-            RecipeCategory.BUILDING_BLOCKS, DnDStoneBlocks.ROCK_CANDY_BLOCK
-        )
-
     }
 }

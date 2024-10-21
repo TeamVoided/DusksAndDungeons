@@ -302,14 +302,6 @@ object DnDFamilies {
             .wall(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICK_WALL)
             .build()
 
-
-    private val ROCK_CANDY_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDStoneBlocks.ROCK_CANDY_BLOCK)
-            .stairs(DnDStoneBlocks.ROCK_CANDY_STAIRS)
-            .slab(DnDStoneBlocks.ROCK_CANDY_SLAB)
-            .wall(DnDStoneBlocks.ROCK_CANDY_WALL)
-            .build()
-
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
 //        PINE_FAMILY,
@@ -328,7 +320,6 @@ object DnDFamilies {
         GRAY_NETHER_BRICKS_FAMILY,
         MIXED_GRAY_NETHER_BRICKS_FAMILY,
         POLISHED_GRAY_NETHER_BRICKS_FAMILY,
-        ROCK_CANDY_FAMILY,
         
         WITHERING_BONEWOOD_FAMILY,
         GALLERY_MAPLE_FAMILY,
