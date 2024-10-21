@@ -15,7 +15,9 @@ import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.StructureWorldAccess
+import kotlin.math.abs
 
 val pi = 3.1415927f
 val degToRad = 0.017453292f
@@ -82,3 +84,13 @@ fun ProjectileEntity.setShootVelocity(pitch: Float, yaw: Float, roll: Float, spe
 
 fun ItemStack.hasEnchantment(enchantment: RegistryKey<Enchantment>): Boolean =
     this.enchantments.enchantments.any { it.isRegistryKey(enchantment) }
+
+fun Iterable<Vec3d>.rotateFlat90(times: Int): Iterable<Vec3d> =
+    this.map { it.rotateFlat90(times) }
+
+fun Vec3d.rotateFlat90(times: Int): Vec3d {
+    if (times == 0) return this
+    var vector = this
+    repeat(times) { vector = Vec3d(-vector.z, y, vector.x) }
+    return Vec3d(abs(vector.x), abs(vector.y), abs(vector.z))
+}

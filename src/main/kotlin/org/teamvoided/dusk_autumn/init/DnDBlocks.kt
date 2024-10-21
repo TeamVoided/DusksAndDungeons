@@ -1,13 +1,10 @@
 package org.teamvoided.dusk_autumn.init
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
+import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.block.Blocks.*
-import net.minecraft.block.IceBlock
-import net.minecraft.block.MapColor
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.BlockItem
 import net.minecraft.item.FoodComponent
@@ -22,8 +19,10 @@ import org.teamvoided.dusk_autumn.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusk_autumn.block.meltable.MeltableWallBlock
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.blocks.*
+import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks.BLACK_SOUL_CANDLE
 import org.teamvoided.dusk_autumn.item.HeadDecorationBlockItem
 import org.teamvoided.dusk_autumn.util.*
+import java.util.function.ToIntFunction
 
 
 @Suppress("LargeClass", "TooManyFunctions", "MemberVisibilityCanBePrivate", "unused")
@@ -153,7 +152,13 @@ object DnDBlocks {
            )
        )*/
 
-    val CANDELABRA = register("candelabra", CandelabraBlock(CANDLE, copy(STONE)))
+    val CANDELABRA = register("candelabra", candelabraOf(CANDLE))
+    val WHITE_CANDELABRA = register("white_candelabra", candelabraOf(WHITE_CANDLE))
+    val RED_CANDELABRA = register("red_candelabra", candelabraOf(RED_CANDLE))
+    val BLACK_CANDELABRA = register("black_candelabra", candelabraOf(BLACK_CANDLE))
+
+    val BLACK_SOUL_CANDELABRA = register("black_soul_candelabra", candelabraOf(BLACK_SOUL_CANDLE))
+
 
     fun init() {
         DnDWoodTypes.init()

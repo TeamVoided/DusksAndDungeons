@@ -25,7 +25,7 @@ class SoulCandleBlock(settings: Settings) : CandleBlock(settings) {
             })
         }
     }
-    private fun spawnCandleParticles(world: World, vec3d: Vec3d, random: RandomGenerator) {
+    fun spawnCandleParticles(world: World, vec3d: Vec3d, random: RandomGenerator) {
         val f = random.nextFloat()
         if (f < 0.3f) {
             world.addParticle(ParticleTypes.SMOKE, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)

@@ -3,7 +3,7 @@
 	"ambientocclusion": false,
 	"textures": {
 		"particle": "#candle",
-		"texture": "dusk_autumn:block/candelabra_iron"
+		"texture": "dusk_autumn:candelabra_iron"
 	},
 	"elements": [
 		{
@@ -76,7 +76,7 @@
 	],
 	"display": {
 		"thirdperson_righthand": {
-			"translation": [0, 2, 2]
+			"translation": [0, 1.5, 2]
 		},
 		"thirdperson_lefthand": {
 			"translation": [0, 2, 2]

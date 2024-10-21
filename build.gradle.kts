@@ -105,20 +105,20 @@ tasks {
     jar {
         val valTaskNames = gradle.startParameter.taskNames
         if (!valTaskNames.contains("runDataGen")) {
-            exclude("org/teamvoided/dusk_autumn/data/gen/*")
+//            exclude("org/teamvoided/dusk_autumn/data/gen/*")
         } else {
             println("Running datagen for task ${valTaskNames.joinToString(" ")}")
         }
     }
 }
 
-/*publishScript {
-    releaseRepository("TeamVoided", "https://maven.teamvoided.org/releases")
-    publication(modSettings.modId(), false)
+publishScript {
+    releaseRepository("TeamVoided", "https://maven.teamvoided.org/snapshots")
+    publication(modSettings.modId(), true)
     publishSources(true)
 }
 
-uploadConfig {
+/*uploadConfig {
 //    debugMode = true
     modrinthId = modrinth_id
     curseId = curse_id

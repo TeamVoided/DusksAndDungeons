@@ -3,12 +3,14 @@ package org.teamvoided.dusk_autumn.util
 import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
 import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.block.*
+import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
 import net.minecraft.particle.DefaultParticleType
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
+import net.minecraft.state.property.Properties
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import org.teamvoided.dusk_autumn.block.*
@@ -171,44 +173,44 @@ fun Block.hoe(): Block {
     return this
 }
 
-fun stairsOf(block: Block): Block = StairsBlock(block.defaultState, AbstractBlock.Settings.copy(block))
+fun stairsOf(block: Block): Block = StairsBlock(block.defaultState, copy(block))
 
-fun slabOf(block: Block): Block = SlabBlock(AbstractBlock.Settings.copy(block))
+fun slabOf(block: Block): Block = SlabBlock(copy(block))
 
-fun wallOf(block: Block): Block = WallBlock(AbstractBlock.Settings.copy(block).solid())
+fun wallOf(block: Block): Block = WallBlock(copy(block).solid())
 
-fun fenceOf(block: Block): Block = FenceBlock(AbstractBlock.Settings.copy(block).solid())
+fun fenceOf(block: Block): Block = FenceBlock(copy(block).solid())
 
 fun fenceGateOf(woodType: WoodType, block: Block): Block =
-    FenceGateBlock(woodType, AbstractBlock.Settings.copy(block).solid())
+    FenceGateBlock(woodType, copy(block).solid())
 
 fun doorOf(blockSetType: BlockSetType, block: Block): Block =
-    DoorBlock(blockSetType, AbstractBlock.Settings.copy(block).strength(3.0f).nonOpaque())
+    DoorBlock(blockSetType, copy(block).strength(3.0f).nonOpaque())
 
 fun trapdoorOf(blockSetType: BlockSetType, block: Block): Block =
-    TrapdoorBlock(blockSetType, AbstractBlock.Settings.copy(block).allowsSpawning(Blocks::nonSpawnable))
+    TrapdoorBlock(blockSetType, copy(block).allowsSpawning(Blocks::nonSpawnable))
 
 fun pressurePlateOf(blockSetType: BlockSetType, block: Block): Block =
     PressurePlateBlock(
         blockSetType,
-        AbstractBlock.Settings.copy(block).noCollision().strength(0.5f).solid().pistonBehavior(PistonBehavior.DESTROY)
+        copy(block).noCollision().strength(0.5f).solid().pistonBehavior(PistonBehavior.DESTROY)
     )
 
 fun signOf(woodType: WoodType, block: Block): Block =
-    VoidSignBlock(woodType, AbstractBlock.Settings.copy(block).solid().noCollision().strength(1.0f))
+    VoidSignBlock(woodType, copy(block).solid().noCollision().strength(1.0f))
 
 fun wallSignOf(woodType: WoodType, block: Block, sign: Block): Block =
     VoidWallSignBlock(
-        woodType, AbstractBlock.Settings.copy(block).solid().noCollision().strength(1.0f)
+        woodType, copy(block).solid().noCollision().strength(1.0f)
             .dropsLike(sign)
     )
 
 fun hangingSignOf(woodType: WoodType, block: Block): Block =
-    VoidCeilingHangingSignBlock(woodType, AbstractBlock.Settings.copy(block).solid().noCollision().strength(1.0f))
+    VoidCeilingHangingSignBlock(woodType, copy(block).solid().noCollision().strength(1.0f))
 
 fun wallHangingSignOf(woodType: WoodType, block: Block, hangingSign: Block): Block =
     VoidWallHangingSignBlock(
-        woodType, AbstractBlock.Settings.copy(block).solid().noCollision().strength(1.0f)
+        woodType, copy(block).solid().noCollision().strength(1.0f)
             .dropsLike(hangingSign)
     )
 
@@ -224,20 +226,20 @@ fun bigSoulCandleOf(color: MapColor): Block =
     BigSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
 
 fun bigCandleCakeOf(block: Block): Block =
-    BigCandleCakeBlock(block, AbstractBlock.Settings.copy(DnDBigBlocks.BIG_CANDLE_CAKE))
+    BigCandleCakeBlock(block, copy(DnDBigBlocks.BIG_CANDLE_CAKE))
 
 fun bigCandleCakeOf(block: Block, candleCake: Block): Block =
-    BigCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
+    BigCandleCakeBlock(block, copy(candleCake))
 
 fun soulCandleCakeOf(block: Block): Block = soulCandleCakeOf(block, DnDBigBlocks.SOUL_CANDLE_CAKE)
 
 fun soulCandleCakeOf(block: Block, candleCake: Block): Block =
-    SoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
+    SoulCandleCakeBlock(block, copy(candleCake))
 
 fun bigSoulCandleCakeOf(block: Block): Block = bigSoulCandleCakeOf(block, DnDBigBlocks.BIG_SOUL_CANDLE_CAKE)
 
 fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block =
-    BigSoulCandleCakeBlock(block, AbstractBlock.Settings.copy(candleCake))
+    BigSoulCandleCakeBlock(block, copy(candleCake))
 
 
 fun bigTallCandleOf(color: MapColor): Block =
@@ -246,12 +248,15 @@ fun bigTallCandleOf(color: MapColor): Block =
 fun bigTallSoulCandleOf(color: MapColor): Block =
     BigTallSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
 
+fun candelabraOf(candle: Block): CandelabraBlock = CandelabraBlock(
+    candle, copy(candle).luminance { if (it.get(Properties.LIT)) 3 * it.get(CandelabraBlock.CANDLES) else 0 }
+)
 
-fun hollowLog(log: Block): Block = HollowLogWithCuttingBlock(AbstractBlock.Settings.copy(log))
-fun hollowBambooBlock(bambooBlock: Block): Block = HollowBambooBlock(AbstractBlock.Settings.copy(bambooBlock))
-fun logPile(log: Block): Block = LogPileBlock(AbstractBlock.Settings.copy(log).nonOpaque())
+fun hollowLog(log: Block): Block = HollowLogWithCuttingBlock(copy(log))
+fun hollowBambooBlock(bambooBlock: Block): Block = HollowBambooBlock(copy(bambooBlock))
+fun logPile(log: Block): Block = LogPileBlock(copy(log).nonOpaque())
 fun logPile(log: Block, mapColor: MapColor): Block =
-    LogPileBlock(AbstractBlock.Settings.copy(log).mapColor(mapColor).nonOpaque())
+    LogPileBlock(copy(log).mapColor(mapColor).nonOpaque())
 
 fun leafPile(): Block = leafPile(MapColor.PLANT, BlockSoundGroup.GRASS)
 fun leafPile(soundGroup: BlockSoundGroup): Block = leafPile(MapColor.PLANT, soundGroup)
