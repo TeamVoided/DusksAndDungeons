@@ -76,6 +76,17 @@ object DnDItems {
     val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
         .tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
+
+
+    val LANTERN_PUMPKIN_SEEDS =
+        register("lantern_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.LANTERN_PUMPKIN_STEM, Item.Settings()))
+    val MOSSKIN_PUMPKIN_SEEDS =
+        register("mosskin_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.MOSSKIN_PUMPKIN_STEM, Item.Settings()))
+    val PALE_PUMPKIN_SEEDS =
+        register("pale_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.PALE_PUMPKIN_STEM, Item.Settings()))
+    val GLOOM_PUMPKIN_SEEDS =
+        register("gloom_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.GLOOM_PUMPKIN_STEM, Item.Settings()))
+
     val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDFloraBlocks.CORN_CROP, Item.Settings())).shh()
     val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings())).shh()
     val CORN = register("corn", Item((Item.Settings()).food(DnDFoodComponents.CORN))).shh()
@@ -89,8 +100,6 @@ object DnDItems {
         "golden_beetroot",
         AliasedBlockItem(DnDFloraBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))
     )
-//    val LANTERN_PUMPKIN_SEEDS =
-//        register("lantern_pumpkin_seeds", (AliasedBlockItem(Blocks.PUMPKIN_STEM, Item.Settings())))
 
     val MOONBERRY_VINELET =
         register("moonberry_vinelet", AliasedBlockItem(DnDFloraBlocks.MOONBERRY_VINELET, Item.Settings()))

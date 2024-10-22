@@ -1,0 +1,43 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage0"
+    },
+    "age=1": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage1"
+    },
+    "age=2": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage2"
+    },
+    "age=3": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage3"
+    },
+    "age=4": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage4"
+    },
+    "age=5": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage5"
+    },
+    "age=6": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage6"
+    },
+    "age=7,facing=up": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage7"
+    },
+    "age=7,facing=west": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage7_attached"
+    },
+    "age=7,facing=north": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage7_attached",
+      "y": 90
+    },
+    "age=7,facing=east": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage7_attached",
+      "y": 180
+    },
+    "age=7,facing=south": {
+      "model": "dusk_autumn:block/pale_pumpkin_stem_stage7_attached",
+      "y": 270
+    }
+  }
+}

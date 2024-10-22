@@ -695,12 +695,14 @@ fun BlockStateModelGenerator.registerPumpkinSet(
     glowing: Block,
     smallPumpkin: Block,
     smallCarved: Block,
-    smallGlowing: Block
+    smallGlowing: Block,
+    stem: Block
 ) {
     this.registerPumpkins(pumpkin, carved, glowing)
     this.registerSmallPumpkin(smallPumpkin, smallPumpkin, Texture.getSubId(pumpkin, "_side"))
     this.registerSmallPumpkin(smallCarved, smallPumpkin, Texture.getId(carved), "carved_")
     this.registerSmallPumpkin(smallGlowing, smallPumpkin, Texture.getId(glowing), "glowing_")
+    this.pumpkinStem(stem)
 }
 
 fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glowing: Block) {
@@ -756,6 +758,18 @@ fun BlockStateModelGenerator.registerSmallPumpkin(
         TextureKey.ALL
     ).upload(pumpkin, modelTexture, this.modelCollector)
     blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
+}
+
+fun BlockStateModelGenerator.pumpkinStem(block: Block) {
+    val texture = Texture.stem(block)
+    val textureAttach =
+        Texture().put(TextureKey.STEM, Texture.getId(block)).put(TextureKey.UPPERSTEM, block.prefixed("attached_"))
+
+    Properties.AGE_7.values.forEach { age ->
+        Models.STEM_GROWTH_STAGES[age].upload(block, texture, this.modelCollector)
+    }
+    Models.STEM_FRUIT.upload(block, "_stage7_attached", textureAttach, this.modelCollector)
+    println("you best do the " + block.model().path + " blockstate file because waaaaaaa")
 }
 
 fun BlockStateModelGenerator.registerGravestones(
@@ -1702,7 +1716,8 @@ fun BlockStateModelGenerator.registerCandelabra(candelabra: Block, isDnD: Boolea
             .coordinate(
                 BlockStateVariantMap.create(Properties.HORIZONTAL_AXIS)
                     .register(Direction.Axis.X, BlockStateVariant.create())
-                    .register(Direction.Axis.Z, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90)))
+                    .register(Direction.Axis.Z, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90))
+            )
             .coordinate(this.candelabraStates(candelabra, isDnD))
     )
     this.registerParentedItemModel(candelabra, candelabra.model("_1"))

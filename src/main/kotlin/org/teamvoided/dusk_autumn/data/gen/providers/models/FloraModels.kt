@@ -55,7 +55,8 @@ object FloraModels {
             DnDFloraBlocks.GLOWING_LANTERN_PUMPKIN,
             DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
-            DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN
+            DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
+            DnDFloraBlocks.LANTERN_PUMPKIN_STEM
         )
         gen.registerPumpkinSet(
             DnDFloraBlocks.MOSSKIN_PUMPKIN,
@@ -63,7 +64,8 @@ object FloraModels {
             DnDFloraBlocks.GLOWING_MOSSKIN_PUMPKIN,
             DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN,
-            DnDFloraBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN
+            DnDFloraBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN,
+            DnDFloraBlocks.MOSSKIN_PUMPKIN_STEM
         )
         gen.registerPumpkinSet(
             DnDFloraBlocks.PALE_PUMPKIN,
@@ -72,6 +74,7 @@ object FloraModels {
             DnDFloraBlocks.SMALL_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_PALE_PUMPKIN,
+            DnDFloraBlocks.PALE_PUMPKIN_STEM
         )
         gen.registerPumpkinSet(
             DnDFloraBlocks.GLOOM_PUMPKIN,
@@ -80,6 +83,7 @@ object FloraModels {
             DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
+            DnDFloraBlocks.GLOOM_PUMPKIN_STEM
         )
         gen.registerCornCrop(DnDFloraBlocks.CORN_CROP)
         gen.registerCorn(DnDFloraBlocks.CORN, DnDItems.CORN_STALK)
