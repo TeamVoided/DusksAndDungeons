@@ -63,9 +63,15 @@ object DnDTabs {
                 DnDBigBlocks.BIG_LANTERN,
                 DnDBigBlocks.BIG_SOUL_LANTERN,
             )
-            entries.addItem( // This add the candles in a nice way
+
+            entries.addItem( // This adds the candles in a nice way
                 DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
-                    listOf(item, DnDItemLists.soulCandles[idx], DnDItemLists.bigSoulCandles[idx])
+                    listOf(item,
+                        DnDItemLists.soulCandles[idx],
+                        DnDItemLists.bigSoulCandles[idx],
+                        DnDBlockLists.candelabras[idx],
+                        DnDBlockLists.soulCandelabras[idx],
+                    )
                 }
             )
             entries.addItem(DnDFloraBlocks.WARPED_WART)
