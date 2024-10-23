@@ -7,10 +7,8 @@ import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeJsonFactory.getItemId
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
-import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.RecipeCategory
-import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
@@ -20,10 +18,10 @@ object FloraRecipes {
     fun generateFloraRecipes(e: RecipeExporter) {
         e.createPiles(DnDWoodBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK)
         e.createPiles(DnDWoodBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK)
-        (DnDBlockLists.logPiles).forEachIndexed { idx, pile ->
+        DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
             e.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
-        (DnDBlockLists.leafPiles).forEachIndexed { idx, pile ->
+        DnDBlockLists.leafPiles.forEachIndexed { idx, pile ->
             e.createPiles(pile, DnDBlockLists.leaves[idx])
         }
         FabricRecipeProvider.offerShapelessRecipe(e, Items.BLUE_DYE, DnDFloraBlocks.BLUE_PETALS, "blue_dye")
@@ -36,11 +34,21 @@ object FloraRecipes {
             .criterion(Blocks.HANGING_ROOTS).offerTo(e)
         e.createCount(Blocks.HANGING_ROOTS, DnDFloraBlocks.ROOT_BLOCK, 4)
 
+        pumpkins(e)
+        corn(e)
+    }
+
+    fun pumpkins(e: RecipeExporter) {
         e.createDoubleCraft(
             DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_PUMPKIN,
             Items.TORCH
         )
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, Items.PUMPKIN_SEEDS, 2)
+            .ingredient(DnDFloraBlocks.SMALL_PUMPKIN)
+            .criterion(DnDFloraBlocks.SMALL_PUMPKIN)
+            .offerTo(e)
+
         e.createPumpkinStuffs(
             DnDFloraBlocks.LANTERN_PUMPKIN,
             DnDFloraBlocks.CARVED_LANTERN_PUMPKIN,
@@ -48,6 +56,7 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
+            DnDItems.LANTERN_PUMPKIN_SEEDS
         )
         e.createPumpkinStuffs(
             DnDFloraBlocks.MOSSKIN_PUMPKIN,
@@ -56,6 +65,7 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN,
+            DnDItems.MOSSKIN_PUMPKIN_SEEDS
         )
         e.createPumpkinStuffs(
             DnDFloraBlocks.PALE_PUMPKIN,
@@ -64,6 +74,7 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_PALE_PUMPKIN,
+            DnDItems.PALE_PUMPKIN_SEEDS,
         )
         e.createPumpkinStuffs(
             DnDFloraBlocks.GLOOM_PUMPKIN,
@@ -72,13 +83,31 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
+            DnDItems.GLOOM_PUMPKIN_SEEDS,
         )
+    }
+
+    fun corn(e: RecipeExporter) {
         e.createCount(DnDItems.CORN_KERNELS, DnDItems.CORN, 1)
+
         e.smeltDefault(DnDFloraBlocks.CORN_SYRUP_BLOCK, DnDFloraBlocks.CORN_BLOCK)
+        ShapelessRecipeJsonFactory.create(RecipeCategory.FOOD, DnDItems.CORN_SYRUP_BOTTLE, 4)
+            .ingredient(DnDFloraBlocks.CORN_SYRUP_BLOCK)
+            .ingredient(Items.GLASS_BOTTLE, 4)
+            .criterion(DnDFloraBlocks.CORN_SYRUP_BLOCK)
+            .offerTo(e)
+        RecipesProvider.offerTwoByTwoCompactingRecipe(
+            e,
+            RecipeCategory.REDSTONE,
+            DnDFloraBlocks.CORN_SYRUP_BLOCK,
+            DnDItems.CORN_SYRUP_BOTTLE
+        )
+
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDItems.CORN, 6)
             .ingredient(DnDFloraBlocks.CORN)
             .criterion(DnDFloraBlocks.CORN)
             .offerTo(e, getItemId(DnDItems.CORN).suffix("_from_plant"))
+
         RecipesProvider.offerReversibleCompactingRecipes(
             e,
             RecipeCategory.MISC, DnDItems.CORN,

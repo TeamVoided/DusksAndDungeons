@@ -5,17 +5,16 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
 import net.minecraft.feature_flags.FeatureFlags
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusk_autumn.block.DnDFamilies.recipesBlockFamilies
-import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
-import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.cobbled
+import org.teamvoided.dusk_autumn.util.criterion
 import java.util.concurrent.CompletableFuture
 
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
@@ -42,10 +41,10 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
     }
 
     private fun temporaryRecipes(e: RecipeExporter) {
-        ShapelessRecipeJsonFactory(RecipeCategory.MISC, DnDBlocks.CHEST_O_SOULS, 1)
-            .ingredient(Items.CHEST)
-            .ingredient(Items.SOUL_LANTERN)
-            .criterion(DnDBlocks.CHEST_O_SOULS).offerTo(e)
+        /* ShapelessRecipeJsonFactory(RecipeCategory.MISC, DnDBlocks.CHEST_O_SOULS, 1)
+             .ingredient(Items.CHEST)
+             .ingredient(Items.SOUL_LANTERN)
+             .criterion(DnDBlocks.CHEST_O_SOULS).offerTo(e)*/
 
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,

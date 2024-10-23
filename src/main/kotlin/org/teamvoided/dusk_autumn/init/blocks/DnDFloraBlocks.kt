@@ -7,15 +7,15 @@ import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
-import net.minecraft.item.Items
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures
 import org.teamvoided.dusk_autumn.block.*
+import org.teamvoided.dusk_autumn.block.DnDPumpkinBlock.Companion.setSeeds
 import org.teamvoided.dusk_autumn.init.DnDBlocks
+import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDFloraBlocks {
-    fun init() = Unit
 
     //    val VERDURE_DEEPSLATE = DnDBlocks.register(
 //        "verdure_deepslate", Block(
@@ -105,7 +105,6 @@ object DnDFloraBlocks {
     val SMALL_PUMPKIN = DnDBlocks.register(
         "small_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(SMALL_CARVED_PUMPKIN)
         ).axe()
     ).shh()
@@ -122,7 +121,6 @@ object DnDFloraBlocks {
     val LANTERN_PUMPKIN = DnDBlocks.register(
         "lantern_pumpkin", DnDPumpkinBlock(
             CARVED_LANTERN_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(CARVED_LANTERN_PUMPKIN)
         ).axe()
     ).shh()
@@ -139,7 +137,6 @@ object DnDFloraBlocks {
     val SMALL_LANTERN_PUMPKIN = DnDBlocks.register(
         "small_lantern_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_LANTERN_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(SMALL_CARVED_LANTERN_PUMPKIN)
         ).axe()
     ).shh()
@@ -156,7 +153,6 @@ object DnDFloraBlocks {
     val MOSSKIN_PUMPKIN = DnDBlocks.register(
         "mosskin_pumpkin", DnDPumpkinBlock(
             CARVED_MOSSKIN_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(CARVED_MOSSKIN_PUMPKIN)
         ).axe()
     ).shh()
@@ -173,7 +169,6 @@ object DnDFloraBlocks {
     val SMALL_MOSSKIN_PUMPKIN = DnDBlocks.register(
         "small_mosskin_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_MOSSKIN_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(SMALL_CARVED_MOSSKIN_PUMPKIN)
         ).axe()
     ).shh()
@@ -190,7 +185,6 @@ object DnDFloraBlocks {
     val PALE_PUMPKIN = DnDBlocks.register(
         "pale_pumpkin", DnDPumpkinBlock(
             CARVED_PALE_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(CARVED_PALE_PUMPKIN)
         ).axe()
     ).shh()
@@ -207,7 +201,6 @@ object DnDFloraBlocks {
     val SMALL_PALE_PUMPKIN = DnDBlocks.register(
         "small_pale_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_PALE_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(SMALL_CARVED_PALE_PUMPKIN)
         ).axe()
     ).shh()
@@ -224,7 +217,6 @@ object DnDFloraBlocks {
     val GLOOM_PUMPKIN = DnDBlocks.register(
         "gloom_pumpkin", DnDPumpkinBlock(
             CARVED_GLOOM_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(CARVED_GLOOM_PUMPKIN)
         ).axe()
     ).shh()
@@ -241,7 +233,6 @@ object DnDFloraBlocks {
     val SMALL_GLOOM_PUMPKIN = DnDBlocks.register(
         "small_gloom_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_GLOOM_PUMPKIN,
-            Items.PUMPKIN_SEEDS,
             copy(SMALL_CARVED_GLOOM_PUMPKIN)
         ).axe()
     ).shh()
@@ -333,4 +324,16 @@ object DnDFloraBlocks {
                 .pistonBehavior(PistonBehavior.DESTROY)
         ).cutout().flammableLogs().axe().sword()
     )
+
+
+    fun init() {
+        LANTERN_PUMPKIN.setSeeds(DnDItems.LANTERN_PUMPKIN_SEEDS)
+        SMALL_LANTERN_PUMPKIN.setSeeds(DnDItems.LANTERN_PUMPKIN_SEEDS)
+        MOSSKIN_PUMPKIN.setSeeds(DnDItems.MOSSKIN_PUMPKIN_SEEDS)
+        SMALL_MOSSKIN_PUMPKIN.setSeeds(DnDItems.MOSSKIN_PUMPKIN_SEEDS)
+        PALE_PUMPKIN.setSeeds(DnDItems.PALE_PUMPKIN_SEEDS)
+        SMALL_PALE_PUMPKIN.setSeeds(DnDItems.PALE_PUMPKIN_SEEDS)
+        GLOOM_PUMPKIN.setSeeds(DnDItems.GLOOM_PUMPKIN_SEEDS)
+        SMALL_GLOOM_PUMPKIN.setSeeds(DnDItems.GLOOM_PUMPKIN_SEEDS)
+    }
 }

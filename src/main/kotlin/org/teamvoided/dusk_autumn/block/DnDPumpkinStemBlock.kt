@@ -98,10 +98,10 @@ class DnDPumpkinStemBlock(
 
     companion object {
         val FACING: DirectionProperty = DirectionProperty.of("facing") { it != Direction.DOWN }
+        val ATTACHED_SHAPE: VoxelShape = createCuboidShape(6.0, 0.0, 6.0, 10.0, 10.0, 16.0)
         fun shape(height: Double): VoxelShape {
             return createCuboidShape(7.0, 0.0, 7.0, 9.0, height, 9.0)
         }
 
-        val ATTACHED_SHAPE: VoxelShape = createCuboidShape(6.0, 0.0, 6.0, 10.0, 10.0, 16.0)
     }
 }

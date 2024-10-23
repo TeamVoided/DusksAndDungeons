@@ -7,7 +7,6 @@ import net.minecraft.block.Waterloggable
 import net.minecraft.entity.ai.pathing.NavigationType
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
@@ -17,8 +16,8 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
-open class SmallPumpkinBlock(carvedBlock: Block, seedsItem: Item, settings: Settings) :
-    DnDPumpkinBlock(carvedBlock, seedsItem, settings), Waterloggable {
+open class SmallPumpkinBlock(carvedBlock: Block, settings: Settings) :
+    DnDPumpkinBlock(carvedBlock, settings), Waterloggable {
     override val seeds = 2
 
     init {

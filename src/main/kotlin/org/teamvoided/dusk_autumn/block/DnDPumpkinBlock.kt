@@ -19,8 +19,10 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
+import org.teamvoided.dusk_autumn.DusksAndDungeons.log
 
-open class DnDPumpkinBlock(private val carvedBlock:Block, private val seedsItem: Item, settings: Settings) : Block(settings) {
+open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Settings) : Block(settings) {
+    private var seedsItem = Items.PUMPKIN_SEEDS
     open val seeds = 4
     override fun onInteract(
         stack: ItemStack,
@@ -39,7 +41,7 @@ open class DnDPumpkinBlock(private val carvedBlock:Block, private val seedsItem:
             val direction = hitResult.side
             val direction2 = if (direction.axis == Direction.Axis.Y) entity.horizontalFacing.opposite else direction
             world.playSound(
-                null as PlayerEntity?,
+                null ,
                 pos,
                 SoundEvents.BLOCK_PUMPKIN_CARVE,
                 SoundCategory.BLOCKS,
@@ -48,7 +50,7 @@ open class DnDPumpkinBlock(private val carvedBlock:Block, private val seedsItem:
             )
             world.setBlockState(
                 pos,
-                carvedBlock.defaultState.with(CarvedPumpkinBlock.FACING, direction2) as BlockState,
+                carvedBlock.defaultState.with(CarvedPumpkinBlock.FACING, direction2),
                 11
             )
             val itemEntity = ItemEntity(
@@ -66,6 +68,17 @@ open class DnDPumpkinBlock(private val carvedBlock:Block, private val seedsItem:
             world.emitGameEvent(entity, GameEvent.SHEAR, pos)
             entity.incrementStat(Stats.USED.getOrCreateStat(Items.SHEARS))
             return ItemInteractionResult.success(world.isClient)
+        }
+    }
+
+    fun setSeeds(item: Item) {
+        seedsItem = item
+    }
+
+    companion object {
+        fun Block.setSeeds(item: Item) {
+            if (this is DnDPumpkinBlock) this.setSeeds(item)
+            else log.warn("Block [$this] is not a DnDPumpkinBlock")
         }
     }
 }
