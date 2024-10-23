@@ -9,11 +9,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static org.teamvoided.dusk_autumn.util.ShutUpKt.dataFixerBlackList;
+
 @Mixin(Util.class)
 public class UtilMixin {
-    @Inject(method = "getChoiceTypeInternal", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;)V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "getChoiceTypeInternal", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;)V"), cancellable = true)
     private static void getChoiceTypeInternal(DSL.TypeReference typeReference, String id, CallbackInfoReturnable<Type<?>> cir,
                                               @Local Type<?> x) {
-        cir.setReturnValue(x);
+        if (dataFixerBlackList.contains(id)) cir.setReturnValue(x);
     }
 }
