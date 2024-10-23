@@ -18,6 +18,7 @@ import org.teamvoided.dusk_autumn.util.*
 import kotlin.jvm.optionals.getOrNull
 
 
+@Suppress("unused")
 object DnDTabs {
     val DUSKS_AND_DUNGEONS: ItemGroup = register(MODID, FabricItemGroup.builder()
         .icon { ItemStack(DnDWoodBlocks.CASCADE_SAPLING) }
@@ -66,7 +67,8 @@ object DnDTabs {
 
             entries.addItem( // This adds the candles in a nice way
                 DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
-                    listOf(item,
+                    listOf(
+                        item,
                         DnDItemLists.soulCandles[idx],
                         DnDItemLists.bigSoulCandles[idx],
                         DnDBlockLists.candelabras[idx],
@@ -95,26 +97,28 @@ object DnDTabs {
             .entries { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
             .build()
     )
+
+    // Dev Tabs
     val DUSKS_AND_DUNGEONS_EXCEPT_DEBUG: ItemGroup = register("dnd_everything",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDStoneBlocks.STONE_PILLAR.asItem()) }
-            .name(Text.translatable("itemGroup.dusk_autumn.everything"))
-            .entries { _, entries ->
-                entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains))
+            .name(Text.translatable("Dusk's and Dungeons Except Debug"))
+            .entries { params, entries ->
+                if (isDev() && params.hasPermissions) entries.addLists(
+                    DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains)
+                )
             }
+            .build()
+    )
+    val DND_EXPERIMENTAL: ItemGroup = register("dnd_experimental",
+        FabricItemGroup.builder()
+            .icon { ItemStack(DnDItems.GALLERY_MAPLE_DOOR) }
+            .name(Text.literal("DnD Experimental"))
+            .entries { params, entries -> if (isDev() && params.hasPermissions) entries.addLists(EVIL_ITEMS) }
             .build()
     )
 
     fun init() {
-        if (isDev()) register("dnd_experimental",
-            FabricItemGroup.builder()
-                .icon { ItemStack(DnDItems.GALLERY_MAPLE_DOOR) }
-                .name(Text.literal("DnD Experimental"))
-                .entries { _, entries -> entries.addLists(EVIL_ITEMS) }
-                .build()
-        )
-
-
         addToTab(ItemGroups.BUILDING_BLOCKS) {
             it.addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
             it.addAfter(Items.CHAIN, DnDBigBlocks.BIG_CHAIN)

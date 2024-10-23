@@ -26,7 +26,6 @@ class EnglishTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Holde
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         getKey(DUSKS_AND_DUNGEONS)?.let { gen.add(it, "Dusks and Dungeons") }
         getKey(OVERLAY_BLOCKS)?.let { gen.add(it, "Rocky Blocks") }
-        getKey(DUSKS_AND_DUNGEONS_EXCEPT_DEBUG)?.let { gen.add(it, "Dusk's and Dungeons Except Debug") }
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, genLang(it.id)) }
         blocks.forEach { gen.add(it.translationKey, genLang(it.id)) }
         DnDItems.ITEMS.forEach { gen.add(it.translationKey, genLang(it.id)) }
