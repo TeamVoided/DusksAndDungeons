@@ -18,6 +18,7 @@ import org.teamvoided.dusk_autumn.util.SECRET_ITEMS
 import org.teamvoided.dusk_autumn.util.addAll
 import java.util.concurrent.CompletableFuture
 
+@Suppress("MemberVisibilityCanBePrivate")
 class ItemTagsProvider(
     output: FabricDataOutput,
     registriesFuture: CompletableFuture<HolderLookup.Provider>,
@@ -39,7 +40,8 @@ class ItemTagsProvider(
         copy(DnDBlockTags.VIVIONBEDS, DnDItemTags.VIVIONBEDS)
         copy(DnDBlockTags.BIG_CANDLES, DnDItemTags.BIG_CANDLES)
         copy(DnDBlockTags.SOUL_CANDLES, DnDItemTags.SOUL_CANDLES)
-        copy(DnDBlockTags.CANDELABRAS,DnDItemTags.CANDELABRAS)
+        copy(DnDBlockTags.CANDELABRAS, DnDItemTags.CANDELABRAS)
+        copy(DnDBlockTags.SOUL_CANDELABRAS, DnDItemTags.SOUL_CANDELABRAS)
         copy(DnDBlockTags.BIG_SOUL_CANDLES, DnDItemTags.BIG_SOUL_CANDLES)
         copy(DnDBlockTags.GRAVESTONES, DnDItemTags.GRAVESTONES)
         copy(DnDBlockTags.SMALL_GRAVESTONES, DnDItemTags.SMALL_GRAVESTONES)
@@ -141,9 +143,13 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ItemTags.EQUIPPABLE_ENCHANTABLE)
             .forceAddTag(DnDItemTags.CARVED_PUMPKINS)
             .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
+            .add(DnDItems.WITCH_HAT)
+            .add(DnDItems.VILE_WITCH_HAT)
         getOrCreateTagBuilder(ItemTags.VANISHING_ENCHANTABLE)
             .forceAddTag(DnDItemTags.CARVED_PUMPKINS)
             .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
+            .add(DnDItems.WITCH_HAT)
+            .add(DnDItems.VILE_WITCH_HAT)
         getOrCreateTagBuilder(ItemTags.BOW_ENCHANTABLE)
             .add(DnDItems.WEB_WEAVER)
     }

@@ -218,6 +218,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.CANDELABRAS)
             .addAll(DnDBlockLists.candelabras)
+            .forceAddTag(DnDBlockTags.SOUL_CANDELABRAS)
+
+        getOrCreateTagBuilder(DnDBlockTags.SOUL_CANDELABRAS)
             .addAll(DnDBlockLists.soulCandelabras)
 
         getOrCreateTagBuilder(DnDBlockTags.GRAVESTONES)
@@ -431,8 +434,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDWoodBlocks.POTTED_GOLDEN_BIRCH_SAPLING)
 
         getOrCreateTagBuilder(BlockTags.CANDLES)
-            .forceAddTag(DnDBlockTags.BIG_CANDLES)
             .forceAddTag(DnDBlockTags.SOUL_CANDLES)
+            .forceAddTag(DnDBlockTags.BIG_CANDLES)
+            .forceAddTag(DnDBlockTags.CANDELABRAS)
 
         getOrCreateTagBuilder(BlockTags.STONE_BRICKS)
             .add(DnDStoneBlocks.OVERGROWN_STONE_BRICKS)
