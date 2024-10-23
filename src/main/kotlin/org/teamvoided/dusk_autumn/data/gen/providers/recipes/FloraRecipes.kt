@@ -48,7 +48,6 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
-            DnDItems.LANTERN_PUMPKIN_PIE
         )
         e.createPumpkinStuffs(
             DnDFloraBlocks.MOSSKIN_PUMPKIN,
@@ -57,7 +56,6 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN,
-            DnDItems.MOSSKIN_PUMPKIN_PIE
         )
         e.createPumpkinStuffs(
             DnDFloraBlocks.PALE_PUMPKIN,
@@ -66,7 +64,6 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_PALE_PUMPKIN,
-            DnDItems.PALE_PUMPKIN_PIE
         )
         e.createPumpkinStuffs(
             DnDFloraBlocks.GLOOM_PUMPKIN,
@@ -75,7 +72,6 @@ object FloraRecipes {
             DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
             DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
-            DnDItems.GLOOM_PUMPKIN_PIE
         )
         e.createCount(DnDItems.CORN_KERNELS, DnDItems.CORN, 1)
         e.smeltDefault(DnDFloraBlocks.CORN_SYRUP_BLOCK, DnDFloraBlocks.CORN_BLOCK)

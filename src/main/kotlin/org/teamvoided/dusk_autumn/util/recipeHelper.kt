@@ -143,7 +143,6 @@ fun RecipeExporter.createPumpkinStuffs(
     smallPumpkin: ItemConvertible,
     smallCarvedPumpkin: ItemConvertible,
     smallGlowingPumpkin: ItemConvertible,
-    pumpkinPie: ItemConvertible
 ) {
     this.createStackedCraft(
         glowingPumpkin,
@@ -154,11 +153,6 @@ fun RecipeExporter.createPumpkinStuffs(
         smallGlowingPumpkin,
         smallCarvedPumpkin,
         Items.TORCH
-    )
-    this.createPumpkinPie(
-        pumpkinPie,
-        pumpkin,
-        carvedPumpkin
     )
     createStonecuttingRecipe(
         this, RecipeCategory.BUILDING_BLOCKS,

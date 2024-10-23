@@ -65,18 +65,10 @@ object DnDItems {
             CountSettings(16).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xFFFFFF, true))
         )
     ).tellWitnessesThatIWasMurdered()
-    val LANTERN_PUMPKIN_PIE =
-        register("lantern_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
-    val MOSSKIN_PUMPKIN_PIE =
-        register("mosskin_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
-    val PALE_PUMPKIN_PIE = register("pale_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
-    val GLOOM_PUMPKIN_PIE =
-        register("gloom_pumpkin_pie", Item((Item.Settings()).food(FoodComponents.PUMPKIN_PIE))).shh()
 
     val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
         .tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
-
 
     val LANTERN_PUMPKIN_SEEDS =
         register("lantern_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.LANTERN_PUMPKIN_STEM, Item.Settings())).shh()

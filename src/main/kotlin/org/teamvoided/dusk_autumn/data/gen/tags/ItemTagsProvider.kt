@@ -84,7 +84,7 @@ class ItemTagsProvider(
             .add(DnDItems.LANTERN_PUMPKIN_SEEDS)
             .add(DnDItems.PALE_PUMPKIN_SEEDS)
             .add(DnDItems.MOSSKIN_PUMPKIN_SEEDS)
-            .add(DnDItems.GLOOM_PUMPKIN_PIE)
+            .add(DnDItems.GLOOM_PUMPKIN_SEEDS)
     }
 
     fun vanillaTags() {
@@ -179,11 +179,6 @@ class ItemTagsProvider(
             .add(DnDItems.CORN)
         getOrCreateTagBuilder(ConventionalItemTags.BERRY_FOODS)
             .add(DnDItems.MOONBERRIES)
-        getOrCreateTagBuilder(ConventionalItemTags.PIE_FOODS)
-            .add(DnDItems.LANTERN_PUMPKIN_PIE)
-            .add(DnDItems.MOSSKIN_PUMPKIN_PIE)
-            .add(DnDItems.PALE_PUMPKIN_PIE)
-            .add(DnDItems.GLOOM_PUMPKIN_PIE)
 
         getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
             .add(DnDItems.BLACKSTONE_PICKAXE)
