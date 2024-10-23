@@ -7,102 +7,6 @@ import net.minecraft.client.render.animation.PartAnimation
 import net.minecraft.client.render.animation.PartAnimation.*
 
 object PifflingPumpkinAnimations {
-    val IDLE: Animation = Animation.Builder.withLength(1.0f).looping()
-        .addPartAnimation(
-            "bone", PartAnimation(
-                AnimationTargets.ROTATE,
-                AnimationKeyframe(
-                    0.0f,
-                    rotate(0.0f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    0.5f,
-                    rotate(2.5f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    1.0f,
-                    rotate(0.0f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                )
-            )
-        )
-        .addPartAnimation(
-            "body", PartAnimation(
-                AnimationTargets.ROTATE,
-                AnimationKeyframe(0.0f, rotate(2.5f, 0.0f, 0.0f), Interpolations.SPLINE),
-                AnimationKeyframe(
-                    0.5f,
-                    rotate(5.0f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    1.0f,
-                    rotate(2.5f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                )
-            )
-        )
-        .addPartAnimation(
-            "head", PartAnimation(
-                AnimationTargets.ROTATE,
-                AnimationKeyframe(0.0f, rotate(0.0f, 0.0f, 0.0f), Interpolations.SPLINE),
-                AnimationKeyframe(
-                    0.625f,
-                    rotate(5.0f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    1.0f,
-                    rotate(0.0f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                )
-            )
-        )
-        .addPartAnimation(
-            "right_arm", PartAnimation(
-                AnimationTargets.ROTATE,
-                AnimationKeyframe(
-                    0.0f,
-                    rotate(-2.5f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(0.5f, rotate(-7.5f, 0.0f, 0.0f), Interpolations.SPLINE),
-                AnimationKeyframe(
-                    0.75f,
-                    rotate(-12.5f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    1.0f,
-                    rotate(-2.5f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                )
-            )
-        )
-        .addPartAnimation(
-            "left_arm", PartAnimation(
-                AnimationTargets.ROTATE,
-                AnimationKeyframe(
-                    0.0f,
-                    rotate(-2.5f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(0.5f, rotate(-7.5f, 0.0f, 0.0f), Interpolations.SPLINE),
-                AnimationKeyframe(
-                    0.75f,
-                    rotate(-12.5f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    1.0f,
-                    rotate(-2.5f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                )
-            )
-        )        .build()
-
     val WALK: Animation = Animation.Builder.withLength(1.0f).looping()
         .addPartAnimation(
             "bone", PartAnimation(
@@ -325,8 +229,7 @@ object PifflingPumpkinAnimations {
                     Interpolations.SPLINE
                 )
             )
-        )
-        .build()
+        ).build()
 
     val RUN: Animation = Animation.Builder.withLength(0.3333f).looping()
         .addPartAnimation(
@@ -498,34 +401,5 @@ object PifflingPumpkinAnimations {
                     Interpolations.SPLINE
                 )
             )
-        )
-        .build()
-
-    val TWITCH: Animation = Animation.Builder.withLength(0.25f)
-        .addPartAnimation(
-            "head", PartAnimation(
-                AnimationTargets.ROTATE,
-                AnimationKeyframe(
-                    0.0f,
-                    rotate(0.0f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    0.0833f,
-                    rotate(0.0f, 5.0f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    0.1667f,
-                    rotate(0.0f, -2.5f, 0.0f),
-                    Interpolations.SPLINE
-                ),
-                AnimationKeyframe(
-                    0.25f,
-                    rotate(0.0f, 0.0f, 0.0f),
-                    Interpolations.SPLINE
-                )
-            )
-        )
-        .build()
+        ).build()
 }

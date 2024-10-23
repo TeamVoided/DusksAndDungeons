@@ -8,16 +8,19 @@ import net.minecraft.client.render.item.HeldItemRenderer
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.EquipmentSlot
+import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.util.Arm
+import net.minecraft.util.math.Axis
 import org.joml.Quaternionf
 import org.teamvoided.dusk_autumn.entity.PifflingPumpkinEntity
 import org.teamvoided.dusk_autumn.entity.pumpkin.piffling.model.PifflingPumpkinModel
+import org.teamvoided.dusk_autumn.entity.pumpkin.piffling.render.PifflingPumpkinHeadFeatureRenderer.Companion.moveRelativeTo
 
 class PifflingPumpkinHeldItemFeatureRenderer(
     context: FeatureRendererContext<PifflingPumpkinEntity, PifflingPumpkinModel>,
     private val heldItemRenderer: HeldItemRenderer
 ) : FeatureRenderer<PifflingPumpkinEntity, PifflingPumpkinModel>(context) {
-    val scale = 0.625f
     override fun render(
         matrices: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
@@ -30,43 +33,65 @@ class PifflingPumpkinHeldItemFeatureRenderer(
         k: Float,
         l: Float
     ) {
-        val mainhand = entity.getEquippedStack(EquipmentSlot.MAINHAND)
-        if (!mainhand.isEmpty) {
-            matrices.push()
+        val bl = entity.mainArm == Arm.RIGHT
+        val mainhand: ItemStack = if (bl) entity.offHandStack else entity.mainHandStack
+        val offhand: ItemStack = if (bl) entity.mainHandStack else entity.offHandStack
+        if (mainhand.isEmpty && offhand.isEmpty) {
             val model = (this.contextModel as PifflingPumpkinModel)
-            model.rightArm.moveRelativeToHand(matrices, model)
-            val scale = 1f
-            matrices.translate(0.0f, -0.5f, -0.55f)
-//            matrices.rotate(Axis.Y_POSITIVE.rotationDegrees(180.0f))
-            matrices.scale(-scale, -scale, scale)
-            heldItemRenderer.renderItem(
+            this.renderItem(
                 entity,
-                ItemStack(mainhand.item),
+                model,
+                model.rightArm,
+                mainhand,
                 ModelTransformationMode.THIRD_PERSON_RIGHT_HAND,
-                false,
+                Arm.RIGHT,
                 matrices,
                 vertexConsumers,
                 light
             )
-            matrices.pop()
+            this.renderItem(
+                entity,
+                model,
+                model.leftArm,
+                offhand,
+                ModelTransformationMode.THIRD_PERSON_LEFT_HAND,
+                Arm.LEFT,
+                matrices,
+                vertexConsumers,
+                light
+            )
         }
     }
 
-    private fun ModelPart.moveRelativeToHand(matrix: MatrixStack, model: PifflingPumpkinModel) {
-        val bone = model.bone
-        val body = model.body
+    fun renderItem(
+        entity: LivingEntity,
+        model: PifflingPumpkinModel,
+        armPart: ModelPart,
+        stack: ItemStack,
+        transformationMode: ModelTransformationMode,
+        arm: Arm,
+        matrices: MatrixStack,
+        vertexConsumers: VertexConsumerProvider,
+        light: Int
+    ) {
+        if (!stack.isEmpty) {
+//            matrices.push()
+//            armPart.moveRelativeToHand(matrices, model)
+//            matrices.rotate(Axis.X_POSITIVE.rotationDegrees(-90.0f))
+//            matrices.rotate(Axis.Y_POSITIVE.rotationDegrees(180.0f))
 
-        matrix.translate(bone.pivotX / 16.0f, bone.pivotY / 16.0f, bone.pivotZ / 16.0f)
-        matrix.rotate(Quaternionf().rotationZYX(bone.roll, bone.yaw, bone.pitch))
+//            matrices.translate((if (bl) -1 else 1).toFloat() / 16.0f, 0.125f, -0.625f)
+//            heldItemRenderer.renderItem(entity, stack, transformationMode, bl, matrices, vertexConsumers, light)
+//            matrices.pop()
 
-        matrix.translate(body.pivotX / 16.0f, body.pivotY / 16.0f, body.pivotZ / 16.0f)
-        matrix.rotate(Quaternionf().rotationZYX(body.roll, body.yaw, body.pitch))
 
-        matrix.translate(this.pivotX / 16.0f, this.pivotY / 16.0f, this.pivotZ / 16.0f)
-        matrix.rotate(Quaternionf().rotationZYX(this.roll, this.yaw, this.pitch))
-
-        if (this.scaleX != 1.0f || (this.scaleY != 1.0f) || (this.scaleZ != 1.0f)) {
-            matrix.scale(this.scaleX, this.scaleY, this.scaleZ)
+            matrices.push()
+            armPart.moveRelativeTo(matrices, model)
+            matrices.translate(0f, 0.3f, -0.1f)
+            matrices.rotate(Axis.X_POSITIVE.rotationDegrees(90.0f))
+            val bl = arm == Arm.LEFT
+            heldItemRenderer.renderItem(entity, stack, transformationMode, bl, matrices, vertexConsumers, light)
+            matrices.pop()
         }
     }
 }

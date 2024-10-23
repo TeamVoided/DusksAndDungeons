@@ -30,12 +30,12 @@ import kotlin.jvm.optionals.getOrNull
 class PifflingPumpkinEntity(entityType: EntityType<out PifflingPumpkinEntity>, world: World) :
     GolemEntity(entityType, world) {
     var stateTicks: Int = 0
-    val twitchAnimationState: AnimationState = AnimationState()
-    val idleAnimationState: AnimationState = AnimationState()
+//    val twitchAnimationState: AnimationState = AnimationState()
 
     init {
         this.setCanPickUpLoot(true)
         Arrays.fill(this.handDropChances, 2f)
+        Arrays.fill(this.armorDropChances, 0f)
     }
 
     override fun initGoals() {
@@ -53,25 +53,8 @@ class PifflingPumpkinEntity(entityType: EntityType<out PifflingPumpkinEntity>, w
         entityData: EntityData?
     ): EntityData? {
         summonedPos = this.blockPos
-        if (this.getEquippedStack(EquipmentSlot.HEAD) == ItemStack.EMPTY) {
-            this.equipStack(EquipmentSlot.HEAD, DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack)
-        }
         return super.initialize(world, difficulty, spawnReason, entityData)
     }
-//
-//    private fun getLootTableHand(world: ServerWorld, golem: TuffGolemEntity) {
-//        val states = world.getLootTable(NulliumLootTables.ENDERMAN_HOLDS)
-//            .generateLoot(LootContextParameterSet())
-//            .mapNotNull {
-//                it
-//            }
-//
-//        if (states.isNotEmpty()) {
-//            states.random().let {
-//                if (!it == ItemStack.EMPTY) golem.carriedBlock = it
-//            }
-//        }
-//    }
 
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
@@ -123,16 +106,12 @@ class PifflingPumpkinEntity(entityType: EntityType<out PifflingPumpkinEntity>, w
     }
 
     private fun updateAnimationStates() {
-        if (this.stateTicks in 0..twitchLength) {
-            this.stateTicks++
-            twitchAnimationState.start(this.age)
-        } else {
-            twitchAnimationState.stop()
-        }
-        if (this.velocity.horizontalLength() == 0.0)
-            idleAnimationState.start(this.age)
-        else
-            idleAnimationState.stop()
+//        if (this.stateTicks < twitchLength) {
+//            this.stateTicks++
+//            twitchAnimationState.start(this.age)
+//        } else {
+//            twitchAnimationState.stop()
+//        }
     }
 
     override fun isPersistent(): Boolean {

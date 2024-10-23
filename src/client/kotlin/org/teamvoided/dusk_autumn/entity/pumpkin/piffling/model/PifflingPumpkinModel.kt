@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.entity.pumpkin.piffling.model
 
 import net.minecraft.client.model.*
 import net.minecraft.client.render.entity.model.SinglePartEntityModel
+import net.minecraft.util.math.MathHelper
 import org.teamvoided.dusk_autumn.entity.PifflingPumpkinEntity
 import org.teamvoided.dusk_autumn.entity.pumpkin.piffling.animation.PifflingPumpkinAnimations
 
@@ -14,9 +15,7 @@ class PifflingPumpkinModel(private val root: ModelPart) : SinglePartEntityModel<
     val rightLeg: ModelPart = bone.getChild("right_leg")
     val leftLeg: ModelPart = bone.getChild("left_leg")
 
-    override fun getPart(): ModelPart {
-        return this.root
-    }
+    override fun getPart(): ModelPart = this.root
 
     override fun setAngles(
         entity: PifflingPumpkinEntity,
@@ -28,15 +27,31 @@ class PifflingPumpkinModel(private val root: ModelPart) : SinglePartEntityModel<
     ) {
         this.part.traverse().forEach(ModelPart::resetTransform)
         this.animateWalk(
-            PifflingPumpkinAnimations.RUN,
-//            if (entity.isSprinting) PifflingPumpkinAnimations.RUN else PifflingPumpkinAnimations.WALK,
+            if (entity.isSprinting) PifflingPumpkinAnimations.RUN else PifflingPumpkinAnimations.WALK,
             limbAngle,
             limbDistance,
-            1f,
+            1.5f,
             2.5f
         )
-        this.animate(entity.idleAnimationState, PifflingPumpkinAnimations.IDLE, animationProgress, 1.0f)
-        this.animate(entity.twitchAnimationState, PifflingPumpkinAnimations.TWITCH, animationProgress, 1.0f)
+        this.animateIdlePose(animationProgress)
+    }
+
+    private fun animateIdlePose(angle: Float) {
+        val f = angle * 0.1f
+        val cos = MathHelper.cos(f)
+        val sin = MathHelper.sin(f)
+
+        this.body.roll += 0.025f * sin
+        this.body.pitch += 0.1f * cos + 0.1f
+
+        this.head.roll += 0.06f * cos
+        this.head.pitch += 0.06f * sin + 0.05f
+
+        this.rightArm.roll += 0.025f * -cos
+        this.rightArm.pitch += 0.05f * -sin - 0.1f
+
+        this.leftArm.roll += 0.025f * cos
+        this.leftArm.pitch += 0.05f * -sin - 0.1f
     }
 
     companion object {
@@ -68,7 +83,7 @@ class PifflingPumpkinModel(private val root: ModelPart) : SinglePartEntityModel<
                     "right_arm",
                     ModelPartBuilder.create()
                         .uv(20, 0)
-                        .cuboid(-1f, 0f, -1f, 2f, 6f, 2f),
+                        .cuboid(-1f, -1f, -1f, 2f, 6f, 2f),
                     ModelTransform.of(-4f, -4f, 0f, 0f, 0f, 0.34907f)
                 )
                 body.addChild(
@@ -76,7 +91,7 @@ class PifflingPumpkinModel(private val root: ModelPart) : SinglePartEntityModel<
                     ModelPartBuilder.create()
                         .uv(20, 0)
                         .mirrored()
-                        .cuboid(-1f, 0f, -1f, 2f, 6f, 2f),
+                        .cuboid(-1f, -1f, -1f, 2f, 6f, 2f),
                     ModelTransform.of(4f, -4f, 0f, 0f, 0f, -0.34907f)
                 )
                 base.addChild(

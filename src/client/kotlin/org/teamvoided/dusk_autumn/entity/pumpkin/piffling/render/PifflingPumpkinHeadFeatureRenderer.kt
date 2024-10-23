@@ -15,6 +15,7 @@ import net.minecraft.util.math.Axis
 import org.joml.Quaternionf
 import org.teamvoided.dusk_autumn.entity.PifflingPumpkinEntity
 import org.teamvoided.dusk_autumn.entity.pumpkin.piffling.model.PifflingPumpkinModel
+import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 
 class PifflingPumpkinHeadFeatureRenderer(
     context: FeatureRendererContext<PifflingPumpkinEntity, PifflingPumpkinModel>,
@@ -32,14 +33,14 @@ class PifflingPumpkinHeadFeatureRenderer(
         k: Float,
         l: Float
     ) {
-        val headStack = entity.getEquippedStack(EquipmentSlot.HEAD)
-        if (
-            !headStack.isEmpty &&
-            (!entity.isInvisible || (MinecraftClient.getInstance().hasOutline(entity) && entity.isInvisible))
-        ) {
+        var headStack = entity.getEquippedStack(EquipmentSlot.HEAD)
+        if (headStack.isEmpty) {
+            headStack = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
+        }
+        if ((!entity.isInvisible || (MinecraftClient.getInstance().hasOutline(entity) && entity.isInvisible))) {
             matrices.push()
             val model = (this.contextModel as PifflingPumpkinModel)
-            model.head.moveRelativeToHead(matrices, model)
+            model.head.moveRelativeTo(matrices, model)
 //            moveRelativeToHead(matrices, model)
             val scale = 1f
             matrices.translate(0.0f, -0.5f, 0.0f)
@@ -60,22 +61,23 @@ class PifflingPumpkinHeadFeatureRenderer(
             matrices.pop()
         }
     }
+    companion object{
+        fun ModelPart.moveRelativeTo(matrix: MatrixStack, model: PifflingPumpkinModel) {
+            val bone = model.bone
+            val body = model.body
 
-    private fun ModelPart.moveRelativeToHead(matrix: MatrixStack, model: PifflingPumpkinModel) {
-        val bone = model.bone
-        val body = model.body
+            matrix.translate(bone.pivotX / 16.0f, bone.pivotY / 16.0f, bone.pivotZ / 16.0f)
+            matrix.rotate(Quaternionf().rotationZYX(bone.roll, bone.yaw, bone.pitch))
 
-        matrix.translate(bone.pivotX / 16.0f, bone.pivotY / 16.0f, bone.pivotZ / 16.0f)
-        matrix.rotate(Quaternionf().rotationZYX(bone.roll, bone.yaw, bone.pitch))
+            matrix.translate(body.pivotX / 16.0f, body.pivotY / 16.0f, body.pivotZ / 16.0f)
+            matrix.rotate(Quaternionf().rotationZYX(body.roll, body.yaw, body.pitch))
 
-        matrix.translate(body.pivotX / 16.0f, body.pivotY / 16.0f, body.pivotZ / 16.0f)
-        matrix.rotate(Quaternionf().rotationZYX(body.roll, body.yaw, body.pitch))
+            matrix.translate(this.pivotX / 16.0f, this.pivotY / 16.0f, this.pivotZ / 16.0f)
+            matrix.rotate(Quaternionf().rotationZYX(this.roll, this.yaw, this.pitch))
 
-        matrix.translate(this.pivotX / 16.0f, this.pivotY / 16.0f, this.pivotZ / 16.0f)
-        matrix.rotate(Quaternionf().rotationZYX(this.roll, this.yaw, this.pitch))
-
-        if (this.scaleX != 1.0f || (this.scaleY != 1.0f) || (this.scaleZ != 1.0f)) {
-            matrix.scale(this.scaleX, this.scaleY, this.scaleZ)
+            if (this.scaleX != 1.0f || (this.scaleY != 1.0f) || (this.scaleZ != 1.0f)) {
+                matrix.scale(this.scaleX, this.scaleY, this.scaleZ)
+            }
         }
     }
 }

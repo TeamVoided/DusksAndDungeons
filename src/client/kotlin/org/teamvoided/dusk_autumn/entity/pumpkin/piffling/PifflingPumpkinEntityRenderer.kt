@@ -14,7 +14,7 @@ class PifflingPumpkinEntityRenderer(context: EntityRendererFactory.Context) :
     MobEntityRenderer<PifflingPumpkinEntity, PifflingPumpkinModel>(
         context,
         PifflingPumpkinModel(context.getPart(DnDEntityModelLayers.PIFFLING_PUMPKIN)),
-        0.2f
+        0.3f
     ) {
     init {
         this.addFeature(PifflingPumpkinHeldItemFeatureRenderer(this, context.heldItemRenderer))
