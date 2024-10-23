@@ -1,6 +1,5 @@
 package org.teamvoided.dusk_autumn.block
 
-import com.mojang.serialization.MapCodec
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
@@ -19,7 +18,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
 open class SmallPumpkinBlock(carvedBlock: Block, seedsItem: Item, settings: Settings) :
-    Pumpkin2Block(carvedBlock, seedsItem, settings), Waterloggable {
+    DnDPumpkinBlock(carvedBlock, seedsItem, settings), Waterloggable {
     override val seeds = 2
 
     init {

@@ -7,10 +7,7 @@ import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
-import net.minecraft.item.ItemKeys
 import net.minecraft.item.Items
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures
 import org.teamvoided.dusk_autumn.block.*
@@ -123,7 +120,7 @@ object DnDFloraBlocks {
         ).axe()
     ).shh()
     val LANTERN_PUMPKIN = DnDBlocks.register(
-        "lantern_pumpkin", Pumpkin2Block(
+        "lantern_pumpkin", DnDPumpkinBlock(
             CARVED_LANTERN_PUMPKIN,
             Items.PUMPKIN_SEEDS,
             copy(CARVED_LANTERN_PUMPKIN)
@@ -157,7 +154,7 @@ object DnDFloraBlocks {
         ).axe()
     ).shh()
     val MOSSKIN_PUMPKIN = DnDBlocks.register(
-        "mosskin_pumpkin", Pumpkin2Block(
+        "mosskin_pumpkin", DnDPumpkinBlock(
             CARVED_MOSSKIN_PUMPKIN,
             Items.PUMPKIN_SEEDS,
             copy(CARVED_MOSSKIN_PUMPKIN)
@@ -191,7 +188,7 @@ object DnDFloraBlocks {
         ).axe()
     ).shh()
     val PALE_PUMPKIN = DnDBlocks.register(
-        "pale_pumpkin", Pumpkin2Block(
+        "pale_pumpkin", DnDPumpkinBlock(
             CARVED_PALE_PUMPKIN,
             Items.PUMPKIN_SEEDS,
             copy(CARVED_PALE_PUMPKIN)
@@ -225,7 +222,7 @@ object DnDFloraBlocks {
         ).axe()
     ).shh()
     val GLOOM_PUMPKIN = DnDBlocks.register(
-        "gloom_pumpkin", Pumpkin2Block(
+        "gloom_pumpkin", DnDPumpkinBlock(
             CARVED_GLOOM_PUMPKIN,
             Items.PUMPKIN_SEEDS,
             copy(CARVED_GLOOM_PUMPKIN)
@@ -252,35 +249,19 @@ object DnDFloraBlocks {
 
     val LANTERN_PUMPKIN_STEM = DnDBlocks.registerNoItem(
         "lantern_pumpkin_stem",
-        PumpkinStemBlock(
-            LANTERN_PUMPKIN,
-            SMALL_LANTERN_PUMPKIN,
-            copy(PUMPKIN_STEM)
-        ).cutout()
+        DnDPumpkinStemBlock(LANTERN_PUMPKIN, SMALL_LANTERN_PUMPKIN, copy(PUMPKIN_STEM)).cutout()
     )
     val MOSSKIN_PUMPKIN_STEM = DnDBlocks.registerNoItem(
         "mosskin_pumpkin_stem",
-        PumpkinStemBlock(
-            MOSSKIN_PUMPKIN,
-            SMALL_MOSSKIN_PUMPKIN,
-            copy(PUMPKIN_STEM)
-        ).cutout()
+        DnDPumpkinStemBlock(MOSSKIN_PUMPKIN, SMALL_MOSSKIN_PUMPKIN, copy(PUMPKIN_STEM)).cutout()
     )
     val PALE_PUMPKIN_STEM = DnDBlocks.registerNoItem(
         "pale_pumpkin_stem",
-        PumpkinStemBlock(
-            PALE_PUMPKIN,
-            SMALL_PALE_PUMPKIN,
-            copy(PUMPKIN_STEM)
-        ).cutout()
+        DnDPumpkinStemBlock(PALE_PUMPKIN, SMALL_PALE_PUMPKIN, copy(PUMPKIN_STEM)).cutout()
     )
     val GLOOM_PUMPKIN_STEM = DnDBlocks.registerNoItem(
         "gloom_pumpkin_stem",
-        PumpkinStemBlock(
-            GLOOM_PUMPKIN,
-            SMALL_GLOOM_PUMPKIN,
-            copy(PUMPKIN_STEM)
-        ).cutout()
+        DnDPumpkinStemBlock(GLOOM_PUMPKIN, SMALL_GLOOM_PUMPKIN, copy(PUMPKIN_STEM)).cutout()
     )
 
     val CORN_CROP = DnDBlocks.registerNoItem(

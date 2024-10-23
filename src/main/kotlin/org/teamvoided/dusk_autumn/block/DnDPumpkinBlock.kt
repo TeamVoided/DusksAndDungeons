@@ -20,7 +20,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
 
-open class Pumpkin2Block(private val carvedBlock:Block, private val seedsItem: Item, settings: Settings) : Block(settings) {
+open class DnDPumpkinBlock(private val carvedBlock:Block, private val seedsItem: Item, settings: Settings) : Block(settings) {
     open val seeds = 4
     override fun onInteract(
         stack: ItemStack,
