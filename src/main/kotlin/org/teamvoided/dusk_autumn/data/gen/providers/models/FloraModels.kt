@@ -9,7 +9,7 @@ import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object FloraModels {
-    fun floraModels(gen: BlockStateModelGenerator) {
+    fun register(gen: BlockStateModelGenerator) {
         gen.registerGalleryRose(DnDFloraBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerGoldenMushroomPlant(DnDFloraBlocks.GOLDEN_MUSHROOM)
 

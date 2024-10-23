@@ -6,14 +6,10 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
-import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Items
-import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
-import net.minecraft.util.math.Direction
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.DusksAndDungeons.isModLoaded
-import org.teamvoided.dusk_autumn.block.CandelabraBlock
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.data.gen.providers.models.*
@@ -21,7 +17,6 @@ import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
 import org.teamvoided.dusk_autumn.util.*
-import org.teamvoided.dusk_autumn.util.datagen.*
 import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
@@ -58,7 +53,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         }
 
         BigModels.register(gen)
-        FloraModels.floraModels(gen)
+        FloraModels.register(gen)
         NetherModels.netherModels(gen)
         OverlayModels.overlayModels(gen)
         StoneModels.stoneModels(gen)
@@ -86,8 +81,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.wall(DnDBlocks.ICE_BRICK_WALL, DnDBlocks.ICE_BRICKS)
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
+        @Suppress("DEPRECATION")
         gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("decorated_pot"), Blocks.TERRACOTTA)
             .includeWithoutItem(DnDBlocks.POT_O_SCREAMS)
+        @Suppress("DEPRECATION")
         gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("chest"), Blocks.OAK_PLANKS)
             .includeWithoutItem(DnDBlocks.CHEST_O_SOULS)
 
