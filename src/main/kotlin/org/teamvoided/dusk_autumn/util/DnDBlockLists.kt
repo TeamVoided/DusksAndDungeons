@@ -127,42 +127,42 @@ object DnDBlockLists {
         (DnDBigBlocks.BIG_PINK_SOUL_CANDLE to DnDBigBlocks.BIG_PINK_SOUL_CANDLE_CAKE),
     )
     val bigTallCandles = listOf<Block>(
-      /*  DnDBigBlocks.BIG_TALL_CANDLE,
-        DnDBigBlocks.BIG_TALL_WHITE_CANDLE,
-        DnDBigBlocks.BIG_TALL_LIGHT_GRAY_CANDLE,
-        DnDBigBlocks.BIG_TALL_GRAY_CANDLE,
-        DnDBigBlocks.BIG_TALL_BLACK_CANDLE,
-        DnDBigBlocks.BIG_TALL_BROWN_CANDLE,
-        DnDBigBlocks.BIG_TALL_RED_CANDLE,
-        DnDBigBlocks.BIG_TALL_ORANGE_CANDLE,
-        DnDBigBlocks.BIG_TALL_YELLOW_CANDLE ,
-        DnDBigBlocks.BIG_TALL_LIME_CANDLE ,
-        DnDBigBlocks.BIG_TALL_GREEN_CANDLE,
-        DnDBigBlocks.BIG_TALL_CYAN_CANDLE ,
-        DnDBigBlocks.BIG_TALL_LIGHT_BLUE_CANDLE,
-        DnDBigBlocks.BIG_TALL_BLUE_CANDLE,
-        DnDBigBlocks.BIG_TALL_PURPLE_CANDLE,
-        DnDBigBlocks.BIG_TALL_MAGENTA_CANDLE,
-        DnDBigBlocks.BIG_TALL_PINK_CANDLE*/
+        /*  DnDBigBlocks.BIG_TALL_CANDLE,
+          DnDBigBlocks.BIG_TALL_WHITE_CANDLE,
+          DnDBigBlocks.BIG_TALL_LIGHT_GRAY_CANDLE,
+          DnDBigBlocks.BIG_TALL_GRAY_CANDLE,
+          DnDBigBlocks.BIG_TALL_BLACK_CANDLE,
+          DnDBigBlocks.BIG_TALL_BROWN_CANDLE,
+          DnDBigBlocks.BIG_TALL_RED_CANDLE,
+          DnDBigBlocks.BIG_TALL_ORANGE_CANDLE,
+          DnDBigBlocks.BIG_TALL_YELLOW_CANDLE ,
+          DnDBigBlocks.BIG_TALL_LIME_CANDLE ,
+          DnDBigBlocks.BIG_TALL_GREEN_CANDLE,
+          DnDBigBlocks.BIG_TALL_CYAN_CANDLE ,
+          DnDBigBlocks.BIG_TALL_LIGHT_BLUE_CANDLE,
+          DnDBigBlocks.BIG_TALL_BLUE_CANDLE,
+          DnDBigBlocks.BIG_TALL_PURPLE_CANDLE,
+          DnDBigBlocks.BIG_TALL_MAGENTA_CANDLE,
+          DnDBigBlocks.BIG_TALL_PINK_CANDLE*/
     )
     val bigTallSoulCandles = listOf<Block>(
-      /*  DnDBigBlocks.BIG_TALL_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_WHITE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_LIGHT_GRAY_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_GRAY_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_BLACK_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_BROWN_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_RED_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_ORANGE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_YELLOW_SOUL_CANDLE ,
-        DnDBigBlocks.BIG_TALL_LIME_SOUL_CANDLE ,
-        DnDBigBlocks.BIG_TALL_GREEN_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_CYAN_SOUL_CANDLE ,
-        DnDBigBlocks.BIG_TALL_LIGHT_BLUE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_BLUE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_PURPLE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_MAGENTA_SOUL_CANDLE,
-        DnDBigBlocks.BIG_TALL_PINK_SOUL_CANDLE*/
+        /*  DnDBigBlocks.BIG_TALL_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_WHITE_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_LIGHT_GRAY_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_GRAY_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_BLACK_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_BROWN_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_RED_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_ORANGE_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_YELLOW_SOUL_CANDLE ,
+          DnDBigBlocks.BIG_TALL_LIME_SOUL_CANDLE ,
+          DnDBigBlocks.BIG_TALL_GREEN_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_CYAN_SOUL_CANDLE ,
+          DnDBigBlocks.BIG_TALL_LIGHT_BLUE_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_BLUE_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_PURPLE_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_MAGENTA_SOUL_CANDLE,
+          DnDBigBlocks.BIG_TALL_PINK_SOUL_CANDLE*/
     )
     val candelabras = listOf(
         DnDBigBlocks.CANDELABRA,
@@ -202,6 +202,7 @@ object DnDBlockLists {
         DnDBigBlocks.MAGENTA_SOUL_CANDELABRA,
         DnDBigBlocks.PINK_SOUL_CANDELABRA
     )
+    val allCandelabras = candelabras + soulCandelabras
     val hollowLogs = listOf(
         DnDWoodBlocks.HOLLOW_OAK_LOG,
         DnDWoodBlocks.HOLLOW_SPRUCE_LOG,
@@ -245,16 +246,16 @@ object DnDBlockLists {
         DnDWoodBlocks.WARPED_STEM_PILE
     )
     val leafPiles = listOf(
-        DnDWoodBlocks.OAK_LEAF_PILE ,
-        DnDWoodBlocks.SPRUCE_LEAF_PILE ,
-        DnDWoodBlocks.BIRCH_LEAF_PILE ,
-        DnDWoodBlocks.JUNGLE_LEAF_PILE ,
-        DnDWoodBlocks.ACACIA_LEAF_PILE ,
+        DnDWoodBlocks.OAK_LEAF_PILE,
+        DnDWoodBlocks.SPRUCE_LEAF_PILE,
+        DnDWoodBlocks.BIRCH_LEAF_PILE,
+        DnDWoodBlocks.JUNGLE_LEAF_PILE,
+        DnDWoodBlocks.ACACIA_LEAF_PILE,
         DnDWoodBlocks.DARK_OAK_LEAF_PILE,
-        DnDWoodBlocks.MANGROVE_LEAF_PILE ,
+        DnDWoodBlocks.MANGROVE_LEAF_PILE,
         DnDWoodBlocks.CHERRY_LEAF_PILE,
         DnDWoodBlocks.AZALEA_LEAF_PILE,
-        DnDWoodBlocks.FLOWERING_AZALEA_LEAF_PILE ,
+        DnDWoodBlocks.FLOWERING_AZALEA_LEAF_PILE,
         DnDWoodBlocks.CASCADE_LEAF_PILE,
 //        DnDWoodBlocks.GALLERY_MAPLE_LEAF_PILE,
         DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE

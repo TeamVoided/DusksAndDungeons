@@ -39,7 +39,7 @@ class ItemTagsProvider(
         copy(DnDBlockTags.VIVIONBEDS, DnDItemTags.VIVIONBEDS)
         copy(DnDBlockTags.BIG_CANDLES, DnDItemTags.BIG_CANDLES)
         copy(DnDBlockTags.SOUL_CANDLES, DnDItemTags.SOUL_CANDLES)
-        copy(DnDBlockTags.CANDELABRAS,,DnDItemTags.CANDELABRAS)
+        copy(DnDBlockTags.CANDELABRAS,DnDItemTags.CANDELABRAS)
         copy(DnDBlockTags.BIG_SOUL_CANDLES, DnDItemTags.BIG_SOUL_CANDLES)
         copy(DnDBlockTags.GRAVESTONES, DnDItemTags.GRAVESTONES)
         copy(DnDBlockTags.SMALL_GRAVESTONES, DnDItemTags.SMALL_GRAVESTONES)
