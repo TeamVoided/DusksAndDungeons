@@ -700,9 +700,10 @@ fun BlockStateModelGenerator.registerPumpkinSet(
     stem: Block
 ) {
     this.registerPumpkins(pumpkin, carved, glowing)
-    this.registerSmallPumpkin(smallPumpkin, smallPumpkin, Texture.getSubId(pumpkin, "_side"))
-    this.registerSmallPumpkin(smallCarved, smallPumpkin, Texture.getId(carved), "carved_")
-    this.registerSmallPumpkin(smallGlowing, smallPumpkin, Texture.getId(glowing), "glowing_")
+    this.registerSmallPumpkins(smallPumpkin, smallCarved, smallGlowing, pumpkin)
+//    this.registerSmallPumpkin(smallPumpkin, smallPumpkin, Texture.getSubId(pumpkin, "_side"))
+//    this.registerSmallPumpkin(smallCarved, smallPumpkin, Texture.getId(carved), "carved_")
+//    this.registerSmallPumpkin(smallGlowing, smallPumpkin, Texture.getId(glowing), "glowing_")
     this.pumpkinStem(stem)
 }
 
@@ -1811,7 +1812,6 @@ fun BlockStateModelGenerator.registerPrefixedItemModel(block: Block, prefix: Str
         this.modelCollector
     )
 }
-
 
 private
 val <T : Any?> T.myb get() = Optional.ofNullable(this)

@@ -157,7 +157,7 @@ fun RecipeExporter.createPumpkinStuffs(
     ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, seeds, 2)
         .ingredient(smallPumpkin)
         .criterion(smallPumpkin)
-        .offerTo(this)
+        .offerTo(this, seeds.id.suffix("_from_small"))
 }
 
 fun RecipeExporter.smeltDefault(
