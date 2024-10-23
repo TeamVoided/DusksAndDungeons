@@ -1058,6 +1058,9 @@ fun BlockStateModelGenerator.registerBigLantern(
     }
 }
 
+fun BlockStateModelGenerator.registerBigCandle(pair: Pair<Block, Block?>) =
+    this.registerBigCandle(pair.first, pair.second)
+
 fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
     this.registerPrefixedItemModel(candle, "candle/")
     val texture = Texture.all(candle.prefixed("candle/"))
@@ -1072,6 +1075,7 @@ fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
     val fourCandleLit = bigCandleModel("4").upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
     this.blockStateCollector.accept(
         VariantsBlockStateSupplier.create(candle)
+            .coordinate(BlockStateModelGenerator.createSouthDefaultHorizontalRotationStates())
             .coordinate(
                 BlockStateVariantMap.create(Properties.CANDLES, Properties.LIT)
                     .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
@@ -1082,7 +1086,7 @@ fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
                     .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
                     .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
                     .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
-            )//.coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates())
+            )
     )
     if (cake != null) {
         val candleCake = bigCandleCakeModel().upload(
@@ -1103,6 +1107,7 @@ fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
     }
 }
 
+fun BlockStateModelGenerator.registerCandle2(pair: Pair<Block, Block?>) = this.registerCandle2(pair.first, pair.second)
 fun BlockStateModelGenerator.registerCandle2(candle: Block, cake: Block?) {
     this.registerPrefixedItemModel(candle, "candle/")
     val texture = Texture.all(candle.prefixed("candle/"))

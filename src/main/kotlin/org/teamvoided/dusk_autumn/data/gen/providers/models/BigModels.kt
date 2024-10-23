@@ -6,7 +6,7 @@ import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks
 import org.teamvoided.dusk_autumn.util.*
 
 object BigModels {
-    fun register(gen: BlockStateModelGenerator){
+    fun register(gen: BlockStateModelGenerator) {
         gen.registerBigChain(DnDBigBlocks.BIG_CHAIN)
         gen.registerBigLantern(DnDBigBlocks.BIG_LANTERN)
         gen.registerBigLantern(DnDBigBlocks.BIG_REDSTONE_LANTERN, true)
@@ -20,17 +20,10 @@ object BigModels {
         gen.registerBigLantern(DnDBigBlocks.BIG_STAR_LANTERN, false, mLB)
         gen.registerBigLantern(DnDBigBlocks.BIG_NEBULAE_LANTERN, false, mLB)
         gen.registerBigLantern(DnDBigBlocks.BIG_ECLIPSE_LANTERN, false, mLB)
-        DnDBlockLists.bigCandles.forEach { (candle, cake) ->
-            gen.registerBigCandle(candle, cake)
-        }
-        DnDBlockLists.soulCandles.forEach { (candle, cake) ->
-            gen.registerCandle2(candle, cake)
-        }
-        DnDBlockLists.bigSoulCandles.forEach { (candle, cake) ->
-            gen.registerBigCandle(candle, cake)
-        }
+        DnDBlockLists.bigCandles.forEach(gen::registerBigCandle)
+        DnDBlockLists.soulCandles.forEach(gen::registerCandle2)
+        DnDBlockLists.bigSoulCandles.forEach(gen::registerBigCandle)
         gen.registerBell(DnDBlocks.CELESTAL_BELL)
-
 
         DnDBlockLists.candelabras.forEach(gen::registerCandelabra)
         DnDBlockLists.soulCandelabras.forEach(gen::registerDnDCandelabra)

@@ -4,30 +4,38 @@ import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.CandleBlock
 import net.minecraft.block.ShapeContext
+import net.minecraft.item.ItemPlacementContext
+import net.minecraft.state.StateManager
+import net.minecraft.state.property.DirectionProperty
+import net.minecraft.state.property.Properties
 import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import org.teamvoided.dusk_autumn.util.FULL_CUBE
+import org.teamvoided.dusk_autumn.util.rotate
+import org.teamvoided.dusk_autumn.util.rotateFlat90
 
 open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
 
-//    init {
-//        this.defaultState =
-//            (stateManager.defaultState)
-//                .with(CANDLES, 1)
-//                .with(LIT, false)
-//                .with(FACING, Direction.NORTH)
-//                .with(WATERLOGGED, false)
-//    }
-//
-//    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
-//        return super.getPlacementState(ctx)?.with(FACING, ctx.playerFacing)
-//    }
+    init {
+        this.defaultState = stateManager.defaultState
+            .with(CANDLES, 1)
+            .with(LIT, false)
+            .with(FACING, Direction.NORTH)
+            .with(WATERLOGGED, false)
+    }
+
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
+        return super.getPlacementState(ctx)?.with(FACING, ctx.playerFacing.opposite)
+    }
 
     override fun getOutlineShape(
         state: BlockState,
@@ -35,33 +43,26 @@ open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
         pos: BlockPos,
         context: ShapeContext
     ): VoxelShape {
-//        val rotations = when (state.get(FACING)) {
-//            Direction.NORTH -> 0
-//            Direction.SOUTH -> 2
-//            Direction.WEST -> 3
-//            Direction.EAST -> 1
-//            else -> 0
-//        }
         return (when (state.get(CANDLES)) {
             1 -> ONE_BIG_CANDLE_SHAPE
             2 -> TWO_BIG_CANDLES_SHAPE
             3 -> THREE_BIG_CANDLES_SHAPE
             4 -> FOUR_BIG_CANDLES_SHAPE
-            else -> ONE_BIG_CANDLE_SHAPE
-        })
-//            .rotate(rotations)
+            else -> FULL_CUBE
+        }).rotate(state.get(FACING).horizontal)
     }
 
     override fun getParticleOffsets(state: BlockState): Iterable<Vec3d> {
-        return BIG_CANDLES_TO_PARTICLE_OFFSETS[state.get(CANDLES)]
+        return BIG_CANDLES_TO_PARTICLE_OFFSETS[state.get(CANDLES)].rotateFlat90(state.get(FACING).horizontal)
     }
 
-//    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-//        builder.add(LIT, CANDLES, FACING, WATERLOGGED)
-//    }
+    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+        super.appendProperties(builder)
+        builder.add(FACING)
+    }
 
     companion object {
-//        val FACING: DirectionProperty = HorizontalFacingBlock.FACING
+        val FACING: DirectionProperty = Properties.HORIZONTAL_FACING
 
         val ONE_BIG_CANDLE_SHAPE: VoxelShape =
             candle(6.0, 6.0, 12.0)
@@ -111,6 +112,7 @@ open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
             )
             Int2ObjectMaps.unmodifiable(int2ObjectMap)
         }
+
         fun candle(x: Double, z: Double, height: Double): VoxelShape {
             return createCuboidShape(x, 0.0, z, x + 4, height, z + 4)
         }
