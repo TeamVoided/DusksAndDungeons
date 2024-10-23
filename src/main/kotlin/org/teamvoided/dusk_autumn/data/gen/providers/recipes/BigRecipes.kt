@@ -32,6 +32,10 @@ object BigRecipes {
             e.createDyed(DnDBlockLists.bigSoulCandles[idx + 1].first, DnDBigBlocks.BIG_SOUL_CANDLE, dye)
 //            e.createDyed(DnDBlockLists.bigTallCandles[idx + 1], DnDBigBlocks.bit BIG_TALL_CANDLE, dye)
 //            e.createDyed(DnDBlockLists.bigTallSoulCandles[idx + 1], DnDBigBlocks.BIG_TALL_SOUL_CANDLE, dye)
+
+            e.createDyed(DnDBlockLists.candelabras[idx + 1], DnDBigBlocks.CANDELABRA, dye, true)
+            e.createDyed(DnDBlockLists.soulCandelabras[idx + 1], DnDBigBlocks.SOUL_CANDELABRA, dye, true)
         }
+        DnDBlockLists.allCandelabras.forEach(e::createCandelabra)
     }
 }

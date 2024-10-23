@@ -3,7 +3,6 @@ package org.teamvoided.dusk_autumn.util
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.data.server.RecipesProvider
 import net.minecraft.data.server.RecipesProvider.*
 import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
@@ -14,8 +13,8 @@ import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
-import org.teamvoided.dusk_autumn.init.DnDBlocks
-import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
+import org.teamvoided.dusk_autumn.block.CandelabraBlock
 import org.teamvoided.dusk_autumn.init.blocks.DnDOverlayBlocks
 
 fun RecipeJsonFactory.criterion(item: ItemConvertible): RecipeJsonFactory =
@@ -68,16 +67,30 @@ fun RecipeExporter.createCandle(
     }
 }
 
+fun RecipeExporter.createCandelabra(candelabra: Block) {
+    if (candelabra !is CandelabraBlock) error("Block provided isn't a CandelabraBlock!")
+
+    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, candelabra, 1)
+        .pattern("NCN")
+        .pattern(" N ")
+        .ingredient('C', Ingredient.ofItems(candelabra.candle))
+        .ingredient('N', Ingredient.ofItems(Items.IRON_NUGGET))
+        .criterion(candelabra.candle)
+        .offerTo(this)
+
+}
+
 fun RecipeExporter.createDyed(
     dyedBlock: ItemConvertible,
     input: ItemConvertible,
-    dye: ItemConvertible
+    dye: ItemConvertible,
+    sufixed: Boolean = false
 ) {
     ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, dyedBlock)
         .ingredient(Ingredient.ofItems(input))
         .ingredient(Ingredient.ofItems(dye))
         .criterion(dye)
-        .offerTo(this)
+        .offerTo(this, if (sufixed) id("${dyedBlock.id.path}_dyed") else dyedBlock.id)
 }
 
 fun RecipeExporter.createGragestones(
