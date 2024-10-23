@@ -19,8 +19,8 @@ public class BlockStateReaderMixin {
 
     @Redirect(method = "method_61066", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V", ordinal = 0))
     void removeErrors(Logger logger, String s, Object idO, Object val) {
-        if (idO instanceof Identifier id && id.getNamespace().equals(MODID) && isDev()) {
-            if (!TRACKED_MODELS.contains(id)) {
+        if (idO instanceof Identifier id && id.getNamespace().equals(MODID)) {
+            if (!TRACKED_MODELS.contains(id) && isDev()) {
                 log.info("Suppressed Model : {}", id);
                 TRACKED_MODELS.add(id);
             }

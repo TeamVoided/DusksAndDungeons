@@ -14,8 +14,8 @@ import static org.teamvoided.dusk_autumn.DusksAndDungeons.*;
 public class BakedModelManagerMixin {
     @Redirect(method = "method_45879", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
     private static void removeErrors(Logger logger, String s, Object id, Object model) {
-        if (id instanceof ModelIdentifier mid && mid.id().getNamespace().equals(MODID) && isDev()) {
-            log.info("Suppressed Model : {}", id);
+        if (id instanceof ModelIdentifier mid && mid.id().getNamespace().equals(MODID)) {
+            if (isDev()) log.info("Suppressed Model : {}", id);
         } else {
             logger.warn(s, id, model);
         }

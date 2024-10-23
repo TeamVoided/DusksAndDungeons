@@ -12,8 +12,8 @@ import static org.teamvoided.dusk_autumn.DusksAndDungeons.*;
 public class ModelLoaderMixin {
     @Redirect(method = "getOrLoadModel", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;warn(Ljava/lang/String;[Ljava/lang/Object;)V"))
     void removeErrors(org.slf4j.Logger logger, String format, Object... args) {
-        if (args[0] instanceof Identifier id && id.getNamespace().equals(MODID) && isDev()) {
-            log.info("Suppressed Model : {}", id);
+        if (args[0] instanceof Identifier id && id.getNamespace().equals(MODID)) {
+            if (isDev()) log.info("Suppressed Model : {}", id);
         } else {
             logger.warn(format, args);
         }
