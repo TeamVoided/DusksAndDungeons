@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.data.gen.providers.models
+package org.teamvoided.dusk_autumn.data.gen.models
 
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.model.BlockStateModelGenerator

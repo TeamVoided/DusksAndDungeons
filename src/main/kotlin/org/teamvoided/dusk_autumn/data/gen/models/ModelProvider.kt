@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.data.gen.providers
+package org.teamvoided.dusk_autumn.data.gen.models
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
@@ -12,7 +12,6 @@ import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.DusksAndDungeons.isModLoaded
 import org.teamvoided.dusk_autumn.block.DnDFamilies
 import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
-import org.teamvoided.dusk_autumn.data.gen.providers.models.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
