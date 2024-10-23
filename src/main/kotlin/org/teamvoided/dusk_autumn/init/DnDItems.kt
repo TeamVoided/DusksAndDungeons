@@ -79,13 +79,13 @@ object DnDItems {
 
 
     val LANTERN_PUMPKIN_SEEDS =
-        register("lantern_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.LANTERN_PUMPKIN_STEM, Item.Settings()))
+        register("lantern_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.LANTERN_PUMPKIN_STEM, Item.Settings())).shh()
     val MOSSKIN_PUMPKIN_SEEDS =
-        register("mosskin_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.MOSSKIN_PUMPKIN_STEM, Item.Settings()))
+        register("mosskin_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.MOSSKIN_PUMPKIN_STEM, Item.Settings())).shh()
     val PALE_PUMPKIN_SEEDS =
-        register("pale_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.PALE_PUMPKIN_STEM, Item.Settings()))
+        register("pale_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.PALE_PUMPKIN_STEM, Item.Settings())).shh()
     val GLOOM_PUMPKIN_SEEDS =
-        register("gloom_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.GLOOM_PUMPKIN_STEM, Item.Settings()))
+        register("gloom_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.GLOOM_PUMPKIN_STEM, Item.Settings())).shh()
 
     val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDFloraBlocks.CORN_CROP, Item.Settings())).shh()
     val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings())).shh()
@@ -94,7 +94,7 @@ object DnDItems {
         "corn_syrup_bottle", HoneyBottleItem(
             Item.Settings().recipeRemainder(Items.GLASS_BOTTLE).food(FoodComponents.HONEY_BOTTLE).maxCount(16)
         )
-    )
+    ).shh()
 
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
