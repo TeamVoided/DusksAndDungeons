@@ -179,6 +179,8 @@ class ItemTagsProvider(
             .add(DnDItems.CORN)
         getOrCreateTagBuilder(ConventionalItemTags.BERRY_FOODS)
             .add(DnDItems.MOONBERRIES)
+        getOrCreateTagBuilder(ConventionalItemTags.FOODS)
+            .add(DnDItems.CORN_SYRUP_BOTTLE)
 
         getOrCreateTagBuilder(ConventionalItemTags.MINING_TOOL_TOOLS)
             .add(DnDItems.BLACKSTONE_PICKAXE)
