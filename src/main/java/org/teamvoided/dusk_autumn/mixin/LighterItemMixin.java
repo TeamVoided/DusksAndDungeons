@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.teamvoided.dusk_autumn.block.CandelabraBlock;
 
-@Debug(export = true)
 @Mixin({FireChargeItem.class, FlintAndSteelItem.class})
 public class LighterItemMixin {
 

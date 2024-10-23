@@ -70,6 +70,7 @@ object DusksAndDungeons {
     fun mc(path: String) = Identifier.ofDefault(path)
     fun id(modId: String, path: String) = Identifier.of(modId, path)
 
+    @JvmStatic
     fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
     fun isModLoaded(modId: String) = FabricLoader.getInstance().isModLoaded(modId)
 }

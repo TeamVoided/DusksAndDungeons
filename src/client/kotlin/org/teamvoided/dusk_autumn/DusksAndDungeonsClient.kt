@@ -31,9 +31,9 @@ object DusksAndDungeonsClient {
         FabricItemGroup.builder()
             .icon { ItemStack(DnDItems.HARVESTER_SCYTHE) }
             .name(Text.literal("Secret Items ;)"))
-            .entries { params, entries ->
+            .entries { _, entries ->
 //                println("Name : ${MinecraftClient.getInstance().player?.gameProfile?.id}")
-                if (isDev() && params.hasPermissions) entries.addLists(SECRET_ITEMS)
+                if (isDev()) entries.addLists(SECRET_ITEMS)
             }
             .build()
     )
