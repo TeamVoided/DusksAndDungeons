@@ -7,7 +7,6 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.Items
 import net.minecraft.registry.RegistryKey
-import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 
@@ -34,7 +33,6 @@ fun FabricItemGroupEntries.addWoodStuffAndLeafPiles() {
             DnDItemLists.woodLists[idx] + DnDBlockLists.logPiles[idx]
         )
     }
-    println()
     this.addAfter(Blocks.BAMBOO_BLOCK, DnDWoodBlocks.HOLLOW_BAMBOO_BLOCK)
     this.addAfter(Blocks.STRIPPED_BAMBOO_BLOCK, DnDWoodBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK)
     DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
@@ -60,7 +58,7 @@ fun FabricItemGroupEntries.addCandles() {
         DnDBigBlocks.LIGHT_GRAY_CANDELABRA, DnDBigBlocks.LIGHT_GRAY_SOUL_CANDELABRA
     )
     this.addAfter(
-        Items.GRAY_CANDLE,DnDBigBlocks.BIG_GRAY_CANDLE,
+        Items.GRAY_CANDLE, DnDBigBlocks.BIG_GRAY_CANDLE,
         DnDBigBlocks.GRAY_SOUL_CANDLE, DnDBigBlocks.BIG_GRAY_SOUL_CANDLE,
         DnDBigBlocks.GRAY_CANDELABRA, DnDBigBlocks.GRAY_SOUL_CANDELABRA
     )

@@ -6,7 +6,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
-import net.minecraft.item.Items
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.DusksAndDungeons.isModLoaded
@@ -46,7 +45,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 //                texture.put(TextureKey.SIDE, Texture.getId(DnDBlocks.MIXED_NETHER_BRICKS))
 //            }
 //        )
-        gen.registerItemModel(Items.AIR) //fer debug porpoises
+//        gen.registerItemModel(Items.AIR) //fer debug porpoises
         DnDFamilies.modelsBlockFamilies.forEach {
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
         }
@@ -100,7 +99,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )*/
         if (isModLoaded("dramaticdoors")) DramaticDoorsCompat.datagen(gen)
     }
-
 
 
     private val single = listOf(
