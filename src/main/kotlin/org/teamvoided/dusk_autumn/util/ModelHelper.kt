@@ -10,6 +10,7 @@ import net.minecraft.data.client.model.BlockStateModelGenerator.TintType
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.Registries
 import net.minecraft.state.property.Properties
 import net.minecraft.state.property.Property
@@ -1831,4 +1832,5 @@ fun Identifier.suffix(str: String) = Identifier(this.namespace, "${this.path}$st
 
 
 val Item.id get() = Registries.ITEM.getId(this)
+val ItemConvertible.id get() = this.asItem().id
 val Block.id get() = Registries.BLOCK.getId(this)
