@@ -152,20 +152,40 @@ open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCand
             createCuboidShape(7.0, 8.0, 7.0, 9.0, 14.0, 9.0)
         )
         val DOUBLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(2.0, 0.0, 6.0, 14.0, 8.0, 10.0),
-            createCuboidShape(3.0, 8.0, 7.0, 13.0, 14.0, 9.0)
+            createCuboidShape(6.0, 0.0, 6.0, 10.0, 4.0, 10.0),
+            createCuboidShape(2.0, 4.0, 6.0, 14.0, 8.0, 10.0),
+            // Candles
+            createCuboidShape(3.0, 8.0, 7.0, 5.0, 14.0, 9.0),
+            createCuboidShape(11.0, 8.0, 7.0, 13.0, 14.0, 9.0),
         )
         val TRIPLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(1.0, 0.0, 6.0, 15.0, 8.0, 10.0),
-            createCuboidShape(6.0, 8.0, 6.0, 10.0, 10.0, 10.0),
-            createCuboidShape(2.0, 8.0, 7.0, 14.0, 16.0, 9.0)
+            createCuboidShape(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
+            createCuboidShape(6.0, 0.0, 6.0, 10.0, 10.0, 10.0),
+            // Candles
+            createCuboidShape(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
+            createCuboidShape(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
+            createCuboidShape(7.0, 10.0, 7.0, 9.0, 16.0, 9.0),
         )
         val QUADRUPLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(2.0, 0.0, 2.0, 14.0, 8.0, 14.0),
+            createCuboidShape(6.0, 0.0, 6.0, 10.0, 4.0, 10.0),
+            createCuboidShape(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
+            createCuboidShape(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
+            // Candles
+            createCuboidShape(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
+            createCuboidShape(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
+            createCuboidShape(7.0, 8.0, 2.0, 9.0, 14.0, 4.0),
+            createCuboidShape(7.0, 8.0, 12.0, 9.0, 14.0, 14.0),
         )
         val QUINTUPLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(1.0, 0.0, 1.0, 15.0, 8.0, 15.0),
-            createCuboidShape(6.0, 8.0, 6.0, 10.0, 10.0, 10.0),
+            createCuboidShape(6.0, 0.0, 6.0, 10.0, 10.0, 10.0),
+            createCuboidShape(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
+            createCuboidShape(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
+            // Candles
+            createCuboidShape(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
+            createCuboidShape(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
+            createCuboidShape(7.0, 8.0, 2.0, 9.0, 14.0, 4.0),
+            createCuboidShape(7.0, 8.0, 12.0, 9.0, 14.0, 14.0),
+            createCuboidShape(7.0, 10.0, 7.0, 9.0, 16.0, 9.0),
         )
         val CANDLE_PARTICLE_OFFSETS = listOf(
             listOf(Vec3d(0.5, 1.0, 0.5)),
