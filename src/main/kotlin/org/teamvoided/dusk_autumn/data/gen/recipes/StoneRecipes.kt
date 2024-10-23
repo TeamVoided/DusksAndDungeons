@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.data.gen.providers.recipes
+package org.teamvoided.dusk_autumn.data.gen.recipes
 
 import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter

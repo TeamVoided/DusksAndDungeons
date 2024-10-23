@@ -15,6 +15,7 @@ import org.teamvoided.dusk_autumn.DusksAndDungeons.log
 import org.teamvoided.dusk_autumn.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusk_autumn.data.gen.models.ModelProvider
 import org.teamvoided.dusk_autumn.data.gen.providers.*
+import org.teamvoided.dusk_autumn.data.gen.recipes.RecipesProvider
 import org.teamvoided.dusk_autumn.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusk_autumn.data.gen.structure.StructurePoolCreator
 import org.teamvoided.dusk_autumn.data.gen.structure.StructureProcessorCreator

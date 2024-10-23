@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.data.gen.providers
+package org.teamvoided.dusk_autumn.data.gen.recipes
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
@@ -12,7 +12,6 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusk_autumn.block.DnDFamilies.recipesBlockFamilies
-import org.teamvoided.dusk_autumn.data.gen.providers.recipes.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
