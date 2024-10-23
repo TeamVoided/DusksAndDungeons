@@ -15,7 +15,7 @@ import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.util.SECRET_ITEMS
-import org.teamvoided.dusk_autumn.util.addAll
+import org.teamvoided.dusk_autumn.util.add
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -78,6 +78,13 @@ class ItemTagsProvider(
             .add(Items.HAY_BLOCK)
         getOrCreateTagBuilder(DnDItemTags.SCARECROW_CLOTHES_ITEMS)
             .add(Items.LEATHER)
+
+        getOrCreateTagBuilder(DnDItemTags.PUMPKIN_SEEDS)
+            .add(Items.PUMPKIN_SEEDS)
+            .add(DnDItems.LANTERN_PUMPKIN_SEEDS)
+            .add(DnDItems.PALE_PUMPKIN_SEEDS)
+            .add(DnDItems.MOSSKIN_PUMPKIN_SEEDS)
+            .add(DnDItems.GLOOM_PUMPKIN_PIE)
     }
 
     fun vanillaTags() {
@@ -121,8 +128,10 @@ class ItemTagsProvider(
 
         getOrCreateTagBuilder(ItemTags.PARROT_FOOD)
             .add(DnDItems.CORN_KERNELS)
+            .forceAddTag(DnDItemTags.PUMPKIN_SEEDS)
         getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD)
             .add(DnDItems.CORN_KERNELS)
+            .forceAddTag(DnDItemTags.PUMPKIN_SEEDS)
         getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS)
             .add(DnDItems.CORN_KERNELS)
 
@@ -183,7 +192,7 @@ class ItemTagsProvider(
             .add(DnDItems.BLACKSTONE_AXE)
 
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
-            .addAll(DnDItems.EVIL_ITEMS)
-            .addAll(SECRET_ITEMS)
+            .add(DnDItems.EVIL_ITEMS)
+            .add(SECRET_ITEMS)
     }
 }

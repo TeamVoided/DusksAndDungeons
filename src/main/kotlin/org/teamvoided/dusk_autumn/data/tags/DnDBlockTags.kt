@@ -46,6 +46,7 @@ object DnDBlockTags {
     val FALLEN_TREE_REPLACEABLE = create("fallen_tree_replaceable")
 
     val CORN_STORAGE = create("storage_blocks/corn")
+    val PUMPKIN_STEMS = create("pumpkin_stems")
     val PUMPKINS = create("pumpkins")
     val CARVED_PUMPKINS = create("carved_pumpkins")
     val GLOWING_PUMPKINS = create("glowing_pumpkins")
@@ -55,6 +56,7 @@ object DnDBlockTags {
 
     val CANDELABRAS = create("candelabras")
     val SOUL_CANDELABRAS = create("soul_candelabras")
+
 
     @JvmField
     val BLOCKS_CANNOT_CONNECT_TO = create("blocks_cannot_connect_to")

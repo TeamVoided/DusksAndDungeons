@@ -11,7 +11,7 @@ import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.*
 import org.teamvoided.dusk_autumn.util.DnDBlockLists
-import org.teamvoided.dusk_autumn.util.addAll
+import org.teamvoided.dusk_autumn.util.add
 import java.util.concurrent.CompletableFuture
 
 @Suppress("LongMethod")
@@ -55,15 +55,15 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDWoodBlocks.STRIPPED_CASCADE_LOG)
             .add(DnDWoodBlocks.STRIPPED_CASCADE_WOOD)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_PLANKS)
-            .addAll(DnDBlocks.FLAMMABLE_PLANKS)
+            .add(DnDBlocks.FLAMMABLE_PLANKS)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_LOGS)
             .forceAddTag(DnDBlockTags.CASCADE_LOGS)
             .forceAddTag(DnDBlockTags.LOG_PILES_THAT_BURN)
             .forceAddTag(DnDBlockTags.HOLLOW_LOGS_THAT_BURN)
-            .addAll(DnDBlocks.FLAMMABLE_LOGS)
+            .add(DnDBlocks.FLAMMABLE_LOGS)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_LEAVES)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
-            .addAll(DnDBlocks.FLAMMABLE_LEAVES)
+            .add(DnDBlocks.FLAMMABLE_LEAVES)
         getOrCreateTagBuilder(DnDBlockTags.WOOD_STAIRS)
             .forceAddTag(DnDBlockTags.WOOD_STAIRS_THAT_BURN)
             .add(DnDWoodBlocks.CRIMSON_HYPHAE_STAIRS)
@@ -146,9 +146,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.MELON)
             .add(Blocks.FARMLAND)
         getOrCreateTagBuilder(DnDBlockTags.FLOWERBEDS)
-            .addAll(DnDBlockLists.flowerbedBlocks)
+            .add(DnDBlockLists.flowerbedBlocks)
         getOrCreateTagBuilder(DnDBlockTags.VIVIONBEDS)
-            .addAll(DnDBlockLists.vivionbedBlocks)
+            .add(DnDBlockLists.vivionbedBlocks)
         getOrCreateTagBuilder(DnDBlockTags.VIVIONBED_PLACEABLE)
             .addOptionalTag(id("nullium", "support/nylium_plants"))
             .forceAddTag(BlockTags.DIRT)
@@ -217,11 +217,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBigBlocks.BIG_PINK_SOUL_CANDLE)
 
         getOrCreateTagBuilder(DnDBlockTags.CANDELABRAS)
-            .addAll(DnDBlockLists.candelabras)
+            .add(DnDBlockLists.candelabras)
             .forceAddTag(DnDBlockTags.SOUL_CANDELABRAS)
 
         getOrCreateTagBuilder(DnDBlockTags.SOUL_CANDELABRAS)
-            .addAll(DnDBlockLists.soulCandelabras)
+            .add(DnDBlockLists.soulCandelabras)
 
         getOrCreateTagBuilder(DnDBlockTags.GRAVESTONES)
             .forceAddTag(DnDBlockTags.SMALL_GRAVESTONES)
@@ -300,6 +300,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.CORN_STORAGE)
             .add(DnDFloraBlocks.CORN_BLOCK)
+        getOrCreateTagBuilder(DnDBlockTags.PUMPKIN_STEMS)
+            .add(DnDFloraBlocks.LANTERN_PUMPKIN_STEM)
+            .add(DnDFloraBlocks.MOSSKIN_PUMPKIN_STEM)
+            .add(DnDFloraBlocks.PALE_PUMPKIN_STEM)
+            .add(DnDFloraBlocks.GLOOM_PUMPKIN_STEM)
         getOrCreateTagBuilder(DnDBlockTags.PUMPKINS)
             .add(Blocks.PUMPKIN)
             .add(DnDFloraBlocks.LANTERN_PUMPKIN)
@@ -361,9 +366,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(BlockTags.BEE_GROWABLES)
             .add(DnDFloraBlocks.MOONBERRY_VINE)
+            .forceAddTag(DnDBlockTags.PUMPKIN_STEMS)
         getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
             .add(DnDFloraBlocks.CORN_CROP)
+            .forceAddTag(DnDBlockTags.PUMPKIN_STEMS)
         getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
             .forceAddTag(DnDBlockTags.FLOWERBEDS)
             .forceAddTag(DnDBlockTags.VIVIONBEDS)
@@ -391,17 +398,17 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
-            .addAll(DnDBlocks.SWORDABLE)
+            .add(DnDBlocks.SWORDABLE)
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-            .addAll(DnDBlocks.PICKAXABLE)
+            .add(DnDBlocks.PICKAXABLE)
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
             .forceAddTag(DnDBlockTags.LOG_PILES)
-            .addAll(DnDBlocks.AXABLE)
+            .add(DnDBlocks.AXABLE)
         getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
-            .addAll(DnDBlocks.SHOVELABLE)
+            .add(DnDBlocks.SHOVELABLE)
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
-            .addAll(DnDBlocks.HOEABLE)
+            .add(DnDBlocks.HOEABLE)
 
 
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
@@ -417,6 +424,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDFloraBlocks.CORN_CROP)
             .add(DnDFloraBlocks.GOLDEN_BEETROOTS)
             .add(DnDFloraBlocks.MOONBERRY_VINELET)
+            .forceAddTag(DnDBlockTags.PUMPKIN_STEMS)
 
         getOrCreateTagBuilder(BlockTags.FLOWERS)
             .add(DnDWoodBlocks.CHERRY_LEAF_PILE)

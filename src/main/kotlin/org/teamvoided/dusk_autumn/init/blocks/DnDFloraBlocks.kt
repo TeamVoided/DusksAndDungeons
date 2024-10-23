@@ -249,19 +249,19 @@ object DnDFloraBlocks {
 
     val LANTERN_PUMPKIN_STEM = DnDBlocks.registerNoItem(
         "lantern_pumpkin_stem",
-        DnDPumpkinStemBlock(LANTERN_PUMPKIN, SMALL_LANTERN_PUMPKIN, copy(PUMPKIN_STEM)).cutout()
+        DnDPumpkinStemBlock(LANTERN_PUMPKIN, SMALL_LANTERN_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
     )
     val MOSSKIN_PUMPKIN_STEM = DnDBlocks.registerNoItem(
         "mosskin_pumpkin_stem",
-        DnDPumpkinStemBlock(MOSSKIN_PUMPKIN, SMALL_MOSSKIN_PUMPKIN, copy(PUMPKIN_STEM)).cutout()
+        DnDPumpkinStemBlock(MOSSKIN_PUMPKIN, SMALL_MOSSKIN_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
     )
     val PALE_PUMPKIN_STEM = DnDBlocks.registerNoItem(
         "pale_pumpkin_stem",
-        DnDPumpkinStemBlock(PALE_PUMPKIN, SMALL_PALE_PUMPKIN, copy(PUMPKIN_STEM)).cutout()
+        DnDPumpkinStemBlock(PALE_PUMPKIN, SMALL_PALE_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
     )
     val GLOOM_PUMPKIN_STEM = DnDBlocks.registerNoItem(
         "gloom_pumpkin_stem",
-        DnDPumpkinStemBlock(GLOOM_PUMPKIN, SMALL_GLOOM_PUMPKIN, copy(PUMPKIN_STEM)).cutout()
+        DnDPumpkinStemBlock(GLOOM_PUMPKIN, SMALL_GLOOM_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
     )
 
     val CORN_CROP = DnDBlocks.registerNoItem(

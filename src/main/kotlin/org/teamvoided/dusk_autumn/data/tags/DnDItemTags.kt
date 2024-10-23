@@ -44,6 +44,7 @@ object DnDItemTags {
     val CANDELABRAS = create("candelabras")
     val SOUL_CANDELABRAS = create("soul_candelabras")
 
+    val PUMPKIN_SEEDS = create("pumpkin_seeds")
 
     fun create(id: String): TagKey<Item> {
         val regTag = TagKey.of(RegistryKeys.ITEM, id(id))
