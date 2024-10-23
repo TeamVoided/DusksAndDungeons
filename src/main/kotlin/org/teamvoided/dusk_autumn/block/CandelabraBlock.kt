@@ -27,6 +27,7 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import org.teamvoided.dusk_autumn.block.big.SoulCandleBlock
 import org.teamvoided.dusk_autumn.data.tags.DnDBlockTags
+import org.teamvoided.dusk_autumn.util.FULL_CUBE
 import org.teamvoided.dusk_autumn.util.rotate
 import org.teamvoided.dusk_autumn.util.rotateFlat90
 import org.teamvoided.dusk_autumn.util.spawnCandleParticles
@@ -48,13 +49,15 @@ open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCand
         builder.add(WATERLOGGED, HORIZONTAL_AXIS, CANDLES, LIT)
     }
 
-    override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext):
-            VoxelShape = when (state.get(CANDLES)) {
+    override fun getOutlineShape(
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
+    ): VoxelShape = when (state.get(CANDLES)) {
         1 -> SINGLE_SHAPE
         2 -> DOUBLE_SHAPE
         3 -> TRIPLE_SHAPE
         4 -> QUADRUPLE_SHAPE
-        else -> QUINTUPLE_SHAPE
+        5 -> QUINTUPLE_SHAPE
+        else -> FULL_CUBE
     }.rotate(state.getRotations())
 
     // Particles

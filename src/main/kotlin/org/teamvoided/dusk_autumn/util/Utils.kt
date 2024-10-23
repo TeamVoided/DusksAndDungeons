@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.Blocks
+import net.minecraft.block.CandleBlock.createCuboidShape
 import net.minecraft.data.client.model.VariantSettings
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.EquipmentSlot
@@ -72,6 +73,8 @@ fun StructureWorldAccess.placeDebug(
 fun Collection<ItemConvertible>.toItems() = this.map(ItemConvertible::asItem)
 fun Collection<ItemConvertible>.toStacks() = this.toItems().map(Item::getDefaultStack)
 
+
+val FULL_CUBE = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 
 fun Hand.toSlot() = if (this == Hand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
 
