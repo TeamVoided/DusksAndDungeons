@@ -8,7 +8,7 @@
     "BlockEntityTypeMixin",
     "BlockMixin",
     "BlockWithEntityAccessor",
-    "FireChargeItemMixin",
+    "LighterItemMixin",
     "FoxEntityVariantMixin",
     "ItemStackMixin",
     "MushroomPlantBlockMixin",
