@@ -19,8 +19,8 @@ class PifflingPumpkinModel(private val root: ModelPart) : SinglePartEntityModel<
 
     override fun setAngles(
         entity: PifflingPumpkinEntity,
-        limbAngle: Float, //f
-        limbDistance: Float, //g
+        limbAngle: Float, //f //limb position
+        limbDistance: Float, //g //limb speed
         animationProgress: Float, //h
         headYaw: Float, //i
         headPitch: Float //j
@@ -30,8 +30,8 @@ class PifflingPumpkinModel(private val root: ModelPart) : SinglePartEntityModel<
             if (entity.isSprinting) PifflingPumpkinAnimations.RUN else PifflingPumpkinAnimations.WALK,
             limbAngle,
             limbDistance,
-            1.5f,
-            2.5f
+            3f,
+            5f
         )
         this.animateIdlePose(animationProgress)
     }
@@ -42,10 +42,10 @@ class PifflingPumpkinModel(private val root: ModelPart) : SinglePartEntityModel<
         val sin = MathHelper.sin(f)
 
         this.body.roll += 0.025f * sin
-        this.body.pitch += 0.1f * cos + 0.1f
+        this.body.pitch += 0.05f * cos + 0.05f
 
-        this.head.roll += 0.06f * cos
-        this.head.pitch += 0.06f * sin + 0.05f
+        this.head.roll += 0.06f * MathHelper.cos(f / 2)
+        this.head.pitch += 0.06f * MathHelper.sin(f / 2)
 
         this.rightArm.roll += 0.025f * -cos
         this.rightArm.pitch += 0.05f * -sin - 0.1f

@@ -180,7 +180,7 @@ object PifflingPumpkinAnimations {
                 ),
                 AnimationKeyframe(
                     0.25f,
-                    rotate(-10.0f, 0.0f, 0.0f),
+                    rotate(-20.0f, 0.0f, 0.0f),
                     Interpolations.SPLINE
                 ),
                 AnimationKeyframe(
@@ -190,7 +190,7 @@ object PifflingPumpkinAnimations {
                 ),
                 AnimationKeyframe(
                     0.75f,
-                    rotate(10.0f, 0.0f, 0.0f),
+                    rotate(20.0f, 0.0f, 0.0f),
                     Interpolations.SPLINE
                 ),
                 AnimationKeyframe(
@@ -210,7 +210,7 @@ object PifflingPumpkinAnimations {
                 ),
                 AnimationKeyframe(
                     0.25f,
-                    rotate(10.0f, 0.0f, 0.0f),
+                    rotate(20.0f, 0.0f, 0.0f),
                     Interpolations.SPLINE
                 ),
                 AnimationKeyframe(
@@ -220,7 +220,7 @@ object PifflingPumpkinAnimations {
                 ),
                 AnimationKeyframe(
                     0.75f,
-                    rotate(-10.0f, 0.0f, 0.0f),
+                    rotate(-20.0f, 0.0f, 0.0f),
                     Interpolations.SPLINE
                 ),
                 AnimationKeyframe(

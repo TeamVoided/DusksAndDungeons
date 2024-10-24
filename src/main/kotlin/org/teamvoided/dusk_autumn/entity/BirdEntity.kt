@@ -1,7 +1,6 @@
 package org.teamvoided.dusk_autumn.entity
 
 import net.minecraft.entity.EntityType
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.ai.control.FlightMoveControl
 import net.minecraft.entity.ai.goal.LookAtEntityGoal
 import net.minecraft.entity.ai.goal.SwimGoal

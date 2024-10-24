@@ -34,9 +34,9 @@ class PifflingPumpkinHeldItemFeatureRenderer(
         l: Float
     ) {
         val bl = entity.mainArm == Arm.RIGHT
-        val mainhand: ItemStack = if (bl) entity.offHandStack else entity.mainHandStack
-        val offhand: ItemStack = if (bl) entity.mainHandStack else entity.offHandStack
-        if (mainhand.isEmpty && offhand.isEmpty) {
+        val mainhand: ItemStack = if (bl) entity.mainHandStack else entity.offHandStack
+        val offhand: ItemStack = if (bl) entity.offHandStack else entity.mainHandStack
+        if (!mainhand.isEmpty || !offhand.isEmpty) {
             val model = (this.contextModel as PifflingPumpkinModel)
             this.renderItem(
                 entity,
@@ -88,7 +88,8 @@ class PifflingPumpkinHeldItemFeatureRenderer(
             matrices.push()
             armPart.moveRelativeTo(matrices, model)
             matrices.translate(0f, 0.3f, -0.1f)
-            matrices.rotate(Axis.X_POSITIVE.rotationDegrees(90.0f))
+            matrices.rotate(Axis.X_POSITIVE.rotationDegrees(-90.0f))
+            matrices.rotate(Axis.Y_POSITIVE.rotationDegrees(180.0f))
             val bl = arm == Arm.LEFT
             heldItemRenderer.renderItem(entity, stack, transformationMode, bl, matrices, vertexConsumers, light)
             matrices.pop()
