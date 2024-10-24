@@ -47,6 +47,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 is SlabBlock -> add(it, ::slabDrops)
                 is DoorBlock -> add(it, ::doorDrops)
                 is LogPileBlock -> add(it, ::logPile)
+                is CandelabraBlock -> add(it, ::candelabraDrops)
                 is CandleBlock -> add(it, ::candleDrops)
                 is TripleTallPlantBlock -> add(it, ::threeTallDrop)
                 is PinkPetalsBlock -> add(it, ::flowerbedDrops)
