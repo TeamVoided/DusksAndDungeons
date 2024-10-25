@@ -46,9 +46,10 @@ class PifflingPumpkinEntity(entityType: EntityType<out PifflingPumpkinEntity>, w
         goalSelector.add(0, MeleeAttackGoal(this, 1.0, true))
         goalSelector.add(1, EscapeDangerGoal(this, 2.0))
         goalSelector.add(2, WanderAroundPoint(this, this.summonedPos, 1.0))
-        goalSelector.add(3, WanderAroundFarGoal(this, 1.0, 1f))
-        goalSelector.add(4, LookAtEntityGoal(this, PlayerEntity::class.java, 6f))
-        goalSelector.add(5, LookAroundGoal(this))
+        goalSelector.add(4, GoToWalkTargetGoal(this, 1.0))
+        goalSelector.add(8, WanderAroundFarGoal(this, 1.0, 1f))
+        goalSelector.add(9, LookAtEntityGoal(this, PlayerEntity::class.java, 6f))
+        goalSelector.add(10, LookAroundGoal(this))
         targetSelector.add(1, RevengeGoal(this, *arrayOfNulls(0)))
         targetSelector.add(2, UniversalAngerGoal(this, true))
     }
