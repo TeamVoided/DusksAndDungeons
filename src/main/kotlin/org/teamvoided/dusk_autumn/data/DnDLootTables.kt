@@ -8,6 +8,7 @@ object DnDLootTables {
 
     val SNIFFER_ADD_MOONBERRY: Identifier = register("inject/add_moonberries")
     val BARTERING_ADD_VIVIONS: Identifier = register("inject/add_vivions")
+    val SIMPLE_DUNGEON_ADD_SPOOKY: Identifier = register("inject/add_spooky")
     val COOL_CHEST: Identifier = register("chests/cool_chest")
     val COOL_ARCHAEOLOGY: Identifier = register("archaeology/cool_archaeology")
 

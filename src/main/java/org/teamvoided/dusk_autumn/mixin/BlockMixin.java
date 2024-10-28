@@ -21,6 +21,6 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
     @Inject(at = @At("HEAD"), method = "cannotConnect", cancellable = true)
     private static void cannotConnectTag(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if (state.isIn(DnDBlockTags.BLOCKS_CANNOT_CONNECT_TO))
-                cir.setReturnValue(false);
+                cir.setReturnValue(true);
     }
 }

@@ -26,14 +26,11 @@ class PifflingPumpkinModel(private val root: ModelPart) : SinglePartEntityModel<
         headPitch: Float //j
     ) {
         this.part.traverse().forEach(ModelPart::resetTransform)
-        this.animateWalk(
-            if (entity.isSprinting) PifflingPumpkinAnimations.RUN else PifflingPumpkinAnimations.WALK,
-            limbAngle,
-            limbDistance,
-            3f,
-            5f
-        )
         this.animateIdlePose(animationProgress)
+//        if (entity.isSprinting)
+            this.animateWalk(PifflingPumpkinAnimations.RUN, limbAngle, limbDistance, 3f, 5f)
+//        else
+//            this.animateWalk(PifflingPumpkinAnimations.WALK, limbAngle, limbDistance, 3f, 5f)
     }
 
     private fun animateIdlePose(angle: Float) {
