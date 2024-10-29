@@ -37,6 +37,7 @@ import org.teamvoided.dusk_autumn.util.DnDBlockLists.leafPiles
 import org.teamvoided.dusk_autumn.util.DnDBlockLists.soulCandles
 import java.util.concurrent.CompletableFuture
 
+@Suppress("MemberVisibilityCanBePrivate")
 class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricBlockLootTableProvider(o, r) {
     val manualList: List<Block> = listOf(DnDFloraBlocks.MOONBERRY_VINE)
@@ -56,18 +57,10 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             }
         }
 
-        bigCandles.forEach { (candle, cake) ->
-            add(cake) { candleCakeDrops(candle) }
-        }
-        soulCandles.forEach { (candle, cake) ->
-            add(cake) { candleCakeDrops(candle) }
-        }
-        bigSoulCandles.forEach { (candle, cake) ->
-            add(cake) { candleCakeDrops(candle) }
-        }
-        leafPiles.forEachIndexed { idx, pile ->
-            add(pile) { leafPile(it, DnDBlockLists.leaves[idx]) }
-        }
+        bigCandles.forEach { (candle, cake) -> add(cake) { candleCakeDrops(candle) } }
+        soulCandles.forEach { (candle, cake) -> add(cake) { candleCakeDrops(candle) } }
+        bigSoulCandles.forEach { (candle, cake) -> add(cake) { candleCakeDrops(candle) } }
+        leafPiles.forEachIndexed { idx, pile -> add(pile) { leafPile(it, DnDBlockLists.leaves[idx]) } }
         add(DnDWoodBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDWoodBlocks.CASCADE_SAPLING) }
         add(DnDWoodBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDWoodBlocks.GOLDEN_BIRCH_SAPLING) }
         add(DnDWoodBlocks.CASCADE_LEAVES) {
@@ -164,12 +157,8 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     fun candelabraDrops(drop: Block): LootTable.Builder {
         return LootTable.builder().pool(
             LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
-                applyExplosionDecay(drop, ItemEntry.builder(drop).apply(
-                    listOf(2, 3, 4, 5)
-                ) { count: Int ->
-                    SetCountLootFunction.builder(
-                        ConstantLootNumberProvider.create(count.toFloat())
-                    ).conditionally(
+                applyExplosionDecay(drop, ItemEntry.builder(drop).apply(listOf(2, 3, 4, 5)) { count: Int ->
+                    SetCountLootFunction.builder(ConstantLootNumberProvider.create(count.toFloat())).conditionally(
                         BlockStatePropertyLootCondition.builder(drop).properties(
                             StatePredicate.Builder.create().exactMatch(CandelabraBlock.CANDLES, count)
                         )
