@@ -15,9 +15,7 @@ import org.teamvoided.dusk_autumn.init.*
 import org.teamvoided.dusk_autumn.init.DnDBlocks.EVIL_BLOCKS
 import org.teamvoided.dusk_autumn.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusk_autumn.init.worldgen.DnDBiomeModifications
-import org.teamvoided.dusk_autumn.modules.BarteringInjection
-import org.teamvoided.dusk_autumn.modules.SimpleDungeonInjection
-import org.teamvoided.dusk_autumn.modules.SnifferInjection
+import org.teamvoided.dusk_autumn.modules.LootTableInjection
 import org.teamvoided.dusk_autumn.util.mergeSecrets
 
 @Suppress("unused")
@@ -42,10 +40,9 @@ object DusksAndDungeons {
         DnDParticles.init()
         DnDSoundEvents.init()
         DnDTabs.init()
-        SnifferInjection.init()
-        BarteringInjection.init()
-        SimpleDungeonInjection.init()
+        LootTableInjection.init()
         AddWanderingTrades.init()
+
         if (isDev()) CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
             val test = literal("end").executes { scc ->
                 val src = scc.source
