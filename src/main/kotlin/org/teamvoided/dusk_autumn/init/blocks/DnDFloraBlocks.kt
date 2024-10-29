@@ -96,163 +96,166 @@ object DnDFloraBlocks {
             Settings.create().mapColor(MapColor.ORANGE).strength(1.0f).sounds(BlockSoundGroup.WOOD)
                 .pistonBehavior(PistonBehavior.DESTROY)
         ).axe()
-    ).shh()
+    )
     val SMALL_GLOWING_PUMPKIN = DnDBlocks.register(
         "small_jack_o_lantern", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val SMALL_PUMPKIN = DnDBlocks.register(
         "small_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_PUMPKIN,
             copy(SMALL_CARVED_PUMPKIN)
         ).axe()
-    ).shh()
+    )
+
+    // Lantern ---
+
     val CARVED_LANTERN_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "carved_lantern_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PUMPKIN).mapColor(MapColor.YELLOW)
         ).axe()
-    ).shh()
+    )
     val GLOWING_LANTERN_PUMPKIN = DnDBlocks.register(
         "glowing_lantern_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_LANTERN_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val LANTERN_PUMPKIN = DnDBlocks.register(
         "lantern_pumpkin", DnDPumpkinBlock(
-            CARVED_LANTERN_PUMPKIN,
-            copy(CARVED_LANTERN_PUMPKIN)
+            CARVED_LANTERN_PUMPKIN, copy(CARVED_LANTERN_PUMPKIN)
         ).axe()
     ).shh()
     val SMALL_CARVED_LANTERN_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "small_carved_lantern_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_LANTERN_PUMPKIN.defaultMapColor)
         ).axe()
-    ).shh()
+    )
     val SMALL_GLOWING_LANTERN_PUMPKIN = DnDBlocks.register(
         "small_glowing_lantern_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_LANTERN_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val SMALL_LANTERN_PUMPKIN = DnDBlocks.register(
         "small_lantern_pumpkin", SmallPumpkinBlock(
-            SMALL_CARVED_LANTERN_PUMPKIN,
-            copy(SMALL_CARVED_LANTERN_PUMPKIN)
+            SMALL_CARVED_LANTERN_PUMPKIN, copy(SMALL_CARVED_LANTERN_PUMPKIN)
         ).axe()
     ).shh()
     val CARVED_MOSSKIN_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "carved_mosskin_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PUMPKIN).mapColor(MapColor.GREEN)
         ).axe()
-    ).shh()
+    )
     val GLOWING_MOSSKIN_PUMPKIN = DnDBlocks.register(
         "glowing_mosskin_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_MOSSKIN_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val MOSSKIN_PUMPKIN = DnDBlocks.register(
         "mosskin_pumpkin", DnDPumpkinBlock(
             CARVED_MOSSKIN_PUMPKIN,
             copy(CARVED_MOSSKIN_PUMPKIN)
         ).axe()
-    ).shh()
+    )
     val SMALL_CARVED_MOSSKIN_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "small_carved_mosskin_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_MOSSKIN_PUMPKIN.defaultMapColor)
         ).axe()
-    ).shh()
+    )
     val SMALL_GLOWING_MOSSKIN_PUMPKIN = DnDBlocks.register(
         "small_glowing_mosskin_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_MOSSKIN_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val SMALL_MOSSKIN_PUMPKIN = DnDBlocks.register(
         "small_mosskin_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_MOSSKIN_PUMPKIN,
             copy(SMALL_CARVED_MOSSKIN_PUMPKIN)
         ).axe()
-    ).shh()
+    )
+
+    // Pale ---
+
     val CARVED_PALE_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "carved_pale_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PUMPKIN).mapColor(MapColor.SNOW)
         ).axe()
-    ).shh()
+    )
     val GLOWING_PALE_PUMPKIN = DnDBlocks.register(
         "glowing_pale_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PALE_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val PALE_PUMPKIN = DnDBlocks.register(
         "pale_pumpkin", DnDPumpkinBlock(
             CARVED_PALE_PUMPKIN,
             copy(CARVED_PALE_PUMPKIN)
         ).axe()
-    ).shh()
+    )
     val SMALL_CARVED_PALE_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "small_carved_pale_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_PALE_PUMPKIN.defaultMapColor)
         ).axe()
-    ).shh()
+    )
     val SMALL_GLOWING_PALE_PUMPKIN = DnDBlocks.register(
         "small_glowing_pale_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PALE_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val SMALL_PALE_PUMPKIN = DnDBlocks.register(
         "small_pale_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_PALE_PUMPKIN,
             copy(SMALL_CARVED_PALE_PUMPKIN)
         ).axe()
-    ).shh()
+    )
+
+    // Gloom ---
+
     val CARVED_GLOOM_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "carved_gloom_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PUMPKIN).mapColor(MapColor.PURPLE_TERRACOTTA)
         ).axe()
-    ).shh()
+    )
     val GLOWING_GLOOM_PUMPKIN = DnDBlocks.register(
         "glowing_gloom_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_GLOOM_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val GLOOM_PUMPKIN = DnDBlocks.register(
         "gloom_pumpkin", DnDPumpkinBlock(
             CARVED_GLOOM_PUMPKIN,
             copy(CARVED_GLOOM_PUMPKIN)
         ).axe()
-    ).shh()
+    )
     val SMALL_CARVED_GLOOM_PUMPKIN = DnDBlocks.registerHeadEquipable(
         "small_carved_gloom_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_GLOOM_PUMPKIN.defaultMapColor)
         ).axe()
-    ).shh()
+    )
     val SMALL_GLOWING_GLOOM_PUMPKIN = DnDBlocks.register(
         "small_glowing_gloom_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_GLOOM_PUMPKIN).luminance(light(15))
         ).axe()
-    ).shh()
+    )
     val SMALL_GLOOM_PUMPKIN = DnDBlocks.register(
         "small_gloom_pumpkin", SmallPumpkinBlock(
             SMALL_CARVED_GLOOM_PUMPKIN,
             copy(SMALL_CARVED_GLOOM_PUMPKIN)
         ).axe()
-    ).shh()
+    )
 
 
     val LANTERN_PUMPKIN_STEM = DnDBlocks.registerNoItem(
-        "lantern_pumpkin_stem",
-        DnDPumpkinStemBlock(LANTERN_PUMPKIN, SMALL_LANTERN_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
+        "lantern_pumpkin_stem", DnDPumpkinStemBlock(LANTERN_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
     )
     val MOSSKIN_PUMPKIN_STEM = DnDBlocks.registerNoItem(
-        "mosskin_pumpkin_stem",
-        DnDPumpkinStemBlock(MOSSKIN_PUMPKIN, SMALL_MOSSKIN_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
+        "mosskin_pumpkin_stem", DnDPumpkinStemBlock(MOSSKIN_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
     )
     val PALE_PUMPKIN_STEM = DnDBlocks.registerNoItem(
-        "pale_pumpkin_stem",
-        DnDPumpkinStemBlock(PALE_PUMPKIN, SMALL_PALE_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
+        "pale_pumpkin_stem", DnDPumpkinStemBlock(PALE_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
     )
     val GLOOM_PUMPKIN_STEM = DnDBlocks.registerNoItem(
-        "gloom_pumpkin_stem",
-        DnDPumpkinStemBlock(GLOOM_PUMPKIN, SMALL_GLOOM_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
+        "gloom_pumpkin_stem", DnDPumpkinStemBlock(GLOOM_PUMPKIN, copy(PUMPKIN_STEM)).cutout().axe().sword()
     )
 
     val CORN_CROP = DnDBlocks.registerNoItem(
@@ -260,25 +263,25 @@ object DnDFloraBlocks {
             Settings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
         ).sword().axe().cutout()
-    ).shh()
+    )
     val CORN = DnDBlocks.registerNoItem(
         "corn", CornMazeBlock(
             Settings.create().mapColor(MapColor.PLANT).offsetType(OffsetType.XYZ).noCollision().breakInstantly()
                 .sounds(BlockSoundGroup.CROP).pistonBehavior(PistonBehavior.DESTROY)
         ).sword().axe().cutout()
-    ).shh()
+    )
     val CORN_BLOCK = DnDBlocks.register(
         "corn_block", PillarBlock(
             copy(CHERRY_PLANKS).mapColor(GOLD_BLOCK.defaultMapColor)
         ).axe()
-    ).shh()
+    )
 
     @JvmField
     val CORN_SYRUP_BLOCK = DnDBlocks.register(
         "corn_syrup_block", CornSyrupBlock(
             copy(HONEY_BLOCK).mapColor(PODZOL.defaultMapColor).sounds(cornSyrupBlockSound)
         ).translucent()
-    ).shh()
+    )
 
     val JOUNCESHROOM_BLOCK = DnDBlocks.register(
         "jounceshroom_block", MushroomLaunchBlock(

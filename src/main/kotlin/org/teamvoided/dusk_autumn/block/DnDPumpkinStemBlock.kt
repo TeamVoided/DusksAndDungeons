@@ -18,7 +18,6 @@ import kotlin.math.min
 
 class DnDPumpkinStemBlock(
     private val gourdBlock: Block,
-    private val smallGourdBlock: Block,
     settings: Settings
 ) : CropBlock(settings) {
 
