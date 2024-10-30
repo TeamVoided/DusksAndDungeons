@@ -2,7 +2,6 @@ package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.item.Items
 import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks

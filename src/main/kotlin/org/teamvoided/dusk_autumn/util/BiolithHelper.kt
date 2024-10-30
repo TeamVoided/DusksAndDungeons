@@ -6,7 +6,6 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.source.util.MultiNoiseUtil
 
 
-
 data class Range(val min: Number, val max: Number) {
     constructor(value: Number) : this(value, value)
 
@@ -45,6 +44,7 @@ fun addOverworld(
         )
     )
 }
+
 fun createNoise(
     temperature: Range, humidity: Range, continentalness: Range, erosion: Range,
     depth: Range, weirdness: Range, offset: Long
