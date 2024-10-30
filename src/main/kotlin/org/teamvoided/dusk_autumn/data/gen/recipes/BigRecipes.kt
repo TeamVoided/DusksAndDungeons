@@ -9,6 +9,7 @@ import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks
 import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 
 object BigRecipes {
     fun generateBigRecipes(e: RecipeExporter) {

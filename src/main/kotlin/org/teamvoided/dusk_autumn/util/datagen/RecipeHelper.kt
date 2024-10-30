@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.util
+package org.teamvoided.dusk_autumn.util.datagen
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Block
@@ -16,6 +16,8 @@ import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.block.CandelabraBlock
 import org.teamvoided.dusk_autumn.init.blocks.DnDOverlayBlocks
+import org.teamvoided.dusk_autumn.util.id
+import org.teamvoided.dusk_autumn.util.suffix
 
 fun RecipeJsonFactory.criterion(item: ItemConvertible): RecipeJsonFactory =
     this.criterion(hasItem(item), conditionsFromItem(item))

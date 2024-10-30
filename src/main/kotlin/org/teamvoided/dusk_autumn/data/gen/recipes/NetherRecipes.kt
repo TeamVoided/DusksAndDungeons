@@ -10,7 +10,7 @@ import net.minecraft.recipe.RecipeCategory
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
-import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 
 object NetherRecipes {
     fun generateNetherRecipes(e:RecipeExporter){

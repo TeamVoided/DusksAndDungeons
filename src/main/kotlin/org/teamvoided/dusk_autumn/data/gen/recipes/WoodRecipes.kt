@@ -9,7 +9,7 @@ import net.minecraft.recipe.RecipeCategory
 import org.teamvoided.dusk_autumn.data.tags.DnDItemTags
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
-import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.criterion
 
 object WoodRecipes {
     fun generateWoodRecipes(e: RecipeExporter) {
