@@ -5,6 +5,7 @@ import net.minecraft.data.client.model.BlockStateModelGenerator
 import net.minecraft.data.client.model.TexturedModel
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 
 object WoodModels {
     fun woodModels(gen: BlockStateModelGenerator) {

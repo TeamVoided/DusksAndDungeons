@@ -4,7 +4,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.client.model.BlockStateModelGenerator
 import org.teamvoided.dusk_autumn.DusksAndDungeons
 import org.teamvoided.dusk_autumn.init.blocks.DnDOverlayBlocks
-import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 
 object OverlayModels {
     fun overlayModels(gen: BlockStateModelGenerator){

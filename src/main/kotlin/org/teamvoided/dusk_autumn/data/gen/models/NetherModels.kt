@@ -8,6 +8,7 @@ import org.teamvoided.dusk_autumn.DusksAndDungeons
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
 import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 
 object NetherModels {
     fun netherModels(gen: BlockStateModelGenerator){

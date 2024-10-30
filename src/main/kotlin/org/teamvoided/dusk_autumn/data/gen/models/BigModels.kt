@@ -4,6 +4,7 @@ import net.minecraft.data.client.model.BlockStateModelGenerator
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks
 import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 
 object BigModels {
     fun register(gen: BlockStateModelGenerator) {
