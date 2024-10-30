@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static org.teamvoided.dusk_autumn.util.ShutUpKt.dataFixerBlackList;
+import static org.teamvoided.dusk_autumn.util.SecretHelperKt.dataFixerBlackList;
 
 @Mixin(Util.class)
 public class UtilMixin {
