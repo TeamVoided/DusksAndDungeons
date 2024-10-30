@@ -4,7 +4,7 @@
     {
       "rolls": {
         "type": "minecraft:uniform",
-        "min": 1,
+        "min": 0,
         "max": 3
       },
       "bonus_rolls": 0,
@@ -93,27 +93,11 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dusk_autumn:tuff_gravestone"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dusk_autumn:blackstone_gravestone"
-        },
-        {
-          "type": "minecraft:item",
           "name": "dusk_autumn:small_gravestone"
         },
         {
           "type": "minecraft:item",
           "name": "dusk_autumn:small_deepslate_gravestone"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dusk_autumn:small_tuff_gravestone"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dusk_autumn:small_blackstone_gravestone"
         }
       ]
     }

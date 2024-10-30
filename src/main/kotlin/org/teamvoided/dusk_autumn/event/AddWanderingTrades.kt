@@ -27,6 +27,8 @@ object AddWanderingTrades {
             it.add(TradeOffers.SellItemFactory(DnDItems.CORN_KERNELS, 1, 1, 12, 1))
             it.add(TradeOffers.SellItemFactory(DnDItems.CORN, 1, 1, 4, 1))
 
+//            it.add(TradeOffers.SellItemFactory(DnDFloraBlocks.GOLDEN_MUSHROOM, 1, 1, 12, 1))
+
             DnDBlockLists.flowerbedBlocks.forEach { flowerbed ->
                 it.add(TradeOffers.SellItemFactory(flowerbed, 3, 1, 8, 1))
             }

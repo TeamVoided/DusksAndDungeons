@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.CandleBlock
-import net.minecraft.block.ShapeContext
+import net.minecraft.block.*
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.DirectionProperty
 import net.minecraft.state.property.Properties
@@ -16,14 +16,18 @@ import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
+import net.minecraft.util.random.RandomGenerator
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import net.minecraft.world.World
 import org.teamvoided.dusk_autumn.util.FULL_CUBE
 import org.teamvoided.dusk_autumn.util.rotate
 import org.teamvoided.dusk_autumn.util.rotateFlat90
+import java.util.function.Consumer
 
 open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
+    open val particle = ParticleTypes.FLAME
 
     init {
         this.defaultState = stateManager.defaultState
@@ -51,9 +55,41 @@ open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
             else -> FULL_CUBE
         }).rotate(state.get(FACING).horizontal)
     }
+    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
+        if (state.get(AbstractCandleBlock.LIT)) {
+            getParticleOffsets(state).forEach(Consumer { offset: Vec3d ->
+                spawnCandleParticles(
+                    world,
+                    offset.add(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()),
+                    random
+                )
+            })
+        }
+    }
 
     override fun getParticleOffsets(state: BlockState): Iterable<Vec3d> {
         return BIG_CANDLES_TO_PARTICLE_OFFSETS[state.get(CANDLES)].rotateFlat90(state.get(FACING).horizontal)
+    }
+
+    private fun spawnCandleParticles(world: World, vec3d: Vec3d, random: RandomGenerator) {
+        val f = random.nextFloat()
+        if (f < 0.3f) {
+            world.addParticle(ParticleTypes.SMOKE, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
+            if (f < 0.17f) {
+                world.playSound(
+                    vec3d.x + 0.5,
+                    vec3d.y + 0.5,
+                    vec3d.z + 0.5,
+                    SoundEvents.BLOCK_CANDLE_AMBIENT,
+                    SoundCategory.BLOCKS,
+                    1.0f + random.nextFloat(),
+                    random.nextFloat() * 0.7f + 0.3f,
+                    false
+                )
+            }
+        }
+
+        world.addParticle(ParticleTypes.FLAME, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

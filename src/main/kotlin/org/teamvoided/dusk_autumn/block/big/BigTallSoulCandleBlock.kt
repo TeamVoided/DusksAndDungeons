@@ -41,7 +41,7 @@ class BigTallSoulCandleBlock(settings: Settings) : BigTallCandleBlock(settings) 
                 )
             }
         }
-        world.addParticle(DnDParticles.SMALL_SOUL_FLAME_PARTICLE, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
+        world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
 
     }
 }

@@ -553,6 +553,49 @@ fun BlockStateModelGenerator.registerGoldenMushroomPlant(block: Block) {
     )
 }
 
+fun BlockStateModelGenerator.registerMushroomBlockDiffInside(
+    block: Block,
+    insideTexture: Identifier = block.model().suffix("_inventory")
+) {
+    val texture = Models.TEMPLATE_SINGLE_FACE.upload(
+        block, Texture.texture(block),
+        this.modelCollector
+    )
+    val blockstate: MultipartBlockStateSupplier = MultipartBlockStateSupplier.create(block)
+    listOf(true, false).forEach { loop ->
+        listOf(
+            Properties.NORTH,
+            Properties.EAST,
+            Properties.SOUTH,
+            Properties.WEST,
+            Properties.DOWN,
+            Properties.UP
+        ).forEach { direction ->
+            val variant = BlockStateVariant.create().put(VariantSettings.MODEL, if (loop) texture else insideTexture)
+            val variant2 = when (direction) {
+                Properties.EAST -> variant.put(VariantSettings.Y, Rotation.R90)
+                Properties.SOUTH -> variant.put(VariantSettings.Y, Rotation.R180)
+                Properties.WEST -> variant.put(VariantSettings.Y, Rotation.R270)
+                Properties.DOWN -> variant.put(VariantSettings.X, Rotation.R90)
+                Properties.UP -> variant.put(VariantSettings.X, Rotation.R270)
+                else -> variant
+            }
+            blockstate.with(
+                When.create().set(direction, loop),
+                variant2.put(VariantSettings.UVLOCK, loop)
+            )
+        }
+    }
+
+    this.blockStateCollector.accept(blockstate)
+    this.registerParentedItemModel(
+        block, TexturedModel.CUBE_ALL.createWithSuffix(
+            block, "_inventory",
+            this.modelCollector
+        )
+    )
+}
+
 fun BlockStateModelGenerator.registerTreeMushroom(block: Block, parentModel: String) {
     this.registerItemModel(block)
     val texture = Texture.texture(block)

@@ -12,6 +12,11 @@ object FloraModels {
     fun register(gen: BlockStateModelGenerator) {
         gen.registerGalleryRose(DnDFloraBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerGoldenMushroomPlant(DnDFloraBlocks.GOLDEN_MUSHROOM)
+        gen.registerMushroomBlockDiffInside(DnDFloraBlocks.GOLDEN_MUSHROOM_BLOCK)
+        gen.registerMushroomBlockDiffInside(
+            DnDFloraBlocks.GOLDEN_MUSHROOM_STEM_BLOCK,
+            DnDFloraBlocks.GOLDEN_MUSHROOM_BLOCK.model().suffix("_inventory")
+        )
 
         gen.registerSpiderlilly(DnDFloraBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerFlowerbed2(DnDFloraBlocks.WHITE_PETALS, false)

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_single_face",
+  "textures": {
+    "texture": "dusk_autumn:block/golden_mushroom_block_inside"
+  }
+}

@@ -32,13 +32,23 @@ object DnDFloraBlocks {
     val GOLDEN_MUSHROOM = DnDBlocks.register(
         "golden_mushroom", MushroomWithSporesPlantBlock(
             TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM,
-            0xFFD800,
-            0.5,
+            0xFFD800, 0.5,
             Settings.create().mapColor(MapColor.GOLD).noCollision().ticksRandomly().breakInstantly()
                 .sounds(BlockSoundGroup.GRASS).luminance(light(11)).offsetType(OffsetType.XYZ)
                 .postProcess(Blocks::solid).pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
-    )
+    ).tellWitnessesThatIWasMurdered()
+    val GOLDEN_MUSHROOM_BLOCK = DnDBlocks.register(
+        "golden_mushroom_block", MushroomWithSporesBlock(
+            0xFFD800, 0.5,
+            copy(BROWN_MUSHROOM_BLOCK).mapColor(MapColor.GOLD).luminance(light(11))
+        )
+    ).tellWitnessesThatIWasMurdered()
+    val GOLDEN_MUSHROOM_STEM_BLOCK = DnDBlocks.register(
+        "golden_mushroom_stem_block", MushroomBlock(
+            copy(MUSHROOM_STEM).mapColor(MapColor.GOLD).luminance(light(9))
+        )
+    ).tellWitnessesThatIWasMurdered()
     val BROWN_TREE_FUNGUS = DnDBlocks.register(
         "brown_tree_fungus", TransparentBlock(
             copy(BROWN_MUSHROOM)
