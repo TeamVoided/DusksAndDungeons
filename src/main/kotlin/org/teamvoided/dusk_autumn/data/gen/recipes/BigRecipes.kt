@@ -26,7 +26,7 @@ object BigRecipes {
         e.createCandle(DnDBigBlocks.BIG_CANDLE, Items.HONEYCOMB_BLOCK)
         e.createCandle(DnDBigBlocks.SOUL_CANDLE, Items.HONEYCOMB, ItemTags.SOUL_FIRE_BASE_BLOCKS)
         e.createCandle(DnDBigBlocks.BIG_SOUL_CANDLE, Items.HONEYCOMB_BLOCK, ItemTags.SOUL_FIRE_BASE_BLOCKS)
-        DnDBlockLists.dye.forEachIndexed { idx, dye ->
+        DnDItemLists.dye.forEachIndexed { idx, dye ->
             e.createDyed(DnDBlockLists.bigCandles[idx + 1].first, DnDBigBlocks.BIG_CANDLE, dye)
             e.createDyed(DnDBlockLists.soulCandles[idx + 1].first, DnDBigBlocks.SOUL_CANDLE, dye)
             e.createDyed(DnDBlockLists.bigSoulCandles[idx + 1].first, DnDBigBlocks.BIG_SOUL_CANDLE, dye)

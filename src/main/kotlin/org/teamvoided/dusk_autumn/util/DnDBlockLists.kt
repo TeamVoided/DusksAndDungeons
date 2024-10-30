@@ -8,24 +8,7 @@ import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 
 object DnDBlockLists {
-    val dye = listOf(
-        Items.WHITE_DYE,
-        Items.LIGHT_GRAY_DYE,
-        Items.GRAY_DYE,
-        Items.BLACK_DYE,
-        Items.BROWN_DYE,
-        Items.RED_DYE,
-        Items.ORANGE_DYE,
-        Items.YELLOW_DYE,
-        Items.LIME_DYE,
-        Items.GREEN_DYE,
-        Items.CYAN_DYE,
-        Items.LIGHT_BLUE_DYE,
-        Items.BLUE_DYE,
-        Items.PURPLE_DYE,
-        Items.MAGENTA_DYE,
-        Items.PINK_DYE
-    )
+
     val logsAndStrippedLogs = listOf(
         (Blocks.OAK_LOG to Blocks.STRIPPED_OAK_LOG),
         (Blocks.SPRUCE_LOG to Blocks.STRIPPED_SPRUCE_LOG),

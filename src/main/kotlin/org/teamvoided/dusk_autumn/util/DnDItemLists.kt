@@ -1,11 +1,30 @@
 package org.teamvoided.dusk_autumn.util
 
 import net.minecraft.item.ItemConvertible
+import net.minecraft.item.Items
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.*
 
 object DnDItemLists {
+    val dye = listOf(
+        Items.WHITE_DYE,
+        Items.LIGHT_GRAY_DYE,
+        Items.GRAY_DYE,
+        Items.BLACK_DYE,
+        Items.BROWN_DYE,
+        Items.RED_DYE,
+        Items.ORANGE_DYE,
+        Items.YELLOW_DYE,
+        Items.LIME_DYE,
+        Items.GREEN_DYE,
+        Items.CYAN_DYE,
+        Items.LIGHT_BLUE_DYE,
+        Items.BLUE_DYE,
+        Items.PURPLE_DYE,
+        Items.MAGENTA_DYE,
+        Items.PINK_DYE
+    )
     val cascadeWood = listOf<ItemConvertible>(
         DnDWoodBlocks.CASCADE_LOG,
         DnDWoodBlocks.CASCADE_WOOD,
@@ -26,39 +45,6 @@ object DnDItemLists {
         DnDItems.CASCADE_SIGN,
         DnDItems.CASCADE_HANGING_SIGN
     )
-
-    //
-//    //    val pineWood = listOf(
-//////        DuskBlocks.PINE_LOG,
-//////        DuskBlocks.PINE_WOOD,
-//////        DuskBlocks.STRIPPED_PINE_LOG,
-//////        DuskBlocks.STRIPPED_PINE_WOOD,
-////        DnDBlocks.PINE_PLANKS,
-////        DnDBlocks.PINE_STAIRS,
-////        DnDBlocks.PINE_SLAB,
-////        DnDBlocks.PINE_FENCE,
-////        DnDBlocks.PINE_FENCE_GATE,
-//////        DuskItems.PINE_DOOR,
-//////        DuskBlocks.PINE_TRAPDOOR,
-//////        DuskBlocks.PINE_PRESSURE_PLATE,
-//////        DuskBlocks.PINE_BUTTON
-////    ).toItems()
-//    val bonewoodWood = listOf(
-//        DnDBlocks.BONEWOOD_PLANKS,
-//        DnDBlocks.BONEWOOD_STAIRS,
-//        DnDBlocks.BONEWOOD_SLAB,
-//        DnDBlocks.BONEWOOD_FENCE,
-//        DnDBlocks.BONEWOOD_FENCE_GATE,
-//        DnDBlocks.BONEWOOD_DOOR,
-//        DnDBlocks.BONEWOOD_TRAPDOOR,
-//        DnDBlocks.WITHERING_BONEWOOD_PLANKS,
-//        DnDBlocks.WITHERING_BONEWOOD_STAIRS,
-//        DnDBlocks.WITHERING_BONEWOOD_SLAB,
-//        DnDBlocks.WITHERING_BONEWOOD_FENCE,
-//        DnDBlocks.WITHERING_BONEWOOD_FENCE_GATE,
-//        DnDBlocks.WITHERING_BONEWOOD_DOOR,
-//        DnDBlocks.WITHERING_BONEWOOD_TRAPDOOR,
-//    ).toItems()
     val polishedStone = listOf(
         DnDStoneBlocks.POLISHED_STONE,
         DnDStoneBlocks.POLISHED_STONE_STAIRS,
@@ -115,7 +101,7 @@ object DnDItemLists {
 //        DnDBlocks.BLUE_ICE_BRICK_WALL,
     )
 
-        val bigCandles = listOf(
+    val bigCandles = listOf(
         DnDBigBlocks.BIG_CANDLE,
         DnDBigBlocks.BIG_WHITE_CANDLE,
         DnDBigBlocks.BIG_LIGHT_GRAY_CANDLE,
@@ -172,12 +158,6 @@ object DnDItemLists {
         DnDBigBlocks.BIG_MAGENTA_SOUL_CANDLE,
         DnDBigBlocks.BIG_PINK_SOUL_CANDLE
     )
-//    val candles = bigCandles + soulCandles + bigSoulCandles
-//    val bigItems = listOf(
-//        DnDBlocks.BIG_CHAIN,
-//        DnDBlocks.BIG_LANTERN,
-//        DnDBlocks.BIG_SOUL_LANTERN
-//    ).toItems()
     val netherrackStuff = listOf(
         DnDNetherBrickBlocks.NETHERRACK_STAIRS,
         DnDNetherBrickBlocks.NETHERRACK_SLAB,
@@ -376,12 +356,6 @@ object DnDItemLists {
         DnDWoodBlocks.CASCADE_LEAF_PILE,
         DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE,
     )
-
-    /*  val moonberry = listOf(
-          DnDItems.MOONBERRY_VINELET,
-          DnDFloraBlocks.MOONBERRY_VINE,
-          DnDItems.MOONBERRIES
-      ).toItems()*/
     val overlayBlocks = listOf(
         DnDOverlayBlocks.ROCKY_GRASS,
         DnDOverlayBlocks.ROCKY_PODZOL,
