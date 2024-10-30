@@ -15,7 +15,7 @@ import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusk_autumn.util.SECRET_ITEMS
-import org.teamvoided.dusk_autumn.util.add
+import org.teamvoided.voidlib.helpers.add
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
