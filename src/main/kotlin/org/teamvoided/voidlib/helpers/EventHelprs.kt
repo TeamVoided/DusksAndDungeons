@@ -1,5 +1,6 @@
 package org.teamvoided.voidlib.helpers
 
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.minecraft.item.ItemConvertible
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
@@ -11,8 +12,9 @@ import net.minecraft.util.Identifier
 import net.minecraft.village.TradeOffers
 import net.minecraft.village.TradeOffers.BuyForOneEmeraldFactory
 
-// Put all this in Voidlib
-
+/*
+     Put all this in Voidlib
+*/
 
 //Trader
 fun MutableList<TradeOffers.Factory>.add1for1(item: ItemConvertible, maxUses: Int) =
@@ -35,3 +37,7 @@ fun addNewPool(tableBuilder: LootTable.Builder, table: Identifier): LootTable.Bu
 
 fun addTable(table: Identifier): LeafEntry.Builder<*> =
     LootTableEntry.method_428(RegistryKey.of(RegistryKeys.LOOT_TABLE, table))
+
+
+// Compositing
+fun compost(item: ItemConvertible, chance: Double = 1.0) = CompostingChanceRegistry.INSTANCE.add(item, chance.toFloat())

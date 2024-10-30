@@ -23,6 +23,7 @@ fun InitializeFabricEvents() {
     LootTableEvents.MODIFY.register(::modifyLootTables)
     TradeOfferHelper.registerWanderingTraderOffers(1, ::addCommonWanderingTrades)
     TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 2, ::addLevel2FarmerTrades)
+    compostItems()
 }
 
 @Suppress("UNUSED_PARAMETER")
@@ -69,3 +70,36 @@ fun addLevel2FarmerTrades(trades: MutableList<TradeOffers.Factory>) {
     // Add to Voided delight
 //    SellItemFactory(Items.PUMPKIN_PIE, 1, 4, 5),
 }
+
+fun compostItems() {
+    compost(DnDFloraBlocks.ROOT_BLOCK, 0.65)
+    DnDBlockLists.flowerbedBlocks.forEach { compost(it, 0.3) }
+
+    compost(DnDItems.LANTERN_PUMPKIN_SEEDS, 0.3)
+    compost(DnDItems.MOSSKIN_PUMPKIN_SEEDS, 0.3)
+    compost(DnDItems.GLOOM_PUMPKIN_SEEDS, 0.3)
+    compost(DnDItems.PALE_PUMPKIN_SEEDS, 0.3)
+
+    compost(DnDFloraBlocks.LANTERN_PUMPKIN, 0.65)
+    compost(DnDFloraBlocks.MOSSKIN_PUMPKIN, 0.65)
+    compost(DnDFloraBlocks.GLOOM_PUMPKIN, 0.65)
+    compost(DnDFloraBlocks.PALE_PUMPKIN, 0.65)
+
+    compost(DnDFloraBlocks.CARVED_LANTERN_PUMPKIN, 0.65)
+    compost(DnDFloraBlocks.CARVED_MOSSKIN_PUMPKIN, 0.65)
+    compost(DnDFloraBlocks.CARVED_GLOOM_PUMPKIN, 0.65)
+    compost(DnDFloraBlocks.CARVED_PALE_PUMPKIN, 0.65)
+
+    compost(DnDFloraBlocks.SMALL_PUMPKIN, 0.45)
+    compost(DnDFloraBlocks.SMALL_LANTERN_PUMPKIN, 0.45)
+    compost(DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN, 0.45)
+    compost(DnDFloraBlocks.SMALL_GLOOM_PUMPKIN, 0.45)
+    compost(DnDFloraBlocks.SMALL_PALE_PUMPKIN, 0.45)
+
+    compost(DnDFloraBlocks.SMALL_CARVED_PUMPKIN, 0.45)
+    compost(DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN, 0.45)
+    compost(DnDFloraBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN, 0.45)
+    compost(DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN, 0.45)
+    compost(DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN, 0.45)
+}
+
