@@ -39,6 +39,52 @@ object DnDTabs {
             entries.addLists(
                 DnDBlockLists.flowerbedBlocks,
                 DnDBlockLists.vivionbedBlocks,
+            )
+            entries.addItem(
+                DnDItems.CORN_STALK,
+                DnDItems.CORN_KERNELS,
+                DnDItems.CORN,
+                DnDFloraBlocks.CORN_BLOCK,
+                DnDFloraBlocks.CORN_SYRUP_BLOCK,
+                DnDItems.CORN_SYRUP_BOTTLE,
+
+                DnDFloraBlocks.SMALL_PUMPKIN,
+                DnDFloraBlocks.SMALL_CARVED_PUMPKIN,
+                DnDFloraBlocks.SMALL_GLOWING_PUMPKIN,
+
+                DnDItems.LANTERN_PUMPKIN_SEEDS,
+                DnDFloraBlocks.LANTERN_PUMPKIN,
+                DnDFloraBlocks.CARVED_LANTERN_PUMPKIN,
+                DnDFloraBlocks.GLOWING_LANTERN_PUMPKIN,
+                DnDFloraBlocks.SMALL_LANTERN_PUMPKIN,
+                DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
+                DnDFloraBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
+
+                DnDItems.MOSSKIN_PUMPKIN_SEEDS,
+                DnDFloraBlocks.MOSSKIN_PUMPKIN,
+                DnDFloraBlocks.CARVED_MOSSKIN_PUMPKIN,
+                DnDFloraBlocks.GLOWING_MOSSKIN_PUMPKIN,
+                DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN,
+                DnDFloraBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN,
+                DnDFloraBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN,
+
+                DnDItems.GLOOM_PUMPKIN_SEEDS,
+                DnDFloraBlocks.GLOOM_PUMPKIN,
+                DnDFloraBlocks.CARVED_GLOOM_PUMPKIN,
+                DnDFloraBlocks.GLOWING_GLOOM_PUMPKIN,
+                DnDFloraBlocks.SMALL_GLOOM_PUMPKIN,
+                DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
+                DnDFloraBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
+
+                DnDItems.PALE_PUMPKIN_SEEDS,
+                DnDFloraBlocks.PALE_PUMPKIN,
+                DnDFloraBlocks.CARVED_PALE_PUMPKIN,
+                DnDFloraBlocks.GLOWING_PALE_PUMPKIN,
+                DnDFloraBlocks.SMALL_PALE_PUMPKIN,
+                DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN,
+                DnDFloraBlocks.SMALL_GLOWING_PALE_PUMPKIN,
+            )
+            entries.addLists(
 //                    DnDItemLists.pineWood,
                 DnDItemLists.woodStuff,
                 DnDItemLists.logPiles,
@@ -50,8 +96,6 @@ object DnDTabs {
 //                DnDItemLists.snowyStoneBricks,
                 DnDItemLists.ice
             )
-
-
             entries.addItem(
                 DnDFloraBlocks.ROOT_BLOCK,
                 DnDStoneBlocks.STONE_PILLAR,
@@ -64,7 +108,6 @@ object DnDTabs {
                 DnDBigBlocks.BIG_LANTERN,
                 DnDBigBlocks.BIG_SOUL_LANTERN,
             )
-
             entries.addItem( // This adds the candles in a nice way
                 DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
                     listOf(
@@ -132,7 +175,7 @@ object DnDTabs {
             )
             it.addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
             it.addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks)
-            it.addWoodStuffAndLeafPiles()
+            it.addWoodStuffAndLeafPiles(false)
         }
 
         addToTab(ItemGroups.COLORED_BLOCKS) { it.addCandles() }
@@ -151,7 +194,6 @@ object DnDTabs {
             it.addAfter(Items.CHERRY_LOG, DnDWoodBlocks.CASCADE_LOG)
             it.addBefore(Items.PINK_PETALS, DnDBlockLists.flowerbedBlocks)
             it.addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
-
             it.addAfter(
                 Items.FLOWERING_AZALEA_LEAVES,
                 listOf(DnDWoodBlocks.CASCADE_LEAVES, DnDWoodBlocks.GOLDEN_BIRCH_LEAVES)
@@ -161,6 +203,34 @@ object DnDTabs {
             DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
                 it.addAfter(DnDBlockLists.leaves[idx], leafPile)
             }
+            it.addAfter(Items.PEONY, DnDItems.CORN_STALK)
+            it.addAfter(
+                Items.PUMPKIN_SEEDS,
+                DnDItems.LANTERN_PUMPKIN_SEEDS,
+                DnDItems.MOSSKIN_PUMPKIN_SEEDS,
+                DnDItems.PALE_PUMPKIN_SEEDS,
+                DnDItems.GLOOM_PUMPKIN_SEEDS,
+            )
+            it.addAfter(Items.BEETROOT_SEEDS, DnDItems.CORN_KERNELS)
+            it.addAfter(
+                Items.JACK_O_LANTERN,
+                DnDFloraBlocks.LANTERN_PUMPKIN,
+                DnDFloraBlocks.CARVED_LANTERN_PUMPKIN,
+                DnDFloraBlocks.GLOWING_LANTERN_PUMPKIN,
+
+                DnDFloraBlocks.MOSSKIN_PUMPKIN,
+                DnDFloraBlocks.CARVED_MOSSKIN_PUMPKIN,
+                DnDFloraBlocks.GLOWING_MOSSKIN_PUMPKIN,
+
+                DnDFloraBlocks.GLOOM_PUMPKIN,
+                DnDFloraBlocks.CARVED_GLOOM_PUMPKIN,
+                DnDFloraBlocks.GLOWING_GLOOM_PUMPKIN,
+
+                DnDFloraBlocks.PALE_PUMPKIN,
+                DnDFloraBlocks.CARVED_PALE_PUMPKIN,
+                DnDFloraBlocks.GLOWING_PALE_PUMPKIN,
+            )
+            it.addAfter(Items.HONEY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
         }
 
         addToTab(ItemGroups.COMBAT) {
@@ -174,6 +244,16 @@ object DnDTabs {
                 DnDItems.BLACKSTONE_SHOVEL, DnDItems.BLACKSTONE_PICKAXE,
                 DnDItems.BLACKSTONE_AXE, DnDItems.BLACKSTONE_HOE
             )
+        }
+
+        addToTab(ItemGroups.FOOD_AND_DRINKS) {
+            it.addAfter(Items.SWEET_BERRIES, DnDItems.MOONBERRIES)
+            it.addAfter(Items.GOLDEN_CARROT, DnDItems.CORN)
+            it.addAfter(Items.BEETROOT, DnDItems.GOLDEN_BEETROOT)
+            it.addAfter(Items.HONEY_BOTTLE, DnDItems.CORN_SYRUP_BOTTLE)
+        }
+        addToTab(ItemGroups.REDSTONE_BLOCKS) {
+            it.addAfter(Items.HONEY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
         }
     }
 

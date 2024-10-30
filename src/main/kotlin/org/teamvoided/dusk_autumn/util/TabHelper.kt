@@ -24,7 +24,7 @@ fun FabricItemGroupEntries.addAfter(item: ItemConvertible, list: Collection<Item
 fun FabricItemGroupEntries.addBefore(item: ItemConvertible, list: Collection<ItemConvertible>) =
     this.addBefore(item.asItem(), list.map { it.asItem().defaultStack })
 
-fun FabricItemGroupEntries.addWoodStuffAndLeafPiles() {
+fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves : Boolean = true) {
     DnDBlockLists.logsAndStrippedLogs.forEachIndexed { idx, (log, stripped) ->
 //        this.addAfter(log, DnDBlockLists.hollowLogs[idx])
 //        this.addAfter(stripped, DnDBlockLists.hollowStrippedLogs[idx])
@@ -35,6 +35,7 @@ fun FabricItemGroupEntries.addWoodStuffAndLeafPiles() {
     }
     this.addAfter(Blocks.BAMBOO_BLOCK, DnDWoodBlocks.HOLLOW_BAMBOO_BLOCK)
     this.addAfter(Blocks.STRIPPED_BAMBOO_BLOCK, DnDWoodBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK)
+    if (!leaves) return
     DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
         this.addAfter(DnDBlockLists.leaves[idx], leafPile)
     }
