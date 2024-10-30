@@ -1,10 +1,10 @@
 package org.teamvoided.dusk_autumn.mixin;
 
 import net.fabricmc.fabric.api.block.v1.FabricBlock;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,6 +21,6 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
     @Inject(at = @At("HEAD"), method = "cannotConnect", cancellable = true)
     private static void cannotConnectTag(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if (state.isIn(DnDBlockTags.BLOCKS_CANNOT_CONNECT_TO))
-                cir.setReturnValue(true);
+            cir.setReturnValue(true);
     }
 }
