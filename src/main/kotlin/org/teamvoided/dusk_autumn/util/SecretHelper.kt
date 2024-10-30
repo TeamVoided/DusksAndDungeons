@@ -7,30 +7,30 @@ import org.teamvoided.dusk_autumn.init.DnDItems
 
 val SECRET_BLOCKS = mutableSetOf<Block>()
 val SECRET_ITEMS = mutableSetOf<Item>()
-fun mergeSecrets() = SECRET_ITEMS.addAll(SECRET_BLOCKS.map { it.asItem() })
-fun Block.shh(): Block {
+internal fun mergeSecrets() = SECRET_ITEMS.addAll(SECRET_BLOCKS.map { it.asItem() })
+internal fun Block.shh(): Block {
     SECRET_BLOCKS.add(this)
     return this
 }
 
-fun Item.shh(): Item {
+internal fun Item.shh(): Item {
     SECRET_ITEMS.add(this)
     return this
 }
 
-fun Item.tellWitnessesThatIWasMurdered(): Item {
+internal fun Item.tellWitnessesThatIWasMurdered(): Item {
     DnDItems.EVIL_ITEMS.add(this)
     return this
 }
 
-fun Block.tellWitnessesThatIWasMurdered(): Block {
+internal fun Block.tellWitnessesThatIWasMurdered(): Block {
     DnDBlocks.EVIL_BLOCKS.add(this)
     return this
 }
 
 
 @JvmField
-val dataFixerBlackList = listOf(
+internal val dataFixerBlackList = listOf(
     "celestal_bell",
     "chest_o_souls",
     "quarter_block_pile",
