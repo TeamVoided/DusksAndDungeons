@@ -3,13 +3,11 @@ package org.teamvoided.dusk_autumn.init.blocks
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks.*
-import net.minecraft.block.MapColor
 import net.minecraft.block.PillarBlock
 import org.teamvoided.dusk_autumn.block.BunnyGraveBlock
 import org.teamvoided.dusk_autumn.block.GravestoneBlock
 import org.teamvoided.dusk_autumn.block.HauntedGravestoneBlock
 import org.teamvoided.dusk_autumn.init.DnDBlocks
-import org.teamvoided.dusk_autumn.item.DnDFoodComponents
 import org.teamvoided.dusk_autumn.util.*
 
 object DnDStoneBlocks {

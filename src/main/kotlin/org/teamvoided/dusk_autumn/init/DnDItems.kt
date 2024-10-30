@@ -4,7 +4,6 @@ import net.minecraft.block.dispenser.DispenserBlock
 import org.teamvoided.dusk_autumn.item.TripleTallBlockItem
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
-import net.minecraft.component.type.BundleContentsComponent
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
