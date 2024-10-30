@@ -21,57 +21,58 @@ object DnDStoneBlocks {
             centerGravestoneShape,
             copy(CHISELED_STONE_BRICKS).solid()
         ).pickaxe()
-    ).shh()
+    )
     val SMALL_GRAVESTONE = DnDBlocks.register(
         "small_gravestone", GravestoneBlock(
             smallGravestoneShape,
             centerSmallGravestoneShape,
             copy(GRAVESTONE)
         ).pickaxe()
-    ).shh()
+    )
     val DEEPSLATE_GRAVESTONE = DnDBlocks.register(
         "deepslate_gravestone", GravestoneBlock(
             gravestoneShape,
             centerGravestoneShape,
             copy(CHISELED_DEEPSLATE).solid()
-        ).pickaxe().shh()
+        ).pickaxe()
     )
     val SMALL_DEEPSLATE_GRAVESTONE = DnDBlocks.register(
         "small_deepslate_gravestone", GravestoneBlock(
             smallGravestoneShape,
             centerSmallGravestoneShape,
             copy(DEEPSLATE_GRAVESTONE)
-        ).pickaxe().shh()
+        ).pickaxe()
     )
     val TUFF_GRAVESTONE = DnDBlocks.register(
         "tuff_gravestone", GravestoneBlock(
             gravestoneShape,
             centerGravestoneShape,
             copy(CHISELED_TUFF_BRICKS).solid()
-        ).pickaxe().shh()
+        ).pickaxe()
     )
     val SMALL_TUFF_GRAVESTONE = DnDBlocks.register(
         "small_tuff_gravestone", GravestoneBlock(
             smallGravestoneShape,
             centerSmallGravestoneShape,
             copy(TUFF_GRAVESTONE)
-        ).pickaxe().shh()
+        ).pickaxe()
     )
     val BLACKSTONE_GRAVESTONE = DnDBlocks.register(
         "blackstone_gravestone", GravestoneBlock(
             gravestoneShape,
             centerGravestoneShape,
             copy(CHISELED_POLISHED_BLACKSTONE).solid()
-        ).pickaxe().shh()
+        ).pickaxe()
     )
     val SMALL_BLACKSTONE_GRAVESTONE = DnDBlocks.register(
         "small_blackstone_gravestone", GravestoneBlock(
             smallGravestoneShape,
             centerSmallGravestoneShape,
             copy(BLACKSTONE_GRAVESTONE)
-        ).pickaxe().shh()
+        ).pickaxe()
     )
 
+    // Haunted ---
     val HAUNTED_GRAVESTONE = DnDBlocks.register(
         "haunted_gravestone", HauntedGravestoneBlock(
             gravestoneShape,
@@ -135,7 +136,7 @@ object DnDStoneBlocks {
                 headstoneShape,
                 centerHeadstoneShape,
                 copy(CHAIN).sounds(bigChainSound)
-            ).cutout().pickaxe().shh()
+            ).cutout().pickaxe()
         )
     val BUNNY_GRAVE = DnDBlocks.register("bunny_grave", BunnyGraveBlock(copy(STONE_BRICK_WALL)).pickaxe()).shh()
 

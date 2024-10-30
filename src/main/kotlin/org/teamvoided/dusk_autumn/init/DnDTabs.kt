@@ -101,9 +101,17 @@ object DnDTabs {
                 DnDStoneBlocks.STONE_PILLAR,
                 DnDStoneBlocks.DEEPSLATE_PILLAR,
 //                DnDBlocks.TALL_REDSTONE_CRYSTAL,
-            )
-            entries.addItem(
-                // big items but not candles
+                DnDStoneBlocks.GRAVESTONE,
+                DnDStoneBlocks.SMALL_GRAVESTONE,
+                DnDStoneBlocks.DEEPSLATE_GRAVESTONE,
+                DnDStoneBlocks.SMALL_DEEPSLATE_GRAVESTONE,
+                DnDStoneBlocks.TUFF_GRAVESTONE,
+                DnDStoneBlocks.SMALL_TUFF_GRAVESTONE,
+                DnDStoneBlocks.BLACKSTONE_GRAVESTONE,
+                DnDStoneBlocks.SMALL_BLACKSTONE_GRAVESTONE,
+
+                DnDStoneBlocks.HEADSTONE,
+
                 DnDBigBlocks.BIG_CHAIN,
                 DnDBigBlocks.BIG_LANTERN,
                 DnDBigBlocks.BIG_SOUL_LANTERN,
