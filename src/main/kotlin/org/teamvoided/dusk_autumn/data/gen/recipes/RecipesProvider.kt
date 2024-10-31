@@ -13,8 +13,8 @@ import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusk_autumn.block.DnDFamilies.recipesBlockFamilies
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
-import org.teamvoided.dusk_autumn.util.cobbled
-import org.teamvoided.dusk_autumn.util.criterion
+import org.teamvoided.dusk_autumn.util.datagen.cobbled
+import org.teamvoided.dusk_autumn.util.datagen.criterion
 import java.util.concurrent.CompletableFuture
 
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {

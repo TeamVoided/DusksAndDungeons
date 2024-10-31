@@ -11,7 +11,7 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import org.teamvoided.dusk_autumn.DusksAndDungeons
 import org.teamvoided.dusk_autumn.init.blocks.DnDWoodBlocks
-import org.teamvoided.dusk_autumn.util.id
+import org.teamvoided.dusk_autumn.util.datagen.id
 
 object DnDItemsClient {
     fun init() {

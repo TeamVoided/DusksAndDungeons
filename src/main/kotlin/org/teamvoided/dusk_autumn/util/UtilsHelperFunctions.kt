@@ -28,9 +28,9 @@ fun getPropertyFromDirection(direction: Direction): BooleanProperty {
 
 fun nextHorizontalDirection(direction: Direction, rotations: Int): Direction {
     var directionReturn = direction
-        for (i in 0 until rotations) {
-            directionReturn = nextHorizontalDirection(directionReturn)
-        }
+    for (i in 0 until rotations) {
+        directionReturn = nextHorizontalDirection(directionReturn)
+    }
     return directionReturn
 }
 

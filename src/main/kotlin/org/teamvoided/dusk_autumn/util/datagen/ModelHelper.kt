@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.util
+package org.teamvoided.dusk_autumn.util.datagen
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
@@ -21,7 +21,7 @@ import org.teamvoided.dusk_autumn.DusksAndDungeons.mc
 import org.teamvoided.dusk_autumn.block.*
 import org.teamvoided.dusk_autumn.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
-import org.teamvoided.dusk_autumn.util.datagen.*
+import org.teamvoided.dusk_autumn.util.modelDirectionRotation
 import java.util.*
 
 val ALL_KRY: TextureKey = TextureKey.of("all")

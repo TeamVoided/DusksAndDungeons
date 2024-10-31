@@ -6,7 +6,7 @@ import net.minecraft.state.property.Properties
 import org.teamvoided.dusk_autumn.DusksAndDungeons
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDFloraBlocks
-import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 
 object FloraModels {
     fun register(gen: BlockStateModelGenerator) {

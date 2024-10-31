@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_autumn.util
+package org.teamvoided.voidlib.helpers
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 

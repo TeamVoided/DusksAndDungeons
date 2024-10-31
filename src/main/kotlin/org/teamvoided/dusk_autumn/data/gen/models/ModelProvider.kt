@@ -14,7 +14,7 @@ import org.teamvoided.dusk_autumn.compat.DramaticDoorsCompat
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.DnDItems
 import org.teamvoided.dusk_autumn.init.blocks.DnDNetherBrickBlocks
-import org.teamvoided.dusk_autumn.util.*
+import org.teamvoided.dusk_autumn.util.datagen.*
 import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
