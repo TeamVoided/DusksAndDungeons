@@ -4,7 +4,6 @@ import net.minecraft.block.*
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.mob.RavagerEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
 import net.minecraft.server.world.ServerWorld
@@ -91,11 +90,6 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         if (entity is RavagerEntity && world.gameRules.getBooleanValue(GameRules.DO_MOB_GRIEFING)) {
             world.breakBlock(pos, true, entity)
         }
-        if (entity is PlayerEntity && !entity.isCreative) {
-            val mult = ((MAX_AGE - state.get(AGE)) / MAX_AGE.toDouble())
-            entity.setMovementMultiplier(state, CornMazeBlock.cornMovementMultiplier.multiply(mult))
-        }
-
         super.onEntityCollision(state, world, pos, entity)
     }
 
