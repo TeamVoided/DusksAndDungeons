@@ -2,6 +2,7 @@ package org.teamvoided.dusk_autumn.block.big
 
 import net.minecraft.block.AbstractCandleBlock
 import net.minecraft.block.BlockState
+import net.minecraft.particle.DefaultParticleType
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -13,5 +14,5 @@ import org.teamvoided.dusk_autumn.init.DnDParticles
 import java.util.function.Consumer
 
 class BigSoulCandleBlock(settings: Settings) : BigCandleBlock(settings) {
-    override val particle = ParticleTypes.SOUL_FIRE_FLAME
+    override val particle: DefaultParticleType = ParticleTypes.SOUL_FIRE_FLAME
 }
