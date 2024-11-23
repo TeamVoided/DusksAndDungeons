@@ -23,7 +23,11 @@ object DusksAndDungeons {
     @JvmField
     val log = LoggerFactory.getLogger(DusksAndDungeons::class.java)
 
+    private var initialised = false
+
     fun init() {
+        if (initialised) return
+        initialised = true
         log.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()

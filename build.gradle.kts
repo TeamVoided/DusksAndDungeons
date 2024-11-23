@@ -112,11 +112,11 @@ tasks {
     }
 }
 
-publishScript {
+/*publishScript {
     releaseRepository("TeamVoided", "https://maven.teamvoided.org/snapshots")
     publication(modSettings.modId(), true)
     publishSources(true)
-}
+}*/
 
 /*uploadConfig {
 //    debugMode = true
