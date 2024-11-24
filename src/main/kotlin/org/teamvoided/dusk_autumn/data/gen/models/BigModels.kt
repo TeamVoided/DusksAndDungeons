@@ -1,6 +1,7 @@
 package org.teamvoided.dusk_autumn.data.gen.models
 
 import net.minecraft.data.client.model.BlockStateModelGenerator
+import org.teamvoided.dusk_autumn.DusksAndDungeons.id
 import org.teamvoided.dusk_autumn.init.DnDBlocks
 import org.teamvoided.dusk_autumn.init.blocks.DnDBigBlocks
 import org.teamvoided.dusk_autumn.util.*
@@ -13,7 +14,7 @@ object BigModels {
         gen.registerBigLantern(DnDBigBlocks.BIG_REDSTONE_LANTERN, true)
         gen.registerBigLantern(DnDBigBlocks.BIG_SOUL_LANTERN)
         gen.registerBigChain(DnDBigBlocks.BIG_CELESTAL_CHAIN)
-        val mLB = "block/big_celestal_lantern_bottom"
+        val mLB = id("block/big_celestal_lantern_bottom")
         gen.registerBigLantern(DnDBigBlocks.BIG_MOON_LANTERN, false, mLB)
         gen.registerBigLantern(DnDBigBlocks.BIG_EARTH_LANTERN, false, mLB)
         gen.registerBigLantern(DnDBigBlocks.BIG_COMET_LANTERN, false, mLB)

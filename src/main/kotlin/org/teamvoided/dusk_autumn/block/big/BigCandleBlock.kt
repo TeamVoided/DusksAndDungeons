@@ -29,8 +29,7 @@ import org.teamvoided.dusk_autumn.util.rotate
 import org.teamvoided.dusk_autumn.util.rotateFlat90
 import java.util.function.Consumer
 
-open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
-    open val particle: DefaultParticleType = ParticleTypes.FLAME
+open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings) : CandleBlock(settings) {
 
     init {
         this.defaultState = stateManager.defaultState
@@ -132,7 +131,7 @@ open class BigCandleBlock(settings: Settings) : CandleBlock(settings) {
             candle(4.0, 8.0, 6.0),
             candle(9.0, 8.0, 10.0)
         )
-        val BIG_CANDLES_TO_PARTICLE_OFFSETS = Util.make {
+        val BIG_CANDLES_TO_PARTICLE_OFFSETS: Int2ObjectMap<List<Vec3d>> = Util.make {
             val int2ObjectMap: Int2ObjectMap<List<Vec3d>> = Int2ObjectOpenHashMap()
             int2ObjectMap.defaultReturnValue(ImmutableList.of())
             int2ObjectMap.put(

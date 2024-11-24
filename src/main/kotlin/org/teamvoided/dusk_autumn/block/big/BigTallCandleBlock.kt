@@ -7,6 +7,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import net.minecraft.block.BlockState
 import net.minecraft.block.CandleBlock
 import net.minecraft.block.ShapeContext
+import net.minecraft.particle.DefaultParticleType
 import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
@@ -14,7 +15,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
-open class BigTallCandleBlock(settings: Settings) : BigCandleBlock(settings) {
+open class BigTallCandleBlock(particle: DefaultParticleType, settings: Settings) : BigCandleBlock(particle, settings) {
 
     override fun getOutlineShape(
         state: BlockState,
@@ -53,7 +54,7 @@ open class BigTallCandleBlock(settings: Settings) : BigCandleBlock(settings) {
             candle(3.0, 8.0, 12.0),
             candle(9.0, 8.0, 20.0)
         )
-        val BIG_CANDLES_TO_PARTICLE_OFFSETS = Util.make {
+        val BIG_CANDLES_TO_PARTICLE_OFFSETS: Int2ObjectMap<List<Vec3d>> = Util.make {
             val fire: Int2ObjectMap<List<Vec3d>> = Int2ObjectOpenHashMap()
             fire.defaultReturnValue(ImmutableList.of())
             fire.put(

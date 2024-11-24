@@ -8,6 +8,7 @@ import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
 import net.minecraft.particle.DefaultParticleType
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
@@ -217,19 +218,20 @@ fun wallHangingSignOf(woodType: WoodType, block: Block, hangingSign: Block): Blo
 fun candleSettings(): AbstractBlock.Settings = AbstractBlock.Settings.create().nonOpaque().strength(0.1f)
     .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
 
-fun bigCandleOf(color: MapColor): Block = BigCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+fun bigCandleOf(color: MapColor): Block =
+    BigCandleBlock(ParticleTypes.FLAME, candleSettings().mapColor(color).sounds(bigCandleSound))
 
 fun soulCandleOf(color: MapColor): Block =
     SoulCandleBlock(candleSettings().mapColor(color).sounds(BlockSoundGroup.CANDLE))
 
 fun bigSoulCandleOf(color: MapColor): Block =
-    BigSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+    BigCandleBlock(ParticleTypes.SOUL_FIRE_FLAME, candleSettings().mapColor(color).sounds(bigCandleSound))
 
 fun bigCandleCakeOf(block: Block): Block =
-    BigCandleCakeBlock(block, copy(DnDBigBlocks.BIG_CANDLE_CAKE))
+    BigCandleCakeBlock(block, ParticleTypes.FLAME, copy(DnDBigBlocks.BIG_CANDLE_CAKE))
 
 fun bigCandleCakeOf(block: Block, candleCake: Block): Block =
-    BigCandleCakeBlock(block, copy(candleCake))
+    BigCandleCakeBlock(block, ParticleTypes.FLAME, copy(candleCake))
 
 fun soulCandleCakeOf(block: Block): Block = soulCandleCakeOf(block, DnDBigBlocks.SOUL_CANDLE_CAKE)
 
@@ -239,14 +241,13 @@ fun soulCandleCakeOf(block: Block, candleCake: Block): Block =
 fun bigSoulCandleCakeOf(block: Block): Block = bigSoulCandleCakeOf(block, DnDBigBlocks.BIG_SOUL_CANDLE_CAKE)
 
 fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block =
-    BigSoulCandleCakeBlock(block, copy(candleCake))
-
+    BigCandleCakeBlock(block, ParticleTypes.SOUL_FIRE_FLAME, copy(candleCake))
 
 fun bigTallCandleOf(color: MapColor): Block =
-    BigTallCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+    BigTallCandleBlock(ParticleTypes.FLAME, candleSettings().mapColor(color).sounds(bigCandleSound))
 
 fun bigTallSoulCandleOf(color: MapColor): Block =
-    BigTallSoulCandleBlock(candleSettings().mapColor(color).sounds(bigCandleSound))
+    BigTallCandleBlock(ParticleTypes.SOUL_FIRE_FLAME, candleSettings().mapColor(color).sounds(bigCandleSound))
 
 fun candelabraOf(candle: Block): CandelabraBlock = CandelabraBlock(
     candle, copy(candle).luminance { if (it.get(Properties.LIT)) 3 * it.get(CandelabraBlock.CANDLES) else 0 }

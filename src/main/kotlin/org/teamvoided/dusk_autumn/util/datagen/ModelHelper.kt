@@ -1041,13 +1041,13 @@ fun BlockStateModelGenerator.registerBigChain(block: Block) {
 fun BlockStateModelGenerator.registerBigLantern(
     block: Block,
     redstone: Boolean = false,
-    bottom: String = "block/big_lantern_bottom"
+    bottom: Identifier = id("block/big_lantern_bottom")
 ) {
     this.registerItemModel(block)
     val texture = Texture()
         .put(TextureKey.PARTICLE, Texture.getId(block))
         .put(TextureKey.SIDE, Texture.getId(block))
-        .put(TextureKey.END, id(bottom))
+        .put(TextureKey.END, bottom)
     val model = block(
         "parent/big_lantern",
         TextureKey.PARTICLE,
@@ -1059,7 +1059,7 @@ fun BlockStateModelGenerator.registerBigLantern(
         val textureOff = Texture()
             .put(TextureKey.PARTICLE, Texture.getSubId(block, "_off"))
             .put(TextureKey.SIDE, Texture.getSubId(block, "_off"))
-            .put(TextureKey.END, id(bottom))
+            .put(TextureKey.END, bottom)
         val modelOff = model.upload(block, "_off", textureOff, this.modelCollector)
         val modelHangingOff = model.upload(block, "_hanging_off", textureOff, this.modelCollector)
         this.blockStateCollector.accept(

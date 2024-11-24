@@ -327,17 +327,17 @@ object PifflingPumpkinAnimations {
                 AnimationTargets.ROTATE,
                 AnimationKeyframe(
                     0.0f,
-                    rotate(-200.0f, 0.0f, -60.0f),
+                    rotate(-200.0f, 0.0f, -40.0f),
                     Interpolations.SPLINE
                 ),
                 AnimationKeyframe(
                     0.1667f,
-                    rotate(160.0f, 180.0f, -60.0f),
+                    rotate(-160.0f, 0.0f, -40.0f),
                     Interpolations.SPLINE
                 ),
                 AnimationKeyframe(
                     0.3333f,
-                    rotate(-200.0f, 0.0f, -60.0f),
+                    rotate(-200.0f, 0.0f, -40.0f),
                     Interpolations.SPLINE
                 )
             )
@@ -347,17 +347,17 @@ object PifflingPumpkinAnimations {
                 AnimationTargets.ROTATE,
                 AnimationKeyframe(
                     0.0f,
-                    rotate(-160.0f, 0.0f, 20.0f),
+                    rotate(-160.0f, 0.0f, 40.0f),
                     Interpolations.SPLINE
                 ),
                 AnimationKeyframe(
                     0.1667f,
-                    rotate(-200.0f, 0.0f, 20.0f),
+                    rotate(-200.0f, 0.0f, 40.0f),
                     Interpolations.SPLINE
                 ),
                 AnimationKeyframe(
                     0.3333f,
-                    rotate(-160.0f, 0.0f, 20.0f),
+                    rotate(-160.0f, 0.0f, 40.0f),
                     Interpolations.SPLINE
                 )
             )
