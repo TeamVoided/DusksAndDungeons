@@ -1,4 +1,3 @@
-//package org.teamvoided.dusk_autumn.entity.scarecrow.render
 //
 //import net.minecraft.client.render.VertexConsumerProvider
 //import net.minecraft.client.render.entity.feature.FeatureRenderer
@@ -7,9 +6,6 @@
 //import net.minecraft.entity.EquipmentSlot
 //import net.minecraft.registry.Registries
 //import net.minecraft.util.Identifier
-//import org.teamvoided.dusk_autumn.DusksAndDungeons.id
-//import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
-//import org.teamvoided.dusk_autumn.entity.scarecrow.model.ScarecrowEntityModel
 //
 //class ScarecrowBodyFeatureRenderer(
 //    context: FeatureRendererContext<ScarecrowEntity, ScarecrowEntityModel>,

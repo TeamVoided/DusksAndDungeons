@@ -54,6 +54,8 @@ class DnDData : DataGeneratorEntrypoint {
         fancyNamePack.addProvider { o -> createResource(o, Text.literal("Better Nether Brick Names")) }
 //        val fancyNamePackVanilla = gen.createBuiltinResourcePack(mc("fancy_names"))
 //        fancyNamePackVanilla.addProvider(::FancyNameVanillaTranslationProvider)
+
+        pack.addProvider(::DnDMappingsProvider)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {

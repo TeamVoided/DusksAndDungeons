@@ -9,7 +9,7 @@ biolith = "3.0.0"
 reef = "0.2.0-beta.2"
 voidmill = "1.0.4"
 
-transition = "1.0.0-alpha.12"
+transition = "1.0.0-alpha.13"
 
 # dev
 modmenu = "11.0.2"
@@ -25,6 +25,7 @@ dramatic-doors = "1.21-3.2.4_1"
 biolith = { module = "com.terraformersmc:biolith-fabric", version.ref = "biolith" }
 reef = { module = "org.teamvoided:reef", version.ref = "reef" }
 voidmill = { module = "org.teamvoided:voidmill", version.ref = "voidmill" }
+transition = { module = "org.teamvoided:transition", version.ref = "transition" }
 
 # dev
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }

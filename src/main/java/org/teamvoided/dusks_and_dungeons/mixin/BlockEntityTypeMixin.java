@@ -12,10 +12,10 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks;
 public class BlockEntityTypeMixin {
 
     @Unique
-    private final BlockEntityType<?> dusk_autumn$me = (BlockEntityType<?>) (Object) this;
+    private final BlockEntityType<?> dusks_and_dungeons$me = (BlockEntityType<?>) (Object) this;
 
     @ModifyExpressionValue(method = "supports", at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
     private boolean supports(boolean original, BlockState state) {
-        return (BlockEntityType.DECORATED_POT.equals(dusk_autumn$me) && state.isOf(DnDBlocks.INSTANCE.getPOT_O_SCREAMS())) || original;
+        return (BlockEntityType.DECORATED_POT.equals(dusks_and_dungeons$me) && state.isOf(DnDBlocks.INSTANCE.getPOT_O_SCREAMS())) || original;
     }
 }

@@ -23,6 +23,7 @@ repositories {
     maven("https://teamvoided.org/releases")
     maven("https://api.modrinth.com/maven")
     maven("https://maven.terraformersmc.com/") { name = "TerraformersMC" }
+    maven("https://maven.fzzyhmstrs.me/") { name = "FzzyMaven" }
     mavenCentral()
 }
 
@@ -31,9 +32,9 @@ modSettings {
     entrypoint("client", "org.teamvoided.dusks_and_dungeons.DusksAndDungeonsClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.dusks_and_dungeons.data.gen.DnDData")
 
-    mixinFile("dusk_autumn.mixins.json")
-    mixinFile("dusk_autumn.client.mixins.json")
-    accessWidener("dusk_autumn.accesswidener")
+    mixinFile("dusks_and_dungeons.mixins.json")
+    mixinFile("dusks_and_dungeons.client.mixins.json")
+    accessWidener("dusks_and_dungeons.accesswidener")
 }
 
 dependencies {
@@ -48,6 +49,9 @@ dependencies {
     modImplementation(libs.voidmill)
     include(libs.voidmill)
 
+
+    // Gay
+    modImplementation(libs.transition)
 
     // Dev
     modImplementation(libs.modmenu)
@@ -105,7 +109,7 @@ tasks {
     jar {
         val valTaskNames = gradle.startParameter.taskNames
         if (!valTaskNames.contains("runDataGen")) {
-//            exclude("org/teamvoided/dusk_autumn/data/gen/*")
+//            exclude("org/teamvoided/dusks_and_dungeons/data/gen/*")
         } else {
             println("Running datagen for task ${valTaskNames.joinToString(" ")}")
         }

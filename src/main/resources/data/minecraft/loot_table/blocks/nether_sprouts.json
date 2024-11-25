@@ -22,7 +22,7 @@
             },
             {
               "type": "minecraft:item",
-              "name": "dusk_autumn:warped_wart",
+              "name": "dusks_and_dungeons:warped_wart",
               "functions": [
                 {
                   "function": "minecraft:apply_bonus",
