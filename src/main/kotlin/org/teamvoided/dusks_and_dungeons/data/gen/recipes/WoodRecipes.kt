@@ -1,0 +1,33 @@
+package org.teamvoided.dusks_and_dungeons.data.gen.recipes
+
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.minecraft.data.server.recipe.RecipeExporter
+import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
+import net.minecraft.item.Items
+import net.minecraft.recipe.Ingredient
+import net.minecraft.recipe.RecipeCategory
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
+import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
+
+object WoodRecipes {
+    fun generateWoodRecipes(e: RecipeExporter) {
+        cascade(e)
+    }
+
+    private fun cascade(e: RecipeExporter) {
+        FabricRecipeProvider.offerPlanksRecipe(e, DnDWoodBlocks.CASCADE_PLANKS, DnDItemTags.CASCADE_LOGS, 4)
+        FabricRecipeProvider.offerBarkBlockRecipe(e, DnDWoodBlocks.CASCADE_WOOD, DnDWoodBlocks.CASCADE_LOG)
+        FabricRecipeProvider.offerBarkBlockRecipe(e, DnDWoodBlocks.STRIPPED_CASCADE_WOOD, DnDWoodBlocks.STRIPPED_CASCADE_LOG)
+        FabricRecipeProvider.offerHangingSignRecipe(e, DnDItems.CASCADE_HANGING_SIGN, DnDWoodBlocks.STRIPPED_CASCADE_LOG)
+        ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, DnDWoodBlocks.BLUE_DOOR, 3)
+            .ingredient('#', Ingredient.ofItems(DnDWoodBlocks.CASCADE_PLANKS.asItem()))
+            .ingredient('@', Ingredient.ofItems(Items.GOLD_NUGGET))
+            .pattern("## ")
+            .pattern("##@")
+            .pattern("## ")
+            .criterion(DnDWoodBlocks.CASCADE_PLANKS.asItem())
+            .offerTo(e)
+    }
+}
