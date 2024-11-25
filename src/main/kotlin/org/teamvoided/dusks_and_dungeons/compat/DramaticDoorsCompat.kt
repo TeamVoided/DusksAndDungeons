@@ -12,9 +12,7 @@ import net.minecraft.data.client.model.BlockStateModelGenerator
 //import net.minecraft.data.client.model.Models
 //import net.minecraft.registry.Registries
 //import net.minecraft.util.Identifier
-//import org.teamvoided.dusk_autumn.DuskAutumns.log
-//import org.teamvoided.dusk_autumn.init.DnDBlocks
-//import org.teamvoided.dusk_autumn.util.id
+
 
 object DramaticDoorsCompat {
 //    fun id(path: String) = Identifier.of("dramaticdoors", path)

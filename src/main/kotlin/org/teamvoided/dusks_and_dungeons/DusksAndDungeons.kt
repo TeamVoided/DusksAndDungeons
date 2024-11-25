@@ -18,7 +18,7 @@ import org.teamvoided.dusks_and_dungeons.util.mergeSecrets
 
 @Suppress("unused")
 object DusksAndDungeons {
-    const val MODID = "dusk_autumn"
+    const val MODID = "dusks_and_dungeons"
 
     @JvmField
     val log = LoggerFactory.getLogger(DusksAndDungeons::class.java)

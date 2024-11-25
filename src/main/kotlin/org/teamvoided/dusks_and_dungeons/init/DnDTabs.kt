@@ -22,7 +22,7 @@ import kotlin.jvm.optionals.getOrNull
 object DnDTabs {
     val DUSKS_AND_DUNGEONS: ItemGroup = register(MODID, FabricItemGroup.builder()
         .icon { ItemStack(DnDWoodBlocks.CASCADE_SAPLING) }
-        .name(Text.translatable("itemGroup.dusk_autumn.$MODID"))
+        .name(Text.translatable("itemGroup.dusks_and_dungeons.$MODID"))
         .entries { _, entries ->
             entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns)
             entries.addItem(
@@ -144,7 +144,7 @@ object DnDTabs {
     val OVERLAY_BLOCKS: ItemGroup = register("overlay_blocks",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDOverlayBlocks.ROCKY_GRASS) }
-            .name(Text.translatable("itemGroup.dusk_autumn.overlay_blocks"))
+            .name(Text.translatable("itemGroup.dusks_and_dungeons.overlay_blocks"))
             .entries { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
             .build()
     )

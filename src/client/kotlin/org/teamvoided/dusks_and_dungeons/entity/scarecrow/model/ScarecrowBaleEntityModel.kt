@@ -1,7 +1,5 @@
-//package org.teamvoided.dusk_autumn.entity.scarecrow.model
 //
 //import net.minecraft.client.model.*
-//import org.teamvoided.dusk_autumn.entity.ScarecrowEntity
 //
 //class ScarecrowBaleEntityModel(root: ModelPart) : ScarecrowEntityModel(root) {
 //    val rightArm: ModelPart = body.getChild("right_arm")

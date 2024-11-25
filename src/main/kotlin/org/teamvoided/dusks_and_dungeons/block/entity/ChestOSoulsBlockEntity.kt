@@ -49,7 +49,7 @@ class ChestOSoulsBlockEntity(pos: BlockPos?, state: BlockState?) :
 
     override fun size(): Int = inventory.size
 
-    override fun getContainerName(): Text = Text.translatable("container.dusk_autumn.chest_o_souls")
+    override fun getContainerName(): Text = Text.translatable("container.dusks_and_dungeons.chest_o_souls")
 
     override fun getInventory(): DefaultedList<ItemStack> = inventory
 
