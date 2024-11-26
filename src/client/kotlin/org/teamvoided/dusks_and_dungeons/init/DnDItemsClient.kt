@@ -17,7 +17,9 @@ import net.minecraft.util.Identifier.ofDefault as mc
 
 object DnDItemsClient {
     fun init() {
-        registerTint(GrassColors.getDefault(), *DnDBlocks.GRASS_TINT_BLOCKS.map { it.asItem() }.toTypedArray())
+        registerTint(
+            { _, _ -> GrassColors.getDefault() }, *DnDBlocks.GRASS_TINT_BLOCKS.map { it.asItem() }.toTypedArray()
+        )
         registerTint(
             FoliageColors.getDefaultColor(),
             DnDWoodBlocks.OAK_LEAF_PILE.asItem(),
