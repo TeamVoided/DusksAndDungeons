@@ -7,9 +7,7 @@ import org.teamvoided.dusks_and_dungeons.util.pi
 import java.util.*
 
 class SpiderlilyPetalParticle(
-    world: ClientWorld,
-    x: Double, y: Double, z: Double,
-    velX: Double, velY: Double, velZ: Double
+    world: ClientWorld, x: Double, y: Double, z: Double, velX: Double, velY: Double, velZ: Double
 ) : SpriteBillboardParticle(world, x, y, z, velX, velY, velZ) {
 
     constructor(
@@ -67,20 +65,11 @@ class SpiderlilyPetalParticle(
 
     class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<DefaultParticleType> {
         override fun createParticle(
-            defaultParticleType: DefaultParticleType,
-            world: ClientWorld,
-            x: Double,
-            y: Double,
-            z: Double,
-            velX: Double,
-            velY: Double,
-            velZ: Double
+            defaultParticleType: DefaultParticleType, world: ClientWorld,
+            x: Double, y: Double, z: Double,
+            velX: Double, velY: Double, velZ: Double
         ): Particle {
-            val snowflakeParticle = SpiderlilyPetalParticle(
-                world,
-                x, y, z,
-                velX, velY, velZ
-            )
+            val snowflakeParticle = SpiderlilyPetalParticle(world, x, y, z, velX, velY, velZ)
             snowflakeParticle.setSprite(spriteProvider)
             return snowflakeParticle
         }

@@ -9,11 +9,10 @@ import java.util.*
 import kotlin.math.max
 
 class SnowflakeParticle(
-    world: ClientWorld,
-    x: Double, y: Double, z: Double,
-    velX: Double, velY: Double, velZ: Double
+    world: ClientWorld, x: Double, y: Double, z: Double, velX: Double, velY: Double, velZ: Double
 ) : SpriteBillboardParticle(world, x, y, z, velX, velY, velZ) {
 
+    //(ender) delet this?
     constructor(
         world: ClientWorld, x: Double, y: Double, z: Double
     ) : this(
@@ -86,20 +85,11 @@ class SnowflakeParticle(
 
     class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<DefaultParticleType> {
         override fun createParticle(
-            defaultParticleType: DefaultParticleType,
-            world: ClientWorld,
-            x: Double,
-            y: Double,
-            z: Double,
-            velX: Double,
-            velY: Double,
-            velZ: Double
+            defaultParticleType: DefaultParticleType, world: ClientWorld,
+            x: Double, y: Double, z: Double,
+            velX: Double, velY: Double, velZ: Double
         ): Particle {
-            val snowflakeParticle = SnowflakeParticle(
-                world,
-                x, y, z,
-                velX, velY, velZ
-            )
+            val snowflakeParticle = SnowflakeParticle(world, x, y, z, velX, velY, velZ)
             snowflakeParticle.setSprite(spriteProvider)
             return snowflakeParticle
         }

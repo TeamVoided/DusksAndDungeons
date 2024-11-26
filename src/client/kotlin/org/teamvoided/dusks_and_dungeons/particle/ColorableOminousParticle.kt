@@ -11,16 +11,10 @@ import java.awt.Color
 @Environment(EnvType.CLIENT)
 class ColorableOminousParticle internal constructor(
     world: ClientWorld,
-    xPos: Double,
-    yPos: Double,
-    zPos: Double,
-    xVel: Double,
-    yVel: Double,
-    zVel: Double,
-    startColor: Color,
-    endColor: Color
-) :
-    SpriteBillboardParticle(world, xPos, yPos, zPos) {
+    xPos: Double, yPos: Double, zPos: Double,
+    xVel: Double, yVel: Double, zVel: Double,
+    startColor: Color, endColor: Color
+) : SpriteBillboardParticle(world, xPos, yPos, zPos) {
     private val positionX: Double
     private val positionY: Double
     private val positionZ: Double
@@ -80,14 +74,9 @@ class ColorableOminousParticle internal constructor(
     @Environment(EnvType.CLIENT)
     class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<ColorableParticleEffect> {
         override fun createParticle(
-            type: ColorableParticleEffect,
-            world: ClientWorld,
-            xPos: Double,
-            yPos: Double,
-            zPos: Double,
-            xVel: Double,
-            yVel: Double,
-            zVel: Double
+            type: ColorableParticleEffect, world: ClientWorld,
+            xPos: Double, yPos: Double, zPos: Double,
+            xVel: Double, yVel: Double, zVel: Double
         ): Particle {
             val particle = ColorableOminousParticle(world, xPos, yPos, zPos, xVel, yVel, zVel, type.color, Color.white)
             particle.scale(MathHelper.nextBetween(world.getRandom(), 3.0f, 5.0f))

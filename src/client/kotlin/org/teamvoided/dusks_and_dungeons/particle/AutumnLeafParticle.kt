@@ -15,13 +15,8 @@ import kotlin.math.sin
 
 @Environment(EnvType.CLIENT)
 open class AutumnLeafParticle protected constructor(
-    world: ClientWorld,
-    x: Double,
-    y: Double,
-    z: Double,
-    spriteProvider: SpriteProvider
-) :
-    SpriteBillboardParticle(world, x, y, z) {
+    world: ClientWorld, x: Double, y: Double, z: Double, spriteProvider: SpriteProvider
+) : SpriteBillboardParticle(world, x, y, z) {
     private var rotationSpeed: Float
     private val fallingCurveAngleFactor: Float
     private val rotationAcceleration: Float

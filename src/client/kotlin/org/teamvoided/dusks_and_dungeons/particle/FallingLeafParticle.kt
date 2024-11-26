@@ -9,17 +9,12 @@ import net.minecraft.particle.DefaultParticleType
 
 class FallingLeafParticle(world: ClientWorld, x: Double, y: Double, z: Double, spriteProvider: SpriteProvider) :
     CherryLeafParticle(world, x, y, z, spriteProvider) {
-
-
     companion object {
         class FallingLeafFactory(private val spriteProvider: SpriteProvider) : ParticleFactory<DefaultParticleType> {
             override fun createParticle(
                 defaultParticleType: DefaultParticleType, world: ClientWorld,
-                x: Double, y: Double, z: Double,
-                g: Double, h: Double, i: Double
-            ): Particle {
-                return FallingLeafParticle(world, x, y, z, spriteProvider)
-            }
+                x: Double, y: Double, z: Double, velX: Double, velY: Double, velZ: Double
+            ): Particle = FallingLeafParticle(world, x, y, z, spriteProvider)
         }
     }
 }

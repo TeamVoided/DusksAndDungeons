@@ -12,14 +12,9 @@ import kotlin.math.sin
 @Environment(EnvType.CLIENT)
 class SpiralParticle internal constructor(
     world: ClientWorld,
-    xPos: Double,
-    yPos: Double,
-    zPos: Double,
-    xVel: Double,
-    yVel: Double,
-    zVel: Double,
-    val color1: Color,
-    val color2: Color
+    xPos: Double, yPos: Double, zPos: Double,
+    xVel: Double, yVel: Double, zVel: Double,
+    val color1: Color, val color2: Color
 ) : SpriteBillboardParticle(world, xPos, yPos, zPos) {
     val scaleBase: Float
     val offsetterXZ: Float
@@ -113,14 +108,9 @@ class SpiralParticle internal constructor(
     @Environment(EnvType.CLIENT)
     class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<SpiralParticleEffect> {
         override fun createParticle(
-            type: SpiralParticleEffect,
-            world: ClientWorld,
-            xPos: Double,
-            yPos: Double,
-            zPos: Double,
-            xVel: Double,
-            yVel: Double,
-            zVel: Double
+            type: SpiralParticleEffect, world: ClientWorld,
+            xPos: Double, yPos: Double, zPos: Double,
+            xVel: Double, yVel: Double, zVel: Double
         ): Particle {
             val particle = SpiralParticle(world, xPos, yPos, zPos, xVel, yVel, zVel, type.color1, type.color2)
             particle.setSprite(this.spriteProvider)

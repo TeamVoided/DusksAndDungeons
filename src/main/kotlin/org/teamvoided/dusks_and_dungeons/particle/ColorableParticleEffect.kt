@@ -8,18 +8,13 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.particle.ParticleType
-import org.teamvoided.dusks_and_dungeons.init.DnDParticles
+import org.teamvoided.dusks_and_dungeons.init.DnDParticles.COLORABLE_OMINOUS_PARTICLE
 import java.awt.Color
 
-class ColorableParticleEffect(
-    val color: Color
-) : ParticleEffect {
-    constructor(
-        color: Int
-    ) : this(Color(color))
+class ColorableParticleEffect(val color: Color) : ParticleEffect {
+    constructor(color: Int) : this(Color(color))
 
-    override fun getType(): ParticleType<ColorableParticleEffect> =
-        DnDParticles.COLORABLE_OMINOUS_PARTICLE
+    override fun getType(): ParticleType<ColorableParticleEffect> = COLORABLE_OMINOUS_PARTICLE
 
     companion object {
         val CODEC: MapCodec<ColorableParticleEffect> =
