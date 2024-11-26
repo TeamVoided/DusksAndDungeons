@@ -8,6 +8,7 @@ import net.minecraft.block.enums.*
 import net.minecraft.data.client.model.*
 import net.minecraft.data.client.model.BlockStateModelGenerator.TintType
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
+import net.minecraft.data.client.model.TextureKey.*
 import net.minecraft.data.client.model.VariantSettings.Rotation
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -24,27 +25,26 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
 import org.teamvoided.dusks_and_dungeons.util.modelDirectionRotation
 import java.util.*
 
-val ALL_KRY: TextureKey = TextureKey.of("all")
-val INNER: TextureKey = TextureKey.of("inner")
-val SMALL: TextureKey = TextureKey.of("small")
-val RABBIT: TextureKey = TextureKey.of("rabbit")
+val INNER: TextureKey = of("inner")
+val SMALL: TextureKey = of("small")
+val RABBIT: TextureKey = of("rabbit")
 
-val BAR: TextureKey = TextureKey.of("bar")
-val POST: TextureKey = TextureKey.of("post")
+val BAR: TextureKey = of("bar")
+val POST: TextureKey = of("post")
 
 fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
-    val texture = Texture().put(TextureKey.ALL, overlay)
+    val texture = Texture().put(ALL, overlay)
     Models.CUBE_ALL.upload(overlay, texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.tintedCubeOverlay(overlay: Identifier) {
-    val texture = Texture().put(TextureKey.ALL, overlay)
-    block("parent/cube_tinted_all", TextureKey.ALL).upload(overlay, texture, this.modelCollector)
+    val texture = Texture().put(ALL, overlay)
+    block("parent/cube_tinted_all", ALL).upload(overlay, texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.cube15Overlay(overlay: Identifier) {
-    val texture = Texture().put(TextureKey.ALL, overlay)
-    block("parent/cube_15_all", TextureKey.ALL).upload(overlay.suffix("_15"), texture, this.modelCollector)
+    val texture = Texture().put(ALL, overlay)
+    block("parent/cube_15_all", ALL).upload(overlay.suffix("_15"), texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.tintedStairAllOverlay(overlay: Identifier) {
@@ -58,15 +58,15 @@ fun BlockStateModelGenerator.tintedStairOverlay(
     overlaySide: Identifier
 ) {
     val texture: Texture = Texture()
-        .put(TextureKey.TOP, overlayTop)
-        .put(TextureKey.BOTTOM, overlayBottom)
-        .put(TextureKey.SIDE, overlaySide)
+        .put(TOP, overlayTop)
+        .put(BOTTOM, overlayBottom)
+        .put(SIDE, overlaySide)
 
-    block("parent/stairs_with_tint", TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE)
+    block("parent/stairs_with_tint", TOP, BOTTOM, SIDE)
         .upload(overlay.suffix("_stairs"), texture, this.modelCollector)
-    block("parent/stairs_inner_with_tint", TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE)
+    block("parent/stairs_inner_with_tint", TOP, BOTTOM, SIDE)
         .upload(overlay.suffix("_stairs_inner"), texture, this.modelCollector)
-    block("parent/stairs_outer_with_tint", TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE)
+    block("parent/stairs_outer_with_tint", TOP, BOTTOM, SIDE)
         .upload(overlay.suffix("_stairs_outer"), texture, this.modelCollector)
 }
 
@@ -81,22 +81,22 @@ fun BlockStateModelGenerator.tintedSlabOverlay(
     overlaySide: Identifier
 ) {
     val texture = Texture()
-        .put(TextureKey.TOP, overlayTop)
-        .put(TextureKey.BOTTOM, overlayBottom)
-        .put(TextureKey.SIDE, overlaySide)
-    block("parent/slab_with_tint", "_post", TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE)
+        .put(TOP, overlayTop)
+        .put(BOTTOM, overlayBottom)
+        .put(SIDE, overlaySide)
+    block("parent/slab_with_tint", "_post", TOP, BOTTOM, SIDE)
         .upload(overlay.suffix("_slab"), texture, this.modelCollector)
-    block("parent/slab_top_with_tint", "_side", TextureKey.TOP, TextureKey.BOTTOM, TextureKey.SIDE)
+    block("parent/slab_top_with_tint", "_side", TOP, BOTTOM, SIDE)
         .upload(overlay.suffix("_slab_top"), texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.tintedWallOverlay(overlay: Identifier) {
-    val texture = Texture().put(TextureKey.WALL, overlay)
-    block("parent/wall_post_with_tint", "_post", TextureKey.WALL)
+    val texture = Texture().put(WALL, overlay)
+    block("parent/wall_post_with_tint", "_post", WALL)
         .upload(overlay.suffix("_wall_post"), texture, this.modelCollector)
-    block("parent/wall_side_with_tint", "_side", TextureKey.WALL)
+    block("parent/wall_side_with_tint", "_side", WALL)
         .upload(overlay.suffix("_wall_side"), texture, this.modelCollector)
-    block("parent/wall_side_tall_with_tint", "_side", TextureKey.WALL)
+    block("parent/wall_side_tall_with_tint", "_side", WALL)
         .upload(overlay.suffix("_wall_side_tall"), texture, this.modelCollector)
 }
 
@@ -130,35 +130,26 @@ fun BlockStateModelGenerator.cubeSnowableColumnWithOverlay(block: Block, referen
 fun BlockStateModelGenerator.grassWithOverlay(block: Block, reference: Block, overlay: Identifier) {
     this.cubeSnowableColumnOverlay(block, reference, overlay)
     val texture = Texture()
-        .put(TextureKey.BOTTOM, Blocks.DIRT.model())
-        .put(TextureKey.TOP, reference.model("_top"))
-        .put(TextureKey.LAYER0, reference.model("_side"))
-        .put(TextureKey.LAYER1, reference.model("_side_overlay"))
-        .put(TextureKey.LAYER2, overlay)
-    block(
-        "parent/grass_block_with_overlay_inventory",
-        TextureKey.BOTTOM,
-        TextureKey.TOP,
-        TextureKey.LAYER0,
-        TextureKey.LAYER1,
-        TextureKey.LAYER2
-    ).upload(
-        ModelIds.getItemModelId(block.asItem()), texture,
-        this.modelCollector
-    )
+        .put(BOTTOM, Blocks.DIRT.model())
+        .put(TOP, reference.model("_top"))
+        .put(LAYER0, reference.model("_side"))
+        .put(LAYER1, reference.model("_side_overlay"))
+        .put(LAYER2, overlay)
+    block("parent/grass_block_with_overlay_inventory", BOTTOM, TOP, LAYER0, LAYER1, LAYER2)
+        .upload(ModelIds.getItemModelId(block.asItem()), texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.cubeItemAllWithOverlay(block: Block, reference: Block, overlay: Identifier) {
 //    yes this is a lazy snow block edge case
     val texture = Texture()
         .put(
-            TextureKey.ALL, if (reference == Blocks.SNOW_BLOCK) Identifier.of(
+            ALL, if (reference == Blocks.SNOW_BLOCK) Identifier.of(
                 reference.model().namespace,
                 reference.model().path.removeSuffix("_block")
             ) else reference.model()
         )
-        .put(TextureKey.DIRT, overlay)
-    block("parent/cube_all_overlay_inventory", TextureKey.ALL, TextureKey.DIRT).upload(
+        .put(DIRT, overlay)
+    block("parent/cube_all_overlay_inventory", ALL, DIRT).upload(
         ModelIds.getItemModelId(block.asItem()), texture,
         this.modelCollector
     )
@@ -166,38 +157,22 @@ fun BlockStateModelGenerator.cubeItemAllWithOverlay(block: Block, reference: Blo
 
 fun BlockStateModelGenerator.cubeItem15WithOverlay(block: Block, reference: Block, overlay: Identifier) {
     val texture = Texture()
-        .put(TextureKey.BOTTOM, Blocks.DIRT.model())
-        .put(TextureKey.TOP, reference.model("_top"))
-        .put(TextureKey.SIDE, reference.model("_side"))
-        .put(TextureKey.DIRT, overlay)
-    block(
-        "parent/cube_15_overlay_inventory",
-        TextureKey.BOTTOM,
-        TextureKey.TOP,
-        TextureKey.SIDE,
-        TextureKey.DIRT
-    ).upload(
-        ModelIds.getItemModelId(block.asItem()), texture,
-        this.modelCollector
-    )
+        .put(BOTTOM, Blocks.DIRT.model())
+        .put(TOP, reference.model("_top"))
+        .put(SIDE, reference.model("_side"))
+        .put(DIRT, overlay)
+    block("parent/cube_15_overlay_inventory", BOTTOM, TOP, SIDE, DIRT)
+        .upload(ModelIds.getItemModelId(block.asItem()), texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.cubeSnowableColumnOverlayItem(block: Block, reference: Block, overlay: Identifier) {
     val texture = Texture()
-        .put(TextureKey.DIRT, overlay)
-        .put(TextureKey.DOWN, Blocks.DIRT.model())
-        .put(TextureKey.UP, reference.model("_top"))
-        .put(TextureKey.SIDE, reference.model("_side"))
-    block(
-        "parent/cube_bottom_top_overlay_inventory",
-        TextureKey.DIRT,
-        TextureKey.DOWN,
-        TextureKey.UP,
-        TextureKey.SIDE
-    ).upload(
-        ModelIds.getItemModelId(block.asItem()), texture,
-        this.modelCollector
-    )
+        .put(DIRT, overlay)
+        .put(DOWN, Blocks.DIRT.model())
+        .put(UP, reference.model("_top"))
+        .put(SIDE, reference.model("_side"))
+    block("parent/cube_bottom_top_overlay_inventory", DIRT, DOWN, UP, SIDE)
+        .upload(ModelIds.getItemModelId(block.asItem()), texture, this.modelCollector)
 }
 
 fun BlockStateModelGenerator.cubeWithOverlay(block: Block, reference: Block, overlay: Identifier) {
@@ -330,12 +305,12 @@ fun BlockStateModelGenerator.stairsWithTintedOverlay(
     }
     this.blockStateCollector.accept(model)
     val texture: Texture = Texture.texture(stairsBlock)
-        .put(TextureKey.BOTTOM, Texture.getId(baseBlock))
-        .put(TextureKey.SIDE, Texture.getId(baseBlock))
-        .put(TextureKey.TOP, Texture.getId(baseBlock))
-        .put(TextureKey.DOWN, overlay)
-        .put(TextureKey.NORTH, overlay)
-        .put(TextureKey.UP, overlay)
+        .put(BOTTOM, Texture.getId(baseBlock))
+        .put(SIDE, Texture.getId(baseBlock))
+        .put(TOP, Texture.getId(baseBlock))
+        .put(DOWN, overlay)
+        .put(NORTH, overlay)
+        .put(UP, overlay)
     this.registerParentedItemModel(
         stairsBlock,
         slabOrStairWithOverlayModel("parent/stairs_inventory_with_tinted_overlay")
@@ -372,12 +347,12 @@ fun BlockStateModelGenerator.slabWithTintedOverlay(
 
 
     val texture: Texture = Texture.texture(slab)
-        .put(TextureKey.BOTTOM, Texture.getId(baseBlock))
-        .put(TextureKey.SIDE, Texture.getId(baseBlock))
-        .put(TextureKey.TOP, Texture.getId(baseBlock))
-        .put(TextureKey.DOWN, overlay)
-        .put(TextureKey.NORTH, overlay)
-        .put(TextureKey.UP, overlay)
+        .put(BOTTOM, Texture.getId(baseBlock))
+        .put(SIDE, Texture.getId(baseBlock))
+        .put(TOP, Texture.getId(baseBlock))
+        .put(DOWN, overlay)
+        .put(NORTH, overlay)
+        .put(UP, overlay)
     this.registerParentedItemModel(
         slab,
         slabOrStairWithOverlayModel("parent/slab_inventory_with_tinted_overlay")
@@ -387,15 +362,7 @@ fun BlockStateModelGenerator.slabWithTintedOverlay(
 
 
 fun slabOrStairWithOverlayModel(parent: String): Model {
-    return block(
-        parent,
-        TextureKey.BOTTOM,
-        TextureKey.TOP,
-        TextureKey.SIDE,
-        TextureKey.DOWN,
-        TextureKey.UP,
-        TextureKey.NORTH
-    )
+    return block(parent, BOTTOM, TOP, SIDE, DOWN, UP, NORTH)
 }
 
 fun BlockStateModelGenerator.wallWithTintedOverlay(wall: Block, baseBlock: Block, overlay: Identifier) {
@@ -412,14 +379,14 @@ fun BlockStateModelGenerator.wallWithTintedOverlay(wall: Block, baseBlock: Block
         )
     )
     val texture = Texture.texture(wall)
-        .put(TextureKey.WALL, Texture.getId(baseBlock))
-        .put(TextureKey.DIRT, overlay)
+        .put(WALL, Texture.getId(baseBlock))
+        .put(DIRT, overlay)
     this.registerParentedItemModel(
         wall, block(
             "parent/wall_inventory_with_tinted_overlay",
             "_inventory",
-            TextureKey.WALL,
-            TextureKey.DIRT
+            WALL,
+            DIRT
         ).upload(wall, texture, this.modelCollector)
     )
 }
@@ -480,7 +447,7 @@ fun createWallBlockStateWithOverlay(
 
 fun getRandomYRotations(model: Identifier): Array<BlockStateVariant> {
     var array = arrayOf<BlockStateVariant>()
-    VariantSettings.Rotation.entries.forEach {
+    Rotation.entries.forEach {
         val variant = BlockStateVariant.create().put(VariantSettings.MODEL, model)
         if (it != Rotation.R0) variant.put(VariantSettings.Y, it)
         array += variant
@@ -490,8 +457,8 @@ fun getRandomYRotations(model: Identifier): Array<BlockStateVariant> {
 
 fun getRandomYXRotations(model: Identifier): Array<BlockStateVariant> {
     var array = arrayOf<BlockStateVariant>()
-    VariantSettings.Rotation.entries.forEach { itY ->
-        VariantSettings.Rotation.entries.forEach { itX ->
+    Rotation.entries.forEach { itY ->
+        Rotation.entries.forEach { itX ->
             val variant = BlockStateVariant.create().put(VariantSettings.MODEL, model)
             if (itY != Rotation.R0) variant.put(VariantSettings.Y, itY)
             if (itX != Rotation.R0) variant.put(VariantSettings.X, itX)
@@ -503,10 +470,10 @@ fun getRandomYXRotations(model: Identifier): Array<BlockStateVariant> {
 
 fun BlockStateModelGenerator.createVerdureGrowth(block: Block, top: Identifier, bottom: Identifier) {
     val texture = Texture.texture(block)
-        .put(TextureKey.PARTICLE, Texture.getId(block))
-        .put(TextureKey.TOP, top)
-        .put(TextureKey.SIDE, Texture.getId(block))
-        .put(TextureKey.BOTTOM, bottom)
+        .put(PARTICLE, Texture.getId(block))
+        .put(TOP, top)
+        .put(SIDE, Texture.getId(block))
+        .put(BOTTOM, bottom)
     val model = Models.CUBE_BOTTOM_TOP.upload(block, texture, this.modelCollector)
     blockStateCollector.accept(
         BlockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(block, model)
@@ -541,7 +508,7 @@ fun BlockStateModelGenerator.registerGoldenMushroomPlant(block: Block) {
     var array = arrayOf<BlockStateVariant>()
     var loop = 1
     repeat(3) {
-        val texture = Texture.texture(block).put(TextureKey.CROSS, Texture.getSubId(block, "_$loop"))
+        val texture = Texture.texture(block).put(CROSS, Texture.getSubId(block, "_$loop"))
         val model = Models.CROSS.upload(block, "_$loop", texture, this.modelCollector)
         array += BlockStateVariant.create().put(VariantSettings.MODEL, model)
         loop += 1
@@ -599,13 +566,13 @@ fun BlockStateModelGenerator.registerMushroomBlockDiffInside(
 fun BlockStateModelGenerator.registerTreeMushroom(block: Block, parentModel: String) {
     this.registerItemModel(block)
     val texture = Texture.texture(block)
-        .put(TextureKey.TOP, Texture.getSubId(block, "_top"))
-        .put(TextureKey.BOTTOM, Texture.getSubId(block, "_bottom"))
+        .put(TOP, Texture.getSubId(block, "_top"))
+        .put(BOTTOM, Texture.getSubId(block, "_bottom"))
         .put(SMALL, Texture.getSubId(block, "_small"))
     val model = block(
         parentModel,
-        TextureKey.TOP,
-        TextureKey.BOTTOM,
+        TOP,
+        BOTTOM,
         SMALL
     )
     this.registerSingleton(block, texture, model)
@@ -647,15 +614,15 @@ fun BlockStateModelGenerator.registerFlowerbed2(
 ) {
     this.registerItemModel(block.asItem())
     val texture = Texture()
-        .put(TextureKey.FLOWERBED, Texture.getId(block))
-        .put(TextureKey.STEM, if (useDefault) Texture.getSubId(block, "_stem") else id("block/petals_stem"))
-    val identifier = block(parent.suffix("_1"), "_1", TextureKey.FLOWERBED, TextureKey.STEM)
+        .put(FLOWERBED, Texture.getId(block))
+        .put(STEM, if (useDefault) Texture.getSubId(block, "_stem") else id("block/petals_stem"))
+    val identifier = block(parent.suffix("_1"), "_1", FLOWERBED, STEM)
         .upload(block, texture, this.modelCollector)
-    val identifier2 = block(parent.suffix("_2"), "_2", TextureKey.FLOWERBED, TextureKey.STEM)
+    val identifier2 = block(parent.suffix("_2"), "_2", FLOWERBED, STEM)
         .upload(block, texture, this.modelCollector)
-    val identifier3 = block(parent.suffix("_3"), "_3", TextureKey.FLOWERBED, TextureKey.STEM)
+    val identifier3 = block(parent.suffix("_3"), "_3", FLOWERBED, STEM)
         .upload(block, texture, this.modelCollector)
-    val identifier4 = block(parent.suffix("_4"), "_4", TextureKey.FLOWERBED, TextureKey.STEM)
+    val identifier4 = block(parent.suffix("_4"), "_4", FLOWERBED, STEM)
         .upload(block, texture, this.modelCollector)
     val flowerbed = MultipartBlockStateSupplier.create(block)
     val directionAndRotation = listOf(
@@ -721,14 +688,14 @@ fun BlockStateModelGenerator.registerTallCrystal(block: Block) {
 fun BlockStateModelGenerator.registerWaterFern(block: Block) {
 //    this.registerItemModel(block.asItem())
     val texture = Texture()
-        .put(TextureKey.PARTICLE, Texture.getId(block))
-        .put(TextureKey.TOP, Texture.getSubId(block, "_roots"))
-        .put(TextureKey.PLANT, Texture.getSubId(block, "_roots"))
+        .put(PARTICLE, Texture.getId(block))
+        .put(TOP, Texture.getSubId(block, "_roots"))
+        .put(PLANT, Texture.getSubId(block, "_roots"))
     val model = block(
         "parent/water_plant",
-        TextureKey.PARTICLE,
-        TextureKey.TOP,
-        TextureKey.PLANT
+        PARTICLE,
+        TOP,
+        PLANT
     ).upload(block, texture, this.modelCollector)
     this.registerAxisRotated(block, model)
 }
@@ -752,11 +719,11 @@ fun BlockStateModelGenerator.registerPumpkinSet(
 
 fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glowing: Block) {
     val texture = Texture()
-        .put(TextureKey.END, Texture.getSubId(pumpkin, "_top"))
-        .put(TextureKey.SIDE, Texture.getSubId(pumpkin, "_side"))
+        .put(END, Texture.getSubId(pumpkin, "_top"))
+        .put(SIDE, Texture.getSubId(pumpkin, "_side"))
     val model = Models.CUBE_COLUMN.upload(pumpkin, texture, this.modelCollector)
-    Models.ORIENTABLE.upload(carved, texture.put(TextureKey.FRONT, Texture.getId(carved)), this.modelCollector)
-    Models.ORIENTABLE.upload(glowing, texture.put(TextureKey.FRONT, Texture.getId(glowing)), this.modelCollector)
+    Models.ORIENTABLE.upload(carved, texture.put(FRONT, Texture.getId(carved)), this.modelCollector)
+    Models.ORIENTABLE.upload(glowing, texture.put(FRONT, Texture.getId(glowing)), this.modelCollector)
 
     blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
     this.registerNorthDefaultHorizontalRotation(carved)
@@ -765,22 +732,22 @@ fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glo
 
 fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
     val texture = Texture()
-        .put(TextureKey.ALL, Texture.getId(pumpkin))
-        .put(TextureKey.PARTICLE, Texture.getSubId(particle, "_side"))
+        .put(ALL, Texture.getId(pumpkin))
+        .put(PARTICLE, Texture.getSubId(particle, "_side"))
     val model = block(
         "parent/small_pumpkin",
-        TextureKey.PARTICLE,
-        TextureKey.ALL
+        PARTICLE,
+        ALL
     ).upload(pumpkin, texture, this.modelCollector)
     block(
         "parent/small_carved_pumpkin",
-        TextureKey.PARTICLE,
-        TextureKey.ALL
+        PARTICLE,
+        ALL
     ).upload(carved, texture, this.modelCollector)
     block(
         "parent/small_glowing_pumpkin",
-        TextureKey.PARTICLE,
-        TextureKey.ALL
+        PARTICLE,
+        ALL
     ).upload(glowing, texture, this.modelCollector)
 
     blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
@@ -795,12 +762,12 @@ fun BlockStateModelGenerator.registerSmallPumpkin(
     modelString: String = ""
 ) {
     val modelTexture = Texture()
-        .put(TextureKey.ALL, Texture.getId(texture))
-        .put(TextureKey.PARTICLE, particle)
+        .put(ALL, Texture.getId(texture))
+        .put(PARTICLE, particle)
     val model = block(
         "parent/small_" + modelString + "pumpkin",
-        TextureKey.PARTICLE,
-        TextureKey.ALL
+        PARTICLE,
+        ALL
     ).upload(pumpkin, modelTexture, this.modelCollector)
     blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
 }
@@ -808,7 +775,7 @@ fun BlockStateModelGenerator.registerSmallPumpkin(
 fun BlockStateModelGenerator.pumpkinStem(block: Block) {
     val texture = Texture.stem(block)
     val textureAttach =
-        Texture().put(TextureKey.STEM, Texture.getId(block)).put(TextureKey.UPPERSTEM, block.prefixed("attached_"))
+        Texture().put(STEM, Texture.getId(block)).put(UPPERSTEM, block.prefixed("attached_"))
 
     Properties.AGE_7.values.forEach { age ->
         Models.STEM_GROWTH_STAGES[age].upload(block, texture, this.modelCollector)
@@ -833,17 +800,17 @@ fun BlockStateModelGenerator.registerGravestone(
     hauntedGravestone: Block? = null
 ) {
     val texture = Texture()
-        .put(TextureKey.FRONT, texture.suffix("_front"))
-        .put(TextureKey.SIDE, texture.suffix("_side"))
+        .put(FRONT, texture.suffix("_front"))
+        .put(SIDE, texture.suffix("_side"))
     block(
         "parent/gravestone",
-        TextureKey.FRONT,
-        TextureKey.SIDE
+        FRONT,
+        SIDE
     ).upload(gravestone, texture, this.modelCollector)
     val centerModel = block(
         "parent/gravestone_centered",
-        TextureKey.FRONT,
-        TextureKey.SIDE
+        FRONT,
+        SIDE
     ).upload(gravestone, "_centered", texture, this.modelCollector)
 
     this.registerParentedItemModel(gravestone, centerModel)
@@ -862,10 +829,10 @@ fun BlockStateModelGenerator.registerSmallGravestone(
     hauntedGravestone: Block? = null
 ) {
     val texture = Texture()
-        .put(TextureKey.FRONT, texture.suffix("_front"))
-    block("parent/small_gravestone", TextureKey.FRONT)
+        .put(FRONT, texture.suffix("_front"))
+    block("parent/small_gravestone", FRONT)
         .upload(gravestone, texture, this.modelCollector)
-    val centerModel = block("parent/small_gravestone_centered", TextureKey.FRONT)
+    val centerModel = block("parent/small_gravestone_centered", FRONT)
         .upload(gravestone, "_centered", texture, this.modelCollector)
     this.registerParentedItemModel(gravestone, centerModel)
     this.blockStateCollector.accept(
@@ -891,10 +858,10 @@ fun BlockStateModelGenerator.registerHauntedGravestone(
 }
 
 fun BlockStateModelGenerator.registerHeadstone(headstone: Block) {
-    val texture = Texture().put(TextureKey.ALL, Texture.getId(headstone))
-    block("parent/headstone", TextureKey.ALL)
+    val texture = Texture().put(ALL, Texture.getId(headstone))
+    block("parent/headstone", ALL)
         .upload(headstone, texture, this.modelCollector)
-    block("parent/headstone_centered", TextureKey.ALL)
+    block("parent/headstone_centered", ALL)
         .upload(headstone, "_centered", texture, this.modelCollector)
     this.registerItemModel(headstone)
     this.blockStateCollector.accept(
@@ -931,11 +898,11 @@ fun BlockStateModelGenerator.registerBunnyGrave(
     val textureBunny: Texture = Texture()
         .put(RABBIT, Texture.getId(block))
     val texturePlate: Texture = Texture()
-        .put(TextureKey.DOWN, Texture.getId(referenceTexture))
-        .put(TextureKey.FRONT, Texture.getId(referenceTexture2))
+        .put(DOWN, Texture.getId(referenceTexture))
+        .put(FRONT, Texture.getId(referenceTexture2))
     val bunnyModel = block("parent/bunny_grave", RABBIT)
         .upload(block, textureBunny, this.modelCollector)
-    val plateModel = block("parent/bunny_grave_base", TextureKey.DOWN, TextureKey.FRONT)
+    val plateModel = block("parent/bunny_grave_base", DOWN, FRONT)
         .upload(block, "_plate", texturePlate, this.modelCollector)
     modelDirectionRotation.forEach { (direction, rotation) ->
         model.with(
@@ -960,12 +927,12 @@ fun BlockStateModelGenerator.registerCorn(block: Block, item: Item) {
         ModelIds.getItemModelId(item), Texture.layer0(Texture.getSubId(block, "_top")),
         this.modelCollector
     )
-    val textureTop = Texture().put(TextureKey.ALL, Texture.getSubId(block, "_top"))
-    val textureMiddle = Texture().put(TextureKey.ALL, Texture.getSubId(block, "_middle"))
-    val textureBottom = Texture().put(TextureKey.ALL, Texture.getSubId(block, "_bottom"))
+    val textureTop = Texture().put(ALL, Texture.getSubId(block, "_top"))
+    val textureMiddle = Texture().put(ALL, Texture.getSubId(block, "_middle"))
+    val textureBottom = Texture().put(ALL, Texture.getSubId(block, "_bottom"))
     val model = block(
         "parent/corn",
-        TextureKey.ALL
+        ALL
     )
     val top = model.upload(block, "_top", textureTop, this.modelCollector)
     val middle = model.upload(block, "_middle", textureMiddle, this.modelCollector)
@@ -991,12 +958,12 @@ fun BlockStateModelGenerator.registerCorn(block: Block, item: Item) {
 fun BlockStateModelGenerator.registerCornCrop(block: Block) {
     val model = block(
         "parent/corn_crop",
-        TextureKey.CROP
+        CROP
     )
     val blockStateVariantMap = BlockStateVariantMap.create(CornCropBlock.AGE, TripleTallPlantBlock.SECTION)
         .register { age: Int, section: TripleBlockSection ->
             val suffix = "_$section" + "_stage_$age"
-            val texture = Texture().put(TextureKey.CROP, Texture.getSubId(block, suffix))
+            val texture = Texture().put(CROP, Texture.getSubId(block, suffix))
             if (section == TripleBlockSection.BOTTOM) {
                 val modelBottom = model.upload(block, suffix, texture, this.modelCollector)
                 BlockStateVariant.create().put(
@@ -1028,12 +995,12 @@ fun BlockStateModelGenerator.registerCornCrop(block: Block) {
 fun BlockStateModelGenerator.registerBigChain(block: Block) {
     this.registerItemModel(block.asItem())
     val texture = Texture()
-        .put(TextureKey.PARTICLE, Texture.getId(block))
-        .put(TextureKey.ALL, Texture.getId(block))
+        .put(PARTICLE, Texture.getId(block))
+        .put(ALL, Texture.getId(block))
     val model = block(
         "parent/big_chain",
-        TextureKey.PARTICLE,
-        TextureKey.ALL
+        PARTICLE,
+        ALL
     ).upload(block, texture, this.modelCollector)
     this.registerAxisRotated(block, model)
 }
@@ -1045,21 +1012,21 @@ fun BlockStateModelGenerator.registerBigLantern(
 ) {
     this.registerItemModel(block)
     val texture = Texture()
-        .put(TextureKey.PARTICLE, Texture.getId(block))
-        .put(TextureKey.SIDE, Texture.getId(block))
-        .put(TextureKey.END, bottom)
+        .put(PARTICLE, Texture.getId(block))
+        .put(SIDE, Texture.getId(block))
+        .put(END, bottom)
     val model = block(
         "parent/big_lantern",
-        TextureKey.PARTICLE,
-        TextureKey.SIDE,
-        TextureKey.END
+        PARTICLE,
+        SIDE,
+        END
     )
     val modelHanging = model.upload(block, "_hanging", texture, this.modelCollector)
     if (redstone) {
         val textureOff = Texture()
-            .put(TextureKey.PARTICLE, Texture.getSubId(block, "_off"))
-            .put(TextureKey.SIDE, Texture.getSubId(block, "_off"))
-            .put(TextureKey.END, bottom)
+            .put(PARTICLE, Texture.getSubId(block, "_off"))
+            .put(SIDE, Texture.getSubId(block, "_off"))
+            .put(END, bottom)
         val modelOff = model.upload(block, "_off", textureOff, this.modelCollector)
         val modelHangingOff = model.upload(block, "_hanging_off", textureOff, this.modelCollector)
         this.blockStateCollector.accept(
@@ -1203,11 +1170,11 @@ fun BlockStateModelGenerator.registerCandle2(candle: Block, cake: Block?) {
 
 fun candleCake(block: Block, lit: Boolean): Texture {
     return Texture()
-        .put(TextureKey.PARTICLE, Texture.getSubId(Blocks.CAKE, "_side"))
-        .put(TextureKey.BOTTOM, Texture.getSubId(Blocks.CAKE, "_bottom"))
-        .put(TextureKey.TOP, Texture.getSubId(Blocks.CAKE, "_top"))
-        .put(TextureKey.SIDE, Texture.getSubId(Blocks.CAKE, "_side"))
-        .put(TextureKey.CANDLE, block.prefixed("candle/").suffix(if (lit) "_lit" else ""))
+        .put(PARTICLE, Texture.getSubId(Blocks.CAKE, "_side"))
+        .put(BOTTOM, Texture.getSubId(Blocks.CAKE, "_bottom"))
+        .put(TOP, Texture.getSubId(Blocks.CAKE, "_top"))
+        .put(SIDE, Texture.getSubId(Blocks.CAKE, "_side"))
+        .put(CANDLE, block.prefixed("candle/").suffix(if (lit) "_lit" else ""))
 }
 
 fun BlockStateModelGenerator.registerBigTallCandle(candle: Block) {
@@ -1240,16 +1207,16 @@ fun BlockStateModelGenerator.registerBigTallCandle(candle: Block) {
 
 fun bigCandleModel(suffix: String): Model {
     val variant = if (suffix == "1") "" else "_$suffix"
-    return block("parent/big_candle$variant", TextureKey.ALL, TextureKey.PARTICLE)
+    return block("parent/big_candle$variant", ALL, PARTICLE)
 }
 
 fun bigCandleCakeModel(): Model {
-    return block("parent/cake_with_big_candle", TextureKey.CANDLE, TextureKey.PARTICLE)
+    return block("parent/cake_with_big_candle", CANDLE, PARTICLE)
 }
 
 fun bigTallCandleModel(suffix: String): Model {
     val variant = if (suffix == "1") "" else "_$suffix"
-    return block("parent/big_tall_candle$variant", TextureKey.ALL, TextureKey.PARTICLE)
+    return block("parent/big_tall_candle$variant", ALL, PARTICLE)
 }
 
 fun BlockStateModelGenerator.registerBell(
@@ -1260,17 +1227,17 @@ fun BlockStateModelGenerator.registerBell(
     this.registerItemModel(block.asItem())
     val variants = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, Properties.ATTACHMENT)
     val texture1 = Texture()
-        .put(TextureKey.PARTICLE, Texture.getId(block))
+        .put(PARTICLE, Texture.getId(block))
         .put(BAR, bar)
     val texture2 = texture1.put(POST, post)
 
     Properties.ATTACHMENT.values.forEach { attachment ->
         val attach = attachment.toString().lowercase()
         if (attachment == Attachment.FLOOR) {
-            block("parent/bell_$attach", TextureKey.PARTICLE, BAR, POST)
+            block("parent/bell_$attach", PARTICLE, BAR, POST)
                 .upload(block, "_$attach", texture2, this.modelCollector)
         } else {
-            block("parent/bell_$attach", TextureKey.PARTICLE, BAR)
+            block("parent/bell_$attach", PARTICLE, BAR)
                 .upload(block, "_$attach", texture1, this.modelCollector)
         }
         Properties.HORIZONTAL_FACING.values.forEach { direction ->
@@ -1297,13 +1264,13 @@ fun BlockStateModelGenerator.registerBell(
 
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {
     val texture1 = Texture()
-        .put(TextureKey.SIDE, Texture.getId(block))
-        .put(TextureKey.TOP, Texture.getSubId(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR, "_top"))
-        .put(TextureKey.BOTTOM, Texture.getSubId(mix, "_top"))
+        .put(SIDE, Texture.getId(block))
+        .put(TOP, Texture.getSubId(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(BOTTOM, Texture.getSubId(mix, "_top"))
     val texture2 = Texture()
-        .put(TextureKey.SIDE, Texture.getSubId(block, "_inverse"))
-        .put(TextureKey.TOP, Texture.getSubId(mix, "_top"))
-        .put(TextureKey.BOTTOM, Texture.getSubId(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(SIDE, Texture.getSubId(block, "_inverse"))
+        .put(TOP, Texture.getSubId(mix, "_top"))
+        .put(BOTTOM, Texture.getSubId(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR, "_top"))
     val model1 = Models.CUBE_BOTTOM_TOP.upload(block, texture1, this.modelCollector)
     val model2 = Models.CUBE_BOTTOM_TOP.upload(block, "_inverse", texture2, this.modelCollector)
     this.blockStateCollector.accept(
@@ -1351,16 +1318,16 @@ fun BlockStateModelGenerator.iceStairs(
     parent: Block
 ) {
     val texture: Texture = Texture.texture(parent)
-        .put(TextureKey.BOTTOM, parent.model())
-        .put(TextureKey.SIDE, parent.model())
-        .put(TextureKey.TOP, parent.model())
-    val ner: Identifier = block("parent/translucent_stairs", TextureKey.BOTTOM, TextureKey.TOP, TextureKey.SIDE)
+        .put(BOTTOM, parent.model())
+        .put(SIDE, parent.model())
+        .put(TOP, parent.model())
+    val ner: Identifier = block("parent/translucent_stairs", BOTTOM, TOP, SIDE)
         .upload(block, texture, this.modelCollector)
     val inner: Identifier =
-        block("parent/translucent_inner_stairs", "_inner", TextureKey.BOTTOM, TextureKey.TOP, TextureKey.SIDE)
+        block("parent/translucent_inner_stairs", "_inner", BOTTOM, TOP, SIDE)
             .upload(block, texture, this.modelCollector)
     val outer: Identifier =
-        block("parent/translucent_outer_stairs", "_outer", TextureKey.BOTTOM, TextureKey.TOP, TextureKey.SIDE)
+        block("parent/translucent_outer_stairs", "_outer", BOTTOM, TOP, SIDE)
             .upload(block, texture, this.modelCollector)
 
     this.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(block, inner, ner, outer))
@@ -1388,9 +1355,9 @@ fun BlockStateModelGenerator.stairs(
     top: Identifier,
 ) {
     val texture: Texture = Texture.texture(parent)
-        .put(TextureKey.BOTTOM, bottom)
-        .put(TextureKey.SIDE, side)
-        .put(TextureKey.TOP, top)
+        .put(BOTTOM, bottom)
+        .put(SIDE, side)
+        .put(TOP, top)
     val id: Identifier = Models.INNER_STAIRS.upload(block, texture, this.modelCollector)
     val id2: Identifier = Models.STAIRS.upload(block, texture, this.modelCollector)
     val id3: Identifier = Models.OUTER_STAIRS.upload(block, texture, this.modelCollector)
@@ -1409,9 +1376,9 @@ fun BlockStateModelGenerator.slab(block: Block, texture: Block, full: Block) =
 fun BlockStateModelGenerator.slab(block: Block, bottom: Block, side: Block, top: Block, full: Block) =
     slab(
         block, Texture.texture(block.model())
-            .put(TextureKey.BOTTOM, bottom.model())
-            .put(TextureKey.SIDE, side.model())
-            .put(TextureKey.TOP, top.model()),
+            .put(BOTTOM, bottom.model())
+            .put(SIDE, side.model())
+            .put(TOP, top.model()),
         full
     )
 
@@ -1424,15 +1391,15 @@ fun BlockStateModelGenerator.slab(block: Block, texture: Texture, full: Block) {
 }
 
 fun slabTexture(texture: Block): Texture = Texture.texture(texture.model())
-    .put(TextureKey.BOTTOM, texture.model())
-    .put(TextureKey.SIDE, texture.model())
-    .put(TextureKey.TOP, texture.model())
+    .put(BOTTOM, texture.model())
+    .put(SIDE, texture.model())
+    .put(TOP, texture.model())
 
 fun BlockStateModelGenerator.wall(block: Block) = wall(block, block.model())
 fun BlockStateModelGenerator.wall(block: Block, texture: Block) = wall(block, texture.model())
 
 fun BlockStateModelGenerator.wall(wallBlock: Block, inId: Identifier) {
-    val texture = Texture.texture(wallBlock.model()).put(TextureKey.WALL, inId)
+    val texture = Texture.texture(wallBlock.model()).put(WALL, inId)
     val id = Models.TEMPLATE_WALL_POST.upload(wallBlock, texture, this.modelCollector)
     val id2 = Models.TEMPLATE_WALL_SIDE.upload(wallBlock, texture, this.modelCollector)
     val id3 = Models.TEMPLATE_WALL_SIDE_TALL.upload(wallBlock, texture, this.modelCollector)
@@ -1479,31 +1446,31 @@ fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, strippedLog
 
 fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, innerTexture: Identifier) {
     val texture: Texture = Texture.texture(hollowLog)
-        .put(TextureKey.SIDE, log.model())
-        .put(TextureKey.END, log.model("_top"))
+        .put(SIDE, log.model())
+        .put(END, log.model("_top"))
         .put(INNER, innerTexture)
     Direction.Type.HORIZONTAL.forEach {
-        block("parent/hollow_log_$it", TextureKey.SIDE, TextureKey.END, INNER)
+        block("parent/hollow_log_$it", SIDE, END, INNER)
             .upload(hollowLog, "_$it", texture, this.modelCollector)
     }
     this.hollowBlock(hollowLog)
     this.registerParentedItemModel(
-        hollowLog, block("parent/hollow_log", TextureKey.SIDE, TextureKey.END, INNER)
+        hollowLog, block("parent/hollow_log", SIDE, END, INNER)
             .upload(hollowLog, texture, this.modelCollector)
     )
 }
 
 fun BlockStateModelGenerator.hollowBambooBlock(hollowBamboo: Block, bambooBlock: Block) {
     val texture: Texture = Texture.texture(hollowBamboo)
-        .put(TextureKey.SIDE, bambooBlock.model())
-        .put(TextureKey.END, bambooBlock.model("_top"))
+        .put(SIDE, bambooBlock.model())
+        .put(END, bambooBlock.model("_top"))
     Direction.Type.HORIZONTAL.forEach {
-        block("parent/hollow_bamboo_block_$it", TextureKey.SIDE, TextureKey.END)
+        block("parent/hollow_bamboo_block_$it", SIDE, END)
             .upload(hollowBamboo, "_$it", texture, this.modelCollector)
     }
     this.hollowBlock(hollowBamboo)
     this.registerParentedItemModel(
-        hollowBamboo, block("parent/hollow_bamboo_block", TextureKey.SIDE, TextureKey.END)
+        hollowBamboo, block("parent/hollow_bamboo_block", SIDE, END)
             .upload(hollowBamboo, texture, this.modelCollector)
     )
 }
@@ -1619,11 +1586,11 @@ fun BlockStateModelGenerator.parentedLogPileModel(
     parent: String = ""
 ): Identifier {
     val pileModel = if (bamboo) id("block/parent/bamboo_pile") else id("block/parent/log_pile")
-    return Model(pileModel.suffix(parent).myb, Optional.empty(), TextureKey.SIDE, TextureKey.END)
+    return Model(pileModel.suffix(parent).myb, Optional.empty(), SIDE, END)
         .upload(
             block.model(parent), Texture()
-                .put(TextureKey.SIDE, textBlock.model())
-                .put(TextureKey.END, textBlock.model("_top")),
+                .put(SIDE, textBlock.model())
+                .put(END, textBlock.model("_top")),
             this.modelCollector
         )
 }
@@ -1682,7 +1649,7 @@ fun BlockStateModelGenerator.registerCropWithParent(
                 this.createSubModel(
                     crop,
                     "_stage$stage",
-                    block(model, TextureKey.CROP)
+                    block(model, CROP)
                 ) { id: Identifier ->
                     Texture.crop(
                         id
@@ -1779,11 +1746,11 @@ fun BlockStateModelGenerator.candelabraStates(
     val candle = candelabra.candle.prefixed(if (isDnD) "candle/" else "")
 
     val texture = Texture.texture(candelabra)
-        .put(TextureKey.CANDLE, candle)
-        .put(TextureKey.TEXTURE, id("block/candelabra_iron"))
+        .put(CANDLE, candle)
+        .put(TEXTURE, id("block/candelabra_iron"))
     val textureLit = Texture.texture(candelabra)
-        .put(TextureKey.CANDLE, candle.suffix("_lit"))
-        .put(TextureKey.TEXTURE, id("block/candelabra_iron"))
+        .put(CANDLE, candle.suffix("_lit"))
+        .put(TEXTURE, id("block/candelabra_iron"))
     val models = listOf(CANDELABRA_1, CANDELABRA_2, CANDELABRA_3, CANDELABRA_4, CANDELABRA_5)
 
     return BlockStateVariantMap.create(Properties.LIT, CandelabraBlock.CANDLES).register { isLit, candles ->
@@ -1837,16 +1804,16 @@ fun BlockStateModelGenerator.parentedModel(
     textBlock: Block,
     parent: Identifier
 ): Identifier =
-    Model(parent.myb, Optional.empty(), ALL_KRY)
-        .upload(block.model(), Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
+    Model(parent.myb, Optional.empty(), ALL)
+        .upload(block.model(), Texture().put(ALL, textBlock.model()), this.modelCollector)
 
 fun BlockStateModelGenerator.parentedModel(
     block: Identifier,
     textBlock: Block,
     parent: Identifier
 ): Identifier =
-    Model(parent.myb, Optional.empty(), ALL_KRY)
-        .upload(block, Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
+    Model(parent.myb, Optional.empty(), ALL)
+        .upload(block, Texture().put(ALL, textBlock.model()), this.modelCollector)
 
 fun BlockStateModelGenerator.registerPrefixedItemModel(block: Block, prefix: String) {
     val item = block.asItem()
