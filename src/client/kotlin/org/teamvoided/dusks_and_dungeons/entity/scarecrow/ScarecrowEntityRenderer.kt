@@ -12,9 +12,9 @@ import net.minecraft.util.math.MathHelper
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
-import org.teamvoided.dusks_and_dungeons.entity.scarecrow.render.ScarecrowArmorFeatureRenderer
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowEntityModel
+import org.teamvoided.dusks_and_dungeons.entity.scarecrow.render.ScarecrowArmorFeatureRenderer
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.render.ScarecrowWoodFeatureRenderer
 import org.teamvoided.dusks_and_dungeons.util.pi
 

@@ -29,9 +29,9 @@ import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.util.block.FULL_CUBE
 import org.teamvoided.dusks_and_dungeons.util.rotate
-import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
+import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 
 open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCandleBlock(settings), Waterloggable {
     override fun getCodec(): MapCodec<out AbstractCandleBlock> = CODEC

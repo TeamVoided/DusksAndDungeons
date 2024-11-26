@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.minecraft.block.dispenser.DispenserBlock
-import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.DyedColorComponent
@@ -14,6 +13,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.item.*
+import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
 import org.teamvoided.dusks_and_dungeons.util.shh
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem

@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_and_dungeons.entity
 
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer
 import net.minecraft.client.model.Dilation
 import net.minecraft.client.model.TexturedModelData

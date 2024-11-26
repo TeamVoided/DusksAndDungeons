@@ -1,10 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
-import net.minecraft.block.Blocks
 import net.minecraft.item.Items
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.voidlib.helpers.mc.addAfter
 
 fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {

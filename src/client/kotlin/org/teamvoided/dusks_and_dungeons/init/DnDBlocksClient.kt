@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_and_dungeons.init
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE as BLOCK_RL_MAP
 import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.block.Block
@@ -13,6 +12,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE as BLOCK_RL_MAP
 
 
 object DnDBlocksClient {
