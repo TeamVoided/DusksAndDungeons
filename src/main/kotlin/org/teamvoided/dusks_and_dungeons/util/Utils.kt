@@ -1,13 +1,10 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.block.Blocks
-import net.minecraft.block.CandleBlock.createCuboidShape
 import net.minecraft.data.client.model.VariantSettings
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
@@ -17,7 +14,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
-import net.minecraft.world.StructureWorldAccess
+import net.minecraft.world.ModifiableWorld
 
 const val pi = 3.1415927f
 const val degToRad = 0.017453292f
@@ -42,7 +39,7 @@ fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, 
 fun uniformNum(x: Number, y: Number): UniformLootNumberProvider =
     UniformLootNumberProvider.create(x.toFloat(), y.toFloat())
 
-fun StructureWorldAccess.placeDebug(
+fun ModifiableWorld.placeDebug(
     pos: BlockPos,
     block: Int
 ) {
@@ -68,12 +65,6 @@ fun StructureWorldAccess.placeDebug(
     }.defaultState
     this.setBlockState(pos, x, 2)
 }
-
-fun Collection<ItemConvertible>.toItems() = this.map(ItemConvertible::asItem)
-fun Collection<ItemConvertible>.toStacks() = this.toItems().map(Item::getDefaultStack)
-
-
-val FULL_CUBE = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 
 fun Hand.toSlot() = if (this == Hand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
 
