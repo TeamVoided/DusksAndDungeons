@@ -9,7 +9,7 @@ biolith = "3.0.0"
 reef = "0.2.0-beta.2"
 voidmill = "1.0.4"
 
-transition = "1.0.0-alpha.15"
+transition = "1.0.0-alpha.18"
 
 # dev
 modmenu = "11.0.2"
