@@ -73,7 +73,7 @@ open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCand
 
     private fun spawnParticles(world: World, offset: Vec3d, random: RandomGenerator): Unit = when (candle) {
         is SoulCandleBlock -> candle.spawnCandleParticles(world, offset, random)
-        is CandleBlock -> spawnCandleParticles(world, offset, random)
+        is CandleBlock -> world.spawnCandleParticles(offset, random)
         else -> Unit
     }
 

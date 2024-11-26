@@ -6,5 +6,5 @@ import net.minecraft.world.World
 import org.teamvoided.dusks_and_dungeons.mixin.AbstractCandleBlockAccessor
 
 
-fun spawnCandleParticles(world: World, vec3d: Vec3d, random: RandomGenerator) =
-    AbstractCandleBlockAccessor.invokeSpawnCandleParticles(world, vec3d, random)
+fun World.spawnCandleParticles(vec3d: Vec3d, random: RandomGenerator) =
+    AbstractCandleBlockAccessor.`dusks_and_dungeons$invokeSpawnCandleParticles`(this, vec3d, random)
