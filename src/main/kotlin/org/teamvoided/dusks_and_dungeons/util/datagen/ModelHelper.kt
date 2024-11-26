@@ -1871,7 +1871,7 @@ fun Item.prefixed(str: String): Identifier = this.id.withPrefix("item/$str")
 
 fun Identifier.toVariant(): BlockStateVariant = BlockStateVariant.create().put(VariantSettings.MODEL, this)
 
-fun Identifier.suffix(str: String) = Identifier(this.namespace, "${this.path}$str")
+fun Identifier.suffix(str: String) = Identifier.of(this.namespace, "${this.path}$str")
 
 
 val Item.id get() = Registries.ITEM.getId(this)
