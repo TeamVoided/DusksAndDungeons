@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.util
+package org.teamvoided.voidlib.reef.world.gen.foliage
 
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.int_provider.IntProvider
@@ -10,15 +10,15 @@ import kotlin.math.abs
 import kotlin.math.min
 
 
-typealias FoliageSetter = FoliagePlacer.Placer
 
+// Diameter X & Z
 typealias ShapePredicate = (dx: Int, dz: Int) -> Boolean
 
 abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : FoliagePlacer(radius, offset) {
 
     fun genSquareRounded(
         world: TestableWorld,
-        place: FoliageSetter,
+        place: Placer,
         random: RandomGenerator,
         config: TreeFeatureConfig,
         centerPos: BlockPos,
@@ -31,7 +31,7 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
 
     fun genCircle(
         world: TestableWorld,
-        place: FoliageSetter,
+        place: Placer,
         random: RandomGenerator,
         config: TreeFeatureConfig,
         centerPos: BlockPos,
@@ -43,7 +43,7 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
 
     fun genSquareNoCorners(
         world: TestableWorld,
-        place: FoliageSetter,
+        place: Placer,
         random: RandomGenerator,
         config: TreeFeatureConfig,
         centerPos: BlockPos,
@@ -55,7 +55,7 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
 
     fun genSquareRandomNoCorners(
         world: TestableWorld,
-        place: FoliageSetter,
+        place: Placer,
         random: RandomGenerator,
         config: TreeFeatureConfig,
         centerPos: BlockPos,
@@ -68,7 +68,7 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
 
     fun genSquare(
         world: TestableWorld,
-        place: FoliageSetter,
+        place: Placer,
         random: RandomGenerator,
         config: TreeFeatureConfig,
         centerPos: BlockPos,
@@ -79,7 +79,7 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
 
     fun genShapeAbsInputs(
         world: TestableWorld,
-        place: FoliageSetter,
+        place: Placer,
         random: RandomGenerator,
         config: TreeFeatureConfig,
         centerPos: BlockPos,
@@ -95,7 +95,7 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
 
     fun genShape(
         world: TestableWorld,
-        place: FoliageSetter,
+        place: Placer,
         random: RandomGenerator,
         config: TreeFeatureConfig,
         centerPos: BlockPos,
