@@ -10,7 +10,6 @@ import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.BlockTags
@@ -29,6 +28,7 @@ import net.minecraft.world.explosion.SimpleExplosionBehavior
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDEntityTypeTags
 import org.teamvoided.dusks_and_dungeons.init.DnDEntities
+import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.DnDParticles
 import org.teamvoided.dusks_and_dungeons.util.spawnParticles
 import java.util.*
@@ -40,54 +40,31 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
         this.accelerationPower = 0.0
     }
 
-    constructor(
-        type: EntityType<out ChillChargeEntity>,
-        world: World,
-        entity: Entity,
-        x: Double,
-        y: Double,
-        z: Double
-    ) : super(type, x, y, z, world) {
+    constructor(type: EntityType<out ChillChargeEntity>, world: World, entity: Entity, x: Double, y: Double, z: Double)
+            : super(type, x, y, z, world) {
         this.owner = entity
         this.accelerationPower = 0.0
     }
 
-    constructor(world: World, d: Double, e: Double, f: Double, vec3d: Vec3d) : super(
-        DnDEntities.CHILL_CHARGE,
-        d,
-        e,
-        f,
-        vec3d,
-        world
-    )
+    constructor(world: World, d: Double, e: Double, f: Double, vec3d: Vec3d)
+            : super(DnDEntities.CHILL_CHARGE, d, e, f, vec3d, world)
 
 
-    constructor(player: PlayerEntity, world: World, x: Double, y: Double, z: Double) : this(
-        DnDEntities.CHILL_CHARGE,
-        world,
-        player,
-        x,
-        y,
-        z,
-    )
+    constructor(player: PlayerEntity, world: World, x: Double, y: Double, z: Double)
+            : this(DnDEntities.CHILL_CHARGE, world, player, x, y, z)
 
     override fun calculateBoundingBox(): Box {
         val width = type.dimensions.width() / 2.0f
         val height = type.dimensions.height()
         val heightOffset = 0.15f
         return Box(
-            pos.x - width.toDouble(),
-            pos.y - heightOffset,
-            pos.z - width.toDouble(),
-            pos.x + width.toDouble(),
-            pos.y - heightOffset + height.toDouble(),
-            pos.z + width.toDouble()
+            pos.x - width.toDouble(), pos.y - heightOffset, pos.z - width.toDouble(),
+            pos.x + width.toDouble(), pos.y - heightOffset + height.toDouble(), pos.z + width.toDouble()
         )
     }
 
-    override fun collidesWith(other: Entity): Boolean {
-        return if (other is ChillChargeEntity) false else super.collidesWith(other)
-    }
+    override fun collidesWith(other: Entity): Boolean =
+        if (other is ChillChargeEntity) false else super.collidesWith(other)
 
     override fun canHit(entity: Entity): Boolean {
         return if (entity.type.isIn(DnDEntityTypeTags.CHILL_CHARGE_GOES_THROUGH)) false
@@ -98,11 +75,7 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
         super.onEntityHit(entityHitResult)
         if (!world.isClient) {
             val owner = this.owner
-            val var10000: LivingEntity? = if (owner is LivingEntity) {
-                owner
-            } else {
-                null
-            }
+            val var10000: LivingEntity? = owner as? LivingEntity
             val entity = entityHitResult.entity
             var10000?.onAttacking(entity)
             val damageSource = this.damageSources.windCharge(this, var10000)
@@ -119,12 +92,9 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
             this.discard()
         } else {
             super.tick()
-            if (!world.isClient && world.isChunkLoaded(this.blockPos)) {
-                val serverWorld = world as ServerWorld
-                serverWorld.spawnParticles(
-                    DnDParticles.SNOWFLAKE,
-                    pos,
-                    Vec3d(
+            if (world is ServerWorld && world.isChunkLoaded(this.blockPos)) {
+                (world as ServerWorld).spawnParticles(
+                    DnDParticles.SNOWFLAKE, pos, Vec3d(
                         (random.nextDouble() * 2.0 - 1.0) * 0.05,
                         (random.nextDouble() * 2.0 - 1.0) * 0.05,
                         (random.nextDouble() * 2.0 - 1.0) * 0.05
@@ -139,9 +109,7 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
             val serverWorld = world as ServerWorld
             repeat(90) {
                 serverWorld.spawnParticles(
-                    DnDParticles.SNOWFLAKE,
-                    pos,
-                    Vec3d(
+                    DnDParticles.SNOWFLAKE, pos, Vec3d(
                         (random.nextDouble() * 2.0 - 1.0),
                         (random.nextDouble() * 2.0 - 1.0),
                         (random.nextDouble() * 2.0 - 1.0)
@@ -151,12 +119,8 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
         }
         val entitiesNearby = world.getOtherEntities(
             this, Box(
-                this.x - radius,
-                this.y - radius,
-                this.z - radius,
-                this.x + radius,
-                this.y + radius,
-                this.z + radius
+                this.x - radius, this.y - radius, this.z - radius,
+                this.x + radius, this.y + radius, this.z + radius
             )
         ) { obj: Entity -> obj.isAlive && !obj.type.isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES) }
         entitiesNearby.forEach {
@@ -169,24 +133,23 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
                         .offset(Direction.Axis.X, x)
                         .offset(Direction.Axis.Y, y)
                         .offset(Direction.Axis.Z, z)
-                    val blockstate = world.getBlockState(blockPos)
-                    if (((blockstate.isOf(Blocks.WATER) && blockstate.get(Properties.LEVEL_15) == 0) &&
+                    val state = world.getBlockState(blockPos)
+                    if (((state.isOf(Blocks.WATER) && state.get(Properties.LEVEL_15) == 0) &&
                                 (world.height < blockPos.y + 1 || world.getBlockState(blockPos.up())
                                     .isIn(BlockTags.AIR)))
                     ) {
                         world.setBlockState(blockPos, Blocks.FROSTED_ICE.defaultState)
-                    } else if (blockstate.isOf(Blocks.FROSTED_ICE)) {
+                    } else if (state.isOf(Blocks.FROSTED_ICE)) {
                         world.setBlockState(blockPos, Blocks.FROSTED_ICE.defaultState)
-                    } else if (blockstate.isIn(DnDBlockTags.CHILL_CHARGE_AFFECTS) && blockstate.contains(Properties.LIT)) {
-                        world.setBlockState(blockPos, blockstate.with(Properties.LIT, false))
+                    } else if (state.isIn(DnDBlockTags.CHILL_CHARGE_AFFECTS) && state.contains(Properties.LIT)) {
+                        world.setBlockState(blockPos, state.with(Properties.LIT, false))
                     }
                 }
             }
         }
     }
 
-    override fun addVelocity(deltaX: Double, deltaY: Double, deltaZ: Double) {}
-
+    override fun addVelocity(deltaX: Double, deltaY: Double, deltaZ: Double) = Unit
     override fun onBlockHit(blockHitResult: BlockHitResult) {
         super.onBlockHit(blockHitResult)
         if (!world.isClient) {
@@ -197,44 +160,21 @@ class ChillChargeEntity : ExplosiveProjectileEntity, FlyingItemEntity {
 
     override fun onCollision(hitResult: HitResult) {
         super.onCollision(hitResult)
-        if (!world.isClient) {
-            this.discard()
-        }
+        if (!world.isClient) this.discard()
     }
 
-    override fun isBurning(): Boolean {
-        return false
-    }
-
-    override fun getStack(): ItemStack {
-//        return DnDItems.CHILL_CHARGE.defaultStack
-        return Items.WIND_CHARGE.defaultStack
-    }
-
-    override fun getDrag(): Float {
-        return 1.0f
-    }
-
-    override fun drag(): Float {
-        return this.drag
-    }
-
-    override fun getParticleType(): ParticleEffect? {
-        //this places the particle half a block above the entity
-        return null
-    }
-
-    override fun damage(source: DamageSource, amount: Float): Boolean {
-        return false
-    }
+    override fun isBurning(): Boolean = false
+    override fun getStack(): ItemStack = DnDItems.CHILL_CHARGE.defaultStack
+    override fun getDrag(): Float = 1.0f
+    override fun drag(): Float = this.drag
+    override fun getParticleType(): ParticleEffect? = null //this places the particle half a block above the entity
+    override fun damage(source: DamageSource, amount: Float): Boolean = false
 
     companion object {
         val defaultRange = 3
         val chillExplosionBehavior: ExplosionBehavior =
             SimpleExplosionBehavior(
-                true,
-                false,
-                Optional.empty(),
+                true, false, Optional.empty(),
                 Registries.BLOCK.getTag(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
             )
         const val explosionOffsetMult: Double = 0.25

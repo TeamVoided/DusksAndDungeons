@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.*
+import net.minecraft.entity.EquipmentSlot.Type.*
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource
@@ -36,7 +37,6 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDEntities
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import java.util.function.Predicate
-
 
 class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World) : LivingEntity(entityType, world) {
     private val heldItems: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
@@ -73,14 +73,8 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         this.setPosition(posX, posY, posZ)
     }
 
-    private fun canClip(): Boolean {
-        return !this.hasNoGravity()
-    }
-
-    override fun canAiMove(): Boolean {
-        return super.canAiMove() && this.canClip()
-    }
-
+    private fun canClip(): Boolean = !this.hasNoGravity()
+    override fun canAiMove(): Boolean = super.canAiMove() && this.canClip()
     override fun initDataTracker(builder: DataTracker.Builder) {
         super.initDataTracker(builder)
         builder.add(TRACKER_IS_SMALL, false)
@@ -172,21 +166,22 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         this.readPoseNbt(nbtCompound2)
     }
 
+    @Suppress("SYNTHETIC_PROPERTY_WITHOUT_JAVA_ORIGIN")
     private fun readPoseNbt(nbt: NbtCompound) {
         val postPose = nbt.getList("Post", 5)
-        this.setPostRotation(if (postPose.isEmpty()) DEFAULT_POST_ROTATION else EulerAngle(postPose))
+        this.setPostRotation(if (postPose.isEmpty) DEFAULT_POST_ROTATION else EulerAngle(postPose))
         val headPose = nbt.getList("Head", 5)
-        this.setHeadRotation(if (headPose.isEmpty()) DEFAULT_HEAD_ROTATION else EulerAngle(headPose))
+        this.setHeadRotation(if (headPose.isEmpty) DEFAULT_HEAD_ROTATION else EulerAngle(headPose))
         val bodyPose = nbt.getList("Body", 5)
-        this.setBodyRotation(if (bodyPose.isEmpty()) DEFAULT_BODY_ROTATION else EulerAngle(bodyPose))
+        this.setBodyRotation(if (bodyPose.isEmpty) DEFAULT_BODY_ROTATION else EulerAngle(bodyPose))
         val leftArmPose = nbt.getList("LeftArm", 5)
-        this.setLeftArmRotation(if (leftArmPose.isEmpty()) DEFAULT_LEFT_ARM_ROTATION else EulerAngle(leftArmPose))
+        this.setLeftArmRotation(if (leftArmPose.isEmpty) DEFAULT_LEFT_ARM_ROTATION else EulerAngle(leftArmPose))
         val rightArmPose = nbt.getList("RightArm", 5)
-        this.setRightArmRotation(if (rightArmPose.isEmpty()) DEFAULT_RIGHT_ARM_ROTATION else EulerAngle(rightArmPose))
+        this.setRightArmRotation(if (rightArmPose.isEmpty) DEFAULT_RIGHT_ARM_ROTATION else EulerAngle(rightArmPose))
         val leftLegPose = nbt.getList("LeftLeg", 5)
-        this.setLeftLegRotation(if (leftLegPose.isEmpty()) DEFAULT_LEFT_LEG_ROTATION else EulerAngle(leftLegPose))
+        this.setLeftLegRotation(if (leftLegPose.isEmpty) DEFAULT_LEFT_LEG_ROTATION else EulerAngle(leftLegPose))
         val rightLegPose = nbt.getList("RightLeg", 5)
-        this.setRightLegRotation(if (rightLegPose.isEmpty()) DEFAULT_RIGHT_LEG_ROTATION else EulerAngle(rightLegPose))
+        this.setRightLegRotation(if (rightLegPose.isEmpty) DEFAULT_RIGHT_LEG_ROTATION else EulerAngle(rightLegPose))
     }
 
     private fun poseToNbt(): NbtCompound {
@@ -215,13 +210,8 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         return nbtCompound
     }
 
-    override fun isPushable(): Boolean {
-        return false
-    }
-
-    override fun pushAway(entity: Entity) {
-    }
-
+    override fun isPushable(): Boolean = false
+    override fun pushAway(entity: Entity) = Unit
     override fun tickCramming() {
         val otherEntity = world.getOtherEntities(this, this.bounds, RIDEABLE_MINECART_PREDICATE)
         val otherEntities: Iterator<*> = otherEntity.iterator()
@@ -234,22 +224,10 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         }
     }
 
-    override fun getArmorItems(): Iterable<ItemStack> {
-        return this.armorItems
-    }
-
-    override fun getHandItems(): Iterable<ItemStack> {
-        return this.heldItems
-    }
-
-    fun getDecorationItems(): Iterable<ItemStack> {
-        return this.decorationItems
-    }
-
-    override fun canUseSlot(slot: EquipmentSlot): Boolean {
-        return slot != EquipmentSlot.BODY
-    }
-
+    override fun getArmorItems(): Iterable<ItemStack> = this.armorItems
+    override fun getHandItems(): Iterable<ItemStack> = this.heldItems
+    fun getDecorationItems(): Iterable<ItemStack> = this.decorationItems
+    override fun canUseSlot(slot: EquipmentSlot): Boolean = slot != EquipmentSlot.BODY
     override fun interactAt(player: PlayerEntity, hitPos: Vec3d, hand: Hand): ActionResult {
         super.interactAt(player, hitPos, hand)
         val playerHandStack = player.getStackInHand(hand)
@@ -261,7 +239,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             if (!playerHandStack.isEmpty) {
                 //the below is done for ordering
                 val perferEquipmentSlot = this.getPreferredEquipmentSlot(playerHandStack)
-                if (perferEquipmentSlot.type == EquipmentSlot.Type.HUMANOID_ARMOR &&
+                if (perferEquipmentSlot.type == HUMANOID_ARMOR &&
                     equip(player, perferEquipmentSlot, playerHandStack)
                 ) {
                     return ActionResult.SUCCESS
@@ -341,23 +319,14 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         return false
     }
 
-    fun isSlotDisabled(slot: EquipmentSlot): Boolean {
-        return (!this.hasLegs && (slot == EquipmentSlot.FEET || slot == EquipmentSlot.LEGS))
-    }
+    fun isSlotDisabled(slot: EquipmentSlot): Boolean =
+        (!this.hasLegs && (slot == EquipmentSlot.FEET || slot == EquipmentSlot.LEGS))
 
     override fun equipStack(slot: EquipmentSlot, stack: ItemStack) {
         this.processEquippedStack(stack)
         when (slot.type) {
-            EquipmentSlot.Type.HAND -> this.onEquipItem(
-                slot,
-                heldItems.set(slot.entitySlotId, stack), stack
-            )
-
-            EquipmentSlot.Type.HUMANOID_ARMOR -> this.onEquipItem(
-                slot,
-                armorItems.set(slot.entitySlotId, stack), stack
-            )
-
+            HAND -> this.onEquipItem(slot, heldItems.set(slot.entitySlotId, stack), stack)
+            HUMANOID_ARMOR -> this.onEquipItem(slot, armorItems.set(slot.entitySlotId, stack), stack)
             else -> {}
         }
     }
@@ -369,8 +338,8 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
 
     override fun getEquippedStack(slot: EquipmentSlot): ItemStack {
         return when (slot.type) {
-            EquipmentSlot.Type.HAND -> heldItems[slot.entitySlotId]
-            EquipmentSlot.Type.HUMANOID_ARMOR -> armorItems[slot.entitySlotId]
+            HAND -> heldItems[slot.entitySlotId]
+            HUMANOID_ARMOR -> armorItems[slot.entitySlotId]
             else -> ItemStack.EMPTY
         }
     }
@@ -520,15 +489,10 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         }
     }
 
-    private fun playBreakSound() {
-        world.playSound(
-            null as PlayerEntity?,
-            this.x,
-            this.y,
-            this.z, SoundEvents.ENTITY_ARMOR_STAND_BREAK,
-            this.soundCategory, 1.0f, 1.0f
-        )
-    }
+    private fun playBreakSound() = world.playSound(
+        null, this.x, this.y, this.z, SoundEvents.ENTITY_ARMOR_STAND_BREAK, this.soundCategory, 1.0f, 1.0f
+    )
+
 
     override fun turnHead(bodyRotation: Float, headRotation: Float): Float {
         this.prevBodyYaw = this.prevYaw
@@ -536,12 +500,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         return 0f
     }
 
-    override fun travel(movementInput: Vec3d) {
-        if (this.canClip()) {
-            super.travel(movementInput)
-        }
-    }
-
+    override fun travel(movementInput: Vec3d) = if (this.canClip()) super.travel(movementInput) else Unit
     override fun setBodyYaw(bodyYaw: Float) {
         this.prevYaw = bodyYaw
         this.prevBodyYaw = this.prevYaw
@@ -589,19 +548,13 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         }
     }
 
-    override fun isBaby(): Boolean {
-        return this.isSmall
-    }
-
+    override fun isBaby(): Boolean = this.isSmall
     override fun kill() {
         this.remove(RemovalReason.KILLED)
         this.emitGameEvent(GameEvent.ENTITY_DIE)
     }
 
-    override fun isImmuneToExplosion(explosion: Explosion): Boolean {
-        return this.isInvisible
-    }
-
+    override fun isImmuneToExplosion(explosion: Explosion): Boolean = this.isInvisible
     var isSmall: Boolean
         get() = dataTracker[TRACKER_IS_SMALL]
         set(isBaby) {
@@ -649,76 +602,32 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         dataTracker.set(TRACKER_RIGHT_LEG_ROTATION, angle)
     }
 
-    fun getPostRotation(): EulerAngle {
-        return this.postRotation
-    }
+    fun getPostRotation(): EulerAngle = this.postRotation
+    fun getHeadRotation(): EulerAngle = this.headRotation
+    fun getBodyRotation(): EulerAngle = this.bodyRotation
+    fun getLeftArmRotation(): EulerAngle = this.leftArmRotation
+    fun getRightArmRotation(): EulerAngle = this.rightArmRotation
+    fun getLeftLegRotation(): EulerAngle = this.leftLegRotation
+    fun getRightLegRotation(): EulerAngle = this.rightLegRotation
+    override fun handleAttack(attacker: Entity): Boolean =
+        attacker is PlayerEntity && !world.canPlayerModifyAt(attacker, this.blockPos)
 
-    fun getHeadRotation(): EulerAngle {
-        return this.headRotation
-    }
-
-    fun getBodyRotation(): EulerAngle {
-        return this.bodyRotation
-    }
-
-    fun getLeftArmRotation(): EulerAngle {
-        return this.leftArmRotation
-    }
-
-    fun getRightArmRotation(): EulerAngle {
-        return this.rightArmRotation
-    }
-
-    fun getLeftLegRotation(): EulerAngle {
-        return this.leftLegRotation
-    }
-
-    fun getRightLegRotation(): EulerAngle {
-        return this.rightLegRotation
-    }
-
-    override fun handleAttack(attacker: Entity): Boolean {
-        return attacker is PlayerEntity && !world.canPlayerModifyAt(attacker, this.blockPos)
-    }
-
-    override fun getMainArm(): Arm {
-        return Arm.RIGHT
-    }
-
-    override fun getFallSounds(): FallSounds {
-        return FallSounds(SoundEvents.ENTITY_ARMOR_STAND_FALL, SoundEvents.ENTITY_ARMOR_STAND_FALL)
-    }
+    override fun getMainArm(): Arm = Arm.RIGHT
+    override fun getFallSounds(): FallSounds =
+        FallSounds(SoundEvents.ENTITY_ARMOR_STAND_FALL, SoundEvents.ENTITY_ARMOR_STAND_FALL)
 
     override fun getHurtSound(source: DamageSource): SoundEvent = SoundEvents.ENTITY_ARMOR_STAND_HIT
-
     override fun getDeathSound(): SoundEvent = SoundEvents.ENTITY_ARMOR_STAND_BREAK
-
     fun getWeirdSound(): SoundEvent = SoundEvents.ENTITY_GHAST_SCREAM
-
-    override fun onStruckByLightning(world: ServerWorld, lightning: LightningEntity) {
-        world.playSound(
-            this.x,
-            this.y,
-            this.z,
-            getWeirdSound(),
-            this.soundCategory,
-            0.3f,
-            1.0f,
-            false
-        )
-    }
+    override fun onStruckByLightning(world: ServerWorld, lightning: LightningEntity) =
+        world.playSound(this.x, this.y, this.z, getWeirdSound(), this.soundCategory, 0.3f, 1.0f, false)
 
     override fun isAffectedBySplashPotions(): Boolean = false
-
     override fun isMobOrPlayer(): Boolean = false
+    public override fun getDefaultDimensions(pose: EntityPose): EntityDimensions =
+        if (this.isBaby) SMALL_DIMENSIONS else type.dimensions
 
-    public override fun getDefaultDimensions(pose: EntityPose): EntityDimensions {
-        return if (this.isBaby) SMALL_DIMENSIONS else type.dimensions
-    }
-
-    override fun getPickBlockStack(): ItemStack {
-        return ItemStack(DnDItems.SCARECROW_ITEM)
-    }
+    override fun getPickBlockStack(): ItemStack = ItemStack(DnDItems.SCARECROW_ITEM)
 
     companion object {
         const val WOBBLE_DURATION: Float = 5f
@@ -731,33 +640,24 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         private val DEFAULT_RIGHT_LEG_ROTATION = EulerAngle(0f, 0f, 0f)
         private val SMALL_DIMENSIONS: EntityDimensions =
             DnDEntities.SCARECROW.dimensions.scaled(0.5f).withEyeHeight(0.9875f)
-        val TRACKER_IS_SMALL: TrackedData<Boolean> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN
-        )
-        val TRACKER_HAS_LEGS: TrackedData<Boolean> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN
-        )
-        val TRACKER_POST_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
-        )
-        val TRACKER_HEAD_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
-        )
-        val TRACKER_BODY_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
-        )
-        val TRACKER_LEFT_ARM_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
-        )
-        val TRACKER_RIGHT_ARM_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
-        )
-        val TRACKER_LEFT_LEG_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
-        )
-        val TRACKER_RIGHT_LEG_ROTATION: TrackedData<EulerAngle> = DataTracker.registerData(
-            ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION
-        )
+        val TRACKER_IS_SMALL: TrackedData<Boolean> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN)
+        val TRACKER_HAS_LEGS: TrackedData<Boolean> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN)
+        val TRACKER_POST_ROTATION: TrackedData<EulerAngle> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
+        val TRACKER_HEAD_ROTATION: TrackedData<EulerAngle> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
+        val TRACKER_BODY_ROTATION: TrackedData<EulerAngle> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
+        val TRACKER_LEFT_ARM_ROTATION: TrackedData<EulerAngle> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
+        val TRACKER_RIGHT_ARM_ROTATION: TrackedData<EulerAngle> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
+        val TRACKER_LEFT_LEG_ROTATION: TrackedData<EulerAngle> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
+        val TRACKER_RIGHT_LEG_ROTATION: TrackedData<EulerAngle> =
+            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
         private val RIDEABLE_MINECART_PREDICATE =
             Predicate { entity: Entity? -> entity is AbstractMinecartEntity && entity.minecartType == AbstractMinecartEntity.Type.RIDEABLE }
 
