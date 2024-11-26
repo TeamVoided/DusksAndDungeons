@@ -15,6 +15,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
 import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.voidlib.helpers.mc.*
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -25,7 +26,7 @@ object DnDTabs {
         .name(Text.translatable("itemGroup.dusks_and_dungeons.$MODID"))
         .entries { _, entries ->
             entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns)
-            entries.addItem(
+            entries.addItems(
                 DnDItems.BLUE_DOOR,
                 DnDWoodBlocks.CASCADE_SAPLING,
                 DnDWoodBlocks.CASCADE_LEAVES,
@@ -35,12 +36,12 @@ object DnDTabs {
                 DnDItems.WILD_WHEAT,
                 DnDItems.GOLDEN_BEETROOT,
             )
-            entries.addItem(DnDItems.MOONBERRY_VINELET, DnDFloraBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
+            entries.addItems(DnDItems.MOONBERRY_VINELET, DnDFloraBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
             entries.addLists(
                 DnDBlockLists.flowerbedBlocks,
                 DnDBlockLists.vivionbedBlocks,
             )
-            entries.addItem(
+            entries.addItems(
                 DnDItems.CORN_STALK,
                 DnDItems.CORN_KERNELS,
                 DnDItems.CORN,
@@ -96,7 +97,7 @@ object DnDTabs {
 //                DnDItemLists.snowyStoneBricks,
                 DnDItemLists.ice
             )
-            entries.addItem(
+            entries.addItems(
                 DnDFloraBlocks.ROOT_BLOCK,
                 DnDStoneBlocks.STONE_PILLAR,
                 DnDStoneBlocks.DEEPSLATE_PILLAR,
@@ -116,7 +117,7 @@ object DnDTabs {
                 DnDBigBlocks.BIG_LANTERN,
                 DnDBigBlocks.BIG_SOUL_LANTERN,
             )
-            entries.addItem( // This adds the candles in a nice way
+            entries.addItems( // This adds the candles in a nice way
                 DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
                     listOf(
                         item,
@@ -170,57 +171,57 @@ object DnDTabs {
     )
 
     fun init() {
-        addToTab(ItemGroups.BUILDING_BLOCKS) {
-            it.addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
-            it.addAfter(Items.CHAIN, DnDBigBlocks.BIG_CHAIN)
-            it.addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
-            it.addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
-            it.addAfter(Items.RED_NETHER_BRICKS, DnDNetherBrickBlocks.CRACKED_RED_NETHER_BRICKS)
-            it.addAfter(
+        modifyTab(ItemGroups.BUILDING_BLOCKS) {
+            addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
+            addAfter(Items.CHAIN, DnDBigBlocks.BIG_CHAIN)
+            addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
+            addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
+            addAfter(Items.RED_NETHER_BRICKS, DnDNetherBrickBlocks.CRACKED_RED_NETHER_BRICKS)
+            addAfter(
                 Items.RED_NETHER_BRICK_WALL,
                 DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedRedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff +
                         DnDItemLists.mixedBlueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
             )
-            it.addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
-            it.addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks)
-            it.addWoodStuffAndLeafPiles(false)
+            addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
+            addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks)
+            addWoodStuffAndLeafPiles(false)
         }
 
-        addToTab(ItemGroups.COLORED_BLOCKS) { it.addCandles() }
+        modifyTab(ItemGroups.COLORED_BLOCKS) { addCandles() }
 
-        addToTab(ItemGroups.FUNCTIONAL_BLOCKS) {
-            it.addAfter(Items.CHAIN, DnDBigBlocks.BIG_CHAIN)
-            it.addAfter(Items.LANTERN, DnDBigBlocks.BIG_LANTERN)
-            it.addAfter(Items.SOUL_LANTERN, DnDBigBlocks.BIG_SOUL_LANTERN)
+        modifyTab(ItemGroups.FUNCTIONAL_BLOCKS) {
+            addAfter(Items.CHAIN, DnDBigBlocks.BIG_CHAIN)
+            addAfter(Items.LANTERN, DnDBigBlocks.BIG_LANTERN)
+            addAfter(Items.SOUL_LANTERN, DnDBigBlocks.BIG_SOUL_LANTERN)
 
-            it.addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
+            addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
 
-            it.addCandles()
+            addCandles()
         }
 
-        addToTab(ItemGroups.NATURAL_BLOCKS) {
-            it.addAfter(Items.CHERRY_LOG, DnDWoodBlocks.CASCADE_LOG)
-            it.addBefore(Items.PINK_PETALS, DnDBlockLists.flowerbedBlocks)
-            it.addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
-            it.addAfter(
+        modifyTab(ItemGroups.NATURAL_BLOCKS) {
+            addAfter(Items.CHERRY_LOG, DnDWoodBlocks.CASCADE_LOG)
+            addBefore(Items.PINK_PETALS, DnDBlockLists.flowerbedBlocks)
+            addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
+            addAfter(
                 Items.FLOWERING_AZALEA_LEAVES,
                 listOf(DnDWoodBlocks.CASCADE_LEAVES, DnDWoodBlocks.GOLDEN_BIRCH_LEAVES)
             )
-            it.addAfter(Items.FLOWERING_AZALEA, DnDWoodBlocks.CASCADE_SAPLING, DnDWoodBlocks.GOLDEN_BIRCH_SAPLING)
-            it.addAfter(Items.VINE, DnDItems.MOONBERRY_VINELET, DnDFloraBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
+            addAfter(Items.FLOWERING_AZALEA, DnDWoodBlocks.CASCADE_SAPLING, DnDWoodBlocks.GOLDEN_BIRCH_SAPLING)
+            addAfter(Items.VINE, DnDItems.MOONBERRY_VINELET, DnDFloraBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
             DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
-                it.addAfter(DnDBlockLists.leaves[idx], leafPile)
+                addAfter(DnDBlockLists.leaves[idx], leafPile)
             }
-            it.addAfter(Items.PEONY, DnDItems.CORN_STALK)
-            it.addAfter(
+            addAfter(Items.PEONY, DnDItems.CORN_STALK)
+            addAfter(
                 Items.PUMPKIN_SEEDS,
                 DnDItems.LANTERN_PUMPKIN_SEEDS,
                 DnDItems.MOSSKIN_PUMPKIN_SEEDS,
                 DnDItems.PALE_PUMPKIN_SEEDS,
                 DnDItems.GLOOM_PUMPKIN_SEEDS,
             )
-            it.addAfter(Items.BEETROOT_SEEDS, DnDItems.CORN_KERNELS)
-            it.addAfter(
+            addAfter(Items.BEETROOT_SEEDS, DnDItems.CORN_KERNELS)
+            addAfter(
                 Items.JACK_O_LANTERN,
                 DnDFloraBlocks.LANTERN_PUMPKIN,
                 DnDFloraBlocks.CARVED_LANTERN_PUMPKIN,
@@ -238,30 +239,30 @@ object DnDTabs {
                 DnDFloraBlocks.CARVED_PALE_PUMPKIN,
                 DnDFloraBlocks.GLOWING_PALE_PUMPKIN,
             )
-            it.addAfter(Items.HONEY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
+            addAfter(Items.HONEY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
         }
 
-        addToTab(ItemGroups.COMBAT) {
-            it.addAfter(Items.STONE_SWORD, DnDItems.BLACKSTONE_SWORD)
-            it.addAfter(Items.STONE_AXE, DnDItems.BLACKSTONE_AXE)
+        modifyTab(ItemGroups.COMBAT) {
+            addAfter(Items.STONE_SWORD, DnDItems.BLACKSTONE_SWORD)
+            addAfter(Items.STONE_AXE, DnDItems.BLACKSTONE_AXE)
         }
 
-        addToTab(ItemGroups.TOOLS_AND_UTILITIES) {
-            it.addAfter( // this is what you should have done dusk >:( // L plus M N O P =)
+        modifyTab(ItemGroups.TOOLS_AND_UTILITIES) {
+            addAfter( // this is what you should have done dusk >:( // L plus M N O P =)
                 Items.STONE_HOE,
                 DnDItems.BLACKSTONE_SHOVEL, DnDItems.BLACKSTONE_PICKAXE,
                 DnDItems.BLACKSTONE_AXE, DnDItems.BLACKSTONE_HOE
             )
         }
 
-        addToTab(ItemGroups.FOOD_AND_DRINKS) {
-            it.addAfter(Items.SWEET_BERRIES, DnDItems.MOONBERRIES)
-            it.addAfter(Items.GOLDEN_CARROT, DnDItems.CORN)
-            it.addAfter(Items.BEETROOT, DnDItems.GOLDEN_BEETROOT)
-            it.addAfter(Items.HONEY_BOTTLE, DnDItems.CORN_SYRUP_BOTTLE)
+        modifyTab(ItemGroups.FOOD_AND_DRINKS) {
+            addAfter(Items.SWEET_BERRIES, DnDItems.MOONBERRIES)
+            addAfter(Items.GOLDEN_CARROT, DnDItems.CORN)
+            addAfter(Items.BEETROOT, DnDItems.GOLDEN_BEETROOT)
+            addAfter(Items.HONEY_BOTTLE, DnDItems.CORN_SYRUP_BOTTLE)
         }
-        addToTab(ItemGroups.REDSTONE_BLOCKS) {
-            it.addAfter(Items.HONEY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
+        modifyTab(ItemGroups.REDSTONE_BLOCKS) {
+            addAfter(Items.HONEY_BLOCK, DnDFloraBlocks.CORN_SYRUP_BLOCK)
         }
     }
 

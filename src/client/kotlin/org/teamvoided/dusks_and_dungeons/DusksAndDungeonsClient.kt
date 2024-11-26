@@ -11,7 +11,7 @@ import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.init.DnDTabs.register
 import org.teamvoided.dusks_and_dungeons.util.BETTER_BRICK_NAMES
 import org.teamvoided.dusks_and_dungeons.util.SECRET_ITEMS
-import org.teamvoided.dusks_and_dungeons.util.addLists
+import org.teamvoided.voidlib.helpers.mc.addLists
 import org.teamvoided.voidlib.helpers.registerBuiltInPack
 
 @Suppress("unused")
