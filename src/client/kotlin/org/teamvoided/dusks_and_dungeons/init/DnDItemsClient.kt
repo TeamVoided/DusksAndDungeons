@@ -48,9 +48,8 @@ object DnDItemsClient {
         }
     }
 
-    fun modelPredicate(item: Item, id: Identifier, provider: UnclampedModelPredicateProvider) {
-        ModelPredicateProviderRegistry.register(DnDItems.WEB_WEAVER, mc("pull")) { _, _, _, _ -> 0f }
-    }
+    fun modelPredicate(item: Item, id: Identifier, provider: UnclampedModelPredicateProvider) =
+        ModelPredicateProviderRegistry.register(item, id, provider)
 
     fun registerTint(provider: ItemColorProvider, vararg items: Item) =
         ColorProviderRegistry.ITEM.register(provider, *items)
