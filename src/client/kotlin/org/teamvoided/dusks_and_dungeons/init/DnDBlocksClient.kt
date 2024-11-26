@@ -17,7 +17,7 @@ import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 
 object DnDBlocksClient {
     fun init() {
-        register(
+        registerTint(
             { _, world, pos, _ -> foliageColor(world, pos) },
             DnDWoodBlocks.OAK_LEAF_PILE,
             DnDWoodBlocks.JUNGLE_LEAF_PILE,
@@ -25,13 +25,13 @@ object DnDBlocksClient {
             DnDWoodBlocks.DARK_OAK_LEAF_PILE,
             DnDWoodBlocks.MANGROVE_LEAF_PILE
         )
-        register(
+        registerTint(
             { _, world, pos, tintIndex -> if (tintIndex != 0) grassColor(world, pos) else -1 },
             *DnDBlockLists.flowerbedBlocks.toTypedArray()
         )
-        register({ _, world, pos, _ -> grassColor(world, pos) }, *DnDBlocks.GRASS_TINT_BLOCKS.toTypedArray())
-        register(FoliageColors.getSpruceColor(), DnDWoodBlocks.SPRUCE_LEAF_PILE)
-        register(FoliageColors.getBirchColor(), DnDWoodBlocks.BIRCH_LEAF_PILE)
+        registerTint({ _, world, pos, _ -> grassColor(world, pos) }, *DnDBlocks.GRASS_TINT_BLOCKS.toTypedArray())
+        registerTint(FoliageColors.getSpruceColor(), DnDWoodBlocks.SPRUCE_LEAF_PILE)
+        registerTint(FoliageColors.getBirchColor(), DnDWoodBlocks.BIRCH_LEAF_PILE)
 
         DnDBlocks.CUTOUT_BLOCKS.forEach { BLOCK_RL_MAP.putBlock(it, RenderLayer.getCutout()) }
         DnDBlocks.TRANSLUCENT_BLOCKS.forEach { BLOCK_RL_MAP.putBlock(it, RenderLayer.getTranslucent()) }
@@ -39,10 +39,10 @@ object DnDBlocksClient {
         ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in DnDBlocks.GRASS_TINT_BLOCKS }
     }
 
-    fun register(provider: BlockColorProvider, vararg blocks: Block) =
+    fun registerTint(provider: BlockColorProvider, vararg blocks: Block) =
         ColorProviderRegistry.BLOCK.register(provider, *blocks)
 
-    fun register(tint: Int, vararg blocks: Block) = register({ _, _, _, _ -> tint }, *blocks)
+    fun registerTint(tint: Int, vararg blocks: Block) = registerTint({ _, _, _, _ -> tint }, *blocks)
 
     fun grassColor(world: BlockRenderView?, pos: BlockPos?): Int {
         return if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
