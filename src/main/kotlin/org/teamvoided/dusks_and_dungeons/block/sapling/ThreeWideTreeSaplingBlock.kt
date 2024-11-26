@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_and_dungeons.block.sapling
 
-import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.sapling.SaplingBlock
@@ -22,12 +21,10 @@ class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Settings) : Sap
     settings
 ) {
     override fun generate(world: ServerWorld, pos: BlockPos, state: BlockState, random: RandomGenerator) {
-        if (state.get(STAGE) as Int == 0) {
-            world.setBlockState(pos, state.cycle(STAGE) as BlockState, 4)
-        } else {
-            generate(world, world.chunkManager.chunkGenerator, pos, state, random)
-        }
+        if (state.get(STAGE) as Int == 0) world.setBlockState(pos, state.cycle(STAGE), 4)
+        else generate(world, world.chunkManager.chunkGenerator, pos, state, random)
     }
+
     fun generate(
         world: ServerWorld,
         chunkGenerator: ChunkGenerator,
@@ -42,7 +39,6 @@ class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Settings) : Sap
                 }
             }
         }
-
         return false
     }
 
@@ -56,52 +52,48 @@ class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Settings) : Sap
         z: Int
     ): Boolean {
         val registryKey = this.getThreeWideTreeFeature(random, false)
-            if (registryKey == null) {
+        if (registryKey == null) {
+            return false
+        } else {
+            val holder: Holder<ConfiguredFeature<*, *>> = world
+                .registryManager
+                .get(RegistryKeys.CONFIGURED_FEATURE)
+                .getHolder(registryKey)
+                .orElse(null)
+            if (holder == null) {
                 return false
             } else {
-                val holder: Holder<ConfiguredFeature<*, *>> = world
-                    .registryManager
-                    .get(RegistryKeys.CONFIGURED_FEATURE)
-                    .getHolder(registryKey)
-                    .orElse(null)
-                if (holder == null) {
-                    return false
+                val configuredFeature = holder.value()
+                val blockState = Blocks.AIR.defaultState
+                world.setBlockState(pos.add(x - 1, 0, z - 1), blockState, NO_REDRAW)
+                world.setBlockState(pos.add(x, 0, z - 1), blockState, NO_REDRAW)
+                world.setBlockState(pos.add(x + 1, 0, z - 1), blockState, NO_REDRAW)
+                world.setBlockState(pos.add(x - 1, 0, z), blockState, NO_REDRAW)
+                world.setBlockState(pos.add(x, 0, z), blockState, NO_REDRAW)
+                world.setBlockState(pos.add(x + 1, 0, z), blockState, NO_REDRAW)
+                world.setBlockState(pos.add(x - 1, 0, z + 1), blockState, NO_REDRAW)
+                world.setBlockState(pos.add(x, 0, z + 1), blockState, NO_REDRAW)
+                world.setBlockState(pos.add(x + 1, 0, z + 1), blockState, NO_REDRAW)
+                if (configuredFeature.generate(world, chunkGenerator, random, pos.add(x, 0, z))) {
+                    return true
                 } else {
-                    val configuredFeature = holder.value()
-                    val blockState = Blocks.AIR.defaultState
-                    world.setBlockState(pos.add(x - 1, 0, z - 1), blockState, Block.NO_REDRAW)
-                    world.setBlockState(pos.add(x, 0, z - 1), blockState, Block.NO_REDRAW)
-                    world.setBlockState(pos.add(x + 1, 0, z - 1), blockState, Block.NO_REDRAW)
-                    world.setBlockState(pos.add(x - 1, 0, z), blockState, Block.NO_REDRAW)
-                    world.setBlockState(pos.add(x, 0, z), blockState, Block.NO_REDRAW)
-                    world.setBlockState(pos.add(x + 1, 0, z), blockState, Block.NO_REDRAW)
-                    world.setBlockState(pos.add(x - 1, 0, z + 1), blockState, Block.NO_REDRAW)
-                    world.setBlockState(pos.add(x, 0, z + 1), blockState, Block.NO_REDRAW)
-                    world.setBlockState(pos.add(x + 1, 0, z + 1), blockState, Block.NO_REDRAW)
-                    if (configuredFeature.generate(world, chunkGenerator, random, pos.add(x, 0, z))) {
-                        return true
-                    } else {
-                        world.setBlockState(pos.add(x - 1, 0, z - 1), state, Block.NO_REDRAW)
-                        world.setBlockState(pos.add(x, 0, z - 1), state, Block.NO_REDRAW)
-                        world.setBlockState(pos.add(x + 1, 0, z - 1), state, Block.NO_REDRAW)
-                        world.setBlockState(pos.add(x - 1, 0, z), state, Block.NO_REDRAW)
-                        world.setBlockState(pos.add(x, 0, z), state, Block.NO_REDRAW)
-                        world.setBlockState(pos.add(x + 1, 0, z), state, Block.NO_REDRAW)
-                        world.setBlockState(pos.add(x - 1, 0, z + 1), state, Block.NO_REDRAW)
-                        world.setBlockState(pos.add(x, 0, z + 1), state, Block.NO_REDRAW)
-                        world.setBlockState(pos.add(x + 1, 0, z + 1), state, Block.NO_REDRAW)
-                        return false
-                    }
+                    world.setBlockState(pos.add(x - 1, 0, z - 1), state, NO_REDRAW)
+                    world.setBlockState(pos.add(x, 0, z - 1), state, NO_REDRAW)
+                    world.setBlockState(pos.add(x + 1, 0, z - 1), state, NO_REDRAW)
+                    world.setBlockState(pos.add(x - 1, 0, z), state, NO_REDRAW)
+                    world.setBlockState(pos.add(x, 0, z), state, NO_REDRAW)
+                    world.setBlockState(pos.add(x + 1, 0, z), state, NO_REDRAW)
+                    world.setBlockState(pos.add(x - 1, 0, z + 1), state, NO_REDRAW)
+                    world.setBlockState(pos.add(x, 0, z + 1), state, NO_REDRAW)
+                    world.setBlockState(pos.add(x + 1, 0, z + 1), state, NO_REDRAW)
+                    return false
                 }
             }
+        }
     }
 
-    fun getThreeWideTreeFeature(
-        random: RandomGenerator,
-        bees: Boolean
-    ): RegistryKey<ConfiguredFeature<*, *>> {
-        return if (bees) DnDConfiguredFeature.CASCADE_TREE_AUTUMN else DnDConfiguredFeature.CASCADE_TREE
-    }
+    fun getThreeWideTreeFeature(random: RandomGenerator, bees: Boolean): RegistryKey<ConfiguredFeature<*, *>> =
+        if (bees) DnDConfiguredFeature.CASCADE_TREE_AUTUMN else DnDConfiguredFeature.CASCADE_TREE
 
     companion object {
         fun canGenerateLargeTree(state: BlockState, world: BlockView, pos: BlockPos, x: Int, z: Int): Boolean {

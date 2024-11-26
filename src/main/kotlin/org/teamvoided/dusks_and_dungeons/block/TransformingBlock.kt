@@ -12,8 +12,8 @@ import org.teamvoided.voidlib.helpers.mc.hasEnchantment
 
 class TransformingBlock(settings: Settings, val turnsInTo: Block) : Block(settings) {
     override fun afterBreak(
-        world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, blockEntity: BlockEntity?,
-        stack: ItemStack
+        world: World, player: PlayerEntity, pos: BlockPos, state: BlockState,
+        blockEntity: BlockEntity?, stack: ItemStack
     ) {
         super.afterBreak(world, player, pos, state, blockEntity, stack)
         if (!stack.hasEnchantment(Enchantments.SILK_TOUCH))

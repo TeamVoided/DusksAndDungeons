@@ -12,23 +12,17 @@ import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
 
 class MeltableStairsBlock(baseBlockState: BlockState, settings: Settings) : StairsBlock(baseBlockState, settings) {
-    override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
-        return if (stateFrom.isOf(this)) true else super.isSideInvisible(state, stateFrom, direction)
-    }
+    override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean =
+        if (stateFrom.isOf(this)) true else super.isSideInvisible(state, stateFrom, direction)
 
     override fun afterBreak(
-        world: World,
-        player: PlayerEntity,
-        pos: BlockPos,
-        state: BlockState,
-        blockEntity: BlockEntity?,
-        stack: ItemStack
+        world: World, player: PlayerEntity, pos: BlockPos,
+        state: BlockState, blockEntity: BlockEntity?, stack: ItemStack
     ) {
         super.afterBreak(world, player, pos, state, blockEntity, stack)
         Meltable.meltAfterBreak(world, pos, stack)
     }
 
-    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
+    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) =
         Meltable.meltFromLight(state, world, pos)
-    }
 }

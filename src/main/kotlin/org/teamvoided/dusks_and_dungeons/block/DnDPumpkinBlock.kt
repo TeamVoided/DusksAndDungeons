@@ -25,23 +25,16 @@ open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Settings) :
     private var seedsItem = Items.PUMPKIN_SEEDS
     open val seeds = 4
     override fun onInteract(
-        stack: ItemStack,
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        entity: PlayerEntity,
-        hand: Hand,
-        hitResult: BlockHitResult
+        stack: ItemStack, state: BlockState, world: World,
+        pos: BlockPos, entity: PlayerEntity, hand: Hand, hitResult: BlockHitResult
     ): ItemInteractionResult {
-        if (!stack.isOf(Items.SHEARS)) {
-            return super.onInteract(stack, state, world, pos, entity, hand, hitResult)
-        } else if (world.isClient) {
-            return ItemInteractionResult.success(world.isClient)
-        } else {
+        return if (!stack.isOf(Items.SHEARS)) super.onInteract(stack, state, world, pos, entity, hand, hitResult)
+        else if (world.isClient) ItemInteractionResult.success(world.isClient)
+        else {
             val direction = hitResult.side
             val direction2 = if (direction.axis == Direction.Axis.Y) entity.horizontalFacing.opposite else direction
             world.playSound(
-                null ,
+                null,
                 pos,
                 SoundEvents.BLOCK_PUMPKIN_CARVE,
                 SoundCategory.BLOCKS,
@@ -67,7 +60,7 @@ open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Settings) :
             stack.damageEquipment(1, entity, LivingEntity.getHand(hand))
             world.emitGameEvent(entity, GameEvent.SHEAR, pos)
             entity.incrementStat(Stats.USED.getOrCreateStat(Items.SHEARS))
-            return ItemInteractionResult.success(world.isClient)
+            ItemInteractionResult.success(world.isClient)
         }
     }
 

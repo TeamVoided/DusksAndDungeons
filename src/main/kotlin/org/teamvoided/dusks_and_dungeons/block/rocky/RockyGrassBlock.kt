@@ -15,23 +15,17 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldView
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.feature.ConfiguredFeature
-import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.RandomPatchFeatureConfig
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 
 class RockyGrassBlock(dirt: Block, settings: Settings) :
     RockySpreadableBlock(Blocks.GRASS_BLOCK, dirt, settings), Fertilizable {
-    public override fun getCodec(): MapCodec<RockyGrassBlock> {
-        return CODEC
-    }
+    public override fun getCodec(): MapCodec<RockyGrassBlock> = CODEC
+    override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState?): Boolean =
+        world.getBlockState(pos.up()).isAir
 
-    override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState?): Boolean {
-        return world.getBlockState(pos.up()).isAir
-    }
-
-    override fun canFertilize(world: World?, random: RandomGenerator?, pos: BlockPos?, state: BlockState?): Boolean {
-        return true
-    }
+    override fun canFertilize(world: World?, random: RandomGenerator?, pos: BlockPos?, state: BlockState?): Boolean =
+        true
 
     override fun fertilize(world: ServerWorld, random: RandomGenerator, pos: BlockPos, state: BlockState?) {
         val blockPos = pos.up()
@@ -77,21 +71,14 @@ class RockyGrassBlock(dirt: Block, settings: Settings) :
                     holder = optional.get()
                 }
 
-                (holder.value() as PlacedFeature).place(world, world.chunkManager.chunkGenerator, random, blockPos2)
+                holder.value().place(world, world.chunkManager.chunkGenerator, random, blockPos2)
             }
         }
     }
 
-    override fun getType(): FertilizationType {
-        return FertilizationType.NEIGHBOR_SPREADER
-    }
+    override fun getType(): FertilizationType = FertilizationType.NEIGHBOR_SPREADER
 
     companion object {
-        val CODEC: MapCodec<RockyGrassBlock> = createCodec { settings: Settings ->
-            RockyGrassBlock(
-                Blocks.DIRT,
-                settings
-            )
-        }
+        val CODEC: MapCodec<RockyGrassBlock> = createCodec { RockyGrassBlock(Blocks.DIRT, it) }
     }
 }

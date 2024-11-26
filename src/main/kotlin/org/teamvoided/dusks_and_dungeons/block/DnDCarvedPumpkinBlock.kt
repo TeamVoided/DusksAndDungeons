@@ -12,9 +12,7 @@ import net.minecraft.world.WorldView
 
 class DnDCarvedPumpkinBlock(settings: Settings) : CarvedPumpkinBlock(settings) {
     override fun onBlockAdded(state: BlockState, world: World, pos: BlockPos, oldState: BlockState, notify: Boolean) {
-        if (!oldState.isOf(state.block)) {
-            trySpawnGolem(world, pos)
-        }
+        if (!oldState.isOf(state.block)) trySpawnGolem(world, pos)
     }
 
     override fun canDispense(world: WorldView, pos: BlockPos): Boolean {

@@ -9,13 +9,8 @@ import net.minecraft.util.random.RandomGenerator
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
 class GoldenBeetrootsBlock(settings: Settings) : BeetrootsBlock(settings) {
-    override fun getSeedsItem(): ItemConvertible {
-        return DnDItems.GOLDEN_BEETROOT
-    }
-
+    override fun getSeedsItem(): ItemConvertible = DnDItems.GOLDEN_BEETROOT
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
-        if (random.nextInt(2) != 0) {
-            super.randomTick(state, world, pos, random)
-        }
+        if (random.nextInt(2) != 0) super.randomTick(state, world, pos, random)
     }
 }

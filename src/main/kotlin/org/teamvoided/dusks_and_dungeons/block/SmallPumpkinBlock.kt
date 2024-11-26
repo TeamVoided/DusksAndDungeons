@@ -29,12 +29,8 @@ open class SmallPumpkinBlock(carvedBlock: Block, settings: Settings) :
     }
 
     override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos,
-        neighborPos: BlockPos
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
         if (state.get(Properties.WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
@@ -52,18 +48,10 @@ open class SmallPumpkinBlock(carvedBlock: Block, settings: Settings) :
         return defaultState.with(Properties.WATERLOGGED, fluidState.isOf(Fluids.WATER))
     }
 
-    override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
-    ): VoxelShape {
-        return SHAPE
-    }
+    override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext)
+            : VoxelShape = SHAPE
 
-    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean {
-        return false
-    }
+    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean = false
 
     companion object {
         private val SHAPE: VoxelShape = createCuboidShape(4.0, 0.0, 4.0, 12.0, 8.0, 12.0)

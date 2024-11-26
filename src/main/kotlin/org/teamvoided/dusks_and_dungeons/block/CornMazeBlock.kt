@@ -14,18 +14,13 @@ class CornMazeBlock(settings: Settings) : TripleTallPlantBlock(settings) {
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
         if (entity is PlayerEntity && !entity.isCreative) {
             entity.setMovementMultiplier(
-                state,
-                if (entity.isSprinting) cornMovementMultiplier
-                else cornSprintMovementMultiplier
+                state, if (entity.isSprinting) cornMovementMultiplier else cornSprintMovementMultiplier
             )
         }
     }
 
     override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
         val voxelShape = super.getOutlineShape(state, world, pos, context)
         val vec3d = state.getModelOffset(world, pos)

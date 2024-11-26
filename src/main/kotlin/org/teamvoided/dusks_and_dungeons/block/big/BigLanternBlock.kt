@@ -21,17 +21,12 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
 open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable {
-
     init {
         defaultState = stateManager.defaultState
             .with(HANGING, false)
             .with(WATERLOGGED, false)
     }
-
-    public override fun getCodec(): MapCodec<BigLanternBlock> {
-        return CODEC
-    }
-
+    public override fun getCodec(): MapCodec<BigLanternBlock> = CODEC
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
         val fluidState = ctx.world.getFluidState(ctx.blockPos)
         val player = ctx.player?.isSneaking ?: false
@@ -40,31 +35,21 @@ open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable 
             .with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
     }
 
-    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
-        return sideCoversSmallSquare(world, pos.offset(Direction.DOWN), Direction.UP) ||
+    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean =
+        sideCoversSmallSquare(world, pos.offset(Direction.DOWN), Direction.UP) ||
                 sideCoversSmallSquare(world, pos.offset(Direction.UP), Direction.DOWN)
-    }
 
     override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
-    ): VoxelShape {
-        return if (state.get(HANGING)) HANGING_SHAPE else SHAPE
-    }
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
+    ): VoxelShape = if (state.get(HANGING)) HANGING_SHAPE else SHAPE
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(HANGING, WATERLOGGED)
     }
 
     override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos,
-        neighborPos: BlockPos
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
         if (state.get(WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
@@ -72,20 +57,10 @@ open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable 
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
-    override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
-    }
-
-    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean {
-        return false
-    }
-
+    override fun getFluidState(state: BlockState): FluidState = if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
+    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean = false
     companion object {
-        val CODEC: MapCodec<BigLanternBlock> = createCodec { settings: Settings ->
-            BigLanternBlock(
-                settings
-            )
-        }
+        val CODEC: MapCodec<BigLanternBlock> = createCodec(::BigLanternBlock)
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val HANGING: BooleanProperty = Properties.HANGING
         val minSize = 2.5

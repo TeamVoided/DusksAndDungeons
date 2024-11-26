@@ -18,19 +18,16 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 
 class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
     override fun getCodec(): MapCodec<MoonberryVineletBlock> = CODEC
-
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(AGE)
     }
 
-    override fun getOutlineShape(
-        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
-    ): VoxelShape = SHAPE[getAge(state)]
+    override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext)
+            : VoxelShape = SHAPE[getAge(state)]
 
     override fun getAgeProperty(): IntProperty = AGE
     override fun getMaxAge(): Int = MAX_AGE
     override fun getSeedsItem(): ItemConvertible = DnDItems.MOONBERRY_VINELET
-
     override fun withAge(age: Int): BlockState {
         return if (age == MAX_AGE) DnDFloraBlocks.MOONBERRY_VINE.defaultState
             .with(AbstractLichenBlock.getProperty(Direction.DOWN), true)
@@ -39,18 +36,16 @@ class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
     }
 
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
-        if (random.nextInt(3) != 0 && world.isNight) {
-            super.randomTick(state, world, pos, random)
-        }
+        if (random.nextInt(3) != 0 && world.isNight) super.randomTick(state, world, pos, random)
     }
 
     override fun getGrowthAmount(world: World): Int = if (world.isNight) BONE_MEAL_AGE_INCREASE else 0
 
     companion object {
-        val CODEC: MapCodec<MoonberryVineletBlock> = createCodec(::MoonberryVineletBlock)
+        val CODEC = createCodec(::MoonberryVineletBlock)
 
         const val MAX_AGE: Int = 3
-        val AGE: IntProperty = Properties.AGE_2
+        val AGE = Properties.AGE_2
         private val SHAPE = arrayOf(
             createCuboidShape(5.0, -1.0, 5.0, 11.0, 1.0, 11.0),
             createCuboidShape(3.0, -1.0, 3.0, 13.0, 1.0, 13.0),

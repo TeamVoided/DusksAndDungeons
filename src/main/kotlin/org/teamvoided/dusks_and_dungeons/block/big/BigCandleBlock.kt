@@ -30,7 +30,6 @@ import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import java.util.function.Consumer
 
 open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings) : CandleBlock(settings) {
-
     init {
         this.defaultState = stateManager.defaultState
             .with(CANDLES, 1)
@@ -39,24 +38,18 @@ open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings)
             .with(WATERLOGGED, false)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
-        return super.getPlacementState(ctx)?.with(FACING, ctx.playerFacing.opposite)
-    }
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? =
+        super.getPlacementState(ctx)?.with(FACING, ctx.playerFacing.opposite)
 
     override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
-    ): VoxelShape {
-        return (when (state.get(CANDLES)) {
-            1 -> ONE_BIG_CANDLE_SHAPE
-            2 -> TWO_BIG_CANDLES_SHAPE
-            3 -> THREE_BIG_CANDLES_SHAPE
-            4 -> FOUR_BIG_CANDLES_SHAPE
-            else -> FULL_CUBE
-        }).rotate(state.get(FACING).horizontal)
-    }
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
+    ): VoxelShape = (when (state.get(CANDLES)) {
+        1 -> ONE_BIG_CANDLE_SHAPE
+        2 -> TWO_BIG_CANDLES_SHAPE
+        3 -> THREE_BIG_CANDLES_SHAPE
+        4 -> FOUR_BIG_CANDLES_SHAPE
+        else -> FULL_CUBE
+    }).rotate(state.get(FACING).horizontal)
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
         if (state.get(AbstractCandleBlock.LIT)) {
@@ -70,9 +63,8 @@ open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings)
         }
     }
 
-    override fun getParticleOffsets(state: BlockState): Iterable<Vec3d> {
-        return BIG_CANDLES_TO_PARTICLE_OFFSETS[state.get(CANDLES)].rotateFlat90(state.get(FACING).horizontal)
-    }
+    override fun getParticleOffsets(state: BlockState): Iterable<Vec3d> =
+        BIG_CANDLES_TO_PARTICLE_OFFSETS[state.get(CANDLES)].rotateFlat90(state.get(FACING).horizontal)
 
     private fun spawnCandleParticles(world: World, vec3d: Vec3d, random: RandomGenerator) {
         val f = random.nextFloat()
@@ -95,16 +87,11 @@ open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings)
         world.addParticle(particle, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
     }
 
-    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState {
-        return state.with(
-            HorizontalFacingBlock.FACING,
-            rotation.rotate(state.get(FACING))
-        )
-    }
+    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
+        state.with(HorizontalFacingBlock.FACING, rotation.rotate(state.get(FACING)))
 
-    override fun mirror(state: BlockState, mirror: BlockMirror): BlockState {
-        return state.rotate(mirror.getRotation(state.get(FACING)))
-    }
+    override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
+        state.rotate(mirror.getRotation(state.get(FACING)))
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         super.appendProperties(builder)
@@ -163,8 +150,7 @@ open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings)
             Int2ObjectMaps.unmodifiable(int2ObjectMap)
         }
 
-        fun candle(x: Double, z: Double, height: Double): VoxelShape {
-            return createCuboidShape(x, 0.0, z, x + 4, height, z + 4)
-        }
+        fun candle(x: Double, z: Double, height: Double): VoxelShape =
+            createCuboidShape(x, 0.0, z, x + 4, height, z + 4)
     }
 }

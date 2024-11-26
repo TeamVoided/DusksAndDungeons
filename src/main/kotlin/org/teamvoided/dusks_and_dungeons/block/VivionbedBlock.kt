@@ -7,7 +7,6 @@ import net.minecraft.world.BlockView
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 
 class VivionbedBlock(settings: Settings) : PinkPetalsBlock(settings) {
-    override fun canPlantOnTop(floor: BlockState, world: BlockView, pos: BlockPos): Boolean {
-        return floor.isIn(DnDBlockTags.VIVIONBED_PLACEABLE)
-    }
+    override fun canPlantOnTop(floor: BlockState, world: BlockView, pos: BlockPos): Boolean =
+        floor.isIn(DnDBlockTags.VIVIONBED_PLACEABLE)
 }

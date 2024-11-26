@@ -17,10 +17,7 @@ import java.util.function.Consumer
 
 open class BigCandleCakeBlock(candle: Block, val particle: DefaultParticleType, settings: Settings) :
     CandleCakeBlock(candle, settings) {
-    override fun getParticleOffsets(state: BlockState?): Iterable<Vec3d> {
-        return BIG_CANDLE_PARTICLE_OFFSETS
-    }
-
+    override fun getParticleOffsets(state: BlockState?): Iterable<Vec3d> = BIG_CANDLE_PARTICLE_OFFSETS
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
         if (state.get(AbstractCandleBlock.LIT)) {
             getParticleOffsets(state).forEach(Consumer { offset: Vec3d ->
@@ -58,12 +55,10 @@ open class BigCandleCakeBlock(candle: Block, val particle: DefaultParticleType, 
         world: BlockView,
         pos: BlockPos,
         context: ShapeContext
-    ): VoxelShape {
-        return SHAPE
-    }
+    ): VoxelShape = SHAPE
 
     companion object {
-        private val CANDLE_SHAPE: VoxelShape = Block.createCuboidShape(6.0, 8.0, 6.0, 10.0, 20.0, 10.0)
+        private val CANDLE_SHAPE: VoxelShape = createCuboidShape(6.0, 8.0, 6.0, 10.0, 20.0, 10.0)
         val SHAPE: VoxelShape = VoxelShapes.union(CAKE_SHAPE, this.CANDLE_SHAPE)
         val BIG_CANDLE_PARTICLE_OFFSETS: ImmutableList<Vec3d> = ImmutableList.of(Vec3d(0.5, 1.375, 0.5))
     }

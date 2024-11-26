@@ -12,7 +12,6 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.StateManager
-import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.ActionResult
@@ -32,14 +31,11 @@ import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 
 class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Waterloggable, Fertilizable {
-
     public override fun getCodec(): MapCodec<MoonberryVineBlock> = CODEC
-
 
     init {
         this.defaultState = defaultState.with(WATERLOGGED, false).with(BERRIES, 0)
     }
-
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         super.appendProperties(builder)
@@ -50,11 +46,8 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         context.stack.isOf(DnDFloraBlocks.MOONBERRY_VINE.asItem())
 
     override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState): Boolean = state.get(BERRIES) < 2
-
-
     override fun canFertilize(world: World, random: RandomGenerator, pos: BlockPos, state: BlockState): Boolean =
         world.isNight
-
 
     override fun fertilize(world: ServerWorld, random: RandomGenerator, pos: BlockPos, state: BlockState) {
         world.setBlockState(pos, state.with(BERRIES, state.get(BERRIES) + 1), 2)
@@ -98,12 +91,10 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
     }
 
     override fun canPlace(view: BlockView, state: BlockState, pos: BlockPos, dir: Direction): Boolean {
-        if (this.canHaveDirection(dir) && (!state.isOf(this) || !hasDirection(state, dir))) {
+        return if (this.canHaveDirection(dir) && (!state.isOf(this) || !hasDirection(state, dir))) {
             val blockPos = pos.offset(dir)
-            return canGrowOnOrOveride(view, dir, blockPos, view.getBlockState(blockPos))
-        } else {
-            return false
-        }
+            canGrowOnOrOveride(view, dir, blockPos, view.getBlockState(blockPos))
+        } else false
     }
 
     private fun canGrowOnOrOveride(world: BlockView, direction: Direction, pos: BlockPos, state: BlockState): Boolean {
@@ -114,7 +105,6 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
 
     override fun getFluidState(state: BlockState): FluidState =
         if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
-
 
     override fun onInteract(
         stack: ItemStack,
@@ -155,10 +145,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         }
     }
 
-    override fun getRandomTicks(state: BlockState): Boolean {
-        return state.get(BERRIES) < 2
-    }
-
+    override fun getRandomTicks(state: BlockState): Boolean = state.get(BERRIES) < 2
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
         val berries = state.get(BERRIES)
         if (berries < 3 && random.nextInt(5) == 0 && world.isNight) {
@@ -168,21 +155,16 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         }
     }
 
-    override fun getLichenSpreadBehavior(): LichenSpreadBehavior {
-        return LichenSpreadBehavior(this)
-    }
+    override fun getLichenSpreadBehavior(): LichenSpreadBehavior = LichenSpreadBehavior(this)
 
     companion object {
-        val CODEC: MapCodec<MoonberryVineBlock> = createCodec(::MoonberryVineBlock)
-        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
-        val BERRIES: IntProperty = IntProperty.of("berries", 0, 2)
-        fun getLuminanceSupplier(luminanceLow: Int, luminance: Int): (BlockState) -> Int {
-            return { state ->
-                if (hasAnyDirection(state) && state.get(BERRIES) > 0) {
-                    if (state.get(BERRIES) > 1) luminance
-                    else luminanceLow
-                } else 0
-            }
+        val CODEC = createCodec(::MoonberryVineBlock)
+        val WATERLOGGED = Properties.WATERLOGGED
+        val BERRIES = IntProperty.of("berries", 0, 2)
+        fun getLuminanceSupplier(luminanceLow: Int, luminance: Int): (BlockState) -> Int = { state ->
+            if (hasAnyDirection(state) && state.get(BERRIES) > 0) {
+                if (state.get(BERRIES) > 1) luminance else luminanceLow
+            } else 0
         }
     }
 }

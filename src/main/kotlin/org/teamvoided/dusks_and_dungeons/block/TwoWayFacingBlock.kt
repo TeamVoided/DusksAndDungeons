@@ -11,17 +11,13 @@ import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.Direction
 
 open class TwoWayFacingBlock(settings: Settings) : Block(settings) {
-    public override fun getCodec(): MapCodec<out TwoWayFacingBlock> {
-        return CODEC
-    }
-
     init {
         this.defaultState = defaultState.with(AXIS, Direction.Axis.X)
     }
 
-    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState {
-        return changeRotation(state, rotation)
-    }
+    public override fun getCodec() = CODEC
+    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState = changeRotation(state, rotation)
+
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(AXIS)
@@ -47,23 +43,21 @@ open class TwoWayFacingBlock(settings: Settings) : Block(settings) {
         val CODEC: MapCodec<TwoWayFacingBlock> = createCodec(::TwoWayFacingBlock)
         val AXIS: EnumProperty<Direction.Axis> = Properties.HORIZONTAL_AXIS
 
-        fun changeRotation(state: BlockState, rotation: BlockRotation?): BlockState {
-            return when (rotation) {
-                BlockRotation.COUNTERCLOCKWISE_90, BlockRotation.CLOCKWISE_90 -> when (state.get(AXIS)) {
-                    Direction.Axis.Z -> state.with(AXIS, Direction.Axis.X)
-                    Direction.Axis.X -> state.with(AXIS, Direction.Axis.Z)
-                    else -> state
-                }
-
-                else -> state
-            }
-        }
-        fun InvertAxis(state: BlockState, axis: Direction.Axis?): BlockState {
-            return when (axis) {
+        fun changeRotation(state: BlockState, rotation: BlockRotation?): BlockState = when (rotation) {
+            BlockRotation.COUNTERCLOCKWISE_90, BlockRotation.CLOCKWISE_90 -> when (state.get(AXIS)) {
                 Direction.Axis.Z -> state.with(AXIS, Direction.Axis.X)
                 Direction.Axis.X -> state.with(AXIS, Direction.Axis.Z)
                 else -> state
             }
+
+            else -> state
+        }
+
+
+        fun InvertAxis(state: BlockState, axis: Direction.Axis?): BlockState = when (axis) {
+            Direction.Axis.Z -> state.with(AXIS, Direction.Axis.X)
+            Direction.Axis.X -> state.with(AXIS, Direction.Axis.Z)
+            else -> state
         }
     }
 }

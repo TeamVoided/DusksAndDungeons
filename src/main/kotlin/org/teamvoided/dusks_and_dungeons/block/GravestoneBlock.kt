@@ -21,11 +21,8 @@ import net.minecraft.world.WorldAccess
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
-open class GravestoneBlock(
-    val shape: VoxelShape,
-    val centerShape: VoxelShape,
-    settings: Settings
-) : HorizontalFacingBlock(settings), Waterloggable {
+open class GravestoneBlock(val shape: VoxelShape, val centerShape: VoxelShape, settings: Settings) :
+    HorizontalFacingBlock(settings), Waterloggable {
     init {
         this.defaultState = stateManager.defaultState
             .with(Properties.WATERLOGGED, false)
@@ -33,10 +30,7 @@ open class GravestoneBlock(
             .with(FACING, Direction.NORTH)
     }
 
-    public override fun getCodec(): MapCodec<GravestoneBlock> {
-        return CODEC
-    }
-
+    public override fun getCodec(): MapCodec<GravestoneBlock> = CODEC
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         super.appendProperties(builder)
         builder.add(Properties.WATERLOGGED)
@@ -45,12 +39,8 @@ open class GravestoneBlock(
     }
 
     override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos,
-        neighborPos: BlockPos
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
         if (state.get(Properties.WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
@@ -65,7 +55,7 @@ open class GravestoneBlock(
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
         val fluidState = ctx.world.getFluidState(ctx.blockPos)
-        val player = ctx.player?.isSneaking ?: false
+        val player = ctx.player?.isSneaking == true
         return defaultState
             .with(Properties.WATERLOGGED, fluidState.isOf(Fluids.WATER))
             .with(CENTERED, !player)
@@ -73,22 +63,18 @@ open class GravestoneBlock(
     }
 
     override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
         val rotations = state.get(FACING).horizontal
         val shape = if (state.get(CENTERED)) centerShape else shape
         return shape.rotate(rotations)
     }
 
-    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean {
-        return false
-    }
+    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean = false
 
     companion object {
         val CENTERED: BooleanProperty = BooleanProperty.of("centered")
-        val CODEC: MapCodec<GravestoneBlock> = createCodec { GravestoneBlock(gravestoneShape, centerGravestoneShape, it) }
+        val CODEC: MapCodec<GravestoneBlock> =
+            createCodec { GravestoneBlock(gravestoneShape, centerGravestoneShape, it) }
     }
 }

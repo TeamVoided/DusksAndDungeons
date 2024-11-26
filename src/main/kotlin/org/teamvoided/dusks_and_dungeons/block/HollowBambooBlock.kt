@@ -12,10 +12,7 @@ class HollowBambooBlock(settings: Settings) : HollowLogWithCuttingBlock(settings
     override val special1: Double = 0.125
     override val special2: Double = 0.875
     override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
         var shape = VoxelShapes.empty()
         if (state.get(NORTH)) shape = VoxelShapes.union(shape, NORTH_BAMBOO_SHAPE)

@@ -54,7 +54,7 @@ class SmallCarvedPumpkinBlock(settings: Settings) : HorizontalFacingBlock(settin
         val fluidState = ctx.world.getFluidState(ctx.blockPos)
         return defaultState
             .with(Properties.WATERLOGGED, fluidState.isOf(Fluids.WATER))
-            .with(FACING, ctx.playerFacing.opposite);
+            .with(FACING, ctx.playerFacing.opposite)
     }
 
     override fun getOutlineShape(
@@ -62,13 +62,9 @@ class SmallCarvedPumpkinBlock(settings: Settings) : HorizontalFacingBlock(settin
         world: BlockView,
         pos: BlockPos,
         context: ShapeContext
-    ): VoxelShape {
-        return SHAPE
-    }
+    ): VoxelShape = SHAPE
 
-    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean {
-        return false
-    }
+    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean = false
 
     companion object {
         val CODEC: MapCodec<SmallCarvedPumpkinBlock> = createCodec(::SmallCarvedPumpkinBlock)

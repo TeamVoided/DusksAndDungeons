@@ -31,9 +31,7 @@ class QuarterBlockPileBlock(settings: Settings?) : HorizontalFacingBlock(setting
         world: BlockView?,
         pos: BlockPos?,
         context: ShapeContext?
-    ): VoxelShape {
-        return SHAPES[state.get(BLOCKS)].rotate(state.get(FACING).horizontal)
-    }
+    ): VoxelShape = SHAPES[state.get(BLOCKS)].rotate(state.get(FACING).horizontal)
 
     override fun onInteract(
         stack: ItemStack,
@@ -74,11 +72,11 @@ class QuarterBlockPileBlock(settings: Settings?) : HorizontalFacingBlock(setting
         val CODEC: MapCodec<QuarterBlockPileBlock> = createCodec(::QuarterBlockPileBlock)
         val BLOCKS: IntProperty = IntProperty.of("blocks", 0, 2)
         val SHAPES = arrayOf(
-            VoxelShapes.union(Block.createCuboidShape(4.0, 4.0, 4.0, 12.0, 12.0, 12.0)),
-            VoxelShapes.union(Block.createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 16.0)),
+            VoxelShapes.union(createCuboidShape(4.0, 4.0, 4.0, 12.0, 12.0, 12.0)),
+            VoxelShapes.union(createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 16.0)),
             VoxelShapes.union(
-                Block.createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 16.0),
-                Block.createCuboidShape(4.0, 4.0, 4.0, 12.0, 12.0, 12.0)
+                createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 16.0),
+                createCuboidShape(4.0, 4.0, 4.0, 12.0, 12.0, 12.0)
             )
         )
     }

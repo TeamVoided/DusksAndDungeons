@@ -28,38 +28,26 @@ open class HollowLogBlock(settings: Settings) : PillarBlock(settings), Waterlogg
     }
 
     override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos,
-        neighborPos: BlockPos
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
-        if (state.get(WATERLOGGED))
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
         return state
     }
 
-    override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
-    }
+    override fun getFluidState(state: BlockState): FluidState =
+        if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(AXIS, WATERLOGGED)
     }
 
     override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
-    ): VoxelShape {
-        return SHAPE.rotateColumn(state.get(AXIS))
-    }
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
+    ): VoxelShape = SHAPE.rotateColumn(state.get(AXIS))
 
-    override fun getRaycastShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
-        return VoxelShapes.fullCube()
-    }
+    override fun getRaycastShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape =
+        VoxelShapes.fullCube()
 
     companion object {
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED

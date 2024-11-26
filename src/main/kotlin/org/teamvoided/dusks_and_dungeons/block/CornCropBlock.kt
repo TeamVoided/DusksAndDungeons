@@ -21,7 +21,6 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import java.lang.Integer.min
 
 class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertilizable {
-
     init {
         this.defaultState = stateManager.defaultState.with(SECTION, TripleBlockSection.BOTTOM)
     }
@@ -31,15 +30,9 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         builder.add(AGE)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        return this.defaultState
-    }
-
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState = this.defaultState
     public override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
         val age = state.get(AGE)
         if (age % 2 != 0) {
@@ -55,12 +48,8 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
     }
 
     public override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos,
-        neighborPos: BlockPos
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
         val blockSection = state.get(SECTION)
         return if (heightAtAge(state.get(AGE), 3)) {
@@ -95,14 +84,8 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
 
     public override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean = false
 
-    override fun onPlaced(
-        world: World,
-        pos: BlockPos,
-        state: BlockState,
-        placer: LivingEntity?,
-        itemStack: ItemStack
-    ) {
-    }
+    override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) =
+        Unit
 
     public override fun getRandomTicks(state: BlockState): Boolean =
         state.get(SECTION) == TripleBlockSection.BOTTOM && !this.isMaxAge(state)
@@ -115,9 +98,8 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         }
     }
 
-    fun withAge(age: Int): BlockState {
-        return if (age >= 6) defaultCornPlant().defaultState else defaultCornCrop().defaultState
-    }
+    fun withAge(age: Int): BlockState =
+        if (age >= 6) defaultCornPlant().defaultState else defaultCornCrop().defaultState
 
 
     private fun grow(world: ServerWorld, state: BlockState, pos: BlockPos, amount: Int) {
@@ -141,9 +123,7 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
                 (age > 1 || canGrowInto(world, pos.up()))
     }
 
-    private fun isMaxAge(state: BlockState): Boolean {
-        return state.get(AGE) >= MAX_AGE
-    }
+    private fun isMaxAge(state: BlockState): Boolean = state.get(AGE) >= MAX_AGE
 
     private fun getLowerHalf(world: WorldView, pos: BlockPos, state: BlockState): LowerHalfInfo? {
         if (isLowestSection(state)) {
@@ -172,13 +152,8 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
     }
 
     private class LowerHalfInfo(val pos: BlockPos, val state: BlockState) {
-        fun pos(): BlockPos {
-            return this.pos
-        }
-
-        fun state(): BlockState {
-            return this.state
-        }
+        fun pos(): BlockPos = this.pos
+        fun state(): BlockState = this.state
     }
 
     companion object {
@@ -191,19 +166,14 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
 
         private fun defaultCornCrop(): Block = DnDFloraBlocks.CORN_CROP
         private fun defaultCornPlant(): Block = DnDFloraBlocks.CORN
-
         private fun canGrowInto(world: WorldView, pos: BlockPos): Boolean {
             val blockState = world.getBlockState(pos)
             return blockState.isAir || blockState.isOf(defaultCornCrop())
         }
 
-        private fun hasEnoughLight(world: WorldView, pos: BlockPos): Boolean {
-            return CropBlock.hasEnoughLight(world, pos)
-        }
-
-        private fun isLowestSection(state: BlockState): Boolean {
-            return state.isOf(defaultCornCrop()) && state.get(SECTION) == TripleBlockSection.BOTTOM
-        }
+        private fun hasEnoughLight(world: WorldView, pos: BlockPos): Boolean = CropBlock.hasEnoughLight(world, pos)
+        private fun isLowestSection(state: BlockState): Boolean =
+            state.isOf(defaultCornCrop()) && state.get(SECTION) == TripleBlockSection.BOTTOM
 
         private fun heightAtAge(age: Int, height: Int): Boolean {
             return ((height == 1 && age < 2) ||
@@ -211,8 +181,6 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
                     (height == 3))
         }
 
-        private fun heightAtAge(age: Int): Int {
-            return if (age < 2) 1 else if (age < 4) 2 else 3
-        }
+        private fun heightAtAge(age: Int): Int = if (age < 2) 1 else if (age < 4) 2 else 3
     }
 }

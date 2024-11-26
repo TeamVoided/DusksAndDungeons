@@ -12,7 +12,6 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
-import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
@@ -71,9 +70,9 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
         else super.isSideInvisible(state, stateFrom, direction)
     }
 
-   /* override fun canPathfindThrough(
-        state: BlockState, world: BlockView, pos: BlockPos, type: NavigationType
-    ): Boolean = true*/
+    /* override fun canPathfindThrough(
+         state: BlockState, world: BlockView, pos: BlockPos, type: NavigationType
+     ): Boolean = true*/
 
     override fun getSidesShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape = VoxelShapes.empty()
 
@@ -90,13 +89,11 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
         state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape = VoxelShapes.empty()
 
-
     override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
         world.setBlockState(pos, updateDistanceFromLogs(state, world, pos), NOTIFY_ALL)
     }
 
     override fun getOpacity(state: BlockState, world: BlockView, pos: BlockPos): Int = 1
-
     override fun getStateForNeighborUpdate(
         state: BlockState, direction: Direction, neighborState: BlockState,
         world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
@@ -144,16 +141,15 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
         builder.add(DISTANCE, HANGING, PILE_LAYERS, WATERLOGGED)
     }
 
-
     companion object {
         val MAX_LAYERS = 4
 
-        val PILE_LAYERS: IntProperty = IntProperty.of("layers", 1, MAX_LAYERS)
-        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
-        val DISTANCE: IntProperty = Properties.DISTANCE_1_7
-        val HANGING: BooleanProperty = Properties.HANGING
+        val PILE_LAYERS = IntProperty.of("layers", 1, MAX_LAYERS)
+        val WATERLOGGED = Properties.WATERLOGGED
+        val DISTANCE = Properties.DISTANCE_1_7
+        val HANGING = Properties.HANGING
 
-        val FULL_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+        val FULL_SHAPE = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 
         val DEFAULT_LAYERS_TO_SHAPE: List<VoxelShape> = listOf(
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
@@ -170,9 +166,7 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
 
 
         fun addLayer(i: Int): Int = min(MAX_LAYERS, (i + 1))
-
         private fun getDistanceFromLog(state: BlockState): Int = getOptionalDistanceFromLog(state).orElse(7)
-
         private fun getOptionalDistanceFromLog(state: BlockState): OptionalInt {
             return if (state.isIn(BlockTags.LOGS)) OptionalInt.of(0)
             else if (state.contains(DISTANCE)) OptionalInt.of((state.get(DISTANCE)))

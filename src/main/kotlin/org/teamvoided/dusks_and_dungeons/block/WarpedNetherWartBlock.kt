@@ -12,30 +12,21 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 
 class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
-    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
-        val blockPos = pos.up()
-        return world.getBlockState(blockPos).isIn(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
-    }
-    override fun getOutlineShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
-    ): VoxelShape {
-        return AGE_TO_SHAPE[(state.get(AGE))]
-    }
+    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean =
+        world.getBlockState(pos.up()).isIn(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
 
-    override fun getPickStack(world: WorldView, pos: BlockPos, state: BlockState): ItemStack {
-        return ItemStack(DnDFloraBlocks.WARPED_WART)
-    }
+    override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext)
+            : VoxelShape = AGE_TO_SHAPE[(state.get(AGE))]
+
+    override fun getPickStack(world: WorldView, pos: BlockPos, state: BlockState): ItemStack =
+        ItemStack(DnDFloraBlocks.WARPED_WART)
 
     companion object {
-        val AGE_TO_SHAPE = arrayOf<VoxelShape>(
+        val AGE_TO_SHAPE = arrayOf(
             createCuboidShape(0.0, 11.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 8.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 5.0, 0.0, 16.0, 16.0, 16.0),
             createCuboidShape(0.0, 2.0, 0.0, 16.0, 16.0, 16.0)
         )
-
     }
 }

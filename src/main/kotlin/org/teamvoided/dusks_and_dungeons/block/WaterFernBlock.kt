@@ -15,17 +15,11 @@ class WaterFernBlock(settings: Settings) : AbstractPlantBlock(settings) {
     override fun getCodec(): MapCodec<out AbstractPlantBlock> = CODEC
 
     override fun getCollisionShape(
-        state: BlockState,
-        world: BlockView,
-        pos: BlockPos,
-        context: ShapeContext
+        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
         val entity = (context as EntityShapeContext).entity
-        return if (entity != null && (entity.type.isIn(DnDEntityTypeTags.NO_COLLIDE_WATER_FERN) || entity is ProjectileEntity)) {
-            VoxelShapes.empty()
-        } else {
-            super.getCollisionShape(state, world, pos, context)
-        }
+        return if (entity != null && (entity.type.isIn(DnDEntityTypeTags.NO_COLLIDE_WATER_FERN) || entity is ProjectileEntity)) VoxelShapes.empty()
+        else super.getCollisionShape(state, world, pos, context)
     }
 
     override fun canPlantOnTop(floor: BlockState, world: BlockView, pos: BlockPos): Boolean {

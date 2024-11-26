@@ -69,35 +69,30 @@ open class LogPileBlock(settings: Settings) : TwoWayFacingBlock(settings), Water
         state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
         val rotations = if (state.get(AXIS) == Direction.Axis.Z) 1 else 0
-        return (if (state.get(HANGING))
-            HANGING_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]
-        else
-            DEFAULT_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]).rotate(rotations)
+        return (if (state.get(HANGING)) HANGING_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]
+        else DEFAULT_LAYERS_TO_SHAPE[state.get(PILE_LAYERS) - 1]).rotate(rotations)
     }
 
     override fun getStateForNeighborUpdate(
         state: BlockState, direction: Direction, neighborState: BlockState,
         world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
-        if (state.get(WATERLOGGED))
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
         return state
     }
 
-    override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
-    }
+    override fun getFluidState(state: BlockState): FluidState =
+        if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(PILE_LAYERS, HANGING, AXIS, WATERLOGGED)
     }
 
-
     companion object {
         val MAX_LAYERS = 4
 
-        val PILE_LAYERS: IntProperty = IntProperty.of("layers", 1, MAX_LAYERS)
-        val HANGING: BooleanProperty = Properties.HANGING
+        val PILE_LAYERS = IntProperty.of("layers", 1, MAX_LAYERS)
+        val HANGING = Properties.HANGING
         val AXIS = Properties.HORIZONTAL_AXIS
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
 
@@ -119,11 +114,9 @@ open class LogPileBlock(settings: Settings) : TwoWayFacingBlock(settings), Water
             VoxelShapes.union(LAYER_4, LAYER_3, LAYER_2, LAYER_1)
         )
 
-        fun layer(height: Double, z: Boolean = false): VoxelShape {
-            return if (z)
-                createCuboidShape(2.0, height, 0.0, 14.0, height + 4, 16.0) else
-                createCuboidShape(0.0, height, 2.0, 16.0, height + 4, 14.0)
-        }
+        fun layer(height: Double, z: Boolean = false): VoxelShape =
+            if (z) createCuboidShape(2.0, height, 0.0, 14.0, height + 4, 16.0)
+            else createCuboidShape(0.0, height, 2.0, 16.0, height + 4, 14.0)
 
         fun addLayer(i: Int): Int = min(MAX_LAYERS, (i + 1))
     }

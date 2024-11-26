@@ -51,24 +51,18 @@ open class HollowLogWithCuttingBlock(settings: Settings) : HollowLogBlock(settin
         hitResult: BlockHitResult
     ): ItemInteractionResult {
         val getHit = this.getRelativeHitCoordinates(hitResult, state, pos)
-        if (getHit != null && !stack.isEmpty && entity.abilities.allowModifyWorld && stack.isIn(ItemTags.AXES)) {
+        return if (getHit != null && !stack.isEmpty && entity.abilities.allowModifyWorld && stack.isIn(ItemTags.AXES)) {
             if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
             setBlockState(world, pos, entity, getHit)
             world.updateNeighbor(pos, this, pos)
-            return ItemInteractionResult.success(world.isClient)
-        } else {
-            return super.onInteract(stack, state, world, pos, entity, hand, hitResult)
-        }
+            ItemInteractionResult.success(world.isClient)
+        } else super.onInteract(stack, state, world, pos, entity, hand, hitResult)
     }
 
     private fun getRelativeHitCoordinates(
-        blockHitResult: BlockHitResult,
-        state: BlockState,
-        pos: BlockPos
+        blockHitResult: BlockHitResult, state: BlockState, pos: BlockPos
     ): BlockState? {
-        if (howManyTrueSides(state) <= 1) {
-            return null
-        }
+        if (howManyTrueSides(state) <= 1) return null
         val vec3d: Vec3d = blockHitResult.pos.subtract(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
         val directionAxis = state.get(AXIS)
         val north: Direction
@@ -209,10 +203,10 @@ open class HollowLogWithCuttingBlock(settings: Settings) : HollowLogBlock(settin
     }
 
     companion object {
-        val NORTH: BooleanProperty = Properties.NORTH
-        val SOUTH: BooleanProperty = Properties.SOUTH
-        val EAST: BooleanProperty = Properties.EAST
-        val WEST: BooleanProperty = Properties.WEST
+        val NORTH = Properties.NORTH
+        val SOUTH = Properties.SOUTH
+        val EAST = Properties.EAST
+        val WEST = Properties.WEST
         val DIRECTION_PROPERTIES = ConnectingBlock.FACING_PROPERTIES
         fun getProperty(direction: Direction): BooleanProperty? {
             return DIRECTION_PROPERTIES[direction]

@@ -81,10 +81,7 @@ class TallRedstoneCrystalBlock(settings: Settings) : TallDirectionalBlock(settin
         }
     }
 
-    override fun getRandomTicks(state: BlockState): Boolean {
-        return (state.get(LIT))
-    }
-
+    override fun getRandomTicks(state: BlockState): Boolean = (state.get(LIT))
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
         if (state.get(LIT)) {
             dark(state, world, pos)

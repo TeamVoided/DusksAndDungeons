@@ -6,8 +6,6 @@ import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
-import net.minecraft.state.property.BooleanProperty
-import net.minecraft.state.property.DirectionProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -47,8 +45,8 @@ open class HorizontalWaterloggedBlock(settings: Settings) : HorizontalFacingBloc
     }
 
     companion object {
-        val CODEC: MapCodec<HorizontalWaterloggedBlock> = createCodec(::HorizontalWaterloggedBlock)
-        val FACING: DirectionProperty = HorizontalFacingBlock.FACING
-        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
+        val CODEC = createCodec(::HorizontalWaterloggedBlock)
+        val FACING = HorizontalFacingBlock.FACING
+        val WATERLOGGED = Properties.WATERLOGGED
     }
 }
