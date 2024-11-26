@@ -27,6 +27,7 @@ import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.leafPiles
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.soulCandles
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.dusks_and_dungeons.util.datagen.decoratedPotDrops
+import org.teamvoided.voidlib.devin.provider.OpenBlockLootTableProvider
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")

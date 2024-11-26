@@ -34,6 +34,7 @@ import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TallDirectionalBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
+import org.teamvoided.voidlib.devin.provider.OpenBlockLootTableProvider
 
 fun BlockLootTableGenerator.leafPile(pile: Block, leaves: Block): LootTable.Builder {
     return LootTable.builder().pool(
