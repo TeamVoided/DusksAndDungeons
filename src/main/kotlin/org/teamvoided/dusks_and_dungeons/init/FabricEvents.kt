@@ -16,7 +16,7 @@ import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SNIFFER_ADD_MOONBERR
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.voidlib.helpers.*
+import org.teamvoided.voidlib.helpers.mc.*
 
 @Suppress("FunctionName")
 fun InitializeFabricEvents() {

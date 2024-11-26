@@ -1,4 +1,4 @@
-package org.teamvoided.voidlib.helpers
+package org.teamvoided.voidlib.helpers.mc
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 

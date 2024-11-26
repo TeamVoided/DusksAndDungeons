@@ -1,4 +1,4 @@
-package org.teamvoided.voidlib.helpers
+package org.teamvoided.voidlib.helpers.mc
 
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.minecraft.item.ItemConvertible

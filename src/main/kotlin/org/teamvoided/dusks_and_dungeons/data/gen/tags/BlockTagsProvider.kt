@@ -11,7 +11,7 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.voidlib.helpers.add
+import org.teamvoided.voidlib.helpers.mc.add
 import java.util.concurrent.CompletableFuture
 
 @Suppress("LongMethod")
