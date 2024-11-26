@@ -26,7 +26,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import org.teamvoided.dusks_and_dungeons.util.block.FULL_CUBE
 import org.teamvoided.dusks_and_dungeons.util.rotate
-import org.teamvoided.dusks_and_dungeons.util.rotateFlat90
+import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import java.util.function.Consumer
 
 open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings) : CandleBlock(settings) {

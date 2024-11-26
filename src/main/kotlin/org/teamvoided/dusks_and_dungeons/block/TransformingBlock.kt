@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import org.teamvoided.dusks_and_dungeons.util.hasEnchantment
+import org.teamvoided.voidlib.helpers.mc.hasEnchantment
 
 class TransformingBlock(settings: Settings, val turnsInTo: Block) : Block(settings) {
     override fun afterBreak(

@@ -19,7 +19,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.projectile.FlyingPumpkinProjectile
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.util.setShootVelocity
-import org.teamvoided.dusks_and_dungeons.util.toSlot
+import org.teamvoided.voidlib.helpers.mc.toSlot
 import java.util.function.Predicate
 
 class HarvesterScytheItem(toolMaterial: ToolMaterial, settings: Settings) : SwordItem(toolMaterial, settings) {
