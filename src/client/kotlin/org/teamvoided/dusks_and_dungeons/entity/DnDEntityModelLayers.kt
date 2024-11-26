@@ -1,5 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.entity
 
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer
 import net.minecraft.client.model.Dilation
 import net.minecraft.client.model.TexturedModelData
@@ -13,6 +14,7 @@ import org.teamvoided.dusks_and_dungeons.entity.dice.render.DiceEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.dust_bunny.render.DustBunnyEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.pumpkin.piffling.model.PifflingPumpkinModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
+import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowWoodModel
 
 @Suppress("SameParameterValue")
@@ -37,9 +39,10 @@ object DnDEntityModelLayers {
         registerModelLayer(CELESTAL_BELL, CelestalBellBlockEntityRenderer::getTexturedModelData)
 
         registerModelLayer(CHILL_CHARGE, ChillChargeEntityModel::texturedModelData)
+        registerModelLayer(SCARECROW, ScarecrowEntityModel::texturedModelData)
+        registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
         registerModelLayer(SCARECROW_INNER_ARMOR, ::createScarecrowInnerArmor)
         registerModelLayer(SCARECROW_OUTER_ARMOR, ::createScarecrowOuterArmor)
-        registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
     }
 
     private fun createScarecrowInnerArmor(): TexturedModelData =
