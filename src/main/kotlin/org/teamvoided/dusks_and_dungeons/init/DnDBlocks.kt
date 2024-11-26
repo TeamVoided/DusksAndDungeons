@@ -20,6 +20,7 @@ import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
 import org.teamvoided.dusks_and_dungeons.item.HeadDecorationBlockItem
+import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.*
 
 

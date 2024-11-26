@@ -16,6 +16,7 @@ import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDParticles
 import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.dusks_and_dungeons.util.block.*
 
 object DnDWoodBlocks {
     val CASCADE_SAPLING = DnDBlocks.register(

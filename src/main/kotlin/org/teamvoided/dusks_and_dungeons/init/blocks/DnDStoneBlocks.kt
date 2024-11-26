@@ -9,6 +9,7 @@ import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
 import org.teamvoided.dusks_and_dungeons.block.HauntedGravestoneBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.dusks_and_dungeons.util.block.*
 
 object DnDStoneBlocks {
     fun init() = Unit

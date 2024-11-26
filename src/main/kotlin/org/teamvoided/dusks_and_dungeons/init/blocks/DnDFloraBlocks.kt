@@ -14,6 +14,7 @@ import org.teamvoided.dusks_and_dungeons.block.DnDPumpkinBlock.Companion.setSeed
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.dusks_and_dungeons.util.block.*
 
 object DnDFloraBlocks {
 

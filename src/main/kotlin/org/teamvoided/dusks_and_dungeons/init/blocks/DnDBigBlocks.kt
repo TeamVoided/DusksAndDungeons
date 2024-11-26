@@ -10,6 +10,7 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigLanternWithSpiralBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.dusks_and_dungeons.util.block.*
 
 object DnDBigBlocks {
     fun init() = Unit

@@ -18,8 +18,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
-import org.teamvoided.dusks_and_dungeons.util.centerGravestoneShape
-import org.teamvoided.dusks_and_dungeons.util.gravestoneShape
+import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
 open class GravestoneBlock(
@@ -90,12 +89,6 @@ open class GravestoneBlock(
 
     companion object {
         val CENTERED: BooleanProperty = BooleanProperty.of("centered")
-        val CODEC: MapCodec<GravestoneBlock> = createCodec { settings: Settings ->
-            GravestoneBlock(
-                gravestoneShape,
-                centerGravestoneShape,
-                settings
-            )
-        }
+        val CODEC: MapCodec<GravestoneBlock> = createCodec { GravestoneBlock(gravestoneShape, centerGravestoneShape, it) }
     }
 }
