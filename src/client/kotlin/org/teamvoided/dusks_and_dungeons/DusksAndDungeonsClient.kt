@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.init.*
@@ -11,7 +12,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDTabs.register
 import org.teamvoided.dusks_and_dungeons.util.BETTER_BRICK_NAMES
 import org.teamvoided.dusks_and_dungeons.util.SECRET_ITEMS
 import org.teamvoided.dusks_and_dungeons.util.addLists
-import org.teamvoided.dusks_and_dungeons.util.registerBuiltInPack
+import org.teamvoided.voidlib.helpers.registerBuiltInPack
 
 @Suppress("unused")
 object DusksAndDungeonsClient {
@@ -24,7 +25,7 @@ object DusksAndDungeonsClient {
         DnDEntitiesClient.init()
         DnDBlockEntitiesClient.init()
 
-        registerBuiltInPack(BETTER_BRICK_NAMES)
+        registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
     }
 
     val DUSKS_AND_DUNGEONS_SECRET: ItemGroup = register("dnd_secret",
@@ -34,7 +35,6 @@ object DusksAndDungeonsClient {
             .entries { _, entries ->
 //                println("Name : ${MinecraftClient.getInstance().player?.gameProfile?.id}")
                 if (isDev()) entries.addLists(SECRET_ITEMS)
-            }
-            .build()
+            }.build()
     )
 }
