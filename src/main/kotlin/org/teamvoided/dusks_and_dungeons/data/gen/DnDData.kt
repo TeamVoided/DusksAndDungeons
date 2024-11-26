@@ -40,7 +40,7 @@ class DnDData : DataGeneratorEntrypoint {
 
         pack.addProvider(::DnDWorldGenerator)
         pack.addProvider(::ModelProvider)
-        pack.addProvider(::EnglishTranslationProvider)
+        pack.addProvider(::EnLangProvider)
         pack.addProvider(::RecipesProvider)
         pack.addProvider(::BlockLootTableProvider)
         val blockTags = pack.addProvider(::BlockTagsProvider)
