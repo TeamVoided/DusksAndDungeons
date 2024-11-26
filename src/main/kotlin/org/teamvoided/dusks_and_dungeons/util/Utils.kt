@@ -40,11 +40,8 @@ fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, 
 fun uniformNum(x: Number, y: Number): UniformLootNumberProvider =
     UniformLootNumberProvider.create(x.toFloat(), y.toFloat())
 
-fun ModifiableWorld.placeDebug(
-    pos: BlockPos,
-    block: Int
-) {
-    val x = when (block) {
+fun ModifiableWorld.placeDebug(pos: BlockPos, block: Int) {
+    val state = when (block) {
         0 -> Blocks.GLASS
         1 -> Blocks.WHITE_STAINED_GLASS
         2 -> Blocks.LIGHT_GRAY_STAINED_GLASS
@@ -64,7 +61,7 @@ fun ModifiableWorld.placeDebug(
         16 -> Blocks.PINK_STAINED_GLASS
         else -> Blocks.TINTED_GLASS
     }.defaultState
-    this.setBlockState(pos, x, 2)
+    this.setBlockState(pos, state, 2)
 }
 
 fun ProjectileEntity.setShootVelocity(pitch: Float, yaw: Float, roll: Float, speed: Float, modifierXYZ: Float) {

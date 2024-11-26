@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.teamvoided.voidlib.helpers.mc
 
 import net.minecraft.enchantment.Enchantment
