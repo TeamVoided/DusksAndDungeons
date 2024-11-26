@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.teamvoided.voidlib.helpers
 
 fun <T : Any> MutableCollection<T>.addInPlace(element: T): MutableCollection<T> {
