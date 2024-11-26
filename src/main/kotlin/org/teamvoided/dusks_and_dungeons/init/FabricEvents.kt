@@ -29,13 +29,13 @@ fun InitializeFabricEvents() {
 @Suppress("UNUSED_PARAMETER")
 fun modifyLootTables(
     key: RegistryKey<LootTable>, builder: LootTable.Builder, source: LootTableSource, lookup: HolderLookup.Provider
-) {
-    when (key) {
-        PIGLIN_BARTERING_GAMEPLAY -> addToExistingPools(builder, BARTERING_ADD_VIVIONS)
-        SNIFFER_DIGGING_GAMEPLAY -> addToExistingPools(builder, SNIFFER_ADD_MOONBERRY)
-        SIMPLE_DUNGEON_CHEST -> addNewPool(builder, SIMPLE_DUNGEON_ADD_SPOOKY)
-    }
+) = when (key) {
+    PIGLIN_BARTERING_GAMEPLAY -> addToExistingPools(builder, BARTERING_ADD_VIVIONS)
+    SNIFFER_DIGGING_GAMEPLAY -> addToExistingPools(builder, SNIFFER_ADD_MOONBERRY)
+    SIMPLE_DUNGEON_CHEST -> addNewPool(builder, SIMPLE_DUNGEON_ADD_SPOOKY)
+    else -> Unit
 }
+
 
 fun addCommonWanderingTrades(trades: MutableList<TradeOffers.Factory>) {
     trades.addSell(DnDWoodBlocks.CASCADE_SAPLING, 5, 1, 8)

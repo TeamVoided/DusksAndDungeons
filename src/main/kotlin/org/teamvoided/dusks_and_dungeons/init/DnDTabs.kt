@@ -5,9 +5,9 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
@@ -16,12 +16,11 @@ import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
 import org.teamvoided.dusks_and_dungeons.util.*
 import org.teamvoided.voidlib.helpers.mc.*
-import kotlin.jvm.optionals.getOrNull
 
 
 @Suppress("unused")
 object DnDTabs {
-    val DUSKS_AND_DUNGEONS: ItemGroup = register(MODID, FabricItemGroup.builder()
+    val DUSKS_AND_DUNGEONS = register(MODID, FabricItemGroup.builder()
         .icon { ItemStack(DnDWoodBlocks.CASCADE_SAPLING) }
         .name(Text.translatable("itemGroup.dusks_and_dungeons.$MODID"))
         .entries { _, entries ->
@@ -142,7 +141,7 @@ object DnDTabs {
             )
         }.build()
     )
-    val OVERLAY_BLOCKS: ItemGroup = register("overlay_blocks",
+    val OVERLAY_BLOCKS = register("overlay_blocks",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDOverlayBlocks.ROCKY_GRASS) }
             .name(Text.translatable("itemGroup.dusks_and_dungeons.overlay_blocks"))
@@ -151,22 +150,21 @@ object DnDTabs {
     )
 
     // Dev Tabs
-    val DUSKS_AND_DUNGEONS_EXCEPT_DEBUG: ItemGroup = register("dnd_everything",
+    val DUSKS_AND_DUNGEONS_EXCEPT_DEBUG = register("dnd_everything",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDStoneBlocks.STONE_PILLAR.asItem()) }
             .name(Text.translatable("Dusk's and Dungeons Except Debug"))
             .entries { params, entries ->
-                if (isDev() && params.hasPermissions) entries.addLists(
-                    DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains)
-                )
+                if (isDev())
+                    entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains))
             }
             .build()
     )
-    val DND_EXPERIMENTAL: ItemGroup = register("dnd_experimental",
+    val DND_EXPERIMENTAL = register("dnd_experimental",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDItems.GALLERY_MAPLE_DOOR) }
             .name(Text.literal("DnD Experimental"))
-            .entries { params, entries -> if (isDev() && params.hasPermissions) entries.addLists(EVIL_ITEMS) }
+            .entries { params, entries -> if (isDev()) entries.addLists(EVIL_ITEMS) }
             .build()
     )
 
@@ -266,14 +264,6 @@ object DnDTabs {
         }
     }
 
-    @Suppress("SameParameterValue")
-    fun register(name: String, itemGroup: ItemGroup): ItemGroup {
-        return Registry.register(Registries.ITEM_GROUP, id(name), itemGroup)
-    }
-
-    fun getKey(itemGroup: ItemGroup): RegistryKey<ItemGroup>? {
-        return Registries.ITEM_GROUP.getKey(itemGroup)?.getOrNull()
-    }
+    fun register(name: String, itemGroup: ItemGroup): Holder.Reference<ItemGroup> =
+        Registry.registerHolder(Registries.ITEM_GROUP, id(name), itemGroup)
 }
-
-

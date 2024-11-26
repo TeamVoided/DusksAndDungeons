@@ -19,9 +19,9 @@ import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
-import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
-import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.dusks_and_dungeons.util.block.*
+import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 
 
 @Suppress("LargeClass", "TooManyFunctions", "MemberVisibilityCanBePrivate", "unused")
@@ -48,11 +48,9 @@ object DnDBlocks {
     val ICE_SLAB = register("ice_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe())
     val ICE_WALL = register("ice_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe())
     val ICE_BRICKS = register("ice_bricks", IceBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
-    val ICE_BRICK_STAIRS =
-        register(
-            "ice_brick_stairs",
-            MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe()
-        ).tellWitnessesThatIWasMurdered()
+    val ICE_BRICK_STAIRS = register(
+        "ice_brick_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe()
+    ).tellWitnessesThatIWasMurdered()
     val ICE_BRICK_SLAB =
         register("ice_brick_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
     val ICE_BRICK_WALL =
@@ -102,57 +100,9 @@ object DnDBlocks {
 
     val QUARTER_BLOCK_PILE = registerNoItem(
         "quarter_block_pile", QuarterBlockPileBlock(
-            Settings.create()
-                .mapColor(MapColor.NONE)
-                .nonOpaque()
-                .allowsSpawning(Blocks::nonSpawnable)
+            Settings.create().mapColor(MapColor.NONE).nonOpaque().allowsSpawning(Blocks::nonSpawnable)
         )
     ).cutout()
-
-    /*   val CLUB_CORAL = register(
-           "club_coral", Block(
-               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-           )
-       )
-       val DEAD_CLUB_CORAL = register(
-           "dead_club_coral", Block(
-               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-           )
-       )
-       val DEAD_CLUB_CORAL_BLOCK = DeadCoralBlock(
-           "dead_club_coral_block", Block(
-               copy(DEAD_TUBE_CORAL_BLOCK)
-           )
-       )
-       val CLUB_CORAL_BLOCK = CoralBlockBlock(
-           DEAD_CLUB_CORAL_BLOCK,
-           "club_coral_block", Block(
-               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-           )
-       )
-       val CLUB_CORAL_FAN = register(
-           "club_coral_fan", Block(
-               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-           )
-       )
-       val DEAD_CLUB_CORAL_FAN = register(
-           "dead_club_coral_fan", Block(
-               copy(DEAD_TUBE_CORAL_BLOCK)
-           )
-       )
-       val CLUB_CORAL_WALL_FAN = register(
-           "club_coral_wall_fan", Block(
-               copy(TUBE_CORAL_BLOCK).mapColor(MapColor.CYAN)
-           )
-       )
-       val DEAD_CLUB_CORAL_WALL_FAN = register(
-           "dead_club_coral_wall_fan", Block(
-               copy(DEAD_TUBE_CORAL_BLOCK)
-           )
-       )*/
-
-
-
 
     fun init() {
         DnDWoodTypes.init()

@@ -18,11 +18,6 @@ import org.teamvoided.dusks_and_dungeons.util.block.*
 
 object DnDFloraBlocks {
 
-    //    val VERDURE_DEEPSLATE = DnDBlocks.register(
-//        "verdure_deepslate", Block(
-//            copy(DEEPSLATE).luminance(light(1))
-//        )
-//    )
     val PAINTED_ROSE = DnDBlocks.register(
         "painted_rose", PaintedRoseBlock(
             Settings.create()

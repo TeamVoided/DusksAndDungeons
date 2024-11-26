@@ -10,46 +10,28 @@ import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
 import org.teamvoided.dusks_and_dungeons.block.TransformingBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.*
-import org.teamvoided.dusks_and_dungeons.util.block.pickaxe
+import org.teamvoided.dusks_and_dungeons.util.block.*
 
 object DnDNetherBrickBlocks {
     fun init() = Unit
-    val NETHERRACK_STAIRS =
-        DnDBlocks.register("netherrack_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(NETHERRACK)
-            .pickaxe())
-    val NETHERRACK_SLAB = DnDBlocks.register("netherrack_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-        NETHERRACK
-    ).pickaxe())
-    val NETHERRACK_WALL = DnDBlocks.register("netherrack_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-        NETHERRACK
-    ).pickaxe())
+    val NETHERRACK_STAIRS = DnDBlocks.register("netherrack_stairs", stairsOf(NETHERRACK).pickaxe())
+    val NETHERRACK_SLAB = DnDBlocks.register("netherrack_slab", slabOf(NETHERRACK).pickaxe())
+    val NETHERRACK_WALL = DnDBlocks.register("netherrack_wall", wallOf(NETHERRACK).pickaxe())
     val NETHER_BRICK_PILLAR = DnDBlocks.register("nether_brick_pillar", PillarBlock(copy(NETHER_BRICKS)).pickaxe())
     val POLISHED_NETHER_BRICKS = DnDBlocks.register("polished_nether_bricks", Block(copy(NETHER_BRICKS)).pickaxe())
     val POLISHED_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("polished_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            NETHER_BRICK_STAIRS
-        ).pickaxe())
+        DnDBlocks.register("polished_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
     val POLISHED_NETHER_BRICK_SLAB =
-        DnDBlocks.register("polished_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-            NETHER_BRICK_SLAB
-        ).pickaxe())
+        DnDBlocks.register("polished_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
     val POLISHED_NETHER_BRICK_WALL =
-        DnDBlocks.register("polished_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-            NETHER_BRICK_WALL
-        ).pickaxe())
+        DnDBlocks.register("polished_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
     val MIXED_NETHER_BRICKS = DnDBlocks.register("mixed_nether_bricks", Block(copy(NETHER_BRICKS)).pickaxe())
     val CRACKED_MIXED_NETHER_BRICKS =
         DnDBlocks.register("cracked_mixed_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
     val MIXED_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("mixed_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            NETHER_BRICK_STAIRS
-        ).pickaxe())
-    val MIXED_NETHER_BRICK_SLAB = DnDBlocks.register("mixed_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-        NETHER_BRICK_SLAB
-    ).pickaxe())
-    val MIXED_NETHER_BRICK_WALL = DnDBlocks.register("mixed_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-        NETHER_BRICK_WALL
-    ).pickaxe())
+        DnDBlocks.register("mixed_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
+    val MIXED_NETHER_BRICK_SLAB = DnDBlocks.register("mixed_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
+    val MIXED_NETHER_BRICK_WALL = DnDBlocks.register("mixed_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
     val MIXED_NETHER_BRICK_FENCE =
         DnDBlocks.register("mixed_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_MIXED_NETHER_BRICKS =
@@ -67,54 +49,35 @@ object DnDNetherBrickBlocks {
     val POLISHED_RED_NETHER_BRICKS =
         DnDBlocks.register("polished_red_nether_bricks", Block(copy(RED_NETHER_BRICKS)).pickaxe())
     val POLISHED_RED_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("polished_red_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            RED_NETHER_BRICK_STAIRS
-        ).pickaxe())
+        DnDBlocks.register("polished_red_nether_brick_stairs", stairsOf(RED_NETHER_BRICK_STAIRS).pickaxe())
     val POLISHED_RED_NETHER_BRICK_SLAB =
-        DnDBlocks.register("polished_red_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-            RED_NETHER_BRICK_SLAB
-        ).pickaxe())
+        DnDBlocks.register("polished_red_nether_brick_slab", slabOf(RED_NETHER_BRICK_SLAB).pickaxe())
     val POLISHED_RED_NETHER_BRICK_WALL =
-        DnDBlocks.register("polished_red_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-            RED_NETHER_BRICK_WALL
-        ).pickaxe())
+        DnDBlocks.register("polished_red_nether_brick_wall", wallOf(RED_NETHER_BRICK_WALL).pickaxe())
     val MIXED_BLUE_NETHER_BRICKS = DnDBlocks.register("mixed_blue_nether_bricks", Block(copy(NETHER_BRICKS)).pickaxe())
     val CRACKED_MIXED_BLUE_NETHER_BRICKS =
         DnDBlocks.register("cracked_mixed_blue_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
     val MIXED_BLUE_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("mixed_blue_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            NETHER_BRICK_STAIRS
-        ).pickaxe())
+        DnDBlocks.register("mixed_blue_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
     val MIXED_BLUE_NETHER_BRICK_SLAB =
-        DnDBlocks.register("mixed_blue_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-            NETHER_BRICK_SLAB
-        ).pickaxe())
+        DnDBlocks.register("mixed_blue_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
     val MIXED_BLUE_NETHER_BRICK_WALL =
-        DnDBlocks.register("mixed_blue_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-            NETHER_BRICK_WALL
-        ).pickaxe())
+        DnDBlocks.register("mixed_blue_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
     val MIXED_BLUE_NETHER_BRICK_FENCE =
         DnDBlocks.register("mixed_blue_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_MIXED_BLUE_NETHER_BRICKS =
         DnDBlocks.register("chiseled_mixed_blue_nether_bricks", Block(copy(CHISELED_NETHER_BRICKS)).pickaxe())
     val MIXED_BLUE_NETHER_BRICK_PILLAR =
         DnDBlocks.register(
-            "mixed_blue_nether_brick_pillar",
-            SixWayFacingBlock(copy(MIXED_BLUE_NETHER_BRICKS)).pickaxe()
+            "mixed_blue_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_BLUE_NETHER_BRICKS)).pickaxe()
         )
     val BLUE_NETHER_BRICKS = DnDBlocks.register("blue_nether_bricks", Block(copy(NETHER_BRICKS)).pickaxe())
     val CRACKED_BLUE_NETHER_BRICKS =
         DnDBlocks.register("cracked_blue_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
     val BLUE_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("blue_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            NETHER_BRICK_STAIRS
-        ).pickaxe())
-    val BLUE_NETHER_BRICK_SLAB = DnDBlocks.register("blue_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-        NETHER_BRICK_SLAB
-    ).pickaxe())
-    val BLUE_NETHER_BRICK_WALL = DnDBlocks.register("blue_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-        NETHER_BRICK_WALL
-    ).pickaxe())
+        DnDBlocks.register("blue_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
+    val BLUE_NETHER_BRICK_SLAB = DnDBlocks.register("blue_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
+    val BLUE_NETHER_BRICK_WALL = DnDBlocks.register("blue_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
     val BLUE_NETHER_BRICK_FENCE =
         DnDBlocks.register("blue_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_BLUE_NETHER_BRICKS =
@@ -124,54 +87,36 @@ object DnDNetherBrickBlocks {
     val POLISHED_BLUE_NETHER_BRICKS =
         DnDBlocks.register("polished_blue_nether_bricks", Block(copy(BLUE_NETHER_BRICKS)).pickaxe())
     val POLISHED_BLUE_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("polished_blue_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            BLUE_NETHER_BRICK_STAIRS
-        ).pickaxe())
+        DnDBlocks.register("polished_blue_nether_brick_stairs", stairsOf(BLUE_NETHER_BRICK_STAIRS).pickaxe())
     val POLISHED_BLUE_NETHER_BRICK_SLAB =
-        DnDBlocks.register("polished_blue_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-            BLUE_NETHER_BRICK_SLAB
-        ).pickaxe())
+        DnDBlocks.register("polished_blue_nether_brick_slab", slabOf(BLUE_NETHER_BRICK_SLAB).pickaxe())
     val POLISHED_BLUE_NETHER_BRICK_WALL =
-        DnDBlocks.register("polished_blue_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-            BLUE_NETHER_BRICK_WALL
-        ).pickaxe())
+        DnDBlocks.register("polished_blue_nether_brick_wall", wallOf(BLUE_NETHER_BRICK_WALL).pickaxe())
     val MIXED_GRAY_NETHER_BRICKS = DnDBlocks.register("mixed_gray_nether_bricks", Block(copy(NETHER_BRICKS)).pickaxe())
     val CRACKED_MIXED_GRAY_NETHER_BRICKS =
         DnDBlocks.register("cracked_mixed_gray_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
     val MIXED_GRAY_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("mixed_gray_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            NETHER_BRICK_STAIRS
-        ).pickaxe())
+        DnDBlocks.register("mixed_gray_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
     val MIXED_GRAY_NETHER_BRICK_SLAB =
-        DnDBlocks.register("mixed_gray_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-            NETHER_BRICK_SLAB
-        ).pickaxe())
+        DnDBlocks.register("mixed_gray_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
     val MIXED_GRAY_NETHER_BRICK_WALL =
-        DnDBlocks.register("mixed_gray_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-            NETHER_BRICK_WALL
-        ).pickaxe())
+        DnDBlocks.register("mixed_gray_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
     val MIXED_GRAY_NETHER_BRICK_FENCE =
         DnDBlocks.register("mixed_gray_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_MIXED_GRAY_NETHER_BRICKS =
         DnDBlocks.register("chiseled_mixed_gray_nether_bricks", Block(copy(CHISELED_NETHER_BRICKS)).pickaxe())
     val MIXED_GRAY_NETHER_BRICK_PILLAR =
         DnDBlocks.register(
-            "mixed_gray_nether_brick_pillar",
-            SixWayFacingBlock(copy(MIXED_GRAY_NETHER_BRICKS)).pickaxe()
+            "mixed_gray_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_GRAY_NETHER_BRICKS)).pickaxe()
         )
     val GRAY_NETHER_BRICKS = DnDBlocks.register("gray_nether_bricks", Block(copy(NETHER_BRICKS)).pickaxe())
     val CRACKED_GRAY_NETHER_BRICKS =
         DnDBlocks.register("cracked_gray_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
     val GRAY_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("gray_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            NETHER_BRICK_STAIRS
-        ).pickaxe())
-    val GRAY_NETHER_BRICK_SLAB = DnDBlocks.register("gray_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-        NETHER_BRICK_SLAB
-    ).pickaxe())
-    val GRAY_NETHER_BRICK_WALL = DnDBlocks.register("gray_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-        NETHER_BRICK_WALL
-    ).pickaxe())
+        DnDBlocks.register("gray_nether_brick_stairs", stairsOf(NETHER_BRICK_STAIRS).pickaxe())
+    val GRAY_NETHER_BRICK_SLAB = DnDBlocks.register("gray_nether_brick_slab", slabOf(NETHER_BRICK_SLAB).pickaxe())
+    val GRAY_NETHER_BRICK_WALL = DnDBlocks.register(
+        "gray_nether_brick_wall", wallOf(NETHER_BRICK_WALL).pickaxe())
     val GRAY_NETHER_BRICK_FENCE =
         DnDBlocks.register("gray_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_GRAY_NETHER_BRICKS =
@@ -181,25 +126,21 @@ object DnDNetherBrickBlocks {
     val POLISHED_GRAY_NETHER_BRICKS =
         DnDBlocks.register("polished_gray_nether_bricks", Block(copy(GRAY_NETHER_BRICKS)).pickaxe())
     val POLISHED_GRAY_NETHER_BRICK_STAIRS =
-        DnDBlocks.register("polished_gray_nether_brick_stairs", org.teamvoided.dusks_and_dungeons.util.block.stairsOf(
-            GRAY_NETHER_BRICK_STAIRS
-        ).pickaxe())
+        DnDBlocks.register("polished_gray_nether_brick_stairs", stairsOf(GRAY_NETHER_BRICK_STAIRS).pickaxe())
     val POLISHED_GRAY_NETHER_BRICK_SLAB =
-        DnDBlocks.register("polished_gray_nether_brick_slab", org.teamvoided.dusks_and_dungeons.util.block.slabOf(
-            GRAY_NETHER_BRICK_SLAB
-        ).pickaxe())
+        DnDBlocks.register("polished_gray_nether_brick_slab", slabOf(GRAY_NETHER_BRICK_SLAB).pickaxe())
     val POLISHED_GRAY_NETHER_BRICK_WALL =
-        DnDBlocks.register("polished_gray_nether_brick_wall", org.teamvoided.dusks_and_dungeons.util.block.wallOf(
-            GRAY_NETHER_BRICK_WALL
-        ).pickaxe())
+        DnDBlocks.register("polished_gray_nether_brick_wall", wallOf(GRAY_NETHER_BRICK_WALL).pickaxe())
 
     val MOLTEN_LAVASPONGE =
-        DnDBlocks.register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe().tellWitnessesThatIWasMurdered()
+        DnDBlocks.register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe()
+            .tellWitnessesThatIWasMurdered()
     val BRITTLE_LAVASPONGE =
         DnDBlocks.register("brittle_lavasponge", LavaSpongeBlock(copy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
             .tellWitnessesThatIWasMurdered()
     val GLOWING_LAVASPONGE =
         DnDBlocks.register("glowing_lavasponge", Block(copy(BASALT))).pickaxe().tellWitnessesThatIWasMurdered()
-    val LAVASPONGE = DnDBlocks.register("lavasponge", LavaSpongeBlock(copy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
-        .tellWitnessesThatIWasMurdered()
+    val LAVASPONGE =
+        DnDBlocks.register("lavasponge", LavaSpongeBlock(copy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
+            .tellWitnessesThatIWasMurdered()
 }

@@ -152,16 +152,6 @@ object DnDItems {
         "harvester_scythe", HarvesterScytheItem(AttributeSettings(HarvesterScytheItem.makeAttributes()))
     ).shh()
     val BROOM = register("broom", BroomItem(CountSettings(1))).shh()
-//    val BIG_BUNDLE = register(
-//        "big_bundle",
-//        BundleItem(
-//            Item.Settings().maxCount(1).component(
-//                DataComponentTypes.BUNDLE_CONTENTS,
-//                BundleContentsComponent.DEFAULT
-//            )
-//        )
-//    )
-
 
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)
