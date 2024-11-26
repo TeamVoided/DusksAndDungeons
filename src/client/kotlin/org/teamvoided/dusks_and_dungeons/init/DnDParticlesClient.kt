@@ -1,25 +1,25 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry.PendingParticleFactory
 import net.minecraft.client.particle.FlameParticle
+import net.minecraft.particle.ParticleEffect
+import net.minecraft.particle.ParticleType
 import org.teamvoided.dusks_and_dungeons.particle.*
 
 object DnDParticlesClient {
     fun init() {
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.CASCADE_LEAF_PARTICLE,
-            FallingLeafParticle.Companion::FallingLeafFactory
-        )
-        ParticleFactoryRegistry.getInstance().register(
-            DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory
-        )
-        ParticleFactoryRegistry.getInstance().register(
-            DnDParticles.COLORABLE_OMINOUS_PARTICLE, ColorableOminousParticle::Factory
-        )
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIDERLILY, SpiderlilyPetalParticle::Factory)
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.MUSHROOM_LAUNCH, MushroomLaunchParticle::Factory)
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.DUST_BUNNY, DustBunnyParticle::Factory)
+        register(DnDParticles.CASCADE_LEAF_PARTICLE, FallingLeafParticle.Companion::FallingLeafFactory)
+        register(DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
+        register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
+        register(DnDParticles.COLORABLE_OMINOUS_PARTICLE, ColorableOminousParticle::Factory)
 
-        ParticleFactoryRegistry.getInstance().register(DnDParticles.SPIRAL, SpiralParticle::Factory)
+        register(DnDParticles.SPIDERLILY, SpiderlilyPetalParticle::Factory)
+        register(DnDParticles.MUSHROOM_LAUNCH, MushroomLaunchParticle::Factory)
+        register(DnDParticles.DUST_BUNNY, DustBunnyParticle::Factory)
+        register(DnDParticles.SPIRAL, SpiralParticle::Factory)
     }
+
+    fun <T : ParticleEffect> register(type: ParticleType<T>, constructor: PendingParticleFactory<T>) =
+        ParticleFactoryRegistry.getInstance().register(type, constructor)
 }
