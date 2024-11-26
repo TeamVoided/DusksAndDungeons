@@ -19,7 +19,7 @@ import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
-import org.teamvoided.dusks_and_dungeons.item.HeadDecorationBlockItem
+import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.*
 
@@ -178,7 +178,7 @@ object DnDBlocks {
 
     fun registerHeadEquipable(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
-        DnDItems.register(id, HeadDecorationBlockItem(regBlock, Item.Settings()))
+        DnDItems.register(id, EquipableBlockItem(regBlock, Item.Settings()))
         return regBlock
     }
 

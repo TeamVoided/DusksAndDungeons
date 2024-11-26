@@ -16,6 +16,7 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.item.*
 import org.teamvoided.dusks_and_dungeons.util.shh
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
+import org.teamvoided.voidlib.helpers.item.EquipableItem
 
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -51,14 +52,14 @@ object DnDItems {
             .tellWitnessesThatIWasMurdered()
 
     val FARMERS_HAT = register(
-        "farmers_hat", HeadDecorationItem(
+        "farmers_hat", EquipableItem(
             CountSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
-    val WITCH_HAT = register("witch_hat", HeadDecorationItem(CountSettings(1))).shh()
+    val WITCH_HAT = register("witch_hat", EquipableItem(CountSettings(1))).shh()
 
     @JvmField
-    val VILE_WITCH_HAT = register("vile_witch_hat", HeadDecorationItem(CountSettings(1))).shh()
+    val VILE_WITCH_HAT = register("vile_witch_hat", EquipableItem(CountSettings(1))).shh()
     val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16))).tellWitnessesThatIWasMurdered()
     val DIE_ITEM = register(
         "die", DiceItem(

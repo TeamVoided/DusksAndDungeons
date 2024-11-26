@@ -12,7 +12,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.stat.Stats
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
-import net.minecraft.util.math.BlockPointer
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Position
 import net.minecraft.util.math.Vec3d
@@ -28,14 +27,9 @@ class ChillChargeItem(settings: Settings) : Item(settings), ProjectileItem {
         }
 
         world.playSound(
-            null as PlayerEntity?,
-            user.x,
-            user.y,
-            user.z,
-            SoundEvents.ENTITY_WIND_CHARGE_THROW,
-            SoundCategory.NEUTRAL,
-            0.5f,
-            0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
+            null, user.x, user.y, user.z,
+            SoundEvents.ENTITY_WIND_CHARGE_THROW, SoundCategory.NEUTRAL,
+            0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
         )
         val itemStack = user.getStackInHand(hand)
         user.itemCooldownManager[this] = cooldown
@@ -55,21 +49,13 @@ class ChillChargeItem(settings: Settings) : Item(settings), ProjectileItem {
         return chillChargeEntity
     }
 
-    override fun initializeProjectile(
-        projectile: ProjectileEntity,
-        x: Double,
-        y: Double,
-        z: Double,
-        speed: Float,
-        divergence: Float
-    ) {
-    }
-
-    override fun createDispenserConfig(): DispenserConfig {
-        return DispenserConfig.builder().positionFunction { blockPointer: BlockPointer, direction: Direction ->
-            DispenserBlock.getDispensePos(blockPointer, 1.0, Vec3d.ZERO)
-        }.uncertainty(6.6666665f).power(1.0f).overrideDispenseEvent(1051).build()
-    }
+    override fun initializeProjectile(p: ProjectileEntity, x: Double, y: Double, z: Double, s: Float, d: Float) = Unit
+    override fun createDispenserConfig(): DispenserConfig = DispenserConfig.builder()
+        .positionFunction { blockPointer, _ -> DispenserBlock.getDispensePos(blockPointer, 1.0, Vec3d.ZERO) }
+        .uncertainty(6.6666665f)
+        .power(1.0f)
+        .overrideDispenseEvent(1051)
+        .build()
 
     companion object {
         private const val cooldown = 10
