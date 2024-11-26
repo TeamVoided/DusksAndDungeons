@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.21"
-fabric-loom = "1.8-SNAPSHOT"
+fabric-loom = "1.7-SNAPSHOT"
 iridium = "3.3.1"
 
 #farrow = "1.0.0+arrow.1.2.4"
@@ -9,15 +9,15 @@ biolith = "3.0.0"
 reef = "0.2.0-beta.2"
 voidmill = "1.0.4"
 
-transition = "1.0.0-alpha.16"
+transition = "1.0.0-alpha.15"
 
 # dev
-modmenu = "11.0.3"
-emi = "1.1.18+1.21.1"
-#dev-tools-unlocker = "1.0.0"
+modmenu = "11.0.2"
+emi = "1.1.16+1.21.1"
+dev-tools-unlocker = "1.0.0"
 
 # compat
-#dramatic-doors = "1.21-3.2.4_1"
+dramatic-doors = "1.21-3.2.4_1"
 
 [libraries]
 #farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
