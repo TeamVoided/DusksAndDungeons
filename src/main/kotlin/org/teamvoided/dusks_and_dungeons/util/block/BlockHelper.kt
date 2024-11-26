@@ -25,6 +25,8 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 import java.util.function.ToIntFunction
 
 
+val FULL_CUBE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+
 //private val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
 //private val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
 val gravestoneShape: VoxelShape = VoxelShapes.union(
@@ -45,6 +47,7 @@ val centerSmallGravestoneShape: VoxelShape = Block.createCuboidShape(3.0, 0.0, 7
 
 val headstoneShape: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
 val centerHeadstoneShape: VoxelShape = Block.createCuboidShape(0.0, 0.0, 7.0, 16.0, 16.0, 9.0)
+
 
 fun light(lightLevel: Int): ToIntFunction<BlockState> = ToIntFunction { lightLevel }
 

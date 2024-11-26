@@ -27,7 +27,7 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.dusks_and_dungeons.util.FULL_CUBE
+import org.teamvoided.dusks_and_dungeons.util.block.FULL_CUBE
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.dusks_and_dungeons.util.rotateFlat90
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
