@@ -5,7 +5,6 @@ import net.minecraft.registry.BootstrapContext
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
 import net.minecraft.world.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.DnDWolfVariants
@@ -13,26 +12,16 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 
 object WolfVariants {
     fun bootstrap(c: BootstrapContext<WolfVariant>) {
-        c.registerWolfVariant(DnDWolfVariants.AUTUMN, "wolf_autumn", DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)
+        c.register(DnDWolfVariants.AUTUMN, "wolf_autumn", DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)
     }
 
-    fun BootstrapContext<WolfVariant>.registerWolfVariant(
-        registryKey: RegistryKey<WolfVariant>,
-        name: String,
-        tagKey: TagKey<Biome>
-    ) {
+    fun BootstrapContext<WolfVariant>.register(key: RegistryKey<WolfVariant>, name: String, tag: TagKey<Biome>) =
         this.register(
-            registryKey,
-            WolfVariant(
-                id("entity/wolf/$name"),
-                id("entity/wolf/" + name + "_tame"),
-                id("entity/wolf/" + name + "_angry"),
-                this.getRegistryLookup(RegistryKeys.BIOME).getTagOrThrow(tagKey)
+            key, WolfVariant(
+                wolf(name), wolf(name, "_tame"), wolf(name, "_angry"),
+                this.getRegistryLookup(RegistryKeys.BIOME).getTagOrThrow(tag)
             )
         )
-    }
 
-    fun getKey(name: String): RegistryKey<WolfVariant> {
-        return RegistryKey.of(RegistryKeys.WOLF_VARIANT, Identifier.ofDefault(name))
-    }
+    fun wolf(name: String, suffix: String = "") = id("entity/wolf/$name$suffix")
 }
