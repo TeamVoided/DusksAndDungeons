@@ -12,9 +12,11 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isModLoaded
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.compat.DramaticDoorsCompat
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.voidlib.devin.extensions.model.createBlockSet
 import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
@@ -98,8 +100,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
                 .put(VariantSettings.UVLOCK, true)
         )*/
         if (isModLoaded("dramaticdoors")) DramaticDoorsCompat.datagen(gen)
-    }
 
+        SETS.forEach(gen::createBlockSet)
+    }
 
     private val single = listOf(
         DnDItems.SCARECROW_ITEM,
@@ -148,4 +151,3 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     private fun Identifier.suffix(str: String) = Identifier.of(this.namespace, "${this.path}$str")
     private fun Block.model(): Identifier = ModelIds.getBlockModelId(this)
 }
-

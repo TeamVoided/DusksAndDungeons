@@ -9,15 +9,18 @@ import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.voidlib.helpers.mc.add
+import org.teamvoided.voidlib.devin.extensions.tag.add
+import org.teamvoided.voidlib.devin.extensions.tag.createSetTags
 import java.util.concurrent.CompletableFuture
 
 @Suppress("LongMethod")
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
     override fun configure(arg: HolderLookup.Provider) {
+        SETS.forEach { it.createSetTags(::getOrCreateTagBuilder) }
         duskTags()
         vanillaTags()
         conventionTags()

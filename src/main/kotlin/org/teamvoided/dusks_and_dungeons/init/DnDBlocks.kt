@@ -21,12 +21,16 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
 import org.teamvoided.dusks_and_dungeons.util.*
 import org.teamvoided.dusks_and_dungeons.util.block.*
+import org.teamvoided.voidlib.consortium.block.BlockSet
+import org.teamvoided.voidlib.consortium.block.createBlockSet
 import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 
 
 @Suppress("LargeClass", "TooManyFunctions", "MemberVisibilityCanBePrivate", "unused")
 object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
+    val SETS = mutableListOf<BlockSet>()
+
     val CUTOUT_BLOCKS = mutableSetOf<Block>()
     val TRANSLUCENT_BLOCKS = mutableSetOf<Block>()
     val GRASS_TINT_BLOCKS = mutableSetOf<Block>()
@@ -103,6 +107,7 @@ object DnDBlocks {
             Settings.create().mapColor(MapColor.NONE).nonOpaque().allowsSpawning(Blocks::nonSpawnable)
         )
     ).cutout()
+    val GAY_BLOCK = register(createBlockSet("gay_block", copy(BEACON)).build())
 
     fun init() {
         DnDWoodTypes.init()
@@ -118,6 +123,12 @@ object DnDBlocks {
         DnDStoneBlocks.init()
         DnDWoodBlocks.init()
 
+    }
+
+    fun register(set: BlockSet): BlockSet {
+        SETS.add(set)
+        set.register(::register)
+        return set
     }
 
     fun register(id: String, block: Block): Block {

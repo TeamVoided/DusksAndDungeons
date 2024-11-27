@@ -35,6 +35,8 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     OpenBlockLootTableProvider(o, r) {
     val manualList: List<Block> = listOf(DnDFloraBlocks.MOONBERRY_VINE)
     override fun generate() {
+        // this is here cuz yeah
+//        SETS.forEach(this::setDrops)
         val enchantmentLookup = getLookup().getLookupOrThrow(RegistryKeys.ENCHANTMENT)
         DnDBlocks.BLOCKS.filterNot(manualList::contains).forEach {
             when (it) {
@@ -98,7 +100,9 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             )
         )
         twoTallDrop(DnDFloraBlocks.WILD_WHEAT)
+
     }
+
     /*   private fun cornCrop(): LootTable.Builder {
            return applyExplosionDecay(
                DnDFloraBlocks.CORN_CROP, LootTable.builder().pool(
