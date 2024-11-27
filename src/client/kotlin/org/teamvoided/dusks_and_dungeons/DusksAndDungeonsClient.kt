@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
@@ -28,7 +27,7 @@ object DusksAndDungeonsClient {
         registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
     }
 
-    val DUSKS_AND_DUNGEONS_SECRET: ItemGroup = register("dnd_secret",
+    val DUSKS_AND_DUNGEONS_SECRET = register("dnd_secret",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDItems.HARVESTER_SCYTHE) }
             .name(Text.literal("Secret Items ;)"))
