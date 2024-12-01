@@ -1,10 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
-import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
+import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.block.Blocks.*
+import net.minecraft.block.IceBlock
+import net.minecraft.block.MapColor
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.BlockItem
 import net.minecraft.item.FoodComponent
@@ -19,58 +22,49 @@ import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
-import org.teamvoided.dusks_and_dungeons.util.*
-import org.teamvoided.dusks_and_dungeons.util.block.*
-import org.teamvoided.voidlib.consortium.block.BlockSet
+import org.teamvoided.dusks_and_dungeons.init.misc.ICE
+import org.teamvoided.dusks_and_dungeons.util.block.cutout
+import org.teamvoided.dusks_and_dungeons.util.block.light
+import org.teamvoided.dusks_and_dungeons.util.block.pickaxe
+import org.teamvoided.dusks_and_dungeons.util.block.translucent
+import org.teamvoided.dusks_and_dungeons.util.shh
+import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
+import org.teamvoided.voidlib.consortium.block.BlockSetBuilder
+import org.teamvoided.voidlib.consortium.block.HeadlessBlockSet
 import org.teamvoided.voidlib.consortium.block.createBlockSet
+import org.teamvoided.voidlib.consortium.block.createHeadlessSet
 import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
+import net.minecraft.block.Blocks.ICE as ICE_BLOCK
 
 
 @Suppress("LargeClass", "TooManyFunctions", "MemberVisibilityCanBePrivate", "unused")
 object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
-    val SETS = mutableListOf<BlockSet>()
-
-
+    val SETS = mutableListOf<HeadlessBlockSet>()
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
 
+    /*
+       ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄  --- ICE AGE --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
+     */
+    val ICE_SET = register(
+        createHeadlessSet("ice", ICE_BLOCK).noStoneCutting().stairs(::MeltableStairsBlock)
+            .slab(::MeltableSlabBlock).wall(::MeltableWallBlock)
+    ).translucent().pickaxe()
+    val PACKED_ICE_SET = registerHeadlessSet("packed_ice", PACKED_ICE).pickaxe()
+    val BLUE_ICE_SET = registerHeadlessSet("blue_ice", BLUE_ICE).pickaxe()
+
+    // ☢ Experimental ☢
+    val ICE_BRICKS = register(
+        createBlockSet("ice_brick", ICE).s().noStoneCutting().parent(::IceBlock)
+            .stairs(::MeltableStairsBlock).slab(::MeltableSlabBlock).wall(::MeltableWallBlock)
+    ).translucent().pickaxe().tellWitnessesThatIWasMurdered()
+    val PACKED_ICE_BRICKS = register(createBlockSet("packed_ice_brick", copy(PACKED_ICE)).s())
+        .pickaxe().tellWitnessesThatIWasMurdered()
+    val BLUE_ICE_BRICKS = register(createBlockSet("blue_ice_brick", copy(BLUE_ICE)).s())
+        .pickaxe().tellWitnessesThatIWasMurdered()
+
     val CELESTAL_BELL = register("celestal_bell", CelestalBellBlock(copy(BELL))).tellWitnessesThatIWasMurdered()
-
-    val ICE_STAIRS = register("ice_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe())
-    val ICE_SLAB = register("ice_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe())
-    val ICE_WALL = register("ice_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe())
-    val ICE_BRICKS = register("ice_bricks", IceBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
-    val ICE_BRICK_STAIRS = register(
-        "ice_brick_stairs", MeltableStairsBlock(ICE.defaultState, copy(ICE)).translucent().pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-    val ICE_BRICK_SLAB =
-        register("ice_brick_slab", MeltableSlabBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
-    val ICE_BRICK_WALL =
-        register("ice_brick_wall", MeltableWallBlock(copy(ICE)).translucent().pickaxe()).tellWitnessesThatIWasMurdered()
-
-    val PACKED_ICE_STAIRS = register("packed_ice_stairs", stairsOf(PACKED_ICE).pickaxe())
-    val PACKED_ICE_SLAB = register("packed_ice_slab", slabOf(PACKED_ICE).pickaxe())
-    val PACKED_ICE_WALL = register("packed_ice_wall", wallOf(PACKED_ICE).pickaxe())
-    val PACKED_ICE_BRICKS =
-        register("packed_ice_bricks", Block(copy(PACKED_ICE)).pickaxe()).tellWitnessesThatIWasMurdered()
-    val PACKED_ICE_BRICK_STAIRS =
-        register("packed_ice_brick_stairs", stairsOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-    val PACKED_ICE_BRICK_SLAB =
-        register("packed_ice_brick_slab", slabOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-    val PACKED_ICE_BRICK_WALL =
-        register("packed_ice_brick_wall", wallOf(PACKED_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-
-    val BLUE_ICE_STAIRS = register("blue_ice_stairs", stairsOf(BLUE_ICE).pickaxe())
-    val BLUE_ICE_SLAB = register("blue_ice_slab", slabOf(BLUE_ICE).pickaxe())
-    val BLUE_ICE_WALL = register("blue_ice_wall", wallOf(BLUE_ICE).pickaxe())
-    val BLUE_ICE_BRICKS = register("blue_ice_bricks", Block(copy(BLUE_ICE)).pickaxe()).tellWitnessesThatIWasMurdered()
-    val BLUE_ICE_BRICK_STAIRS =
-        register("blue_ice_brick_stairs", stairsOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-    val BLUE_ICE_BRICK_SLAB =
-        register("blue_ice_brick_slab", slabOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
-    val BLUE_ICE_BRICK_WALL =
-        register("blue_ice_brick_wall", wallOf(BLUE_ICE).pickaxe()).tellWitnessesThatIWasMurdered()
 
     val MOONCORE = register(
         "mooncore", CrytalClusterWithParticlesBlock(
@@ -87,7 +81,6 @@ object DnDBlocks {
                 .pistonBehavior(PistonBehavior.DESTROY)
         ).cutout()
     ).tellWitnessesThatIWasMurdered()
-
     val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT))).shh()
     val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST))).shh()
 
@@ -96,7 +89,11 @@ object DnDBlocks {
             Settings.create().mapColor(MapColor.NONE).nonOpaque().allowsSpawning(Blocks::nonSpawnable)
         )
     ).cutout()
-    val GAY_BLOCK = register(createBlockSet("gay_block", copy(BEACON)).build())
+
+    /*
+        🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
+    */
+    val GAY_BLOCK = registerSet("gay_block", copy(BEACON))
 
     fun init() {
         DnDWoodTypes.init()
@@ -114,11 +111,14 @@ object DnDBlocks {
 
     }
 
-    fun register(set: BlockSet): BlockSet {
+    fun register(builder: BlockSetBuilder): HeadlessBlockSet {
+        val set = builder.build()
         SETS.add(set)
         set.register(::register)
         return set
     }
+    fun registerSet(name: String, settings: Settings) = register(createBlockSet(name, settings))
+    fun registerHeadlessSet(name: String, parent: Block) = register(createHeadlessSet(name, parent))
 
     fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)

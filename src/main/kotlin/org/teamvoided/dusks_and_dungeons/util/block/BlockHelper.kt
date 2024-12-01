@@ -17,6 +17,8 @@ import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.big.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
+import org.teamvoided.voidlib.consortium.block.BlockSet
+import org.teamvoided.voidlib.consortium.block.HeadlessBlockSet
 import org.teamvoided.voidlib.helpers.addAndReturn
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidSignBlock
@@ -76,6 +78,18 @@ fun Block.pickaxe(): Block = PICKAXABLE.addAndReturn(this)
 fun Block.axe(): Block = AXABLE.addAndReturn(this)
 fun Block.shovel(): Block = SHOVELABLE.addAndReturn(this)
 fun Block.hoe(): Block = HOEABLE.addAndReturn(this)
+
+fun HeadlessBlockSet.translucent(): HeadlessBlockSet {
+    TRANSLUCENT_BLOCKS.addAll(this.collect())
+    return this
+}
+
+fun HeadlessBlockSet.pickaxe(): HeadlessBlockSet {
+    PICKAXABLE.addAll(this.collect())
+    return this
+}
+
+fun blockOf(block: Block): Block = Block(copy(block))
 
 fun stairsOf(block: Block): Block = StairsBlock(block.defaultState, copy(block))
 

@@ -77,29 +77,8 @@ object DnDItemLists {
         DnDStoneBlocks.SNOWY_STONE_BRICK_WALL,
     )
 
-    val ice = listOf(
-        DnDBlocks.ICE_STAIRS,
-        DnDBlocks.ICE_SLAB,
-        DnDBlocks.ICE_WALL,
-//        DnDBlocks.ICE_BRICKS,
-//        DnDBlocks.ICE_BRICK_STAIRS,
-//        DnDBlocks.ICE_BRICK_SLAB,
-//        DnDBlocks.ICE_BRICK_WALL,
-        DnDBlocks.PACKED_ICE_STAIRS,
-        DnDBlocks.PACKED_ICE_SLAB,
-        DnDBlocks.PACKED_ICE_WALL,
-//        DnDBlocks.PACKED_ICE_BRICKS,
-//        DnDBlocks.PACKED_ICE_BRICK_STAIRS,
-//        DnDBlocks.PACKED_ICE_BRICK_SLAB,
-//        DnDBlocks.PACKED_ICE_BRICK_WALL,
-        DnDBlocks.BLUE_ICE_STAIRS,
-        DnDBlocks.BLUE_ICE_SLAB,
-        DnDBlocks.BLUE_ICE_WALL,
-//        DnDBlocks.BLUE_ICE_BRICKS,
-//        DnDBlocks.BLUE_ICE_BRICK_STAIRS,
-//        DnDBlocks.BLUE_ICE_BRICK_SLAB,
-//        DnDBlocks.BLUE_ICE_BRICK_WALL,
-    )
+    val ice = DnDBlocks.ICE_SET.collect() + DnDBlocks.PACKED_ICE_SET.collect() + DnDBlocks.BLUE_ICE_SET.collect()
+//            DnDBlocks.ICE_BRICKS.collect() + DnDBlocks.PACKED_ICE_BRICKS.collect() + DnDBlocks.BLUE_ICE_BRICKS.collect()
 
     val bigCandles = listOf(
         DnDBigBlocks.BIG_CANDLE,

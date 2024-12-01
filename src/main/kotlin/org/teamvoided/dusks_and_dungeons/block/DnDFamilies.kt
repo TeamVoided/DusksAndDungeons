@@ -191,44 +191,6 @@ object DnDFamilies {
             .slab(DnDStoneBlocks.SNOWY_STONE_BRICK_SLAB)
             .wall(DnDStoneBlocks.SNOWY_STONE_BRICK_WALL)
             .build()
-
-    private val ICE_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDBlocks.ICE_BRICKS)
-            .stairs(DnDBlocks.ICE_BRICK_STAIRS)
-            .slab(DnDBlocks.ICE_BRICK_SLAB)
-            .wall(DnDBlocks.ICE_BRICK_WALL)
-            .build()
-    private val ICE_FAMILY: BlockFamily =
-        BlockFamilies.register(Blocks.ICE)
-            .stairs(DnDBlocks.ICE_STAIRS)
-            .slab(DnDBlocks.ICE_SLAB)
-            .wall(DnDBlocks.ICE_WALL)
-            .build()
-    private val PACKED_ICE_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDBlocks.PACKED_ICE_BRICKS)
-            .stairs(DnDBlocks.PACKED_ICE_BRICK_STAIRS)
-            .slab(DnDBlocks.PACKED_ICE_BRICK_SLAB)
-            .wall(DnDBlocks.PACKED_ICE_BRICK_WALL)
-            .build()
-    private val PACKED_ICE_FAMILY: BlockFamily =
-        BlockFamilies.register(Blocks.PACKED_ICE)
-            .stairs(DnDBlocks.PACKED_ICE_STAIRS)
-            .slab(DnDBlocks.PACKED_ICE_SLAB)
-            .wall(DnDBlocks.PACKED_ICE_WALL)
-            .build()
-    private val BLUE_ICE_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDBlocks.BLUE_ICE_BRICKS)
-            .stairs(DnDBlocks.BLUE_ICE_BRICK_STAIRS)
-            .slab(DnDBlocks.BLUE_ICE_BRICK_SLAB)
-            .wall(DnDBlocks.BLUE_ICE_BRICK_WALL)
-            .build()
-    private val BLUE_ICE_FAMILY: BlockFamily =
-        BlockFamilies.register(Blocks.BLUE_ICE)
-            .stairs(DnDBlocks.BLUE_ICE_STAIRS)
-            .slab(DnDBlocks.BLUE_ICE_SLAB)
-            .wall(DnDBlocks.BLUE_ICE_WALL)
-            .build()
-
     private val NETHERRACK_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.NETHERRACK)
             .stairs(DnDNetherBrickBlocks.NETHERRACK_STAIRS)
@@ -304,13 +266,10 @@ object DnDFamilies {
 
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
-//        PINE_FAMILY,
         BONEWOOD_FAMILY,
         POLISHED_STONE_FAMILY,
         MOSSY_POLISHED_STONE_FAMILY,
         SNOWY_STONE_BRICKS_FAMILY,
-        PACKED_ICE_BRICKS_FAMILY,
-        BLUE_ICE_BRICKS_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         MIXED_RED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY,
@@ -337,10 +296,6 @@ object DnDFamilies {
         GALLERY_MAPLE_WOOD_FAMILY,
         CRIMSON_HYPHAE_FAMILY,
         WARPED_HYPHAE_FAMILY,
-        ICE_BRICKS_FAMILY,
-        ICE_FAMILY,
-        PACKED_ICE_FAMILY,
-        BLUE_ICE_FAMILY,
         NETHERRACK_FAMILY,
         OVERGROWN_POLISHED_STONE_FAMILY,
         OVERGROWN_COBBLESTONE_FAMILY,

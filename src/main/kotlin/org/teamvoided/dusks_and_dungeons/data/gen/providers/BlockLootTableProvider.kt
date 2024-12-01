@@ -17,6 +17,7 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
@@ -65,9 +66,9 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             leavesDrops(it, DnDWoodBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
         twoTallDrop(DnDFloraBlocks.SPIDERLILY)
-        addDropWithSilkTouch(DnDBlocks.ICE_STAIRS)
-        addIceSlab(DnDBlocks.ICE_SLAB)
-        addDropWithSilkTouch(DnDBlocks.ICE_WALL)
+        addDropWithSilkTouch(ICE_SET.slab)
+        addIceSlab(ICE_SET.slab)
+        addDropWithSilkTouch(ICE_SET.wall)
         add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
         add(DnDFloraBlocks.WARPED_WART) {
             var state = BlockStatePropertyLootCondition.builder(it)

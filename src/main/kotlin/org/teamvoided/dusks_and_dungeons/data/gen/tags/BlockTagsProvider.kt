@@ -9,6 +9,7 @@ import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
@@ -161,9 +162,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.SOUL_SOIL)
         getOrCreateTagBuilder(DnDBlockTags.ICE_BLOCK_TRANSLUCENT)
             .add(Blocks.ICE)
-            .add(DnDBlocks.ICE_STAIRS)
-            .add(DnDBlocks.ICE_SLAB)
-            .add(DnDBlocks.ICE_WALL)
+            .add(ICE_SET.collect())
         getOrCreateTagBuilder(DnDBlockTags.BIG_CANDLES)
             .forceAddTag(DnDBlockTags.BIG_SOUL_CANDLES)
             .add(DnDBigBlocks.BIG_CANDLE)
@@ -459,9 +458,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDStoneBlocks.POLISHED_STONE_STAIRS)
             .add(DnDStoneBlocks.MOSSY_POLISHED_STONE_STAIRS)
             .add(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_STAIRS)
-            .add(DnDBlocks.ICE_STAIRS)
-            .add(DnDBlocks.PACKED_ICE_STAIRS)
-            .add(DnDBlocks.BLUE_ICE_STAIRS)
             .add(DnDNetherBrickBlocks.NETHERRACK_STAIRS)
             .add(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_STAIRS)
             .add(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_STAIRS)
@@ -478,9 +474,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDStoneBlocks.POLISHED_STONE_SLAB)
             .add(DnDStoneBlocks.MOSSY_POLISHED_STONE_SLAB)
             .add(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_SLAB)
-            .add(DnDBlocks.ICE_SLAB)
-            .add(DnDBlocks.PACKED_ICE_SLAB)
-            .add(DnDBlocks.BLUE_ICE_SLAB)
             .add(DnDNetherBrickBlocks.NETHERRACK_SLAB)
             .add(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_SLAB)
             .add(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_SLAB)
@@ -497,9 +490,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDStoneBlocks.POLISHED_STONE_WALL)
             .add(DnDStoneBlocks.MOSSY_POLISHED_STONE_WALL)
             .add(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_WALL)
-            .add(DnDBlocks.ICE_WALL)
-            .add(DnDBlocks.PACKED_ICE_WALL)
-            .add(DnDBlocks.BLUE_ICE_WALL)
             .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE_WALL)
             .add(DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL)
             .add(DnDNetherBrickBlocks.NETHERRACK_WALL)

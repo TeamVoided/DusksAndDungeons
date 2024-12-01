@@ -2,12 +2,9 @@
 
 package org.teamvoided.voidlib.consortium.block
 
+import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
-import net.minecraft.block.Block
-import net.minecraft.block.SlabBlock
-import net.minecraft.block.StairsBlock
-import net.minecraft.block.WallBlock
 import net.minecraft.item.ItemConvertible
 import java.util.function.Supplier
 
@@ -36,11 +33,12 @@ open class BlockSet(
 
 fun createBlockSet(name: String) = BlockSetBuilder(name)
 fun createBlockSet(name: String, settings: Settings) = BlockSetBuilder(name).settings(settings)
-fun createHeadlessSet(name: String, parent: Block) = BlockSetBuilder(name).parent(parent)
+fun createHeadlessSet(name: String, parent: Block) = BlockSetBuilder(name, true).parent(parent)
 
 typealias BlockMaker<T> = (Block, Settings) -> T
+typealias StairMaker = (BlockState, Settings) -> StairsBlock
 
-open class BlockSetBuilder(var name: String) {
+open class BlockSetBuilder(var name: String, val headless: Boolean = false) {
     var parentName: String = name
     lateinit var settings: Settings
     lateinit var parent: Block
@@ -52,16 +50,29 @@ open class BlockSetBuilder(var name: String) {
     var wallMaker: BlockMaker<WallBlock> = { _, s -> WallBlock(s) }
 
     fun parentName(parentName: String): BlockSetBuilder = this.apply { this.parentName = parentName }
+    fun parentSuffix(suffix: String): BlockSetBuilder = this.apply { this.parentName = name + suffix }
+    fun s(): BlockSetBuilder = this.apply { this.parentName = name + "s" }
     fun settings(settings: Settings): BlockSetBuilder = this.apply { this.settings = settings }
     fun parent(parent: (Settings) -> Block): BlockSetBuilder = this.apply { this.parentMaker = parent }
     fun parent(parent: Block): BlockSetBuilder = this.apply { this.parent = parent; this.settings = copy(parent) }
-    fun stairs(stairs: BlockMaker<StairsBlock>): BlockSetBuilder = this.apply { stairMaker = stairs }
+    fun rawStairs(stairs: BlockMaker<StairsBlock>): BlockSetBuilder = this.apply { stairMaker = stairs }
+    fun stairs(stairs: StairMaker): BlockSetBuilder = this.apply { stairMaker = { b, s -> stairs(b.defaultState, s) } }
     fun slab(slab: BlockMaker<SlabBlock>): BlockSetBuilder = this.apply { slabMaker = slab }
+    fun slab(slab: (Settings) -> SlabBlock): BlockSetBuilder = this.apply { slabMaker = { _, s -> slab(s) } }
     fun wall(wall: BlockMaker<WallBlock>): BlockSetBuilder = this.apply { wallMaker = wall }
+    fun wall(wall: (Settings) -> WallBlock): BlockSetBuilder = this.apply { wallMaker = { _, s -> wall(s) } }
     fun hasStoneCutting(hasStoneCutting: Boolean): BlockSetBuilder =
         this.apply { this.hasStoneCutting = hasStoneCutting }
 
-    fun build(): BlockSet {
+    fun noStoneCutting(): BlockSetBuilder = this.apply { this.hasStoneCutting = false }
+
+    fun build(): HeadlessBlockSet {
+        if (headless) return HeadlessBlockSet(
+            name, parent,
+            stairMaker(parent, settings), slabMaker(parent, settings), wallMaker(parent, settings),
+            hasStoneCutting
+        )
+
         parent = parentMaker(settings)
         return BlockSet(
             parentName, name,
@@ -69,10 +80,4 @@ open class BlockSetBuilder(var name: String) {
             hasStoneCutting
         )
     }
-
-    fun buildHeadless(): HeadlessBlockSet = HeadlessBlockSet(
-        name, parent,
-        stairMaker(parent, settings), slabMaker(parent, settings), wallMaker(parent, settings),
-        hasStoneCutting
-    )
 }

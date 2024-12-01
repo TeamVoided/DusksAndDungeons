@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.voidlib.consortium.block.HeadlessBlockSet
 import org.teamvoided.voidlib.helpers.addAndReturn
 
 val SECRET_BLOCKS = mutableSetOf<Block>()
@@ -14,6 +15,11 @@ internal fun Block.shh(): Block = SECRET_BLOCKS.addAndReturn(this)
 internal fun Item.shh(): Item = SECRET_ITEMS.addAndReturn(this)
 internal fun Item.tellWitnessesThatIWasMurdered(): Item = DnDItems.EVIL_ITEMS.addAndReturn(this)
 internal fun Block.tellWitnessesThatIWasMurdered(): Block = DnDBlocks.EVIL_BLOCKS.addAndReturn(this)
+
+internal fun HeadlessBlockSet.tellWitnessesThatIWasMurdered(): HeadlessBlockSet {
+    DnDBlocks.EVIL_BLOCKS.addAll(this.collect())
+    return this
+}
 
 
 @JvmField

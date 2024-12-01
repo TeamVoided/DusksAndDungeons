@@ -12,16 +12,23 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isModLoaded
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.compat.DramaticDoorsCompat
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_BRICKS
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
-import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.dusks_and_dungeons.util.datagen.iceStairs
+import org.teamvoided.dusks_and_dungeons.util.datagen.registerTallCrystal
+import org.teamvoided.dusks_and_dungeons.util.datagen.slab
+import org.teamvoided.dusks_and_dungeons.util.datagen.wall
 import org.teamvoided.voidlib.devin.extensions.model.createBlockSet
 import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private val ALL_KRY: TextureKey = TextureKey.of("all")
+    val excludeModels = listOf(ICE_SET, ICE_BRICKS)
+
 
 //    var woodStates =
 //        BlockStateModelGenerator.StateFactory { block, identifier, texture, biConsumer ->
@@ -60,25 +67,15 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         WoodModels.woodModels(gen)
 
 
-        gen.iceStairs(DnDBlocks.ICE_STAIRS, Blocks.ICE)
-        gen.slab(DnDBlocks.ICE_SLAB, Blocks.ICE)
-        gen.wall(DnDBlocks.ICE_WALL, Blocks.ICE)
-        gen.genPsudoFamily(
-            DnDBlocks.PACKED_ICE_STAIRS,
-            DnDBlocks.PACKED_ICE_SLAB,
-            DnDBlocks.PACKED_ICE_WALL,
-            Blocks.PACKED_ICE
-        )
-        gen.genPsudoFamily(
-            DnDBlocks.BLUE_ICE_STAIRS,
-            DnDBlocks.BLUE_ICE_SLAB,
-            DnDBlocks.BLUE_ICE_WALL,
-            Blocks.BLUE_ICE
-        )
-        gen.registerSimpleCubeAll(DnDBlocks.ICE_BRICKS)
-        gen.iceStairs(DnDBlocks.ICE_BRICK_STAIRS, DnDBlocks.ICE_BRICKS)
-        gen.slab(DnDBlocks.ICE_BRICK_SLAB, DnDBlocks.ICE_BRICKS)
-        gen.wall(DnDBlocks.ICE_BRICK_WALL, DnDBlocks.ICE_BRICKS)
+        gen.iceStairs(ICE_SET.stairs, Blocks.ICE)
+        gen.slab(ICE_SET.slab, Blocks.ICE)
+        gen.wall(ICE_SET.wall, Blocks.ICE)
+        gen.registerSimpleCubeAll(ICE_BRICKS.parent)
+
+        gen.iceStairs(ICE_BRICKS.stairs, ICE_BRICKS.parent)
+        gen.slab(ICE_BRICKS.slab, ICE_BRICKS.parent)
+        gen.wall(ICE_BRICKS.wall, ICE_BRICKS.parent)
+
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
         @Suppress("DEPRECATION")
@@ -101,7 +98,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )*/
         if (isModLoaded("dramaticdoors")) DramaticDoorsCompat.datagen(gen)
 
-        SETS.forEach(gen::createBlockSet)
+        SETS.filterNot(excludeModels::contains).forEach(gen::createBlockSet)
     }
 
     private val single = listOf(
