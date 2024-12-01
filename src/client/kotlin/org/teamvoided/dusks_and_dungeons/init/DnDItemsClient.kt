@@ -13,12 +13,13 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
+import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
 import net.minecraft.util.Identifier.ofDefault as mc
 
 object DnDItemsClient {
     fun init() {
         registerTint(
-            { _, _ -> GrassColors.getDefault() }, *DnDBlocks.GRASS_TINT_BLOCKS.map { it.asItem() }.toTypedArray()
+            { _, _ -> GrassColors.getDefault() }, *GRASS_TINT_BLOCKS.map { it.asItem() }.toTypedArray()
         )
         registerTint(
             FoliageColors.getDefaultColor(),

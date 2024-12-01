@@ -31,18 +31,7 @@ object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
     val SETS = mutableListOf<BlockSet>()
 
-    val CUTOUT_BLOCKS = mutableSetOf<Block>()
-    val TRANSLUCENT_BLOCKS = mutableSetOf<Block>()
-    val GRASS_TINT_BLOCKS = mutableSetOf<Block>()
-    val FOLIAGE_TINT_BLOCKS = mutableSetOf<Block>()
-    val FLAMMABLE_PLANKS = mutableSetOf<Block>()
-    val FLAMMABLE_LOGS = mutableSetOf<Block>()
-    val FLAMMABLE_LEAVES = mutableSetOf<Block>()
-    val SWORDABLE = mutableSetOf<Block>()
-    val PICKAXABLE = mutableSetOf<Block>()
-    val AXABLE = mutableSetOf<Block>()
-    val SHOVELABLE = mutableSetOf<Block>()
-    val HOEABLE = mutableSetOf<Block>()
+
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
 

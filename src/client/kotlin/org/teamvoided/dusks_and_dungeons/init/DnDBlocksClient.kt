@@ -12,6 +12,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
+import org.teamvoided.dusks_and_dungeons.util.block.CUTOUT_BLOCKS
+import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
+import org.teamvoided.dusks_and_dungeons.util.block.TRANSLUCENT_BLOCKS
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE as BLOCK_RL_MAP
 
 
@@ -29,14 +32,14 @@ object DnDBlocksClient {
             { _, world, pos, tintIndex -> if (tintIndex != 0) grassColor(world, pos) else -1 },
             *DnDBlockLists.flowerbedBlocks.toTypedArray()
         )
-        registerTint({ _, world, pos, _ -> grassColor(world, pos) }, *DnDBlocks.GRASS_TINT_BLOCKS.toTypedArray())
+        registerTint({ _, world, pos, _ -> grassColor(world, pos) }, *GRASS_TINT_BLOCKS.toTypedArray())
         registerTint(FoliageColors.getSpruceColor(), DnDWoodBlocks.SPRUCE_LEAF_PILE)
         registerTint(FoliageColors.getBirchColor(), DnDWoodBlocks.BIRCH_LEAF_PILE)
 
-        DnDBlocks.CUTOUT_BLOCKS.forEach { BLOCK_RL_MAP.putBlock(it, RenderLayer.getCutout()) }
-        DnDBlocks.TRANSLUCENT_BLOCKS.forEach { BLOCK_RL_MAP.putBlock(it, RenderLayer.getTranslucent()) }
+        CUTOUT_BLOCKS.forEach { BLOCK_RL_MAP.putBlock(it, RenderLayer.getCutout()) }
+        TRANSLUCENT_BLOCKS.forEach { BLOCK_RL_MAP.putBlock(it, RenderLayer.getTranslucent()) }
 
-        ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in DnDBlocks.GRASS_TINT_BLOCKS }
+        ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS }
     }
 
     fun registerTint(provider: BlockColorProvider, vararg blocks: Block) =

@@ -12,6 +12,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
+import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.voidlib.devin.extensions.tag.add
 import org.teamvoided.voidlib.devin.extensions.tag.createSetTags
 import java.util.concurrent.CompletableFuture
@@ -58,15 +59,15 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDWoodBlocks.STRIPPED_CASCADE_LOG)
             .add(DnDWoodBlocks.STRIPPED_CASCADE_WOOD)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_PLANKS)
-            .add(DnDBlocks.FLAMMABLE_PLANKS)
+            .add(FLAMMABLE_PLANKS)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_LOGS)
             .forceAddTag(DnDBlockTags.CASCADE_LOGS)
             .forceAddTag(DnDBlockTags.LOG_PILES_THAT_BURN)
             .forceAddTag(DnDBlockTags.HOLLOW_LOGS_THAT_BURN)
-            .add(DnDBlocks.FLAMMABLE_LOGS)
+            .add(FLAMMABLE_LOGS)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_LEAVES)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
-            .add(DnDBlocks.FLAMMABLE_LEAVES)
+            .add(FLAMMABLE_LEAVES)
         getOrCreateTagBuilder(DnDBlockTags.WOOD_STAIRS)
             .forceAddTag(DnDBlockTags.WOOD_STAIRS_THAT_BURN)
             .add(DnDWoodBlocks.CRIMSON_HYPHAE_STAIRS)
@@ -401,17 +402,17 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
-            .add(DnDBlocks.SWORDABLE)
+            .add(SWORDABLE)
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-            .add(DnDBlocks.PICKAXABLE)
+            .add(PICKAXABLE)
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
             .forceAddTag(DnDBlockTags.LOG_PILES)
-            .add(DnDBlocks.AXABLE)
+            .add(AXABLE)
         getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
-            .add(DnDBlocks.SHOVELABLE)
+            .add(SHOVELABLE)
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
-            .add(DnDBlocks.HOEABLE)
+            .add(HOEABLE)
 
 
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
