@@ -1,5 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.block.meltable
 
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.StairsBlock
 import net.minecraft.block.entity.BlockEntity
@@ -12,6 +13,7 @@ import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.World
 
 class MeltableStairsBlock(baseBlockState: BlockState, settings: Settings) : StairsBlock(baseBlockState, settings) {
+    constructor(block: Block) : this(block.defaultState, Settings.copy(block))
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean =
         if (stateFrom.isOf(this)) true else super.isSideInvisible(state, stateFrom, direction)
 
