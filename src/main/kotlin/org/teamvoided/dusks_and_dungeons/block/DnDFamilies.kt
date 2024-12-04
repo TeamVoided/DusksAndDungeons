@@ -5,7 +5,6 @@ import net.minecraft.data.family.BlockFamilies
 import net.minecraft.data.family.BlockFamily
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 
 

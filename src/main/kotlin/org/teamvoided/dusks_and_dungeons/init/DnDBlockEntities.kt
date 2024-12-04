@@ -7,7 +7,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Util
 import org.teamvoided.dusks_and_dungeons.block.entity.*
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDStoneBlocks
 
 object DnDBlockEntities {
     fun init() {}
@@ -23,32 +22,32 @@ object DnDBlockEntities {
     )
 
     val BUNNY_GRAVE: BlockEntityType<BunnyGraveBlockEntity> =
-        register("bunny_grave", BlockEntityType.Builder.create(::BunnyGraveBlockEntity, DnDStoneBlocks.BUNNY_GRAVE))
+        register("bunny_grave", BlockEntityType.Builder.create(::BunnyGraveBlockEntity, DnDBlocks.BUNNY_GRAVE))
 
     val HAUNTED_BLOCK: BlockEntityType<HauntedBlockEntity> = register(
         "hauted_block", BlockEntityType.Builder.create(
             ::HauntedBlockEntity,
-//            DnDStoneBlocks.HAUNTED_GRAVESTONE,
-//            DnDStoneBlocks.SMALL_HAUNTED_GRAVESTONE,
-//            DnDStoneBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
-//            DnDStoneBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE,
-//            DnDStoneBlocks.HAUNTED_TUFF_GRAVESTONE,
-//            DnDStoneBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE,
-//            DnDStoneBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
-//            DnDStoneBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE
+//            DnDBlocks.HAUNTED_GRAVESTONE,
+//            DnDBlocks.SMALL_HAUNTED_GRAVESTONE,
+//            DnDBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
+//            DnDBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE,
+//            DnDBlocks.HAUNTED_TUFF_GRAVESTONE,
+//            DnDBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE,
+//            DnDBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
+//            DnDBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE
         )
     )
     val HAUNTED_GRAVESTONE_BLOCK: BlockEntityType<HauntedGravestoneBlockEntity> = register(
         "haunted_gravestone_block", BlockEntityType.Builder.create(
             ::HauntedGravestoneBlockEntity,
-            DnDStoneBlocks.HAUNTED_GRAVESTONE,
-            DnDStoneBlocks.SMALL_HAUNTED_GRAVESTONE,
-            DnDStoneBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
-            DnDStoneBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE,
-            DnDStoneBlocks.HAUNTED_TUFF_GRAVESTONE,
-            DnDStoneBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE,
-            DnDStoneBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
-            DnDStoneBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE
+            DnDBlocks.HAUNTED_GRAVESTONE,
+            DnDBlocks.SMALL_HAUNTED_GRAVESTONE,
+            DnDBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
+            DnDBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE,
+            DnDBlocks.HAUNTED_TUFF_GRAVESTONE,
+            DnDBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE,
+            DnDBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
+            DnDBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE
         )
     )
 

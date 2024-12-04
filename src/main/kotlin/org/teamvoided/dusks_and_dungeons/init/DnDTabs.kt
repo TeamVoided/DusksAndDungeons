@@ -98,19 +98,19 @@ object DnDTabs {
             )
             entries.addItems(
                 DnDFloraBlocks.ROOT_BLOCK,
-                DnDStoneBlocks.STONE_PILLAR,
-                DnDStoneBlocks.DEEPSLATE_PILLAR,
+                DnDBlocks.STONE_PILLAR,
+                DnDBlocks.DEEPSLATE_PILLAR,
 //                DnDBlocks.TALL_REDSTONE_CRYSTAL,
-                DnDStoneBlocks.STONE_GRAVESTONE,
-                DnDStoneBlocks.SMALL_STONE_GRAVESTONE,
-                DnDStoneBlocks.DEEPSLATE_GRAVESTONE,
-                DnDStoneBlocks.SMALL_DEEPSLATE_GRAVESTONE,
-                DnDStoneBlocks.TUFF_GRAVESTONE,
-                DnDStoneBlocks.SMALL_TUFF_GRAVESTONE,
-                DnDStoneBlocks.BLACKSTONE_GRAVESTONE,
-                DnDStoneBlocks.SMALL_BLACKSTONE_GRAVESTONE,
+                DnDBlocks.STONE_GRAVESTONE,
+                DnDBlocks.SMALL_STONE_GRAVESTONE,
+                DnDBlocks.DEEPSLATE_GRAVESTONE,
+                DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE,
+                DnDBlocks.TUFF_GRAVESTONE,
+                DnDBlocks.SMALL_TUFF_GRAVESTONE,
+                DnDBlocks.BLACKSTONE_GRAVESTONE,
+                DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE,
 
-                DnDStoneBlocks.HEADSTONE,
+                DnDBlocks.HEADSTONE,
 
                 DnDBigBlocks.BIG_CHAIN,
                 DnDBigBlocks.BIG_LANTERN,
@@ -152,9 +152,9 @@ object DnDTabs {
     // Dev Tabs
     val DND_EVERYTHING = register("dnd_everything",
         FabricItemGroup.builder()
-            .icon { ItemStack(DnDStoneBlocks.STONE_PILLAR.asItem()) }
+            .icon { ItemStack(DnDBlocks.STONE_PILLAR.asItem()) }
             .name(Text.translatable("DnD Everything"))
-            .entries { params, entries ->
+            .entries { _, entries ->
                 if (isDev())
                     entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains))
             }
@@ -164,7 +164,7 @@ object DnDTabs {
         FabricItemGroup.builder()
             .icon { ItemStack(DnDItems.GALLERY_MAPLE_DOOR) }
             .name(Text.literal("DnD Experimental"))
-            .entries { params, entries -> if (isDev()) entries.addLists(EVIL_ITEMS) }
+            .entries { _, entries -> if (isDev()) entries.addLists(EVIL_ITEMS) }
             .build()
     )
 

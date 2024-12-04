@@ -15,9 +15,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.big.*
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
-import org.teamvoided.voidlib.consortium.block.BlockSet
 import org.teamvoided.voidlib.consortium.block.HeadlessBlockSet
 import org.teamvoided.voidlib.helpers.addAndReturn
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
@@ -87,11 +85,12 @@ fun HeadlessBlockSet.flammablePlanks(): HeadlessBlockSet = FLAMMABLE_PLANKS.addS
 fun HeadlessBlockSet.flammableLogs(): HeadlessBlockSet = FLAMMABLE_LOGS.addSet(this)
 fun HeadlessBlockSet.flammableLeaves(): HeadlessBlockSet = FLAMMABLE_LEAVES.addSet(this)
 fun HeadlessBlockSet.sword(): HeadlessBlockSet = SWORDABLE.addSet(this)
-fun HeadlessBlockSet.pickaxe(): HeadlessBlockSet =PICKAXABLE.addSet(this)
+fun HeadlessBlockSet.pickaxe(): HeadlessBlockSet = PICKAXABLE.addSet(this)
 fun HeadlessBlockSet.axe(): HeadlessBlockSet = AXABLE.addSet(this)
 fun HeadlessBlockSet.shovel(): HeadlessBlockSet = SHOVELABLE.addSet(this)
 fun HeadlessBlockSet.hoe(): HeadlessBlockSet = HOEABLE.addSet(this)
 
+fun HeadlessBlockSet.overgrown(): HeadlessBlockSet = this.cutout().grass().pickaxe()
 
 fun MutableCollection<Block>.addSet(set: HeadlessBlockSet): HeadlessBlockSet {
     this.addAll(set.collect())

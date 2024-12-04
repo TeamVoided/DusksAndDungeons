@@ -1,13 +1,10 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
+import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.block.Blocks.*
-import net.minecraft.block.IceBlock
-import net.minecraft.block.MapColor
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.BlockItem
 import net.minecraft.item.FoodComponent
@@ -22,11 +19,9 @@ import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.blocks.*
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks.BIG_CHAIN
 import org.teamvoided.dusks_and_dungeons.init.misc.ICE
-import org.teamvoided.dusks_and_dungeons.util.block.cutout
-import org.teamvoided.dusks_and_dungeons.util.block.light
-import org.teamvoided.dusks_and_dungeons.util.block.pickaxe
-import org.teamvoided.dusks_and_dungeons.util.block.translucent
+import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.shh
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.BlockSetBuilder
@@ -45,7 +40,31 @@ object DnDBlocks {
     val EVIL_BLOCKS = mutableSetOf<Block>()
 
     /*
-       ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄  --- ICE AGE --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
+        🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
+     */
+    val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
+    val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
+
+    val POLISHED_STONE = registerSet("polished_stone", copy(SMOOTH_STONE)).pickaxe()
+    val MOSSY_POLISHED_STONE = registerSet("mossy_polished_stone", copy(POLISHED_STONE)).pickaxe()
+
+    val OVERGROWN_POLISHED_STONE = registerSet("overgrown_polished_stone", copy(MOSSY_POLISHED_STONE)).overgrown()
+    val OVERGROWN_COBBLESTONE = registerSet("overgrown_cobblestone", copy(MOSSY_COBBLESTONE)).overgrown()
+    val OVERGROWN_STONE_BRICKS = registerSet("overgrown_stone_brick", copy(MOSSY_STONE_BRICKS), "s").overgrown()
+
+    val STONE_GRAVESTONE = registerGravestone("stone_gravestone", CHISELED_STONE_BRICKS)
+    val SMALL_STONE_GRAVESTONE = registerSmallGravestone("small_stone_gravestone", STONE_GRAVESTONE)
+    val DEEPSLATE_GRAVESTONE = registerGravestone("deepslate_gravestone", CHISELED_DEEPSLATE)
+    val SMALL_DEEPSLATE_GRAVESTONE = registerSmallGravestone("small_deepslate_gravestone", DEEPSLATE_GRAVESTONE)
+    val TUFF_GRAVESTONE = registerGravestone("tuff_gravestone", CHISELED_TUFF_BRICKS)
+    val SMALL_TUFF_GRAVESTONE = registerSmallGravestone("small_tuff_gravestone", TUFF_GRAVESTONE)
+    val BLACKSTONE_GRAVESTONE = registerGravestone("blackstone_gravestone", CHISELED_POLISHED_BLACKSTONE)
+    val SMALL_BLACKSTONE_GRAVESTONE = registerSmallGravestone("small_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
+    val HEADSTONE =
+        register("headstone", GravestoneBlock(headstoneShape, centerHeadstoneShape, copy(BIG_CHAIN)).cutout().pickaxe())
+
+    /*
+       ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE AGE --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
      */
     val ICE_SET = register(
         createHeadlessSet("ice", ICE_BLOCK).noStoneCutting().stairs(::MeltableStairsBlock)
@@ -55,6 +74,23 @@ object DnDBlocks {
     val BLUE_ICE_SET = registerHeadlessSet("blue_ice", BLUE_ICE).pickaxe()
 
     // ☢ Experimental ☢
+
+    val BUNNY_GRAVE = register("bunny_grave", BunnyGraveBlock(copy(STONE_BRICK_WALL)).pickaxe()).shh()
+    // Haunted graves
+    val HAUNTED_GRAVESTONE = registerHGravestone("haunted_gravestone", STONE_GRAVESTONE)
+    val SMALL_HAUNTED_GRAVESTONE = registerSmallHGravestone("small_haunted_gravestone", STONE_GRAVESTONE)
+    val HAUNTED_DEEPSLATE_GRAVESTONE = registerHGravestone("haunted_deepslate_gravestone", DEEPSLATE_GRAVESTONE)
+    val SMALL_HAUNTED_DEEPSLATE_GRAVESTONE =
+        registerSmallHGravestone("small_haunted_deepslate_gravestone", DEEPSLATE_GRAVESTONE)
+    val HAUNTED_TUFF_GRAVESTONE = registerHGravestone("haunted_tuff_gravestone", TUFF_GRAVESTONE)
+    val SMALL_HAUNTED_TUFF_GRAVESTONE = registerSmallHGravestone("small_haunted_tuff_gravestone", TUFF_GRAVESTONE)
+    val HAUNTED_BLACKSTONE_GRAVESTONE = registerHGravestone("haunted_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
+    val SMALL_HAUNTED_BLACKSTONE_GRAVESTONE =
+        registerSmallHGravestone("small_haunted_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
+
+    val SNOWY_STONE_BRICKS = registerSet("snowy_stone_brick", copy(STONE_BRICKS), "s")
+        .pickaxe().tellWitnessesThatIWasMurdered()
+
     val ICE_BRICKS = register(
         createBlockSet("ice_brick", ICE).s().noStoneCutting().parent(::IceBlock)
             .stairs(::MeltableStairsBlock).slab(::MeltableSlabBlock).wall(::MeltableWallBlock)
@@ -106,7 +142,6 @@ object DnDBlocks {
         DnDFloraBlocks.init()
         DnDNetherBrickBlocks.init()
         DnDOverlayBlocks.init()
-        DnDStoneBlocks.init()
         DnDWoodBlocks.init()
 
     }
@@ -147,4 +182,18 @@ object DnDBlocks {
         BLOCKS.add(regBlock)
         return regBlock
     }
+
+    internal fun registerGravestone(name: String, block: Block) =
+        register(name, GravestoneBlock(gravestoneShape, centerGravestoneShape, copy(block).solid())).pickaxe()
+
+    internal fun registerSmallGravestone(name: String, block: Block) =
+        register(name, GravestoneBlock(smallGravestoneShape, centerSmallGravestoneShape, copy(block))).pickaxe()
+
+    internal fun registerHGravestone(name: String, block: Block) =
+        register(name, HauntedGravestoneBlock(gravestoneShape, centerGravestoneShape, copy(block).solid()))
+            .pickaxe().shh().tellWitnessesThatIWasMurdered()
+
+    internal fun registerSmallHGravestone(name: String, block: Block) =
+        register(name, HauntedGravestoneBlock(smallGravestoneShape, centerSmallGravestoneShape, copy(block)))
+            .pickaxe().shh().tellWitnessesThatIWasMurdered()
 }

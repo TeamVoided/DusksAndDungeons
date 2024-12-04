@@ -45,11 +45,11 @@ object DnDItemLists {
         DnDItems.CASCADE_SIGN,
         DnDItems.CASCADE_HANGING_SIGN
     )
-    val polishedStone = DnDStoneBlocks.POLISHED_STONE.collect()
-    val mossyPolishedStone = DnDStoneBlocks.MOSSY_POLISHED_STONE.collect()
-    val overgrownCobblestone = DnDStoneBlocks.OVERGROWN_COBBLESTONE.collect()
-    val overgrownStoneBricks = DnDStoneBlocks.OVERGROWN_STONE_BRICKS.collect()
-    val snowyStoneBricks = DnDStoneBlocks.SNOWY_STONE_BRICKS.collect()
+    val polishedStone = DnDBlocks.POLISHED_STONE.collect()
+    val mossyPolishedStone = DnDBlocks.MOSSY_POLISHED_STONE.collect()
+    val overgrownCobblestone = DnDBlocks.OVERGROWN_COBBLESTONE.collect()
+    val overgrownStoneBricks = DnDBlocks.OVERGROWN_STONE_BRICKS.collect()
+    val snowyStoneBricks = DnDBlocks.SNOWY_STONE_BRICKS.collect()
     val ice = DnDBlocks.ICE_SET.collect() + DnDBlocks.PACKED_ICE_SET.collect() + DnDBlocks.BLUE_ICE_SET.collect()
 //            DnDBlocks.ICE_BRICKS.collect() + DnDBlocks.PACKED_ICE_BRICKS.collect() + DnDBlocks.BLUE_ICE_BRICKS.collect()
 

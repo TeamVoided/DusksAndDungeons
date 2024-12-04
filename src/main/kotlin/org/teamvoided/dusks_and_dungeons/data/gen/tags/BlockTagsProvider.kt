@@ -142,7 +142,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
             .add(Blocks.COBBLESTONE)
             .add(Blocks.MOSSY_COBBLESTONE)
-            .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE.parent)
+            .add(DnDBlocks.OVERGROWN_COBBLESTONE.parent)
             .forceAddTag(BlockTags.STONE_BRICKS)
             .forceAddTag(BlockTags.LOGS)
             .forceAddTag(DnDBlockTags.PUMPKINS)
@@ -228,28 +228,28 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.GRAVESTONES)
             .forceAddTag(DnDBlockTags.SMALL_GRAVESTONES)
-            .add(DnDStoneBlocks.STONE_GRAVESTONE)
-            .add(DnDStoneBlocks.DEEPSLATE_GRAVESTONE)
-            .add(DnDStoneBlocks.TUFF_GRAVESTONE)
-            .add(DnDStoneBlocks.BLACKSTONE_GRAVESTONE)
+            .add(DnDBlocks.STONE_GRAVESTONE)
+            .add(DnDBlocks.DEEPSLATE_GRAVESTONE)
+            .add(DnDBlocks.TUFF_GRAVESTONE)
+            .add(DnDBlocks.BLACKSTONE_GRAVESTONE)
         getOrCreateTagBuilder(DnDBlockTags.SMALL_GRAVESTONES)
-            .add(DnDStoneBlocks.SMALL_STONE_GRAVESTONE)
-            .add(DnDStoneBlocks.SMALL_DEEPSLATE_GRAVESTONE)
-            .add(DnDStoneBlocks.SMALL_TUFF_GRAVESTONE)
-            .add(DnDStoneBlocks.SMALL_BLACKSTONE_GRAVESTONE)
+            .add(DnDBlocks.SMALL_STONE_GRAVESTONE)
+            .add(DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE)
+            .add(DnDBlocks.SMALL_TUFF_GRAVESTONE)
+            .add(DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE)
         getOrCreateTagBuilder(DnDBlockTags.HAUNTED_GRAVESTONES)
             .forceAddTag(DnDBlockTags.SMALL_HAUNTED_GRAVESTONES)
-            .add(DnDStoneBlocks.HAUNTED_GRAVESTONE)
-            .add(DnDStoneBlocks.HAUNTED_DEEPSLATE_GRAVESTONE)
-            .add(DnDStoneBlocks.HAUNTED_TUFF_GRAVESTONE)
-            .add(DnDStoneBlocks.HAUNTED_BLACKSTONE_GRAVESTONE)
+            .add(DnDBlocks.HAUNTED_GRAVESTONE)
+            .add(DnDBlocks.HAUNTED_DEEPSLATE_GRAVESTONE)
+            .add(DnDBlocks.HAUNTED_TUFF_GRAVESTONE)
+            .add(DnDBlocks.HAUNTED_BLACKSTONE_GRAVESTONE)
         getOrCreateTagBuilder(DnDBlockTags.SMALL_HAUNTED_GRAVESTONES)
-            .add(DnDStoneBlocks.SMALL_HAUNTED_GRAVESTONE)
-            .add(DnDStoneBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE)
-            .add(DnDStoneBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE)
-            .add(DnDStoneBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE)
+            .add(DnDBlocks.SMALL_HAUNTED_GRAVESTONE)
+            .add(DnDBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE)
+            .add(DnDBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE)
+            .add(DnDBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE)
         getOrCreateTagBuilder(DnDBlockTags.HEADSTONES)
-            .add(DnDStoneBlocks.HEADSTONE)
+            .add(DnDBlocks.HEADSTONE)
 
         getOrCreateTagBuilder(DnDBlockTags.NETHER_BRICKS)
             .forceAddTag(DnDBlockTags.CRACKED_NETHER_BRICKS)
@@ -450,7 +450,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.CANDELABRAS)
 
         getOrCreateTagBuilder(BlockTags.STONE_BRICKS)
-            .add(DnDStoneBlocks.OVERGROWN_STONE_BRICKS.parent)
+            .add(DnDBlocks.OVERGROWN_STONE_BRICKS.parent)
     }
 
     private fun vanillaBlockTypeShapeTags() {
@@ -665,7 +665,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     }
 
     private fun conventionTags() {
-        getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES).add(DnDStoneBlocks.OVERGROWN_COBBLESTONE.parent)
+        getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES).add(DnDBlocks.OVERGROWN_COBBLESTONE.parent)
         getOrCreateTagBuilder(ConventionalBlockTags.CHAINS).add(DnDBigBlocks.BIG_CHAIN)
         getOrCreateTagBuilder(ConventionalBlockTags.WOODEN_CHESTS).add(DnDBlocks.CHEST_O_SOULS)
     }

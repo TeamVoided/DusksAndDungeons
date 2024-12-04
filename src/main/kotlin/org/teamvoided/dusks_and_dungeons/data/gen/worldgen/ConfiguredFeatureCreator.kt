@@ -36,9 +36,9 @@ import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.BoulderConfig
@@ -121,7 +121,7 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
             DnDFeatures.BOULDER,
             BoulderConfig(
-                BlockStateProvider.of(DnDStoneBlocks.OVERGROWN_COBBLESTONE.get().defaultState),
+                BlockStateProvider.of(DnDBlocks.OVERGROWN_COBBLESTONE.get().defaultState),
                 UniformIntProvider.create(2, 5),
                 UniformIntProvider.create(1, 4),
                 UniformIntProvider.create(1, 2),

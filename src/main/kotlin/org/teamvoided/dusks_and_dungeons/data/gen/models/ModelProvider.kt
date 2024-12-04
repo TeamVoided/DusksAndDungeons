@@ -17,7 +17,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.iceStairs
 import org.teamvoided.dusks_and_dungeons.util.datagen.registerTallCrystal
 import org.teamvoided.dusks_and_dungeons.util.datagen.slab
@@ -30,9 +29,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     private val ALL_KRY: TextureKey = TextureKey.of("all")
     val excludeModels = listOf(
         ICE_SET, ICE_BRICKS,
-        DnDStoneBlocks.OVERGROWN_POLISHED_STONE,
-        DnDStoneBlocks.OVERGROWN_COBBLESTONE,
-        DnDStoneBlocks.OVERGROWN_STONE_BRICKS
+        DnDBlocks.OVERGROWN_POLISHED_STONE,
+        DnDBlocks.OVERGROWN_COBBLESTONE,
+        DnDBlocks.OVERGROWN_STONE_BRICKS
     )
 
 
