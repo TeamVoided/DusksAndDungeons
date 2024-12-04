@@ -3,8 +3,6 @@ package org.teamvoided.dusks_and_dungeons.block
 import net.minecraft.block.Blocks
 import net.minecraft.data.family.BlockFamilies
 import net.minecraft.data.family.BlockFamily
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 
 
@@ -153,92 +151,11 @@ object DnDFamilies {
             .slab(DnDWoodBlocks.WARPED_HYPHAE_SLAB)
             .wall(DnDWoodBlocks.WARPED_HYPHAE_WALL)
             .build()
-    private val NETHERRACK_FAMILY: BlockFamily =
-        BlockFamilies.register(Blocks.NETHERRACK)
-            .stairs(DnDNetherBrickBlocks.NETHERRACK_STAIRS)
-            .slab(DnDNetherBrickBlocks.NETHERRACK_SLAB)
-            .wall(DnDNetherBrickBlocks.NETHERRACK_WALL)
-            .build()
-    private val POLISHED_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.POLISHED_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.POLISHED_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.POLISHED_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.POLISHED_NETHER_BRICK_WALL)
-            .build()
-    private val MIXED_RED_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.MIXED_NETHER_BRICKS)
-            .cracked(DnDNetherBrickBlocks.CRACKED_MIXED_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.MIXED_NETHER_BRICK_WALL)
-            .chiseled(DnDNetherBrickBlocks.CHISELED_MIXED_NETHER_BRICKS)
-            .build()
-    private val POLISHED_RED_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICK_WALL)
-            .build()
-    private val BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.BLUE_NETHER_BRICKS)
-            .cracked(DnDNetherBrickBlocks.CRACKED_BLUE_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_WALL)
-            .polished(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICKS)
-            .chiseled(DnDNetherBrickBlocks.CHISELED_BLUE_NETHER_BRICKS)
-            .build()
-    private val MIXED_BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICKS)
-            .cracked(DnDNetherBrickBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_WALL)
-            .chiseled(DnDNetherBrickBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS)
-            .build()
-    private val POLISHED_BLUE_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICK_WALL)
-            .build()
-    private val GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.GRAY_NETHER_BRICKS)
-            .cracked(DnDNetherBrickBlocks.CRACKED_GRAY_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_WALL)
-            .polished(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICKS)
-            .chiseled(DnDNetherBrickBlocks.CHISELED_GRAY_NETHER_BRICKS)
-            .build()
-    private val MIXED_GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICKS)
-            .cracked(DnDNetherBrickBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_WALL)
-            .chiseled(DnDNetherBrickBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS)
-            .build()
-    private val POLISHED_GRAY_NETHER_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICKS)
-            .stairs(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS)
-            .slab(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB)
-            .wall(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICK_WALL)
-            .build()
+
 
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
         BONEWOOD_FAMILY,
-        POLISHED_NETHER_BRICKS_FAMILY,
-        MIXED_RED_NETHER_BRICKS_FAMILY,
-        POLISHED_RED_NETHER_BRICKS_FAMILY,
-        BLUE_NETHER_BRICKS_FAMILY,
-        MIXED_BLUE_NETHER_BRICKS_FAMILY,
-        POLISHED_BLUE_NETHER_BRICKS_FAMILY,
-        GRAY_NETHER_BRICKS_FAMILY,
-        MIXED_GRAY_NETHER_BRICKS_FAMILY,
-        POLISHED_GRAY_NETHER_BRICKS_FAMILY,
-        
         WITHERING_BONEWOOD_FAMILY,
         GALLERY_MAPLE_FAMILY,
     )
@@ -255,7 +172,6 @@ object DnDFamilies {
         GALLERY_MAPLE_WOOD_FAMILY,
         CRIMSON_HYPHAE_FAMILY,
         WARPED_HYPHAE_FAMILY,
-        NETHERRACK_FAMILY,
     )
 
     fun init() = Unit
