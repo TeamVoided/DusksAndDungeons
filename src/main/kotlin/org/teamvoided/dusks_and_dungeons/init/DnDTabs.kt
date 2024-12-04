@@ -150,7 +150,7 @@ object DnDTabs {
     )
 
     // Dev Tabs
-    val DUSKS_AND_DUNGEONS_EXCEPT_DEBUG = register("dnd_everything",
+    val DND_EVERYTHING = register("dnd_everything",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDStoneBlocks.STONE_PILLAR.asItem()) }
             .name(Text.translatable("DnD Everything"))
