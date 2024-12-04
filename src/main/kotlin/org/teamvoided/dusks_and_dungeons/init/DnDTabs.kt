@@ -153,7 +153,7 @@ object DnDTabs {
     val DUSKS_AND_DUNGEONS_EXCEPT_DEBUG = register("dnd_everything",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDStoneBlocks.STONE_PILLAR.asItem()) }
-            .name(Text.translatable("Dusk's and Dungeons Except Debug"))
+            .name(Text.translatable("DnD Everything"))
             .entries { params, entries ->
                 if (isDev())
                     entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains))

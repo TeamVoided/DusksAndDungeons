@@ -30,7 +30,7 @@ object DusksAndDungeonsClient {
     val DUSKS_AND_DUNGEONS_SECRET = register("dnd_secret",
         FabricItemGroup.builder()
             .icon { ItemStack(DnDItems.HARVESTER_SCYTHE) }
-            .name(Text.literal("Secret Items ;)"))
+            .name(Text.literal("DnD Secrets"))
             .entries { _, entries ->
 //                println("Name : ${MinecraftClient.getInstance().player?.gameProfile?.id}")
                 if (isDev()) entries.addLists(SECRET_ITEMS)
