@@ -121,6 +121,7 @@ class ItemTagsProvider(
 
         copy(BlockTags.DIRT, ItemTags.DIRT)
 
+        copy(BlockTags.STONE_BRICKS, ItemTags.STONE_BRICKS)
 
         getOrCreateTagBuilder(ItemTags.DYEABLE)
             .add(DnDItems.FARMERS_HAT)

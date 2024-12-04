@@ -9,6 +9,7 @@ import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDStoneBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
 
 object StoneRecipes {
     fun generateStoneRecipes(e: RecipeExporter) {
@@ -50,69 +51,26 @@ object StoneRecipes {
             .criterion(DnDItemTags.GRAVESTONES)
             .offerTo(e)
 
-        e.createSmallSquare(DnDStoneBlocks.POLISHED_STONE, Blocks.STONE, 4)
         e.createStackedCraft(DnDStoneBlocks.STONE_PILLAR, Blocks.STONE_BRICKS, ItemTags.STONE_BRICKS)
         e.createStackedCraft(DnDStoneBlocks.DEEPSLATE_PILLAR, Blocks.DEEPSLATE_BRICKS)
         e.createStonecuttedFromList(
-            listOf(
-                Blocks.STONE,
-                Blocks.STONE_BRICKS,
-                DnDStoneBlocks.POLISHED_STONE
-            ),
-            DnDStoneBlocks.STONE_PILLAR
+            DnDStoneBlocks.STONE_PILLAR,
+            Blocks.STONE, Blocks.STONE_BRICKS, DnDStoneBlocks.POLISHED_STONE.parent
         )
         e.createStonecuttedFromList(
-            listOf(
-                Blocks.COBBLED_DEEPSLATE,
-                Blocks.DEEPSLATE_BRICKS,
-                Blocks.POLISHED_DEEPSLATE
-            ),
-            DnDStoneBlocks.DEEPSLATE_PILLAR
+            DnDStoneBlocks.DEEPSLATE_PILLAR,
+            Blocks.COBBLED_DEEPSLATE, Blocks.DEEPSLATE_BRICKS, Blocks.POLISHED_DEEPSLATE,
         )
+        e.createSmallSquare(DnDStoneBlocks.POLISHED_STONE, Blocks.STONE, 4)
+        e.createTwoPiece(DnDStoneBlocks.MOSSY_POLISHED_STONE, DnDStoneBlocks.POLISHED_STONE, Items.MOSS_BLOCK, "_from_moss")
+        e.createTwoPiece(DnDStoneBlocks.MOSSY_POLISHED_STONE, DnDStoneBlocks.POLISHED_STONE, Items.VINE, "_from_vine")
+
         e.createOvergrown(DnDStoneBlocks.OVERGROWN_POLISHED_STONE, DnDStoneBlocks.POLISHED_STONE)
         e.createOvergrown(DnDStoneBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
         e.createOvergrown(DnDStoneBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
-        e.createStonecuttedFromList(
-            listOf(
-                Blocks.STONE,
-                Blocks.STONE_BRICKS
-            ),
-            DnDStoneBlocks.POLISHED_STONE
-        )
-        e.createStonecuttedSet(
-            listOf(DnDStoneBlocks.POLISHED_STONE, Blocks.STONE, Blocks.STONE_BRICKS),
-            null,
-            DnDStoneBlocks.POLISHED_STONE_STAIRS,
-            DnDStoneBlocks.POLISHED_STONE_SLAB,
-            DnDStoneBlocks.POLISHED_STONE_WALL
-        )
-        e.createStonecuttedSet(
-            listOf(DnDStoneBlocks.MOSSY_POLISHED_STONE, Blocks.MOSSY_STONE_BRICKS),
-            null,
-            DnDStoneBlocks.MOSSY_POLISHED_STONE_STAIRS,
-            DnDStoneBlocks.MOSSY_POLISHED_STONE_SLAB,
-            DnDStoneBlocks.MOSSY_POLISHED_STONE_WALL
-        )
-        e.createStonecuttedSet(
-            listOf(DnDStoneBlocks.OVERGROWN_POLISHED_STONE, DnDStoneBlocks.OVERGROWN_STONE_BRICKS),
-            null,
-            DnDStoneBlocks.OVERGROWN_POLISHED_STONE_STAIRS,
-            DnDStoneBlocks.OVERGROWN_POLISHED_STONE_SLAB,
-            DnDStoneBlocks.OVERGROWN_POLISHED_STONE_WALL
-        )
-        e.createStonecuttedSet(
-            listOf(DnDStoneBlocks.OVERGROWN_COBBLESTONE),
-            null,
-            DnDStoneBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-            DnDStoneBlocks.OVERGROWN_COBBLESTONE_SLAB,
-            DnDStoneBlocks.OVERGROWN_COBBLESTONE_WALL
-        )
-        e.createStonecuttedSet(
-            listOf(DnDStoneBlocks.OVERGROWN_STONE_BRICKS),
-            null,
-            DnDStoneBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-            DnDStoneBlocks.OVERGROWN_STONE_BRICK_SLAB,
-            DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL
-        )
+
+        e.createStonecuttingSet(DnDStoneBlocks.POLISHED_STONE, Blocks.STONE, Blocks.STONE_BRICKS)
+        e.createStonecuttingSet(DnDStoneBlocks.MOSSY_POLISHED_STONE, Blocks.MOSSY_STONE_BRICKS)
+        e.createStonecuttingSet(DnDStoneBlocks.OVERGROWN_POLISHED_STONE, DnDStoneBlocks.OVERGROWN_STONE_BRICKS.parent)
     }
 }

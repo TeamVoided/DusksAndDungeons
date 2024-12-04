@@ -45,38 +45,11 @@ object DnDItemLists {
         DnDItems.CASCADE_SIGN,
         DnDItems.CASCADE_HANGING_SIGN
     )
-    val polishedStone = listOf(
-        DnDStoneBlocks.POLISHED_STONE,
-        DnDStoneBlocks.POLISHED_STONE_STAIRS,
-        DnDStoneBlocks.POLISHED_STONE_SLAB,
-        DnDStoneBlocks.POLISHED_STONE_WALL,
-    )
-    val mossyPolishedStone = listOf(
-        DnDStoneBlocks.MOSSY_POLISHED_STONE,
-        DnDStoneBlocks.MOSSY_POLISHED_STONE_STAIRS,
-        DnDStoneBlocks.MOSSY_POLISHED_STONE_SLAB,
-        DnDStoneBlocks.MOSSY_POLISHED_STONE_WALL,
-    )
-    val overgrownCobblestone = listOf(
-        DnDStoneBlocks.OVERGROWN_COBBLESTONE,
-        DnDStoneBlocks.OVERGROWN_COBBLESTONE_STAIRS,
-        DnDStoneBlocks.OVERGROWN_COBBLESTONE_SLAB,
-        DnDStoneBlocks.OVERGROWN_COBBLESTONE_WALL,
-    )
-    val overgrownStoneBricks = listOf(
-        DnDStoneBlocks.OVERGROWN_STONE_BRICKS,
-        DnDStoneBlocks.OVERGROWN_STONE_BRICK_STAIRS,
-        DnDStoneBlocks.OVERGROWN_STONE_BRICK_SLAB,
-        DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL,
-    )
-
-    val snowyStoneBricks = listOf(
-        DnDStoneBlocks.SNOWY_STONE_BRICKS,
-        DnDStoneBlocks.SNOWY_STONE_BRICK_STAIRS,
-        DnDStoneBlocks.SNOWY_STONE_BRICK_SLAB,
-        DnDStoneBlocks.SNOWY_STONE_BRICK_WALL,
-    )
-
+    val polishedStone = DnDStoneBlocks.POLISHED_STONE.collect()
+    val mossyPolishedStone = DnDStoneBlocks.MOSSY_POLISHED_STONE.collect()
+    val overgrownCobblestone = DnDStoneBlocks.OVERGROWN_COBBLESTONE.collect()
+    val overgrownStoneBricks = DnDStoneBlocks.OVERGROWN_STONE_BRICKS.collect()
+    val snowyStoneBricks = DnDStoneBlocks.SNOWY_STONE_BRICKS.collect()
     val ice = DnDBlocks.ICE_SET.collect() + DnDBlocks.PACKED_ICE_SET.collect() + DnDBlocks.BLUE_ICE_SET.collect()
 //            DnDBlocks.ICE_BRICKS.collect() + DnDBlocks.PACKED_ICE_BRICKS.collect() + DnDBlocks.BLUE_ICE_BRICKS.collect()
 

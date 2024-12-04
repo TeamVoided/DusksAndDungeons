@@ -16,6 +16,7 @@ import net.minecraft.util.Identifier
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
+import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 
 fun RecipeJsonFactory.criterion(item: ItemConvertible): RecipeJsonFactory =
     this.criterion(hasItem(item), conditionsFromItem(item))
@@ -101,18 +102,8 @@ fun RecipeExporter.createGragestones(
     block: ItemConvertible
 ) {
     this.createGravestone(gravestone, block)
-    FabricRecipeProvider.createStonecuttingRecipe(
-        this,
-        RecipeCategory.BUILDING_BLOCKS,
-        smallGravestone,
-        gravestone
-    )
-    FabricRecipeProvider.createStonecuttingRecipe(
-        this,
-        RecipeCategory.BUILDING_BLOCKS,
-        hauntedSmallGravestone,
-        hauntedGravestone
-    )
+    this.createStonecutting(smallGravestone, gravestone)
+    this.createStonecutting(hauntedSmallGravestone, hauntedGravestone)
 }
 
 fun RecipeExporter.createGravestone(output: ItemConvertible, input: ItemConvertible) {
@@ -180,16 +171,18 @@ fun RecipeExporter.createOvergrown(
 }
 
 fun RecipeExporter.createTwoPiece(
+    output: ItemConvertible,
     input1: ItemConvertible,
     input2: ItemConvertible,
-    output: ItemConvertible
+    suffix: String = "",
+    id: Identifier = output.id.extendPath(suffix)
 ) {
     ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
         .ingredient(Ingredient.ofItems(input1))
         .ingredient(Ingredient.ofItems(input2))
         .criterion(input1)
         .criterion(input2)
-        .offerTo(this)
+        .offerTo(this, id)
 }
 
 fun RecipeExporter.createTwoPiece(
@@ -310,6 +303,9 @@ fun RecipeExporter.createStonecuttedSet(
         }
     }
 }
+
+fun RecipeExporter.createStonecuttedFromList(output: ItemConvertible, vararg input: Block) =
+    this.createStonecuttedFromList(input.toList(), output)
 
 fun RecipeExporter.createStonecuttedFromList(
     input: List<Block>,

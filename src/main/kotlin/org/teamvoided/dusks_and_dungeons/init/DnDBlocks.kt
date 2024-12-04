@@ -117,7 +117,11 @@ object DnDBlocks {
         set.register(::register)
         return set
     }
+
     fun registerSet(name: String, settings: Settings) = register(createBlockSet(name, settings))
+    fun registerSet(name: String, settings: Settings, suffix: String) =
+        register(createBlockSet(name, settings).parentSuffix(suffix))
+
     fun registerHeadlessSet(name: String, parent: Block) = register(createHeadlessSet(name, parent))
 
     fun register(id: String, block: Block): Block {

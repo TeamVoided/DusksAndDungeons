@@ -5,6 +5,7 @@ import net.minecraft.data.server.recipe.RecipeExporter
 import org.teamvoided.dusks_and_dungeons.util.datagen.createSlab
 import org.teamvoided.dusks_and_dungeons.util.datagen.createStair
 import org.teamvoided.dusks_and_dungeons.util.datagen.createWall
+import org.teamvoided.voidlib.consortium.block.BlockSet
 import org.teamvoided.voidlib.consortium.block.HeadlessBlockSet
 
 fun RecipeExporter.createSet(set: HeadlessBlockSet) {
@@ -24,5 +25,6 @@ fun RecipeExporter.createStonecuttingSet(set: HeadlessBlockSet, vararg blocks: B
         this.createStonecutting(set.stairs, input)
         this.createStonecutting(set.slab, input, 2)
         this.createStonecutting(set.wall, input)
+        if (set is BlockSet) this.createStonecutting(set.parent, input)
     }
 }

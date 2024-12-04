@@ -142,7 +142,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
             .add(Blocks.COBBLESTONE)
             .add(Blocks.MOSSY_COBBLESTONE)
-            .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE)
+            .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE.parent)
             .forceAddTag(BlockTags.STONE_BRICKS)
             .forceAddTag(BlockTags.LOGS)
             .forceAddTag(DnDBlockTags.PUMPKINS)
@@ -450,14 +450,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.CANDELABRAS)
 
         getOrCreateTagBuilder(BlockTags.STONE_BRICKS)
-            .add(DnDStoneBlocks.OVERGROWN_STONE_BRICKS)
+            .add(DnDStoneBlocks.OVERGROWN_STONE_BRICKS.parent)
     }
 
     private fun vanillaBlockTypeShapeTags() {
         getOrCreateTagBuilder(BlockTags.STAIRS)
-            .add(DnDStoneBlocks.POLISHED_STONE_STAIRS)
-            .add(DnDStoneBlocks.MOSSY_POLISHED_STONE_STAIRS)
-            .add(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_STAIRS)
             .add(DnDNetherBrickBlocks.NETHERRACK_STAIRS)
             .add(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_STAIRS)
             .add(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_STAIRS)
@@ -468,12 +465,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICK_STAIRS)
             .add(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICK_STAIRS)
             .add(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICK_STAIRS)
-            .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE_STAIRS)
-            .add(DnDStoneBlocks.OVERGROWN_STONE_BRICK_STAIRS)
         getOrCreateTagBuilder(BlockTags.SLABS)
-            .add(DnDStoneBlocks.POLISHED_STONE_SLAB)
-            .add(DnDStoneBlocks.MOSSY_POLISHED_STONE_SLAB)
-            .add(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_SLAB)
             .add(DnDNetherBrickBlocks.NETHERRACK_SLAB)
             .add(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_SLAB)
             .add(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_SLAB)
@@ -484,14 +476,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICK_SLAB)
             .add(DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICK_SLAB)
             .add(DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICK_SLAB)
-            .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE_SLAB)
-            .add(DnDStoneBlocks.OVERGROWN_STONE_BRICK_SLAB)
         getOrCreateTagBuilder(BlockTags.WALLS)
-            .add(DnDStoneBlocks.POLISHED_STONE_WALL)
-            .add(DnDStoneBlocks.MOSSY_POLISHED_STONE_WALL)
-            .add(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_WALL)
-            .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE_WALL)
-            .add(DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL)
             .add(DnDNetherBrickBlocks.NETHERRACK_WALL)
             .add(DnDNetherBrickBlocks.BLUE_NETHER_BRICK_WALL)
             .add(DnDNetherBrickBlocks.GRAY_NETHER_BRICK_WALL)
@@ -680,12 +665,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     }
 
     private fun conventionTags() {
-        getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES)
-            .add(DnDStoneBlocks.OVERGROWN_COBBLESTONE)
-        getOrCreateTagBuilder(ConventionalBlockTags.CHAINS)
-            .add(DnDBigBlocks.BIG_CHAIN)
-        getOrCreateTagBuilder(ConventionalBlockTags.WOODEN_CHESTS)
-            .add(DnDBlocks.CHEST_O_SOULS)
+        getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES).add(DnDStoneBlocks.OVERGROWN_COBBLESTONE.parent)
+        getOrCreateTagBuilder(ConventionalBlockTags.CHAINS).add(DnDBigBlocks.BIG_CHAIN)
+        getOrCreateTagBuilder(ConventionalBlockTags.WOODEN_CHESTS).add(DnDBlocks.CHEST_O_SOULS)
     }
 
 //    private fun FabricTagProvider.addOverlay() {

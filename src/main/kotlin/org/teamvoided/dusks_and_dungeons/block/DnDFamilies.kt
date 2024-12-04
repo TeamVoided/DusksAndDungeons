@@ -154,43 +154,6 @@ object DnDFamilies {
             .slab(DnDWoodBlocks.WARPED_HYPHAE_SLAB)
             .wall(DnDWoodBlocks.WARPED_HYPHAE_WALL)
             .build()
-
-    private val POLISHED_STONE_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDStoneBlocks.POLISHED_STONE)
-            .stairs(DnDStoneBlocks.POLISHED_STONE_STAIRS)
-            .slab(DnDStoneBlocks.POLISHED_STONE_SLAB)
-            .wall(DnDStoneBlocks.POLISHED_STONE_WALL)
-            .build()
-    private val MOSSY_POLISHED_STONE_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDStoneBlocks.MOSSY_POLISHED_STONE)
-            .stairs(DnDStoneBlocks.MOSSY_POLISHED_STONE_STAIRS)
-            .slab(DnDStoneBlocks.MOSSY_POLISHED_STONE_SLAB)
-            .wall(DnDStoneBlocks.MOSSY_POLISHED_STONE_WALL)
-            .build()
-    private val OVERGROWN_POLISHED_STONE_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDStoneBlocks.OVERGROWN_POLISHED_STONE)
-            .stairs(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_STAIRS)
-            .slab(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_SLAB)
-            .wall(DnDStoneBlocks.OVERGROWN_POLISHED_STONE_WALL)
-            .build()
-    private val OVERGROWN_COBBLESTONE_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDStoneBlocks.OVERGROWN_COBBLESTONE)
-            .stairs(DnDStoneBlocks.OVERGROWN_COBBLESTONE_STAIRS)
-            .slab(DnDStoneBlocks.OVERGROWN_COBBLESTONE_SLAB)
-            .wall(DnDStoneBlocks.OVERGROWN_COBBLESTONE_WALL)
-            .build()
-    private val OVERGROWN_STONE_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDStoneBlocks.OVERGROWN_STONE_BRICKS)
-            .stairs(DnDStoneBlocks.OVERGROWN_STONE_BRICK_STAIRS)
-            .slab(DnDStoneBlocks.OVERGROWN_STONE_BRICK_SLAB)
-            .wall(DnDStoneBlocks.OVERGROWN_STONE_BRICK_WALL)
-            .build()
-    private val SNOWY_STONE_BRICKS_FAMILY: BlockFamily =
-        BlockFamilies.register(DnDStoneBlocks.SNOWY_STONE_BRICKS)
-            .stairs(DnDStoneBlocks.SNOWY_STONE_BRICK_STAIRS)
-            .slab(DnDStoneBlocks.SNOWY_STONE_BRICK_SLAB)
-            .wall(DnDStoneBlocks.SNOWY_STONE_BRICK_WALL)
-            .build()
     private val NETHERRACK_FAMILY: BlockFamily =
         BlockFamilies.register(Blocks.NETHERRACK)
             .stairs(DnDNetherBrickBlocks.NETHERRACK_STAIRS)
@@ -267,9 +230,6 @@ object DnDFamilies {
     val modelsBlockFamilies = listOf(
         CASCADE_FAMILY,
         BONEWOOD_FAMILY,
-        POLISHED_STONE_FAMILY,
-        MOSSY_POLISHED_STONE_FAMILY,
-        SNOWY_STONE_BRICKS_FAMILY,
         POLISHED_NETHER_BRICKS_FAMILY,
         MIXED_RED_NETHER_BRICKS_FAMILY,
         POLISHED_RED_NETHER_BRICKS_FAMILY,
@@ -297,15 +257,7 @@ object DnDFamilies {
         CRIMSON_HYPHAE_FAMILY,
         WARPED_HYPHAE_FAMILY,
         NETHERRACK_FAMILY,
-        OVERGROWN_POLISHED_STONE_FAMILY,
-        OVERGROWN_COBBLESTONE_FAMILY,
-        OVERGROWN_STONE_BRICKS_FAMILY
     )
 
-    fun init() {
-//        modelsBlockFamilies.forEach{
-//            it.variants.forEach(::println)
-//        }
-
-    }
+    fun init() = Unit
 }
