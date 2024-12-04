@@ -79,15 +79,26 @@ fun Block.axe(): Block = AXABLE.addAndReturn(this)
 fun Block.shovel(): Block = SHOVELABLE.addAndReturn(this)
 fun Block.hoe(): Block = HOEABLE.addAndReturn(this)
 
-fun HeadlessBlockSet.translucent(): HeadlessBlockSet {
-    TRANSLUCENT_BLOCKS.addAll(this.collect())
-    return this
+fun HeadlessBlockSet.cutout(): HeadlessBlockSet = CUTOUT_BLOCKS.addSet(this)
+fun HeadlessBlockSet.translucent(): HeadlessBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
+fun HeadlessBlockSet.grass(): HeadlessBlockSet = GRASS_TINT_BLOCKS.addSet(this)
+fun HeadlessBlockSet.foliage(): HeadlessBlockSet = FOLIAGE_TINT_BLOCKS.addSet(this)
+fun HeadlessBlockSet.flammablePlanks(): HeadlessBlockSet = FLAMMABLE_PLANKS.addSet(this)
+fun HeadlessBlockSet.flammableLogs(): HeadlessBlockSet = FLAMMABLE_LOGS.addSet(this)
+fun HeadlessBlockSet.flammableLeaves(): HeadlessBlockSet = FLAMMABLE_LEAVES.addSet(this)
+fun HeadlessBlockSet.sword(): HeadlessBlockSet = SWORDABLE.addSet(this)
+fun HeadlessBlockSet.pickaxe(): HeadlessBlockSet =PICKAXABLE.addSet(this)
+fun HeadlessBlockSet.axe(): HeadlessBlockSet = AXABLE.addSet(this)
+fun HeadlessBlockSet.shovel(): HeadlessBlockSet = SHOVELABLE.addSet(this)
+fun HeadlessBlockSet.hoe(): HeadlessBlockSet = HOEABLE.addSet(this)
+
+
+fun MutableCollection<Block>.addSet(set: HeadlessBlockSet): HeadlessBlockSet {
+    this.addAll(set.collect())
+    return set
 }
 
-fun HeadlessBlockSet.pickaxe(): HeadlessBlockSet {
-    PICKAXABLE.addAll(this.collect())
-    return this
-}
+fun copy(set: HeadlessBlockSet): AbstractBlock.Settings = copy(set.parent)
 
 fun blockOf(block: Block): Block = Block(copy(block))
 
