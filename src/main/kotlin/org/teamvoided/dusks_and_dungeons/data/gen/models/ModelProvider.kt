@@ -16,7 +16,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_BRICKS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.iceStairs
 import org.teamvoided.dusks_and_dungeons.util.datagen.registerTallCrystal
 import org.teamvoided.dusks_and_dungeons.util.datagen.slab
@@ -90,10 +89,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("chest"), Blocks.OAK_PLANKS)
             .includeWithoutItem(DnDBlocks.CHEST_O_SOULS)
 
-        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.MOLTEN_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.BRITTLE_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.GLOWING_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDNetherBrickBlocks.LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.MOLTEN_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.BRITTLE_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.GLOWING_LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)
 
 
         /*.with(

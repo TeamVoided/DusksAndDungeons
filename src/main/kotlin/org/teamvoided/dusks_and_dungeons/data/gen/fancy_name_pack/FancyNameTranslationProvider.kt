@@ -7,7 +7,7 @@ import net.minecraft.item.Item
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -15,37 +15,37 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
     FabricLanguageProvider(o, r) {
 
     val crimsonBricks = listOf(
-        DnDNetherBrickBlocks.CRACKED_RED_NETHER_BRICKS,
-        DnDNetherBrickBlocks.RED_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_RED_NETHER_BRICKS,
-        DnDNetherBrickBlocks.RED_NETHER_BRICK_PILLAR,
-        DnDNetherBrickBlocks.CRACKED_MIXED_RED_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_MIXED_RED_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICK_PILLAR,
-    ) + DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICKS.collect() + DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICKS.collect()
+        DnDBlocks.CRACKED_RED_NETHER_BRICKS,
+        DnDBlocks.RED_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_RED_NETHER_BRICKS,
+        DnDBlocks.RED_NETHER_BRICK_PILLAR,
+        DnDBlocks.CRACKED_MIXED_RED_NETHER_BRICKS,
+        DnDBlocks.MIXED_RED_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_RED_NETHER_BRICKS,
+        DnDBlocks.MIXED_RED_NETHER_BRICK_PILLAR,
+    ) + DnDBlocks.POLISHED_RED_NETHER_BRICKS.collect() + DnDBlocks.MIXED_RED_NETHER_BRICKS.collect()
     val warpedBricks = listOf(
-        DnDNetherBrickBlocks.CRACKED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.BLUE_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.BLUE_NETHER_BRICK_PILLAR,
-        DnDNetherBrickBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
-    ) + DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICKS.collect() +
-            DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICKS.collect() + DnDNetherBrickBlocks.BLUE_NETHER_BRICKS.collect()
+        DnDBlocks.CRACKED_BLUE_NETHER_BRICKS,
+        DnDBlocks.BLUE_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_BLUE_NETHER_BRICKS,
+        DnDBlocks.BLUE_NETHER_BRICK_PILLAR,
+        DnDBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
+    ) + DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.collect() +
+            DnDBlocks.MIXED_BLUE_NETHER_BRICKS.collect() + DnDBlocks.BLUE_NETHER_BRICKS.collect()
     val ashenBricks = listOf(
-        DnDNetherBrickBlocks.CRACKED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.GRAY_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.GRAY_NETHER_BRICK_PILLAR,
-        DnDNetherBrickBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR,
-    ) + DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICKS.collect() +
-            DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICKS.collect() + DnDNetherBrickBlocks.GRAY_NETHER_BRICKS.collect()
+        DnDBlocks.CRACKED_GRAY_NETHER_BRICKS,
+        DnDBlocks.GRAY_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_GRAY_NETHER_BRICKS,
+        DnDBlocks.GRAY_NETHER_BRICK_PILLAR,
+        DnDBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR,
+    ) + DnDBlocks.MIXED_GRAY_NETHER_BRICKS.collect() +
+            DnDBlocks.POLISHED_GRAY_NETHER_BRICKS.collect() + DnDBlocks.GRAY_NETHER_BRICKS.collect()
 
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {

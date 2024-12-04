@@ -21,7 +21,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDNetherBrickBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.modelDirectionRotation
 import java.util.*
 
@@ -1265,12 +1265,12 @@ fun BlockStateModelGenerator.registerBell(
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {
     val texture1 = Texture()
         .put(SIDE, Texture.getId(block))
-        .put(TOP, Texture.getSubId(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(TOP, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
         .put(BOTTOM, Texture.getSubId(mix, "_top"))
     val texture2 = Texture()
         .put(SIDE, Texture.getSubId(block, "_inverse"))
         .put(TOP, Texture.getSubId(mix, "_top"))
-        .put(BOTTOM, Texture.getSubId(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(BOTTOM, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
     val model1 = Models.CUBE_BOTTOM_TOP.upload(block, texture1, this.modelCollector)
     val model2 = Models.CUBE_BOTTOM_TOP.upload(block, "_inverse", texture2, this.modelCollector)
     this.blockStateCollector.accept(

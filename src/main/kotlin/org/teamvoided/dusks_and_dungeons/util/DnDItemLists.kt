@@ -4,7 +4,9 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.*
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 
 object DnDItemLists {
     val dye = listOf(
@@ -110,64 +112,63 @@ object DnDItemLists {
         DnDBigBlocks.BIG_MAGENTA_SOUL_CANDLE,
         DnDBigBlocks.BIG_PINK_SOUL_CANDLE
     )
-    val netherrackStuff = DnDNetherBrickBlocks.NETHERRACK_SET.collect()
-    val netherBrickStuff = listOf(DnDNetherBrickBlocks.NETHER_BRICK_PILLAR) +
-            DnDNetherBrickBlocks.POLISHED_NETHER_BRICKS.collect()
+    val netherrackStuff = DnDBlocks.NETHERRACK_SET.collect()
+    val netherBrickStuff = listOf(DnDBlocks.NETHER_BRICK_PILLAR) + DnDBlocks.POLISHED_NETHER_BRICKS.collect()
     val redNetherBrickStuff = listOf(
-        DnDNetherBrickBlocks.RED_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_RED_NETHER_BRICKS,
-        DnDNetherBrickBlocks.RED_NETHER_BRICK_PILLAR
-    ) + DnDNetherBrickBlocks.POLISHED_RED_NETHER_BRICKS.collect()
+        DnDBlocks.RED_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_RED_NETHER_BRICKS,
+        DnDBlocks.RED_NETHER_BRICK_PILLAR
+    ) + DnDBlocks.POLISHED_RED_NETHER_BRICKS.collect()
     val mixedRedNetherBrickStuff = listOf(
-        DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICKS,
-        DnDNetherBrickBlocks.CRACKED_MIXED_RED_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICKS.stairs,
-        DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICKS.slab,
-        DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICKS.wall,
-        DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_MIXED_RED_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_RED_NETHER_BRICK_PILLAR
+        DnDBlocks.MIXED_RED_NETHER_BRICKS,
+        DnDBlocks.CRACKED_MIXED_RED_NETHER_BRICKS,
+        DnDBlocks.MIXED_RED_NETHER_BRICKS.stairs,
+        DnDBlocks.MIXED_RED_NETHER_BRICKS.slab,
+        DnDBlocks.MIXED_RED_NETHER_BRICKS.wall,
+        DnDBlocks.MIXED_RED_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_RED_NETHER_BRICKS,
+        DnDBlocks.MIXED_RED_NETHER_BRICK_PILLAR
     )
     val blueNetherBrickStuff = listOf(
-        DnDNetherBrickBlocks.BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.CRACKED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.BLUE_NETHER_BRICKS.stairs,
-        DnDNetherBrickBlocks.BLUE_NETHER_BRICKS.slab,
-        DnDNetherBrickBlocks.BLUE_NETHER_BRICKS.wall,
-        DnDNetherBrickBlocks.BLUE_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.BLUE_NETHER_BRICK_PILLAR
-    ) + DnDNetherBrickBlocks.POLISHED_BLUE_NETHER_BRICKS.collect()
+        DnDBlocks.BLUE_NETHER_BRICKS,
+        DnDBlocks.CRACKED_BLUE_NETHER_BRICKS,
+        DnDBlocks.BLUE_NETHER_BRICKS.stairs,
+        DnDBlocks.BLUE_NETHER_BRICKS.slab,
+        DnDBlocks.BLUE_NETHER_BRICKS.wall,
+        DnDBlocks.BLUE_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_BLUE_NETHER_BRICKS,
+        DnDBlocks.BLUE_NETHER_BRICK_PILLAR
+    ) + DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.collect()
 
     val mixedBlueNetherBrickStuff = listOf(
-        DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICKS.stairs,
-        DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICKS.slab,
-        DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICKS.wall,
-        DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR
+        DnDBlocks.MIXED_BLUE_NETHER_BRICKS,
+        DnDBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICKS.stairs,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICKS.slab,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICKS.wall,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS,
+        DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR
     )
     val grayNetherBrickStuff = listOf(
-        DnDNetherBrickBlocks.GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.CRACKED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.GRAY_NETHER_BRICKS.stairs,
-        DnDNetherBrickBlocks.GRAY_NETHER_BRICKS.slab,
-        DnDNetherBrickBlocks.GRAY_NETHER_BRICKS.wall,
-        DnDNetherBrickBlocks.GRAY_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.GRAY_NETHER_BRICK_PILLAR)+
-        DnDNetherBrickBlocks.POLISHED_GRAY_NETHER_BRICKS.collect()
+        DnDBlocks.GRAY_NETHER_BRICKS,
+        DnDBlocks.CRACKED_GRAY_NETHER_BRICKS,
+        DnDBlocks.GRAY_NETHER_BRICKS.stairs,
+        DnDBlocks.GRAY_NETHER_BRICKS.slab,
+        DnDBlocks.GRAY_NETHER_BRICKS.wall,
+        DnDBlocks.GRAY_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_GRAY_NETHER_BRICKS,
+        DnDBlocks.GRAY_NETHER_BRICK_PILLAR
+    ) + DnDBlocks.POLISHED_GRAY_NETHER_BRICKS.collect()
     val mixedGrayNetherBrickStuff = listOf(
-        DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICKS.stairs,
-        DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICKS.slab,
-        DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICKS.wall,
-        DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_FENCE,
-        DnDNetherBrickBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS,
-        DnDNetherBrickBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR
+        DnDBlocks.MIXED_GRAY_NETHER_BRICKS,
+        DnDBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICKS.stairs,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICKS.slab,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICKS.wall,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE,
+        DnDBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS,
+        DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR
     )
     val blackstoneTools = listOf(
         DnDItems.BLACKSTONE_SWORD,

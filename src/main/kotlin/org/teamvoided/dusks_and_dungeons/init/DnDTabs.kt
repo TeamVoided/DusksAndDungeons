@@ -129,7 +129,7 @@ object DnDTabs {
             )
             entries.addItem(DnDFloraBlocks.WARPED_WART)
             entries.addLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
-            entries.addItem(DnDNetherBrickBlocks.CRACKED_RED_NETHER_BRICKS)
+            entries.addItem(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
             entries.addLists(
                 DnDItemLists.redNetherBrickStuff,
                 DnDItemLists.mixedRedNetherBrickStuff,
@@ -174,7 +174,7 @@ object DnDTabs {
             addAfter(Items.CHAIN, DnDBigBlocks.BIG_CHAIN)
             addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
             addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
-            addAfter(Items.RED_NETHER_BRICKS, DnDNetherBrickBlocks.CRACKED_RED_NETHER_BRICKS)
+            addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
             addAfter(
                 Items.RED_NETHER_BRICK_WALL,
                 DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedRedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff +
