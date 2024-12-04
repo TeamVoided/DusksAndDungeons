@@ -16,8 +16,8 @@ import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 object DnDStoneBlocks {
     fun init() = Unit
 
-    val GRAVESTONE = registerGravestone("gravestone", CHISELED_STONE_BRICKS)
-    val SMALL_GRAVESTONE = registerSmallGravestone("small_gravestone", GRAVESTONE)
+    val STONE_GRAVESTONE = registerGravestone("stone_gravestone", CHISELED_STONE_BRICKS)
+    val SMALL_STONE_GRAVESTONE = registerSmallGravestone("small_stone_gravestone", STONE_GRAVESTONE)
     val DEEPSLATE_GRAVESTONE = registerGravestone("deepslate_gravestone", CHISELED_DEEPSLATE)
     val SMALL_DEEPSLATE_GRAVESTONE = registerSmallGravestone("small_deepslate_gravestone", DEEPSLATE_GRAVESTONE)
     val TUFF_GRAVESTONE = registerGravestone("tuff_gravestone", CHISELED_TUFF_BRICKS)
@@ -42,8 +42,8 @@ object DnDStoneBlocks {
 
     // ☢ Experimental ☢
     // Haunted graves
-    val HAUNTED_GRAVESTONE = registerHGravestone("haunted_gravestone", GRAVESTONE)
-    val SMALL_HAUNTED_GRAVESTONE = registerSmallHGravestone("small_haunted_gravestone", GRAVESTONE)
+    val HAUNTED_GRAVESTONE = registerHGravestone("haunted_gravestone", STONE_GRAVESTONE)
+    val SMALL_HAUNTED_GRAVESTONE = registerSmallHGravestone("small_haunted_gravestone", STONE_GRAVESTONE)
     val HAUNTED_DEEPSLATE_GRAVESTONE = registerHGravestone("haunted_deepslate_gravestone", DEEPSLATE_GRAVESTONE)
     val SMALL_HAUNTED_DEEPSLATE_GRAVESTONE =
         registerSmallHGravestone("small_haunted_deepslate_gravestone", DEEPSLATE_GRAVESTONE)

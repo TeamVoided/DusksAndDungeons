@@ -14,8 +14,8 @@ import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
 object StoneRecipes {
     fun generateStoneRecipes(e: RecipeExporter) {
         e.createGragestones(
-            DnDStoneBlocks.GRAVESTONE,
-            DnDStoneBlocks.SMALL_GRAVESTONE,
+            DnDStoneBlocks.STONE_GRAVESTONE,
+            DnDStoneBlocks.SMALL_STONE_GRAVESTONE,
             DnDStoneBlocks.HAUNTED_GRAVESTONE,
             DnDStoneBlocks.SMALL_HAUNTED_GRAVESTONE,
             Blocks.STONE_BRICKS

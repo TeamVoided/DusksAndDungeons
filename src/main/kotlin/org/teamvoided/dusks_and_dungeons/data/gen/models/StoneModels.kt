@@ -11,8 +11,8 @@ object StoneModels {
     fun stoneModels(gen: BlockStateModelGenerator) {
 
         gen.registerGravestones(
-            DnDStoneBlocks.GRAVESTONE,
-            DnDStoneBlocks.SMALL_GRAVESTONE,
+            DnDStoneBlocks.STONE_GRAVESTONE,
+            DnDStoneBlocks.SMALL_STONE_GRAVESTONE,
             DnDStoneBlocks.HAUNTED_GRAVESTONE,
             DnDStoneBlocks.SMALL_HAUNTED_GRAVESTONE
         )
