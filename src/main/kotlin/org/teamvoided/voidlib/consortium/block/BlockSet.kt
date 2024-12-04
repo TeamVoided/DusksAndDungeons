@@ -5,30 +5,29 @@ package org.teamvoided.voidlib.consortium.block
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
+import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import java.util.function.Supplier
 
 open class HeadlessBlockSet(
     val name: String, val parent: Block, val stairs: Block, val slab: Block, val wall: Block,
     val hasStoneCutting: Boolean = true
-) {
+): ItemConvertible, Supplier<Block> {
     open fun collect() = listOf(stairs, slab, wall)
     open fun toIdMap() = mapOf("${name}_stairs" to stairs, "${name}_slab" to slab, "${name}_wall" to wall)
     fun forEach(consumer: (Block) -> Unit) = this.collect().forEach(consumer)
     fun register(consumer: (String, Block) -> Unit) = this.toIdMap().forEach(consumer)
+    override fun asItem(): Item = parent.asItem()
+    override fun get() = parent
 }
 
 open class BlockSet(
     val parentName: String, name: String, parent: Block, stairs: Block, slab: Block, wall: Block,
     hasStoneCutting: Boolean = true
-) :
-    HeadlessBlockSet(name, parent, stairs, slab, wall, hasStoneCutting), ItemConvertible, Supplier<Block> {
+) : HeadlessBlockSet(name, parent, stairs, slab, wall, hasStoneCutting) {
     override fun collect() = listOf(parent, stairs, slab, wall)
     override fun toIdMap() =
         mapOf(parentName to parent, "${name}_stairs" to stairs, "${name}_slab" to slab, "${name}_wall" to wall)
-
-    override fun asItem() = parent.asItem()
-    override fun get() = parent
 }
 
 fun createBlockSet(name: String) = BlockSetBuilder(name)
