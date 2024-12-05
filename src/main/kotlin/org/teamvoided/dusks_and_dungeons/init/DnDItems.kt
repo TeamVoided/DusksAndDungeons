@@ -10,7 +10,16 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.block.DnDPumpkinBlock.Companion.setSeeds
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.GLOOM_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.LANTERN_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.MOSSKIN_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.PALE_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_GLOOM_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_LANTERN_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_PALE_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.item.*
 import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
@@ -155,6 +164,15 @@ object DnDItems {
 
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)
+
+        LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
+        SMALL_LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
+        MOSSKIN_PUMPKIN.setSeeds(MOSSKIN_PUMPKIN_SEEDS)
+        SMALL_MOSSKIN_PUMPKIN.setSeeds(MOSSKIN_PUMPKIN_SEEDS)
+        PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
+        SMALL_PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
+        GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
+        SMALL_GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
     }
 
     fun register(id: String, item: Item): Item {

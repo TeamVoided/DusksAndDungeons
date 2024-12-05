@@ -336,15 +336,10 @@ object DnDFloraBlocks {
         ).cutout().flammableLogs().axe().sword()
     )
 
+    // ☢ Experimental ☢
+
 
     fun init() {
-        LANTERN_PUMPKIN.setSeeds(DnDItems.LANTERN_PUMPKIN_SEEDS)
-        SMALL_LANTERN_PUMPKIN.setSeeds(DnDItems.LANTERN_PUMPKIN_SEEDS)
-        MOSSKIN_PUMPKIN.setSeeds(DnDItems.MOSSKIN_PUMPKIN_SEEDS)
-        SMALL_MOSSKIN_PUMPKIN.setSeeds(DnDItems.MOSSKIN_PUMPKIN_SEEDS)
-        PALE_PUMPKIN.setSeeds(DnDItems.PALE_PUMPKIN_SEEDS)
-        SMALL_PALE_PUMPKIN.setSeeds(DnDItems.PALE_PUMPKIN_SEEDS)
-        GLOOM_PUMPKIN.setSeeds(DnDItems.GLOOM_PUMPKIN_SEEDS)
-        SMALL_GLOOM_PUMPKIN.setSeeds(DnDItems.GLOOM_PUMPKIN_SEEDS)
+
     }
 }
