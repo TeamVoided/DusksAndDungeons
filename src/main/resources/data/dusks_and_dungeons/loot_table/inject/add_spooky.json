@@ -85,7 +85,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dusks_and_dungeons:gravestone"
+          "name": "dusks_and_dungeons:stone_gravestone"
         },
         {
           "type": "minecraft:item",
@@ -93,7 +93,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dusks_and_dungeons:small_gravestone"
+          "name": "dusks_and_dungeons:small_stone_gravestone"
         },
         {
           "type": "minecraft:item",
