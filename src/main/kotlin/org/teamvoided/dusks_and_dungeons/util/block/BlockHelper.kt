@@ -13,10 +13,15 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.state.property.Properties
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.big.*
+import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
+import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
+import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
-import org.teamvoided.voidlib.consortium.block.HeadlessBlockSet
+import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.BlockSetBuilder
 import org.teamvoided.voidlib.helpers.addAndReturn
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidSignBlock
@@ -50,6 +55,7 @@ val centerHeadstoneShape: VoxelShape = Block.createCuboidShape(0.0, 0.0, 7.0, 16
 
 
 fun light(lightLevel: Int): ToIntFunction<BlockState> = ToIntFunction { lightLevel }
+fun AbstractBlock.Settings.luminance(lightLevel: Int): AbstractBlock.Settings = this.luminance { lightLevel }
 
 val CUTOUT_BLOCKS = mutableSetOf<Block>()
 val TRANSLUCENT_BLOCKS = mutableSetOf<Block>()
@@ -64,40 +70,40 @@ val AXABLE = mutableSetOf<Block>()
 val SHOVELABLE = mutableSetOf<Block>()
 val HOEABLE = mutableSetOf<Block>()
 
+// Extensions
 fun Block.cutout(): Block = CUTOUT_BLOCKS.addAndReturn(this)
 fun Block.translucent(): Block = TRANSLUCENT_BLOCKS.addAndReturn(this)
 fun Block.grass(): Block = GRASS_TINT_BLOCKS.addAndReturn(this)
 fun Block.foliage(): Block = FOLIAGE_TINT_BLOCKS.addAndReturn(this)
-fun Block.flammablePlanks(): Block = FLAMMABLE_PLANKS.addAndReturn(this)
-fun Block.flammableLogs(): Block = FLAMMABLE_LOGS.addAndReturn(this)
-fun Block.flammableLeaves(): Block = FLAMMABLE_LEAVES.addAndReturn(this)
-fun Block.sword(): Block = SWORDABLE.addAndReturn(this)
-fun Block.pickaxe(): Block = PICKAXABLE.addAndReturn(this)
-fun Block.axe(): Block = AXABLE.addAndReturn(this)
-fun Block.shovel(): Block = SHOVELABLE.addAndReturn(this)
-fun Block.hoe(): Block = HOEABLE.addAndReturn(this)
+fun Block.flammablePlanks(): Block = FLAMMABLE_PLANKS.addDev(this)
+fun Block.flammableLogs(): Block = FLAMMABLE_LOGS.addDev(this)
+fun Block.flammableLeaves(): Block = FLAMMABLE_LEAVES.addDev(this)
+fun Block.sword(): Block = SWORDABLE.addDev(this)
+fun Block.pickaxe(): Block = PICKAXABLE.addDev(this)
+fun Block.axe(): Block = AXABLE.addDev(this)
+fun Block.shovel(): Block = SHOVELABLE.addDev(this)
+fun Block.hoe(): Block = HOEABLE.addDev(this)
 
-fun HeadlessBlockSet.cutout(): HeadlessBlockSet = CUTOUT_BLOCKS.addSet(this)
-fun HeadlessBlockSet.translucent(): HeadlessBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
-fun HeadlessBlockSet.grass(): HeadlessBlockSet = GRASS_TINT_BLOCKS.addSet(this)
-fun HeadlessBlockSet.foliage(): HeadlessBlockSet = FOLIAGE_TINT_BLOCKS.addSet(this)
-fun HeadlessBlockSet.flammablePlanks(): HeadlessBlockSet = FLAMMABLE_PLANKS.addSet(this)
-fun HeadlessBlockSet.flammableLogs(): HeadlessBlockSet = FLAMMABLE_LOGS.addSet(this)
-fun HeadlessBlockSet.flammableLeaves(): HeadlessBlockSet = FLAMMABLE_LEAVES.addSet(this)
-fun HeadlessBlockSet.sword(): HeadlessBlockSet = SWORDABLE.addSet(this)
-fun HeadlessBlockSet.pickaxe(): HeadlessBlockSet = PICKAXABLE.addSet(this)
-fun HeadlessBlockSet.axe(): HeadlessBlockSet = AXABLE.addSet(this)
-fun HeadlessBlockSet.shovel(): HeadlessBlockSet = SHOVELABLE.addSet(this)
-fun HeadlessBlockSet.hoe(): HeadlessBlockSet = HOEABLE.addSet(this)
+fun AbstractBlockSet.cutout(): AbstractBlockSet = CUTOUT_BLOCKS.addSet(this)
+fun AbstractBlockSet.translucent(): AbstractBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
+fun AbstractBlockSet.grass(): AbstractBlockSet = GRASS_TINT_BLOCKS.addSet(this)
+fun AbstractBlockSet.foliage(): AbstractBlockSet = FOLIAGE_TINT_BLOCKS.addSet(this)
+fun AbstractBlockSet.flammablePlanks(): AbstractBlockSet = FLAMMABLE_PLANKS.addDevSet(this)
+fun AbstractBlockSet.flammableLogs(): AbstractBlockSet = FLAMMABLE_LOGS.addDevSet(this)
+fun AbstractBlockSet.flammableLeaves(): AbstractBlockSet = FLAMMABLE_LEAVES.addDevSet(this)
+fun AbstractBlockSet.sword(): AbstractBlockSet = SWORDABLE.addDevSet(this)
+fun AbstractBlockSet.pickaxe(): AbstractBlockSet = PICKAXABLE.addDevSet(this)
+fun AbstractBlockSet.axe(): AbstractBlockSet = AXABLE.addDevSet(this)
+fun AbstractBlockSet.shovel(): AbstractBlockSet = SHOVELABLE.addDevSet(this)
+fun AbstractBlockSet.hoe(): AbstractBlockSet = HOEABLE.addDevSet(this)
 
-fun HeadlessBlockSet.overgrown(): HeadlessBlockSet = this.cutout().grass().pickaxe()
+fun AbstractBlockSet.overgrown(): AbstractBlockSet = this.cutout().grass().pickaxe()
 
-fun MutableCollection<Block>.addSet(set: HeadlessBlockSet): HeadlessBlockSet {
-    this.addAll(set.collect())
-    return set
+// Block Helpers
+fun <T : Any> MutableCollection<T>.addDev(element: T): T {
+    if (isDev()) this.add(element)
+    return element
 }
-
-fun copy(set: HeadlessBlockSet): AbstractBlock.Settings = copy(set.parent)
 
 fun blockOf(block: Block): Block = Block(copy(block))
 
@@ -214,3 +220,20 @@ fun dirtPath(input: Block, output: Block) = FlattenableBlockRegistry.register(in
 
 fun removeRocks(input: Block, output: Block, craftingIngredient: ItemConvertible) = TillableBlockRegistry
     .register(input, { true }, HoeItem.createTillAndDropAction(output.defaultState, craftingIngredient))
+
+
+// Set Helpers
+fun MutableCollection<Block>.addSet(set: AbstractBlockSet): AbstractBlockSet {
+    this.addAll(set.collect())
+    return set
+}
+
+fun MutableCollection<Block>.addDevSet(set: AbstractBlockSet): AbstractBlockSet {
+    if (isDev()) this.addAll(set.collect())
+    return set
+}
+
+fun copy(set: AbstractBlockSet): AbstractBlock.Settings = copy(set.parent)
+
+fun BlockSetBuilder.meltable(): BlockSetBuilder =
+    this.stairs(::MeltableStairsBlock).slab(::MeltableSlabBlock).wall(::MeltableWallBlock)

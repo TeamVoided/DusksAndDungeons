@@ -97,7 +97,7 @@ object DnDFloraBlocks {
         ).cutout().sword().hoe()
     )
 
-    val SMALL_CARVED_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val SMALL_CARVED_PUMPKIN = registerHeadEquipable(
         "small_carved_pumpkin", SmallCarvedPumpkinBlock(
             Settings.create().mapColor(MapColor.ORANGE).strength(1.0f).sounds(BlockSoundGroup.WOOD)
                 .pistonBehavior(PistonBehavior.DESTROY)
@@ -117,7 +117,7 @@ object DnDFloraBlocks {
 
     // Lantern ---
 
-    val CARVED_LANTERN_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val CARVED_LANTERN_PUMPKIN = registerHeadEquipable(
         "carved_lantern_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PUMPKIN).mapColor(MapColor.YELLOW)
         ).axe()
@@ -132,7 +132,7 @@ object DnDFloraBlocks {
             CARVED_LANTERN_PUMPKIN, copy(CARVED_LANTERN_PUMPKIN)
         ).axe()
     )
-    val SMALL_CARVED_LANTERN_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val SMALL_CARVED_LANTERN_PUMPKIN = registerHeadEquipable(
         "small_carved_lantern_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_LANTERN_PUMPKIN.defaultMapColor)
         ).axe()
@@ -150,7 +150,7 @@ object DnDFloraBlocks {
 
     // Mosskin ---
 
-    val CARVED_MOSSKIN_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val CARVED_MOSSKIN_PUMPKIN = registerHeadEquipable(
         "carved_mosskin_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PUMPKIN).mapColor(MapColor.GREEN)
         ).axe()
@@ -166,7 +166,7 @@ object DnDFloraBlocks {
             copy(CARVED_MOSSKIN_PUMPKIN)
         ).axe()
     )
-    val SMALL_CARVED_MOSSKIN_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val SMALL_CARVED_MOSSKIN_PUMPKIN = registerHeadEquipable(
         "small_carved_mosskin_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_MOSSKIN_PUMPKIN.defaultMapColor)
         ).axe()
@@ -185,7 +185,7 @@ object DnDFloraBlocks {
 
     // Gloom ---
 
-    val CARVED_GLOOM_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val CARVED_GLOOM_PUMPKIN = registerHeadEquipable(
         "carved_gloom_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PUMPKIN).mapColor(MapColor.PURPLE_TERRACOTTA)
         ).axe()
@@ -201,7 +201,7 @@ object DnDFloraBlocks {
             copy(CARVED_GLOOM_PUMPKIN)
         ).axe()
     )
-    val SMALL_CARVED_GLOOM_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val SMALL_CARVED_GLOOM_PUMPKIN = registerHeadEquipable(
         "small_carved_gloom_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_GLOOM_PUMPKIN.defaultMapColor)
         ).axe()
@@ -220,7 +220,7 @@ object DnDFloraBlocks {
 
     // Pale ---
 
-    val CARVED_PALE_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val CARVED_PALE_PUMPKIN = registerHeadEquipable(
         "carved_pale_pumpkin", DnDCarvedPumpkinBlock(
             copy(CARVED_PUMPKIN).mapColor(MapColor.SNOW)
         ).axe()
@@ -236,7 +236,7 @@ object DnDFloraBlocks {
             copy(CARVED_PALE_PUMPKIN)
         ).axe()
     )
-    val SMALL_CARVED_PALE_PUMPKIN = DnDBlocks.registerHeadEquipable(
+    val SMALL_CARVED_PALE_PUMPKIN = registerHeadEquipable(
         "small_carved_pale_pumpkin", SmallCarvedPumpkinBlock(
             copy(SMALL_CARVED_PUMPKIN).mapColor(CARVED_PALE_PUMPKIN.defaultMapColor)
         ).axe()
