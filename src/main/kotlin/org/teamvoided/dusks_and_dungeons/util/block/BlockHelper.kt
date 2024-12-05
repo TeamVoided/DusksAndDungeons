@@ -89,6 +89,8 @@ fun Block.hoe(): Block = HOEABLE.addDev(this)
 
 fun Block.plant() = this.cutout().sword().hoe()
 fun Block.grassLike() = this.cutout().sword().axe()
+fun Block.leaves() = this.cutout().hoe().flammableLeaves()
+fun Block.wood() = this.axe().flammablePlanks()
 
 fun AbstractBlockSet.cutout(): AbstractBlockSet = CUTOUT_BLOCKS.addSet(this)
 fun AbstractBlockSet.translucent(): AbstractBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
