@@ -382,12 +382,8 @@ fun BlockStateModelGenerator.wallWithTintedOverlay(wall: Block, baseBlock: Block
         .put(WALL, Texture.getId(baseBlock))
         .put(DIRT, overlay)
     this.registerParentedItemModel(
-        wall, block(
-            "parent/wall_inventory_with_tinted_overlay",
-            "_inventory",
-            WALL,
-            DIRT
-        ).upload(wall, texture, this.modelCollector)
+        wall, block("parent/wall_inventory_with_tinted_overlay", "_inventory", WALL, DIRT)
+            .upload(wall, texture, this.modelCollector)
     )
 }
 
@@ -1644,7 +1640,8 @@ fun BlockStateModelGenerator.registerCropWithParent(
     val int2ObjectMap: Int2ObjectMap<Identifier> = Int2ObjectOpenHashMap()
     val blockStateVariantMap = BlockStateVariantMap.create(ageProperty).register { age: Int ->
         val stage = ageTextureIndices[age]
-        val identifier = int2ObjectMap.computeIfAbsent(stage,
+        val identifier = int2ObjectMap.computeIfAbsent(
+            stage,
             Int2ObjectFunction { _: Int ->
                 this.createSubModel(
                     crop,
