@@ -21,7 +21,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_GLOOM_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_PALE_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.item.*
-import org.teamvoided.dusks_and_dungeons.util.shh
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem
 
