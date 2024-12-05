@@ -40,42 +40,11 @@ object DnDItems {
         "cascade_hanging_sign",
         HangingSignItem(DnDWoodBlocks.CASCADE_HANGING_SIGN, DnDWoodBlocks.CASCADE_WALL_HANGING_SIGN, CountSettings(16))
     )
-    val GALLERY_MAPLE_DOOR =
-        register("gallery_maple_door", TallBlockItem(DnDWoodBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
-            .tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_SIGN = register(
-        "gallery_maple_sign",
-        SignItem(CountSettings(16), DnDWoodBlocks.GALLERY_MAPLE_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_SIGN)
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_HANGING_SIGN = register(
-        "gallery_maple_hanging_sign", HangingSignItem(
-            DnDWoodBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN, CountSettings(16)
-        )
-    ).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDWoodBlocks.BONEWOOD_DOOR, Item.Settings()))
-        .tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_DOOR =
-        register("withering_bonewood_door", TallBlockItem(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))
-            .tellWitnessesThatIWasMurdered()
-
     val FARMERS_HAT = register(
         "farmers_hat", EquipableItem(
             CountSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
-    val WITCH_HAT = register("witch_hat", EquipableItem(CountSettings(1))).shh()
-
-    @JvmField
-    val VILE_WITCH_HAT = register("vile_witch_hat", EquipableItem(CountSettings(1))).shh()
-    val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16))).tellWitnessesThatIWasMurdered()
-    val DIE_ITEM = register(
-        "die", DiceItem(
-            CountSettings(16).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xFFFFFF, true))
-        )
-    ).tellWitnessesThatIWasMurdered()
-
-    val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDBlocks.WATER_FERN, Item.Settings()))
-        .tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, Item.Settings()))
 
     val LANTERN_PUMPKIN_SEEDS =
@@ -144,6 +113,39 @@ object DnDItems {
         )
     )
 
+    // ☢ Experimental ☢
+    val GALLERY_MAPLE_DOOR =
+        register("gallery_maple_door", TallBlockItem(DnDWoodBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
+            .tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_SIGN = register(
+        "gallery_maple_sign",
+        SignItem(CountSettings(16), DnDWoodBlocks.GALLERY_MAPLE_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_SIGN)
+    ).tellWitnessesThatIWasMurdered()
+    val GALLERY_MAPLE_HANGING_SIGN = register(
+        "gallery_maple_hanging_sign", HangingSignItem(
+            DnDWoodBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN, CountSettings(16)
+        )
+    ).tellWitnessesThatIWasMurdered()
+    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDWoodBlocks.BONEWOOD_DOOR, Item.Settings()))
+        .tellWitnessesThatIWasMurdered()
+    val WITHERING_BONEWOOD_DOOR =
+        register("withering_bonewood_door", TallBlockItem(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))
+            .tellWitnessesThatIWasMurdered()
+
+    val WITCH_HAT = register("witch_hat", EquipableItem(CountSettings(1))).shh().tellWitnessesThatIWasMurdered()
+
+    @JvmField
+    val VILE_WITCH_HAT = register("vile_witch_hat", EquipableItem(CountSettings(1))).shh().tellWitnessesThatIWasMurdered()
+    val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16))).tellWitnessesThatIWasMurdered()
+    val DIE_ITEM = register(
+        "die", DiceItem(
+            CountSettings(16).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xFFFFFF, true))
+        )
+    ).tellWitnessesThatIWasMurdered()
+
+    val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDBlocks.WATER_FERN, Item.Settings()))
+        .tellWitnessesThatIWasMurdered()
+
     val FREEZE_ROD = register("freeze_rod", Item(Item.Settings())).tellWitnessesThatIWasMurdered()
     val CHILL_CHARGE = register("chill_charge", ChillChargeItem(Item.Settings())).tellWitnessesThatIWasMurdered()
 
@@ -154,11 +156,12 @@ object DnDItems {
 //                .attributeModifiersComponent(FunnyIceSword.createAttributes())
 //        )
 //    )
-    val WEB_WEAVER = register("web_weaver", BowItem(Item.Settings().maxDamage(404))).shh()
+    val WEB_WEAVER =
+        register("web_weaver", BowItem(Item.Settings().maxDamage(404))).shh().tellWitnessesThatIWasMurdered()
     val HARVESTER_SCYTHE = register(
         "harvester_scythe", HarvesterScytheItem(AttributeSettings(HarvesterScytheItem.makeAttributes()))
-    ).shh()
-    val BROOM = register("broom", BroomItem(CountSettings(1))).shh()
+    ).shh().tellWitnessesThatIWasMurdered()
+    val BROOM = register("broom", BroomItem(CountSettings(1))).shh().tellWitnessesThatIWasMurdered()
 
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)
