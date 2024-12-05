@@ -1,10 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
-import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
+import net.minecraft.block.Block
 import net.minecraft.block.Blocks.*
+import net.minecraft.block.FenceBlock
+import net.minecraft.block.IceBlock
+import net.minecraft.block.PillarBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
@@ -165,9 +168,9 @@ object DnDBlocks {
     val SNOWY_STONE_BRICKS = registerSet("snowy_stone_brick", copy(STONE_BRICKS), "s").pickaxe()
         .tellWitnessesThatIWasMurdered()
 
-    val ICE_BRICKS =
-        register(createBlockSet("ice_brick", ICE_SETIN).s().noStoneCutting().parent(::IceBlock).meltable().build())
-            .translucent().pickaxe().tellWitnessesThatIWasMurdered()
+    val ICE_BRICKS = register(
+        createBlockSet("ice_brick", ICE_SETIN).s().noStoneCutting().parent(::IceBlock).meltable().buildHeadless()
+    ).translucent().pickaxe().tellWitnessesThatIWasMurdered()
     val PACKED_ICE_BRICKS = registerSet("packed_ice_brick", copy(PACKED_ICE), "s").pickaxe()
         .tellWitnessesThatIWasMurdered()
     val BLUE_ICE_BRICKS = registerSet("blue_ice_brick", copy(BLUE_ICE), "s").pickaxe()
