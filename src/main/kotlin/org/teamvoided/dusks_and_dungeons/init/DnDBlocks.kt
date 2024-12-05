@@ -20,21 +20,19 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks.BIG_CHAIN
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
-import org.teamvoided.dusks_and_dungeons.init.misc.ICE_SETIN
-import org.teamvoided.dusks_and_dungeons.init.misc.MOONCORE_SETIN
-import org.teamvoided.dusks_and_dungeons.init.misc.REDSTONE_CRYSTAL_SETIN
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.shh
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.createBlockSet
 import org.teamvoided.voidlib.consortium.block.createHeadlessSet
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set
 
 
 @Suppress("LargeClass", "TooManyFunctions", "MemberVisibilityCanBePrivate", "unused")
 object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
-    val SETS = mutableListOf<AbstractBlockSet>()
+    val SETS = mutableSetOf<AbstractBlockSet>()
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
 
@@ -65,7 +63,7 @@ object DnDBlocks {
     /*
        ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE AGE --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
      */
-    val ICE_SET = register(createHeadlessSet("ice", ICE).noStoneCutting().meltable().build()).translucent().pickaxe()
+    val ICE_SET = register(createHeadlessSet("ice", ICE).noStoneCutting().meltable().buildHeadless()).translucent().pickaxe()
     val PACKED_ICE_SET = registerHeadlessSet("packed_ice", PACKED_ICE).pickaxe()
     val BLUE_ICE_SET = registerHeadlessSet("blue_ice", BLUE_ICE).pickaxe()
 
@@ -152,6 +150,7 @@ object DnDBlocks {
     // ☢ Experimental ☢
 
     val BUNNY_GRAVE = register("bunny_grave", BunnyGraveBlock(copy(STONE_BRICK_WALL)).pickaxe()).shh()
+        .tellWitnessesThatIWasMurdered()
 
     // Haunted graves
     val HAUNTED_GRAVESTONE = registerHGravestone("haunted_gravestone", STONE_GRAVESTONE)
@@ -169,7 +168,7 @@ object DnDBlocks {
         .tellWitnessesThatIWasMurdered()
 
     val ICE_BRICKS = register(
-        createBlockSet("ice_brick", ICE_SETIN).s().noStoneCutting().parent(::IceBlock).meltable().buildHeadless()
+        createBlockSet("ice_brick", Set.ICE).s().noStoneCutting().parent(::IceBlock).meltable().build()
     ).translucent().pickaxe().tellWitnessesThatIWasMurdered()
     val PACKED_ICE_BRICKS = registerSet("packed_ice_brick", copy(PACKED_ICE), "s").pickaxe()
         .tellWitnessesThatIWasMurdered()
@@ -179,10 +178,10 @@ object DnDBlocks {
     val CELESTAL_BELL = register("celestal_bell", CelestalBellBlock(copy(BELL))).tellWitnessesThatIWasMurdered()
 
     val MOONCORE = register(
-        "mooncore", CrytalClusterWithParticlesBlock(12.0f, 2.0f, MOONCORE_SETIN).cutout()
+        "mooncore", CrytalClusterWithParticlesBlock(12.0f, 2.0f, Set.MOONCORE).cutout()
     ).tellWitnessesThatIWasMurdered()
     val TALL_REDSTONE_CRYSTAL = register(
-        "tall_redstone_crystal", TallRedstoneCrystalBlock(REDSTONE_CRYSTAL_SETIN).cutout()
+        "tall_redstone_crystal", TallRedstoneCrystalBlock(Set.REDSTONE_CRYSTAL).cutout()
     ).tellWitnessesThatIWasMurdered()
     val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT))).shh()
     val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST))).shh()

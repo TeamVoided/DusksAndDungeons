@@ -161,7 +161,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         val CODEC = createCodec(::MoonberryVineBlock)
         val WATERLOGGED = Properties.WATERLOGGED
         val BERRIES = IntProperty.of("berries", 0, 2)
-        fun getLuminanceSupplier(luminanceLow: Int, luminance: Int): (BlockState) -> Int = { state ->
+        fun Settings.moonberryLuminance(luminanceLow: Int, luminance: Int): Settings = this.luminance{ state ->
             if (hasAnyDirection(state) && state.get(BERRIES) > 0) {
                 if (state.get(BERRIES) > 1) luminance else luminanceLow
             } else 0

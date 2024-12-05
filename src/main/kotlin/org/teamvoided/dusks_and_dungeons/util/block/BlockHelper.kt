@@ -4,6 +4,8 @@ import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
 import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings.copy
+import net.minecraft.block.Blocks.CARVED_PUMPKIN
+import net.minecraft.block.Blocks.PUMPKIN_STEM
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
@@ -20,6 +22,7 @@ import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.BlockSetBuilder
 import org.teamvoided.voidlib.helpers.addAndReturn
@@ -83,6 +86,9 @@ fun Block.pickaxe(): Block = PICKAXABLE.addDev(this)
 fun Block.axe(): Block = AXABLE.addDev(this)
 fun Block.shovel(): Block = SHOVELABLE.addDev(this)
 fun Block.hoe(): Block = HOEABLE.addDev(this)
+
+fun Block.plant() = this.cutout().sword().hoe()
+fun Block.grassLike() = this.cutout().sword().axe()
 
 fun AbstractBlockSet.cutout(): AbstractBlockSet = CUTOUT_BLOCKS.addSet(this)
 fun AbstractBlockSet.translucent(): AbstractBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
@@ -215,6 +221,17 @@ fun fallingLeafPile(particle: DefaultParticleType, mapColor: MapColor, soundGrou
             .blockVision(Blocks::nonSolid).solidBlock(Blocks::nonSolid).lavaIgnitable().noCollision().nonSolid()
             .pistonBehavior(PistonBehavior.DESTROY)
     )
+
+fun pumpkinOf(block: Block) = DnDPumpkinBlock(block, copy(block))
+fun glowingPumpkinOf(block: Block) = DnDCarvedPumpkinBlock(copy(block).luminance(15))
+fun carvedPumpkin(color: MapColor) = DnDCarvedPumpkinBlock(copy(CARVED_PUMPKIN).mapColor(color))
+
+fun sPumpkinOf(block: Block) = SmallPumpkinBlock(block, copy(block))
+fun sGlowingPumpkinOf(block: Block) = SmallCarvedPumpkinBlock(copy(block).luminance(15))
+fun sCarvedPumpkinOf(block: Block) = SmallCarvedPumpkinBlock(DnDBlockSettings.smallPumpkin(block.defaultMapColor))
+
+fun stemOf(block: Block) = DnDPumpkinStemBlock(block, copy(PUMPKIN_STEM))
+
 
 fun dirtPath(input: Block, output: Block) = FlattenableBlockRegistry.register(input, output.defaultState)
 
