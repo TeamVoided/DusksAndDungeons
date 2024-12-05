@@ -22,7 +22,6 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_MOSSKI
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_PALE_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.item.*
-import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
 import org.teamvoided.dusks_and_dungeons.util.shh
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem
@@ -173,6 +172,8 @@ object DnDItems {
         SMALL_PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
         GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
         SMALL_GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
+
+//        BLOCK_ITEMS.forEach(::register)
     }
 
     fun register(id: String, item: Item): Item {

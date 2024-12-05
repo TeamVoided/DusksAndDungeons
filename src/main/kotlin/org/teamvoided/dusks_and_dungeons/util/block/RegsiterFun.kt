@@ -2,11 +2,13 @@ package org.teamvoided.dusks_and_dungeons.util.block
 
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.Block
-import net.minecraft.item.BlockItem
-import net.minecraft.item.FoodComponent
 import net.minecraft.item.Item
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
 import org.teamvoided.dusks_and_dungeons.block.HauntedGravestoneBlock
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.BLOCK_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.register
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.registerNoItem
@@ -20,15 +22,17 @@ import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 
 fun registerHeadEquipable(id: String, block: Block): Block {
     val regBlock = registerNoItem(id, block)
-    DnDItems.register(id, EquipableBlockItem(regBlock, Item.Settings()))
+//    BLOCK_ITEMS[id]?.let { error("Id $it already exists in BLOCK_ITEMS") }
+    if (isDev()) log.warn("Fix registerHeadEquipable in the near future!")
+    DnDItems.register( id, EquipableBlockItem(regBlock, Item.Settings()))
     return regBlock
 }
 
-fun registerEdible(id: String, foodComponent: FoodComponent, block: Block): Block {
-    val regBlock = registerNoItem(id, block)
-    DnDItems.register(id, BlockItem(regBlock, Item.Settings().food(foodComponent)))
-    return regBlock
-}
+//fun registerEdible(id: String, foodComponent: FoodComponent, block: Block): Block {
+//    val regBlock = registerNoItem(id, block)
+//    DnDItems.register(id, BlockItem(regBlock, Item.Settings().food(foodComponent)))
+//    return regBlock
+//}
 
 fun <T : AbstractBlockSet> register(set: T): T {
     SETS.add(set)

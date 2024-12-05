@@ -32,6 +32,7 @@ import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set
 @Suppress("LargeClass", "TooManyFunctions", "MemberVisibilityCanBePrivate", "unused")
 object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
+    val BLOCK_ITEMS = mutableMapOf<String, Item>()
     val SETS = mutableSetOf<AbstractBlockSet>()
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
@@ -220,7 +221,10 @@ object DnDBlocks {
 
     fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
+        // Switch away from this when the file has been merged
         DnDItems.register(id, BlockItem(regBlock, Item.Settings()))
+//        BLOCK_ITEMS[id]?.let { error("Id $it already exists in BLOCK_ITEMS") }
+//        BLOCK_ITEMS[id] = BlockItem(regBlock, Item.Settings())
         return regBlock
     }
 
