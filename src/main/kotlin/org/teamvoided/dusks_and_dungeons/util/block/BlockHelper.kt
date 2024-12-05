@@ -4,8 +4,7 @@ import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
 import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings.copy
-import net.minecraft.block.Blocks.CARVED_PUMPKIN
-import net.minecraft.block.Blocks.PUMPKIN_STEM
+import net.minecraft.block.Blocks.*
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
@@ -13,6 +12,7 @@ import net.minecraft.particle.DefaultParticleType
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.state.property.Properties
+import net.minecraft.util.Color
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
@@ -91,6 +91,7 @@ fun Block.plant() = this.cutout().sword().hoe()
 fun Block.grassLike() = this.cutout().sword().axe()
 fun Block.leaves() = this.cutout().hoe().flammableLeaves()
 fun Block.wood() = this.axe().flammablePlanks()
+fun Block.rocky() = cutout().pickaxe().shovel()
 
 fun AbstractBlockSet.cutout(): AbstractBlockSet = CUTOUT_BLOCKS.addSet(this)
 fun AbstractBlockSet.translucent(): AbstractBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
@@ -234,7 +235,11 @@ fun sCarvedPumpkinOf(block: Block) = SmallCarvedPumpkinBlock(DnDBlockSettings.sm
 
 fun stemOf(block: Block) = DnDPumpkinStemBlock(block, copy(PUMPKIN_STEM))
 
+fun gravel(color: MapColor) = GravelBlock(Color(-8356741), copy(GRAVEL).mapColor(color))
+fun sand(color: MapColor) = GravelBlock(Color(14406560), copy(SAND).mapColor(color))
+fun redSand(color: MapColor) = GravelBlock(Color(11098145), copy(RED_SAND).mapColor(color))
 
+// Misc Registries
 fun dirtPath(input: Block, output: Block) = FlattenableBlockRegistry.register(input, output.defaultState)
 
 fun removeRocks(input: Block, output: Block, craftingIngredient: ItemConvertible) = TillableBlockRegistry
