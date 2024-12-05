@@ -21,11 +21,12 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks.BIG_CHAIN
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.block.*
-import org.teamvoided.dusks_and_dungeons.util.shh
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.createBlockSet
 import org.teamvoided.voidlib.consortium.block.createHeadlessSet
+import kotlin.collections.mutableMapOf
+import kotlin.collections.mutableSetOf
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set
 
 
@@ -36,10 +37,12 @@ object DnDBlocks {
     val SETS = mutableSetOf<AbstractBlockSet>()
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
+
     /*
         🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 --- Flora --- 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄
      */
     val WARPED_WART = register("warped_wart", WarpedNetherWartBlock(Set.WARPED_WART).grassLike())
+
     // Petals
     val WHITE_PETALS = register("white_petals", PinkPetalsBlock(Set.petals(MapColor.SNOW)).plant())
     val RED_PETALS = register("red_petals", PinkPetalsBlock(Set.petals(MapColor.RED)).plant())
@@ -48,10 +51,12 @@ object DnDBlocks {
     val WILD_PETALS = register("wild_petals", PinkPetalsBlock(Set.petals(MapColor.PURPLE)).plant())
     val CRIMSON_VIVIONS = register("crimson_vivions", VivionbedBlock(Set.vivions(MapColor.RED)).plant())
     val WARPED_VIVIONS = register("warped_vivions", VivionbedBlock(Set.vivions(MapColor.WARPED_WART_BLOCK)).plant())
+
     // Smol Punkin
     val SMALL_CARVED_PUMPKIN = registerHeadEquipable("small_carved_pumpkin", sCarvedPumpkinOf(CARVED_PUMPKIN).axe())
     val SMALL_GLOWING_PUMPKIN = register("small_jack_o_lantern", sGlowingPumpkinOf(SMALL_CARVED_PUMPKIN).axe())
     val SMALL_PUMPKIN = register("small_pumpkin", sPumpkinOf(SMALL_CARVED_PUMPKIN).axe())
+
     // Lantern ---
     val CARVED_LANTERN_PUMPKIN = registerHeadEquipable("carved_lantern_pumpkin", carvedPumpkin(MapColor.YELLOW).axe())
     val GLOWING_LANTERN_PUMPKIN = register("glowing_lantern_pumpkin", glowingPumpkinOf(CARVED_LANTERN_PUMPKIN).axe())
@@ -62,6 +67,7 @@ object DnDBlocks {
         register("small_glowing_lantern_pumpkin", sGlowingPumpkinOf(SMALL_CARVED_LANTERN_PUMPKIN).axe())
     val SMALL_LANTERN_PUMPKIN = register("small_lantern_pumpkin", sPumpkinOf(SMALL_CARVED_LANTERN_PUMPKIN).axe())
     val LANTERN_PUMPKIN_STEM = registerNoItem("lantern_pumpkin_stem", stemOf(LANTERN_PUMPKIN).grassLike())
+
     // Mosskin ---
     val CARVED_MOSSKIN_PUMPKIN = registerHeadEquipable("carved_mosskin_pumpkin", carvedPumpkin(MapColor.GREEN).axe())
     val GLOWING_MOSSKIN_PUMPKIN = register("glowing_mosskin_pumpkin", glowingPumpkinOf(CARVED_MOSSKIN_PUMPKIN).axe())
@@ -72,6 +78,7 @@ object DnDBlocks {
         register("small_glowing_mosskin_pumpkin", sGlowingPumpkinOf(SMALL_CARVED_MOSSKIN_PUMPKIN).axe())
     val SMALL_MOSSKIN_PUMPKIN = register("small_mosskin_pumpkin", sPumpkinOf(SMALL_CARVED_MOSSKIN_PUMPKIN).axe())
     val MOSSKIN_PUMPKIN_STEM = registerNoItem("mosskin_pumpkin_stem", stemOf(MOSSKIN_PUMPKIN).grassLike())
+
     // Gloom ---
     val CARVED_GLOOM_PUMPKIN =
         registerHeadEquipable("carved_gloom_pumpkin", carvedPumpkin(MapColor.PURPLE_TERRACOTTA).axe())
@@ -83,6 +90,7 @@ object DnDBlocks {
         register("small_glowing_gloom_pumpkin", sGlowingPumpkinOf(SMALL_CARVED_GLOOM_PUMPKIN).axe())
     val SMALL_GLOOM_PUMPKIN = register("small_gloom_pumpkin", sPumpkinOf(SMALL_CARVED_GLOOM_PUMPKIN).axe())
     val GLOOM_PUMPKIN_STEM = registerNoItem("gloom_pumpkin_stem", stemOf(GLOOM_PUMPKIN).grassLike())
+
     // Pale ---
     val CARVED_PALE_PUMPKIN = registerHeadEquipable("carved_pale_pumpkin", carvedPumpkin(MapColor.SNOW).axe())
     val GLOWING_PALE_PUMPKIN = register("glowing_pale_pumpkin", glowingPumpkinOf(CARVED_PALE_PUMPKIN).axe())
@@ -93,6 +101,7 @@ object DnDBlocks {
         register("small_glowing_pale_pumpkin", sGlowingPumpkinOf(SMALL_CARVED_PALE_PUMPKIN).axe())
     val SMALL_PALE_PUMPKIN = register("small_pale_pumpkin", sPumpkinOf(SMALL_CARVED_PALE_PUMPKIN).axe())
     val PALE_PUMPKIN_STEM = registerNoItem("pale_pumpkin_stem", stemOf(PALE_PUMPKIN).grassLike())
+
     // Corn
     val CORN_CROP = registerNoItem("corn_crop", CornCropBlock(Set.corn().ticksRandomly()).grassLike())
     val CORN = registerNoItem("corn", CornMazeBlock(Set.corn().offsetType(OffsetType.XYZ)).grassLike())
@@ -100,6 +109,7 @@ object DnDBlocks {
 
     @JvmField
     val CORN_SYRUP_BLOCK = register("corn_syrup_block", CornSyrupBlock(Set.CORN_SYRUP)).translucent()
+
     // The Rest
     val ROOT_BLOCK = register("root_block", MangroveRootsBlock(Set.ROOT_BLOCK).grassLike().flammableLeaves())
     val WILD_WHEAT = registerNoItem("wild_wheat", TallPlantBlock(Set.WILD_WHEAT).grassLike())
@@ -116,13 +126,16 @@ object DnDBlocks {
      */
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
+
     // Polish
     val POLISHED_STONE = registerSet("polished_stone", copy(SMOOTH_STONE)).pickaxe()
     val MOSSY_POLISHED_STONE = registerSet("mossy_polished_stone", copy(POLISHED_STONE)).pickaxe()
+
     // Overgrown
     val OVERGROWN_POLISHED_STONE = registerSet("overgrown_polished_stone", copy(MOSSY_POLISHED_STONE)).overgrown()
     val OVERGROWN_COBBLESTONE = registerSet("overgrown_cobblestone", copy(MOSSY_COBBLESTONE)).overgrown()
     val OVERGROWN_STONE_BRICKS = registerSet("overgrown_stone_brick", copy(MOSSY_STONE_BRICKS), "s").overgrown()
+
     // Graves
     val STONE_GRAVESTONE = registerGravestone("stone_gravestone", CHISELED_STONE_BRICKS)
     val SMALL_STONE_GRAVESTONE = registerSmallGravestone("small_stone_gravestone", STONE_GRAVESTONE)
@@ -252,7 +265,7 @@ object DnDBlocks {
     val WATER_FERN = registerNoItem("water_fern", WaterFernBlock(copy(LILY_PAD)).cutout())
         .tellWitnessesThatIWasMurdered()
 
-    val BUNNY_GRAVE = register("bunny_grave", BunnyGraveBlock(copy(STONE_BRICK_WALL)).pickaxe()).shh()
+    val BUNNY_GRAVE = register("bunny_grave", BunnyGraveBlock(copy(STONE_BRICK_WALL)).pickaxe())
         .tellWitnessesThatIWasMurdered()
 
     // Haunted graves
@@ -286,8 +299,8 @@ object DnDBlocks {
     val TALL_REDSTONE_CRYSTAL = register(
         "tall_redstone_crystal", TallRedstoneCrystalBlock(Set.REDSTONE_CRYSTAL).cutout()
     ).tellWitnessesThatIWasMurdered()
-    val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT))).shh()
-    val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST))).shh()
+    val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT))).tellWitnessesThatIWasMurdered()
+    val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST))).tellWitnessesThatIWasMurdered()
 
     val QUARTER_BLOCK_PILE = registerNoItem("quarter_block_pile", QuarterBlockPileBlock(Settings.create())).cutout()
 

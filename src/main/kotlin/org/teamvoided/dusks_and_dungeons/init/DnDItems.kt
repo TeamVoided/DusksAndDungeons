@@ -45,6 +45,7 @@ object DnDItems {
             CountSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
+    val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16)))
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, Item.Settings()))
 
     val LANTERN_PUMPKIN_SEEDS =
@@ -132,11 +133,10 @@ object DnDItems {
         register("withering_bonewood_door", TallBlockItem(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))
             .tellWitnessesThatIWasMurdered()
 
-    val WITCH_HAT = register("witch_hat", EquipableItem(CountSettings(1))).shh().tellWitnessesThatIWasMurdered()
+    val WITCH_HAT = register("witch_hat", EquipableItem(CountSettings(1))).tellWitnessesThatIWasMurdered()
 
     @JvmField
-    val VILE_WITCH_HAT = register("vile_witch_hat", EquipableItem(CountSettings(1))).shh().tellWitnessesThatIWasMurdered()
-    val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16))).tellWitnessesThatIWasMurdered()
+    val VILE_WITCH_HAT = register("vile_witch_hat", EquipableItem(CountSettings(1))).tellWitnessesThatIWasMurdered()
     val DIE_ITEM = register(
         "die", DiceItem(
             CountSettings(16).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xFFFFFF, true))
@@ -157,11 +157,11 @@ object DnDItems {
 //        )
 //    )
     val WEB_WEAVER =
-        register("web_weaver", BowItem(Item.Settings().maxDamage(404))).shh().tellWitnessesThatIWasMurdered()
+        register("web_weaver", BowItem(Item.Settings().maxDamage(404))).tellWitnessesThatIWasMurdered()
     val HARVESTER_SCYTHE = register(
         "harvester_scythe", HarvesterScytheItem(AttributeSettings(HarvesterScytheItem.makeAttributes()))
-    ).shh().tellWitnessesThatIWasMurdered()
-    val BROOM = register("broom", BroomItem(CountSettings(1))).shh().tellWitnessesThatIWasMurdered()
+    ).tellWitnessesThatIWasMurdered()
+    val BROOM = register("broom", BroomItem(CountSettings(1))).tellWitnessesThatIWasMurdered()
 
     fun init() {
         DispenserBlock.registerBehavior(CHILL_CHARGE)

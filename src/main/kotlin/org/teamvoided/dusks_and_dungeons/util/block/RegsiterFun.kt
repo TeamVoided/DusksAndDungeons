@@ -57,9 +57,9 @@ internal fun registerSmallGravestone(name: String, block: Block) =
 internal fun registerHGravestone(name: String, block: Block) =
     register(
         name, HauntedGravestoneBlock(gravestoneShape, centerGravestoneShape, Settings.copy(block).solid())
-    ).pickaxe().shh().tellWitnessesThatIWasMurdered()
+    ).pickaxe().tellWitnessesThatIWasMurdered()
 
 internal fun registerSmallHGravestone(name: String, block: Block) =
     register(
         name, HauntedGravestoneBlock(smallGravestoneShape, centerSmallGravestoneShape, Settings.copy(block))
-    ).pickaxe().shh().tellWitnessesThatIWasMurdered()
+    ).pickaxe().tellWitnessesThatIWasMurdered()
