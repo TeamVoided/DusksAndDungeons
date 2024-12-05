@@ -13,7 +13,6 @@ import net.minecraft.village.VillagerProfession
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.BARTERING_ADD_VIVIONS
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SNIFFER_ADD_MOONBERRY
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.voidlib.helpers.mc.*
@@ -46,15 +45,15 @@ fun addCommonWanderingTrades(trades: MutableList<TradeOffers.Factory>) {
     trades.add1for1(DnDItems.PALE_PUMPKIN_SEEDS, 12)
     trades.add1for1(DnDItems.GLOOM_PUMPKIN_SEEDS, 12)
 
-    trades.add1for1(DnDFloraBlocks.LANTERN_PUMPKIN, 4)
-    trades.add1for1(DnDFloraBlocks.MOSSKIN_PUMPKIN, 4)
-    trades.add1for1(DnDFloraBlocks.PALE_PUMPKIN, 4)
-    trades.add1for1(DnDFloraBlocks.GLOOM_PUMPKIN, 4)
+    trades.add1for1(DnDBlocks.LANTERN_PUMPKIN, 4)
+    trades.add1for1(DnDBlocks.MOSSKIN_PUMPKIN, 4)
+    trades.add1for1(DnDBlocks.PALE_PUMPKIN, 4)
+    trades.add1for1(DnDBlocks.GLOOM_PUMPKIN, 4)
 
     trades.add1for1(DnDItems.CORN_KERNELS, 12)
     trades.add1for1(DnDItems.CORN, 4)
 
-//    trades.addSell(DnDFloraBlocks.GOLDEN_MUSHROOM, 1, 1, 12)
+//    trades.addSell(DnDBlocks.GOLDEN_MUSHROOM, 1, 1, 12)
 
     DnDBlockLists.flowerbedBlocks.forEach { flowerbed ->
         trades.addSell(flowerbed, 3, 1, 8)
@@ -63,16 +62,16 @@ fun addCommonWanderingTrades(trades: MutableList<TradeOffers.Factory>) {
 }
 
 fun addLevel2FarmerTrades(trades: MutableList<TradeOffers.Factory>) {
-    trades.buyFor1(DnDFloraBlocks.LANTERN_PUMPKIN, 6, 12, 10)
-    trades.buyFor1(DnDFloraBlocks.MOSSKIN_PUMPKIN, 6, 12, 10)
-    trades.buyFor1(DnDFloraBlocks.GLOOM_PUMPKIN, 6, 12, 10)
-    trades.buyFor1(DnDFloraBlocks.PALE_PUMPKIN, 6, 12, 10)
+    trades.buyFor1(DnDBlocks.LANTERN_PUMPKIN, 6, 12, 10)
+    trades.buyFor1(DnDBlocks.MOSSKIN_PUMPKIN, 6, 12, 10)
+    trades.buyFor1(DnDBlocks.GLOOM_PUMPKIN, 6, 12, 10)
+    trades.buyFor1(DnDBlocks.PALE_PUMPKIN, 6, 12, 10)
     // Add to Voided delight
 //    SellItemFactory(Items.PUMPKIN_PIE, 1, 4, 5),
 }
 
 fun compostItems() {
-    compost(DnDFloraBlocks.ROOT_BLOCK, 0.65)
+    compost(DnDBlocks.ROOT_BLOCK, 0.65)
     DnDBlockLists.flowerbedBlocks.forEach { compost(it, 0.3) }
 
     compost(DnDItems.LANTERN_PUMPKIN_SEEDS, 0.3)
@@ -80,26 +79,26 @@ fun compostItems() {
     compost(DnDItems.GLOOM_PUMPKIN_SEEDS, 0.3)
     compost(DnDItems.PALE_PUMPKIN_SEEDS, 0.3)
 
-    compost(DnDFloraBlocks.LANTERN_PUMPKIN, 0.65)
-    compost(DnDFloraBlocks.MOSSKIN_PUMPKIN, 0.65)
-    compost(DnDFloraBlocks.GLOOM_PUMPKIN, 0.65)
-    compost(DnDFloraBlocks.PALE_PUMPKIN, 0.65)
+    compost(DnDBlocks.LANTERN_PUMPKIN, 0.65)
+    compost(DnDBlocks.MOSSKIN_PUMPKIN, 0.65)
+    compost(DnDBlocks.GLOOM_PUMPKIN, 0.65)
+    compost(DnDBlocks.PALE_PUMPKIN, 0.65)
 
-    compost(DnDFloraBlocks.CARVED_LANTERN_PUMPKIN, 0.65)
-    compost(DnDFloraBlocks.CARVED_MOSSKIN_PUMPKIN, 0.65)
-    compost(DnDFloraBlocks.CARVED_GLOOM_PUMPKIN, 0.65)
-    compost(DnDFloraBlocks.CARVED_PALE_PUMPKIN, 0.65)
+    compost(DnDBlocks.CARVED_LANTERN_PUMPKIN, 0.65)
+    compost(DnDBlocks.CARVED_MOSSKIN_PUMPKIN, 0.65)
+    compost(DnDBlocks.CARVED_GLOOM_PUMPKIN, 0.65)
+    compost(DnDBlocks.CARVED_PALE_PUMPKIN, 0.65)
 
-    compost(DnDFloraBlocks.SMALL_PUMPKIN, 0.45)
-    compost(DnDFloraBlocks.SMALL_LANTERN_PUMPKIN, 0.45)
-    compost(DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN, 0.45)
-    compost(DnDFloraBlocks.SMALL_GLOOM_PUMPKIN, 0.45)
-    compost(DnDFloraBlocks.SMALL_PALE_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_LANTERN_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_MOSSKIN_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_GLOOM_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_PALE_PUMPKIN, 0.45)
 
-    compost(DnDFloraBlocks.SMALL_CARVED_PUMPKIN, 0.45)
-    compost(DnDFloraBlocks.SMALL_CARVED_LANTERN_PUMPKIN, 0.45)
-    compost(DnDFloraBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN, 0.45)
-    compost(DnDFloraBlocks.SMALL_CARVED_GLOOM_PUMPKIN, 0.45)
-    compost(DnDFloraBlocks.SMALL_CARVED_PALE_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_CARVED_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_CARVED_LANTERN_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_CARVED_GLOOM_PUMPKIN, 0.45)
+    compost(DnDBlocks.SMALL_CARVED_PALE_PUMPKIN, 0.45)
 }
 

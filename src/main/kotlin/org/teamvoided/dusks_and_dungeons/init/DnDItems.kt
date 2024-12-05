@@ -11,15 +11,14 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDPumpkinBlock.Companion.setSeeds
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.GLOOM_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.LANTERN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.MOSSKIN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.PALE_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_GLOOM_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_LANTERN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_MOSSKIN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks.SMALL_PALE_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.LANTERN_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.MOSSKIN_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.GLOOM_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.PALE_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_LANTERN_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_MOSSKIN_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_GLOOM_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_PALE_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.item.*
 import org.teamvoided.dusks_and_dungeons.util.shh
@@ -75,21 +74,21 @@ object DnDItems {
         )
     ).tellWitnessesThatIWasMurdered()
 
-    val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDFloraBlocks.WATER_FERN, Item.Settings()))
+    val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDBlocks.WATER_FERN, Item.Settings()))
         .tellWitnessesThatIWasMurdered()
-    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDFloraBlocks.WILD_WHEAT, Item.Settings()))
+    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, Item.Settings()))
 
     val LANTERN_PUMPKIN_SEEDS =
-        register("lantern_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.LANTERN_PUMPKIN_STEM, Item.Settings()))
+        register("lantern_pumpkin_seeds", AliasedBlockItem(DnDBlocks.LANTERN_PUMPKIN_STEM, Item.Settings()))
     val MOSSKIN_PUMPKIN_SEEDS =
-        register("mosskin_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.MOSSKIN_PUMPKIN_STEM, Item.Settings()))
+        register("mosskin_pumpkin_seeds", AliasedBlockItem(DnDBlocks.MOSSKIN_PUMPKIN_STEM, Item.Settings()))
     val PALE_PUMPKIN_SEEDS =
-        register("pale_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.PALE_PUMPKIN_STEM, Item.Settings()))
+        register("pale_pumpkin_seeds", AliasedBlockItem(DnDBlocks.PALE_PUMPKIN_STEM, Item.Settings()))
     val GLOOM_PUMPKIN_SEEDS =
-        register("gloom_pumpkin_seeds", AliasedBlockItem(DnDFloraBlocks.GLOOM_PUMPKIN_STEM, Item.Settings()))
+        register("gloom_pumpkin_seeds", AliasedBlockItem(DnDBlocks.GLOOM_PUMPKIN_STEM, Item.Settings()))
 
-    val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDFloraBlocks.CORN_CROP, Item.Settings()))
-    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDFloraBlocks.CORN, Item.Settings()))
+    val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDBlocks.CORN_CROP, Item.Settings()))
+    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDBlocks.CORN, Item.Settings()))
     val CORN = register("corn", Item((Item.Settings()).food(DnDFoodComponents.CORN)))
     val CORN_SYRUP_BOTTLE = register(
         "corn_syrup_bottle", HoneyBottleItem(
@@ -99,11 +98,11 @@ object DnDItems {
 
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
-        AliasedBlockItem(DnDFloraBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))
+        AliasedBlockItem(DnDBlocks.GOLDEN_BEETROOTS, Item.Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))
     )
 
     val MOONBERRY_VINELET =
-        register("moonberry_vinelet", AliasedBlockItem(DnDFloraBlocks.MOONBERRY_VINELET, Item.Settings()))
+        register("moonberry_vinelet", AliasedBlockItem(DnDBlocks.MOONBERRY_VINELET, Item.Settings()))
     val MOONBERRIES = register("moonberries", Item((Item.Settings()).food(DnDFoodComponents.MOONBERRIES)))
 
     @JvmField
@@ -168,10 +167,10 @@ object DnDItems {
         SMALL_LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
         MOSSKIN_PUMPKIN.setSeeds(MOSSKIN_PUMPKIN_SEEDS)
         SMALL_MOSSKIN_PUMPKIN.setSeeds(MOSSKIN_PUMPKIN_SEEDS)
-        PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
-        SMALL_PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
         GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
         SMALL_GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
+        PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
+        SMALL_PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
 
 //        BLOCK_ITEMS.forEach(::register)
     }

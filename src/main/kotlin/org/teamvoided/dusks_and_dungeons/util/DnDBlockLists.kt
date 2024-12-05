@@ -2,8 +2,8 @@ package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 
 object DnDBlockLists {
@@ -243,14 +243,14 @@ object DnDBlockLists {
         DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE
     )
     val flowerbedBlocks = listOf(
-        DnDFloraBlocks.WILD_PETALS,
-        DnDFloraBlocks.WHITE_PETALS,
-        DnDFloraBlocks.RED_PETALS,
-        DnDFloraBlocks.ORANGE_PETALS,
-        DnDFloraBlocks.BLUE_PETALS
+        DnDBlocks.WILD_PETALS,
+        DnDBlocks.WHITE_PETALS,
+        DnDBlocks.RED_PETALS,
+        DnDBlocks.ORANGE_PETALS,
+        DnDBlocks.BLUE_PETALS
     )
     val vivionbedBlocks = listOf(
-        DnDFloraBlocks.CRIMSON_VIVIONS,
-        DnDFloraBlocks.WARPED_VIVIONS
+        DnDBlocks.CRIMSON_VIVIONS,
+        DnDBlocks.WARPED_VIVIONS
     )
 }

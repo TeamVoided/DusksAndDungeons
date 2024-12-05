@@ -9,7 +9,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldView
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean =
@@ -19,7 +19,7 @@ class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
             : VoxelShape = AGE_TO_SHAPE[(state.get(AGE))]
 
     override fun getPickStack(world: WorldView, pos: BlockPos, state: BlockState): ItemStack =
-        ItemStack(DnDFloraBlocks.WARPED_WART)
+        ItemStack(DnDBlocks.WARPED_WART)
 
     companion object {
         val AGE_TO_SHAPE = arrayOf(

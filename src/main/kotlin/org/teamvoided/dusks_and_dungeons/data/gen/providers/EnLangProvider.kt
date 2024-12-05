@@ -7,16 +7,16 @@ import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.DnDTabs.DUSKS_AND_DUNGEONS
 import org.teamvoided.dusks_and_dungeons.init.DnDTabs.OVERLAY_BLOCKS
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.voidlib.devin.FDOutput
 import org.teamvoided.voidlib.devin.FutureLookup
 
 @Suppress("MemberVisibilityCanBePrivate")
 class EnLangProvider(o: FDOutput, r: FutureLookup) : FabricLanguageProvider(o, r) {
-    val blocks = listOf(DnDFloraBlocks.GOLDEN_BEETROOTS)
+    val blocks = listOf(DnDBlocks.GOLDEN_BEETROOTS)
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         DUSKS_AND_DUNGEONS.key.get().let { gen.add(it, "Dusks and Dungeons") }
         OVERLAY_BLOCKS.key.get().let { gen.add(it, "Rocky Blocks") }

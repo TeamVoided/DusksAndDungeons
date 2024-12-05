@@ -11,9 +11,9 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.HolderLookup
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.cobbled
 import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
 import org.teamvoided.voidlib.devin.extensions.recipe.createSet
@@ -51,7 +51,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
 
         createStonecuttingRecipe(
             e, RecipeCategory.BUILDING_BLOCKS,
-            DnDFloraBlocks.SMALL_PUMPKIN,
+            DnDBlocks.SMALL_PUMPKIN,
             Blocks.PUMPKIN,
             4
         )

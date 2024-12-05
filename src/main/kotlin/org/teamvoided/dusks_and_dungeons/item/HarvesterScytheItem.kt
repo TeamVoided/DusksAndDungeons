@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.projectile.FlyingPumpkinProjectile
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.setShootVelocity
 import org.teamvoided.voidlib.helpers.mc.toSlot
 import java.util.function.Predicate
@@ -98,7 +98,7 @@ class HarvesterScytheItem(toolMaterial: ToolMaterial, settings: Settings) : Swor
     }
 
     fun defaultAmmo(): ItemStack {
-        return ItemStack(DnDFloraBlocks.SMALL_CARVED_PUMPKIN)
+        return ItemStack(DnDBlocks.SMALL_CARVED_PUMPKIN)
     }
 
     companion object {

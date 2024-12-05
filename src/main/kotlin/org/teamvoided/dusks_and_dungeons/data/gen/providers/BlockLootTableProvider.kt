@@ -19,7 +19,6 @@ import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.bigCandles
@@ -34,7 +33,7 @@ import java.util.concurrent.CompletableFuture
 @Suppress("MemberVisibilityCanBePrivate")
 class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     OpenBlockLootTableProvider(o, r) {
-    val manualList: List<Block> = listOf(DnDFloraBlocks.MOONBERRY_VINE)
+    val manualList: List<Block> = listOf(DnDBlocks.MOONBERRY_VINE)
     override fun generate() {
         // this is here cuz yeah
 //        SETS.forEach(this::setDrops)
@@ -65,18 +64,18 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDWoodBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDWoodBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
-        twoTallDrop(DnDFloraBlocks.SPIDERLILY)
+        twoTallDrop(DnDBlocks.SPIDERLILY)
         addDropWithSilkTouch(ICE_SET.slab)
         addIceSlab(ICE_SET.slab)
         addDropWithSilkTouch(ICE_SET.wall)
         add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
-        add(DnDFloraBlocks.WARPED_WART) {
-            var state = BlockStatePropertyLootCondition.builder(it)
+        add(DnDBlocks.WARPED_WART) {
+            val state = BlockStatePropertyLootCondition.builder(it)
                 .properties(StatePredicate.Builder.create().exactMatch(NetherWartBlock.AGE, 3))
             LootTable.builder().pool(
                 applyExplosionDecay(
                     it, LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
-                        ItemEntry.builder(DnDFloraBlocks.WARPED_WART).apply(
+                        ItemEntry.builder(DnDBlocks.WARPED_WART).apply(
                             SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))
                                 .conditionally(state)
                         ).apply(
@@ -88,11 +87,11 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             )
         }
 
-//        add(DnDFloraBlocks.CORN_CROP) { block: Block -> cornCrop() }
+//        add(DnDBlocks.CORN_CROP) { block: Block -> cornCrop() }
         add(
-            DnDFloraBlocks.GOLDEN_BEETROOTS,
+            DnDBlocks.GOLDEN_BEETROOTS,
             this.cropDrops(
-                DnDFloraBlocks.GOLDEN_BEETROOTS,
+                DnDBlocks.GOLDEN_BEETROOTS,
                 DnDItems.GOLDEN_BEETROOT,
                 DnDItems.GOLDEN_BEETROOT,
                 BlockStatePropertyLootCondition.builder(Blocks.BEETROOTS).properties(
@@ -100,23 +99,23 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 )
             )
         )
-        twoTallDrop(DnDFloraBlocks.WILD_WHEAT)
+        twoTallDrop(DnDBlocks.WILD_WHEAT)
 
     }
 
     /*   private fun cornCrop(): LootTable.Builder {
            return applyExplosionDecay(
-               DnDFloraBlocks.CORN_CROP, LootTable.builder().pool(
+               DnDBlocks.CORN_CROP, LootTable.builder().pool(
                    LootPool.builder().with(AlternativeEntry.builder(
                        PitcherCropBlock.AGE.values
                    ) { integer: Int ->
                        val builder =
-                           BlockStatePropertyLootCondition.builder(DnDFloraBlocks.CORN_CROP).properties(
+                           BlockStatePropertyLootCondition.builder(DnDBlocks.CORN_CROP).properties(
                                StatePredicate.Builder.create()
                                    .exactMatch(TripleTallPlantBlock.SECTION, TripleBlockSection.BOTTOM)
                            )
                        val builder2 =
-                           BlockStatePropertyLootCondition.builder(DnDFloraBlocks.CORN_CROP).properties(
+                           BlockStatePropertyLootCondition.builder(DnDBlocks.CORN_CROP).properties(
                                StatePredicate.Builder.create().exactMatch(
                                    Properties.AGE_7,
                                    integer

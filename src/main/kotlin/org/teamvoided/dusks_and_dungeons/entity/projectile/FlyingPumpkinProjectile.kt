@@ -16,8 +16,8 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.teamvoided.dusks_and_dungeons.entity.FlyingBlockItemEntity
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDEntities
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.util.spawnParticles
 
 open class FlyingPumpkinProjectile : PersistentProjectileEntity, FlyingBlockItemEntity {
@@ -71,14 +71,14 @@ open class FlyingPumpkinProjectile : PersistentProjectileEntity, FlyingBlockItem
     }
 
     override fun getHitSound(): SoundEvent = SoundEvents.BLOCK_WOOD_BREAK
-    override fun getDefaultItemStack(): ItemStack = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
+    override fun getDefaultItemStack(): ItemStack = DnDBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
     override fun getState(): BlockState {
         return if (state.item is BlockItem) {
             (state.item as BlockItem).block.defaultState
-        } else DnDFloraBlocks.SMALL_CARVED_PUMPKIN.defaultState
+        } else DnDBlocks.SMALL_CARVED_PUMPKIN.defaultState
     }
 
     companion object {
-        var state: ItemStack = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
+        var state: ItemStack = DnDBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
     }
 }

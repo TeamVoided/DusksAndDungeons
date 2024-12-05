@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks;
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks;
 
 @Mixin(PistonHandler.class)
 public abstract class PistonHandlerMixin {
@@ -18,7 +18,7 @@ public abstract class PistonHandlerMixin {
 
     @Inject(at = @At("HEAD"), method = "isBlockSticky ", cancellable = true)
     private static void isSyrupSticky(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (state.isOf(DnDFloraBlocks.CORN_SYRUP_BLOCK))
+        if (state.isOf(DnDBlocks.CORN_SYRUP_BLOCK))
             cir.setReturnValue(true);
     }
 

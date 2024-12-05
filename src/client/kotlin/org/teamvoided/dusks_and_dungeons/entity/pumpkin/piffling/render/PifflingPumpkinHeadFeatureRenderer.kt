@@ -15,7 +15,7 @@ import net.minecraft.util.math.Axis
 import org.joml.Quaternionf
 import org.teamvoided.dusks_and_dungeons.entity.PifflingPumpkinEntity
 import org.teamvoided.dusks_and_dungeons.entity.pumpkin.piffling.model.PifflingPumpkinModel
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 class PifflingPumpkinHeadFeatureRenderer(
     context: FeatureRendererContext<PifflingPumpkinEntity, PifflingPumpkinModel>,
@@ -35,7 +35,7 @@ class PifflingPumpkinHeadFeatureRenderer(
     ) {
         var headStack = entity.getEquippedStack(EquipmentSlot.HEAD)
         if (headStack.isEmpty) {
-            headStack = DnDFloraBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
+            headStack = DnDBlocks.SMALL_CARVED_PUMPKIN.asItem().defaultStack
         }
         if ((!entity.isInvisible || (MinecraftClient.getInstance().hasOutline(entity) && entity.isInvisible))) {
             matrices.push()

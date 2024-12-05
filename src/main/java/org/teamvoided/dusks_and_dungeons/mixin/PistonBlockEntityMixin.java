@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks;
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks;
 
 @Mixin(PistonBlockEntity.class)
 public abstract class PistonBlockEntityMixin extends BlockEntity {
@@ -26,7 +26,7 @@ public abstract class PistonBlockEntityMixin extends BlockEntity {
 
     @Inject(at = @At("HEAD"), method = "isMovingHoneyBlock ", cancellable = true)
     private void isMovingSyrupBlock(CallbackInfoReturnable<Boolean> cir) {
-        if (this.movedState.isOf(DnDFloraBlocks.CORN_SYRUP_BLOCK))
+        if (this.movedState.isOf(DnDBlocks.CORN_SYRUP_BLOCK))
             cir.setReturnValue(true);
     }
 }

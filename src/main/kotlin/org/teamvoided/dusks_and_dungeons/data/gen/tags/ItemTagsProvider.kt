@@ -11,8 +11,8 @@ import net.minecraft.registry.tag.ItemTags
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.SECRET_ITEMS
 import org.teamvoided.voidlib.devin.extensions.tag.add
@@ -59,7 +59,7 @@ class ItemTagsProvider(
         copy(DnDBlockTags.SMALL_GLOWING_PUMPKINS, DnDItemTags.SMALL_GLOWING_PUMPKINS)
 
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS)
-            .add(DnDFloraBlocks.WARPED_WART.asItem())
+            .add(DnDBlocks.WARPED_WART.asItem())
         getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
             .addOptional(id("supplementaries", "ash_pile"))
             .add(Items.BASALT)

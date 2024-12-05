@@ -17,7 +17,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.*
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.lang.Integer.min
 
 class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertilizable {
@@ -164,8 +164,8 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         private val HALF_SHAPE =
             createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)
 
-        private fun defaultCornCrop(): Block = DnDFloraBlocks.CORN_CROP
-        private fun defaultCornPlant(): Block = DnDFloraBlocks.CORN
+        private fun defaultCornCrop(): Block = DnDBlocks.CORN_CROP
+        private fun defaultCornPlant(): Block = DnDBlocks.CORN
         private fun canGrowInto(world: WorldView, pos: BlockPos): Boolean {
             val blockState = world.getBlockState(pos)
             return blockState.isAir || blockState.isOf(defaultCornCrop())

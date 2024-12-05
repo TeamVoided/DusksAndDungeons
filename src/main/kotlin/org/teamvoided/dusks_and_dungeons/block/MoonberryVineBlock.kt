@@ -27,8 +27,8 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import net.minecraft.world.event.GameEvent
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 
 class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Waterloggable, Fertilizable {
     public override fun getCodec(): MapCodec<MoonberryVineBlock> = CODEC
@@ -43,7 +43,7 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
     }
 
     override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean =
-        context.stack.isOf(DnDFloraBlocks.MOONBERRY_VINE.asItem())
+        context.stack.isOf(DnDBlocks.MOONBERRY_VINE.asItem())
 
     override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState): Boolean = state.get(BERRIES) < 2
     override fun canFertilize(world: World, random: RandomGenerator, pos: BlockPos, state: BlockState): Boolean =

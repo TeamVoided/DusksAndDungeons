@@ -37,7 +37,6 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
@@ -132,7 +131,7 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.FAIRY_RING_RED,
             DnDFeatures.FAIRY_RING,
             FairyRingConfig(
-                BlockStateProvider.of(DnDFloraBlocks.RED_PETALS.defaultState),
+                BlockStateProvider.of(DnDBlocks.RED_PETALS.defaultState),
                 DnDBlockTags.FALLEN_TREE_REPLACEABLE,
                 3,
                 UniformIntProvider.create(1, 3)
@@ -142,7 +141,7 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.FAIRY_RING_CRIMSON,
             DnDFeatures.FAIRY_RING,
             FairyRingConfig(
-                BlockStateProvider.of(DnDFloraBlocks.CRIMSON_VIVIONS.defaultState),
+                BlockStateProvider.of(DnDBlocks.CRIMSON_VIVIONS.defaultState),
                 DnDBlockTags.FALLEN_TREE_REPLACEABLE,
                 5,
                 UniformIntProvider.create(1, 3)
@@ -152,7 +151,7 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.FAIRY_RING_WARPED,
             DnDFeatures.FAIRY_RING,
             FairyRingConfig(
-                BlockStateProvider.of(DnDFloraBlocks.WARPED_VIVIONS.defaultState),
+                BlockStateProvider.of(DnDBlocks.WARPED_VIVIONS.defaultState),
                 DnDBlockTags.FALLEN_TREE_REPLACEABLE,
                 5,
                 UniformIntProvider.create(1, 3)
@@ -429,7 +428,7 @@ object ConfiguredFeatureCreator {
                 96, 6, 2,
                 PlacedFeatureUtil.onlyWhenEmpty(
                     Feature.SIMPLE_BLOCK,
-                    SimpleBlockFeatureConfig(WeightedBlockStateProvider(petalBuilder(DnDFloraBlocks.BLUE_PETALS)))
+                    SimpleBlockFeatureConfig(WeightedBlockStateProvider(petalBuilder(DnDBlocks.BLUE_PETALS)))
                 )
             )
         )
@@ -507,7 +506,7 @@ object ConfiguredFeatureCreator {
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockFeatureConfig(
                     BlockStateProvider.of(
-                        DnDFloraBlocks.WILD_WHEAT.defaultState
+                        DnDBlocks.WILD_WHEAT.defaultState
                     )
                 ), ImmutableList.of(Blocks.PODZOL, Blocks.GRASS_BLOCK, Blocks.FARMLAND), 32
             )
@@ -570,8 +569,8 @@ object ConfiguredFeatureCreator {
                 Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
                     WeightedBlockStateProvider(
                         DataPool.builder<BlockState>()
-                            .addWeighted(DnDFloraBlocks.GOLDEN_BEETROOTS.defaultState, 1)
-                            .addWeighted(DnDFloraBlocks.GOLDEN_BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 1)
+                            .addWeighted(DnDBlocks.GOLDEN_BEETROOTS.defaultState, 1)
+                            .addWeighted(DnDBlocks.GOLDEN_BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 2), 1)
                             .addWeighted(Blocks.BEETROOTS.defaultState.with(BeetrootsBlock.AGE, 3), 1)
                     )
                 )

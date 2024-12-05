@@ -6,7 +6,6 @@ import net.minecraft.data.client.model.TexturedModel
 import net.minecraft.state.property.Properties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDFloraBlocks
 import org.teamvoided.dusks_and_dungeons.util.*
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
@@ -15,7 +14,7 @@ object NetherModels {
         DnDItemLists.blackstoneTools.forEach { gen.registerHandheldItem(it) }
 
         gen.registerCropWithParent(
-            DnDFloraBlocks.WARPED_WART,
+            DnDBlocks.WARPED_WART,
             DusksAndDungeons.id("block/parent/crop"), Properties.AGE_3, 0, 1, 1, 2)
         gen.registerAxisRotated(
             DnDBlocks.NETHER_BRICK_PILLAR,
