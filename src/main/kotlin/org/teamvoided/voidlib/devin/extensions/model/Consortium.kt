@@ -5,9 +5,9 @@ import org.teamvoided.dusks_and_dungeons.util.datagen.slab
 import org.teamvoided.dusks_and_dungeons.util.datagen.stairs
 import org.teamvoided.dusks_and_dungeons.util.datagen.wall
 import org.teamvoided.voidlib.consortium.block.BlockSet
-import org.teamvoided.voidlib.consortium.block.HeadlessBlockSet
+import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
 
-fun BlockStateModelGenerator.createBlockSet(set: HeadlessBlockSet) {
+fun BlockStateModelGenerator.createBlockSet(set: AbstractBlockSet) {
     if (set is BlockSet) this.registerSimpleCubeAll(set.parent)
     this.stairs(set.stairs, set.parent)
     this.slab(set.slab, set.parent)
