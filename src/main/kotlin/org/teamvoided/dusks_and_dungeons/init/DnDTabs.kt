@@ -3,169 +3,162 @@ package org.teamvoided.dusks_and_dungeons.init
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
-import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.registry.Holder
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.text.Text
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
-import org.teamvoided.dusks_and_dungeons.init.blocks.*
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.*
 import org.teamvoided.voidlib.helpers.mc.*
 
 
 @Suppress("unused")
 object DnDTabs {
-    val DUSKS_AND_DUNGEONS = register(MODID, FabricItemGroup.builder()
-        .icon { ItemStack(DnDWoodBlocks.CASCADE_SAPLING) }
-        .name(Text.translatable("itemGroup.dusks_and_dungeons.$MODID"))
-        .entries { _, entries ->
-            entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns)
-            entries.addItems(
-                DnDItems.BLUE_DOOR,
-                DnDWoodBlocks.CASCADE_SAPLING,
-                DnDWoodBlocks.CASCADE_LEAVES,
-                DnDWoodBlocks.GOLDEN_BIRCH_SAPLING,
-                DnDWoodBlocks.GOLDEN_BIRCH_LEAVES,
-                DnDItems.FARMERS_HAT,
-                DnDItems.WILD_WHEAT,
-                DnDItems.GOLDEN_BEETROOT,
-            )
-            entries.addItems(DnDItems.MOONBERRY_VINELET, DnDBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
-            entries.addLists(
-                DnDBlockLists.flowerbedBlocks,
-                DnDBlockLists.vivionbedBlocks,
-            )
-            entries.addItems(
-                DnDItems.CORN_STALK,
-                DnDItems.CORN_KERNELS,
-                DnDItems.CORN,
-                DnDBlocks.CORN_BLOCK,
-                DnDBlocks.CORN_SYRUP_BLOCK,
-                DnDItems.CORN_SYRUP_BOTTLE,
+    val DUSKS_AND_DUNGEONS = register(
+        MODID, FabricItemGroup.builder()
+            .icon(DnDWoodBlocks.CASCADE_SAPLING).translation("itemGroup.$MODID.$MODID")
+            .entries { _, entries ->
+                entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns)
+                entries.addItems(
+                    DnDItems.BLUE_DOOR,
+                    DnDWoodBlocks.CASCADE_SAPLING,
+                    DnDWoodBlocks.CASCADE_LEAVES,
+                    DnDWoodBlocks.GOLDEN_BIRCH_SAPLING,
+                    DnDWoodBlocks.GOLDEN_BIRCH_LEAVES,
+                    DnDItems.FARMERS_HAT,
+                    DnDItems.WILD_WHEAT,
+                    DnDItems.GOLDEN_BEETROOT,
+                )
+                entries.addItems(DnDItems.MOONBERRY_VINELET, DnDBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
+                entries.addLists(
+                    DnDBlockLists.flowerbedBlocks,
+                    DnDBlockLists.vivionbedBlocks,
+                )
+                entries.addItems(
+                    DnDItems.CORN_STALK,
+                    DnDItems.CORN_KERNELS,
+                    DnDItems.CORN,
+                    DnDBlocks.CORN_BLOCK,
+                    DnDBlocks.CORN_SYRUP_BLOCK,
+                    DnDItems.CORN_SYRUP_BOTTLE,
 
-                DnDBlocks.SMALL_PUMPKIN,
-                DnDBlocks.SMALL_CARVED_PUMPKIN,
-                DnDBlocks.SMALL_GLOWING_PUMPKIN,
+                    DnDBlocks.SMALL_PUMPKIN,
+                    DnDBlocks.SMALL_CARVED_PUMPKIN,
+                    DnDBlocks.SMALL_GLOWING_PUMPKIN,
 
-                DnDItems.LANTERN_PUMPKIN_SEEDS,
-                DnDBlocks.LANTERN_PUMPKIN,
-                DnDBlocks.CARVED_LANTERN_PUMPKIN,
-                DnDBlocks.GLOWING_LANTERN_PUMPKIN,
-                DnDBlocks.SMALL_LANTERN_PUMPKIN,
-                DnDBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
-                DnDBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
+                    DnDItems.LANTERN_PUMPKIN_SEEDS,
+                    DnDBlocks.LANTERN_PUMPKIN,
+                    DnDBlocks.CARVED_LANTERN_PUMPKIN,
+                    DnDBlocks.GLOWING_LANTERN_PUMPKIN,
+                    DnDBlocks.SMALL_LANTERN_PUMPKIN,
+                    DnDBlocks.SMALL_CARVED_LANTERN_PUMPKIN,
+                    DnDBlocks.SMALL_GLOWING_LANTERN_PUMPKIN,
 
-                DnDItems.MOSSKIN_PUMPKIN_SEEDS,
-                DnDBlocks.MOSSKIN_PUMPKIN,
-                DnDBlocks.CARVED_MOSSKIN_PUMPKIN,
-                DnDBlocks.GLOWING_MOSSKIN_PUMPKIN,
-                DnDBlocks.SMALL_MOSSKIN_PUMPKIN,
-                DnDBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN,
-                DnDBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN,
+                    DnDItems.MOSSKIN_PUMPKIN_SEEDS,
+                    DnDBlocks.MOSSKIN_PUMPKIN,
+                    DnDBlocks.CARVED_MOSSKIN_PUMPKIN,
+                    DnDBlocks.GLOWING_MOSSKIN_PUMPKIN,
+                    DnDBlocks.SMALL_MOSSKIN_PUMPKIN,
+                    DnDBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN,
+                    DnDBlocks.SMALL_GLOWING_MOSSKIN_PUMPKIN,
 
-                DnDItems.GLOOM_PUMPKIN_SEEDS,
-                DnDBlocks.GLOOM_PUMPKIN,
-                DnDBlocks.CARVED_GLOOM_PUMPKIN,
-                DnDBlocks.GLOWING_GLOOM_PUMPKIN,
-                DnDBlocks.SMALL_GLOOM_PUMPKIN,
-                DnDBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
-                DnDBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
+                    DnDItems.GLOOM_PUMPKIN_SEEDS,
+                    DnDBlocks.GLOOM_PUMPKIN,
+                    DnDBlocks.CARVED_GLOOM_PUMPKIN,
+                    DnDBlocks.GLOWING_GLOOM_PUMPKIN,
+                    DnDBlocks.SMALL_GLOOM_PUMPKIN,
+                    DnDBlocks.SMALL_CARVED_GLOOM_PUMPKIN,
+                    DnDBlocks.SMALL_GLOWING_GLOOM_PUMPKIN,
 
-                DnDItems.PALE_PUMPKIN_SEEDS,
-                DnDBlocks.PALE_PUMPKIN,
-                DnDBlocks.CARVED_PALE_PUMPKIN,
-                DnDBlocks.GLOWING_PALE_PUMPKIN,
-                DnDBlocks.SMALL_PALE_PUMPKIN,
-                DnDBlocks.SMALL_CARVED_PALE_PUMPKIN,
-                DnDBlocks.SMALL_GLOWING_PALE_PUMPKIN,
-            )
-            entries.addLists(
+                    DnDItems.PALE_PUMPKIN_SEEDS,
+                    DnDBlocks.PALE_PUMPKIN,
+                    DnDBlocks.CARVED_PALE_PUMPKIN,
+                    DnDBlocks.GLOWING_PALE_PUMPKIN,
+                    DnDBlocks.SMALL_PALE_PUMPKIN,
+                    DnDBlocks.SMALL_CARVED_PALE_PUMPKIN,
+                    DnDBlocks.SMALL_GLOWING_PALE_PUMPKIN,
+                )
+                entries.addLists(
 //                    DnDItemLists.pineWood,
-                DnDItemLists.woodStuff,
-                DnDItemLists.logPiles,
-                DnDItemLists.leafPiles,
-                DnDItemLists.polishedStone,
-                DnDItemLists.mossyPolishedStone,
-                DnDItemLists.overgrownCobblestone,
-                DnDItemLists.overgrownStoneBricks,
+                    DnDItemLists.woodStuff,
+                    DnDItemLists.logPiles,
+                    DnDItemLists.leafPiles,
+                    DnDItemLists.polishedStone,
+                    DnDItemLists.mossyPolishedStone,
+                    DnDItemLists.overgrownCobblestone,
+                    DnDItemLists.overgrownStoneBricks,
 //                DnDItemLists.snowyStoneBricks,
-                DnDItemLists.ice
-            )
-            entries.addItems(
-                DnDBlocks.ROOT_BLOCK,
-                DnDBlocks.STONE_PILLAR,
-                DnDBlocks.DEEPSLATE_PILLAR,
+                    DnDItemLists.ice
+                )
+                entries.addItems(
+                    DnDBlocks.ROOT_BLOCK,
+                    DnDBlocks.STONE_PILLAR,
+                    DnDBlocks.DEEPSLATE_PILLAR,
 //                DnDBlocks.TALL_REDSTONE_CRYSTAL,
-                DnDBlocks.STONE_GRAVESTONE,
-                DnDBlocks.SMALL_STONE_GRAVESTONE,
-                DnDBlocks.DEEPSLATE_GRAVESTONE,
-                DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE,
-                DnDBlocks.TUFF_GRAVESTONE,
-                DnDBlocks.SMALL_TUFF_GRAVESTONE,
-                DnDBlocks.BLACKSTONE_GRAVESTONE,
-                DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE,
+                    DnDBlocks.STONE_GRAVESTONE,
+                    DnDBlocks.SMALL_STONE_GRAVESTONE,
+                    DnDBlocks.DEEPSLATE_GRAVESTONE,
+                    DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE,
+                    DnDBlocks.TUFF_GRAVESTONE,
+                    DnDBlocks.SMALL_TUFF_GRAVESTONE,
+                    DnDBlocks.BLACKSTONE_GRAVESTONE,
+                    DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE,
 
-                DnDBlocks.HEADSTONE,
+                    DnDBlocks.HEADSTONE,
 
-                DnDBlocks.BIG_CHAIN,
-                DnDBlocks.BIG_LANTERN,
-                DnDBlocks.BIG_SOUL_LANTERN,
-            )
-            entries.addItems( // This adds the candles in a nice way
-                DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
-                    listOf(
-                        item,
-                        DnDBlockLists.candelabras[idx],
-                        DnDItemLists.soulCandles[idx],
-                        DnDItemLists.bigSoulCandles[idx],
-                        DnDBlockLists.soulCandelabras[idx],
-                    )
-                }
-            )
-            entries.addItem(DnDBlocks.WARPED_WART)
-            entries.addLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
-            entries.addItem(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
-            entries.addLists(
-                DnDItemLists.redNetherBrickStuff,
-                DnDItemLists.mixedRedNetherBrickStuff,
-                DnDItemLists.blueNetherBrickStuff,
-                DnDItemLists.mixedBlueNetherBrickStuff,
-                DnDItemLists.grayNetherBrickStuff,
-                DnDItemLists.mixedGrayNetherBrickStuff,
-                DnDItemLists.blackstoneTools,
-            )
-        }.build()
+                    DnDBlocks.BIG_CHAIN,
+                    DnDBlocks.BIG_LANTERN,
+                    DnDBlocks.BIG_SOUL_LANTERN,
+                )
+                entries.addItems( // This adds the candles in a nice way
+                    DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
+                        listOf(
+                            item,
+                            DnDBlockLists.candelabras[idx],
+                            DnDItemLists.soulCandles[idx],
+                            DnDItemLists.bigSoulCandles[idx],
+                            DnDBlockLists.soulCandelabras[idx],
+                        )
+                    }
+                )
+                entries.addItem(DnDBlocks.WARPED_WART)
+                entries.addLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
+                entries.addItem(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
+                entries.addLists(
+                    DnDItemLists.redNetherBrickStuff,
+                    DnDItemLists.mixedRedNetherBrickStuff,
+                    DnDItemLists.blueNetherBrickStuff,
+                    DnDItemLists.mixedBlueNetherBrickStuff,
+                    DnDItemLists.grayNetherBrickStuff,
+                    DnDItemLists.mixedGrayNetherBrickStuff,
+                    DnDItemLists.blackstoneTools,
+                )
+            }.build()
     )
-    val OVERLAY_BLOCKS = register("overlay_blocks",
-        FabricItemGroup.builder()
-            .icon { ItemStack(DnDOverlayBlocks.ROCKY_GRASS) }
-            .name(Text.translatable("itemGroup.dusks_and_dungeons.overlay_blocks"))
+    val OVERLAY_BLOCKS = register(
+        "overlay_blocks", FabricItemGroup.builder()
+            .icon(DnDOverlayBlocks.ROCKY_GRASS).translation("itemGroup.$MODID.overlay_blocks")
             .entries { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
-            .build()
     )
 
     // Dev Tabs
-    val DND_EVERYTHING = register("dnd_everything",
-        FabricItemGroup.builder()
-            .icon { ItemStack(DnDBlocks.STONE_PILLAR.asItem()) }
-            .name(Text.translatable("DnD Everything"))
+    val DND_EVERYTHING = register(
+        "dnd_everything", FabricItemGroup.builder()
+            .icon(DnDBlocks.STONE_PILLAR).name("DnD Everything")
             .entries { _, entries ->
                 if (isDev())
                     entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains))
             }
-            .build()
     )
-    val DND_EXPERIMENTAL = register("dnd_experimental",
-        FabricItemGroup.builder()
-            .icon { ItemStack(DnDItems.GALLERY_MAPLE_DOOR) }
-            .name(Text.literal("DnD Experimental"))
+    val DND_EXPERIMENTAL = register(
+        "dnd_experimental", FabricItemGroup.builder()
+            .icon(DnDItems.GALLERY_MAPLE_DOOR).name("DnD Experimental")
             .entries { _, entries -> if (isDev()) entries.addLists(EVIL_ITEMS) }
-            .build()
     )
 
     fun init() {
@@ -177,8 +170,9 @@ object DnDTabs {
             addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
             addAfter(
                 Items.RED_NETHER_BRICK_WALL,
-                DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedRedNetherBrickStuff + DnDItemLists.blueNetherBrickStuff +
-                        DnDItemLists.mixedBlueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
+                DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedRedNetherBrickStuff +
+                        DnDItemLists.blueNetherBrickStuff + DnDItemLists.mixedBlueNetherBrickStuff +
+                        DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
             )
             addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
             addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks)
@@ -264,6 +258,6 @@ object DnDTabs {
         }
     }
 
-    fun register(name: String, itemGroup: ItemGroup): Holder.Reference<ItemGroup> =
-        Registry.registerHolder(Registries.ITEM_GROUP, id(name), itemGroup)
+    fun register(name: String, itemGroup: ItemGroup.Builder): Holder.Reference<ItemGroup> =
+        Registry.registerHolder(Registries.ITEM_GROUP, id(name), itemGroup.build())
 }

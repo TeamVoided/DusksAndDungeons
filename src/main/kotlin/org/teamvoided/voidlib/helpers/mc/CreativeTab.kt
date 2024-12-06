@@ -6,7 +6,9 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
+import net.minecraft.text.Text
 
 fun modifyTab(itemGroup: RegistryKey<ItemGroup>, modifyEntries: FabricItemGroupEntries.() -> Unit) =
     ItemGroupEvents.modifyEntriesEvent(itemGroup).register(modifyEntries)
@@ -23,3 +25,7 @@ fun FabricItemGroupEntries.addAfter(item: ItemConvertible, list: Collection<Item
 
 fun FabricItemGroupEntries.addBefore(item: ItemConvertible, list: Collection<ItemConvertible>) =
     this.addBefore(item.asItem(), list.map { it.asItem().defaultStack })
+
+fun ItemGroup.Builder.icon(item: ItemConvertible): ItemGroup.Builder = this.icon { ItemStack(item) }
+fun ItemGroup.Builder.translation(translation: String): ItemGroup.Builder = this.name(Text.translatable(translation))
+fun ItemGroup.Builder.name(name: String): ItemGroup.Builder = this.name(Text.literal(name))
