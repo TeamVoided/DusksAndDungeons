@@ -19,6 +19,8 @@ import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.AUTUMN_CASCADES
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.AUTUMN_PASTURES
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.AUTUMN_WETLANDS
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.AUTUMN_WOODS
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.GOLDEN_PASTURES
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.GOLDEN_WOODS
 
 object BiomeCreator {
     //        .grassColor(16366449)
@@ -29,8 +31,12 @@ object BiomeCreator {
         context.register(AUTUMN_PASTURES, createAutumnPlains(context))
         context.register(AUTUMN_CASCADES, createAutumnRiver(context))
         context.register(AUTUMN_WETLANDS, createAutumnWetlands(context))
+
+        context.register(GOLDEN_WOODS, createAutumnForest(context))
+        context.register(GOLDEN_PASTURES, createAutumnPlains(context))
     }
 
+    //no access widener?
     private fun getSkyColor(temperature: Float): Int {
         val f = MathHelper.clamp(temperature / 3.0f, -1.0f, 1.0f)
         return MathHelper.hsvToRgb(0.62222224f - f * 0.05f, 0.5f + f * 0.1f, 1.0f)
@@ -45,7 +51,7 @@ object BiomeCreator {
         spawnSettings.spawn(SpawnGroup.CREATURE, SpawnEntry(EntityType.WOLF, 2, 2, 4))
     }
 
-    private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder) {
+    private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder, golden: Boolean = false) {
         generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DnDPlacedFeature.AUTUMN_FARMLANDS)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.ORE_LAPIS_EXTRA)
         generationSettings.feature(
@@ -54,7 +60,10 @@ object BiomeCreator {
         )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.PATCH_PUMPKIN_EXTRA)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.FLOWER_AUTUMN)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.BLUE_PETALS)
+        generationSettings.feature(
+            GenerationStep.Feature.VEGETAL_DECORATION,
+            if (golden) DnDPlacedFeature.FAIRY_RING_RED else DnDPlacedFeature.BLUE_PETALS
+        )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.CROPS_WILD_WHEAT)
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_MUD)
     }
@@ -78,7 +87,7 @@ object BiomeCreator {
     }
 
 
-    fun createAutumnForest(c: BootstrapContext<Biome>): Biome {
+    fun createAutumnForest(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
@@ -94,7 +103,7 @@ object BiomeCreator {
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_PODZOL)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
+            if (golden) DnDPlacedFeature.GOLDEN_WOODS_VEGETATION else DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
         )
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
         generationSettings.feature(
@@ -107,7 +116,7 @@ object BiomeCreator {
         )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
-        addAutumnFeatures(generationSettings)
+        addAutumnFeatures(generationSettings, golden)
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.PATCH_ROSEBUSH)
 
         return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
@@ -115,7 +124,7 @@ object BiomeCreator {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(16224051)
+                .grassColor(if (golden) 16434531 else 16224051)
                 .foliageColor(15097636)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
@@ -125,7 +134,7 @@ object BiomeCreator {
     }
 //grass 16434531 15647087
 
-    fun createAutumnPlains(c: BootstrapContext<Biome>): Biome {
+    fun createAutumnPlains(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
         val spawnSettings = SpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings)
@@ -140,7 +149,7 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
-            DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
+            if (golden) DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION else DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
         )
         generationSettings.feature(
             GenerationStep.Feature.VEGETAL_DECORATION,
@@ -152,14 +161,14 @@ object BiomeCreator {
         )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
-        addAutumnFeatures(generationSettings)
+        addAutumnFeatures(generationSettings, golden)
 
         return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
             BiomeEffects.Builder()
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(15768399)
+                .grassColor(if (golden) 15647087 else 15768399)
                 .foliageColor(15097636)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)

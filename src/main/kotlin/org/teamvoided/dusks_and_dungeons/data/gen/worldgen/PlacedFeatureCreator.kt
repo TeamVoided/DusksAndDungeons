@@ -195,6 +195,24 @@ object PlacedFeatureCreator {
             PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
         )
+        c.register(
+            DnDPlacedFeature.GOLDEN_WOODS_VEGETATION,
+            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN),
+            PlacedFeatureUtil.createCountExtraModifier(10, 0.1f, 1),
+            InSquarePlacementModifier.getInstance(),
+            SurfaceWaterDepthFilterPlacementModifier.create(0),
+            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
+            BiomePlacementModifier.getInstance()
+        )
+        c.register(
+            DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION,
+            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN),
+            RarityFilterPlacementModifier.create(2),
+            InSquarePlacementModifier.getInstance(),
+            SurfaceWaterDepthFilterPlacementModifier.create(0),
+            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
+            BiomePlacementModifier.getInstance()
+        )
 //        c.register(
 //            AUTUMN_WETLANDS_VEGETATION,
 //            holderProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION),
@@ -208,16 +226,16 @@ object PlacedFeatureCreator {
         c.register(
             DnDPlacedFeature.FLOWER_AUTUMN,
             configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.FLOWER_AUTUMN),
-            NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-            RarityFilterPlacementModifier.create(14),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            noiseThresholdFlowerPlacement(14)
         )
         c.register(
             DnDPlacedFeature.BLUE_PETALS, configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.BLUE_PETALS),
-            NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-            RarityFilterPlacementModifier.create(18),
+            noiseThresholdFlowerPlacement(18)
+        )
+        c.register(
+            DnDPlacedFeature.FAIRY_RING_RED,
+            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.FAIRY_RING_RED),
+            RarityFilterPlacementModifier.create(7),
             InSquarePlacementModifier.getInstance(),
             PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
             BiomePlacementModifier.getInstance()
@@ -287,6 +305,17 @@ object PlacedFeatureCreator {
                 HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.belowTop(128))
             )
         )
+    }
+
+    fun noiseThresholdFlowerPlacement(rarity: Int): List<PlacementModifier> {
+        return listOf(
+            NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
+            RarityFilterPlacementModifier.create(rarity),
+            InSquarePlacementModifier.getInstance(),
+            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
+            BiomePlacementModifier.getInstance()
+        )
+
     }
 
     fun orePlacementModifiers(

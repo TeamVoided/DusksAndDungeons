@@ -18,6 +18,10 @@ object DnDBiomes {
     val AUTUMN_CASCADES = create("autumn_cascades")
     val AUTUMN_WETLANDS = create("autumn_wetlands")
 
+    val GOLDEN_WOODS = create("golden_woods")
+    val GOLDEN_PASTURES = create("golden_pastures")
+
+
     val temperature: Criterion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.15f)
     val humidity: Criterion = CriterionBuilder.value(BiomeParameterTargets.HUMIDITY, -1f, -0.35f)
 
@@ -65,6 +69,11 @@ object DnDBiomes {
                 humidity
             )
         )
+    }
+
+    fun goldenPlacement() {
+        BiomePlacement.replaceOverworld(AUTUMN_WOODS, GOLDEN_WOODS, 0.2)
+        BiomePlacement.replaceOverworld(AUTUMN_PASTURES, GOLDEN_PASTURES, 0.2)
     }
 
     fun create(id: String): RegistryKey<Biome> = RegistryKey.of(RegistryKeys.BIOME, id(id))
