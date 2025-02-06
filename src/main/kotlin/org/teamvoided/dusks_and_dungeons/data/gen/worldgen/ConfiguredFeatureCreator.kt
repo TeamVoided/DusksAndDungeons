@@ -375,6 +375,14 @@ object ConfiguredFeatureCreator {
                 ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.ACACIA_AUTUMN)
             )
         )
+
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.GOLDEN_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
+                listOf(
+                    WeightedPlacedFeature(placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL), 0.5f)
+                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
+            )
+        )
 //        c.registerConfiguredFeature(
 //            DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
 //                listOf(

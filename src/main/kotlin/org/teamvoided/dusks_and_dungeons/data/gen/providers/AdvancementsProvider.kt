@@ -16,7 +16,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
-import org.teamvoided.dusks_and_dungeons.data.DnDWolfVariants
+import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 import java.util.concurrent.CompletableFuture

@@ -197,7 +197,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DnDPlacedFeature.GOLDEN_WOODS_VEGETATION,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN),
+            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
             PlacedFeatureUtil.createCountExtraModifier(10, 0.1f, 1),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
@@ -206,7 +206,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN),
+            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
             RarityFilterPlacementModifier.create(2),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),

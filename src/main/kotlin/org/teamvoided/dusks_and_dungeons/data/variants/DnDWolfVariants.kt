@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data
+package org.teamvoided.dusks_and_dungeons.data.variants
 
 import net.minecraft.entity.passive.WolfVariant
 import net.minecraft.registry.RegistryKey

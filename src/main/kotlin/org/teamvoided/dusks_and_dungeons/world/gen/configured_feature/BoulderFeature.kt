@@ -21,8 +21,9 @@ class BoulderFeature(codec: Codec<BoulderConfig>) :
         if (blockPos.y <= structureWorldAccess.bottomY + 1 + size) {
             return false
         } else {
-            if (!structureWorldAccess.getBlockState(blockPos).isIn(BlockTags.FEATURES_CANNOT_REPLACE))
+            if (!structureWorldAccess.getBlockState(blockPos).isIn(BlockTags.FEATURES_CANNOT_REPLACE)) {
                 structureWorldAccess.setBlockState(blockPos, config.block.getBlockState(randomGenerator, blockPos), 3)
+            }
             for (i in 0..boulderCount) {
                 size = config.size[randomGenerator]
                 val x = randomGenerator.nextInt(size)

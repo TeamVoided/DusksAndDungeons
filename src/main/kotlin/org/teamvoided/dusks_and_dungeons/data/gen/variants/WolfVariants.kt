@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.providers
+package org.teamvoided.dusks_and_dungeons.data.gen.variants
 
 import net.minecraft.entity.passive.WolfVariant
 import net.minecraft.registry.BootstrapContext
@@ -7,7 +7,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.world.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.data.DnDWolfVariants
+import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 
 object WolfVariants {

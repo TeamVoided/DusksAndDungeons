@@ -10,7 +10,11 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.biome.*
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
-import net.minecraft.world.gen.GenerationStep
+import net.minecraft.world.gen.GenerationStep.Feature.*
+import net.minecraft.world.gen.GenerationStep.Feature.LOCAL_MODIFICATIONS as lm2
+import net.minecraft.world.gen.GenerationStep.Feature.SURFACE_STRUCTURES as ss4
+import net.minecraft.world.gen.GenerationStep.Feature.UNDERGROUND_ORES as uo6
+import net.minecraft.world.gen.GenerationStep.Feature.VEGETAL_DECORATION as vd9
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
@@ -32,8 +36,8 @@ object BiomeCreator {
         context.register(AUTUMN_CASCADES, createAutumnRiver(context))
         context.register(AUTUMN_WETLANDS, createAutumnWetlands(context))
 
-        context.register(GOLDEN_WOODS, createAutumnForest(context))
-        context.register(GOLDEN_PASTURES, createAutumnPlains(context))
+        context.register(GOLDEN_WOODS, createAutumnForest(context, true))
+        context.register(GOLDEN_PASTURES, createAutumnPlains(context, true))
     }
 
     //no access widener?
@@ -52,38 +56,23 @@ object BiomeCreator {
     }
 
     private fun addAutumnFeatures(generationSettings: GenerationSettings.Builder, golden: Boolean = false) {
-        generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, DnDPlacedFeature.AUTUMN_FARMLANDS)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.ORE_LAPIS_EXTRA)
-        generationSettings.feature(
-            GenerationStep.Feature.LOCAL_MODIFICATIONS,
-            DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER
-        )
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.PATCH_PUMPKIN_EXTRA)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.FLOWER_AUTUMN)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            if (golden) DnDPlacedFeature.FAIRY_RING_RED else DnDPlacedFeature.BLUE_PETALS
-        )
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.CROPS_WILD_WHEAT)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_MUD)
+        generationSettings.feature(ss4, DnDPlacedFeature.AUTUMN_FARMLANDS)
+        generationSettings.feature(uo6, DnDPlacedFeature.ORE_LAPIS_EXTRA)
+        generationSettings.feature(lm2, DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER)
+        generationSettings.feature(vd9, DnDPlacedFeature.PATCH_PUMPKIN_EXTRA)
+        generationSettings.feature(vd9, DnDPlacedFeature.FLOWER_AUTUMN)
+        generationSettings.feature(vd9, if (golden) DnDPlacedFeature.FAIRY_RING_RED else DnDPlacedFeature.BLUE_PETALS)
+        generationSettings.feature(vd9, DnDPlacedFeature.CROPS_WILD_WHEAT)
+        generationSettings.feature(uo6, DnDPlacedFeature.DISK_MUD)
     }
 
     private fun addAutumnSwampFeatures(generationSettings: GenerationSettings.Builder) {
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.FLOWER_SWAMP)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            VegetationPlacedFeatures.PATCH_GRASS_NORMAL
-        )
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_WATERLILY)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            VegetationPlacedFeatures.BROWN_MUSHROOM_SWAMP
-        )
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            VegetationPlacedFeatures.RED_MUSHROOM_SWAMP
-        )
+        generationSettings.feature(vd9, VegetationPlacedFeatures.FLOWER_SWAMP)
+        generationSettings.feature(vd9, VegetationPlacedFeatures.PATCH_GRASS_NORMAL)
+        generationSettings.feature(vd9, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
+        generationSettings.feature(vd9, VegetationPlacedFeatures.PATCH_WATERLILY)
+        generationSettings.feature(vd9, VegetationPlacedFeatures.BROWN_MUSHROOM_SWAMP)
+        generationSettings.feature(vd9, VegetationPlacedFeatures.RED_MUSHROOM_SWAMP)
     }
 
 
@@ -100,32 +89,27 @@ object BiomeCreator {
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_PODZOL)
+        generationSettings.feature(uo6, DnDPlacedFeature.DISK_PODZOL)
         generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
+            vd9,
             if (golden) DnDPlacedFeature.GOLDEN_WOODS_VEGETATION else DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
         )
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            VegetationPlacedFeatures.BROWN_MUSHROOM_OLD_GROWTH
-        )
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            VegetationPlacedFeatures.RED_MUSHROOM_OLD_GROWTH
-        )
+        if (golden) DefaultBiomeFeatures.addForestGrass(generationSettings)
+        generationSettings.feature(vd9, VegetationPlacedFeatures.PATCH_DEAD_BUSH)
+        generationSettings.feature(vd9, VegetationPlacedFeatures.BROWN_MUSHROOM_OLD_GROWTH)
+        generationSettings.feature(vd9, VegetationPlacedFeatures.RED_MUSHROOM_OLD_GROWTH)
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings, golden)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, DnDPlacedFeature.PATCH_ROSEBUSH)
+        generationSettings.feature(vd9, DnDPlacedFeature.PATCH_ROSEBUSH)
 
-        return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
+        return Biome.Builder().temperature(0.25f).downfall(0.8f).effects(
             BiomeEffects.Builder()
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(if (golden) 16434531 else 16224051)
-                .foliageColor(15097636)
+                .grassColor(if (golden) 0xF7C156 else 16224051)
+                .foliageColor(if (golden) 0xF7C156 else 15097636)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
                 .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FLOWER_FOREST))
@@ -148,22 +132,16 @@ object BiomeCreator {
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
         generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
+            vd9,
             if (golden) DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION else DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
         )
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN
-        )
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN
-        )
+        generationSettings.feature(vd9, DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN)
+        generationSettings.feature(vd9, DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN)
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings, golden)
 
-        return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
+        return Biome.Builder().temperature(0.25f).downfall(0.8f).effects(
             BiomeEffects.Builder()
                 .waterColor(1392275)
                 .waterFogColor(329011)
@@ -192,19 +170,16 @@ object BiomeCreator {
         OverworldBiomeCreator.addBasicFeatures(generationSettings)
         DefaultBiomeFeatures.addDefaultOres(generationSettings)
         DefaultBiomeFeatures.addDefaultDisks(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, DnDPlacedFeature.DISK_PODZOL)
-        generationSettings.feature(
-            GenerationStep.Feature.VEGETAL_DECORATION,
-            DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
-        )
+        generationSettings.feature(uo6, DnDPlacedFeature.DISK_PODZOL)
+        generationSettings.feature(vd9, DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION)
         DefaultBiomeFeatures.addPlainsTallGrass(generationSettings)
         DefaultBiomeFeatures.addGiantTaigaGrass(generationSettings)
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings)
         addAutumnFeatures(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_RIVER)
+        generationSettings.feature(vd9, OceanPlacedFeatures.SEAGRASS_RIVER)
 
-        return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.8f).effects(
+        return Biome.Builder().temperature(0.25f).downfall(0.8f).effects(
             BiomeEffects.Builder()
                 .waterColor(1392275)
                 .waterFogColor(329011)
@@ -235,14 +210,14 @@ object BiomeCreator {
         DefaultBiomeFeatures.addClayDisk(generationSettings)
         addAutumnSwampFeatures(generationSettings)
 //        generationSettings.feature(
-//            GenerationStep.Feature.VEGETAL_DECORATION,
+//            vegetal_decoration_9,
 //            DnDPlacedFeature.AUTUMN_WETLANDS_VEGETATION
 //        )
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings)
         addAutumnFeatures(generationSettings)
         DefaultBiomeFeatures.addSwampVegetation(generationSettings)
-        generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_SWAMP)
-        return Biome.Builder().hasPrecipitation(true).temperature(0.25f).downfall(0.9f).effects(
+        generationSettings.feature(vd9, OceanPlacedFeatures.SEAGRASS_SWAMP)
+        return Biome.Builder().temperature(0.25f).downfall(0.9f).effects(
             BiomeEffects.Builder()
                 .waterColor(4476844)
                 .waterFogColor(1383204)
