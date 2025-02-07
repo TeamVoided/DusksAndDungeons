@@ -19,25 +19,20 @@ import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.AUTUMN_CASCADES
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.AUTUMN_PASTURES
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.AUTUMN_WETLANDS
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.AUTUMN_WOODS
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.GOLDEN_PASTURES
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes.GOLDEN_WOODS
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 
 object BiomeCreator {
     //        .grassColor(16366449)
     // (ender) this was by the biomes so IDK have it I guess
 
     fun boostrap(context: BootstrapContext<Biome>) {
-        context.register(AUTUMN_WOODS, createAutumnForest(context))
-        context.register(AUTUMN_PASTURES, createAutumnPlains(context))
-        context.register(AUTUMN_CASCADES, createAutumnRiver(context))
-        context.register(AUTUMN_WETLANDS, createAutumnWetlands(context))
+        context.register(DnDBiomes.AUTUMN_WOODS, createAutumnForest(context))
+        context.register(DnDBiomes.AUTUMN_PASTURES, createAutumnPlains(context))
+        context.register(DnDBiomes.AUTUMN_CASCADES, createAutumnRiver(context))
+        context.register(DnDBiomes.AUTUMN_WETLANDS, createAutumnWetlands(context))
 
-        context.register(GOLDEN_WOODS, createAutumnForest(context, true))
-        context.register(GOLDEN_PASTURES, createAutumnPlains(context, true))
+        context.register(DnDBiomes.GOLDEN_WOODS, createAutumnForest(context, true))
+        context.register(DnDBiomes.GOLDEN_PASTURES, createAutumnPlains(context, true))
     }
 
     //no access widener?
@@ -62,8 +57,10 @@ object BiomeCreator {
         generationSettings.feature(vd9, DnDPlacedFeature.PATCH_PUMPKIN_EXTRA)
         generationSettings.feature(vd9, DnDPlacedFeature.FLOWER_AUTUMN)
         generationSettings.feature(vd9, if (golden) DnDPlacedFeature.FAIRY_RING_RED else DnDPlacedFeature.BLUE_PETALS)
-        generationSettings.feature(vd9, DnDPlacedFeature.CROPS_WILD_WHEAT)
-        generationSettings.feature(uo6, DnDPlacedFeature.DISK_MUD)
+        if (!golden) {
+            generationSettings.feature(vd9, DnDPlacedFeature.CROPS_WILD_WHEAT)
+            generationSettings.feature(uo6, DnDPlacedFeature.DISK_MUD)
+        }
     }
 
     private fun addAutumnSwampFeatures(generationSettings: GenerationSettings.Builder) {
@@ -108,8 +105,8 @@ object BiomeCreator {
                 .waterColor(1392275)
                 .waterFogColor(329011)
                 .fogColor(11587327)
-                .grassColor(if (golden) 0xF7C156 else 16224051)
-                .foliageColor(if (golden) 0xF7C156 else 15097636)
+                .grassColor(if (golden) 0xFFD859 else 16224051)
+                .foliageColor(if (golden) 0xFFD859 else 15097636)
                 .skyColor(getSkyColor(0.25f))
                 .moodSound(BiomeMoodSound.CAVE)
                 .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_FLOWER_FOREST))

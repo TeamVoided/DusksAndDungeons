@@ -274,6 +274,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.POLISHED_RED_NETHER_BRICKS.parent)
             .add(DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.parent)
             .add(DnDBlocks.POLISHED_GRAY_NETHER_BRICKS.parent)
+        
+        
         getOrCreateTagBuilder(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
             .addOptionalTag(id("nullium", "support/nether_wart"))
             .add(Blocks.SOUL_SAND)
@@ -299,6 +301,12 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DnDBlockTags.FALLEN_TREE_REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE_BY_TREES)
+        
+        getOrCreateTagBuilder(DnDBlockTags.PUMPKIN_PATCH_PLACE_ON)
+            .forceAddTag(BlockTags.DIRT)
+            .forceAddTag(DnDBlockTags.PUMPKIN_BLOCKS)
+            .forceAddTag(ConventionalBlockTags.COBBLESTONES)
+            .add(Blocks.FARMLAND)
 
 
         getOrCreateTagBuilder(DnDBlockTags.CORN_STORAGE)
@@ -308,6 +316,14 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.MOSSKIN_PUMPKIN_STEM)
             .add(DnDBlocks.PALE_PUMPKIN_STEM)
             .add(DnDBlocks.GLOOM_PUMPKIN_STEM)
+        getOrCreateTagBuilder(DnDBlockTags.PUMPKIN_BLOCKS)
+            .forceAddTag(DnDBlockTags.PUMPKINS)
+            .forceAddTag(DnDBlockTags.CARVED_PUMPKINS)
+            .forceAddTag(DnDBlockTags.GLOWING_PUMPKINS)
+        getOrCreateTagBuilder(DnDBlockTags.PUMPKIN_EIGHTHS)
+            .forceAddTag(DnDBlockTags.SMALL_PUMPKINS)
+            .forceAddTag(DnDBlockTags.SMALL_CARVED_PUMPKINS)
+            .forceAddTag(DnDBlockTags.SMALL_GLOWING_PUMPKINS)
         getOrCreateTagBuilder(DnDBlockTags.PUMPKINS)
             .add(Blocks.PUMPKIN)
             .add(DnDBlocks.LANTERN_PUMPKIN)

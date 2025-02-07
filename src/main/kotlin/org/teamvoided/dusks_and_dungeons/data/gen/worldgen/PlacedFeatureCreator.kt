@@ -252,11 +252,10 @@ object PlacedFeatureCreator {
         c.register(
             DnDPlacedFeature.AUTUMN_FARMLANDS,
             configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND),
-            RarityFilterPlacementModifier.create(28),
+            RarityFilterPlacementModifier.create(21),
             InSquarePlacementModifier.getInstance(),
             SurfaceWaterDepthFilterPlacementModifier.create(0),
             PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
-            CountPlacementModifier.create(ClampedIntProvider.create(UniformIntProvider.create(-3, 1), 0, 1)),
             BiomePlacementModifier.getInstance()
         )
         c.register(

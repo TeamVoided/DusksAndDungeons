@@ -3,28 +3,57 @@ package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.collection.DataPool
+import net.minecraft.util.math.int_provider.BiasedToBottomIntProvider
 import net.minecraft.util.math.int_provider.IntProvider
+import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.feature.FeatureConfig
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
+import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 
 data class FallenTreeConfig(
     val stumpBlock: BlockStateProvider,
     val logBlock: BlockStateProvider,
-    val replaceable: TagKey<Block>,
-    val logTopperChance: Int,
-    val stumpSidesChance: Int,
-    val logTopper: BlockStateProvider,    //mushrooms
-    val stumpSides: BlockStateProvider,   //vines
-    val treeWidth: Int,                   //oak, dark oak, cascade
-    val stumpHeight: IntProvider,
-    val trunkLength: IntProvider,
-    val trunkDistanceFromStump: IntProvider,
-    val trunkVerticalRange: Int
+    val replaceable: TagKey<Block> = DEFAULT.replaceable,
+    val logTopperChance: Int = DEFAULT.logTopperChance,
+    val stumpSidesChance: Int = DEFAULT.stumpSidesChance,
+    val logTopper: BlockStateProvider = DEFAULT.logTopper,    //mushrooms
+    val stumpSides: BlockStateProvider = DEFAULT.stumpSides,  //vines
+    val treeWidth: Int = DEFAULT.treeWidth,                   //oak, dark oak, cascade
+    val stumpHeight: IntProvider = DEFAULT.stumpHeight,
+    val trunkLength: IntProvider = DEFAULT.trunkLength,
+    val trunkDistanceFromStump: IntProvider = DEFAULT.trunkDistanceFromStump,
+    val trunkVerticalRange: Int = DEFAULT.trunkVerticalRange
 ) : FeatureConfig {
+
+
     companion object {
+        private val mushrooms = WeightedBlockStateProvider(
+            DataPool.builder<BlockState>()
+                .addWeighted(Blocks.BROWN_MUSHROOM.defaultState, 1)
+                .addWeighted(Blocks.RED_MUSHROOM.defaultState, 1)
+        )
+        private val vine = BlockStateProvider.of(Blocks.VINE)
+
+        val DEFAULT = FallenTreeConfig(
+            BlockStateProvider.of(Blocks.OAK_LOG),
+            BlockStateProvider.of(Blocks.OAK_LOG),
+            DnDBlockTags.FALLEN_TREE_REPLACEABLE,
+            -1,
+            -1,
+            BlockStateProvider.of(Blocks.AIR),
+            BlockStateProvider.of(Blocks.AIR),
+            1,
+            BiasedToBottomIntProvider.create(1, 3),
+            UniformIntProvider.create(2, 4),
+            UniformIntProvider.create(0, 2),
+            16
+        )
         val CODEC =
             RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<FallenTreeConfig> ->
                 instance.group(

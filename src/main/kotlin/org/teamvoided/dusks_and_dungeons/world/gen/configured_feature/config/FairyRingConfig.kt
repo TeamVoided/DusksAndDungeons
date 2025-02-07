@@ -6,6 +6,7 @@ import net.minecraft.block.Block
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.math.int_provider.IntProvider
+import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.feature.FeatureConfig
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 
@@ -13,7 +14,7 @@ data class FairyRingConfig(
     val block: BlockStateProvider,
     val replaceable: TagKey<Block>,
     val verticalRange: Int,
-    val size: IntProvider,
+    val size: IntProvider = UniformIntProvider.create(1, 3),
 //    val feature: Holder<PlacedFeature>,
 ) : FeatureConfig {
     companion object {
