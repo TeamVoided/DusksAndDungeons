@@ -8,9 +8,7 @@ import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.model.*
 import net.minecraft.util.Identifier
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isModLoaded
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
-import org.teamvoided.dusks_and_dungeons.compat.DramaticDoorsCompat
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_BRICKS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
@@ -100,7 +98,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
                 .put(VariantSettings.UVLOCK, true)
         )*/
-        if (isModLoaded("dramaticdoors")) DramaticDoorsCompat.datagen(gen)
 
         SETS.filterNot(excludeModels::contains).forEach(gen::createBlockSet)
     }
