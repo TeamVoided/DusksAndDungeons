@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.teamvoided.dusks_and_dungeons.util.block
 
 import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
@@ -35,8 +37,8 @@ import java.util.function.ToIntFunction
 
 val FULL_CUBE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 
-//private val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
-//private val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
+//val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
+//val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
 val gravestoneShape: VoxelShape = VoxelShapes.union(
     Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 6.0), //left
     Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 6.0), //right
