@@ -9,6 +9,7 @@ import org.teamvoided.dusks_and_dungeons.particle.*
 
 object DnDParticlesClient {
     fun init() {
+        register(DnDParticles.AUTUMN_LEAF_PARTICLE, AutumnLeafParticle::Factory)
         register(DnDParticles.CASCADE_LEAF_PARTICLE, FallingLeafParticle.Companion::FallingLeafFactory)
         register(DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFactory)
         register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)

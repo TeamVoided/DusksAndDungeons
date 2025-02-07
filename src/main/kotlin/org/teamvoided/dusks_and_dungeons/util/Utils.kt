@@ -27,6 +27,11 @@ const val rotate180 = 3.142f
 const val rotate225 = 3.927f
 const val rotate270 = 4.712f
 const val rotate315 = 5.498f
+const val rotate360 = 6.28319f
+
+fun Vec3d.blockPos(): BlockPos {
+    return BlockPos(this.x.toInt(),this.y.toInt(),this.z.toInt())
+}
 
 val modelDirectionRotation = listOf(
     (Direction.NORTH to VariantSettings.Rotation.R0),

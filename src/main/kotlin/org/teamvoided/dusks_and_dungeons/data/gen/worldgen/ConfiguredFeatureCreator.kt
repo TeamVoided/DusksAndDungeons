@@ -195,11 +195,10 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.CASCADE_TREE_AUTUMN, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
                 ImmutableList.of(
                     BeehiveBigTreeDecorator(0.02F),
-                    AlterGroundRadiusTreeDecorator(
-                        BlockStateProvider.of(Blocks.PODZOL),
-                        2, 5,
-                        blockTags.getTagOrThrow(BlockTags.DIRT)
-                    ),
+//                    AlterGroundRadiusTreeDecorator(
+//                        BlockStateProvider.of(Blocks.PODZOL), 2, 5,
+//                        blockTags.getTagOrThrow(BlockTags.DIRT)
+//                    ),
                     leafPiles(DnDWoodBlocks.CASCADE_LEAF_PILE, blockTags)
                 )
             ).build()
@@ -208,10 +207,10 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
                 ImmutableList.of(
                     BeehiveBigTreeDecorator(0.02F),
-                    AlterGroundRadiusTreeDecorator(
-                        BlockStateProvider.of(Blocks.PODZOL), 2, 20,
-                        blockTags.getTagOrThrow(BlockTags.DIRT)
-                    ),
+//                    AlterGroundRadiusTreeDecorator(
+//                        BlockStateProvider.of(Blocks.PODZOL), 2, 20,
+//                        blockTags.getTagOrThrow(BlockTags.DIRT)
+//                    ),
                     birchDecorator1,
                     birchDecorator2,
                     leafPiles(DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
@@ -229,10 +228,10 @@ object ConfiguredFeatureCreator {
                 .forceDirt().ignoreVines().decorators(
                     ImmutableList.of(
                         BeehiveBigTreeDecorator(0.02F),
-                        AlterGroundRadiusTreeDecorator(
-                            BlockStateProvider.of(Blocks.PODZOL), 2, 5,
-                            blockTags.getTagOrThrow(BlockTags.DIRT)
-                        ),
+//                        AlterGroundRadiusTreeDecorator(
+//                            BlockStateProvider.of(Blocks.PODZOL), 2, 5,
+//                            blockTags.getTagOrThrow(BlockTags.DIRT)
+//                        ),
                         leafPiles(DnDWoodBlocks.DARK_OAK_LEAF_PILE, blockTags)
                     )
                 ).build()

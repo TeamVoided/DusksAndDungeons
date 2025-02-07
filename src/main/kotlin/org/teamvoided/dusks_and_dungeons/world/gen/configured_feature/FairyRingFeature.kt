@@ -37,6 +37,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
         random: RandomGenerator
     ) {
         var placePos = pos
+        if (!world.getFluidState(pos).isEmpty) return
         val placeblock = config.block.getBlockState(random, pos)
             .withIfExists(Properties.HORIZONTAL_FACING, rotation)
             .withIfExists(Properties.FLOWER_AMOUNT, flowerbedCount)
@@ -75,6 +76,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
             else -> ::placeRing1
         }.invoke(config, origin, world, random)
     }
+
     fun placeRing1(
         config: FairyRingConfig,
         origin: BlockPos,
@@ -85,6 +87,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
             placeBlock(origin.offset(direction), nextHorizontalDirection(direction, 3), 2, config, world, random)
         }
     }
+
     fun placeRing2(
         config: FairyRingConfig,
         origin: BlockPos,
@@ -110,6 +113,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
             placeBlock(pos, flowerFacing, 2, config, world, random)
         }
     }
+
     fun placeRing3(
         config: FairyRingConfig,
         origin: BlockPos,

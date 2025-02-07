@@ -53,14 +53,14 @@ object DnDSurfaceRules {
         )
         val defaultAutumnPasturesSurface = condition(
             biome(DnDBiomes.AUTUMN_PASTURES), sequence(
-                condition(
-                    ON_FLOOR, sequence(
-                        condition(
-                            surfaceNoiseThreshold(1.0),
-                            podzol
-                        )
-                    )
-                ),
+//                condition(
+//                    ON_FLOOR, sequence(
+//                        condition(
+//                            surfaceNoiseThreshold(1.0),
+//                            podzol
+//                        )
+//                    )
+//                ),
                 condition(
                     UNDER_FLOOR, sequence(
                         condition(
@@ -81,21 +81,21 @@ object DnDSurfaceRules {
                         )
                     )
                 ),
-                condition(
-                    ON_FLOOR, sequence(
-                        condition(
-                            surfaceNoiseThreshold(-2.0, 2.0),
-                            podzol
-                        )
-                    )
-                )
+//                condition(
+//                    ON_FLOOR, sequence(
+//                        condition(
+//                            surfaceNoiseThreshold(-2.0, 2.0),
+//                            podzol
+//                        )
+//                    )
+//                )
             )
         )
 
         val surface = condition(
             abovePreliminarySurface(),
             sequence(
-                autumnMud,
+//                autumnMud,
                 condition(
                     water(-6, 0),
                     sequence(
