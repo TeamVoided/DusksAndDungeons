@@ -3,42 +3,29 @@ kotlin = "2.0.21"
 fabric-loom = "1.7-SNAPSHOT"
 iridium = "3.3.1"
 
-#farrow = "1.0.0+arrow.1.2.4"
-
-biolith = "3.0.0"
+biolith = "3.0.1"
 reef = "0.2.0-beta.2"
 voidmill = "1.0.4"
 
 transition = "1.0.0-alpha.18"
-
 # dev
-modmenu = "11.0.2"
-emi = "1.1.16+1.21.1"
-dev-tools-unlocker = "1.0.0"
-
-# compat
-dramatic-doors = "1.21-3.2.4_1"
+modmenu = "11.0.3"
+emi = "1.1.19+1.21.1"
 
 [libraries]
-#farrow = { module = "net.wiredtomato:farrow", version.ref = "farrow" }
-
 biolith = { module = "com.terraformersmc:biolith-fabric", version.ref = "biolith" }
 reef = { module = "org.teamvoided:reef", version.ref = "reef" }
 voidmill = { module = "org.teamvoided:voidmill", version.ref = "voidmill" }
-transition = { module = "org.teamvoided:transition", version.ref = "transition" }
 
+transition = { module = "org.teamvoided:transition", version.ref = "transition" }
 # dev
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 emi = { module = "dev.emi:emi-fabric", version.ref = "emi" }
-#dev-tools-unlocker = { module = "maven.modrinth:dev-tools-unlocker", version.ref = "dev-tools-unlocker" }
-
-# compat
-#dramatic-doors = { module = "maven.modrinth:dramatic-doors", version.ref = "dramatic-doors" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 fabric-loom = { id = "fabric-loom", version.ref = "fabric-loom" }
-iridium = { id = "org.teamvoided.iridium", version.ref = "iridium"}
-iridium-publish = { id = "iridium.project.publish-script", version.ref = "iridium"}
+iridium = { id = "org.teamvoided.iridium", version.ref = "iridium" }
+iridium-publish = { id = "iridium.project.publish-script", version.ref = "iridium" }
 iridium-upload = { id = "iridium.mod.upload-script", version.ref = "iridium" }

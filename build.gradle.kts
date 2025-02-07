@@ -58,13 +58,6 @@ dependencies {
 
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
-
-//    modImplementation(libs.dev.tools.unlocker)
-
-
-    // Compat
-//    modImplementation(libs.dramatic.doors)
-
 }
 
 loom {
