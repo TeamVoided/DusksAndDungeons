@@ -1,9 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.util
 
-import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 
 object DnDBlockLists {
@@ -51,140 +49,13 @@ object DnDBlockLists {
 //        DnDWoodBlocks.GALLERY_MAPLE_LEAVES,
         DnDWoodBlocks.GOLDEN_BIRCH_LEAVES
     )
-    val bigCandles = listOf(
-        (DnDBigBlocks.BIG_CANDLE to DnDBigBlocks.BIG_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_WHITE_CANDLE to DnDBigBlocks.BIG_WHITE_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_LIGHT_GRAY_CANDLE to DnDBigBlocks.BIG_LIGHT_GRAY_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_GRAY_CANDLE to DnDBigBlocks.BIG_GRAY_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_BLACK_CANDLE to DnDBigBlocks.BIG_BLACK_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_BROWN_CANDLE to DnDBigBlocks.BIG_BROWN_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_RED_CANDLE to DnDBigBlocks.BIG_RED_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_ORANGE_CANDLE to DnDBigBlocks.BIG_ORANGE_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_YELLOW_CANDLE to DnDBigBlocks.BIG_YELLOW_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_LIME_CANDLE to DnDBigBlocks.BIG_LIME_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_GREEN_CANDLE to DnDBigBlocks.BIG_GREEN_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_CYAN_CANDLE to DnDBigBlocks.BIG_CYAN_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_LIGHT_BLUE_CANDLE to DnDBigBlocks.BIG_LIGHT_BLUE_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_BLUE_CANDLE to DnDBigBlocks.BIG_BLUE_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_PURPLE_CANDLE to DnDBigBlocks.BIG_PURPLE_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_MAGENTA_CANDLE to DnDBigBlocks.BIG_MAGENTA_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_PINK_CANDLE to DnDBigBlocks.BIG_PINK_CANDLE_CAKE),
-    )
-    val soulCandles = listOf(
-        (DnDBigBlocks.SOUL_CANDLE to DnDBigBlocks.SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.WHITE_SOUL_CANDLE to DnDBigBlocks.WHITE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.LIGHT_GRAY_SOUL_CANDLE to DnDBigBlocks.LIGHT_GRAY_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.GRAY_SOUL_CANDLE to DnDBigBlocks.GRAY_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BLACK_SOUL_CANDLE to DnDBigBlocks.BLACK_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BROWN_SOUL_CANDLE to DnDBigBlocks.BROWN_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.RED_SOUL_CANDLE to DnDBigBlocks.RED_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.ORANGE_SOUL_CANDLE to DnDBigBlocks.ORANGE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.YELLOW_SOUL_CANDLE to DnDBigBlocks.YELLOW_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.LIME_SOUL_CANDLE to DnDBigBlocks.LIME_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.GREEN_SOUL_CANDLE to DnDBigBlocks.GREEN_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.CYAN_SOUL_CANDLE to DnDBigBlocks.CYAN_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.LIGHT_BLUE_SOUL_CANDLE to DnDBigBlocks.LIGHT_BLUE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BLUE_SOUL_CANDLE to DnDBigBlocks.BLUE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.PURPLE_SOUL_CANDLE to DnDBigBlocks.PURPLE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.MAGENTA_SOUL_CANDLE to DnDBigBlocks.MAGENTA_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.PINK_SOUL_CANDLE to DnDBigBlocks.PINK_SOUL_CANDLE_CAKE),
-    )
-    val bigSoulCandles = listOf(
-        (DnDBigBlocks.BIG_SOUL_CANDLE to DnDBigBlocks.BIG_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_WHITE_SOUL_CANDLE to DnDBigBlocks.BIG_WHITE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_LIGHT_GRAY_SOUL_CANDLE to DnDBigBlocks.BIG_LIGHT_GRAY_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_GRAY_SOUL_CANDLE to DnDBigBlocks.BIG_GRAY_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_BLACK_SOUL_CANDLE to DnDBigBlocks.BIG_BLACK_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_BROWN_SOUL_CANDLE to DnDBigBlocks.BIG_BROWN_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_RED_SOUL_CANDLE to DnDBigBlocks.BIG_RED_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_ORANGE_SOUL_CANDLE to DnDBigBlocks.BIG_ORANGE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_YELLOW_SOUL_CANDLE to DnDBigBlocks.BIG_YELLOW_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_LIME_SOUL_CANDLE to DnDBigBlocks.BIG_LIME_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_GREEN_SOUL_CANDLE to DnDBigBlocks.BIG_GREEN_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_CYAN_SOUL_CANDLE to DnDBigBlocks.BIG_CYAN_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_LIGHT_BLUE_SOUL_CANDLE to DnDBigBlocks.BIG_LIGHT_BLUE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_BLUE_SOUL_CANDLE to DnDBigBlocks.BIG_BLUE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_PURPLE_SOUL_CANDLE to DnDBigBlocks.BIG_PURPLE_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_MAGENTA_SOUL_CANDLE to DnDBigBlocks.BIG_MAGENTA_SOUL_CANDLE_CAKE),
-        (DnDBigBlocks.BIG_PINK_SOUL_CANDLE to DnDBigBlocks.BIG_PINK_SOUL_CANDLE_CAKE),
-    )
-    val bigTallCandles = listOf<Block>(
-        /*  DnDBigBlocks.BIG_TALL_CANDLE,
-          DnDBigBlocks.BIG_TALL_WHITE_CANDLE,
-          DnDBigBlocks.BIG_TALL_LIGHT_GRAY_CANDLE,
-          DnDBigBlocks.BIG_TALL_GRAY_CANDLE,
-          DnDBigBlocks.BIG_TALL_BLACK_CANDLE,
-          DnDBigBlocks.BIG_TALL_BROWN_CANDLE,
-          DnDBigBlocks.BIG_TALL_RED_CANDLE,
-          DnDBigBlocks.BIG_TALL_ORANGE_CANDLE,
-          DnDBigBlocks.BIG_TALL_YELLOW_CANDLE ,
-          DnDBigBlocks.BIG_TALL_LIME_CANDLE ,
-          DnDBigBlocks.BIG_TALL_GREEN_CANDLE,
-          DnDBigBlocks.BIG_TALL_CYAN_CANDLE ,
-          DnDBigBlocks.BIG_TALL_LIGHT_BLUE_CANDLE,
-          DnDBigBlocks.BIG_TALL_BLUE_CANDLE,
-          DnDBigBlocks.BIG_TALL_PURPLE_CANDLE,
-          DnDBigBlocks.BIG_TALL_MAGENTA_CANDLE,
-          DnDBigBlocks.BIG_TALL_PINK_CANDLE*/
-    )
-    val bigTallSoulCandles = listOf<Block>(
-        /*  DnDBigBlocks.BIG_TALL_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_WHITE_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_LIGHT_GRAY_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_GRAY_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_BLACK_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_BROWN_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_RED_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_ORANGE_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_YELLOW_SOUL_CANDLE ,
-          DnDBigBlocks.BIG_TALL_LIME_SOUL_CANDLE ,
-          DnDBigBlocks.BIG_TALL_GREEN_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_CYAN_SOUL_CANDLE ,
-          DnDBigBlocks.BIG_TALL_LIGHT_BLUE_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_BLUE_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_PURPLE_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_MAGENTA_SOUL_CANDLE,
-          DnDBigBlocks.BIG_TALL_PINK_SOUL_CANDLE*/
-    )
-    val candelabras = listOf(
-        DnDBigBlocks.CANDELABRA,
-        DnDBigBlocks.WHITE_CANDELABRA,
-        DnDBigBlocks.LIGHT_GRAY_CANDELABRA,
-        DnDBigBlocks.GRAY_CANDELABRA,
-        DnDBigBlocks.BLACK_CANDELABRA,
-        DnDBigBlocks.BROWN_CANDELABRA,
-        DnDBigBlocks.RED_CANDELABRA,
-        DnDBigBlocks.ORANGE_CANDELABRA,
-        DnDBigBlocks.YELLOW_CANDELABRA,
-        DnDBigBlocks.LIME_CANDELABRA,
-        DnDBigBlocks.GREEN_CANDELABRA,
-        DnDBigBlocks.CYAN_CANDELABRA,
-        DnDBigBlocks.LIGHT_BLUE_CANDELABRA,
-        DnDBigBlocks.BLUE_CANDELABRA,
-        DnDBigBlocks.PURPLE_CANDELABRA,
-        DnDBigBlocks.MAGENTA_CANDELABRA,
-        DnDBigBlocks.PINK_CANDELABRA
-    )
-    val soulCandelabras = listOf(
-        DnDBigBlocks.SOUL_CANDELABRA,
-        DnDBigBlocks.WHITE_SOUL_CANDELABRA,
-        DnDBigBlocks.LIGHT_GRAY_SOUL_CANDELABRA,
-        DnDBigBlocks.GRAY_SOUL_CANDELABRA,
-        DnDBigBlocks.BLACK_SOUL_CANDELABRA,
-        DnDBigBlocks.BROWN_SOUL_CANDELABRA,
-        DnDBigBlocks.RED_SOUL_CANDELABRA,
-        DnDBigBlocks.ORANGE_SOUL_CANDELABRA,
-        DnDBigBlocks.YELLOW_SOUL_CANDELABRA,
-        DnDBigBlocks.LIME_SOUL_CANDELABRA,
-        DnDBigBlocks.GREEN_SOUL_CANDELABRA,
-        DnDBigBlocks.CYAN_SOUL_CANDELABRA,
-        DnDBigBlocks.LIGHT_BLUE_SOUL_CANDELABRA,
-        DnDBigBlocks.BLUE_SOUL_CANDELABRA,
-        DnDBigBlocks.PURPLE_SOUL_CANDELABRA,
-        DnDBigBlocks.MAGENTA_SOUL_CANDELABRA,
-        DnDBigBlocks.PINK_SOUL_CANDELABRA
-    )
+    val bigCandles = DnDBlocks.BIG_CANDLES.zip(DnDBlocks.BIG_CANDLE_CAKES)
+    val soulCandles = DnDBlocks.SOUL_CANDLES.zip(DnDBlocks.SOUL_CANDLE_CAKES)
+    val bigSoulCandles = DnDBlocks.BIG_SOUL_CANDLES.zip(DnDBlocks.BIG_SOUL_CANDLE_CAKES)
+    val candelabras = DnDBlocks.CANDELABRAS.toList()
+    val soulCandelabras = DnDBlocks.SOUL_CANDELABRAS.toList()
     val allCandelabras = candelabras + soulCandelabras
+
     val hollowLogs = listOf(
         DnDWoodBlocks.HOLLOW_OAK_LOG,
         DnDWoodBlocks.HOLLOW_SPRUCE_LOG,

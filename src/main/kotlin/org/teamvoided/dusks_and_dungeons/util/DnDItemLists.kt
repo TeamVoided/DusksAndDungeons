@@ -4,28 +4,27 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 
 object DnDItemLists {
     val dye = listOf(
         Items.WHITE_DYE,
-        Items.LIGHT_GRAY_DYE,
-        Items.GRAY_DYE,
-        Items.BLACK_DYE,
-        Items.BROWN_DYE,
-        Items.RED_DYE,
         Items.ORANGE_DYE,
+        Items.MAGENTA_DYE,
+        Items.LIGHT_BLUE_DYE,
         Items.YELLOW_DYE,
         Items.LIME_DYE,
-        Items.GREEN_DYE,
+        Items.PINK_DYE,
+        Items.GRAY_DYE,
+        Items.LIGHT_GRAY_DYE,
         Items.CYAN_DYE,
-        Items.LIGHT_BLUE_DYE,
-        Items.BLUE_DYE,
         Items.PURPLE_DYE,
-        Items.MAGENTA_DYE,
-        Items.PINK_DYE
+        Items.BLUE_DYE,
+        Items.BROWN_DYE,
+        Items.GREEN_DYE,
+        Items.RED_DYE,
+        Items.BLACK_DYE,
     )
     val cascadeWood = listOf<ItemConvertible>(
         DnDWoodBlocks.CASCADE_LOG,
@@ -55,63 +54,9 @@ object DnDItemLists {
     val ice = DnDBlocks.ICE_SET.collect() + DnDBlocks.PACKED_ICE_SET.collect() + DnDBlocks.BLUE_ICE_SET.collect()
 //            DnDBlocks.ICE_BRICKS.collect() + DnDBlocks.PACKED_ICE_BRICKS.collect() + DnDBlocks.BLUE_ICE_BRICKS.collect()
 
-    val bigCandles = listOf(
-        DnDBigBlocks.BIG_CANDLE,
-        DnDBigBlocks.BIG_WHITE_CANDLE,
-        DnDBigBlocks.BIG_LIGHT_GRAY_CANDLE,
-        DnDBigBlocks.BIG_GRAY_CANDLE,
-        DnDBigBlocks.BIG_BLACK_CANDLE,
-        DnDBigBlocks.BIG_BROWN_CANDLE,
-        DnDBigBlocks.BIG_RED_CANDLE,
-        DnDBigBlocks.BIG_ORANGE_CANDLE,
-        DnDBigBlocks.BIG_YELLOW_CANDLE,
-        DnDBigBlocks.BIG_LIME_CANDLE,
-        DnDBigBlocks.BIG_GREEN_CANDLE,
-        DnDBigBlocks.BIG_CYAN_CANDLE,
-        DnDBigBlocks.BIG_BLUE_CANDLE,
-        DnDBigBlocks.BIG_LIGHT_BLUE_CANDLE,
-        DnDBigBlocks.BIG_PURPLE_CANDLE,
-        DnDBigBlocks.BIG_MAGENTA_CANDLE,
-        DnDBigBlocks.BIG_PINK_CANDLE
-    )
-    val soulCandles = listOf(
-        DnDBigBlocks.SOUL_CANDLE,
-        DnDBigBlocks.WHITE_SOUL_CANDLE,
-        DnDBigBlocks.LIGHT_GRAY_SOUL_CANDLE,
-        DnDBigBlocks.GRAY_SOUL_CANDLE,
-        DnDBigBlocks.BLACK_SOUL_CANDLE,
-        DnDBigBlocks.BROWN_SOUL_CANDLE,
-        DnDBigBlocks.RED_SOUL_CANDLE,
-        DnDBigBlocks.ORANGE_SOUL_CANDLE,
-        DnDBigBlocks.YELLOW_SOUL_CANDLE,
-        DnDBigBlocks.LIME_SOUL_CANDLE,
-        DnDBigBlocks.GREEN_SOUL_CANDLE,
-        DnDBigBlocks.CYAN_SOUL_CANDLE,
-        DnDBigBlocks.BLUE_SOUL_CANDLE,
-        DnDBigBlocks.LIGHT_BLUE_SOUL_CANDLE,
-        DnDBigBlocks.PURPLE_SOUL_CANDLE,
-        DnDBigBlocks.MAGENTA_SOUL_CANDLE,
-        DnDBigBlocks.PINK_SOUL_CANDLE
-    )
-    val bigSoulCandles = listOf(
-        DnDBigBlocks.BIG_SOUL_CANDLE,
-        DnDBigBlocks.BIG_WHITE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_LIGHT_GRAY_SOUL_CANDLE,
-        DnDBigBlocks.BIG_GRAY_SOUL_CANDLE,
-        DnDBigBlocks.BIG_BLACK_SOUL_CANDLE,
-        DnDBigBlocks.BIG_BROWN_SOUL_CANDLE,
-        DnDBigBlocks.BIG_RED_SOUL_CANDLE,
-        DnDBigBlocks.BIG_ORANGE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_YELLOW_SOUL_CANDLE,
-        DnDBigBlocks.BIG_LIME_SOUL_CANDLE,
-        DnDBigBlocks.BIG_GREEN_SOUL_CANDLE,
-        DnDBigBlocks.BIG_CYAN_SOUL_CANDLE,
-        DnDBigBlocks.BIG_BLUE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_LIGHT_BLUE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_PURPLE_SOUL_CANDLE,
-        DnDBigBlocks.BIG_MAGENTA_SOUL_CANDLE,
-        DnDBigBlocks.BIG_PINK_SOUL_CANDLE
-    )
+    val bigCandles = DnDBlocks.BIG_CANDLES.toList()
+    val soulCandles = DnDBlocks.SOUL_CANDLES.toList()
+    val bigSoulCandles = DnDBlocks.BIG_SOUL_CANDLES.toList()
     val netherrackStuff = DnDBlocks.NETHERRACK_SET.collect()
     val netherBrickStuff = listOf(DnDBlocks.NETHER_BRICK_PILLAR) + DnDBlocks.POLISHED_NETHER_BRICKS.collect()
     val redNetherBrickStuff = listOf(

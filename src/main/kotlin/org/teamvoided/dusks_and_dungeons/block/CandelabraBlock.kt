@@ -32,6 +32,7 @@ import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
+import java.util.function.ToIntFunction
 
 open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCandleBlock(settings), Waterloggable {
     override fun getCodec(): MapCodec<out AbstractCandleBlock> = CODEC
@@ -146,6 +147,7 @@ open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCand
         val HORIZONTAL_AXIS: EnumProperty<Direction.Axis> = Properties.HORIZONTAL_AXIS
         val CANDLES: IntProperty = IntProperty.of("candles", 1, 5)
         val LIT: BooleanProperty = Properties.LIT
+        val LUMINANCE = ToIntFunction<BlockState> { if (it.get(LIT)) 3 * it.get(CANDLES) as Int else 0 }
 
         val SINGLE_SHAPE: VoxelShape = VoxelShapes.union(
             createCuboidShape(6.0, 0.0, 6.0, 10.0, 8.0, 10.0),

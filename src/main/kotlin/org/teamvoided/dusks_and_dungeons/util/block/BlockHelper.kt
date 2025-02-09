@@ -12,18 +12,20 @@ import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemConvertible
 import net.minecraft.particle.DefaultParticleType
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.particle.ParticleTypes.SOUL_FIRE_FLAME
 import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.state.property.Properties
 import net.minecraft.util.Color
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.*
-import org.teamvoided.dusks_and_dungeons.block.big.*
+import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
+import org.teamvoided.dusks_and_dungeons.block.big.BigCandleCakeBlock
+import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
+import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.BlockSetBuilder
@@ -159,44 +161,19 @@ fun wallHangingSignOf(woodType: WoodType, block: Block, hangingSign: Block): Blo
             .dropsLike(hangingSign)
     )
 
-fun candleSettings(): AbstractBlock.Settings = AbstractBlock.Settings.create().nonOpaque().strength(0.1f)
-    .luminance(CandleBlock.STATE_TO_LUMINANCE).pistonBehavior(PistonBehavior.DESTROY)
 
-fun bigCandleOf(color: MapColor): Block =
-    BigCandleBlock(ParticleTypes.FLAME, candleSettings().mapColor(color).sounds(bigCandleSound))
+// Candles
+fun bigCandleOf(candle: Block) = BigCandleBlock(ParticleTypes.FLAME, copy(candle).sounds(bigCandleSound))
+fun bigCandleCakeOf(block: Block) = BigCandleCakeBlock(block, ParticleTypes.FLAME, copy(CANDLE_CAKE))
+fun candelabraOf(candle: Block) = CandelabraBlock(candle, copy(candle).luminance(CandelabraBlock.LUMINANCE))
 
-fun soulCandleOf(color: MapColor): Block =
-    SoulCandleBlock(candleSettings().mapColor(color).sounds(BlockSoundGroup.CANDLE))
+// Soul
+fun soulCandleOf(candle: Block) = SoulCandleBlock(copy(candle))
+fun soulCandleCakeOf(block: Block) = SoulCandleCakeBlock(block, copy(CANDLE_CAKE))
+fun bigSoulCandleOf(candle: Block) = BigCandleBlock(SOUL_FIRE_FLAME, copy(candle).sounds(bigCandleSound))
+fun bigSoulCandleCakeOf(block: Block) = BigCandleCakeBlock(block, SOUL_FIRE_FLAME, copy(CANDLE_CAKE))
 
-fun bigSoulCandleOf(color: MapColor): Block =
-    BigCandleBlock(ParticleTypes.SOUL_FIRE_FLAME, candleSettings().mapColor(color).sounds(bigCandleSound))
-
-fun bigCandleCakeOf(block: Block): Block =
-    BigCandleCakeBlock(block, ParticleTypes.FLAME, copy(DnDBigBlocks.BIG_CANDLE_CAKE))
-
-fun bigCandleCakeOf(block: Block, candleCake: Block): Block =
-    BigCandleCakeBlock(block, ParticleTypes.FLAME, copy(candleCake))
-
-fun soulCandleCakeOf(block: Block): Block = soulCandleCakeOf(block, DnDBigBlocks.SOUL_CANDLE_CAKE)
-
-fun soulCandleCakeOf(block: Block, candleCake: Block): Block =
-    SoulCandleCakeBlock(block, copy(candleCake))
-
-fun bigSoulCandleCakeOf(block: Block): Block = bigSoulCandleCakeOf(block, DnDBigBlocks.BIG_SOUL_CANDLE_CAKE)
-
-fun bigSoulCandleCakeOf(block: Block, candleCake: Block): Block =
-    BigCandleCakeBlock(block, ParticleTypes.SOUL_FIRE_FLAME, copy(candleCake))
-
-fun bigTallCandleOf(color: MapColor): Block =
-    BigTallCandleBlock(ParticleTypes.FLAME, candleSettings().mapColor(color).sounds(bigCandleSound))
-
-fun bigTallSoulCandleOf(color: MapColor): Block =
-    BigTallCandleBlock(ParticleTypes.SOUL_FIRE_FLAME, candleSettings().mapColor(color).sounds(bigCandleSound))
-
-fun candelabraOf(candle: Block): CandelabraBlock = CandelabraBlock(
-    candle, copy(candle).luminance { if (it.get(Properties.LIT)) 3 * it.get(CandelabraBlock.CANDLES) else 0 }
-)
-
+// Other
 fun hollowLog(log: Block): Block = HollowLogWithCuttingBlock(copy(log))
 fun hollowBambooBlock(bambooBlock: Block): Block = HollowBambooBlock(copy(bambooBlock))
 fun logPile(log: Block): Block = LogPileBlock(copy(log).nonOpaque())
@@ -254,6 +231,7 @@ fun MutableCollection<Block>.addSet(set: AbstractBlockSet): AbstractBlockSet {
     return set
 }
 
+// Use for populating tags when running data-gen in dev mode
 fun MutableCollection<Block>.addDevSet(set: AbstractBlockSet): AbstractBlockSet {
     if (isDev()) this.addAll(set.collect())
     return set

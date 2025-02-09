@@ -112,17 +112,17 @@ object DnDTabs {
 
                 DnDBlocks.HEADSTONE,
 
-                DnDBigBlocks.BIG_CHAIN,
-                DnDBigBlocks.BIG_LANTERN,
-                DnDBigBlocks.BIG_SOUL_LANTERN,
+                DnDBlocks.BIG_CHAIN,
+                DnDBlocks.BIG_LANTERN,
+                DnDBlocks.BIG_SOUL_LANTERN,
             )
             entries.addItems( // This adds the candles in a nice way
                 DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
                     listOf(
                         item,
+                        DnDBlockLists.candelabras[idx],
                         DnDItemLists.soulCandles[idx],
                         DnDItemLists.bigSoulCandles[idx],
-                        DnDBlockLists.candelabras[idx],
                         DnDBlockLists.soulCandelabras[idx],
                     )
                 }
@@ -171,7 +171,7 @@ object DnDTabs {
     fun init() {
         modifyTab(ItemGroups.BUILDING_BLOCKS) {
             addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
-            addAfter(Items.CHAIN, DnDBigBlocks.BIG_CHAIN)
+            addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
             addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
             addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
             addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
@@ -188,9 +188,9 @@ object DnDTabs {
         modifyTab(ItemGroups.COLORED_BLOCKS) { addCandles() }
 
         modifyTab(ItemGroups.FUNCTIONAL_BLOCKS) {
-            addAfter(Items.CHAIN, DnDBigBlocks.BIG_CHAIN)
-            addAfter(Items.LANTERN, DnDBigBlocks.BIG_LANTERN)
-            addAfter(Items.SOUL_LANTERN, DnDBigBlocks.BIG_SOUL_LANTERN)
+            addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
+            addAfter(Items.LANTERN, DnDBlocks.BIG_LANTERN)
+            addAfter(Items.SOUL_LANTERN, DnDBlocks.BIG_SOUL_LANTERN)
 
             addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
 

@@ -15,14 +15,16 @@ import net.minecraft.world.gen.feature.TreeConfiguredFeatures
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
+import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
+import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.big.BigLanternWithSpiralBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDBigBlocks.BIG_CHAIN
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.VanillaColorCollections.CANDLES
 import org.teamvoided.voidlib.consortium.block.createBlockSet
 import org.teamvoided.voidlib.consortium.block.createHeadlessSet
 import kotlin.collections.mutableMapOf
@@ -38,9 +40,9 @@ object DnDBlocks {
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
 
-    /*
-        🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 --- Flora --- 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄
-     */
+
+    // region 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 --- Flora --- 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄
+
     val WARPED_WART = register("warped_wart", WarpedNetherWartBlock(Set.WARPED_WART).grassLike())
 
     // Petals
@@ -120,10 +122,41 @@ object DnDBlocks {
     val MOONBERRY_VINELET = registerNoItem(
         "moonberry_vinelet", MoonberryVineletBlock(Set.moonbery().ticksRandomly().breakInstantly())
     ).grassLike().flammableLogs()
+    // endregion
 
-    /*
-        🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
-     */
+    // region 🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳 --- Sold Oxygen --- 🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳
+//    val BLUE_ICE_SET = registerHeadlessSet("blue_ice", BLUE_ICE).pickaxe()
+    // endregion
+
+    // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Big Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
+
+    val BIG_CHAIN = register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
+    val BIG_LANTERN = register("big_lantern", BigLanternBlock(copy(LANTERN).sounds(bigLanternSound)).pickaxe())
+    val BIG_SOUL_LANTERN =
+        register("big_soul_lantern", BigLanternBlock(copy(SOUL_LANTERN).sounds(bigLanternSound)).pickaxe())
+
+    //TODO Move this to Varinace
+    /*   val BIG_REDSTONE_LANTERN = register(
+         "big_redstone_lantern",
+         BigRedstoneLanternBlock(copy(LANTERN).sounds(bigLanternSound).luminance(luminanceOf(8))).pickaxe()
+     )*/
+    // Normal
+    val BIG_CANDLES = register("big_", "candle", CANDLES, ::bigCandleOf)
+    val BIG_CANDLE_CAKES =
+        registerNoItem("big_", "candle_cake", BIG_CANDLES.toColorCollection(), ::bigCandleCakeOf)
+    val CANDELABRAS = register("candelabra", CANDLES, ::candelabraOf)
+
+    // Soul
+    val SOUL_CANDLES = register("soul_candle", CANDLES, ::soulCandleOf)
+    val SOUL_CANDLE_CAKES = registerNoItem("soul_candle_cake", SOUL_CANDLES.toColorCollection(), ::soulCandleCakeOf)
+    val BIG_SOUL_CANDLES = register("big_", "soul_candle", CANDLES, ::bigSoulCandleOf)
+    val BIG_SOUL_CANDLE_CAKES =
+        registerNoItem("big_", "soul_candle_cake", BIG_SOUL_CANDLES.toColorCollection(), ::bigSoulCandleCakeOf)
+    val SOUL_CANDELABRAS = register("soul_candelabra", SOUL_CANDLES.toColorCollection(), ::candelabraOf)
+    // endregion
+
+    // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
+
     val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
     val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
 
@@ -147,18 +180,19 @@ object DnDBlocks {
     val SMALL_BLACKSTONE_GRAVESTONE = registerSmallGravestone("small_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
     val HEADSTONE =
         register("headstone", GravestoneBlock(headstoneShape, centerHeadstoneShape, copy(BIG_CHAIN)).cutout().pickaxe())
+    // endregion
 
-    /*
-       ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE AGE --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
-     */
+    // region  ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE age --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
+
     val ICE_SET =
-        register(createHeadlessSet("ice", ICE).noStoneCutting().meltable().buildHeadless()).translucent().pickaxe()
+        register(createHeadlessSet("ice", ICE).noStoneCutting().meltable().buildHeadless())
+            .translucent().pickaxe()
     val PACKED_ICE_SET = registerHeadlessSet("packed_ice", PACKED_ICE).pickaxe()
     val BLUE_ICE_SET = registerHeadlessSet("blue_ice", BLUE_ICE).pickaxe()
+    // endregion
 
-    /*
-    🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥
-     */
+    // region 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥  --- Hell ---  🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥
+
     val NETHERRACK_SET = registerHeadlessSet("netherrack", NETHERRACK).pickaxe()
 
     val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(copy(NETHER_BRICKS)).pickaxe())
@@ -234,9 +268,9 @@ object DnDBlocks {
     val MIXED_GRAY_NETHER_BRICK_PILLAR = register(
         "mixed_gray_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_GRAY_NETHER_BRICKS)).pickaxe()
     )
+    // endregion
 
-
-    // ☢ Experimental ☢
+    // region ☢ Experimental ☢
     val PAINTED_ROSE = register("painted_rose", PaintedRoseBlock(Set.PAINTED_ROSE).cutout())
         .tellWitnessesThatIWasMurdered()
     val GOLDEN_MUSHROOM = register(
@@ -267,6 +301,37 @@ object DnDBlocks {
 
     val BUNNY_GRAVE = register("bunny_grave", BunnyGraveBlock(copy(STONE_BRICK_WALL)).pickaxe())
         .tellWitnessesThatIWasMurdered()
+
+    // celestal block
+    val BIG_CELESTAL_CHAIN = register(
+        "big_celestal_chain", BigChainBlock(copy(CHAIN).sounds(BlockSoundGroup.BLOCK_VAULT_BREAK)).cutout().pickaxe()
+    ).tellWitnessesThatIWasMurdered()
+    val BIG_MOON_LANTERN = register(
+        "big_moon_lantern",
+        BigLanternWithSpiralBlock(
+            0xE01638,
+            0x8B3DB5,
+            copy(BIG_SOUL_LANTERN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)
+        ).pickaxe()
+    ).tellWitnessesThatIWasMurdered()
+    val BIG_EARTH_LANTERN = register(
+        "big_earth_lantern", BigLanternWithSpiralBlock(0xE5AE16, 0xE5B816, copy(BIG_MOON_LANTERN)).pickaxe()
+    ).tellWitnessesThatIWasMurdered()
+    val BIG_COMET_LANTERN = register(
+        "big_comet_lantern", BigLanternWithSpiralBlock(0xE57716, 0xCC6C28, copy(BIG_MOON_LANTERN)).pickaxe()
+    ).tellWitnessesThatIWasMurdered()
+    val BIG_SUN_LANTERN = register(
+        "big_sun_lantern", BigLanternWithSpiralBlock(0x16E5E5, 0x1470CC, copy(BIG_MOON_LANTERN)).pickaxe()
+    ).tellWitnessesThatIWasMurdered()
+    val BIG_STAR_LANTERN = register(
+        "big_star_lantern", BigLanternWithSpiralBlock(0x7E16E5, 0xE52DE5, copy(BIG_MOON_LANTERN)).pickaxe()
+    ).tellWitnessesThatIWasMurdered()
+    val BIG_NEBULAE_LANTERN = register(
+        "big_nebulae_lantern", BigLanternWithSpiralBlock(0x24CADA, 0x52D973, copy(BIG_MOON_LANTERN)).pickaxe()
+    ).tellWitnessesThatIWasMurdered()
+    val BIG_ECLIPSE_LANTERN = register(
+        "big_eclipse_lantern", BigLanternWithSpiralBlock(0xE5E5E5, 0xBFBFBF, copy(BIG_MOON_LANTERN)).pickaxe()
+    ).tellWitnessesThatIWasMurdered()
 
     // Haunted graves
     val HAUNTED_GRAVESTONE = registerHGravestone("haunted_gravestone", STONE_GRAVESTONE)
@@ -314,23 +379,19 @@ object DnDBlocks {
     val LAVASPONGE =
         register("lavasponge", LavaSpongeBlock(copy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
             .tellWitnessesThatIWasMurdered()
+    // endregion
 
-    /*
-        🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
-    */
+    //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
     val GAY_BLOCK = registerSet("gay_block", copy(BEACON))
 
     fun init() {
         DnDWoodTypes.init()
-
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
 
-        DnDBigBlocks.init()
         DnDOverlayBlocks.init()
         DnDWoodBlocks.init()
-
     }
 
     fun register(id: String, block: Block): Block {

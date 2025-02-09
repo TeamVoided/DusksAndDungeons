@@ -1003,7 +1003,6 @@ fun BlockStateModelGenerator.registerBigChain(block: Block) {
 
 fun BlockStateModelGenerator.registerBigLantern(
     block: Block,
-    redstone: Boolean = false,
     bottom: Identifier = id("block/big_lantern_bottom")
 ) {
     this.registerItemModel(block)
@@ -1018,7 +1017,7 @@ fun BlockStateModelGenerator.registerBigLantern(
         END
     )
     val modelHanging = model.upload(block, "_hanging", texture, this.modelCollector)
-    if (redstone) {
+ /*   if (redstone) {
         val textureOff = Texture()
             .put(PARTICLE, Texture.getSubId(block, "_off"))
             .put(SIDE, Texture.getSubId(block, "_off"))
@@ -1048,22 +1047,21 @@ fun BlockStateModelGenerator.registerBigLantern(
                     )
             )
         )
-    } else {
-        this.blockStateCollector.accept(
-            VariantsBlockStateSupplier.create(block).coordinate(
-                BlockStateVariantMap.create(Properties.HANGING)
-                    .register(
-                        false, BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, model.upload(block, texture, this.modelCollector))
-                    )
-                    .register(
-                        true, BlockStateVariant.create()
-                            .put(VariantSettings.X, Rotation.R180)
-                            .put(VariantSettings.MODEL, modelHanging)
-                    )
-            )
+    }*/
+    this.blockStateCollector.accept(
+        VariantsBlockStateSupplier.create(block).coordinate(
+            BlockStateVariantMap.create(Properties.HANGING)
+                .register(
+                    false, BlockStateVariant.create()
+                        .put(VariantSettings.MODEL, model.upload(block, texture, this.modelCollector))
+                )
+                .register(
+                    true, BlockStateVariant.create()
+                        .put(VariantSettings.X, Rotation.R180)
+                        .put(VariantSettings.MODEL, modelHanging)
+                )
         )
-    }
+    )
 }
 
 fun BlockStateModelGenerator.registerBigCandle(pair: Pair<Block, Block?>) =
