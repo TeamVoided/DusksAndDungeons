@@ -7,20 +7,22 @@ import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import org.teamvoided.voidlib.consortium.utils.Registrable
 import org.teamvoided.voidlib.helpers.block.BlockConvertable
+import java.util.function.BiConsumer
 import java.util.function.Supplier
 
 abstract class AbstractBlockSet(
     val name: String,
     val parent: Block, val stairs: Block, val slab: Block, val wall: Block,
     val hasStoneCutting: Boolean
-) : ItemConvertible, Supplier<Block>, BlockConvertable {
+) : ItemConvertible, Supplier<Block>, BlockConvertable, Registrable<Block> {
     open fun collect(): List<Block> = listOf(stairs, slab, wall)
     open fun toIdMap(): Map<String, Block> =
         mapOf("${name}_stairs" to stairs, "${name}_slab" to slab, "${name}_wall" to wall)
 
     open fun forEach(consumer: (Block) -> Unit) = this.collect().forEach(consumer)
-    open fun register(consumer: (String, Block) -> Unit) = this.toIdMap().forEach(consumer)
+    override fun register(consumer: BiConsumer<String, Block>) = this.toIdMap().forEach(consumer)
 
     override fun asItem(): Item = parent.asItem()
     override fun get() = parent
