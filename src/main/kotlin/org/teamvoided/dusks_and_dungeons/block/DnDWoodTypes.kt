@@ -30,6 +30,7 @@ object DnDWoodTypes {
     val CASCADE_WOOD_TYPE = registerWoodType("cascade", WoodType.CHERRY, CASCADE_BLOCK_SET_TYPE)
 
     // ☢ Experimental ☢
+    // TODO remove this
     val GALLERY_MAPLE_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder().register(id("gallery_maple"))
     val GALLERY_MAPLE_WOOD_TYPE = registerWoodType("gallery_maple", WoodType.MANGROVE, GALLERY_MAPLE_BLOCK_SET_TYPE)
 
