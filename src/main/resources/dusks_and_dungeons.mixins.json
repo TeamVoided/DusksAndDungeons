@@ -16,7 +16,6 @@
     "PersistentProjectileEntityAccessor",
     "PistonBlockEntityMixin",
     "PistonHandlerMixin",
-    "UtilMixin",
     "WallBlockMixin",
     "WitherSkeletonEntityMixin"
   ],
