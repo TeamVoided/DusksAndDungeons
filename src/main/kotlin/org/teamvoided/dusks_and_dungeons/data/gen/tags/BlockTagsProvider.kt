@@ -9,12 +9,15 @@ import net.minecraft.registry.tag.BlockTags
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
-import org.teamvoided.dusks_and_dungeons.init.blocks.*
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.voidlib.devin.extensions.tag.add
+import org.teamvoided.voidlib.devin.extensions.tag.createColorTags
 import org.teamvoided.voidlib.devin.extensions.tag.createSetTags
 import java.util.concurrent.CompletableFuture
 
@@ -23,9 +26,12 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
     override fun configure(arg: HolderLookup.Provider) {
         SETS.forEach { it.createSetTags(::getOrCreateTagBuilder) }
+        COLOR_CONSORTIUM.forEach { it.createColorTags(::getOrCreateTagBuilder) }
         duskTags()
         vanillaTags()
         conventionTags()
+
+        overlayTags()
     }
 
     private fun duskTags() {
@@ -225,8 +231,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.POLISHED_RED_NETHER_BRICKS.parent)
             .add(DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.parent)
             .add(DnDBlocks.POLISHED_GRAY_NETHER_BRICKS.parent)
-        
-        
+
+
         getOrCreateTagBuilder(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
             .addOptionalTag(id("nullium", "support/nether_wart"))
             .add(Blocks.SOUL_SAND)
@@ -252,7 +258,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DnDBlockTags.FALLEN_TREE_REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE_BY_TREES)
-        
+
         getOrCreateTagBuilder(DnDBlockTags.PUMPKIN_PATCH_PLACE_ON)
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(DnDBlockTags.PUMPKIN_BLOCKS)
@@ -347,12 +353,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
         getOrCreateTagBuilder(BlockTags.MUSHROOM_GROW_BLOCK)
-            .add(DnDOverlayBlocks.ROCKY_PODZOL, DnDOverlayBlocks.SLATED_PODZOL, DnDOverlayBlocks.BLACKSTONE_PODZOL)
-            .add(
-                DnDOverlayBlocks.ROCKY_MYCELIUM,
-                DnDOverlayBlocks.SLATED_MYCELIUM,
-                DnDOverlayBlocks.BLACKSTONE_MYCELIUM
-            )
             .forceAddTag(BlockTags.LOGS)
             .forceAddTag(DnDBlockTags.HOLLOW_LOGS)
         getOrCreateTagBuilder(BlockTags.GUARDED_BY_PIGLINS)
@@ -467,135 +467,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     }
 
     private fun vanillaOverlayTags() {
-        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
-            .add(DnDOverlayBlocks.ROCKY_GRAVEL, DnDOverlayBlocks.SLATED_GRAVEL, DnDOverlayBlocks.BLACKSTONE_GRAVEL)
-        getOrCreateTagBuilder(BlockTags.NETHER_CARVER_REPLACEABLES)
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SAND,
-                DnDOverlayBlocks.SLATED_SOUL_SAND,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SAND
-            )
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SOIL,
-                DnDOverlayBlocks.SLATED_SOUL_SOIL,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL
-            )
-        getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
-            .add(DnDOverlayBlocks.ROCKY_GRAVEL, DnDOverlayBlocks.SLATED_GRAVEL, DnDOverlayBlocks.BLACKSTONE_GRAVEL)
-            .add(DnDOverlayBlocks.ROCKY_SAND, DnDOverlayBlocks.SLATED_SAND, DnDOverlayBlocks.BLACKSTONE_SAND)
-            .add(
-                DnDOverlayBlocks.ROCKY_RED_SAND,
-                DnDOverlayBlocks.SLATED_RED_SAND,
-                DnDOverlayBlocks.BLACKSTONE_RED_SAND
-            )
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SAND,
-                DnDOverlayBlocks.SLATED_SOUL_SAND,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SAND
-            )
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SOIL,
-                DnDOverlayBlocks.SLATED_SOUL_SOIL,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL
-            )
-        getOrCreateTagBuilder(BlockTags.DIRT)
-            .add(DnDOverlayBlocks.ROCKY_DIRT, DnDOverlayBlocks.SLATED_DIRT, DnDOverlayBlocks.BLACKSTONE_DIRT)
-            .add(DnDOverlayBlocks.ROCKY_GRASS, DnDOverlayBlocks.SLATED_GRASS, DnDOverlayBlocks.BLACKSTONE_GRASS)
-            .add(DnDOverlayBlocks.ROCKY_PODZOL, DnDOverlayBlocks.SLATED_PODZOL, DnDOverlayBlocks.BLACKSTONE_PODZOL)
-            .add(
-                DnDOverlayBlocks.ROCKY_MYCELIUM,
-                DnDOverlayBlocks.SLATED_MYCELIUM,
-                DnDOverlayBlocks.BLACKSTONE_MYCELIUM
-            )
-            .add(
-                DnDOverlayBlocks.ROCKY_COARSE_DIRT,
-                DnDOverlayBlocks.SLATED_COARSE_DIRT,
-                DnDOverlayBlocks.BLACKSTONE_COARSE_DIRT
-            )
-            .add(DnDOverlayBlocks.ROCKY_MUD, DnDOverlayBlocks.SLATED_MUD, DnDOverlayBlocks.BLACKSTONE_MUD)
-        getOrCreateTagBuilder(BlockTags.SAND)
-            .add(DnDOverlayBlocks.ROCKY_SAND, DnDOverlayBlocks.SLATED_SAND, DnDOverlayBlocks.BLACKSTONE_SAND)
-            .add(
-                DnDOverlayBlocks.ROCKY_RED_SAND,
-                DnDOverlayBlocks.SLATED_RED_SAND,
-                DnDOverlayBlocks.BLACKSTONE_RED_SAND
-            )
-        getOrCreateTagBuilder(BlockTags.SNOW)
-            .add(DnDOverlayBlocks.ROCKY_SNOW, DnDOverlayBlocks.SLATED_SNOW, DnDOverlayBlocks.BLACKSTONE_SNOW)
         getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)
             .add(DnDBlocks.CORN_SYRUP_BLOCK)
-            .add(DnDOverlayBlocks.ROCKY_MUD, DnDOverlayBlocks.SLATED_MUD, DnDOverlayBlocks.BLACKSTONE_MUD)
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SAND,
-                DnDOverlayBlocks.SLATED_SOUL_SAND,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SAND
-            )
-        getOrCreateTagBuilder(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SAND,
-                DnDOverlayBlocks.SLATED_SOUL_SAND,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SAND
-            )
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SOIL,
-                DnDOverlayBlocks.SLATED_SOUL_SOIL,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL
-            )
-        getOrCreateTagBuilder(BlockTags.SOUL_SPEED_BLOCKS)
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SAND,
-                DnDOverlayBlocks.SLATED_SOUL_SAND,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SAND
-            )
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SOIL,
-                DnDOverlayBlocks.SLATED_SOUL_SOIL,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL
-            )
-        getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS)
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SAND,
-                DnDOverlayBlocks.SLATED_SOUL_SAND,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SAND
-            )
-            .add(
-                DnDOverlayBlocks.ROCKY_SOUL_SOIL,
-                DnDOverlayBlocks.SLATED_SOUL_SOIL,
-                DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL
-            )
-        getOrCreateTagBuilder(BlockTags.BAMBOO_PLANTABLE_ON)
-            .add(DnDOverlayBlocks.ROCKY_GRAVEL, DnDOverlayBlocks.SLATED_GRAVEL, DnDOverlayBlocks.BLACKSTONE_GRAVEL)
-        getOrCreateTagBuilder(BlockTags.VALID_SPAWN)
-            .add(DnDOverlayBlocks.ROCKY_GRASS, DnDOverlayBlocks.SLATED_GRASS, DnDOverlayBlocks.BLACKSTONE_GRASS)
-            .add(DnDOverlayBlocks.ROCKY_PODZOL, DnDOverlayBlocks.SLATED_PODZOL, DnDOverlayBlocks.BLACKSTONE_PODZOL)
-        getOrCreateTagBuilder(BlockTags.ANIMALS_SPAWNABLE_ON)
-            .add(DnDOverlayBlocks.ROCKY_GRASS, DnDOverlayBlocks.SLATED_GRASS, DnDOverlayBlocks.BLACKSTONE_GRASS)
-        getOrCreateTagBuilder(BlockTags.FOXES_SPAWNABLE_ON)
-            .add(DnDOverlayBlocks.ROCKY_GRASS, DnDOverlayBlocks.SLATED_GRASS, DnDOverlayBlocks.BLACKSTONE_GRASS)
-            .add(DnDOverlayBlocks.ROCKY_PODZOL, DnDOverlayBlocks.SLATED_PODZOL, DnDOverlayBlocks.BLACKSTONE_PODZOL)
-            .add(
-                DnDOverlayBlocks.ROCKY_COARSE_DIRT,
-                DnDOverlayBlocks.SLATED_COARSE_DIRT,
-                DnDOverlayBlocks.BLACKSTONE_COARSE_DIRT
-            )
-            .add(DnDOverlayBlocks.ROCKY_SNOW, DnDOverlayBlocks.SLATED_SNOW, DnDOverlayBlocks.BLACKSTONE_SNOW)
-        getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON)
-            .add(
-                DnDOverlayBlocks.ROCKY_MYCELIUM,
-                DnDOverlayBlocks.SLATED_MYCELIUM,
-                DnDOverlayBlocks.BLACKSTONE_MYCELIUM
-            )
-        getOrCreateTagBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK)
-            .add(DnDOverlayBlocks.ROCKY_DIRT, DnDOverlayBlocks.SLATED_DIRT, DnDOverlayBlocks.BLACKSTONE_DIRT)
-            .add(DnDOverlayBlocks.ROCKY_GRASS, DnDOverlayBlocks.SLATED_GRASS, DnDOverlayBlocks.BLACKSTONE_GRASS)
-            .add(DnDOverlayBlocks.ROCKY_PODZOL, DnDOverlayBlocks.SLATED_PODZOL, DnDOverlayBlocks.BLACKSTONE_PODZOL)
-            .add(
-                DnDOverlayBlocks.ROCKY_COARSE_DIRT,
-                DnDOverlayBlocks.SLATED_COARSE_DIRT,
-                DnDOverlayBlocks.BLACKSTONE_COARSE_DIRT
-            )
-        getOrCreateTagBuilder(BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH)
-            .add(DnDOverlayBlocks.ROCKY_MUD, DnDOverlayBlocks.SLATED_MUD, DnDOverlayBlocks.BLACKSTONE_MUD)
     }
 
     private fun conventionTags() {
@@ -604,12 +477,27 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(ConventionalBlockTags.WOODEN_CHESTS).add(DnDBlocks.CHEST_O_SOULS)
     }
 
-//    private fun FabricTagProvider.addOverlay() {
-//        listOf(
-//            DnDOverlayBlocks.ROCKY_COARSE_DIRT,
-//            DnDOverlayBlocks.SLATED_COARSE_DIRT,
-//            DnDOverlayBlocks.BLACKSTONE_COARSE_DIRT
-//        ).forEach(this::add)
-//        return this
-//    }
+    private fun overlayTags() {
+        DnDOverlayBlocks.OVERLAYS.forEach {
+            getOrCreateTagBuilder(BlockTags.MUSHROOM_GROW_BLOCK).add(it.podzol, it.mycelium)
+            getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(it.gravel)
+            getOrCreateTagBuilder(BlockTags.NETHER_CARVER_REPLACEABLES).add(it.soulSand, it.soulSoil)
+            getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
+                .add(it.gravel, it.sand, it.redSand, it.soulSand, it.soulSoil)
+            getOrCreateTagBuilder(BlockTags.DIRT).add(it.dirt, it.grass, it.podzol, it.mycelium, it.coarseDirt, it.mud)
+            getOrCreateTagBuilder(BlockTags.SAND).add(it.sand, it.redSand)
+            getOrCreateTagBuilder(BlockTags.SNOW).add(it.snow)
+            getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).add(it.mud, it.soulSand)
+            getOrCreateTagBuilder(BlockTags.WITHER_SUMMON_BASE_BLOCKS).add(it.soulSand, it.soulSoil)
+            getOrCreateTagBuilder(BlockTags.SOUL_SPEED_BLOCKS).add(it.soulSand, it.soulSoil)
+            getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(it.soulSand, it.soulSoil)
+            getOrCreateTagBuilder(BlockTags.BAMBOO_PLANTABLE_ON).add(it.gravel)
+            getOrCreateTagBuilder(BlockTags.VALID_SPAWN).add(it.grass, it.podzol)
+            getOrCreateTagBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(it.grass)
+            getOrCreateTagBuilder(BlockTags.FOXES_SPAWNABLE_ON).add(it.grass, it.podzol, it.coarseDirt, it.snow)
+            getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON).add(it.mycelium)
+            getOrCreateTagBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(it.dirt, it.grass, it.podzol, it.coarseDirt)
+            getOrCreateTagBuilder(BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH).add(it.mud)
+        }
+    }
 }

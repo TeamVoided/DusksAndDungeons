@@ -3,7 +3,6 @@
 package org.teamvoided.voidlib.consortium.block
 
 import net.minecraft.block.Block
-import org.teamvoided.voidlib.consortium.utils.Registrable
 import java.util.function.BiConsumer
 
 typealias NameCreator = (prefix: String, color: String) -> String
@@ -82,7 +81,7 @@ open class ColorConsortium<T>(
     val brown: T, val green: T,
     val red: T, val black: T,
     var prefix: String = "",
-) : Collection<T>, Registrable<T> where T : Block {
+) : BlockCollection<T> where T : Block {
     constructor(name: String, provider: ColorCollection, constructor: (coloredBlock: Block) -> T) : this(
         name,
         constructor(provider.white), constructor(provider.orange),
@@ -101,9 +100,8 @@ open class ColorConsortium<T>(
         white, orange, magenta, lightBlue, yellow, lime, pink, gray,
         lightGray, cyan, purple, blue, brown, green, red, black
     )
-    open val list = originalList.toList()
-
-    open fun getIdMap() = listOf(
+    override val list = originalList.toList()
+    override fun getIdMap() = listOf(
         "${prefix}white_$name", "${prefix}orange_$name",
         "${prefix}magenta_$name", "${prefix}light_blue_$name",
         "${prefix}yellow_$name", "${prefix}lime_$name",

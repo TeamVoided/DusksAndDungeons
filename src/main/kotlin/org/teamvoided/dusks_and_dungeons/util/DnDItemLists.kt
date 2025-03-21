@@ -234,47 +234,5 @@ object DnDItemLists {
         DnDWoodBlocks.CASCADE_LEAF_PILE,
         DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE,
     )
-    val overlayBlocks = listOf(
-        DnDOverlayBlocks.ROCKY_GRASS,
-        DnDOverlayBlocks.ROCKY_PODZOL,
-        DnDOverlayBlocks.ROCKY_MYCELIUM,
-        DnDOverlayBlocks.ROCKY_DIRT_PATH,
-        DnDOverlayBlocks.ROCKY_DIRT,
-        DnDOverlayBlocks.ROCKY_COARSE_DIRT,
-        DnDOverlayBlocks.ROCKY_MUD,
-        DnDOverlayBlocks.ROCKY_SNOW,
-        DnDOverlayBlocks.ROCKY_GRAVEL,
-        DnDOverlayBlocks.ROCKY_SAND,
-        DnDOverlayBlocks.ROCKY_RED_SAND,
-        DnDOverlayBlocks.ROCKY_SOUL_SAND,
-        DnDOverlayBlocks.ROCKY_SOUL_SOIL,
-
-        DnDOverlayBlocks.SLATED_GRASS,
-        DnDOverlayBlocks.SLATED_PODZOL,
-        DnDOverlayBlocks.SLATED_MYCELIUM,
-        DnDOverlayBlocks.SLATED_DIRT_PATH,
-        DnDOverlayBlocks.SLATED_DIRT,
-        DnDOverlayBlocks.SLATED_COARSE_DIRT,
-        DnDOverlayBlocks.SLATED_MUD,
-        DnDOverlayBlocks.SLATED_SNOW,
-        DnDOverlayBlocks.SLATED_GRAVEL,
-        DnDOverlayBlocks.SLATED_SAND,
-        DnDOverlayBlocks.SLATED_RED_SAND,
-        DnDOverlayBlocks.SLATED_SOUL_SAND,
-        DnDOverlayBlocks.SLATED_SOUL_SOIL,
-
-        DnDOverlayBlocks.BLACKSTONE_GRASS,
-        DnDOverlayBlocks.BLACKSTONE_PODZOL,
-        DnDOverlayBlocks.BLACKSTONE_MYCELIUM,
-        DnDOverlayBlocks.BLACKSTONE_DIRT_PATH,
-        DnDOverlayBlocks.BLACKSTONE_DIRT,
-        DnDOverlayBlocks.BLACKSTONE_COARSE_DIRT,
-        DnDOverlayBlocks.BLACKSTONE_MUD,
-        DnDOverlayBlocks.BLACKSTONE_SNOW,
-        DnDOverlayBlocks.BLACKSTONE_GRAVEL,
-        DnDOverlayBlocks.BLACKSTONE_SAND,
-        DnDOverlayBlocks.BLACKSTONE_RED_SAND,
-        DnDOverlayBlocks.BLACKSTONE_SOUL_SAND,
-        DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL
-    )
+    val overlayBlocks = DnDOverlayBlocks.OVERLAYS.flatMap { it.list }
 }

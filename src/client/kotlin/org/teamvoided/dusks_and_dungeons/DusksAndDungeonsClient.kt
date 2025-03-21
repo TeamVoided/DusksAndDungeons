@@ -1,16 +1,9 @@
 package org.teamvoided.dusks_and_dungeons
 
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.minecraft.item.ItemStack
-import net.minecraft.text.Text
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.init.*
-import org.teamvoided.dusks_and_dungeons.init.DnDTabs.register
 import org.teamvoided.dusks_and_dungeons.util.BETTER_BRICK_NAMES
-import org.teamvoided.dusks_and_dungeons.util.SECRET_ITEMS
-import org.teamvoided.voidlib.helpers.mc.addLists
 import org.teamvoided.voidlib.helpers.registerBuiltInPack
 
 @Suppress("unused")
@@ -26,14 +19,4 @@ object DusksAndDungeonsClient {
 
         registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
     }
-
-    val DUSKS_AND_DUNGEONS_SECRET = register("dnd_secret",
-        FabricItemGroup.builder()
-            .icon { ItemStack(DnDItems.HARVESTER_SCYTHE) }
-            .name(Text.literal("DnD Secrets"))
-            .entries { _, entries ->
-//                println("Name : ${MinecraftClient.getInstance().player?.gameProfile?.id}")
-                if (isDev()) entries.addLists(SECRET_ITEMS)
-            }.build()
-    )
 }

@@ -7,12 +7,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
 import org.teamvoided.voidlib.helpers.addAndReturn
 
-val SECRET_BLOCKS = mutableSetOf<Block>()
-val SECRET_ITEMS = mutableSetOf<Item>()
-
-internal fun mergeSecrets() = SECRET_ITEMS.addAll(SECRET_BLOCKS.map { it.asItem() })
-internal fun Block.shh(): Block = SECRET_BLOCKS.addAndReturn(this)
-internal fun Item.shh(): Item = SECRET_ITEMS.addAndReturn(this)
 internal fun Item.tellWitnessesThatIWasMurdered(): Item = DnDItems.EVIL_ITEMS.addAndReturn(this)
 internal fun Block.tellWitnessesThatIWasMurdered(): Block = DnDBlocks.EVIL_BLOCKS.addAndReturn(this)
 

@@ -18,6 +18,7 @@ import net.minecraft.util.math.int_provider.ConstantIntProvider
 import net.minecraft.util.math.int_provider.UniformIntProvider
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.feature.*
+import net.minecraft.world.gen.feature.OreFeatureConfig.createTarget
 import net.minecraft.world.gen.feature.size.ThreeLayersFeatureSize
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
@@ -30,12 +31,13 @@ import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
 import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraft.world.gen.trunk.DarkOakTrunkPlacer
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator.fairyRings
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks.BLACKSTONE_BLOCKS
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks.ROCKY_BLOCKS
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks.SLATE_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
@@ -46,7 +48,6 @@ import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.Far
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer
-import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AttachedToTrunkTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.ThreeWideTrunkPlacer
@@ -98,8 +99,8 @@ object ConfiguredFeatureCreator {
                 0.9f,
                 PlacedFeatureUtil.placedInline(
                     configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS),
-                    *arrayOfNulls<PlacementModifier>(0)
-                ),
+
+                    ),
                 0.1f,
                 true,
                 listOf()
@@ -420,42 +421,35 @@ object ConfiguredFeatureCreator {
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
                             configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_WHEAT),
-                            *arrayOfNulls<PlacementModifier>(0)
                         ), 0.25f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
                             configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_CARROTS),
-                            *arrayOfNulls<PlacementModifier>(0)
                         ), 0.175f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
-                            configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_POTATOES),
-                            *arrayOfNulls<PlacementModifier>(0)
+                            configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_POTATOES)
                         ), 0.175f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
                             configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_PUMPKIN),
-                            *arrayOfNulls<PlacementModifier>(0)
                         ), 0.175f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
                             configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_BEETROOTS),
-                            *arrayOfNulls<PlacementModifier>(0)
                         ), 0.175f
                     ),
                     WeightedPlacedFeature(
                         PlacedFeatureUtil.placedInline(
                             configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_GOLDEN_BEETROOTS),
-                            *arrayOfNulls<PlacementModifier>(0)
                         ), 0.05f
                     )
                 ), PlacedFeatureUtil.placedInline(
                     configuredFeatures.getHolderOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
-                    *arrayOfNulls<PlacementModifier>(0)
                 )
             )
         )
@@ -465,9 +459,7 @@ object ConfiguredFeatureCreator {
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockFeatureConfig(
-                    BlockStateProvider.of(
-                        DnDBlocks.WILD_WHEAT.defaultState
-                    )
+                    BlockStateProvider.of(DnDBlocks.WILD_WHEAT.defaultState)
                 ), ImmutableList.of(Blocks.PODZOL, Blocks.GRASS_BLOCK, Blocks.FARMLAND), 32
             )
         )
@@ -475,37 +467,28 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.CROPS_WHEAT,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                Feature.SIMPLE_BLOCK,
-                SimpleBlockFeatureConfig(
-                    basicCropAges(Blocks.WHEAT)
-                ),
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(basicCropAges(Blocks.WHEAT)),
             )
         )
         this.registerConfiguredFeature(
             DnDConfiguredFeature.CROPS_CARROTS,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                    basicCropAges(Blocks.CARROTS)
-                )
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(basicCropAges(Blocks.CARROTS))
             )
         )
         this.registerConfiguredFeature(
             DnDConfiguredFeature.CROPS_POTATOES,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                    basicCropAges(Blocks.POTATOES)
-                )
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(basicCropAges(Blocks.POTATOES))
             )
         )
         this.registerConfiguredFeature(
             DnDConfiguredFeature.CROPS_PUMPKIN,
             Feature.RANDOM_PATCH,
             ConfiguredFeatureUtil.createRandomPatchFeatureConfig(
-                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                    basicCropAges(Blocks.PUMPKIN_STEM)
-                )
+                Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(basicCropAges(Blocks.PUMPKIN_STEM))
             )
         )
         this.registerConfiguredFeature(
@@ -561,13 +544,8 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.DISK_MUD, Feature.DISK, DiskFeatureConfig(
                 C_cxbmzbuz.method_43312(Blocks.MUD), BlockPredicate.matchingBlocks(
                     listOf(
-                        Blocks.DIRT,
-                        Blocks.GRASS_BLOCK,
-                        Blocks.MYCELIUM,
-                        Blocks.PODZOL,
-                        Blocks.GRAVEL,
-                        Blocks.SAND,
-                        Blocks.MUD
+                        Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.MYCELIUM,
+                        Blocks.PODZOL, Blocks.GRAVEL, Blocks.SAND, Blocks.MUD
                     )
                 ), UniformIntProvider.create(2, 6), 1
             )
@@ -584,13 +562,8 @@ object ConfiguredFeatureCreator {
                     )
                 ), BlockPredicate.matchingBlocks(
                     listOf(
-                        Blocks.DIRT,
-                        Blocks.GRASS_BLOCK,
-                        Blocks.MYCELIUM,
-                        Blocks.PODZOL,
-                        Blocks.GRAVEL,
-                        Blocks.SAND,
-                        Blocks.MUD
+                        Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.MYCELIUM,
+                        Blocks.PODZOL, Blocks.GRAVEL, Blocks.SAND, Blocks.MUD
                     )
                 ), UniformIntProvider.create(2, 6), 2
             )
@@ -599,34 +572,15 @@ object ConfiguredFeatureCreator {
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.overlayOres() {
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.ROCKY_OVERWORLD_ORE,
-            Feature.ORE,
+            DnDConfiguredFeature.ROCKY_OVERWORLD_ORE, Feature.ORE,
             OreFeatureConfig(
-                listOf<OreFeatureConfig.Target>(
-                    OreFeatureConfig.createTarget(
-                        TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES),
-                        DnDOverlayBlocks.ROCKY_DIRT.defaultState
-                    ),
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.DIRT),
-                        DnDOverlayBlocks.ROCKY_DIRT.defaultState
-                    ),
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.GRASS_BLOCK),
-                        DnDOverlayBlocks.ROCKY_GRASS.defaultState
-                    ),
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.PODZOL),
-                        DnDOverlayBlocks.ROCKY_PODZOL.defaultState
-                    ),
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.GRAVEL),
-                        DnDOverlayBlocks.ROCKY_GRAVEL.defaultState
-                    ),
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.DIRT_PATH),
-                        DnDOverlayBlocks.ROCKY_DIRT_PATH.defaultState
-                    )
+                listOf(
+                    createTarget(TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES), ROCKY_BLOCKS.dirt.defaultState),
+                    createTarget(BlockMatchRuleTest(Blocks.DIRT), ROCKY_BLOCKS.dirt.defaultState),
+                    createTarget(BlockMatchRuleTest(Blocks.GRASS_BLOCK), ROCKY_BLOCKS.grass.defaultState),
+                    createTarget(BlockMatchRuleTest(Blocks.PODZOL), ROCKY_BLOCKS.podzol.defaultState),
+                    createTarget(BlockMatchRuleTest(Blocks.GRAVEL), ROCKY_BLOCKS.gravel.defaultState),
+                    createTarget(BlockMatchRuleTest(Blocks.DIRT_PATH), ROCKY_BLOCKS.path.defaultState)
                 ), 33
             )
         )
@@ -635,14 +589,10 @@ object ConfiguredFeatureCreator {
             Feature.ORE,
             OreFeatureConfig(
                 listOf<OreFeatureConfig.Target>(
-                    OreFeatureConfig.createTarget(
-                        TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-                        DnDOverlayBlocks.SLATED_DIRT.defaultState
+                    createTarget(
+                        TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), SLATE_BLOCKS.dirt.defaultState
                     ),
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.GRAVEL),
-                        DnDOverlayBlocks.SLATED_GRAVEL.defaultState
-                    ),
+                    createTarget(BlockMatchRuleTest(Blocks.GRAVEL), SLATE_BLOCKS.gravel.defaultState),
                 ), 33
             )
         )
@@ -651,18 +601,9 @@ object ConfiguredFeatureCreator {
             Feature.ORE,
             OreFeatureConfig(
                 listOf<OreFeatureConfig.Target>(
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.NETHERRACK),
-                        DnDOverlayBlocks.BLACKSTONE_SOUL_SAND.defaultState
-                    ),
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.SOUL_SAND),
-                        DnDOverlayBlocks.BLACKSTONE_SOUL_SAND.defaultState
-                    ),
-                    OreFeatureConfig.createTarget(
-                        BlockMatchRuleTest(Blocks.SOUL_SOIL),
-                        DnDOverlayBlocks.BLACKSTONE_SOUL_SOIL.defaultState
-                    ),
+                    createTarget(BlockMatchRuleTest(Blocks.NETHERRACK), BLACKSTONE_BLOCKS.soulSand.defaultState),
+                    createTarget(BlockMatchRuleTest(Blocks.SOUL_SAND), BLACKSTONE_BLOCKS.soulSand.defaultState),
+                    createTarget(BlockMatchRuleTest(Blocks.SOUL_SOIL), BLACKSTONE_BLOCKS.soulSoil.defaultState),
                 ), 33
             )
         )

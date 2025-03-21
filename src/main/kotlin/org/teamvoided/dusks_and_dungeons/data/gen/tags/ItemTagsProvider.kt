@@ -14,8 +14,8 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
-import org.teamvoided.dusks_and_dungeons.util.SECRET_ITEMS
 import org.teamvoided.voidlib.devin.extensions.tag.add
+import org.teamvoided.voidlib.devin.extensions.tag.copyColorTags
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -167,6 +167,7 @@ class ItemTagsProvider(
     }
 
     fun conventionTags() {
+        copyColorTags(::copy)
         copy(ConventionalBlockTags.COBBLESTONES, ConventionalItemTags.COBBLESTONES)
         copy(ConventionalBlockTags.CHAINS, ConventionalItemTags.CHAINS)
 
@@ -191,6 +192,5 @@ class ItemTagsProvider(
 
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
             .add(DnDItems.EVIL_ITEMS)
-            .add(SECRET_ITEMS)
     }
 }

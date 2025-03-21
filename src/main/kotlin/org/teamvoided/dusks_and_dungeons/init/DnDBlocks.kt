@@ -24,6 +24,7 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.ColorConsortium
 import org.teamvoided.voidlib.consortium.block.VanillaColorCollections.CANDLES
 import org.teamvoided.voidlib.consortium.block.createBlockSet
 import org.teamvoided.voidlib.consortium.block.createHeadlessSet
@@ -37,6 +38,8 @@ object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
     val BLOCK_ITEMS = mutableMapOf<String, Item>()
     val SETS = mutableSetOf<AbstractBlockSet>()
+    val COLOR_CONSORTIUM = mutableSetOf<ColorConsortium<*>>()
+
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
 

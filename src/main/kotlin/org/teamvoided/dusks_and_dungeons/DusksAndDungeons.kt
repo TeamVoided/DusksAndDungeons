@@ -14,7 +14,6 @@ import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.EVIL_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomeModifications
-import org.teamvoided.dusks_and_dungeons.util.mergeSecrets
 
 @Suppress("unused")
 object DusksAndDungeons {
@@ -61,9 +60,6 @@ object DusksAndDungeons {
             }.build()
             dispatcher.root.addChild(test)
         }
-
-        mergeSecrets()
-//        if (isModLoaded("dramaticdoors") && isDev()) DramaticDoorsCompat.initCompat()
     }
 
     fun id(path: String) = Identifier.of(MODID, path)

@@ -13,7 +13,10 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
-import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
+import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
+import org.teamvoided.dusks_and_dungeons.util.addCandles
+import org.teamvoided.dusks_and_dungeons.util.addWoodStuffAndLeafPiles
 import org.teamvoided.voidlib.helpers.mc.*
 
 
@@ -138,11 +141,11 @@ object DnDTabs {
                     DnDItemLists.mixedGrayNetherBrickStuff,
                     DnDItemLists.blackstoneTools,
                 )
-            }.build()
+            }
     )
     val OVERLAY_BLOCKS = register(
         "overlay_blocks", FabricItemGroup.builder()
-            .icon(DnDOverlayBlocks.ROCKY_GRASS).translation("itemGroup.$MODID.overlay_blocks")
+            .icon(DnDOverlayBlocks.ROCKY_BLOCKS.grass).translation("itemGroup.$MODID.overlay_blocks")
             .entries { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
     )
 
@@ -152,7 +155,7 @@ object DnDTabs {
             .icon(DnDBlocks.STONE_PILLAR).name("DnD Everything")
             .entries { _, entries ->
                 if (isDev())
-                    entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains).filterNot(SECRET_ITEMS::contains))
+                    entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains))
             }
     )
     val DND_EXPERIMENTAL = register(

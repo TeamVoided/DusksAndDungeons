@@ -7,6 +7,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
 import org.teamvoided.dusks_and_dungeons.block.HauntedGravestoneBlock
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.register
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.registerNoItem
@@ -31,10 +32,9 @@ fun registerHeadEquipable(id: String, block: Block): Block {
 
 // region Color Consortiums
 typealias BlockMaker<T> = (coloredBlock: Block) -> T
-//val COLORS = mutableSetOf<ColorConsortium<*>>()
 
 fun <T, C> register(consortium: C): C where C : ColorConsortium<T>, T : Block {
-    /*COLORS.add(consortium)*/
+    COLOR_CONSORTIUM.add(consortium)
     consortium.register(::register)
     return consortium
 }
