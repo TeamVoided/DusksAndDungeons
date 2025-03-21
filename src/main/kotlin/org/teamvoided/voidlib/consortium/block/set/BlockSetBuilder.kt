@@ -1,55 +1,13 @@
-@file:Suppress("unused")
+package org.teamvoided.voidlib.consortium.block.set
 
-package org.teamvoided.voidlib.consortium.block
-
-import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
-import org.teamvoided.voidlib.consortium.utils.Registrable
-import org.teamvoided.voidlib.helpers.block.BlockConvertable
-import java.util.function.BiConsumer
-import java.util.function.Supplier
+import net.minecraft.block.Block
+import net.minecraft.block.SlabBlock
+import net.minecraft.block.StairsBlock
+import net.minecraft.block.WallBlock
 
-abstract class AbstractBlockSet(
-    val name: String,
-    val parent: Block, val stairs: Block, val slab: Block, val wall: Block,
-    val hasStoneCutting: Boolean
-) : ItemConvertible, Supplier<Block>, BlockConvertable, Registrable<Block> {
-    open fun collect(): List<Block> = listOf(stairs, slab, wall)
-    open fun toIdMap(): Map<String, Block> =
-        mapOf("${name}_stairs" to stairs, "${name}_slab" to slab, "${name}_wall" to wall)
-
-    open fun forEach(consumer: (Block) -> Unit) = this.collect().forEach(consumer)
-    override fun register(consumer: BiConsumer<String, Block>) = this.toIdMap().forEach(consumer)
-
-    override fun asItem(): Item = parent.asItem()
-    override fun get() = parent
-    override fun asBlock(): Block = parent
-    override fun getDefaultState(): BlockState = parent.defaultState
-}
-
-open class BlockSet(
-    val parentName: String,
-    name: String, parent: Block, stairs: Block, slab: Block, wall: Block, hasStoneCutting: Boolean
-) : AbstractBlockSet(name, parent, stairs, slab, wall, hasStoneCutting) {
-    override fun collect() = listOf(parent) + super.collect()
-    override fun toIdMap() = mapOf(parentName to parent) + super.toIdMap()
-}
-open class HeadlessBlockSet(
-    name: String, parent: Block, stairs: Block, slab: Block, wall: Block, hasStoneCutting: Boolean
-) : AbstractBlockSet(name, parent, stairs, slab, wall, hasStoneCutting)
-
-
-fun createBlockSet(name: String) = BlockSetBuilder(name)
-fun createBlockSet(name: String, settings: Settings) = BlockSetBuilder(name).settings(settings)
-fun createHeadlessSet(name: String, parent: Block) = BlockSetBuilder(name, true).parent(parent)
-
-typealias BlockMaker<T> = (Block, Settings) -> T
-typealias StairMaker = (BlockState, Settings) -> StairsBlock
-
-open class BlockSetBuilder(var name: String, val headless: Boolean = false) {
+open class BlockSetBuilder(var name: String) {
     var parentName: String = name
     lateinit var settings: Settings
     lateinit var parent: Block
@@ -83,6 +41,7 @@ open class BlockSetBuilder(var name: String, val headless: Boolean = false) {
             hasStoneCutting
         )
     }
+
     fun buildHeadless(): HeadlessBlockSet = HeadlessBlockSet(
         name, parent, stairMaker(parent, settings), slabMaker(parent, settings), wallMaker(parent, settings),
         hasStoneCutting

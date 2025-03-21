@@ -4,14 +4,14 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.helpers.addAndReturn
 
 internal fun Item.tellWitnessesThatIWasMurdered(): Item = DnDItems.EVIL_ITEMS.addAndReturn(this)
 internal fun Block.tellWitnessesThatIWasMurdered(): Block = DnDBlocks.EVIL_BLOCKS.addAndReturn(this)
 
 internal fun AbstractBlockSet.tellWitnessesThatIWasMurdered(): AbstractBlockSet {
-    DnDBlocks.EVIL_BLOCKS.addAll(this.collect())
+    DnDBlocks.EVIL_BLOCKS.addAll(this.list)
     return this
 }
 

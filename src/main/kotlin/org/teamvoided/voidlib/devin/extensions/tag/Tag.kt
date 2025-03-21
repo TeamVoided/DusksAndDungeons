@@ -9,8 +9,8 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.TagKey
-import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.ColorConsortium
+import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 
 fun <T> FabricTagProvider<T>.FabricTagBuilder.add(list: Collection<T>): FabricTagProvider<T>.FabricTagBuilder {
     list.forEach { this.add(it) }

@@ -23,11 +23,11 @@ import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
-import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.ColorConsortium
 import org.teamvoided.voidlib.consortium.block.VanillaColorCollections.CANDLES
-import org.teamvoided.voidlib.consortium.block.createBlockSet
-import org.teamvoided.voidlib.consortium.block.createHeadlessSet
+import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.set.createBlockSet
+import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
 import kotlin.collections.mutableMapOf
 import kotlin.collections.mutableSetOf
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set

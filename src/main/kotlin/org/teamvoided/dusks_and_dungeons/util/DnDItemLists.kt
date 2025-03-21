@@ -46,24 +46,24 @@ object DnDItemLists {
         DnDItems.CASCADE_SIGN,
         DnDItems.CASCADE_HANGING_SIGN
     )
-    val polishedStone = DnDBlocks.POLISHED_STONE.collect()
-    val mossyPolishedStone = DnDBlocks.MOSSY_POLISHED_STONE.collect()
-    val overgrownCobblestone = DnDBlocks.OVERGROWN_COBBLESTONE.collect()
-    val overgrownStoneBricks = DnDBlocks.OVERGROWN_STONE_BRICKS.collect()
-    val snowyStoneBricks = DnDBlocks.SNOWY_STONE_BRICKS.collect()
-    val ice = DnDBlocks.ICE_SET.collect() + DnDBlocks.PACKED_ICE_SET.collect() + DnDBlocks.BLUE_ICE_SET.collect()
-//            DnDBlocks.ICE_BRICKS.collect() + DnDBlocks.PACKED_ICE_BRICKS.collect() + DnDBlocks.BLUE_ICE_BRICKS.collect()
+    val polishedStone = DnDBlocks.POLISHED_STONE.list
+    val mossyPolishedStone = DnDBlocks.MOSSY_POLISHED_STONE.list
+    val overgrownCobblestone = DnDBlocks.OVERGROWN_COBBLESTONE.list
+    val overgrownStoneBricks = DnDBlocks.OVERGROWN_STONE_BRICKS.list
+    val snowyStoneBricks = DnDBlocks.SNOWY_STONE_BRICKS.list
+    val ice = DnDBlocks.ICE_SET.list + DnDBlocks.PACKED_ICE_SET.list + DnDBlocks.BLUE_ICE_SET.list
+//            DnDBlocks.ICE_BRICKS.list + DnDBlocks.PACKED_ICE_BRICKS.list + DnDBlocks.BLUE_ICE_BRICKS.list
 
     val bigCandles = DnDBlocks.BIG_CANDLES.toList()
     val soulCandles = DnDBlocks.SOUL_CANDLES.toList()
     val bigSoulCandles = DnDBlocks.BIG_SOUL_CANDLES.toList()
-    val netherrackStuff = DnDBlocks.NETHERRACK_SET.collect()
-    val netherBrickStuff = listOf(DnDBlocks.NETHER_BRICK_PILLAR) + DnDBlocks.POLISHED_NETHER_BRICKS.collect()
+    val netherrackStuff = DnDBlocks.NETHERRACK_SET.list
+    val netherBrickStuff = listOf(DnDBlocks.NETHER_BRICK_PILLAR) + DnDBlocks.POLISHED_NETHER_BRICKS.list
     val redNetherBrickStuff = listOf(
         DnDBlocks.RED_NETHER_BRICK_FENCE,
         DnDBlocks.CHISELED_RED_NETHER_BRICKS,
         DnDBlocks.RED_NETHER_BRICK_PILLAR
-    ) + DnDBlocks.POLISHED_RED_NETHER_BRICKS.collect()
+    ) + DnDBlocks.POLISHED_RED_NETHER_BRICKS.list
     val mixedRedNetherBrickStuff = listOf(
         DnDBlocks.MIXED_RED_NETHER_BRICKS,
         DnDBlocks.CRACKED_MIXED_RED_NETHER_BRICKS,
@@ -83,7 +83,7 @@ object DnDItemLists {
         DnDBlocks.BLUE_NETHER_BRICK_FENCE,
         DnDBlocks.CHISELED_BLUE_NETHER_BRICKS,
         DnDBlocks.BLUE_NETHER_BRICK_PILLAR
-    ) + DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.collect()
+    ) + DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.list
 
     val mixedBlueNetherBrickStuff = listOf(
         DnDBlocks.MIXED_BLUE_NETHER_BRICKS,
@@ -104,7 +104,7 @@ object DnDItemLists {
         DnDBlocks.GRAY_NETHER_BRICK_FENCE,
         DnDBlocks.CHISELED_GRAY_NETHER_BRICKS,
         DnDBlocks.GRAY_NETHER_BRICK_PILLAR
-    ) + DnDBlocks.POLISHED_GRAY_NETHER_BRICKS.collect()
+    ) + DnDBlocks.POLISHED_GRAY_NETHER_BRICKS.list
     val mixedGrayNetherBrickStuff = listOf(
         DnDBlocks.MIXED_GRAY_NETHER_BRICKS,
         DnDBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS,

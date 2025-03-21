@@ -13,7 +13,12 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.register
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.registerNoItem
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
-import org.teamvoided.voidlib.consortium.block.*
+import org.teamvoided.voidlib.consortium.block.ColorConsortium
+import org.teamvoided.voidlib.consortium.block.FullColorCollections
+import org.teamvoided.voidlib.consortium.block.FullColorConsortium
+import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.set.createBlockSet
+import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
 import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 
 fun registerHeadEquipable(id: String, block: Block): Block {

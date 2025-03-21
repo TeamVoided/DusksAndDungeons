@@ -28,8 +28,8 @@ import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings
-import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
-import org.teamvoided.voidlib.consortium.block.BlockSetBuilder
+import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.set.BlockSetBuilder
 import org.teamvoided.voidlib.helpers.addAndReturn
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidSignBlock
@@ -234,13 +234,13 @@ fun removeRocks(input: Block, output: Block, craftingIngredient: ItemConvertible
 
 // Set Helpers
 fun MutableCollection<Block>.addSet(set: AbstractBlockSet): AbstractBlockSet {
-    this.addAll(set.collect())
+    this.addAll(set.list)
     return set
 }
 
 // Use for populating tags when running data-gen in dev mode
 fun MutableCollection<Block>.addDevSet(set: AbstractBlockSet): AbstractBlockSet {
-    if (isDev()) this.addAll(set.collect())
+    if (isDev()) this.addAll(set.list)
     return set
 }
 

@@ -168,7 +168,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.SOUL_SOIL)
         getOrCreateTagBuilder(DnDBlockTags.ICE_BLOCK_TRANSLUCENT)
             .add(Blocks.ICE)
-            .add(ICE_SET.collect())
+            .add(ICE_SET.list)
         // Candles
         getOrCreateTagBuilder(DnDBlockTags.BIG_CANDLES)
             .add(DnDBlocks.BIG_CANDLES)

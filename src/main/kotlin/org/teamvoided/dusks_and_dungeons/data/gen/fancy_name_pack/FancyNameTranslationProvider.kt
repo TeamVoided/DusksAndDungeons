@@ -23,7 +23,7 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         DnDBlocks.MIXED_RED_NETHER_BRICK_FENCE,
         DnDBlocks.CHISELED_MIXED_RED_NETHER_BRICKS,
         DnDBlocks.MIXED_RED_NETHER_BRICK_PILLAR,
-    ) + DnDBlocks.POLISHED_RED_NETHER_BRICKS.collect() + DnDBlocks.MIXED_RED_NETHER_BRICKS.collect()
+    ) + DnDBlocks.POLISHED_RED_NETHER_BRICKS.list + DnDBlocks.MIXED_RED_NETHER_BRICKS.list
     val warpedBricks = listOf(
         DnDBlocks.CRACKED_BLUE_NETHER_BRICKS,
         DnDBlocks.BLUE_NETHER_BRICK_FENCE,
@@ -33,8 +33,8 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE,
         DnDBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS,
         DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR,
-    ) + DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.collect() +
-            DnDBlocks.MIXED_BLUE_NETHER_BRICKS.collect() + DnDBlocks.BLUE_NETHER_BRICKS.collect()
+    ) + DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.list +
+            DnDBlocks.MIXED_BLUE_NETHER_BRICKS.list + DnDBlocks.BLUE_NETHER_BRICKS.list
     val ashenBricks = listOf(
         DnDBlocks.CRACKED_GRAY_NETHER_BRICKS,
         DnDBlocks.GRAY_NETHER_BRICK_FENCE,
@@ -44,8 +44,8 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
         DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE,
         DnDBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS,
         DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR,
-    ) + DnDBlocks.MIXED_GRAY_NETHER_BRICKS.collect() +
-            DnDBlocks.POLISHED_GRAY_NETHER_BRICKS.collect() + DnDBlocks.GRAY_NETHER_BRICKS.collect()
+    ) + DnDBlocks.MIXED_GRAY_NETHER_BRICKS.list +
+            DnDBlocks.POLISHED_GRAY_NETHER_BRICKS.list + DnDBlocks.GRAY_NETHER_BRICKS.list
 
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
