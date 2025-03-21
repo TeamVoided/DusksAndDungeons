@@ -11,13 +11,13 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDPumpkinBlock.Companion.setSeeds
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.GLOOM_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.LANTERN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.MOSSKIN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.GLOOM_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.PALE_PUMPKIN
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_GLOOM_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_LANTERN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_MOSSKIN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_GLOOM_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_PALE_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.item.*

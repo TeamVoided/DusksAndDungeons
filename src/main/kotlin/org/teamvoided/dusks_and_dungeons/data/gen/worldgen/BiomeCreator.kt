@@ -10,16 +10,15 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.biome.*
 import net.minecraft.world.biome.SpawnSettings.SpawnEntry
-import net.minecraft.world.gen.GenerationStep.Feature.*
-import net.minecraft.world.gen.GenerationStep.Feature.LOCAL_MODIFICATIONS as lm2
-import net.minecraft.world.gen.GenerationStep.Feature.SURFACE_STRUCTURES as ss4
-import net.minecraft.world.gen.GenerationStep.Feature.UNDERGROUND_ORES as uo6
-import net.minecraft.world.gen.GenerationStep.Feature.VEGETAL_DECORATION as vd9
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.OceanPlacedFeatures
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
+import net.minecraft.world.gen.GenerationStep.Feature.LOCAL_MODIFICATIONS as lm2
+import net.minecraft.world.gen.GenerationStep.Feature.SURFACE_STRUCTURES as ss4
+import net.minecraft.world.gen.GenerationStep.Feature.UNDERGROUND_ORES as uo6
+import net.minecraft.world.gen.GenerationStep.Feature.VEGETAL_DECORATION as vd9
 
 object BiomeCreator {
     //        .grassColor(16366449)

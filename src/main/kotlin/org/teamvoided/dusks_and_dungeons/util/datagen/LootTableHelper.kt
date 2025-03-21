@@ -28,11 +28,7 @@ import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.state.property.Property
 import net.minecraft.util.StringIdentifiable
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
-import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
-import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
-import org.teamvoided.dusks_and_dungeons.block.TallDirectionalBlock
-import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
+import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.voidlib.devin.provider.OpenBlockLootTableProvider
 

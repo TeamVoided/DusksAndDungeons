@@ -4,8 +4,8 @@ import net.minecraft.data.client.model.BlockStateModelGenerator
 import org.teamvoided.dusks_and_dungeons.util.datagen.slab
 import org.teamvoided.dusks_and_dungeons.util.datagen.stairs
 import org.teamvoided.dusks_and_dungeons.util.datagen.wall
-import org.teamvoided.voidlib.consortium.block.BlockSet
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.BlockSet
 
 fun BlockStateModelGenerator.createBlockSet(set: AbstractBlockSet) {
     if (set is BlockSet) this.registerSimpleCubeAll(set.parent)

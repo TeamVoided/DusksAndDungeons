@@ -2,7 +2,9 @@ package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.*
-import net.minecraft.block.entity.*
+import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext

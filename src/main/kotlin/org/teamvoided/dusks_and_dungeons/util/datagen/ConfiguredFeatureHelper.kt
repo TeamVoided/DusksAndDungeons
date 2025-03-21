@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.util.datagen
 
 import net.minecraft.block.*
-import net.minecraft.registry.Holder
 import net.minecraft.registry.HolderProvider
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.collection.DataPool
@@ -9,7 +8,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.gen.blockpredicate.BlockPredicate
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.FeatureConfig
-import net.minecraft.world.gen.feature.PlacedFeature
 import net.minecraft.world.gen.feature.RandomPatchFeatureConfig
 import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil

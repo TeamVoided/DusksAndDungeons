@@ -9,10 +9,11 @@ import net.minecraft.fluid.Fluids
 import net.minecraft.particle.DefaultParticleType
 import net.minecraft.util.math.MathHelper.lerp
 import net.minecraft.util.math.Vec3d
-import org.joml.Vector3f
 import org.teamvoided.dusks_and_dungeons.util.blockPos
 import org.teamvoided.dusks_and_dungeons.util.rotate360
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.sin
 
 @Environment(EnvType.CLIENT)
 open class AutumnLeafParticle(

@@ -4,7 +4,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.client.model.BlockStateModelGenerator
 import net.minecraft.data.client.model.TexturedModel
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
-import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object WoodModels {

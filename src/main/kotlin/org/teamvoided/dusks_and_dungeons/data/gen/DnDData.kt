@@ -14,7 +14,10 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.providers.*
+import org.teamvoided.dusks_and_dungeons.data.gen.providers.AdvancementsProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.providers.BlockLootTableProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.providers.DnDMappingsProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.providers.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructurePoolCreator

@@ -2,9 +2,10 @@ package org.teamvoided.dusks_and_dungeons.entity.pumpkin.piffling.animation
 
 import net.minecraft.client.render.animation.Animation
 import net.minecraft.client.render.animation.AnimationKeyframe
-import net.minecraft.client.render.animation.Animator.*
+import net.minecraft.client.render.animation.Animator.rotate
 import net.minecraft.client.render.animation.PartAnimation
-import net.minecraft.client.render.animation.PartAnimation.*
+import net.minecraft.client.render.animation.PartAnimation.AnimationTargets
+import net.minecraft.client.render.animation.PartAnimation.Interpolations
 
 object PifflingPumpkinAnimations {
     val WALK: Animation = Animation.Builder.withLength(1.0f).looping()

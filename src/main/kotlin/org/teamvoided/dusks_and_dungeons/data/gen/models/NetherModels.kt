@@ -6,8 +6,11 @@ import net.minecraft.data.client.model.TexturedModel
 import net.minecraft.state.property.Properties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.util.*
-import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
+import org.teamvoided.dusks_and_dungeons.util.datagen.fence
+import org.teamvoided.dusks_and_dungeons.util.datagen.registerCropWithParent
+import org.teamvoided.dusks_and_dungeons.util.datagen.registerHandheldItem
+import org.teamvoided.dusks_and_dungeons.util.datagen.registerMixedNetherBrickPillar
 
 object NetherModels {
     fun netherModels(gen: BlockStateModelGenerator){

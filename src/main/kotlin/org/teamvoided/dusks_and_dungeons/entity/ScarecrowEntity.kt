@@ -4,7 +4,8 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.*
-import net.minecraft.entity.EquipmentSlot.Type.*
+import net.minecraft.entity.EquipmentSlot.Type.HAND
+import net.minecraft.entity.EquipmentSlot.Type.HUMANOID_ARMOR
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.damage.DamageSource

@@ -7,8 +7,8 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.world.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
+import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
 
 object WolfVariants {
     fun bootstrap(c: BootstrapContext<WolfVariant>) {

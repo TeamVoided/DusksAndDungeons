@@ -7,7 +7,7 @@ import net.minecraft.enchantment.Enchantments
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
-import net.minecraft.loot.entry.*
+import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
@@ -15,7 +15,9 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
-import org.teamvoided.dusks_and_dungeons.block.*
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
+import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -26,7 +28,6 @@ import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.bigSoulCandles
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.leafPiles
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.soulCandles
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
-import org.teamvoided.dusks_and_dungeons.util.datagen.decoratedPotDrops
 import org.teamvoided.voidlib.devin.provider.OpenBlockLootTableProvider
 import java.util.concurrent.CompletableFuture
 

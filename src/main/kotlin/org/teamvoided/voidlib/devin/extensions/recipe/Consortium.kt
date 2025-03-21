@@ -5,8 +5,8 @@ import net.minecraft.data.server.recipe.RecipeExporter
 import org.teamvoided.dusks_and_dungeons.util.datagen.createSlab
 import org.teamvoided.dusks_and_dungeons.util.datagen.createStair
 import org.teamvoided.dusks_and_dungeons.util.datagen.createWall
-import org.teamvoided.voidlib.consortium.block.BlockSet
 import org.teamvoided.voidlib.consortium.block.AbstractBlockSet
+import org.teamvoided.voidlib.consortium.block.BlockSet
 
 fun RecipeExporter.createSet(set: AbstractBlockSet) {
     val input = set.parent
