@@ -27,6 +27,8 @@ object DusksAndDungeons {
     fun init() {
         if (initialised) return
         initialised = true
+        if (!FabricLoader.getInstance().isModLoaded("transition")) error("$MODID requires Transition to be loaded!")
+
         log.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()
