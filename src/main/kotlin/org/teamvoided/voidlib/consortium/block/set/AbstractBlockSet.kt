@@ -25,5 +25,6 @@ abstract class AbstractBlockSet(
     override fun asBlock(): Block = parent
     override fun getDefaultState(): BlockState = parent.defaultState
 
+    open fun headless() = list
     override val family: BlockFamily = BlockFamilies.register(parent).stairs(stairs).slab(slab).wall(wall).build()
 }

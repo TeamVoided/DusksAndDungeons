@@ -13,6 +13,8 @@ open class BlockSet(
 ) : AbstractBlockSet(name, parent, stairs, slab, wall, hasStoneCutting) {
     override val list = listOf(parent) + super.list
     override fun getIdMap() = mapOf(parentName to parent) + super.getIdMap()
+
+    override fun headless() = list.drop(1)
 }
 
 open class HeadlessBlockSet(
