@@ -35,9 +35,9 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks.BLACKSTONE_BLOCKS
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks.ROCKY_BLOCKS
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks.SLATE_BLOCKS
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.BLACKSTONE_BLOCKS
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ROCKY_BLOCKS
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SLATE_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.util.datagen.*

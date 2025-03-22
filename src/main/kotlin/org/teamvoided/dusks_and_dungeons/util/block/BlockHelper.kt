@@ -23,10 +23,10 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleCakeBlock
+import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.BlockSetBuilder
@@ -98,10 +98,11 @@ fun Block.leaves() = this.cutout().hoe().flammableLeaves()
 fun Block.wood() = this.axe().flammablePlanks()
 fun Block.rocky() = this.cutout().pickaxe().shovel()
 
-fun DnDOverlayBlocks.RockyBlocks.rocky() {
+fun RockyBlocks.rocky(): RockyBlocks {
     CUTOUT_BLOCKS.addAll(list)
     PICKAXABLE.addAll(list)
     SHOVELABLE.addAll(list)
+    return this
 }
 
 fun AbstractBlockSet.cutout(): AbstractBlockSet = CUTOUT_BLOCKS.addSet(this)

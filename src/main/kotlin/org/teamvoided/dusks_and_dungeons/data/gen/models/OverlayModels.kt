@@ -4,7 +4,8 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.client.model.BlockStateModelGenerator
 import net.minecraft.util.Identifier
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
+import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object OverlayModels {
@@ -19,12 +20,12 @@ object OverlayModels {
         gen.cube15Overlay(deepslate)
         gen.cube15Overlay(blackstone)
 
-        gen.rockyBlocks(DnDOverlayBlocks.ROCKY_BLOCKS, stone)
-        gen.rockyBlocks(DnDOverlayBlocks.SLATE_BLOCKS, deepslate)
-        gen.rockyBlocks(DnDOverlayBlocks.BLACKSTONE_BLOCKS, blackstone)
+        gen.rockyBlocks(DnDBlocks.ROCKY_BLOCKS, stone)
+        gen.rockyBlocks(DnDBlocks.SLATE_BLOCKS, deepslate)
+        gen.rockyBlocks(DnDBlocks.BLACKSTONE_BLOCKS, blackstone)
     }
 
-    fun BlockStateModelGenerator.rockyBlocks(rocks: DnDOverlayBlocks.RockyBlocks, overlay: Identifier) {
+    fun BlockStateModelGenerator.rockyBlocks(rocks: RockyBlocks, overlay: Identifier) {
         this.cubeAllWithTintedOverlay(rocks.dirt, Blocks.DIRT, overlay)
         this.grassWithOverlay(rocks.grass, Blocks.GRASS_BLOCK, overlay)
         this.cubeSnowableColumnWithOverlay(rocks.podzol, Blocks.PODZOL, overlay)

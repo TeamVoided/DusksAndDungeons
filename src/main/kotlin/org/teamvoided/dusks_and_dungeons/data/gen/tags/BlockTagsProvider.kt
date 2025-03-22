@@ -12,7 +12,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
@@ -478,7 +477,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     }
 
     private fun overlayTags() {
-        DnDOverlayBlocks.OVERLAYS.forEach {
+        DnDBlocks.OVERLAYS.forEach {
             getOrCreateTagBuilder(BlockTags.MUSHROOM_GROW_BLOCK).add(it.podzol, it.mycelium)
             getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(it.gravel)
             getOrCreateTagBuilder(BlockTags.NETHER_CARVER_REPLACEABLES).add(it.soulSand, it.soulSoil)

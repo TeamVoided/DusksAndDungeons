@@ -11,7 +11,6 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
@@ -145,7 +144,7 @@ object DnDTabs {
     )
     val OVERLAY_BLOCKS = register(
         "overlay_blocks", FabricItemGroup.builder()
-            .icon(DnDOverlayBlocks.ROCKY_BLOCKS.grass).translation("itemGroup.$MODID.overlay_blocks")
+            .icon(DnDBlocks.ROCKY_BLOCKS.grass).translation("itemGroup.$MODID.overlay_blocks")
             .entries { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
     )
 

@@ -4,7 +4,6 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 
 object DnDItemLists {
@@ -234,5 +233,5 @@ object DnDItemLists {
         DnDWoodBlocks.CASCADE_LEAF_PILE,
         DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE,
     )
-    val overlayBlocks = DnDOverlayBlocks.OVERLAYS.flatMap { it.list }
+    val overlayBlocks = DnDBlocks.OVERLAYS.flatMap { it.list }
 }

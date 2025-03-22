@@ -18,8 +18,8 @@ import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moon
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternWithSpiralBlock
+import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
@@ -37,8 +37,12 @@ import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set
 object DnDBlocks {
     val BLOCKS = mutableSetOf<Block>()
     val BLOCK_ITEMS = mutableMapOf<String, Item>()
+
+    // Collections
     val SETS = mutableSetOf<AbstractBlockSet>()
     val COLOR_CONSORTIUM = mutableSetOf<ColorConsortium<*>>()
+    val OVERLAYS = mutableSetOf<RockyBlocks>()
+
 
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
@@ -273,6 +277,14 @@ object DnDBlocks {
     )
     // endregion
 
+    // region  🌿 🌿 🌿 🌿 🌿 🌿  --- Grass Is Greener Here ---  🌿 🌿 🌿 🌿 🌿
+
+    val ROCKY_BLOCKS = register(RockyBlocks("rocks", "rocky", COBBLESTONE)).rocky()
+    val SLATE_BLOCKS = register(RockyBlocks("slate", "slated", COBBLED_DEEPSLATE)).rocky()
+    val BLACKSTONE_BLOCKS = register(RockyBlocks("blackstone", "blackstoned", BLACKSTONE)).rocky()
+    // endregion
+
+
     // region ☢ Experimental ☢
     val PAINTED_ROSE = register("painted_rose", PaintedRoseBlock(Set.PAINTED_ROSE).cutout())
         .tellWitnessesThatIWasMurdered()
@@ -393,7 +405,10 @@ object DnDBlocks {
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
 
-        DnDOverlayBlocks.init()
+        OVERLAYS.forEach {
+            it.grass.grass()
+            it.init()
+        }
         DnDWoodBlocks.init()
     }
 

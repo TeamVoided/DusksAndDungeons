@@ -15,7 +15,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDOverlayBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 
 fun RecipeJsonFactory.criterion(item: ItemConvertible): RecipeJsonFactory =
@@ -449,7 +449,7 @@ fun RecipeExporter.createPiles(output: ItemConvertible, input: ItemConvertible) 
 }
 
 fun RecipeExporter.cobbled() {
-    DnDOverlayBlocks.OVERLAYS.forEach {
+    DnDBlocks.OVERLAYS.forEach {
         val overlay = it.block
         this.createDiagonalRecipe(it.dirt, Blocks.DIRT, overlay)
         this.createDiagonalRecipe(it.grass, Blocks.GRASS_BLOCK, overlay)
