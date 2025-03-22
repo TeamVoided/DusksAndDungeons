@@ -1,5 +1,5 @@
 
-package org.teamvoided.voidlib.consortium.block
+package org.teamvoided.voidlib.consortium.block.color
 
 import net.minecraft.block.Blocks
 import net.minecraft.block.Blocks.*

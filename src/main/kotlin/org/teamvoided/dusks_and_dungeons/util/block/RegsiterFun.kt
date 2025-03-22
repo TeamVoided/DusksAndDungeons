@@ -11,13 +11,14 @@ import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.OVERLAYS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.WOODEN_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.register
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.registerNoItem
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
-import org.teamvoided.voidlib.consortium.block.ColorConsortium
-import org.teamvoided.voidlib.consortium.block.FullColorCollections
-import org.teamvoided.voidlib.consortium.block.FullColorConsortium
+import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
+import org.teamvoided.voidlib.consortium.block.color.FullColorCollections
+import org.teamvoided.voidlib.consortium.block.color.FullColorConsortium
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
@@ -85,6 +86,11 @@ fun <T, C> registerNoItem(prefix: String, name: String, provider: FullColorColle
 // region Block Sets
 fun <T : AbstractBlockSet> register(set: T): T {
     SETS.add(set)
+    set.register(::register)
+    return set
+}
+fun <T : AbstractBlockSet> registerWooden(set: T): T {
+    WOODEN_SET.add(set)
     set.register(::register)
     return set
 }

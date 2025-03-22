@@ -1,8 +1,9 @@
 @file:Suppress("unused")
 
-package org.teamvoided.voidlib.consortium.block
+package org.teamvoided.voidlib.consortium.block.color
 
 import net.minecraft.block.Block
+import org.teamvoided.voidlib.consortium.block.BlockCollection
 import java.util.function.BiConsumer
 
 typealias NameCreator = (prefix: String, color: String) -> String
