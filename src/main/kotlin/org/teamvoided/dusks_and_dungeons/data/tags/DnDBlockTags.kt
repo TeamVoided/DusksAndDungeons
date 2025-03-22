@@ -12,13 +12,21 @@ object DnDBlockTags {
     val FLAMMABLE_PLANKS = create("flammable/planks")
     val FLAMMABLE_LOGS = create("flammable/logs")
     val FLAMMABLE_LEAVES = create("flammable/leaves")
-    val WOOD_STAIRS = create("wood_stairs")
-    val WOOD_STAIRS_THAT_BURN = create("wood_stairs_that_burn")
-    val WOOD_SLABS = create("wood_slabs")
-    val WOOD_SLABS_THAT_BURN = create("wood_slabs_that_burn")
+
+    // Wood Block Set
     @JvmField
     val WOODEN_WALLS = create("wooden_walls")
     val WOODEN_WALLS_THAT_BURN = create("wooden_walls_that_burn")
+
+    val WOOD_STAIRS = create("wood_stairs")
+    val WOOD_SLABS = create("wood_slabs")
+    val WOOD_WALLS = create("wood_walls")
+
+    val WOOD_STAIRS_THAT_BURN = create("wood_stairs_that_burn")
+    val WOOD_WALLS_THAT_BURN = create("wood_walls_that_burn")
+    val WOOD_SLABS_THAT_BURN = create("wood_slabs_that_burn")
+
+    // Other stuff
     val LOG_PILES = create("log_piles")
     val LOG_PILES_THAT_BURN = create("log_piles_that_burn")
     val LEAF_PILES = create("leaf_piles")

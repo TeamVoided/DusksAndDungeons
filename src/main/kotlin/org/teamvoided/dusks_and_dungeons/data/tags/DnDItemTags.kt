@@ -8,6 +8,18 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 object DnDItemTags {
     val ITEM_TAGS = mutableSetOf<TagKey<Item>>()
 
+    // wood
+    val WOODEN_WALLS = create("wooden_walls")
+    val WOODEN_WALLS_THAT_BURN = create("wooden_walls_that_burn")
+
+    val WOOD_STAIRS = create("wood_stairs")
+    val WOOD_SLABS = create("wood_slabs")
+    val WOOD_WALLS = create("wood_walls")
+
+    val WOOD_STAIRS_THAT_BURN = create("wood_stairs_that_burn")
+    val WOOD_SLABS_THAT_BURN = create("wood_slabs_that_burn")
+    val WOOD_WALLS_THAT_BURN = create("wood_walls_that_burn")
+
     val CASCADE_LOGS = create("cascade_logs")
     val LEAF_PILES = create("leaf_piles")
     val LOG_PILES = create("log_piles")

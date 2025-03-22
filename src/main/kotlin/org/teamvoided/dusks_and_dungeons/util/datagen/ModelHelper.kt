@@ -1330,25 +1330,27 @@ fun BlockStateModelGenerator.iceStairs(
 
 //shamelessley stolen from voidUtils :)
 fun BlockStateModelGenerator.stairs(block: Block) =
-    stairs(block, block, block, block, block)
+    stairs(block, block, block, block)
 
 fun BlockStateModelGenerator.stairs(block: Block, texture: Block) =
-    stairs(block, texture, texture, texture, texture)
+    stairs(block, texture, texture, texture)
 
-fun BlockStateModelGenerator.stairs(block: Block, parent: Block, bottom: Block, side: Block, top: Block) =
-    stairs(block, parent, bottom.model(), side.model(), top.model())
+fun BlockStateModelGenerator.stairs(block: Block, texture: Block, suffix: String) =
+    stairs(block, texture.model(suffix), texture.model(suffix), texture.model(suffix))
+
+fun BlockStateModelGenerator.stairs(block: Block, bottom: Block, side: Block, top: Block) =
+    stairs(block, bottom.model(), side.model(), top.model())
 
 fun BlockStateModelGenerator.stairs(block: Block, ends: Identifier, side: Identifier) =
-    stairs(block, block, ends, side, ends)
+    stairs(block, ends, side, ends)
 
 fun BlockStateModelGenerator.stairs(
     block: Block,
-    parent: Block,
     bottom: Identifier,
     side: Identifier,
     top: Identifier,
 ) {
-    val texture: Texture = Texture.texture(parent)
+    val texture: Texture = Texture()
         .put(BOTTOM, bottom)
         .put(SIDE, side)
         .put(TOP, top)

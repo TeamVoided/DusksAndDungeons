@@ -15,6 +15,8 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
+import org.teamvoided.dusks_and_dungeons.util.datagen.createWoodTags
+import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.devin.extensions.tag.add
 import org.teamvoided.voidlib.devin.extensions.tag.createColorTags
 import org.teamvoided.voidlib.devin.extensions.tag.createSetTags
@@ -23,10 +25,12 @@ import java.util.concurrent.CompletableFuture
 @Suppress("LongMethod")
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
+    val excludeWood: List<AbstractBlockSet> = listOf(DnDWoodBlocks.CRIMSON_HYPHAE, DnDWoodBlocks.WARPED_HYPHAE)
     override fun configure(arg: HolderLookup.Provider) {
-        SETS.forEach { it.createSetTags(::getOrCreateTagBuilder) }
+        SETS.filterNot(WOOD_SETS::contains).forEach { it.createSetTags(::getOrCreateTagBuilder) }
         COLOR_CONSORTIUM.forEach { it.createColorTags(::getOrCreateTagBuilder) }
         duskTags()
+        woodTags()
         vanillaTags()
         conventionTags()
 
@@ -61,7 +65,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDWoodBlocks.HOLLOW_STRIPPED_CASCADE_LOG)
         getOrCreateTagBuilder(DnDBlockTags.CASCADE_LOGS)
             .add(DnDWoodBlocks.CASCADE_LOG)
-            .add(DnDWoodBlocks.CASCADE_WOOD)
+            .add(DnDWoodBlocks.CASCADE_WOOD.parent)
             .add(DnDWoodBlocks.STRIPPED_CASCADE_LOG)
             .add(DnDWoodBlocks.STRIPPED_CASCADE_WOOD)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_PLANKS)
@@ -74,48 +78,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_LEAVES)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
             .add(FLAMMABLE_LEAVES)
-        getOrCreateTagBuilder(DnDBlockTags.WOOD_STAIRS)
-            .forceAddTag(DnDBlockTags.WOOD_STAIRS_THAT_BURN)
-            .add(DnDWoodBlocks.CRIMSON_HYPHAE_STAIRS)
-            .add(DnDWoodBlocks.WARPED_HYPHAE_STAIRS)
-        getOrCreateTagBuilder(DnDBlockTags.WOOD_STAIRS_THAT_BURN)
-            .add(DnDWoodBlocks.OAK_WOOD_STAIRS)
-            .add(DnDWoodBlocks.SPRUCE_WOOD_STAIRS)
-            .add(DnDWoodBlocks.BIRCH_WOOD_STAIRS)
-            .add(DnDWoodBlocks.JUNGLE_WOOD_STAIRS)
-            .add(DnDWoodBlocks.ACACIA_WOOD_STAIRS)
-            .add(DnDWoodBlocks.DARK_OAK_WOOD_STAIRS)
-            .add(DnDWoodBlocks.MANGROVE_WOOD_STAIRS)
-            .add(DnDWoodBlocks.CHERRY_WOOD_STAIRS)
-            .add(DnDWoodBlocks.CASCADE_WOOD_STAIRS)
-        getOrCreateTagBuilder(DnDBlockTags.WOOD_SLABS)
-            .forceAddTag(DnDBlockTags.WOOD_SLABS_THAT_BURN)
-            .add(DnDWoodBlocks.CRIMSON_HYPHAE_SLAB)
-            .add(DnDWoodBlocks.WARPED_HYPHAE_SLAB)
-        getOrCreateTagBuilder(DnDBlockTags.WOOD_SLABS_THAT_BURN)
-            .add(DnDWoodBlocks.OAK_WOOD_SLAB)
-            .add(DnDWoodBlocks.SPRUCE_WOOD_SLAB)
-            .add(DnDWoodBlocks.BIRCH_WOOD_SLAB)
-            .add(DnDWoodBlocks.JUNGLE_WOOD_SLAB)
-            .add(DnDWoodBlocks.ACACIA_WOOD_SLAB)
-            .add(DnDWoodBlocks.DARK_OAK_WOOD_SLAB)
-            .add(DnDWoodBlocks.MANGROVE_WOOD_SLAB)
-            .add(DnDWoodBlocks.CHERRY_WOOD_SLAB)
-            .add(DnDWoodBlocks.CASCADE_WOOD_SLAB)
-        getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS)
-            .forceAddTag(DnDBlockTags.WOODEN_WALLS_THAT_BURN)
-            .add(DnDWoodBlocks.CRIMSON_HYPHAE_WALL)
-            .add(DnDWoodBlocks.WARPED_HYPHAE_WALL)
-        getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS_THAT_BURN)
-            .add(DnDWoodBlocks.OAK_WOOD_WALL)
-            .add(DnDWoodBlocks.SPRUCE_WOOD_WALL)
-            .add(DnDWoodBlocks.BIRCH_WOOD_WALL)
-            .add(DnDWoodBlocks.JUNGLE_WOOD_WALL)
-            .add(DnDWoodBlocks.ACACIA_WOOD_WALL)
-            .add(DnDWoodBlocks.DARK_OAK_WOOD_WALL)
-            .add(DnDWoodBlocks.MANGROVE_WOOD_WALL)
-            .add(DnDWoodBlocks.CHERRY_WOOD_WALL)
-            .add(DnDWoodBlocks.CASCADE_WOOD_WALL)
+
         getOrCreateTagBuilder(DnDBlockTags.LOG_PILES)
             .forceAddTag(DnDBlockTags.LOG_PILES_THAT_BURN)
             .add(DnDWoodBlocks.CRIMSON_STEM_PILE)
@@ -323,6 +286,32 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.GLOWING_PUMPKINS)
     }
 
+    private fun woodTags(){
+        WOOD_SETS.filterNot(excludeWood::contains).forEach { it.createWoodTags(::getOrCreateTagBuilder) }
+        getOrCreateTagBuilder(BlockTags.WALLS).forceAddTag(DnDBlockTags.WOODEN_WALLS)
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).forceAddTag(DnDBlockTags.WOODEN_WALLS)
+
+        getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS)
+            .forceAddTag(DnDBlockTags.WOODEN_WALLS_THAT_BURN)
+            .forceAddTag(DnDBlockTags.WOOD_WALLS)
+        getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS).forceAddTag(DnDBlockTags.WOOD_STAIRS)
+        getOrCreateTagBuilder(BlockTags.WOODEN_SLABS).forceAddTag(DnDBlockTags.WOOD_SLABS)
+
+
+        getOrCreateTagBuilder(DnDBlockTags.WOOD_STAIRS)
+            .forceAddTag(DnDBlockTags.WOOD_STAIRS_THAT_BURN)
+            .add(DnDWoodBlocks.CRIMSON_HYPHAE.stairs)
+            .add(DnDWoodBlocks.WARPED_HYPHAE.stairs)
+        getOrCreateTagBuilder(DnDBlockTags.WOOD_SLABS)
+            .forceAddTag(DnDBlockTags.WOOD_SLABS_THAT_BURN)
+            .add(DnDWoodBlocks.CRIMSON_HYPHAE.slab)
+            .add(DnDWoodBlocks.WARPED_HYPHAE.slab)
+        getOrCreateTagBuilder(DnDBlockTags.WOOD_WALLS)
+            .forceAddTag(DnDBlockTags.WOOD_WALLS_THAT_BURN)
+            .add(DnDWoodBlocks.CRIMSON_HYPHAE.wall)
+            .add(DnDWoodBlocks.WARPED_HYPHAE.wall)
+    }
+
     private fun vanillaTags() {
         vanillaBlockTypesTags()
         vanillaBlockTypeShapeTags()
@@ -431,17 +420,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDWoodBlocks.CASCADE_STAIRS)
         getOrCreateTagBuilder(BlockTags.WOODEN_SLABS)
             .add(DnDWoodBlocks.CASCADE_SLAB)
-            .add(DnDWoodBlocks.OAK_WOOD_SLAB)
-            .add(DnDWoodBlocks.SPRUCE_WOOD_SLAB)
-            .add(DnDWoodBlocks.BIRCH_WOOD_SLAB)
-            .add(DnDWoodBlocks.JUNGLE_WOOD_SLAB)
-            .add(DnDWoodBlocks.ACACIA_WOOD_SLAB)
-            .add(DnDWoodBlocks.DARK_OAK_WOOD_SLAB)
-            .add(DnDWoodBlocks.MANGROVE_WOOD_SLAB)
-            .add(DnDWoodBlocks.CHERRY_WOOD_SLAB)
-            .add(DnDWoodBlocks.CASCADE_WOOD_SLAB)
-            .add(DnDWoodBlocks.CRIMSON_HYPHAE_SLAB)
-            .add(DnDWoodBlocks.WARPED_HYPHAE_SLAB)
         getOrCreateTagBuilder(BlockTags.WOODEN_DOORS)
             .add(DnDWoodBlocks.CASCADE_DOOR)
             .add(DnDWoodBlocks.BLUE_DOOR)

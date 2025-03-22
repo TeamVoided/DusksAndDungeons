@@ -16,7 +16,8 @@ object WoodModels {
         )
         gen.registerLog(DnDWoodBlocks.CASCADE_LOG)
             .log(DnDWoodBlocks.CASCADE_LOG)
-            .wood(DnDWoodBlocks.CASCADE_WOOD)
+            .wood(DnDWoodBlocks.CASCADE_WOOD.parent)
+
         gen.registerLog(DnDWoodBlocks.STRIPPED_CASCADE_LOG)
             .log(DnDWoodBlocks.STRIPPED_CASCADE_LOG)
             .log(DnDWoodBlocks.STRIPPED_CASCADE_WOOD)
@@ -52,57 +53,26 @@ object WoodModels {
         )
         gen.registerSingleton(DnDWoodBlocks.GALLERY_MAPLE_LEAVES, TexturedModel.LEAVES)
 
-        gen.genPsudoFamily(
-            DnDWoodBlocks.OAK_WOOD_STAIRS, DnDWoodBlocks.OAK_WOOD_SLAB, DnDWoodBlocks.OAK_WOOD_WALL,
-            Blocks.OAK_LOG, Blocks.OAK_WOOD
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.SPRUCE_WOOD_STAIRS, DnDWoodBlocks.SPRUCE_WOOD_SLAB, DnDWoodBlocks.SPRUCE_WOOD_WALL,
-            Blocks.SPRUCE_LOG, Blocks.SPRUCE_WOOD
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.BIRCH_WOOD_STAIRS, DnDWoodBlocks.BIRCH_WOOD_SLAB, DnDWoodBlocks.BIRCH_WOOD_WALL,
-            Blocks.BIRCH_LOG, Blocks.BIRCH_WOOD
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.JUNGLE_WOOD_STAIRS, DnDWoodBlocks.JUNGLE_WOOD_SLAB, DnDWoodBlocks.JUNGLE_WOOD_WALL,
-            Blocks.JUNGLE_LOG, Blocks.JUNGLE_WOOD
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.ACACIA_WOOD_STAIRS, DnDWoodBlocks.ACACIA_WOOD_SLAB, DnDWoodBlocks.ACACIA_WOOD_WALL,
-            Blocks.ACACIA_LOG, Blocks.ACACIA_WOOD
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.DARK_OAK_WOOD_STAIRS, DnDWoodBlocks.DARK_OAK_WOOD_SLAB, DnDWoodBlocks.DARK_OAK_WOOD_WALL,
-            Blocks.DARK_OAK_LOG, Blocks.DARK_OAK_WOOD
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.MANGROVE_WOOD_STAIRS, DnDWoodBlocks.MANGROVE_WOOD_SLAB, DnDWoodBlocks.MANGROVE_WOOD_WALL,
-            Blocks.MANGROVE_LOG, Blocks.MANGROVE_WOOD
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.CHERRY_WOOD_STAIRS, DnDWoodBlocks.CHERRY_WOOD_SLAB, DnDWoodBlocks.CHERRY_WOOD_WALL,
-            Blocks.CHERRY_LOG, Blocks.CHERRY_WOOD
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.CASCADE_WOOD_STAIRS, DnDWoodBlocks.CASCADE_WOOD_SLAB, DnDWoodBlocks.CASCADE_WOOD_WALL,
-            DnDWoodBlocks.CASCADE_LOG, DnDWoodBlocks.CASCADE_WOOD
-        )
-        gen.genPsudoFamily(
+        gen.createWood(DnDWoodBlocks.OAK_WOOD, Blocks.OAK_LOG)
+        gen.createWood(DnDWoodBlocks.SPRUCE_WOOD, Blocks.SPRUCE_LOG)
+        gen.createWood(DnDWoodBlocks.BIRCH_WOOD, Blocks.BIRCH_LOG)
+        gen.createWood(DnDWoodBlocks.JUNGLE_WOOD, Blocks.JUNGLE_LOG)
+        gen.createWood(DnDWoodBlocks.ACACIA_WOOD, Blocks.ACACIA_LOG)
+        gen.createWood(DnDWoodBlocks.DARK_OAK_WOOD, Blocks.DARK_OAK_LOG)
+        gen.createWood(DnDWoodBlocks.MANGROVE_WOOD, Blocks.MANGROVE_LOG)
+        gen.createWood(DnDWoodBlocks.CHERRY_WOOD, Blocks.CHERRY_LOG)
+        gen.createWood(DnDWoodBlocks.CRIMSON_HYPHAE, Blocks.CRIMSON_STEM)
+        gen.createWood(DnDWoodBlocks.WARPED_HYPHAE, Blocks.WARPED_STEM)
+        gen.createWood(DnDWoodBlocks.CASCADE_WOOD, DnDWoodBlocks.CASCADE_LOG)
+
+        gen.genPsudoFamily( // delete this when done
             DnDWoodBlocks.GALLERY_MAPLE_WOOD_STAIRS,
             DnDWoodBlocks.GALLERY_MAPLE_WOOD_SLAB,
             DnDWoodBlocks.GALLERY_MAPLE_WOOD_WALL,
             DnDWoodBlocks.GALLERY_MAPLE_LOG,
             DnDWoodBlocks.GALLERY_MAPLE_WOOD
         )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.CRIMSON_HYPHAE_STAIRS, DnDWoodBlocks.CRIMSON_HYPHAE_SLAB, DnDWoodBlocks.CRIMSON_HYPHAE_WALL,
-            Blocks.CRIMSON_STEM, Blocks.CRIMSON_HYPHAE
-        )
-        gen.genPsudoFamily(
-            DnDWoodBlocks.WARPED_HYPHAE_STAIRS, DnDWoodBlocks.WARPED_HYPHAE_SLAB, DnDWoodBlocks.WARPED_HYPHAE_WALL,
-            Blocks.WARPED_STEM, Blocks.WARPED_HYPHAE
-        )
+
         DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->
             val log = DnDBlockLists.logsAndStrippedLogs[idx].first
             val strippedLog = DnDBlockLists.logsAndStrippedLogs[idx].second

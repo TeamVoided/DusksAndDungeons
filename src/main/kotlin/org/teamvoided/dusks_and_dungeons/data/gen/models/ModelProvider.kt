@@ -14,6 +14,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_BRICKS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.dusks_and_dungeons.util.block.WOOD_SETS
 import org.teamvoided.dusks_and_dungeons.util.datagen.iceStairs
 import org.teamvoided.dusks_and_dungeons.util.datagen.registerTallCrystal
 import org.teamvoided.dusks_and_dungeons.util.datagen.slab
@@ -24,38 +25,15 @@ import java.util.*
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private val ALL_KRY: TextureKey = TextureKey.of("all")
-    val excludeModels = listOf(
+    val excludeModels = WOOD_SETS + listOf(
         ICE_SET, ICE_BRICKS,
         DnDBlocks.OVERGROWN_POLISHED_STONE,
         DnDBlocks.OVERGROWN_COBBLESTONE,
-        DnDBlocks.OVERGROWN_STONE_BRICKS
+        DnDBlocks.OVERGROWN_STONE_BRICKS,
     )
 
 
-//    var woodStates =
-//        BlockStateModelGenerator.StateFactory { block, identifier, texture, biConsumer ->
-//            println("45642")
-////            val model = Models.CUBE_COLUMN.create(block, texture, biConsumer)
-//            val model1 = TexturedModel.END_FOR_TOP_CUBE_COLUMN.create(block, biConsumer)
-//            val model2 = TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL.create(block, biConsumer)
-//            BlockStateModelGenerator.createAxisRotatedBlockState(block, model1, model2)
-//        }
-
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
-//        gen.stoneStateFactories = mapOf(
-//            DnDBlocks.CASCADE_WOOD to woodStates,
-//            DnDBlocks.GALLERY_MAPLE_WOOD to woodStates
-//        )
-//        gen.sandstoneModels = mapOf(
-//            DnDBlocks.CASCADE_WOOD to TexturedModel.SIDE_END_WALL.get(DnDBlocks.CASCADE_WOOD),
-//            DnDBlocks.GALLERY_MAPLE_WOOD to TexturedModel.SIDE_END_WALL.get(DnDBlocks.GALLERY_MAPLE_WOOD)
-
-//            DnDBlocks.MIXED_NETHER_BRICKS to TexturedModel.SIDE_TOP_BOTTOM_WALL[DnDBlocks.MIXED_NETHER_BRICKS].texture { texture: Texture ->
-//                texture.put(TextureKey.TOP, Texture.getId(Blocks.NETHER_BRICKS))
-//                texture.put(TextureKey.BOTTOM, Texture.getId(Blocks.RED_NETHER_BRICKS))
-//                texture.put(TextureKey.SIDE, Texture.getId(DnDBlocks.MIXED_NETHER_BRICKS))
-//            }
-//        )
 //        gen.registerItemModel(Items.AIR) //fer debug porpoises
         DnDFamilies.modelsBlockFamilies.forEach {
             gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
@@ -91,7 +69,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerSimpleCubeAll(DnDBlocks.BRITTLE_LAVASPONGE)
         gen.registerSimpleCubeAll(DnDBlocks.GLOWING_LAVASPONGE)
         gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)
-
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),

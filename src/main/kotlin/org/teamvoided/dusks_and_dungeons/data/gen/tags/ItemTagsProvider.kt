@@ -27,6 +27,7 @@ class ItemTagsProvider(
     FabricTagProvider.ItemTagProvider(output, registriesFuture, blockTags) {
     override fun configure(arg: HolderLookup.Provider) {
         duskTags()
+        woodTags()
         vanillaTags()
         conventionTags()
     }
@@ -85,6 +86,22 @@ class ItemTagsProvider(
             .add(DnDItems.PALE_PUMPKIN_SEEDS)
             .add(DnDItems.MOSSKIN_PUMPKIN_SEEDS)
             .add(DnDItems.GLOOM_PUMPKIN_SEEDS)
+    }
+
+    private fun woodTags(){
+        getOrCreateTagBuilder(ItemTags.WOODEN_STAIRS).forceAddTag(DnDItemTags.WOOD_STAIRS)
+        getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).forceAddTag(DnDItemTags.WOOD_SLABS)
+        getOrCreateTagBuilder(ItemTags.WALLS).forceAddTag(DnDItemTags.WOODEN_WALLS)
+        copy(DnDBlockTags.WOODEN_WALLS, DnDItemTags.WOODEN_WALLS)
+        copy(DnDBlockTags.WOODEN_WALLS_THAT_BURN, DnDItemTags.WOODEN_WALLS_THAT_BURN)
+
+        copy(DnDBlockTags.WOOD_STAIRS, DnDItemTags.WOOD_STAIRS)
+        copy(DnDBlockTags.WOOD_SLABS, DnDItemTags.WOOD_SLABS)
+        copy(DnDBlockTags.WOOD_WALLS, DnDItemTags.WOOD_WALLS)
+
+        copy(DnDBlockTags.WOOD_STAIRS_THAT_BURN, DnDItemTags.WOOD_STAIRS_THAT_BURN)
+        copy(DnDBlockTags.WOOD_SLABS_THAT_BURN, DnDItemTags.WOOD_SLABS_THAT_BURN)
+        copy(DnDBlockTags.WOOD_WALLS_THAT_BURN, DnDItemTags.WOOD_WALLS_THAT_BURN)
     }
 
     fun vanillaTags() {

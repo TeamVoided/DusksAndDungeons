@@ -11,7 +11,6 @@ import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.OVERLAYS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.WOODEN_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.register
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.registerNoItem
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -89,11 +88,6 @@ fun <T : AbstractBlockSet> register(set: T): T {
     set.register(::register)
     return set
 }
-fun <T : AbstractBlockSet> registerWooden(set: T): T {
-    WOODEN_SET.add(set)
-    set.register(::register)
-    return set
-}
 
 fun registerSet(name: String, settings: Settings) =
     register(createBlockSet(name, settings).build())
@@ -103,6 +97,9 @@ fun registerSet(name: String, settings: Settings, sfx: String) =
 
 fun registerHeadlessSet(name: String, parent: Block) =
     register(createHeadlessSet(name, parent).buildHeadless())
+
+fun registerWoodenSet(name: String, parent: Block) =
+    register(createHeadlessSet(name, parent).noStoneCutting().buildHeadless()).woodSet()
 // endregion
 
 // Gravestones

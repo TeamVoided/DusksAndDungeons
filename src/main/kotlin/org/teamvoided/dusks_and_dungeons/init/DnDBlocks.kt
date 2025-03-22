@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
 import net.minecraft.block.AbstractBlock.Settings
@@ -20,11 +21,14 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternWithSpiralBlock
 import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks.CASCADE_LOG
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks.CASCADE_WOOD
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks.STRIPPED_CASCADE_LOG
+import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks.STRIPPED_CASCADE_WOOD
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
-import org.teamvoided.voidlib.consortium.block.ColorConsortium
-import org.teamvoided.voidlib.consortium.block.VanillaColorCollections.CANDLES
+import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
+import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections.CANDLES
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
@@ -44,8 +48,11 @@ object DnDBlocks {
     val OVERLAYS = mutableSetOf<RockyBlocks>()
 
 
-
     val EVIL_BLOCKS = mutableSetOf<Block>()
+
+    init { //  Pre Block Init
+        DnDWoodTypes.init()
+    }
 
 
     // region 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 --- Flora --- 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄
@@ -400,16 +407,18 @@ object DnDBlocks {
     val GAY_BLOCK = registerSet("gay_block", copy(BEACON))
 
     fun init() {
-        DnDWoodTypes.init()
+        // Striping
+        StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
+        StrippableBlockRegistry.register(CASCADE_WOOD.parent, STRIPPED_CASCADE_WOOD)
+        // Flammability
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
-
+        // Misc
         OVERLAYS.forEach {
             it.grass.grass()
             it.init()
         }
-        DnDWoodBlocks.init()
     }
 
     fun register(id: String, block: Block): Block {

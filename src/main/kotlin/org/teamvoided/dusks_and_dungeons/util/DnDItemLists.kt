@@ -121,61 +121,18 @@ object DnDItemLists {
         DnDItems.BLACKSTONE_SHOVEL,
         DnDItems.BLACKSTONE_HOE
     )
-    val oakWoodStuff = listOf(
-        DnDWoodBlocks.OAK_WOOD_STAIRS,
-        DnDWoodBlocks.OAK_WOOD_SLAB,
-        DnDWoodBlocks.OAK_WOOD_WALL
-    )
-    val spruceWoodStuff = listOf(
-        DnDWoodBlocks.SPRUCE_WOOD_STAIRS,
-        DnDWoodBlocks.SPRUCE_WOOD_SLAB,
-        DnDWoodBlocks.SPRUCE_WOOD_WALL
-    )
-    val birchWoodStuff = listOf(
-        DnDWoodBlocks.BIRCH_WOOD_STAIRS,
-        DnDWoodBlocks.BIRCH_WOOD_SLAB,
-        DnDWoodBlocks.BIRCH_WOOD_WALL
-    )
-    val jungleWoodStuff = listOf(
-        DnDWoodBlocks.JUNGLE_WOOD_STAIRS,
-        DnDWoodBlocks.JUNGLE_WOOD_SLAB,
-        DnDWoodBlocks.JUNGLE_WOOD_WALL
-    )
-    val acaciaWoodStuff = listOf(
-        DnDWoodBlocks.ACACIA_WOOD_STAIRS,
-        DnDWoodBlocks.ACACIA_WOOD_SLAB,
-        DnDWoodBlocks.ACACIA_WOOD_WALL
-    )
-    val darkOakWoodStuff = listOf(
-        DnDWoodBlocks.DARK_OAK_WOOD_STAIRS,
-        DnDWoodBlocks.DARK_OAK_WOOD_SLAB,
-        DnDWoodBlocks.DARK_OAK_WOOD_WALL
-    )
-    val mangroveWoodStuff = listOf(
-        DnDWoodBlocks.MANGROVE_WOOD_STAIRS,
-        DnDWoodBlocks.MANGROVE_WOOD_SLAB,
-        DnDWoodBlocks.MANGROVE_WOOD_WALL
-    )
-    val cherryWoodStuff = listOf(
-        DnDWoodBlocks.CHERRY_WOOD_STAIRS,
-        DnDWoodBlocks.CHERRY_WOOD_SLAB,
-        DnDWoodBlocks.CHERRY_WOOD_WALL
-    )
-    val cascadeWoodStuff = listOf(
-        DnDWoodBlocks.CASCADE_WOOD_STAIRS,
-        DnDWoodBlocks.CASCADE_WOOD_SLAB,
-        DnDWoodBlocks.CASCADE_WOOD_WALL
-    )
-    val crimsonHyphaeStuff = listOf(
-        DnDWoodBlocks.CRIMSON_HYPHAE_STAIRS,
-        DnDWoodBlocks.CRIMSON_HYPHAE_SLAB,
-        DnDWoodBlocks.CRIMSON_HYPHAE_WALL
-    )
-    val warpedHyphaeStuff = listOf(
-        DnDWoodBlocks.WARPED_HYPHAE_STAIRS,
-        DnDWoodBlocks.WARPED_HYPHAE_SLAB,
-        DnDWoodBlocks.WARPED_HYPHAE_WALL,
-    )
+    val oakWoodStuff = DnDWoodBlocks.OAK_WOOD.headless()
+    val spruceWoodStuff = DnDWoodBlocks.SPRUCE_WOOD.headless()
+    val birchWoodStuff = DnDWoodBlocks.BIRCH_WOOD.headless()
+    val jungleWoodStuff = DnDWoodBlocks.JUNGLE_WOOD.headless()
+    val acaciaWoodStuff = DnDWoodBlocks.ACACIA_WOOD.headless()
+    val darkOakWoodStuff = DnDWoodBlocks.DARK_OAK_WOOD.headless()
+    val mangroveWoodStuff = DnDWoodBlocks.MANGROVE_WOOD.headless()
+    val cherryWoodStuff = DnDWoodBlocks.CHERRY_WOOD.headless()
+    val cascadeWoodStuff = DnDWoodBlocks.CASCADE_WOOD.headless()
+    val crimsonHyphaeStuff = DnDWoodBlocks.CRIMSON_HYPHAE.headless()
+    val warpedHyphaeStuff = DnDWoodBlocks.WARPED_HYPHAE.headless()
+
     val woodLists = listOf(
         oakWoodStuff,
         spruceWoodStuff,

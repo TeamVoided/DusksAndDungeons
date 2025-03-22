@@ -13,3 +13,9 @@ fun BlockStateModelGenerator.createBlockSet(set: AbstractBlockSet) {
     this.slab(set.slab, set.parent)
     this.wall(set.wall, set.parent)
 }
+
+fun BlockStateModelGenerator.createHeadlessBlockSet(set: AbstractBlockSet) {
+    this.stairs(set.stairs, set.parent)
+    this.slab(set.slab, set.parent)
+    this.wall(set.wall, set.parent)
+}

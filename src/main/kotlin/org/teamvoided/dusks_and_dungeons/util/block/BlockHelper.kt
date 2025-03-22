@@ -120,6 +120,10 @@ fun AbstractBlockSet.hoe(): AbstractBlockSet = HOEABLE.addDevSet(this)
 
 fun AbstractBlockSet.overgrown(): AbstractBlockSet = this.cutout().grass().pickaxe()
 
+// Custom Collections
+val WOOD_SETS = mutableSetOf<AbstractBlockSet>()
+fun AbstractBlockSet.woodSet(): AbstractBlockSet = WOOD_SETS.addDevSets(this)
+
 // Block Helpers
 fun <T : Any> MutableCollection<T>.addDev(element: T): T {
     if (isDev()) this.add(element)
@@ -242,6 +246,11 @@ fun MutableCollection<Block>.addSet(set: AbstractBlockSet): AbstractBlockSet {
 // Use for populating tags when running data-gen in dev mode
 fun MutableCollection<Block>.addDevSet(set: AbstractBlockSet): AbstractBlockSet {
     if (isDev()) this.addAll(set.list)
+    return set
+}
+
+fun MutableCollection<AbstractBlockSet>.addDevSets(set: AbstractBlockSet): AbstractBlockSet {
+    if (isDev()) this.add(set)
     return set
 }
 

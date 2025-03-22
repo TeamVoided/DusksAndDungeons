@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_and_dungeons.init.blocks
 
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
@@ -20,43 +19,28 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.registerNoItem
 import org.teamvoided.dusks_and_dungeons.init.DnDParticles
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
+import org.teamvoided.voidlib.consortium.block.set.createBlockSet
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set
+
 
 object DnDWoodBlocks {
     val CASCADE_SAPLING = register(
-        "cascade_sapling", ThreeWideTreeSaplingBlock(
-            SaplingGenerators.CASCADE, Settings.create()
-                .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly()
-                .sounds(BlockSoundGroup.CHERRY_SAPLING).pistonBehavior(PistonBehavior.DESTROY)
-        )
+        "cascade_sapling", ThreeWideTreeSaplingBlock(SaplingGenerators.CASCADE, Set.CASCADE_SAPLING)
     ).cutout()
-    val POTTED_CASCADE_SAPLING =
-        registerNoItem("potted_cascade_sapling", pottedVariant(CASCADE_SAPLING)).cutout()
+    val POTTED_CASCADE_SAPLING = registerNoItem("potted_cascade_sapling", pottedVariant(CASCADE_SAPLING)).cutout()
     val CASCADE_LEAVES = register(
-        "cascade_leaves", FallingLeavesBlock(
-            DnDParticles.CASCADE_LEAF_PARTICLE, Settings.create().strength(0.2f).ticksRandomly()
-                .nonOpaque().allowsSpawning(Blocks::allowOcelotsAndParrots).suffocates(Blocks::nonSolid)
-                .blockVision(Blocks::nonSolid)
-                .lavaIgnitable().pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
-                .sounds(BlockSoundGroup.AZALEA_LEAVES)
-                .mapColor(MapColor.RED)
-        ).leaves()
-    )
+        "cascade_leaves", FallingLeavesBlock(DnDParticles.CASCADE_LEAF_PARTICLE, Set.CASCADE_LEAVES)
+    ).leaves()
     val CASCADE_LEAF_PILE = register(
         "cascade_leaf_pile",
-        fallingLeafPile(DnDParticles.CASCADE_LEAF_PARTICLE, MapColor.RED, BlockSoundGroup.AZALEA_LEAVES).cutout()
-    )
+        fallingLeafPile(DnDParticles.CASCADE_LEAF_PARTICLE, MapColor.RED, BlockSoundGroup.AZALEA_LEAVES)
+    ).cutout()
     val CASCADE_LOG = register("cascade_log", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD))
+    val CASCADE_WOOD =
+        register(createBlockSet("cascade_wood", Set.CASCADE_WOOD).noStoneCutting().parent(::PillarBlock).build())
+            .woodSet()
 
-    val CASCADE_WOOD = register(
-        "cascade_wood", PillarBlock(
-            Settings.create().mapColor(MapColor.BROWN).instrument(NoteBlockInstrument.BASS).strength(2.0f)
-                .sounds(BlockSoundGroup.CHERRY_WOOD).lavaIgnitable()
-        )
-    )
-    val CASCADE_WOOD_STAIRS = register("cascade_wood_stairs", stairsOf(CASCADE_WOOD))
-    val CASCADE_WOOD_SLAB = register("cascade_wood_slab", slabOf(CASCADE_WOOD))
-    val CASCADE_WOOD_WALL = register("cascade_wood_wall", wallOf(CASCADE_WOOD))
-    val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD))
+    val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD.parent))
     val STRIPPED_CASCADE_LOG =
         register("stripped_cascade_log", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD))
     val STRIPPED_CASCADE_WOOD =
@@ -112,36 +96,16 @@ object DnDWoodBlocks {
     )
     val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", leafPile(MapColor.YELLOW).cutout())
 
-    val OAK_WOOD_STAIRS = register("oak_wood_stairs", stairsOf(Blocks.OAK_WOOD))
-    val OAK_WOOD_SLAB = register("oak_wood_slab", slabOf(Blocks.OAK_WOOD))
-    val OAK_WOOD_WALL = register("oak_wood_wall", wallOf(Blocks.OAK_WOOD))
-    val SPRUCE_WOOD_STAIRS = register("spruce_wood_stairs", stairsOf(Blocks.SPRUCE_WOOD))
-    val SPRUCE_WOOD_SLAB = register("spruce_wood_slab", slabOf(Blocks.SPRUCE_WOOD))
-    val SPRUCE_WOOD_WALL = register("spruce_wood_wall", wallOf(Blocks.SPRUCE_WOOD))
-    val BIRCH_WOOD_STAIRS = register("birch_wood_stairs", stairsOf(Blocks.BIRCH_WOOD))
-    val BIRCH_WOOD_SLAB = register("birch_wood_slab", slabOf(Blocks.BIRCH_WOOD))
-    val BIRCH_WOOD_WALL = register("birch_wood_wall", wallOf(Blocks.BIRCH_WOOD))
-    val JUNGLE_WOOD_STAIRS = register("jungle_wood_stairs", stairsOf(Blocks.JUNGLE_WOOD))
-    val JUNGLE_WOOD_SLAB = register("jungle_wood_slab", slabOf(Blocks.JUNGLE_WOOD))
-    val JUNGLE_WOOD_WALL = register("jungle_wood_wall", wallOf(Blocks.JUNGLE_WOOD))
-    val ACACIA_WOOD_STAIRS = register("acacia_wood_stairs", stairsOf(Blocks.ACACIA_WOOD))
-    val ACACIA_WOOD_SLAB = register("acacia_wood_slab", slabOf(Blocks.ACACIA_WOOD))
-    val ACACIA_WOOD_WALL = register("acacia_wood_wall", wallOf(Blocks.ACACIA_WOOD))
-    val DARK_OAK_WOOD_STAIRS = register("dark_oak_wood_stairs", stairsOf(Blocks.DARK_OAK_WOOD))
-    val DARK_OAK_WOOD_SLAB = register("dark_oak_wood_slab", slabOf(Blocks.DARK_OAK_WOOD))
-    val DARK_OAK_WOOD_WALL = register("dark_oak_wood_wall", wallOf(Blocks.DARK_OAK_WOOD))
-    val MANGROVE_WOOD_STAIRS = register("mangrove_wood_stairs", stairsOf(Blocks.MANGROVE_WOOD))
-    val MANGROVE_WOOD_SLAB = register("mangrove_wood_slab", slabOf(Blocks.MANGROVE_WOOD))
-    val MANGROVE_WOOD_WALL = register("mangrove_wood_wall", wallOf(Blocks.MANGROVE_WOOD))
-    val CHERRY_WOOD_STAIRS = register("cherry_wood_stairs", stairsOf(Blocks.CHERRY_WOOD))
-    val CHERRY_WOOD_SLAB = register("cherry_wood_slab", slabOf(Blocks.CHERRY_WOOD))
-    val CHERRY_WOOD_WALL = register("cherry_wood_wall", wallOf(Blocks.CHERRY_WOOD))
-    val CRIMSON_HYPHAE_STAIRS = register("crimson_hyphae_stairs", stairsOf(Blocks.CRIMSON_HYPHAE))
-    val CRIMSON_HYPHAE_SLAB = register("crimson_hyphae_slab", slabOf(Blocks.CRIMSON_HYPHAE))
-    val CRIMSON_HYPHAE_WALL = register("crimson_hyphae_wall", wallOf(Blocks.CRIMSON_HYPHAE))
-    val WARPED_HYPHAE_STAIRS = register("warped_hyphae_stairs", stairsOf(Blocks.WARPED_HYPHAE))
-    val WARPED_HYPHAE_SLAB = register("warped_hyphae_slab", slabOf(Blocks.WARPED_HYPHAE))
-    val WARPED_HYPHAE_WALL = register("warped_hyphae_wall", wallOf(Blocks.WARPED_HYPHAE))
+    val OAK_WOOD = registerWoodenSet("oak_wood", Blocks.OAK_WOOD)
+    val SPRUCE_WOOD = registerWoodenSet("spruce_wood", Blocks.SPRUCE_WOOD)
+    val BIRCH_WOOD = registerWoodenSet("birch_wood", Blocks.BIRCH_WOOD)
+    val JUNGLE_WOOD = registerWoodenSet("jungle_wood", Blocks.JUNGLE_WOOD)
+    val ACACIA_WOOD = registerWoodenSet("acacia_wood", Blocks.ACACIA_WOOD)
+    val DARK_OAK_WOOD = registerWoodenSet("dark_oak_wood", Blocks.DARK_OAK_WOOD)
+    val MANGROVE_WOOD = registerWoodenSet("mangrove_wood", Blocks.MANGROVE_WOOD)
+    val CHERRY_WOOD = registerWoodenSet("cherry_wood", Blocks.CHERRY_WOOD)
+    val CRIMSON_HYPHAE = registerWoodenSet("crimson_hyphae", Blocks.CRIMSON_HYPHAE)
+    val WARPED_HYPHAE = registerWoodenSet("warped_hyphae", Blocks.WARPED_HYPHAE)
 
     //logs are done differently and crash when varianted, but the woods have the exact same properties, just use them
     val OAK_LOG_PILE = register("oak_log_pile", logPile(Blocks.OAK_WOOD))
@@ -177,25 +141,6 @@ object DnDWoodBlocks {
     val HOLLOW_CASCADE_LOG = register("hollow_cascade_log", hollowLog(CASCADE_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_CASCADE_LOG = register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_LOG))
         .tellWitnessesThatIWasMurdered()
-    //    val PINE_PLANKS = register(
-//        "pine_planks", Block(
-//            Settings.create()
-//                .mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
-//                .sounds(BlockSoundGroup.WOOD).lavaIgnitable()
-//        ).axe()
-//    )
-//    val PINE_STAIRS = register("pine_stairs", stairsOf(PINE_PLANKS).axe())
-//    val PINE_SLAB = register("pine_slab", slabOf(PINE_PLANKS).axe())
-//    val PINE_FENCE = register("pine_fence", fenceOf(PINE_PLANKS))
-//    val PINE_FENCE_GATE = register(
-//        "pine_fence_gate",
-//        FenceGateBlock(
-//            DnDWoodTypes.PINE_WOOD_TYPE,
-//            Settings.create()
-//                .mapColor(PINE_PLANKS.defaultMapColor).instrument(NoteBlockInstrument.BASS)
-//                .strength(2.0f, 3.0f).solid()
-//        ).axe()
-//    )
 
     val GALLERY_MAPLE_SAPLING = register(
         "gallery_maple_sapling", ThreeWideTreeSaplingBlock(
@@ -398,9 +343,4 @@ object DnDWoodBlocks {
     val HOLLOW_STRIPPED_WARPED_STEM =
         register("hollow_stripped_warped_stem", hollowLog(Blocks.STRIPPED_WARPED_HYPHAE))
             .tellWitnessesThatIWasMurdered()
-
-    fun init() {
-        StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
-        StrippableBlockRegistry.register(CASCADE_WOOD, STRIPPED_CASCADE_WOOD)
-    }
 }
