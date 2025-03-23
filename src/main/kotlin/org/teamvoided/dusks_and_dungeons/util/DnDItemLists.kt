@@ -48,7 +48,6 @@ object DnDItemLists {
     val mossyPolishedStone = DnDBlocks.MOSSY_POLISHED_STONE.list
     val overgrownCobblestone = DnDBlocks.OVERGROWN_COBBLESTONE.list
     val overgrownStoneBricks = DnDBlocks.OVERGROWN_STONE_BRICKS.list
-    val snowyStoneBricks = DnDBlocks.SNOWY_STONE_BRICKS.list
     val ice = DnDBlocks.ICE_SET.list + DnDBlocks.PACKED_ICE_SET.list + DnDBlocks.BLUE_ICE_SET.list
 //            DnDBlocks.ICE_BRICKS.list + DnDBlocks.PACKED_ICE_BRICKS.list + DnDBlocks.BLUE_ICE_BRICKS.list
 

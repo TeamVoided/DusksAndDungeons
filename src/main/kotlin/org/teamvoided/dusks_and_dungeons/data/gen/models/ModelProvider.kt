@@ -10,7 +10,6 @@ import net.minecraft.util.Identifier
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_BRICKS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -26,7 +25,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private val ALL_KRY: TextureKey = TextureKey.of("all")
     val excludeModels = WOOD_SETS + listOf(
-        ICE_SET, ICE_BRICKS,
+        ICE_SET,
         DnDBlocks.OVERGROWN_POLISHED_STONE,
         DnDBlocks.OVERGROWN_COBBLESTONE,
         DnDBlocks.OVERGROWN_STONE_BRICKS,
@@ -50,11 +49,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.iceStairs(ICE_SET.stairs, Blocks.ICE)
         gen.slab(ICE_SET.slab, Blocks.ICE)
         gen.wall(ICE_SET.wall, Blocks.ICE)
-        gen.registerSimpleCubeAll(ICE_BRICKS.parent)
 
-        gen.iceStairs(ICE_BRICKS.stairs, ICE_BRICKS.parent)
-        gen.slab(ICE_BRICKS.slab, ICE_BRICKS.parent)
-        gen.wall(ICE_BRICKS.wall, ICE_BRICKS.parent)
 
         gen.registerAmethyst(DnDBlocks.MOONCORE)
         gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
@@ -65,10 +60,18 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("chest"), Blocks.OAK_PLANKS)
             .includeWithoutItem(DnDBlocks.CHEST_O_SOULS)
 
+
+        /* Future Content
+        gen.registerSimpleCubeAll(ICE_BRICKS.parent)
+
+        gen.iceStairs(ICE_BRICKS.stairs, ICE_BRICKS.parent)
+        gen.slab(ICE_BRICKS.slab, ICE_BRICKS.parent)
+        gen.wall(ICE_BRICKS.wall, ICE_BRICKS.parent)
+
         gen.registerSimpleCubeAll(DnDBlocks.MOLTEN_LAVASPONGE)
         gen.registerSimpleCubeAll(DnDBlocks.BRITTLE_LAVASPONGE)
         gen.registerSimpleCubeAll(DnDBlocks.GLOWING_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)
+        gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)*/
 
         /*.with(
             When.create().set(LeafPileBlock.PILE_LAYERS, 8),
