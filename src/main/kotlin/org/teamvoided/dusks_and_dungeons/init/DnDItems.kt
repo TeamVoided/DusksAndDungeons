@@ -134,6 +134,7 @@ object DnDItems {
     fun attributeSettings(comp: AttributeModifiersComponent): Settings = Settings().attributeModifiersComponent(comp)
     fun countSettings(count: Int): Settings = Settings().maxCount(count)
 
+    // TODO move to voidlib
     @JvmField
     val CUSTOM_STATS = listOf(id("base_block_range"), id("base_entity_range"))
 }

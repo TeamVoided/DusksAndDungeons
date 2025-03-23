@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock;
 
+// TODO add a void lib reg for this
 @Mixin({FireChargeItem.class, FlintAndSteelItem.class})
 public class LighterItemMixin {
 

@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags;
 
+
+// TODO move to Taglighting
 @Mixin(Block.class)
 public abstract class BlockMixin extends AbstractBlock implements ItemConvertible, FabricBlock {
 
