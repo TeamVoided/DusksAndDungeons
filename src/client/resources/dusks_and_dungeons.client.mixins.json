@@ -5,13 +5,10 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "BakedModelManagerMixin",
-    "BlockStateReaderMixin",
     "EntityRenderDispatcherMixin",
     "EntityRendererAccessor",
     "FoxEntityRendererMixin",
-    "HeldItemFeatureRendererMixin",
-    "ModelLoaderMixin"
+    "HeldItemFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
