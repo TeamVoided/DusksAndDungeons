@@ -14,8 +14,10 @@ object DnDConfiguredFeature {
     val FAIRY_RING_ORANGE = create("fairy_ring/orange")
     val FAIRY_RING_WILDFLOWER = create("fairy_ring/wildflower")
     val FAIRY_RING_COLD_WILDFLOWER = create("fairy_ring/cold_wildflower")
+
     @JvmField
     val FAIRY_RING_CRIMSON = create("fairy_ring/crimson")
+
     @JvmField
     val FAIRY_RING_WARPED = create("fairy_ring/warped")
 

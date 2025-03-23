@@ -13,12 +13,13 @@ import org.teamvoided.dusks_and_dungeons.util.datagen.registerHandheldItem
 import org.teamvoided.dusks_and_dungeons.util.datagen.registerMixedNetherBrickPillar
 
 object NetherModels {
-    fun netherModels(gen: BlockStateModelGenerator){
+    fun netherModels(gen: BlockStateModelGenerator) {
         DnDItemLists.blackstoneTools.forEach { gen.registerHandheldItem(it) }
 
         gen.registerCropWithParent(
             DnDBlocks.WARPED_WART,
-            DusksAndDungeons.id("block/parent/crop"), Properties.AGE_3, 0, 1, 1, 2)
+            DusksAndDungeons.id("block/parent/crop"), Properties.AGE_3, 0, 1, 1, 2
+        )
         gen.registerAxisRotated(
             DnDBlocks.NETHER_BRICK_PILLAR,
             TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL

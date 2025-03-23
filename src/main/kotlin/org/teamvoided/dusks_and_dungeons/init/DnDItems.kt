@@ -111,6 +111,7 @@ object DnDItems {
             )
         )
     )
+
     fun init() {
         LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
         SMALL_LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)

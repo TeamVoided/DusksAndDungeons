@@ -22,11 +22,14 @@ data class FrozenSpringConfig(
             RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<FrozenSpringConfig> ->
                 instance.group(
                     BlockState.CODEC.fieldOf("ice_block").forGetter { it.iceBlock },
-                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_replacement").forGetter { it.allowedReplacement },
-                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_placement").forGetter { it.allowedPlacement },
+                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_replacement")
+                        .forGetter { it.allowedReplacement },
+                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_placement")
+                        .forGetter { it.allowedPlacement },
                     Codec.intRange(1, 16).fieldOf("spread_range").forGetter { it.spreadRange },
                     Codec.intRange(1, 16).fieldOf("horizontal_range").orElse(1).forGetter { it.horizontalRange },
-                    Codec.intRange(0, 5).fieldOf("empty_faces_requirement").orElse(1).forGetter { it.emptyFacesRequirement },
+                    Codec.intRange(0, 5).fieldOf("empty_faces_requirement").orElse(1)
+                        .forGetter { it.emptyFacesRequirement },
                     Codec.BOOL.fieldOf("has_exposed_down_face").orElse(false).forGetter { it.hasExposedDownFace }
                 ).apply(instance, ::FrozenSpringConfig)
             }

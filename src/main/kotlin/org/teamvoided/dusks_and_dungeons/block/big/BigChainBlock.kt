@@ -18,6 +18,7 @@ class BigChainBlock(settings: Settings) : ChainBlock(settings) {
         Direction.Axis.X -> X_SHAPE
         else -> X_SHAPE
     }
+
     companion object {
         protected const val SHAPE_MIN = 4.5
         protected const val SHAPE_MAX = 11.5

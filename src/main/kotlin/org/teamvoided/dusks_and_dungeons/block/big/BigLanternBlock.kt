@@ -26,6 +26,7 @@ open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable 
             .with(HANGING, false)
             .with(WATERLOGGED, false)
     }
+
     public override fun getCodec(): MapCodec<BigLanternBlock> = CODEC
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
         val fluidState = ctx.world.getFluidState(ctx.blockPos)
@@ -57,8 +58,11 @@ open class BigLanternBlock(settings: Settings) : Block(settings), Waterloggable 
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
-    override fun getFluidState(state: BlockState): FluidState = if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
+    override fun getFluidState(state: BlockState): FluidState =
+        if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
+
     override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean = false
+
     companion object {
         val CODEC: MapCodec<BigLanternBlock> = createCodec(::BigLanternBlock)
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED

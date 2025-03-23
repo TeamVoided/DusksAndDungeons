@@ -549,7 +549,6 @@ fun BlockStateModelGenerator.registerTreeMushroom(block: Block, parentModel: Str
 }
 
 
-
 fun BlockStateModelGenerator.registerFlowerbed2(
     block: Block,
     useDefault: Boolean = true,

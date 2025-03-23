@@ -82,7 +82,7 @@ class ItemTagsProvider(
             .add(DnDItems.GLOOM_PUMPKIN_SEEDS)
     }
 
-    private fun woodTags(){
+    private fun woodTags() {
         getOrCreateTagBuilder(ItemTags.WOODEN_STAIRS).forceAddTag(DnDItemTags.WOOD_STAIRS)
         getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).forceAddTag(DnDItemTags.WOOD_SLABS)
         getOrCreateTagBuilder(ItemTags.WALLS).forceAddTag(DnDItemTags.WOODEN_WALLS)

@@ -29,7 +29,7 @@ const val rotate315 = 5.498f
 const val rotate360 = 6.28319f
 
 fun Vec3d.blockPos(): BlockPos {
-    return BlockPos(this.x.toInt(),this.y.toInt(),this.z.toInt())
+    return BlockPos(this.x.toInt(), this.y.toInt(), this.z.toInt())
 }
 
 fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, y))

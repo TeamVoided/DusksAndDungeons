@@ -24,7 +24,7 @@ class ScarecrowArmorEntityModel(root: ModelPart) : ScarecrowEntityModel(root) {
         setRotation(leftLeg, scarecrowEntity.getLeftLegRotation())
     }
 
-   fun setAttributesM(model: ScarecrowArmorEntityModel) {
+    fun setAttributesM(model: ScarecrowArmorEntityModel) {
         super.setAttributes(model)
         model.hat.copyTransform(this.headNotFun)
     }

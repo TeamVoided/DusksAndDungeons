@@ -10,6 +10,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 @Suppress("unused")
 object DnDSoundEvents {
     fun init() = Unit
+
     @Suppress("SameParameterValue")
     private fun register(id: String): SoundEvent = register(id(id))
     private fun register(id: Identifier): SoundEvent = register(id, id)

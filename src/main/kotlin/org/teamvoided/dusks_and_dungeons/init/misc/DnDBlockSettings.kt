@@ -82,7 +82,7 @@ object DnDBlockSettings {
         .strength(2.0F, 3.0F)
         .sounds(BlockSoundGroup.CHERRY_WOOD)
         .lavaIgnitable()
-    val BLUE_DOOR: Settings =  Settings.create()
+    val BLUE_DOOR: Settings = Settings.create()
         .mapColor(MapColor.BLUE)
         .instrument(NoteBlockInstrument.BASS)
         .strength(3.0f)

@@ -7,7 +7,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 object DnDStructureProcessorLists {
 
-    val AUTUMN_RUINS_DEFAULT= create("autumn_ruins/default")
+    val AUTUMN_RUINS_DEFAULT = create("autumn_ruins/default")
 
     fun create(id: String): RegistryKey<StructureProcessorList> =
         RegistryKey.of(RegistryKeys.STRUCTURE_PROCESSOR_LIST, id(id))

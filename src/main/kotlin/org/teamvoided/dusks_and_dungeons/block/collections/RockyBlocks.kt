@@ -13,6 +13,7 @@ data class RockyBlocks(val name: String, val variation: String, val block: Block
     BlockCollection<Block> {
     constructor(mainName: String, defaultName: String, block: Block)
             : this(mainName, defaultName, block, block.defaultMapColor)
+
     val dirt = Block(AbstractBlock.Settings.copy(Blocks.DIRT).mapColor(color))
     val grass = RockyGrassBlock(dirt, AbstractBlock.Settings.copy(Blocks.GRASS_BLOCK).mapColor(color))
     val podzol = SnowyBlock(AbstractBlock.Settings.copy(Blocks.PODZOL).mapColor(color))

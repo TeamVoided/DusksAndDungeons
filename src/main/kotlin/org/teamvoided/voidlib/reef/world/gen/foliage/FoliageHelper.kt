@@ -10,7 +10,6 @@ import kotlin.math.abs
 import kotlin.math.min
 
 
-
 // Diameter X & Z
 typealias ShapePredicate = (dx: Int, dz: Int) -> Boolean
 

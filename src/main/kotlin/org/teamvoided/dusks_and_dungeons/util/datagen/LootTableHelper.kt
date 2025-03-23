@@ -48,17 +48,18 @@ fun BlockLootTableGenerator.leafPile(pile: Block, leaves: Block): LootTable.Buil
 fun BlockLootTableGenerator.logPile(drop: Block): LootTable.Builder {
     return LootTable.builder().pool(
         LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
-            applyExplosionDecay(drop, ItemEntry.builder(drop).apply(
-                listOf(2, 3, 4)
-            ) { count: Int ->
-                SetCountLootFunction.builder(
-                    ConstantLootNumberProvider.create(count.toFloat())
-                ).conditionally(
-                    BlockStatePropertyLootCondition.builder(drop).properties(
-                        StatePredicate.Builder.create().exactMatch(LogPileBlock.PILE_LAYERS, count)
+            applyExplosionDecay(
+                drop, ItemEntry.builder(drop).apply(
+                    listOf(2, 3, 4)
+                ) { count: Int ->
+                    SetCountLootFunction.builder(
+                        ConstantLootNumberProvider.create(count.toFloat())
+                    ).conditionally(
+                        BlockStatePropertyLootCondition.builder(drop).properties(
+                            StatePredicate.Builder.create().exactMatch(LogPileBlock.PILE_LAYERS, count)
+                        )
                     )
-                )
-            })
+                })
         )
     )
 }
