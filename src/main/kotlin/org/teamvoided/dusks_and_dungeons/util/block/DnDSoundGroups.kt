@@ -3,24 +3,6 @@ package org.teamvoided.dusks_and_dungeons.util.block
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
 
-val bonewoodSound = BlockSoundGroup(
-    1.0F,
-    0.8F,
-    SoundEvents.BLOCK_BONE_BLOCK_BREAK,
-    SoundEvents.BLOCK_BONE_BLOCK_STEP,
-    SoundEvents.BLOCK_BONE_BLOCK_PLACE,
-    SoundEvents.BLOCK_BONE_BLOCK_HIT,
-    SoundEvents.BLOCK_BONE_BLOCK_FALL
-)
-val witheringBonewoodSound = BlockSoundGroup(
-    1.0F,
-    0.0F,
-    SoundEvents.BLOCK_BONE_BLOCK_BREAK,
-    SoundEvents.BLOCK_BONE_BLOCK_STEP,
-    SoundEvents.BLOCK_BONE_BLOCK_PLACE,
-    SoundEvents.BLOCK_BONE_BLOCK_HIT,
-    SoundEvents.BLOCK_BONE_BLOCK_FALL
-)
 val bigChainSound = BlockSoundGroup(
     1.0F,
     0.8F,
