@@ -13,11 +13,11 @@ object DnDBlockTags {
     val FLAMMABLE_LOGS = create("flammable/logs")
     val FLAMMABLE_LEAVES = create("flammable/leaves")
 
-    // Wood Block Set
     @JvmField
     val WOODEN_WALLS = create("wooden_walls")
     val WOODEN_WALLS_THAT_BURN = create("wooden_walls_that_burn")
 
+    // Wood Block Set
     val WOOD_STAIRS = create("wood_stairs")
     val WOOD_SLABS = create("wood_slabs")
     val WOOD_WALLS = create("wood_walls")
