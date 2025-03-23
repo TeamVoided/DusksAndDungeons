@@ -38,7 +38,6 @@ object DnDBlocksClient {
 
         CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderLayer.getCutout()) }
         TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderLayer.getTranslucent()) }
-
         ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS }
 
         if (!isDev()) {
