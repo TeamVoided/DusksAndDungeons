@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(AbstractCandleBlock.class)
 public interface AbstractCandleBlockAccessor {
     @Invoker("spawnCandleParticles")
-    static void dusks_and_dungeons$invokeSpawnCandleParticles(World world, Vec3d vec3d, RandomGenerator random) {
+    static void invokeSpawnCandleParticles(World world, Vec3d vec3d, RandomGenerator random) {
         throw new AssertionError();
     }
 }

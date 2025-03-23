@@ -7,4 +7,4 @@ import org.teamvoided.dusks_and_dungeons.mixin.AbstractCandleBlockAccessor
 
 
 fun World.spawnCandleParticles(vec3d: Vec3d, random: RandomGenerator) =
-    AbstractCandleBlockAccessor.`dusks_and_dungeons$invokeSpawnCandleParticles`(this, vec3d, random)
+    AbstractCandleBlockAccessor.invokeSpawnCandleParticles(this, vec3d, random)
