@@ -6,8 +6,7 @@
   "mixins": [],
   "client": [
     "ShadowAttributeMixin",
-    "FoxEntityRendererMixin",
-    "HeldItemFeatureRendererMixin"
+    "FoxEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

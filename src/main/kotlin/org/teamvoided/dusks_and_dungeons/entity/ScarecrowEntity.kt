@@ -167,7 +167,6 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         this.readPoseNbt(nbtCompound2)
     }
 
-    @Suppress("SYNTHETIC_PROPERTY_WITHOUT_JAVA_ORIGIN")
     private fun readPoseNbt(nbt: NbtCompound) {
         val postPose = nbt.getList("Post", 5)
         this.setPostRotation(if (postPose.isEmpty()) DEFAULT_POST_ROTATION else EulerAngle(postPose))

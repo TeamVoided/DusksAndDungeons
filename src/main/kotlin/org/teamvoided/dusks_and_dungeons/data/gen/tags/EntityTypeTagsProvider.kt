@@ -25,16 +25,11 @@ class EntityTypeTagsProvider(output: FabricDataOutput, registriesFuture: Complet
             .forceAddTag(EntityTypeTags.AQUATIC)
             .add(EntityType.FISHING_BOBBER)
             .add(EntityType.SILVERFISH)
-        getOrCreateTagBuilder(DnDEntityTypeTags.CHILL_CHARGE_GOES_THROUGH)
-            .add(DnDEntities.CHILL_CHARGE)
-            .add(EntityType.END_CRYSTAL)
     }
 
     private fun vanillaTags() {
-        getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES)
-            .add(DnDEntities.CHILL_CHARGE)
-        getOrCreateTagBuilder(EntityTypeTags.REDIRECTABLE_PROJECTILE)
-            .add(DnDEntities.CHILL_CHARGE)
+        getOrCreateTagBuilder(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
+            .add(DnDEntities.SCARECROW)
     }
 
     private fun conventionTags() {}

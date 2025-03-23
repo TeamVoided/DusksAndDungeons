@@ -6,12 +6,6 @@ import net.minecraft.client.model.TexturedModelData
 import net.minecraft.client.render.entity.model.BipedArmorEntityModel
 import net.minecraft.client.render.entity.model.EntityModelLayer
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.entity.bird.render.BirdEntityModel
-import org.teamvoided.dusks_and_dungeons.entity.block.CelestalBellBlockEntityRenderer
-import org.teamvoided.dusks_and_dungeons.entity.chill_charge.render.ChillChargeEntityModel
-import org.teamvoided.dusks_and_dungeons.entity.dice.render.DiceEntityModel
-import org.teamvoided.dusks_and_dungeons.entity.dust_bunny.render.DustBunnyEntityModel
-import org.teamvoided.dusks_and_dungeons.entity.pumpkin.piffling.model.PifflingPumpkinModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowWoodModel
@@ -24,27 +18,12 @@ object DnDEntityModelLayers {
     val SCARECROW_WOOD: EntityModelLayer = register("scarecrow", "wood")
 
     // experimental
-    val CHILL_CHARGE: EntityModelLayer = registerMain("chill_charge")
-    val BIRD: EntityModelLayer = registerMain("bird")
-    val DICE: EntityModelLayer = registerMain("dice")
-    val DUST_BUNNY: EntityModelLayer = registerMain("dust_bunny")
-    val PIFFLING_PUMPKIN: EntityModelLayer = registerMain("piffling_pumpkin")
 
-    val CELESTAL_BELL = registerMain("celestal_bell")
     fun init() {
         registerModelLayer(SCARECROW, ScarecrowEntityModel::texturedModelData)
         registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
         registerModelLayer(SCARECROW_INNER_ARMOR, ::createScarecrowInnerArmor)
         registerModelLayer(SCARECROW_OUTER_ARMOR, ::createScarecrowOuterArmor)
-
-        // Experimental
-        registerModelLayer(BIRD, BirdEntityModel::texturedModelData)
-        registerModelLayer(DICE, DiceEntityModel::texturedModelData)
-        registerModelLayer(DUST_BUNNY, DustBunnyEntityModel::texturedModelData)
-        registerModelLayer(PIFFLING_PUMPKIN, PifflingPumpkinModel::texturedModelData)
-        registerModelLayer(CELESTAL_BELL, CelestalBellBlockEntityRenderer::getTexturedModelData)
-        registerModelLayer(CHILL_CHARGE, ChillChargeEntityModel::texturedModelData)
-
     }
 
     private fun createScarecrowInnerArmor(): TexturedModelData =

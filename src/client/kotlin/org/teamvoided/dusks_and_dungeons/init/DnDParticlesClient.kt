@@ -15,11 +15,6 @@ object DnDParticlesClient {
         register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
         register(DnDParticles.COLORABLE_OMINOUS_PARTICLE, ColorableOminousParticle::Factory)
 
-        // Experimental
-        register(DnDParticles.SPIDERLILY, SpiderlilyPetalParticle::Factory)
-        register(DnDParticles.MUSHROOM_LAUNCH, MushroomLaunchParticle::Factory)
-        register(DnDParticles.DUST_BUNNY, DustBunnyParticle::Factory)
-        register(DnDParticles.SPIRAL, SpiralParticle::Factory)
     }
 
     fun <T : ParticleEffect> register(type: ParticleType<T>, constructor: PendingParticleFactory<T>) =
