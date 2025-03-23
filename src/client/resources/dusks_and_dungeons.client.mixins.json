@@ -5,8 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "EntityRenderDispatcherMixin",
-    "EntityRendererAccessor",
+    "ShadowAttributeMixin",
     "FoxEntityRendererMixin",
     "HeldItemFeatureRendererMixin"
   ],
