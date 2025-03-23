@@ -1,10 +1,10 @@
 package org.teamvoided.dusks_and_dungeons.init
 
-import net.minecraft.block.dispenser.DispenserBlock
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.DyedColorComponent
 import net.minecraft.item.*
+import net.minecraft.item.Item.Settings
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -20,7 +20,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_LANTERN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_MOSSKIN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_PALE_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.item.*
-import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem
 
 
@@ -29,60 +28,60 @@ object DnDItems {
     val ITEMS = mutableListOf<Item>()
     val EVIL_ITEMS = mutableSetOf<Item>()
 
-    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDBlocks.CASCADE_DOOR, settings()))
-    val BLUE_DOOR = register("blue_door", TallBlockItem(DnDBlocks.BLUE_DOOR, settings()))
+    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDBlocks.CASCADE_DOOR, Settings()))
+    val BLUE_DOOR = register("blue_door", TallBlockItem(DnDBlocks.BLUE_DOOR, Settings()))
     val CASCADE_SIGN = register(
-        "cascade_sign", SignItem(CountSettings(16), DnDBlocks.CASCADE_SIGN, DnDBlocks.CASCADE_WALL_SIGN)
+        "cascade_sign", SignItem(countSettings(16), DnDBlocks.CASCADE_SIGN, DnDBlocks.CASCADE_WALL_SIGN)
     )
     val CASCADE_HANGING_SIGN = register(
         "cascade_hanging_sign",
-        HangingSignItem(DnDBlocks.CASCADE_HANGING_SIGN, DnDBlocks.CASCADE_WALL_HANGING_SIGN, CountSettings(16))
+        HangingSignItem(DnDBlocks.CASCADE_HANGING_SIGN, DnDBlocks.CASCADE_WALL_HANGING_SIGN, countSettings(16))
     )
     val FARMERS_HAT = register(
         "farmers_hat", EquipableItem(
-            CountSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
+            countSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
-    val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(CountSettings(16)))
-    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, settings()))
+    val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(countSettings(16)))
+    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, Settings()))
 
     val LANTERN_PUMPKIN_SEEDS =
-        register("lantern_pumpkin_seeds", AliasedBlockItem(DnDBlocks.LANTERN_PUMPKIN_STEM, settings()))
+        register("lantern_pumpkin_seeds", AliasedBlockItem(DnDBlocks.LANTERN_PUMPKIN_STEM, Settings()))
     val MOSSKIN_PUMPKIN_SEEDS =
-        register("mosskin_pumpkin_seeds", AliasedBlockItem(DnDBlocks.MOSSKIN_PUMPKIN_STEM, settings()))
+        register("mosskin_pumpkin_seeds", AliasedBlockItem(DnDBlocks.MOSSKIN_PUMPKIN_STEM, Settings()))
     val PALE_PUMPKIN_SEEDS =
-        register("pale_pumpkin_seeds", AliasedBlockItem(DnDBlocks.PALE_PUMPKIN_STEM, settings()))
+        register("pale_pumpkin_seeds", AliasedBlockItem(DnDBlocks.PALE_PUMPKIN_STEM, Settings()))
     val GLOOM_PUMPKIN_SEEDS =
-        register("gloom_pumpkin_seeds", AliasedBlockItem(DnDBlocks.GLOOM_PUMPKIN_STEM, settings()))
+        register("gloom_pumpkin_seeds", AliasedBlockItem(DnDBlocks.GLOOM_PUMPKIN_STEM, Settings()))
 
-    val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDBlocks.CORN_CROP, settings()))
-    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDBlocks.CORN, settings()))
-    val CORN = register("corn", Item(settings().food(DnDFoodComponents.CORN)))
+    val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDBlocks.CORN_CROP, Settings()))
+    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDBlocks.CORN, Settings()))
+    val CORN = register("corn", Item(Settings().food(DnDFoodComponents.CORN)))
     val CORN_SYRUP_BOTTLE = register(
         "corn_syrup_bottle", HoneyBottleItem(
-            settings().recipeRemainder(Items.GLASS_BOTTLE).food(FoodComponents.HONEY_BOTTLE).maxCount(16)
+            Settings().recipeRemainder(Items.GLASS_BOTTLE).food(FoodComponents.HONEY_BOTTLE).maxCount(16)
         )
     )
 
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
-        AliasedBlockItem(DnDBlocks.GOLDEN_BEETROOTS, settings().food(DnDFoodComponents.GOLDEN_BEETROOT))
+        AliasedBlockItem(DnDBlocks.GOLDEN_BEETROOTS, Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))
     )
 
-    val MOONBERRY_VINELET = register("moonberry_vinelet", AliasedBlockItem(DnDBlocks.MOONBERRY_VINELET, settings()))
-    val MOONBERRIES = register("moonberries", Item((settings()).food(DnDFoodComponents.MOONBERRIES)))
+    val MOONBERRY_VINELET = register("moonberry_vinelet", AliasedBlockItem(DnDBlocks.MOONBERRY_VINELET, Settings()))
+    val MOONBERRIES = register("moonberries", Item((Settings()).food(DnDFoodComponents.MOONBERRIES)))
 
     @JvmField
     val BLACKSTONE_SWORD = register(
         "blackstone_sword", SwordItem(
-            ToolMaterials.STONE, AttributeSettings(
+            ToolMaterials.STONE, attributeSettings(
                 SwordItem.createAttributes(ToolMaterials.STONE, 3, -2.4f)
             )
         )
     )
     val BLACKSTONE_PICKAXE = register(
         "blackstone_pickaxe", PickaxeItem(
-            ToolMaterials.STONE, AttributeSettings(
+            ToolMaterials.STONE, attributeSettings(
                 PickaxeItem.createAttributes(ToolMaterials.STONE, 1.0f, -2.8f)
             )
         )
@@ -91,79 +90,26 @@ object DnDItems {
     @JvmField
     val BLACKSTONE_AXE = register(
         "blackstone_axe", AxeItem(
-            ToolMaterials.STONE, AttributeSettings(
+            ToolMaterials.STONE, attributeSettings(
                 AxeItem.createAttributes(ToolMaterials.STONE, 7.0f, -3.2f)
             )
         )
     )
     val BLACKSTONE_SHOVEL = register(
         "blackstone_shovel", ShovelItem(
-            ToolMaterials.STONE, AttributeSettings(
+            ToolMaterials.STONE, attributeSettings(
                 ShovelItem.createAttributes(ToolMaterials.STONE, 1.5f, -3.0f)
             )
         )
     )
     val BLACKSTONE_HOE = register(
         "blackstone_hoe", HoeItem(
-            ToolMaterials.STONE, AttributeSettings(
+            ToolMaterials.STONE, attributeSettings(
                 HoeItem.createAttributes(ToolMaterials.STONE, -1.0f, -2.0f)
             )
         )
     )
-
-    // region  ☢ Experimental ☢
-    val GALLERY_MAPLE_DOOR =
-        register("gallery_maple_door", TallBlockItem(DnDBlocks.GALLERY_MAPLE_DOOR, settings()))
-            .tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_SIGN = register(
-        "gallery_maple_sign",
-        SignItem(CountSettings(16), DnDBlocks.GALLERY_MAPLE_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_SIGN)
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_HANGING_SIGN = register(
-        "gallery_maple_hanging_sign", HangingSignItem(
-            DnDBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN, CountSettings(16)
-        )
-    ).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDBlocks.BONEWOOD_DOOR, settings()))
-        .tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_DOOR =
-        register("withering_bonewood_door", TallBlockItem(DnDBlocks.WITHERING_BONEWOOD_DOOR, settings()))
-            .tellWitnessesThatIWasMurdered()
-
-    val WITCH_HAT = register("witch_hat", EquipableItem(CountSettings(1))).tellWitnessesThatIWasMurdered()
-
-    @JvmField
-    val VILE_WITCH_HAT = register("vile_witch_hat", EquipableItem(CountSettings(1))).tellWitnessesThatIWasMurdered()
-    val DIE_ITEM = register(
-        "die", DiceItem(
-            CountSettings(16).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xFFFFFF, true))
-        )
-    ).tellWitnessesThatIWasMurdered()
-
-    val WATER_FERN = register("water_fern", WaterPlaceableBlockItem(DnDBlocks.WATER_FERN, settings()))
-        .tellWitnessesThatIWasMurdered()
-
-    val FREEZE_ROD = register("freeze_rod", Item(settings())).tellWitnessesThatIWasMurdered()
-    val CHILL_CHARGE = register("chill_charge", ChillChargeItem(settings())).tellWitnessesThatIWasMurdered()
-
-    //    val ICE_SWORD = register(
-//        "ice_sword", FunnyIceSword(
-//            settings().rarity(Rarity.EPIC)
-//                .component(DataComponentTypes.TOOL, FunnyIceSword.createToolComponent())
-//                .attributeModifiersComponent(FunnyIceSword.createAttributes())
-//        )
-//    )
-    val WEB_WEAVER =
-        register("web_weaver", BowItem(settings().maxDamage(404))).tellWitnessesThatIWasMurdered()
-    val HARVESTER_SCYTHE = register(
-        "harvester_scythe", HarvesterScytheItem(AttributeSettings(HarvesterScytheItem.makeAttributes()))
-    ).tellWitnessesThatIWasMurdered()
-    val BROOM = register("broom", BroomItem(CountSettings(1))).tellWitnessesThatIWasMurdered()
-    // endregion
-
     fun init() {
-        DispenserBlock.registerBehavior(CHILL_CHARGE)
-
         LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
         SMALL_LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
         MOSSKIN_PUMPKIN.setSeeds(MOSSKIN_PUMPKIN_SEEDS)
@@ -172,7 +118,6 @@ object DnDItems {
         SMALL_GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
         PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
         SMALL_PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
-
 //        BLOCK_ITEMS.forEach(::register)
     }
 
@@ -186,15 +131,8 @@ object DnDItems {
         return RegistryKey.of(RegistryKeys.ITEM_GROUP, id(name))
     }
 
-    fun settings() = Item.Settings()
-
-    @Suppress("FunctionName")
-    fun AttributeSettings(comp: AttributeModifiersComponent): Item.Settings =
-        settings().attributeModifiersComponent(comp)
-
-    @Suppress("FunctionName")
-    fun CountSettings(count: Int): Item.Settings = settings().maxCount(count)
-
+    fun attributeSettings(comp: AttributeModifiersComponent): Settings = Settings().attributeModifiersComponent(comp)
+    fun countSettings(count: Int): Settings = Settings().maxCount(count)
 
     @JvmField
     val CUSTOM_STATS = listOf(id("base_block_range"), id("base_entity_range"))

@@ -64,11 +64,6 @@ class ItemTagsProvider(
             .addOptional(id("supplementaries", "ash_pile"))
             .add(Items.BASALT)
 
-        getOrCreateTagBuilder(DnDItemTags.HARVESTER_SCYTHE_AMMO)
-            .forceAddTag(DnDItemTags.SMALL_PUMPKINS)
-            .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
-            .forceAddTag(DnDItemTags.SMALL_GLOWING_PUMPKINS)
-
         getOrCreateTagBuilder(DnDItemTags.SCARECROW_WOOD_ITEMS)
             .add(Items.OAK_PLANKS)
             .add(Items.DARK_OAK_PLANKS)
@@ -140,7 +135,6 @@ class ItemTagsProvider(
 
         getOrCreateTagBuilder(ItemTags.DYEABLE)
             .add(DnDItems.FARMERS_HAT)
-            .add(DnDItems.DIE_ITEM)
 
         getOrCreateTagBuilder(ItemTags.PARROT_FOOD)
             .add(DnDItems.CORN_KERNELS)
@@ -169,16 +163,10 @@ class ItemTagsProvider(
             .forceAddTag(DnDItemTags.CARVED_PUMPKINS)
             .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
             .add(DnDItems.FARMERS_HAT)
-//            .add(DnDItems.WITCH_HAT)
-//            .add(DnDItems.VILE_WITCH_HAT)
         getOrCreateTagBuilder(ItemTags.VANISHING_ENCHANTABLE)
             .forceAddTag(DnDItemTags.CARVED_PUMPKINS)
             .forceAddTag(DnDItemTags.SMALL_CARVED_PUMPKINS)
             .add(DnDItems.FARMERS_HAT)
-//            .add(DnDItems.WITCH_HAT)
-//            .add(DnDItems.VILE_WITCH_HAT)
-//        getOrCreateTagBuilder(ItemTags.BOW_ENCHANTABLE)
-//            .add(DnDItems.WEB_WEAVER)
     }
 
     fun conventionTags() {

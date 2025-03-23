@@ -84,7 +84,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
     private val single = listOf(
         DnDItems.SCARECROW_ITEM,
-        DnDItems.DIE_ITEM,
         DnDItems.LANTERN_PUMPKIN_SEEDS,
         DnDItems.MOSSKIN_PUMPKIN_SEEDS,
         DnDItems.PALE_PUMPKIN_SEEDS,
@@ -92,19 +91,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDItems.CORN_KERNELS,
         DnDItems.CORN,
         DnDItems.CORN_SYRUP_BOTTLE,
-        DnDItems.CHILL_CHARGE
     )
 
     override fun generateItemModels(gen: ItemModelGenerator) {
         single.forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }
-        gen.register(DnDItems.FREEZE_ROD, Models.HANDHELD_ROD)
-//        gen.register(DnDItems.ICE_SWORD, Models.HANDHELD)
-        gen.register(DnDItems.HARVESTER_SCYTHE, item("parent/handheld_32", TextureKey.LAYER0))
-
-        val webWeaver = item("web_weaver", TextureKey.LAYER0)
-        gen.register(DnDItems.WEB_WEAVER, "_0", webWeaver)
-        gen.register(DnDItems.WEB_WEAVER, "_1", webWeaver)
-        gen.register(DnDItems.WEB_WEAVER, "_2", webWeaver)
     }
 
     private fun item(parent: String, vararg requiredTextures: TextureKey): Model =
@@ -122,10 +112,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         Model(parent.myb, Optional.empty(), ALL_KRY)
             .upload(block, Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
 
-
-    private
-    val <T : Any?> T.myb get() = Optional.ofNullable(this)
-
+    private val <T : Any?> T.myb get() = Optional.ofNullable(this)
     private fun Identifier.suffix(str: String) = Identifier.of(this.namespace, "${this.path}$str")
     private fun Block.model(): Identifier = ModelIds.getBlockModelId(this)
 }

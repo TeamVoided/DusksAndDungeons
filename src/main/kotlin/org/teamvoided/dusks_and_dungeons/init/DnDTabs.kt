@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
+import net.minecraft.block.Blocks
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.Items
@@ -158,7 +159,7 @@ object DnDTabs {
     )
     val DND_EXPERIMENTAL = register(
         "dnd_experimental", FabricItemGroup.builder()
-            .icon(DnDItems.GALLERY_MAPLE_DOOR).name("DnD Experimental")
+            .icon(Blocks.BARRIER).name("DnD Experimental")
             .entries { _, entries -> if (isDev()) entries.addLists(EVIL_ITEMS) }
     )
 
