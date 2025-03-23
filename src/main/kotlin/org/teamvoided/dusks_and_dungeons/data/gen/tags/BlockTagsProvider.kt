@@ -285,13 +285,12 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.GLOWING_PUMPKINS)
     }
 
-    private fun woodTags(){
+    private fun woodTags() {
         WOOD_SETS.filterNot(excludeWood::contains).forEach { it.createWoodTags(::getOrCreateTagBuilder) }
         getOrCreateTagBuilder(BlockTags.WALLS).forceAddTag(DnDBlockTags.WOODEN_WALLS)
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).forceAddTag(DnDBlockTags.WOODEN_WALLS)
 
         getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS)
-            .forceAddTag(DnDBlockTags.WOODEN_WALLS_THAT_BURN)
             .forceAddTag(DnDBlockTags.WOOD_WALLS)
         getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS).forceAddTag(DnDBlockTags.WOOD_STAIRS)
         getOrCreateTagBuilder(BlockTags.WOODEN_SLABS).forceAddTag(DnDBlockTags.WOOD_SLABS)
@@ -309,6 +308,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.WOOD_WALLS_THAT_BURN)
             .add(DnDBlocks.CRIMSON_HYPHAE.wall)
             .add(DnDBlocks.WARPED_HYPHAE.wall)
+
     }
 
     private fun vanillaTags() {

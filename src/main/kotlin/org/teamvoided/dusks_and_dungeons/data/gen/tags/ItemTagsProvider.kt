@@ -92,7 +92,6 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).forceAddTag(DnDItemTags.WOOD_SLABS)
         getOrCreateTagBuilder(ItemTags.WALLS).forceAddTag(DnDItemTags.WOODEN_WALLS)
         copy(DnDBlockTags.WOODEN_WALLS, DnDItemTags.WOODEN_WALLS)
-        copy(DnDBlockTags.WOODEN_WALLS_THAT_BURN, DnDItemTags.WOODEN_WALLS_THAT_BURN)
 
         copy(DnDBlockTags.WOOD_STAIRS, DnDItemTags.WOOD_STAIRS)
         copy(DnDBlockTags.WOOD_SLABS, DnDItemTags.WOOD_SLABS)
