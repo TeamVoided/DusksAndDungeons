@@ -11,7 +11,15 @@ import org.teamvoided.dusks_and_dungeons.entity.*
 import org.teamvoided.dusks_and_dungeons.entity.projectile.FlyingPumpkinProjectile
 
 object DnDEntities {
+    val SCARECROW = register(
+        "scarecrow",
+        EntityType.Builder.create(EntityType.EntityFactory(::ScarecrowEntity), SpawnGroup.MISC)
+            .setDimensions(0.5F, 2.375F)
+            .setEyeHeight(2.175F)
+            .maxTrackingRange(10)
+    )
 
+    // region ☢ Experimental ☢
     val CHILL_CHARGE = register(
         "chill_charge",
         EntityType.Builder.create(EntityType.EntityFactory(::ChillChargeEntity), SpawnGroup.MISC)
@@ -20,6 +28,7 @@ object DnDEntities {
             .maxTrackingRange(4)
             .trackingTickInterval(10)
     )
+
 //    val BIRD_TEST = register(
 //        "bird",
 //        EntityType.Builder.create(EntityType.EntityFactory(::BirdEntity), SpawnGroup.CREATURE)
@@ -28,14 +37,6 @@ object DnDEntities {
 //            .maxTrackingRange(4)
 //            .trackingTickInterval(10)
 //    )
-
-    val SCARECROW = register(
-        "scarecrow",
-        EntityType.Builder.create(EntityType.EntityFactory(::ScarecrowEntity), SpawnGroup.MISC)
-            .setDimensions(0.5F, 2.375F)
-            .setEyeHeight(2.175F)
-            .maxTrackingRange(10)
-    )
 
     val DIE = register(
         "die",
@@ -70,11 +71,12 @@ object DnDEntities {
             .setEyeHeight(0.6f)
             .maxTrackingRange(8)
     )
+    // endregion
 
     fun init() {
-//        FabricDefaultAttributeRegistry.register(BIRD_TEST, BirdEntity.createAttributes().build())
-
         FabricDefaultAttributeRegistry.register(SCARECROW, ScarecrowEntity.createAttributes().build())
+        // ☢ Experimental ☢
+//        FabricDefaultAttributeRegistry.register(BIRD_TEST, BirdEntity.createAttributes().build())
         FabricDefaultAttributeRegistry.register(DUST_BUNNY, DustBunnyEntity.createAttributes().build())
         FabricDefaultAttributeRegistry.register(PIFFLING_PUMPKIN, PifflingPumpkinEntity.createAttributes().build())
     }

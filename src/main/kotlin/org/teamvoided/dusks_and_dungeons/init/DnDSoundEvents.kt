@@ -7,9 +7,12 @@ import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
+@Suppress("unused")
 object DnDSoundEvents {
+    // experimental
     val BLOCK_CELESTAL_BELL_USE = register("block.celestal_bell.use")
     fun init() = Unit
+    @Suppress("SameParameterValue")
     private fun register(id: String): SoundEvent = register(id(id))
     private fun register(id: Identifier): SoundEvent = register(id, id)
     private fun register(id: Identifier, soundId: Identifier): SoundEvent =

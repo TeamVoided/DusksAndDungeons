@@ -19,6 +19,7 @@ object DnDParticles {
     val COLORABLE_OMINOUS_PARTICLE = complex(ColorableParticleEffect.CODEC, ColorableParticleEffect.PACKET_CODEC)
     val SNOWFLAKE = simple()
 
+    // experimental
     val SPIDERLILY = simple()
     val MUSHROOM_LAUNCH = simple()
     val DUST_BUNNY = complex(DustBunnyParticleEffect.CODEC, DustBunnyParticleEffect.PACKET_CODEC)

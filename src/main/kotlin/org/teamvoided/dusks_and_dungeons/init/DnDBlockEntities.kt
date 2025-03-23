@@ -9,7 +9,7 @@ import net.minecraft.util.Util
 import org.teamvoided.dusks_and_dungeons.block.entity.*
 
 object DnDBlockEntities {
-    fun init() {}
+    // region ☢ Experimental ☢
     val CELESTAL_BELL: BlockEntityType<CelestalBellBlockEntity> =
         register("celestal_bell", BlockEntityType.Builder.create(::CelestalBellBlockEntity, DnDBlocks.CELESTAL_BELL))
 
@@ -50,6 +50,8 @@ object DnDBlockEntities {
             DnDBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE
         )
     )
+    // endregion
+    fun init() {}
 
     private fun <T : BlockEntity> register(id: String, builder: BlockEntityType.Builder<T>): BlockEntityType<T> {
         val type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id)

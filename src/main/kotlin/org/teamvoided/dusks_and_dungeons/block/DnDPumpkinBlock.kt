@@ -19,7 +19,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 
 open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Settings) : Block(settings) {
     private var seedsItem = Items.PUMPKIN_SEEDS
@@ -69,9 +68,7 @@ open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Settings) :
     }
 
     companion object {
-        fun Block.setSeeds(item: Item) {
-            if (this is DnDPumpkinBlock) this.setSeeds(item)
-            else log.warn("Block [$this] is not a DnDPumpkinBlock")
-        }
+        fun Block.setSeeds(item: Item) =
+            if (this is DnDPumpkinBlock) this.setSeeds(item) else error("Block [$this] is not a DnDPumpkinBlock")
     }
 }
