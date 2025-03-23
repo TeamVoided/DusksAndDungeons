@@ -33,6 +33,8 @@ object DnDItemsClient {
         registerTint({ stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) }, DnDItems.FARMERS_HAT)
 
 
+
+        // Experimental
         modelPredicate(DnDItems.WEB_WEAVER, mc("pull")) { stack, _, entity, _ ->
             if (entity == null || entity.activeItem != stack) 0.0f
             else (stack.getUseTicks(entity) - entity.itemUseTimeLeft) / 20.0f

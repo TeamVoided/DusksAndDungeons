@@ -16,6 +16,7 @@ object DnDBlockEntitiesClient {
     private var chestOSoulsBlockEntity = ChestOSoulsBlockEntity(BlockPos.ORIGIN, DnDBlocks.CHEST_O_SOULS.defaultState)
 
     fun init() {
+        // experimental
         BlockEntityRendererFactories.register(DnDBlockEntities.CELESTAL_BELL, ::CelestalBellBlockEntityRenderer)
         BlockEntityRendererFactories.register(DnDBlockEntities.CHEST_O_SOULS, ::ChestBlockEntityRenderer)
         BlockEntityRendererFactories.register(DnDBlockEntities.QUARTER_BLOCK_PILE, ::QuarterBlockPileBlockEntityRenderer)

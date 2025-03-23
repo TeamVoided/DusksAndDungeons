@@ -10,9 +10,10 @@ import org.teamvoided.dusks_and_dungeons.entity.scarecrow.ScarecrowEntityRendere
 
 object DnDEntitiesClient {
     fun init() {
-        EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
         EntityRendererRegistry.register(DnDEntities.SCARECROW, ::ScarecrowEntityRenderer)
 
+        // Experimental
+        EntityRendererRegistry.register(DnDEntities.CHILL_CHARGE, ::ChillChargeEntityRenderer)
         EntityRendererRegistry.register(DnDEntities.DIE, ::DiceEntityRenderer)
 //        EntityRendererRegistry.register(DnDEntities.BIRD_TEST, ::BirdEntityRenderer)
         EntityRendererRegistry.register(DnDEntities.FLYING_PUMPKIN, ::FlyingBlockItemEntityRenderer)
