@@ -4,7 +4,6 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 
 object DnDItemLists {
     val dye = listOf(
@@ -26,19 +25,19 @@ object DnDItemLists {
         Items.BLACK_DYE,
     )
     val cascadeWood = listOf<ItemConvertible>(
-        DnDWoodBlocks.CASCADE_LOG,
-        DnDWoodBlocks.CASCADE_WOOD,
-        DnDWoodBlocks.STRIPPED_CASCADE_LOG,
-        DnDWoodBlocks.STRIPPED_CASCADE_WOOD,
-        DnDWoodBlocks.CASCADE_PLANKS,
-        DnDWoodBlocks.CASCADE_STAIRS,
-        DnDWoodBlocks.CASCADE_SLAB,
-        DnDWoodBlocks.CASCADE_FENCE,
-        DnDWoodBlocks.CASCADE_FENCE_GATE,
+        DnDBlocks.CASCADE_LOG,
+        DnDBlocks.CASCADE_WOOD,
+        DnDBlocks.STRIPPED_CASCADE_LOG,
+        DnDBlocks.STRIPPED_CASCADE_WOOD,
+        DnDBlocks.CASCADE_PLANKS,
+        DnDBlocks.CASCADE_STAIRS,
+        DnDBlocks.CASCADE_SLAB,
+        DnDBlocks.CASCADE_FENCE,
+        DnDBlocks.CASCADE_FENCE_GATE,
         DnDItems.CASCADE_DOOR,
-        DnDWoodBlocks.CASCADE_TRAPDOOR,
-        DnDWoodBlocks.CASCADE_PRESSURE_PLATE,
-        DnDWoodBlocks.CASCADE_BUTTON
+        DnDBlocks.CASCADE_TRAPDOOR,
+        DnDBlocks.CASCADE_PRESSURE_PLATE,
+        DnDBlocks.CASCADE_BUTTON
     )
 
     val cascadeSigns = listOf(
@@ -121,17 +120,17 @@ object DnDItemLists {
         DnDItems.BLACKSTONE_SHOVEL,
         DnDItems.BLACKSTONE_HOE
     )
-    val oakWoodStuff = DnDWoodBlocks.OAK_WOOD.headless()
-    val spruceWoodStuff = DnDWoodBlocks.SPRUCE_WOOD.headless()
-    val birchWoodStuff = DnDWoodBlocks.BIRCH_WOOD.headless()
-    val jungleWoodStuff = DnDWoodBlocks.JUNGLE_WOOD.headless()
-    val acaciaWoodStuff = DnDWoodBlocks.ACACIA_WOOD.headless()
-    val darkOakWoodStuff = DnDWoodBlocks.DARK_OAK_WOOD.headless()
-    val mangroveWoodStuff = DnDWoodBlocks.MANGROVE_WOOD.headless()
-    val cherryWoodStuff = DnDWoodBlocks.CHERRY_WOOD.headless()
-    val cascadeWoodStuff = DnDWoodBlocks.CASCADE_WOOD.headless()
-    val crimsonHyphaeStuff = DnDWoodBlocks.CRIMSON_HYPHAE.headless()
-    val warpedHyphaeStuff = DnDWoodBlocks.WARPED_HYPHAE.headless()
+    val oakWoodStuff = DnDBlocks.OAK_WOOD.headless()
+    val spruceWoodStuff = DnDBlocks.SPRUCE_WOOD.headless()
+    val birchWoodStuff = DnDBlocks.BIRCH_WOOD.headless()
+    val jungleWoodStuff = DnDBlocks.JUNGLE_WOOD.headless()
+    val acaciaWoodStuff = DnDBlocks.ACACIA_WOOD.headless()
+    val darkOakWoodStuff = DnDBlocks.DARK_OAK_WOOD.headless()
+    val mangroveWoodStuff = DnDBlocks.MANGROVE_WOOD.headless()
+    val cherryWoodStuff = DnDBlocks.CHERRY_WOOD.headless()
+    val cascadeWoodStuff = DnDBlocks.CASCADE_WOOD.headless()
+    val crimsonHyphaeStuff = DnDBlocks.CRIMSON_HYPHAE.headless()
+    val warpedHyphaeStuff = DnDBlocks.WARPED_HYPHAE.headless()
 
     val woodLists = listOf(
         oakWoodStuff,
@@ -162,33 +161,33 @@ object DnDItemLists {
             /*   DnDBlocks.HOLLOW_WARPED_STEM + DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM +*/ warpedHyphaeStuff
 
     val logPiles = listOf(
-        DnDWoodBlocks.OAK_LOG_PILE,
-        DnDWoodBlocks.SPRUCE_LOG_PILE,
-        DnDWoodBlocks.BIRCH_LOG_PILE,
-        DnDWoodBlocks.JUNGLE_LOG_PILE,
-        DnDWoodBlocks.ACACIA_LOG_PILE,
-        DnDWoodBlocks.DARK_OAK_LOG_PILE,
-        DnDWoodBlocks.MANGROVE_LOG_PILE,
-        DnDWoodBlocks.CHERRY_LOG_PILE,
-        DnDWoodBlocks.CASCADE_LOG_PILE,
-        DnDWoodBlocks.BAMBOO_PILE,
-        DnDWoodBlocks.STRIPPED_BAMBOO_PILE,
-        DnDWoodBlocks.CRIMSON_STEM_PILE,
-        DnDWoodBlocks.WARPED_STEM_PILE,
+        DnDBlocks.OAK_LOG_PILE,
+        DnDBlocks.SPRUCE_LOG_PILE,
+        DnDBlocks.BIRCH_LOG_PILE,
+        DnDBlocks.JUNGLE_LOG_PILE,
+        DnDBlocks.ACACIA_LOG_PILE,
+        DnDBlocks.DARK_OAK_LOG_PILE,
+        DnDBlocks.MANGROVE_LOG_PILE,
+        DnDBlocks.CHERRY_LOG_PILE,
+        DnDBlocks.CASCADE_LOG_PILE,
+        DnDBlocks.BAMBOO_PILE,
+        DnDBlocks.STRIPPED_BAMBOO_PILE,
+        DnDBlocks.CRIMSON_STEM_PILE,
+        DnDBlocks.WARPED_STEM_PILE,
     )
     val leafPiles = listOf(
-        DnDWoodBlocks.OAK_LEAF_PILE,
-        DnDWoodBlocks.SPRUCE_LEAF_PILE,
-        DnDWoodBlocks.BIRCH_LEAF_PILE,
-        DnDWoodBlocks.JUNGLE_LEAF_PILE,
-        DnDWoodBlocks.ACACIA_LEAF_PILE,
-        DnDWoodBlocks.DARK_OAK_LEAF_PILE,
-        DnDWoodBlocks.MANGROVE_LEAF_PILE,
-        DnDWoodBlocks.CHERRY_LEAF_PILE,
-        DnDWoodBlocks.AZALEA_LEAF_PILE,
-        DnDWoodBlocks.FLOWERING_AZALEA_LEAF_PILE,
-        DnDWoodBlocks.CASCADE_LEAF_PILE,
-        DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE,
+        DnDBlocks.OAK_LEAF_PILE,
+        DnDBlocks.SPRUCE_LEAF_PILE,
+        DnDBlocks.BIRCH_LEAF_PILE,
+        DnDBlocks.JUNGLE_LEAF_PILE,
+        DnDBlocks.ACACIA_LEAF_PILE,
+        DnDBlocks.DARK_OAK_LEAF_PILE,
+        DnDBlocks.MANGROVE_LEAF_PILE,
+        DnDBlocks.CHERRY_LEAF_PILE,
+        DnDBlocks.AZALEA_LEAF_PILE,
+        DnDBlocks.FLOWERING_AZALEA_LEAF_PILE,
+        DnDBlocks.CASCADE_LEAF_PILE,
+        DnDBlocks.GOLDEN_BIRCH_LEAF_PILE,
     )
     val overlayBlocks = DnDBlocks.OVERLAYS.flatMap { it.list }
 }

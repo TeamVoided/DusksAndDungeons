@@ -19,7 +19,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_GLOOM_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_LANTERN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_MOSSKIN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_PALE_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.item.*
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem
@@ -30,14 +29,14 @@ object DnDItems {
     val ITEMS = mutableListOf<Item>()
     val EVIL_ITEMS = mutableSetOf<Item>()
 
-    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDWoodBlocks.CASCADE_DOOR, Item.Settings()))
-    val BLUE_DOOR = register("blue_door", TallBlockItem(DnDWoodBlocks.BLUE_DOOR, Item.Settings()))
+    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDBlocks.CASCADE_DOOR, Item.Settings()))
+    val BLUE_DOOR = register("blue_door", TallBlockItem(DnDBlocks.BLUE_DOOR, Item.Settings()))
     val CASCADE_SIGN = register(
-        "cascade_sign", SignItem(CountSettings(16), DnDWoodBlocks.CASCADE_SIGN, DnDWoodBlocks.CASCADE_WALL_SIGN)
+        "cascade_sign", SignItem(CountSettings(16), DnDBlocks.CASCADE_SIGN, DnDBlocks.CASCADE_WALL_SIGN)
     )
     val CASCADE_HANGING_SIGN = register(
         "cascade_hanging_sign",
-        HangingSignItem(DnDWoodBlocks.CASCADE_HANGING_SIGN, DnDWoodBlocks.CASCADE_WALL_HANGING_SIGN, CountSettings(16))
+        HangingSignItem(DnDBlocks.CASCADE_HANGING_SIGN, DnDBlocks.CASCADE_WALL_HANGING_SIGN, CountSettings(16))
     )
     val FARMERS_HAT = register(
         "farmers_hat", EquipableItem(
@@ -115,21 +114,21 @@ object DnDItems {
 
     // ☢ Experimental ☢
     val GALLERY_MAPLE_DOOR =
-        register("gallery_maple_door", TallBlockItem(DnDWoodBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
+        register("gallery_maple_door", TallBlockItem(DnDBlocks.GALLERY_MAPLE_DOOR, Item.Settings()))
             .tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_SIGN = register(
         "gallery_maple_sign",
-        SignItem(CountSettings(16), DnDWoodBlocks.GALLERY_MAPLE_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_SIGN)
+        SignItem(CountSettings(16), DnDBlocks.GALLERY_MAPLE_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_SIGN)
     ).tellWitnessesThatIWasMurdered()
     val GALLERY_MAPLE_HANGING_SIGN = register(
         "gallery_maple_hanging_sign", HangingSignItem(
-            DnDWoodBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDWoodBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN, CountSettings(16)
+            DnDBlocks.GALLERY_MAPLE_HANGING_SIGN, DnDBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN, CountSettings(16)
         )
     ).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDWoodBlocks.BONEWOOD_DOOR, Item.Settings()))
+    val BONEWOOD_DOOR = register("bonewood_door", TallBlockItem(DnDBlocks.BONEWOOD_DOOR, Item.Settings()))
         .tellWitnessesThatIWasMurdered()
     val WITHERING_BONEWOOD_DOOR =
-        register("withering_bonewood_door", TallBlockItem(DnDWoodBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))
+        register("withering_bonewood_door", TallBlockItem(DnDBlocks.WITHERING_BONEWOOD_DOOR, Item.Settings()))
             .tellWitnessesThatIWasMurdered()
 
     val WITCH_HAT = register("witch_hat", EquipableItem(CountSettings(1))).tellWitnessesThatIWasMurdered()

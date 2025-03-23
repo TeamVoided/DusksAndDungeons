@@ -76,6 +76,19 @@ object DnDBlockSettings {
         .strength(2.0f)
         .sounds(BlockSoundGroup.CHERRY_WOOD)
         .lavaIgnitable()
+    val CASCADE_PLANKS: Settings = Settings.create()
+        .mapColor(MapColor.BLUE)
+        .instrument(NoteBlockInstrument.BASS)
+        .strength(2.0F, 3.0F)
+        .sounds(BlockSoundGroup.CHERRY_WOOD)
+        .lavaIgnitable()
+    val BLUE_DOOR: Settings =  Settings.create()
+        .mapColor(MapColor.BLUE)
+        .instrument(NoteBlockInstrument.BASS)
+        .strength(3.0f)
+        .nonOpaque()
+        .lavaIgnitable()
+        .pistonBehavior(PistonBehavior.DESTROY)
 
 
     // ☢ Experimental ☢

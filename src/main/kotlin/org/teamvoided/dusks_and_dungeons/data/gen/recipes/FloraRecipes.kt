@@ -11,14 +11,13 @@ import net.minecraft.item.Items
 import net.minecraft.recipe.RecipeCategory
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object FloraRecipes {
     fun generateFloraRecipes(e: RecipeExporter) {
-        e.createPiles(DnDWoodBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK)
-        e.createPiles(DnDWoodBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK)
+        e.createPiles(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK)
+        e.createPiles(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK)
         DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
             e.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }

@@ -21,7 +21,6 @@ import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.bigCandles
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.bigSoulCandles
@@ -57,13 +56,13 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         soulCandles.forEach { (candle, cake) -> add(cake) { candleCakeDrops(candle) } }
         bigSoulCandles.forEach { (candle, cake) -> add(cake) { candleCakeDrops(candle) } }
         leafPiles.forEachIndexed { idx, pile -> add(pile) { leafPile(it, DnDBlockLists.leaves[idx]) } }
-        add(DnDWoodBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDWoodBlocks.CASCADE_SAPLING) }
-        add(DnDWoodBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDWoodBlocks.GOLDEN_BIRCH_SAPLING) }
-        add(DnDWoodBlocks.CASCADE_LEAVES) {
-            oakLeavesDrops(it, DnDWoodBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES)
+        add(DnDBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDBlocks.CASCADE_SAPLING) }
+        add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
+        add(DnDBlocks.CASCADE_LEAVES) {
+            oakLeavesDrops(it, DnDBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES)
         }
-        add(DnDWoodBlocks.GOLDEN_BIRCH_LEAVES) {
-            leavesDrops(it, DnDWoodBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
+        add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
+            leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
         twoTallDrop(DnDBlocks.SPIDERLILY)
         addDropWithSilkTouch(ICE_SET.slab)

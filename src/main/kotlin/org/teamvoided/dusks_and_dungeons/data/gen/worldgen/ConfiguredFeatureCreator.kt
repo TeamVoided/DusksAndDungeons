@@ -38,7 +38,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.BLACKSTONE_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ROCKY_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SLATE_BLOCKS
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.BoulderConfig
@@ -112,9 +111,9 @@ object ConfiguredFeatureCreator {
         val blockTags = this.getRegistryLookup(RegistryKeys.BLOCK)
 
         val cascadeTree = TreeFeatureConfig.Builder(
-            BlockStateProvider.of(DnDWoodBlocks.CASCADE_LOG),
+            BlockStateProvider.of(DnDBlocks.CASCADE_LOG),
             ThreeWideTrunkPlacer(9, 2, 1),
-            BlockStateProvider.of(DnDWoodBlocks.CASCADE_LEAVES),
+            BlockStateProvider.of(DnDBlocks.CASCADE_LEAVES),
             CascadeFoliagePlacer(
                 ConstantIntProvider.create(3),
                 ConstantIntProvider.create(0),
@@ -124,7 +123,7 @@ object ConfiguredFeatureCreator {
             Optional.of(
                 CascadeRootPlacer(
                     BiasedToBottomIntProvider.create(0, 2),
-                    BlockStateProvider.of(DnDWoodBlocks.CASCADE_LOG),
+                    BlockStateProvider.of(DnDBlocks.CASCADE_LOG),
                     Optional.empty(),
                     CascadeRootConfig(
                         blockTags.getTagOrThrow(BlockTags.REPLACEABLE_BY_TREES),
@@ -136,7 +135,7 @@ object ConfiguredFeatureCreator {
             ),
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
-        val goldenBirchTree = treeBuilder(Blocks.BIRCH_LOG, DnDWoodBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
+        val goldenBirchTree = treeBuilder(Blocks.BIRCH_LOG, DnDBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
         val birchDecorator1 = AttachedToTrunkTreeDecorator(
             0.14f,
             1,
@@ -165,12 +164,12 @@ object ConfiguredFeatureCreator {
         )
         this.registerConfiguredFeature(
             DnDConfiguredFeature.CASCADE_TREE, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
-                ImmutableList.of(leafPiles(DnDWoodBlocks.CASCADE_LEAF_PILE, blockTags))
+                ImmutableList.of(leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags))
             ).build()
         )
         this.registerConfiguredFeature(
             DnDConfiguredFeature.CASCADE_TREE_BEES, Feature.TREE, cascadeTree.forceDirt().ignoreVines().decorators(
-                ImmutableList.of(BeehiveBigTreeDecorator(0.1F), leafPiles(DnDWoodBlocks.CASCADE_LEAF_PILE, blockTags))
+                ImmutableList.of(BeehiveBigTreeDecorator(0.1F), leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags))
             ).build()
         )
         this.registerConfiguredFeature(
@@ -178,7 +177,7 @@ object ConfiguredFeatureCreator {
                 ImmutableList.of(
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -188,7 +187,7 @@ object ConfiguredFeatureCreator {
                     BeehiveBigTreeDecorator(0.1F),
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -200,7 +199,7 @@ object ConfiguredFeatureCreator {
 //                        BlockStateProvider.of(Blocks.PODZOL), 2, 5,
 //                        blockTags.getTagOrThrow(BlockTags.DIRT)
 //                    ),
-                    leafPiles(DnDWoodBlocks.CASCADE_LEAF_PILE, blockTags)
+                    leafPiles(DnDBlocks.CASCADE_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -214,7 +213,7 @@ object ConfiguredFeatureCreator {
 //                    ),
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDWoodBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -233,7 +232,7 @@ object ConfiguredFeatureCreator {
 //                            BlockStateProvider.of(Blocks.PODZOL), 2, 5,
 //                            blockTags.getTagOrThrow(BlockTags.DIRT)
 //                        ),
-                        leafPiles(DnDWoodBlocks.DARK_OAK_LEAF_PILE, blockTags)
+                        leafPiles(DnDBlocks.DARK_OAK_LEAF_PILE, blockTags)
                     )
                 ).build()
         )
@@ -246,7 +245,7 @@ object ConfiguredFeatureCreator {
                 TwoLayersFeatureSize(1, 0, 1)
             )
                 .forceDirt().ignoreVines().decorators(
-                    ImmutableList.of<TreeDecorator>(leafPiles(DnDWoodBlocks.ACACIA_LEAF_PILE, blockTags))
+                    ImmutableList.of<TreeDecorator>(leafPiles(DnDBlocks.ACACIA_LEAF_PILE, blockTags))
                 ).build()
         )
         this.registerConfiguredFeature(
@@ -265,7 +264,7 @@ object ConfiguredFeatureCreator {
         this.registerConfiguredFeature(
             DnDConfiguredFeature.OAK_FALLEN_TREE, DnDFeatures.FALLEN_TREE, FallenTreeConfig(
                 BlockStateProvider.of(Blocks.OAK_LOG.defaultState),
-                BlockStateProvider.of(DnDWoodBlocks.HOLLOW_OAK_LOG.defaultState)
+                BlockStateProvider.of(DnDBlocks.HOLLOW_OAK_LOG.defaultState)
             )
         )
     }
@@ -280,7 +279,7 @@ object ConfiguredFeatureCreator {
                             DataPool.builder<BlockState>()
                                 .addWeighted(Blocks.CORNFLOWER.defaultState, 5)
                                 .addWeighted(Blocks.POPPY.defaultState, 5)
-                                .addWeighted(DnDWoodBlocks.CASCADE_SAPLING.defaultState, 1)
+                                .addWeighted(DnDBlocks.CASCADE_SAPLING.defaultState, 1)
                         )
                     )
                 )

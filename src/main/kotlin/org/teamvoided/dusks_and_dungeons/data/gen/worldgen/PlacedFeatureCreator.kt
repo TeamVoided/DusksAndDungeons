@@ -16,14 +16,14 @@ import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber", "LongMethod")
 object PlacedFeatureCreator {
     val cascadeSapling: BlockPredicateFilterPlacementModifier =
-        PlacedFeatureUtil.createWouldSurvivePlacementModifier(DnDWoodBlocks.CASCADE_SAPLING)
+        PlacedFeatureUtil.createWouldSurvivePlacementModifier(DnDBlocks.CASCADE_SAPLING)
     val goldenBirchSapling: BlockPredicateFilterPlacementModifier =
-        PlacedFeatureUtil.createWouldSurvivePlacementModifier(DnDWoodBlocks.GOLDEN_BIRCH_SAPLING)
+        PlacedFeatureUtil.createWouldSurvivePlacementModifier(DnDBlocks.GOLDEN_BIRCH_SAPLING)
     val darkOakSapling: BlockPredicateFilterPlacementModifier =
         PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
     val acaciaSapling: BlockPredicateFilterPlacementModifier =

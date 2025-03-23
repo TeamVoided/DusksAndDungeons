@@ -12,7 +12,6 @@ import net.minecraft.item.Item
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
 import net.minecraft.util.Identifier.ofDefault as mc
 
@@ -23,14 +22,14 @@ object DnDItemsClient {
         )
         registerTint(
             FoliageColors.getDefaultColor(),
-            DnDWoodBlocks.OAK_LEAF_PILE.asItem(),
-            DnDWoodBlocks.JUNGLE_LEAF_PILE.asItem(),
-            DnDWoodBlocks.ACACIA_LEAF_PILE.asItem(),
-            DnDWoodBlocks.DARK_OAK_LEAF_PILE.asItem()
+            DnDBlocks.OAK_LEAF_PILE.asItem(),
+            DnDBlocks.JUNGLE_LEAF_PILE.asItem(),
+            DnDBlocks.ACACIA_LEAF_PILE.asItem(),
+            DnDBlocks.DARK_OAK_LEAF_PILE.asItem()
         )
-        registerTint(FoliageColors.getSpruceColor(), DnDWoodBlocks.SPRUCE_LEAF_PILE.asItem())
-        registerTint(FoliageColors.getBirchColor(), DnDWoodBlocks.BIRCH_LEAF_PILE.asItem())
-        registerTint(FoliageColors.getMangroveColor(), DnDWoodBlocks.MANGROVE_LEAF_PILE.asItem())
+        registerTint(FoliageColors.getSpruceColor(), DnDBlocks.SPRUCE_LEAF_PILE.asItem())
+        registerTint(FoliageColors.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE.asItem())
+        registerTint(FoliageColors.getMangroveColor(), DnDBlocks.MANGROVE_LEAF_PILE.asItem())
         registerTint({ stack, _ -> DyedColorComponent.getColorOrDefault(stack, 0xffffff) }, DnDItems.FARMERS_HAT)
 
 

@@ -13,7 +13,6 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.voidlib.devin.extensions.tag.add
 import org.teamvoided.voidlib.devin.extensions.tag.copyColorTags
 import java.util.concurrent.CompletableFuture
@@ -123,8 +122,8 @@ class ItemTagsProvider(
 
         copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS)
         getOrCreateTagBuilder(ItemTags.LEAVES)
-            .add(DnDWoodBlocks.CASCADE_LEAVES.asItem())
-            .add(DnDWoodBlocks.GOLDEN_BIRCH_LEAVES.asItem())
+            .add(DnDBlocks.CASCADE_LEAVES.asItem())
+            .add(DnDBlocks.GOLDEN_BIRCH_LEAVES.asItem())
         copy(BlockTags.FLOWERS, ItemTags.FLOWERS)
 
         copy(BlockTags.STAIRS, ItemTags.STAIRS)

@@ -17,7 +17,7 @@ import net.minecraft.text.Text
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
@@ -72,7 +72,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
             provider,
             autumnBiomes
         ).display(
-            DnDWoodBlocks.CASCADE_SAPLING,
+            DnDBlocks.CASCADE_SAPLING,
             Text.of("Fall!"),
             Text.of("Visit the autumn biomes!"),
             null,
@@ -95,7 +95,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
                     )
                 )
             ).display(
-                DnDWoodBlocks.CASCADE_LOG,
+                DnDBlocks.CASCADE_LOG,
                 Text.of("Woof"),
                 Text.of("Find the Autumn Wolf"),
                 null,

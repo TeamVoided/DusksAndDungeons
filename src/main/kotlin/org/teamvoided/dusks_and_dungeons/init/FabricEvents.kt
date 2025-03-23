@@ -13,7 +13,6 @@ import net.minecraft.village.VillagerProfession
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.BARTERING_ADD_VIVIONS
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SNIFFER_ADD_MOONBERRY
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.voidlib.helpers.mc.*
 
@@ -37,8 +36,8 @@ fun modifyLootTables(
 
 
 fun addCommonWanderingTrades(trades: MutableList<TradeOffers.Factory>) {
-    trades.addSell(DnDWoodBlocks.CASCADE_SAPLING, 5, 1, 8)
-    trades.addSell(DnDWoodBlocks.GOLDEN_BIRCH_SAPLING, 5, 1, 8)
+    trades.addSell(DnDBlocks.CASCADE_SAPLING, 5, 1, 8)
+    trades.addSell(DnDBlocks.GOLDEN_BIRCH_SAPLING, 5, 1, 8)
 
     trades.add1for1(DnDItems.LANTERN_PUMPKIN_SEEDS, 12)
     trades.add1for1(DnDItems.MOSSKIN_PUMPKIN_SEEDS, 12)

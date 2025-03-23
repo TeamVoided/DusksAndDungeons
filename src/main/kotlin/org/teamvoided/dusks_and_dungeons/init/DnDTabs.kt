@@ -11,7 +11,6 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
-import org.teamvoided.dusks_and_dungeons.init.blocks.DnDWoodBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
 import org.teamvoided.dusks_and_dungeons.util.addCandles
@@ -23,15 +22,15 @@ import org.teamvoided.voidlib.helpers.mc.*
 object DnDTabs {
     val DUSKS_AND_DUNGEONS = register(
         MODID, FabricItemGroup.builder()
-            .icon(DnDWoodBlocks.CASCADE_SAPLING).translation("itemGroup.$MODID.$MODID")
+            .icon(DnDBlocks.CASCADE_SAPLING).translation("itemGroup.$MODID.$MODID")
             .entries { _, entries ->
                 entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns)
                 entries.addItems(
                     DnDItems.BLUE_DOOR,
-                    DnDWoodBlocks.CASCADE_SAPLING,
-                    DnDWoodBlocks.CASCADE_LEAVES,
-                    DnDWoodBlocks.GOLDEN_BIRCH_SAPLING,
-                    DnDWoodBlocks.GOLDEN_BIRCH_LEAVES,
+                    DnDBlocks.CASCADE_SAPLING,
+                    DnDBlocks.CASCADE_LEAVES,
+                    DnDBlocks.GOLDEN_BIRCH_SAPLING,
+                    DnDBlocks.GOLDEN_BIRCH_LEAVES,
                     DnDItems.FARMERS_HAT,
                     DnDItems.WILD_WHEAT,
                     DnDItems.GOLDEN_BEETROOT,
@@ -194,14 +193,14 @@ object DnDTabs {
         }
 
         modifyTab(ItemGroups.NATURAL_BLOCKS) {
-            addAfter(Items.CHERRY_LOG, DnDWoodBlocks.CASCADE_LOG)
+            addAfter(Items.CHERRY_LOG, DnDBlocks.CASCADE_LOG)
             addBefore(Items.PINK_PETALS, DnDBlockLists.flowerbedBlocks)
             addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
             addAfter(
                 Items.FLOWERING_AZALEA_LEAVES,
-                listOf(DnDWoodBlocks.CASCADE_LEAVES, DnDWoodBlocks.GOLDEN_BIRCH_LEAVES)
+                listOf(DnDBlocks.CASCADE_LEAVES, DnDBlocks.GOLDEN_BIRCH_LEAVES)
             )
-            addAfter(Items.FLOWERING_AZALEA, DnDWoodBlocks.CASCADE_SAPLING, DnDWoodBlocks.GOLDEN_BIRCH_SAPLING)
+            addAfter(Items.FLOWERING_AZALEA, DnDBlocks.CASCADE_SAPLING, DnDBlocks.GOLDEN_BIRCH_SAPLING)
             addAfter(Items.VINE, DnDItems.MOONBERRY_VINELET, DnDBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
             DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
                 addAfter(DnDBlockLists.leaves[idx], leafPile)
