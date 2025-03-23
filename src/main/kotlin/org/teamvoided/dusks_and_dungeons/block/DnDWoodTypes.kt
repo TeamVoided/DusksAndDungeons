@@ -29,6 +29,7 @@ object DnDWoodTypes {
             .register(id("cascade"))
     val CASCADE_WOOD_TYPE = registerWoodType("cascade", WoodType.CHERRY, CASCADE_BLOCK_SET_TYPE)
 
+    @Suppress("SameParameterValue")
     private fun registerWoodType(id: String, woodType: WoodType, blockSet: BlockSetType): WoodType =
         WoodTypeBuilder.copyOf(woodType).register(id(id), blockSet)
 }
