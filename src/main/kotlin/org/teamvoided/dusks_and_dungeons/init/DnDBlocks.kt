@@ -4,11 +4,8 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
-import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
-import net.minecraft.block.enums.NoteBlockInstrument
-import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -22,7 +19,6 @@ import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
-import org.teamvoided.dusks_and_dungeons.block.big.BigLanternWithSpiralBlock
 import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
 import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
@@ -34,6 +30,7 @@ import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections.CAN
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
+import kotlin.collections.forEach
 import kotlin.collections.mutableMapOf
 import kotlin.collections.mutableSetOf
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set
@@ -297,7 +294,7 @@ object DnDBlocks {
     val BIG_SOUL_LANTERN =
         register("big_soul_lantern", BigLanternBlock(copy(SOUL_LANTERN).sounds(bigLanternSound)).pickaxe())
 
-    //TODO Move this to Varinace
+    //TODO Move this to Variance
     /*   val BIG_REDSTONE_LANTERN = register(
          "big_redstone_lantern",
          BigRedstoneLanternBlock(copy(LANTERN).sounds(bigLanternSound).luminance(luminanceOf(8))).pickaxe()
@@ -440,158 +437,7 @@ object DnDBlocks {
     // endregion
 
 
-    // region ☢ Experimental ☢
-
-    val GALLERY_MAPLE_SAPLING = register(
-        "gallery_maple_sapling", ThreeWideTreeSaplingBlock(
-            SaplingGenerators.CASCADE,
-            Settings.create()
-                .mapColor(MapColor.RED).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.AZALEA)
-                .pistonBehavior(PistonBehavior.DESTROY).luminance(light(1))
-        ).cutout()
-    ).tellWitnessesThatIWasMurdered()
-    val POTTED_GALLERY_MAPLE_SAPLING =
-        registerNoItem("potted_gallery_maple_sapling", pottedVariant(GALLERY_MAPLE_SAPLING)).cutout()
-    val GALLERY_MAPLE_LEAVES = register(
-        "gallery_maple_leaves", LeavesBlock(
-            Settings.create().strength(0.2f).ticksRandomly()
-                .nonOpaque().allowsSpawning(Blocks::allowOcelotsAndParrots).suffocates(Blocks::nonSolid)
-                .blockVision(Blocks::nonSolid).pistonBehavior(PistonBehavior.DESTROY).solidBlock(Blocks::nonSolid)
-                .sounds(BlockSoundGroup.GRASS).mapColor(MapColor.RED)
-        ).cutout().axe().hoe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_LEAF_PILE = register(
-        "gallery_maple_leaf_pile", fallingLeafPile(DnDParticles.CASCADE_LEAF_PARTICLE, MapColor.RED).cutout()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_LOG = register("gallery_maple_log", logOf(MapColor.GRAY, MapColor.BROWN, BlockSoundGroup.WOOD))
-        .tellWitnessesThatIWasMurdered()
-    val HOLLOW_GALLERY_MAPLE_LOG =
-        register("hollow_gallery_maple_log", hollowLog(GALLERY_MAPLE_LOG)).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_WOOD = register(
-        "gallery_maple_wood", PillarBlock(
-            Settings.create().mapColor(MapColor.BROWN).instrument(NoteBlockInstrument.BASS).strength(2.0f)
-                .sounds(BlockSoundGroup.WOOD)
-        )
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_WOOD_STAIRS =
-        register("gallery_maple_wood_stairs", stairsOf(GALLERY_MAPLE_WOOD)).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_WOOD_SLAB =
-        register("gallery_maple_wood_slab", slabOf(GALLERY_MAPLE_WOOD)).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_WOOD_WALL =
-        register("gallery_maple_wood_wall", wallOf(GALLERY_MAPLE_WOOD)).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_LOG_PILE =
-        register("gallery_maple_log_pile", logPile(GALLERY_MAPLE_WOOD)).tellWitnessesThatIWasMurdered()
-    val STRIPPED_GALLERY_MAPLE_LOG = register(
-        "stripped_gallery_maple_log", logOf(MapColor.GRAY, MapColor.GRAY, BlockSoundGroup.WOOD)
-    ).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_GALLERY_MAPLE_LOG =
-        register("hollow_stripped_gallery_maple_log", hollowLog(STRIPPED_GALLERY_MAPLE_LOG))
-            .tellWitnessesThatIWasMurdered()
-    val STRIPPED_GALLERY_MAPLE_WOOD = register(
-        "stripped_gallery_maple_wood", PillarBlock(copy(GALLERY_MAPLE_WOOD).mapColor(MapColor.GRAY))
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_PLANKS = register(
-        "gallery_maple_planks", Block(
-            Settings.create()
-                .mapColor(MapColor.GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
-                .sounds(BlockSoundGroup.WOOD)
-        ).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_STAIRS =
-        register("gallery_maple_stairs", stairsOf(GALLERY_MAPLE_PLANKS).axe()).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_SLAB =
-        register("gallery_maple_slab", slabOf(GALLERY_MAPLE_PLANKS).axe()).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_FENCE =
-        register("gallery_maple_fence", fenceOf(GALLERY_MAPLE_PLANKS).axe()).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_FENCE_GATE = register(
-        "gallery_maple_fence_gate", fenceGateOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_DOOR = registerNoItem(
-        "gallery_maple_door", doorOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_PLANKS).cutout().axe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_TRAPDOOR = register(
-        "gallery_maple_trapdoor",
-        trapdoorOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_DOOR).cutout().axe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_PRESSURE_PLATE = register(
-        "gallery_maple_pressure_plate",
-        pressurePlateOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE, GALLERY_MAPLE_PLANKS).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_BUTTON =
-        register("gallery_maple_button", buttonOf(DnDWoodTypes.GALLERY_MAPLE_BLOCK_SET_TYPE).axe())
-            .tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_SIGN = registerNoItem(
-        "gallery_maple_sign", signOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_WALL_SIGN = registerNoItem(
-        "gallery_maple_wall_sign",
-        wallSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS, GALLERY_MAPLE_SIGN).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_HANGING_SIGN = registerNoItem(
-        "gallery_maple_hanging_sign", hangingSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val GALLERY_MAPLE_WALL_HANGING_SIGN = registerNoItem(
-        "gallery_maple_wall_hanging_sign",
-        wallHangingSignOf(DnDWoodTypes.GALLERY_MAPLE_WOOD_TYPE, GALLERY_MAPLE_PLANKS, GALLERY_MAPLE_HANGING_SIGN).axe()
-    ).tellWitnessesThatIWasMurdered()
-
-    val BONEWOOD_PLANKS = register(
-        "bonewood_planks", Block(
-            Settings.create()
-                .mapColor(MapColor.SNOW).instrument(NoteBlockInstrument.XYLOPHONE).strength(2.0F, 3.0F)
-                .sounds(bonewoodSound)
-        ).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_STAIRS =
-        register("bonewood_stairs", stairsOf(BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_SLAB =
-        register("bonewood_slab", slabOf(BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_FENCE =
-        register("bonewood_fence", fenceOf(BONEWOOD_PLANKS).axe()).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_FENCE_GATE = register(
-        "bonewood_fence_gate", FenceGateBlock(DnDWoodTypes.BONEWOOD_WOOD_TYPE, copy(BONEWOOD_PLANKS).solid()).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_DOOR = registerNoItem(
-        "bonewood_door",
-        DoorBlock(DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE, copy(BONEWOOD_PLANKS).strength(3.0f).nonOpaque()).cutout().axe()
-    ).tellWitnessesThatIWasMurdered()
-    val BONEWOOD_TRAPDOOR = register(
-        "bonewood_trapdoor",
-        TrapdoorBlock(
-            DnDWoodTypes.BONEWOOD_BLOCK_SET_TYPE, copy(BONEWOOD_DOOR).allowsSpawning(Blocks::nonSpawnable),
-        ).cutout().axe()
-    ).tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_PLANKS = register(
-        "withering_bonewood_planks",
-        Block(copy(BONEWOOD_PLANKS).mapColor(MapColor.BLACK).sounds(witheringBonewoodSound)).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_STAIRS =
-        register("withering_bonewood_stairs", stairsOf(WITHERING_BONEWOOD_PLANKS).axe())
-            .tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_SLAB = register("withering_bonewood_slab", slabOf(WITHERING_BONEWOOD_PLANKS).axe())
-        .tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_FENCE =
-        register("withering_bonewood_fence", fenceOf(WITHERING_BONEWOOD_PLANKS).axe())
-            .tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_FENCE_GATE = register(
-        "withering_bonewood_fence_gate",
-        FenceGateBlock(DnDWoodTypes.WITHERING_BONEWOOD_WOOD_TYPE, copy(WITHERING_BONEWOOD_PLANKS).solid()).axe()
-    ).tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_DOOR = registerNoItem(
-        "withering_bonewood_door",
-        DoorBlock(
-            DnDWoodTypes.WITHERING_BONEWOOD_BLOCK_SET_TYPE, copy(WITHERING_BONEWOOD_PLANKS).strength(3.0f).nonOpaque(),
-        ).cutout().axe()
-    ).tellWitnessesThatIWasMurdered()
-    val WITHERING_BONEWOOD_TRAPDOOR = register(
-        "withering_bonewood_trapdoor", TrapdoorBlock(
-            DnDWoodTypes.WITHERING_BONEWOOD_BLOCK_SET_TYPE,
-            copy(WITHERING_BONEWOOD_DOOR).allowsSpawning(Blocks::nonSpawnable),
-        ).cutout().axe()
-    ).tellWitnessesThatIWasMurdered()
-
-    val PAINTED_ROSE = register("painted_rose", PaintedRoseBlock(Set.PAINTED_ROSE).cutout())
-        .tellWitnessesThatIWasMurdered()
+    // TODO add this
     val GOLDEN_MUSHROOM = register(
         "golden_mushroom", MushroomWithSporesPlantBlock(
             TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM
@@ -605,79 +451,6 @@ object DnDBlocks {
     val GOLDEN_MUSHROOM_STEM_BLOCK = register(
         "golden_mushroom_stem_block", MushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9))
     ).tellWitnessesThatIWasMurdered()
-    val BROWN_TREE_FUNGUS = register("brown_tree_fungus", TransparentBlock(copy(BROWN_MUSHROOM)).cutout())
-        .tellWitnessesThatIWasMurdered()
-    val SPIDERLILY = register(
-        "spiderlily", SpiderlilyBlock(copy(ROSE_BUSH).ticksRandomly()).plant()
-    ).tellWitnessesThatIWasMurdered()
-    val JOUNCESHROOM_BLOCK = register(
-        "jounceshroom_block", MushroomLaunchBlock(
-            copy(BROWN_MUSHROOM_BLOCK).sounds(BlockSoundGroup.SHROOMLIGHT).mapColor(MapColor.PURPLE_TERRACOTTA)
-        )
-    ).tellWitnessesThatIWasMurdered()
-    val WATER_FERN = registerNoItem("water_fern", WaterFernBlock(copy(LILY_PAD)).cutout())
-        .tellWitnessesThatIWasMurdered()
-
-    val BUNNY_GRAVE = register("bunny_grave", BunnyGraveBlock(copy(STONE_BRICK_WALL)).pickaxe())
-        .tellWitnessesThatIWasMurdered()
-
-    // celestal block
-    val BIG_CELESTAL_CHAIN = register(
-        "big_celestal_chain", BigChainBlock(copy(CHAIN).sounds(BlockSoundGroup.BLOCK_VAULT_BREAK)).cutout().pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-    val BIG_MOON_LANTERN = register(
-        "big_moon_lantern",
-        BigLanternWithSpiralBlock(
-            0xE01638,
-            0x8B3DB5,
-            copy(BIG_SOUL_LANTERN).sounds(BlockSoundGroup.BLOCK_TRIAL_SPAWNER_BREAK)
-        ).pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-    val BIG_EARTH_LANTERN = register(
-        "big_earth_lantern", BigLanternWithSpiralBlock(0xE5AE16, 0xE5B816, copy(BIG_MOON_LANTERN)).pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-    val BIG_COMET_LANTERN = register(
-        "big_comet_lantern", BigLanternWithSpiralBlock(0xE57716, 0xCC6C28, copy(BIG_MOON_LANTERN)).pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-    val BIG_SUN_LANTERN = register(
-        "big_sun_lantern", BigLanternWithSpiralBlock(0x16E5E5, 0x1470CC, copy(BIG_MOON_LANTERN)).pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-    val BIG_STAR_LANTERN = register(
-        "big_star_lantern", BigLanternWithSpiralBlock(0x7E16E5, 0xE52DE5, copy(BIG_MOON_LANTERN)).pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-    val BIG_NEBULAE_LANTERN = register(
-        "big_nebulae_lantern", BigLanternWithSpiralBlock(0x24CADA, 0x52D973, copy(BIG_MOON_LANTERN)).pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-    val BIG_ECLIPSE_LANTERN = register(
-        "big_eclipse_lantern", BigLanternWithSpiralBlock(0xE5E5E5, 0xBFBFBF, copy(BIG_MOON_LANTERN)).pickaxe()
-    ).tellWitnessesThatIWasMurdered()
-
-    // Haunted graves
-    val HAUNTED_GRAVESTONE = registerHGravestone("haunted_gravestone", STONE_GRAVESTONE)
-    val SMALL_HAUNTED_GRAVESTONE = registerSmallHGravestone("small_haunted_gravestone", STONE_GRAVESTONE)
-    val HAUNTED_DEEPSLATE_GRAVESTONE = registerHGravestone("haunted_deepslate_gravestone", DEEPSLATE_GRAVESTONE)
-    val SMALL_HAUNTED_DEEPSLATE_GRAVESTONE =
-        registerSmallHGravestone("small_haunted_deepslate_gravestone", DEEPSLATE_GRAVESTONE)
-    val HAUNTED_TUFF_GRAVESTONE = registerHGravestone("haunted_tuff_gravestone", TUFF_GRAVESTONE)
-    val SMALL_HAUNTED_TUFF_GRAVESTONE = registerSmallHGravestone("small_haunted_tuff_gravestone", TUFF_GRAVESTONE)
-    val HAUNTED_BLACKSTONE_GRAVESTONE = registerHGravestone("haunted_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
-    val SMALL_HAUNTED_BLACKSTONE_GRAVESTONE =
-        registerSmallHGravestone("small_haunted_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
-
-
-    val CELESTAL_BELL = register("celestal_bell", CelestalBellBlock(copy(BELL))).tellWitnessesThatIWasMurdered()
-
-    val MOONCORE = register(
-        "mooncore", CrytalClusterWithParticlesBlock(12.0f, 2.0f, Set.MOONCORE).cutout()
-    ).tellWitnessesThatIWasMurdered()
-    val TALL_REDSTONE_CRYSTAL = register(
-        "tall_redstone_crystal", TallRedstoneCrystalBlock(Set.REDSTONE_CRYSTAL).cutout()
-    ).tellWitnessesThatIWasMurdered()
-    val POT_O_SCREAMS = register("pot_o_screams", PotOScreamsBlock(copy(DECORATED_POT))).tellWitnessesThatIWasMurdered()
-    val CHEST_O_SOULS = register("chest_o_souls", ChestOSoulsBlock(copy(CHEST))).tellWitnessesThatIWasMurdered()
-
-    val QUARTER_BLOCK_PILE = registerNoItem("quarter_block_pile", QuarterBlockPileBlock(Settings.create())).cutout()
-    // endregion
 
     /* Future Content
     val MOLTEN_LAVASPONGE = register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe()
@@ -714,7 +487,7 @@ object DnDBlocks {
         val regBlock = registerNoItem(id, block)
         // Switch away from this when the file has been merged
         DnDItems.register(id, BlockItem(regBlock, Item.Settings()))
-//        BLOCK_ITEMS[id]?.let { error("Id $it already exists in BLOCK_ITEMS") }
+//        BLOCK_ITEMS[id]?.let { error("It $it already exists in BLOCK_ITEMS") }
 //        BLOCK_ITEMS[id] = BlockItem(regBlock, Item.Settings())
         return regBlock
     }

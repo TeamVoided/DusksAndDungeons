@@ -64,11 +64,11 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
-        twoTallDrop(DnDBlocks.SPIDERLILY)
+//        twoTallDrop(DnDBlocks.SPIDERLILY)
         addDropWithSilkTouch(ICE_SET.slab)
         addIceSlab(ICE_SET.slab)
         addDropWithSilkTouch(ICE_SET.wall)
-        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
+//        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
         add(DnDBlocks.WARPED_WART) {
             val state = BlockStatePropertyLootCondition.builder(it)
                 .properties(StatePredicate.Builder.create().exactMatch(NetherWartBlock.AGE, 3))

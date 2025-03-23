@@ -5,7 +5,10 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry.Pendin
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.particle.ParticleType
-import org.teamvoided.dusks_and_dungeons.particle.*
+import org.teamvoided.dusks_and_dungeons.particle.AutumnLeafParticle
+import org.teamvoided.dusks_and_dungeons.particle.ColorableOminousParticle
+import org.teamvoided.dusks_and_dungeons.particle.FallingLeafParticle
+import org.teamvoided.dusks_and_dungeons.particle.SnowflakeParticle
 
 object DnDParticlesClient {
     fun init() {

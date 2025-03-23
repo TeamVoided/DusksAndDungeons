@@ -39,8 +39,6 @@ object DnDBlockTags {
     val BIG_SOUL_CANDLES = create("big_soul_candles")
     val GRAVESTONES = create("gravestones")
     val SMALL_GRAVESTONES = create("small_gravestones")
-    val HAUNTED_GRAVESTONES = create("haunted_gravestones")
-    val SMALL_HAUNTED_GRAVESTONES = create("small_haunted_gravestones")
     val HEADSTONES = create("headstones")
     val NETHER_BRICKS = create("nether_bricks")
     val POLISHED_NETHER_BRICKS = create("polished_nether_bricks")

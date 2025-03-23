@@ -89,33 +89,6 @@ object DnDBlockSettings {
         .nonOpaque()
         .lavaIgnitable()
         .pistonBehavior(PistonBehavior.DESTROY)
-
-
-    // ☢ Experimental ☢
-    val MOONCORE: Settings = Settings.create()
-        .mapColor(MapColor.LIGHT_BLUE)
-        .solid().nonOpaque()
-        .sounds(BlockSoundGroup.AMETHYST_CLUSTER)
-        .strength(1.5f)
-        .ticksRandomly()
-        .luminance(15)
-        .pistonBehavior(PistonBehavior.DESTROY)
-    val REDSTONE_CRYSTAL: Settings = Settings.create()
-        .mapColor(MapColor.RED)
-        .solid().nonOpaque()
-        .sounds(BlockSoundGroup.AMETHYST_CLUSTER)
-        .strength(1.5f)
-        .ticksRandomly()
-        .luminance(9)
-        .pistonBehavior(PistonBehavior.DESTROY)
-    val PAINTED_ROSE: Settings = Settings.create()
-        .mapColor(MapColor.BLUE)
-        .noCollision()
-        .ticksRandomly()
-        .breakInstantly()
-        .offsetType(OffsetType.XZ)
-        .sounds(BlockSoundGroup.GRASS)
-        .pistonBehavior(PistonBehavior.DESTROY)
     val GOLDEN_MUSHROOM_BLOCK: Settings = copy(BROWN_MUSHROOM_BLOCK).mapColor(MapColor.GOLD)
     val GOLDEN_MUSHROOM: Settings = Settings.create()
         .mapColor(MapColor.GOLD)
@@ -127,7 +100,6 @@ object DnDBlockSettings {
         .offsetType(OffsetType.XYZ)
         .postProcess(Blocks::solid)
         .pistonBehavior(PistonBehavior.DESTROY)
-
 
     // Fun!
     fun petals(color: MapColor): Settings = copy(PINK_PETALS).mapColor(color)

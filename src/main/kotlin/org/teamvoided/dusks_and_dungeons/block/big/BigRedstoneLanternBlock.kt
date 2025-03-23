@@ -12,6 +12,7 @@ import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
+// TODO move to Variance
 class BigRedstoneLanternBlock(settings: Settings) : BigLanternBlock(settings) {
     init {
         defaultState = stateManager.defaultState

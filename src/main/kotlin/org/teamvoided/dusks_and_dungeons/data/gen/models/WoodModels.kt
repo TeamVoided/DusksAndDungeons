@@ -35,24 +35,6 @@ object WoodModels {
         )
         gen.registerSingleton(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
 
-        gen.registerFlowerPotPlant(
-            DnDBlocks.GALLERY_MAPLE_SAPLING,
-            DnDBlocks.POTTED_GALLERY_MAPLE_SAPLING,
-            BlockStateModelGenerator.TintType.NOT_TINTED
-        )
-        gen.registerLog(DnDBlocks.GALLERY_MAPLE_LOG)
-            .log(DnDBlocks.GALLERY_MAPLE_LOG)
-            .wood(DnDBlocks.GALLERY_MAPLE_WOOD)
-        gen.registerLog(DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG)
-            .log(DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG)
-            .wood(DnDBlocks.STRIPPED_GALLERY_MAPLE_WOOD)
-        gen.registerHangingSign(
-            DnDBlocks.STRIPPED_GALLERY_MAPLE_LOG,
-            DnDBlocks.GALLERY_MAPLE_HANGING_SIGN,
-            DnDBlocks.GALLERY_MAPLE_WALL_HANGING_SIGN
-        )
-        gen.registerSingleton(DnDBlocks.GALLERY_MAPLE_LEAVES, TexturedModel.LEAVES)
-
         gen.createWood(DnDBlocks.OAK_WOOD, Blocks.OAK_LOG)
         gen.createWood(DnDBlocks.SPRUCE_WOOD, Blocks.SPRUCE_LOG)
         gen.createWood(DnDBlocks.BIRCH_WOOD, Blocks.BIRCH_LOG)
@@ -64,14 +46,6 @@ object WoodModels {
         gen.createWood(DnDBlocks.CRIMSON_HYPHAE, Blocks.CRIMSON_STEM)
         gen.createWood(DnDBlocks.WARPED_HYPHAE, Blocks.WARPED_STEM)
         gen.createWood(DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
-
-        gen.genPsudoFamily( // delete this when done
-            DnDBlocks.GALLERY_MAPLE_WOOD_STAIRS,
-            DnDBlocks.GALLERY_MAPLE_WOOD_SLAB,
-            DnDBlocks.GALLERY_MAPLE_WOOD_WALL,
-            DnDBlocks.GALLERY_MAPLE_LOG,
-            DnDBlocks.GALLERY_MAPLE_WOOD
-        )
 
         DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->
             val log = DnDBlockLists.logsAndStrippedLogs[idx].first

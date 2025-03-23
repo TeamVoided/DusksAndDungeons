@@ -155,17 +155,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE)
             .add(DnDBlocks.SMALL_TUFF_GRAVESTONE)
             .add(DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE)
-        getOrCreateTagBuilder(DnDBlockTags.HAUNTED_GRAVESTONES)
-            .forceAddTag(DnDBlockTags.SMALL_HAUNTED_GRAVESTONES)
-            .add(DnDBlocks.HAUNTED_GRAVESTONE)
-            .add(DnDBlocks.HAUNTED_DEEPSLATE_GRAVESTONE)
-            .add(DnDBlocks.HAUNTED_TUFF_GRAVESTONE)
-            .add(DnDBlocks.HAUNTED_BLACKSTONE_GRAVESTONE)
-        getOrCreateTagBuilder(DnDBlockTags.SMALL_HAUNTED_GRAVESTONES)
-            .add(DnDBlocks.SMALL_HAUNTED_GRAVESTONE)
-            .add(DnDBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE)
-            .add(DnDBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE)
-            .add(DnDBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE)
         getOrCreateTagBuilder(DnDBlockTags.HEADSTONES)
             .add(DnDBlocks.HEADSTONE)
 
@@ -317,8 +306,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         vanillaBlockTypeShapeTags()
         vanillaOverlayTags()
 
-        getOrCreateTagBuilder(BlockTags.FEATURES_CANNOT_REPLACE)
-            .add(DnDBlocks.CHEST_O_SOULS)
         getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
             .forceAddTag(DnDBlockTags.FLOWERBEDS)
@@ -345,10 +332,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.HOLLOW_LOGS)
         getOrCreateTagBuilder(BlockTags.GUARDED_BY_PIGLINS)
             .forceAddTag(DnDBlockTags.GRAVESTONES)
-        getOrCreateTagBuilder(BlockTags.PIGLIN_REPELLENTS)
-            .forceAddTag(DnDBlockTags.HAUNTED_GRAVESTONES)
-            .add(DnDBlocks.CHEST_O_SOULS)
-            .add(DnDBlocks.POT_O_SCREAMS)
         getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE)
             .forceAddTag(DnDBlockTags.PUMPKINS)
             .forceAddTag(DnDBlockTags.CARVED_PUMPKINS)
@@ -451,7 +434,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     private fun conventionTags() {
         getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES).add(DnDBlocks.OVERGROWN_COBBLESTONE.parent)
         getOrCreateTagBuilder(ConventionalBlockTags.CHAINS).add(DnDBlocks.BIG_CHAIN)
-        getOrCreateTagBuilder(ConventionalBlockTags.WOODEN_CHESTS).add(DnDBlocks.CHEST_O_SOULS)
     }
 
     private fun overlayTags() {

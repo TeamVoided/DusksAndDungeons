@@ -86,7 +86,6 @@ object DnDTabs {
                     DnDBlocks.SMALL_GLOWING_PALE_PUMPKIN,
                 )
                 entries.addLists(
-//                    DnDItemLists.pineWood,
                     DnDItemLists.woodStuff,
                     DnDItemLists.logPiles,
                     DnDItemLists.leafPiles,
@@ -94,14 +93,12 @@ object DnDTabs {
                     DnDItemLists.mossyPolishedStone,
                     DnDItemLists.overgrownCobblestone,
                     DnDItemLists.overgrownStoneBricks,
-//                DnDItemLists.snowyStoneBricks,
                     DnDItemLists.ice
                 )
                 entries.addItems(
                     DnDBlocks.ROOT_BLOCK,
                     DnDBlocks.STONE_PILLAR,
                     DnDBlocks.DEEPSLATE_PILLAR,
-//                DnDBlocks.TALL_REDSTONE_CRYSTAL,
                     DnDBlocks.STONE_GRAVESTONE,
                     DnDBlocks.SMALL_STONE_GRAVESTONE,
                     DnDBlocks.DEEPSLATE_GRAVESTONE,
@@ -153,8 +150,7 @@ object DnDTabs {
         "dnd_everything", FabricItemGroup.builder()
             .icon(DnDBlocks.STONE_PILLAR).name("DnD Everything")
             .entries { _, entries ->
-                if (isDev())
-                    entries.addLists(DnDItems.ITEMS.filterNot(EVIL_ITEMS::contains))
+                if (isDev()) entries.addLists(DnDItems.ITEMS)
             }
     )
     val DND_EXPERIMENTAL = register(

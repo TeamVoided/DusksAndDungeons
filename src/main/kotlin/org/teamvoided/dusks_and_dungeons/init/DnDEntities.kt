@@ -7,7 +7,7 @@ import net.minecraft.entity.SpawnGroup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.entity.*
+import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 
 object DnDEntities {
     val SCARECROW = register(

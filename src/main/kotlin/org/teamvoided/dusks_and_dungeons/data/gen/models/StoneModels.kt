@@ -9,33 +9,12 @@ import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object StoneModels {
     fun stoneModels(gen: BlockStateModelGenerator) {
-        gen.registerGravestones(
-            DnDBlocks.STONE_GRAVESTONE,
-            DnDBlocks.SMALL_STONE_GRAVESTONE,
-            DnDBlocks.HAUNTED_GRAVESTONE,
-            DnDBlocks.SMALL_HAUNTED_GRAVESTONE
-        )
-        gen.registerGravestones(
-            DnDBlocks.DEEPSLATE_GRAVESTONE,
-            DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE,
-            DnDBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
-            DnDBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE
-        )
-        gen.registerGravestones(
-            DnDBlocks.TUFF_GRAVESTONE,
-            DnDBlocks.SMALL_TUFF_GRAVESTONE,
-            DnDBlocks.HAUNTED_TUFF_GRAVESTONE,
-            DnDBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE
-        )
-        gen.registerGravestones(
-            DnDBlocks.BLACKSTONE_GRAVESTONE,
-            DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE,
-            DnDBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
-            DnDBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE
-        )
+        gen.registerGravestones(DnDBlocks.STONE_GRAVESTONE, DnDBlocks.SMALL_STONE_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.DEEPSLATE_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.TUFF_GRAVESTONE, DnDBlocks.SMALL_TUFF_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.BLACKSTONE_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE)
 
         gen.registerHeadstone(DnDBlocks.HEADSTONE)
-        gen.registerBunnyGrave(DnDBlocks.BUNNY_GRAVE, Blocks.SMOOTH_STONE, Blocks.STONE)
 
         gen.registerAxisRotated(
             DnDBlocks.STONE_PILLAR,

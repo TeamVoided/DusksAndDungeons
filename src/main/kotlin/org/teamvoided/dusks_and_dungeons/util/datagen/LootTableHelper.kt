@@ -8,9 +8,6 @@ import net.minecraft.block.enums.DoubleBlockHalf
 import net.minecraft.block.enums.SlabType
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.data.server.loot_table.BlockLootTableGenerator
-import net.minecraft.data.server.loot_table.BlockLootTableGenerator.dropsConditionally
-import net.minecraft.enchantment.Enchantments
-import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition
@@ -18,19 +15,18 @@ import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.DynamicEntry
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LootTableEntry
-import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.CopyComponentsLootFunction
 import net.minecraft.loot.function.CopyComponentsLootFunction.C_zcqyfuyv
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
-import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.predicate.StatePredicate
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.state.property.Property
 import net.minecraft.util.StringIdentifiable
-import org.teamvoided.dusks_and_dungeons.block.*
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
+import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
+import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
-import org.teamvoided.voidlib.devin.provider.OpenBlockLootTableProvider
 
 fun BlockLootTableGenerator.leafPile(pile: Block, leaves: Block): LootTable.Builder {
     return LootTable.builder().pool(
@@ -114,7 +110,7 @@ fun decoratedPotDrops(pot: Block): LootTable.Builder {
     )
 }
 
-fun OpenBlockLootTableProvider.redstoneCrystalDrops(fullBlock: Block): LootTable.Builder {
+/*fun OpenBlockLootTableProvider.redstoneCrystalDrops(fullBlock: Block): LootTable.Builder {
     val registryLookup = getLookup().getLookupOrThrow(RegistryKeys.ENCHANTMENT)
     val blockstateCondition = BlockStatePropertyLootCondition.builder(fullBlock)
         .properties(
@@ -130,7 +126,7 @@ fun OpenBlockLootTableProvider.redstoneCrystalDrops(fullBlock: Block): LootTable
                 .apply(ApplyBonusLootFunction.method_456(registryLookup.getHolderOrThrow(Enchantments.FORTUNE)))
         )
     )
-}
+}*/
 
 fun BlockLootTableGenerator.twoTallDrop(block: Block) {
     add(block) { this.customDropsWithPropertyValue(it, TallPlantBlock.HALF, DoubleBlockHalf.LOWER) }

@@ -1,7 +1,10 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
 import net.minecraft.block.Blocks
-import net.minecraft.data.client.model.*
+import net.minecraft.data.client.model.BlockStateModelGenerator
+import net.minecraft.data.client.model.Texture
+import net.minecraft.data.client.model.TextureKey
+import net.minecraft.data.client.model.TexturedModel
 import net.minecraft.state.property.Properties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -10,14 +13,14 @@ import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object FloraModels {
     fun register(gen: BlockStateModelGenerator) {
-        gen.registerGalleryRose(DnDBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
+//        gen.registerGalleryRose(DnDBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerGoldenMushroomPlant(DnDBlocks.GOLDEN_MUSHROOM)
         gen.registerMushroomBlockDiffInside(DnDBlocks.GOLDEN_MUSHROOM_BLOCK)
         gen.registerMushroomBlockDiffInside(
             DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK, DnDBlocks.GOLDEN_MUSHROOM_BLOCK.model().suffix("_inventory")
         )
 
-        gen.registerSpiderlilly(DnDBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
+//        gen.registerSpiderlilly(DnDBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerFlowerbed2(DnDBlocks.WHITE_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.RED_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS, false)
@@ -25,7 +28,7 @@ object FloraModels {
         gen.registerFlowerbed2(DnDBlocks.WILD_PETALS, false, DusksAndDungeons.id("block/parent/wildflowerbed"))
         gen.registerFlowerbed(DnDBlocks.CRIMSON_VIVIONS)
         gen.registerFlowerbed(DnDBlocks.WARPED_VIVIONS)
-        gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
+//        gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
 
         gen.registerDoubleBlock(DnDBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerCrop(DnDBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
@@ -67,10 +70,6 @@ object FloraModels {
             TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
         )
         gen.registerParentedItemModel(DnDBlocks.CORN_SYRUP_BLOCK)
-
-        gen.registerSingleton(
-            DnDBlocks.JOUNCESHROOM_BLOCK, TexturedModel.makeFactory(Texture::sideEnd, Models.CUBE_COLUMN)
-        )
 
         gen.registerSingleton(
             DnDBlocks.ROOT_BLOCK,

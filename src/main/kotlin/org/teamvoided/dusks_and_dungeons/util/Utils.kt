@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.block.Blocks
-import net.minecraft.data.client.model.VariantSettings
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
@@ -32,13 +31,6 @@ const val rotate360 = 6.28319f
 fun Vec3d.blockPos(): BlockPos {
     return BlockPos(this.x.toInt(),this.y.toInt(),this.z.toInt())
 }
-
-val modelDirectionRotation = listOf(
-    (Direction.NORTH to VariantSettings.Rotation.R0),
-    (Direction.EAST to VariantSettings.Rotation.R90),
-    (Direction.SOUTH to VariantSettings.Rotation.R180),
-    (Direction.WEST to VariantSettings.Rotation.R270)
-)
 
 fun setCount(x: Number, y: Number) = SetCountLootFunction.builder(uniformNum(x, y))
 

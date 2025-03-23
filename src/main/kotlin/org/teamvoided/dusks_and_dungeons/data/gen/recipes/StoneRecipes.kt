@@ -13,33 +13,13 @@ import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
 
 object StoneRecipes {
     fun generateStoneRecipes(e: RecipeExporter) {
+        e.createGragestones(DnDBlocks.STONE_GRAVESTONE, DnDBlocks.SMALL_STONE_GRAVESTONE, Blocks.STONE_BRICKS)
         e.createGragestones(
-            DnDBlocks.STONE_GRAVESTONE,
-            DnDBlocks.SMALL_STONE_GRAVESTONE,
-            DnDBlocks.HAUNTED_GRAVESTONE,
-            DnDBlocks.SMALL_HAUNTED_GRAVESTONE,
-            Blocks.STONE_BRICKS
+            DnDBlocks.DEEPSLATE_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE, Blocks.DEEPSLATE_BRICKS
         )
+        e.createGragestones(DnDBlocks.TUFF_GRAVESTONE, DnDBlocks.SMALL_TUFF_GRAVESTONE, Blocks.TUFF_BRICKS)
         e.createGragestones(
-            DnDBlocks.DEEPSLATE_GRAVESTONE,
-            DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE,
-            DnDBlocks.HAUNTED_DEEPSLATE_GRAVESTONE,
-            DnDBlocks.SMALL_HAUNTED_DEEPSLATE_GRAVESTONE,
-            Blocks.DEEPSLATE_BRICKS
-        )
-        e.createGragestones(
-            DnDBlocks.TUFF_GRAVESTONE,
-            DnDBlocks.SMALL_TUFF_GRAVESTONE,
-            DnDBlocks.HAUNTED_TUFF_GRAVESTONE,
-            DnDBlocks.SMALL_HAUNTED_TUFF_GRAVESTONE,
-            Blocks.TUFF_BRICKS
-        )
-        e.createGragestones(
-            DnDBlocks.BLACKSTONE_GRAVESTONE,
-            DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE,
-            DnDBlocks.HAUNTED_BLACKSTONE_GRAVESTONE,
-            DnDBlocks.SMALL_HAUNTED_BLACKSTONE_GRAVESTONE,
-            Blocks.POLISHED_BLACKSTONE_BRICKS
+            DnDBlocks.BLACKSTONE_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE, Blocks.POLISHED_BLACKSTONE_BRICKS
         )
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.HEADSTONE)
             .ingredient('#', Items.IRON_BARS)

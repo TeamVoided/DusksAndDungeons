@@ -95,15 +95,11 @@ fun RecipeExporter.createDyed(
 }
 
 fun RecipeExporter.createGragestones(
-    gravestone: ItemConvertible,
-    smallGravestone: ItemConvertible,
-    hauntedGravestone: ItemConvertible,
-    hauntedSmallGravestone: ItemConvertible,
-    block: ItemConvertible
+    gravestone: ItemConvertible, smallGravestone: ItemConvertible, block: ItemConvertible
 ) {
     this.createGravestone(gravestone, block)
     this.createStonecutting(smallGravestone, gravestone)
-    this.createStonecutting(hauntedSmallGravestone, hauntedGravestone)
+//    this.createStonecutting(hauntedSmallGravestone, hauntedGravestone)
 }
 
 fun RecipeExporter.createGravestone(output: ItemConvertible, input: ItemConvertible) {

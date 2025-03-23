@@ -15,7 +15,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.block.WOOD_SETS
 import org.teamvoided.dusks_and_dungeons.util.datagen.iceStairs
-import org.teamvoided.dusks_and_dungeons.util.datagen.registerTallCrystal
 import org.teamvoided.dusks_and_dungeons.util.datagen.slab
 import org.teamvoided.dusks_and_dungeons.util.datagen.wall
 import org.teamvoided.voidlib.devin.extensions.model.createBlockSet
@@ -49,17 +48,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.iceStairs(ICE_SET.stairs, Blocks.ICE)
         gen.slab(ICE_SET.slab, Blocks.ICE)
         gen.wall(ICE_SET.wall, Blocks.ICE)
-
-
-        gen.registerAmethyst(DnDBlocks.MOONCORE)
-        gen.registerTallCrystal(DnDBlocks.TALL_REDSTONE_CRYSTAL)
-        @Suppress("DEPRECATION")
-        gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("decorated_pot"), Blocks.TERRACOTTA)
-            .includeWithoutItem(DnDBlocks.POT_O_SCREAMS)
-        @Suppress("DEPRECATION")
-        gen.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("chest"), Blocks.OAK_PLANKS)
-            .includeWithoutItem(DnDBlocks.CHEST_O_SOULS)
-
 
         /* Future Content
         gen.registerSimpleCubeAll(ICE_BRICKS.parent)

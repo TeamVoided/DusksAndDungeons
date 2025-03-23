@@ -19,7 +19,9 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_GLOOM_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_LANTERN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_MOSSKIN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_PALE_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.item.*
+import org.teamvoided.dusks_and_dungeons.item.DnDFoodComponents
+import org.teamvoided.dusks_and_dungeons.item.ScarecrowItem
+import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
 import org.teamvoided.voidlib.helpers.item.EquipableItem
 
 

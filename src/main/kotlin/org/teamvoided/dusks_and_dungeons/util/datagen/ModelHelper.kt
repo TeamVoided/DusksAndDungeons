@@ -4,9 +4,11 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectFunction
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import net.minecraft.block.*
-import net.minecraft.block.enums.*
+import net.minecraft.block.enums.BlockHalf
+import net.minecraft.block.enums.SlabType
+import net.minecraft.block.enums.StairShape
+import net.minecraft.block.enums.WallShape
 import net.minecraft.data.client.model.*
-import net.minecraft.data.client.model.BlockStateModelGenerator.TintType
 import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
 import net.minecraft.data.client.model.TextureKey.*
 import net.minecraft.data.client.model.VariantSettings.Rotation
@@ -22,15 +24,10 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.util.modelDirectionRotation
 import java.util.*
 
 val INNER: TextureKey = of("inner")
 val SMALL: TextureKey = of("small")
-val RABBIT: TextureKey = of("rabbit")
-
-val BAR: TextureKey = of("bar")
-val POST: TextureKey = of("post")
 
 fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
     val texture = Texture().put(ALL, overlay)
@@ -476,29 +473,6 @@ fun BlockStateModelGenerator.createVerdureGrowth(block: Block, top: Identifier, 
     )
 }
 
-fun BlockStateModelGenerator.registerGalleryRose(block: Block, tintType: TintType) {
-    this.registerItemModel(block, "_top")
-    val top = this.createSubModel(block, "_top", tintType.crossModel, Texture::cross)
-    val middle = this.createSubModel(block, "_middle", tintType.crossModel, Texture::cross)
-    val bottom = this.createSubModel(block, "_bottom", tintType.crossModel, Texture::cross)
-    blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(block).coordinate(
-            BlockStateVariantMap.create(
-                PaintedRoseBlock.SECTION
-            ).register(
-                TripleBlockSection.TOP,
-                BlockStateVariant.create().put(VariantSettings.MODEL, top)
-            ).register(
-                TripleBlockSection.MIDDLE,
-                BlockStateVariant.create().put(VariantSettings.MODEL, middle)
-            ).register(
-                TripleBlockSection.BOTTOM,
-                BlockStateVariant.create().put(VariantSettings.MODEL, bottom)
-            )
-        )
-    )
-}
-
 fun BlockStateModelGenerator.registerGoldenMushroomPlant(block: Block) {
     this.registerItemModel(block, "_1")
     var array = arrayOf<BlockStateVariant>()
@@ -574,34 +548,7 @@ fun BlockStateModelGenerator.registerTreeMushroom(block: Block, parentModel: Str
     this.registerSingleton(block, texture, model)
 }
 
-fun BlockStateModelGenerator.registerSpiderlilly(doubleBlock: Block, tintType: TintType) {
-    this.registerItemModel(doubleBlock, "_top")
-    val top: Identifier = this.createSubModel(doubleBlock, "_top", tintType.crossModel, Texture::cross)
-    val bottom: Identifier = this.createSubModel(doubleBlock, "_bottom", tintType.crossModel, Texture::cross)
-    val topFalse: Identifier = this.createSubModel(doubleBlock, "_top_false", tintType.crossModel, Texture::cross)
-    val bottomFalse: Identifier = this.createSubModel(doubleBlock, "_bottom_false", tintType.crossModel, Texture::cross)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(doubleBlock).coordinate(
-            BlockStateVariantMap.create(Properties.DOUBLE_BLOCK_HALF, SpiderlilyBlock.FLOWERING)
-                .register(
-                    DoubleBlockHalf.LOWER, true,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, bottom)
-                )
-                .register(
-                    DoubleBlockHalf.UPPER, true,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, top)
-                )
-                .register(
-                    DoubleBlockHalf.LOWER, false,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, bottomFalse)
-                )
-                .register(
-                    DoubleBlockHalf.UPPER, false,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, topFalse)
-                )
-        )
-    )
-}
+
 
 fun BlockStateModelGenerator.registerFlowerbed2(
     block: Block,
@@ -659,41 +606,6 @@ fun BlockStateModelGenerator.registerFlowerbed2(
         )
     }
     this.blockStateCollector.accept(flowerbed)
-}
-
-fun BlockStateModelGenerator.registerTallCrystal(block: Block) {
-    this.registerItemModel(block, "_top")
-    val model = Models.CROSS
-    val lowerHalfModelId: Identifier = this.createSubModel(block, "_top", model, Texture::cross)
-    val upperHalfModelId: Identifier = this.createSubModel(block, "_bottom", model, Texture::cross)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(block).coordinate(
-            BlockStateVariantMap.create(Properties.DOUBLE_BLOCK_HALF)
-                .register(
-                    DoubleBlockHalf.LOWER,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, lowerHalfModelId)
-                )
-                .register(
-                    DoubleBlockHalf.UPPER,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, upperHalfModelId)
-                )
-        ).coordinate(this.createUpDefaultFacingVariantMap())
-    )
-}
-
-fun BlockStateModelGenerator.registerWaterFern(block: Block) {
-//    this.registerItemModel(block.asItem())
-    val texture = Texture()
-        .put(PARTICLE, Texture.getId(block))
-        .put(TOP, Texture.getSubId(block, "_roots"))
-        .put(PLANT, Texture.getSubId(block, "_roots"))
-    val model = block(
-        "parent/water_plant",
-        PARTICLE,
-        TOP,
-        PLANT
-    ).upload(block, texture, this.modelCollector)
-    this.registerAxisRotated(block, model)
 }
 
 fun BlockStateModelGenerator.registerPumpkinSet(
@@ -780,21 +692,12 @@ fun BlockStateModelGenerator.pumpkinStem(block: Block) {
     println("you best do the " + block.model().path + " blockstate file because waaaaaaa")
 }
 
-fun BlockStateModelGenerator.registerGravestones(
-    gravestone: Block,
-    smallGravestone: Block,
-    hauntedGravestone: Block,
-    smallHauntedGravestone: Block
-) {
-    this.registerGravestone(gravestone, gravestone.model(), hauntedGravestone)
-    this.registerSmallGravestone(smallGravestone, gravestone.model(), smallHauntedGravestone)
+fun BlockStateModelGenerator.registerGravestones(gravestone: Block, smallGravestone: Block) {
+    this.registerGravestone(gravestone, gravestone.model())
+    this.registerSmallGravestone(smallGravestone, gravestone.model())
 }
 
-fun BlockStateModelGenerator.registerGravestone(
-    gravestone: Block,
-    texture: Identifier = gravestone.model(),
-    hauntedGravestone: Block? = null
-) {
+fun BlockStateModelGenerator.registerGravestone(gravestone: Block, texture: Identifier = gravestone.model()) {
     val texture = Texture()
         .put(FRONT, texture.suffix("_front"))
         .put(SIDE, texture.suffix("_side"))
@@ -815,17 +718,15 @@ fun BlockStateModelGenerator.registerGravestone(
             gravestoneBlockstates(gravestone)
         )
     )
-    if (hauntedGravestone != null)
-        this.registerHauntedGravestone(hauntedGravestone, gravestone, centerModel)
 }
 
 fun BlockStateModelGenerator.registerSmallGravestone(
     gravestone: Block,
-    texture: Identifier = gravestone.model(),
+    textureId: Identifier = gravestone.model(),
     hauntedGravestone: Block? = null
 ) {
     val texture = Texture()
-        .put(FRONT, texture.suffix("_front"))
+        .put(FRONT, textureId.suffix("_front"))
     block("parent/small_gravestone", FRONT)
         .upload(gravestone, texture, this.modelCollector)
     val centerModel = block("parent/small_gravestone_centered", FRONT)
@@ -885,37 +786,6 @@ fun gravestoneBlockstates(gravestone: Block): BlockStateVariantMap.DoublePropert
     }
     return variants
 }
-
-
-fun BlockStateModelGenerator.registerBunnyGrave(
-    block: Block, referenceTexture: Block, referenceTexture2: Block
-) {
-    val model = MultipartBlockStateSupplier.create(block)
-    val textureBunny: Texture = Texture()
-        .put(RABBIT, Texture.getId(block))
-    val texturePlate: Texture = Texture()
-        .put(DOWN, Texture.getId(referenceTexture))
-        .put(FRONT, Texture.getId(referenceTexture2))
-    val bunnyModel = block("parent/bunny_grave", RABBIT)
-        .upload(block, textureBunny, this.modelCollector)
-    val plateModel = block("parent/bunny_grave_base", DOWN, FRONT)
-        .upload(block, "_plate", texturePlate, this.modelCollector)
-    modelDirectionRotation.forEach { (direction, rotation) ->
-        model.with(
-            When.create().set(Properties.HORIZONTAL_FACING, direction),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, plateModel)
-                .put(VariantSettings.Y, rotation)
-        ).with(
-            When.create().set(Properties.HORIZONTAL_FACING, direction),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, bunnyModel)
-                .put(VariantSettings.Y, rotation)
-        )
-    }
-    this.blockStateCollector.accept(model)
-}
-
 
 fun BlockStateModelGenerator.registerCorn(block: Block, item: Item) {
 //    this.registerItemModel(block, "_top") //this one is for if the names are the same, they are not
@@ -1017,37 +887,6 @@ fun BlockStateModelGenerator.registerBigLantern(
         END
     )
     val modelHanging = model.upload(block, "_hanging", texture, this.modelCollector)
- /*   if (redstone) {
-        val textureOff = Texture()
-            .put(PARTICLE, Texture.getSubId(block, "_off"))
-            .put(SIDE, Texture.getSubId(block, "_off"))
-            .put(END, bottom)
-        val modelOff = model.upload(block, "_off", textureOff, this.modelCollector)
-        val modelHangingOff = model.upload(block, "_hanging_off", textureOff, this.modelCollector)
-        this.blockStateCollector.accept(
-            VariantsBlockStateSupplier.create(block).coordinate(
-                BlockStateVariantMap.create(Properties.HANGING, Properties.LIT)
-                    .register(
-                        false, true, BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, model.upload(block, texture, this.modelCollector))
-                    )
-                    .register(
-                        false, false, BlockStateVariant.create()
-                            .put(VariantSettings.MODEL, modelOff)
-                    )
-                    .register(
-                        true, true, BlockStateVariant.create()
-                            .put(VariantSettings.X, Rotation.R180)
-                            .put(VariantSettings.MODEL, modelHanging)
-                    )
-                    .register(
-                        true, false, BlockStateVariant.create()
-                            .put(VariantSettings.X, Rotation.R180)
-                            .put(VariantSettings.MODEL, modelHangingOff)
-                    )
-            )
-        )
-    }*/
     this.blockStateCollector.accept(
         VariantsBlockStateSupplier.create(block).coordinate(
             BlockStateVariantMap.create(Properties.HANGING)
@@ -1213,49 +1052,6 @@ fun bigTallCandleModel(suffix: String): Model {
     return block("parent/big_tall_candle$variant", ALL, PARTICLE)
 }
 
-fun BlockStateModelGenerator.registerBell(
-    block: Block,
-    bar: Identifier = Texture.getId(Blocks.DARK_OAK_PLANKS),
-    post: Identifier = Texture.getId(Blocks.STONE)
-) {
-    this.registerItemModel(block.asItem())
-    val variants = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, Properties.ATTACHMENT)
-    val texture1 = Texture()
-        .put(PARTICLE, Texture.getId(block))
-        .put(BAR, bar)
-    val texture2 = texture1.put(POST, post)
-
-    Properties.ATTACHMENT.values.forEach { attachment ->
-        val attach = attachment.toString().lowercase()
-        if (attachment == Attachment.FLOOR) {
-            block("parent/bell_$attach", PARTICLE, BAR, POST)
-                .upload(block, "_$attach", texture2, this.modelCollector)
-        } else {
-            block("parent/bell_$attach", PARTICLE, BAR)
-                .upload(block, "_$attach", texture1, this.modelCollector)
-        }
-        Properties.HORIZONTAL_FACING.values.forEach { direction ->
-            val variant = BlockStateVariant.create()
-                .put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(block, "_$attach"))
-            val variant2 = when (direction) {
-                Direction.EAST -> variant.put(VariantSettings.Y, Rotation.R90)
-                Direction.SOUTH -> variant.put(VariantSettings.Y, Rotation.R180)
-                Direction.WEST -> variant.put(VariantSettings.Y, Rotation.R270)
-                else -> variant
-            }
-            variants.register(
-                direction, attachment,
-                variant2
-            )
-        }
-    }
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(block).coordinate(
-            variants
-        )
-    )
-}
-
 fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {
     val texture1 = Texture()
         .put(SIDE, Texture.getId(block))
@@ -1401,18 +1197,6 @@ fun BlockStateModelGenerator.wall(wallBlock: Block, inId: Identifier) {
     val id3 = Models.TEMPLATE_WALL_SIDE_TALL.upload(wallBlock, texture, this.modelCollector)
     this.blockStateCollector.accept(BlockStateModelGenerator.createWallBlockState(wallBlock, id, id2, id3))
     this.registerParentedItemModel(wallBlock, Models.WALL_INVENTORY.upload(wallBlock, texture, this.modelCollector))
-}
-
-fun BlockStateModelGenerator.genPsudoFamily(stairs: Block, slab: Block, wall: Block, texture: Block) {
-    this.stairs(stairs, texture)
-    this.slab(slab, texture)
-    this.wall(wall, texture)
-}
-
-fun BlockStateModelGenerator.genPsudoFamily(stairs: Block, slab: Block, wall: Block, texture: Block, fullSlab: Block) {
-    this.stairs(stairs, texture)
-    this.slab(slab, texture, fullSlab)
-    this.wall(wall, texture)
 }
 
 fun BlockStateModelGenerator.fence(fenceBlock: Block, reference: Block) {

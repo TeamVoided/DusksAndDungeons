@@ -6,7 +6,6 @@ import net.minecraft.item.Item
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
-import org.teamvoided.dusks_and_dungeons.block.HauntedGravestoneBlock
 import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.OVERLAYS
@@ -14,7 +13,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.register
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.registerNoItem
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
 import org.teamvoided.voidlib.consortium.block.color.FullColorCollections
 import org.teamvoided.voidlib.consortium.block.color.FullColorConsortium
@@ -110,14 +108,3 @@ internal fun registerGravestone(name: String, block: Block) =
 internal fun registerSmallGravestone(name: String, block: Block) =
     register(name, GravestoneBlock(smallGravestoneShape, centerSmallGravestoneShape, Settings.copy(block)))
         .pickaxe()
-
-// TODO remove when done with port
-internal fun registerHGravestone(name: String, block: Block) =
-    register(
-        name, HauntedGravestoneBlock(gravestoneShape, centerGravestoneShape, Settings.copy(block).solid())
-    ).pickaxe().tellWitnessesThatIWasMurdered()
-
-internal fun registerSmallHGravestone(name: String, block: Block) =
-    register(
-        name, HauntedGravestoneBlock(smallGravestoneShape, centerSmallGravestoneShape, Settings.copy(block))
-    ).pickaxe().tellWitnessesThatIWasMurdered()
