@@ -24,7 +24,7 @@ public abstract class NyliumBlockMixin implements Fertilizable {
     @Shadow
     protected abstract void generate(Registry<ConfiguredFeature<?, ?>> registry, RegistryKey<ConfiguredFeature<?, ?>> registryKey, ServerWorld world, ChunkGenerator chunkGenerator, RandomGenerator random, BlockPos pos);
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z", ordinal = 0), method = "fertilize", cancellable = true)
+    @Inject(method = "fertilize", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z", ordinal = 0), cancellable = true)
     private void vivionBonemeal(ServerWorld world, RandomGenerator random, BlockPos pos, BlockState state, CallbackInfo ci,
                                 @Local(ordinal = 1) BlockState blockState, @Local(ordinal = 1) BlockPos blockPos, @Local ChunkGenerator chunkGenerator, @Local(ordinal = 0) Registry<ConfiguredFeature<?, ?>> registry) {
         if (random.nextInt(24) == 0) {

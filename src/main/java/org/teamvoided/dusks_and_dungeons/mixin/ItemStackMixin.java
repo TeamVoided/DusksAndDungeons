@@ -23,11 +23,11 @@ import static org.teamvoided.dusks_and_dungeons.init.DnDItems.CUSTOM_STATS;
 public class ItemStackMixin {
     @Inject(method = "appendModifierTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/attribute/EntityAttributeModifier;matches(Lnet/minecraft/util/Identifier;)Z", ordinal = 0))
     void modifyTooltipContent(Consumer<Text> textConsumer, @Nullable PlayerEntity player, Holder<EntityAttribute> attribute, EntityAttributeModifier modifier, CallbackInfo ci,
-                              @Local(ordinal = 0) LocalDoubleRef d, @Local(ordinal = 0) LocalBooleanRef bl) {
+                              @Local(ordinal = 0) LocalDoubleRef amount, @Local(ordinal = 0) LocalBooleanRef greenText) {
         if (CUSTOM_STATS.contains(modifier.id())) {
             assert player != null;
-            d.set(d.get() + player.getAttributeBaseValue(attribute));
-            bl.set(true);
+            amount.set(amount.get() + player.getAttributeBaseValue(attribute));
+            greenText.set(true);
         }
     }
 }

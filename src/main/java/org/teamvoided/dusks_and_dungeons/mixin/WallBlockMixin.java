@@ -1,12 +1,10 @@
 package org.teamvoided.dusks_and_dungeons.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.*;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags;
 
 @Mixin(WallBlock.class)
@@ -16,13 +14,12 @@ public abstract class WallBlockMixin extends Block implements Waterloggable {
         super(settings);
     }
 
-    @Inject(at = @At("HEAD"), method = "shouldConnectTo", cancellable = true)
-    private void connectToWoodenOrRegular(BlockState state, boolean faceFullSquare, Direction side, CallbackInfoReturnable<Boolean> cir) {
+    @ModifyReturnValue(method = "shouldConnectTo", at = @At("RETURN"))
+    private boolean connectToWoodenOrRegular(boolean original, BlockState state) {
         if (this.getDefaultState().isIn(DnDBlockTags.WOODEN_WALLS)) {
-            if (state.isIn(DnDBlockTags.WOODEN_WALLS))
-                cir.setReturnValue(true);
-            else if (state.isIn(BlockTags.WALLS))
-                cir.setReturnValue(false);
+            if (state.isIn(DnDBlockTags.WOODEN_WALLS)) return true;
+            else if (state.isIn(BlockTags.WALLS)) return false;
         }
+        return original;
     }
 }
