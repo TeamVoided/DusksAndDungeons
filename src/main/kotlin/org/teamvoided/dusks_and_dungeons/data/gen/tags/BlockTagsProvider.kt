@@ -282,6 +282,18 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS)
             .forceAddTag(DnDBlockTags.WOOD_WALLS)
+            .add(DnDBlocks.OAK_WALL)
+            .add(DnDBlocks.SPRUCE_WALL)
+            .add(DnDBlocks.BIRCH_WALL)
+            .add(DnDBlocks.JUNGLE_WALL)
+            .add(DnDBlocks.ACACIA_WALL)
+            .add(DnDBlocks.DARK_OAK_WALL)
+            .add(DnDBlocks.MANGROVE_WALL)
+            .add(DnDBlocks.CHERRY_WALL)
+            .add(DnDBlocks.CRIMSON_WALL)
+            .add(DnDBlocks.WARPED_WALL)
+            .add(DnDBlocks.BAMBOO_WALL)
+            .add(DnDBlocks.CASCADE_WALL)
         getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS).forceAddTag(DnDBlockTags.WOOD_STAIRS)
         getOrCreateTagBuilder(BlockTags.WOODEN_SLABS).forceAddTag(DnDBlockTags.WOOD_SLABS)
 

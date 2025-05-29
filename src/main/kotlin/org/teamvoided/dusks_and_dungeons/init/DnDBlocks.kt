@@ -163,6 +163,7 @@ object DnDBlocks {
     val CASCADE_PLANKS = register("cascade_planks", Block(Set.CASCADE_PLANKS)).flammablePlanks()
     val CASCADE_STAIRS = register("cascade_stairs", stairsOf(CASCADE_PLANKS).wood())
     val CASCADE_SLAB = register("cascade_slab", slabOf(CASCADE_PLANKS).wood())
+    val CASCADE_WALL = register("cascade_plank_wall", wallOf(CASCADE_PLANKS).wood())
     val CASCADE_FENCE = register("cascade_fence", fenceOf(CASCADE_PLANKS).wood())
     val CASCADE_FENCE_GATE =
         register("cascade_fence_gate", fenceGateOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
@@ -206,6 +207,18 @@ object DnDBlocks {
     val CHERRY_WOOD = registerWoodenSet("cherry_wood", Blocks.CHERRY_WOOD)
     val CRIMSON_HYPHAE = registerWoodenSet("crimson_hyphae", Blocks.CRIMSON_HYPHAE)
     val WARPED_HYPHAE = registerWoodenSet("warped_hyphae", Blocks.WARPED_HYPHAE)
+
+    val OAK_WALL = register("oak_wall", wallOf(OAK_PLANKS).wood())
+    val SPRUCE_WALL = register("spruce_wall", wallOf(SPRUCE_PLANKS).wood())
+    val BIRCH_WALL = register("birch_wall", wallOf(BIRCH_PLANKS).wood())
+    val JUNGLE_WALL = register("jungle_wall", wallOf(JUNGLE_PLANKS).wood())
+    val ACACIA_WALL = register("acacia_wall", wallOf(ACACIA_PLANKS).wood())
+    val DARK_OAK_WALL = register("dark_oak_wall", wallOf(DARK_OAK_PLANKS).wood())
+    val MANGROVE_WALL = register("mangrove_wall", wallOf(MANGROVE_PLANKS).wood())
+    val CHERRY_WALL = register("cherry_wall", wallOf(CHERRY_PLANKS).wood())
+    val CRIMSON_WALL = register("crimson_wall", wallOf(CRIMSON_PLANKS).wood())
+    val WARPED_WALL = register("warped_wall", wallOf(WARPED_PLANKS).wood())
+    val BAMBOO_WALL = register("bamboo_wall", wallOf(BAMBOO_PLANKS).wood())
 
     //(ender) Uses wood because logs have diff map colors based on if top is showing
     val OAK_LOG_PILE = register("oak_log_pile", logPile(Blocks.OAK_WOOD))

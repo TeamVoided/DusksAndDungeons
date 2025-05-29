@@ -47,6 +47,19 @@ object WoodModels {
         gen.createWood(DnDBlocks.WARPED_HYPHAE, Blocks.WARPED_STEM)
         gen.createWood(DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
 
+        gen.wall(DnDBlocks.OAK_WALL, Blocks.OAK_PLANKS)
+        gen.wall(DnDBlocks.SPRUCE_WALL, Blocks.SPRUCE_PLANKS)
+        gen.wall(DnDBlocks.BIRCH_WALL, Blocks.BIRCH_PLANKS)
+        gen.wall(DnDBlocks.JUNGLE_WALL, Blocks.JUNGLE_PLANKS)
+        gen.wall(DnDBlocks.ACACIA_WALL, Blocks.ACACIA_PLANKS)
+        gen.wall(DnDBlocks.DARK_OAK_WALL, Blocks.DARK_OAK_PLANKS)
+        gen.wall(DnDBlocks.MANGROVE_WALL, Blocks.MANGROVE_PLANKS)
+        gen.wall(DnDBlocks.CHERRY_WALL, Blocks.CHERRY_PLANKS)
+        gen.wall(DnDBlocks.CRIMSON_WALL, Blocks.CRIMSON_PLANKS)
+        gen.wall(DnDBlocks.WARPED_WALL, Blocks.WARPED_PLANKS)
+        gen.wall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS)
+        gen.wall(DnDBlocks.CASCADE_WALL, DnDBlocks.CASCADE_PLANKS)
+
         DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->
             val log = DnDBlockLists.logsAndStrippedLogs[idx].first
             val strippedLog = DnDBlockLists.logsAndStrippedLogs[idx].second
