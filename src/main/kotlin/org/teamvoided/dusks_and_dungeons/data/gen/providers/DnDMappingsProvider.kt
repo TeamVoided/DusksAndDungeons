@@ -11,5 +11,6 @@ class DnDMappingsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup
         gen.addOldPathMapping("rocky_rocks", "rocky_gravel")
         gen.addOldPathMapping("slated_slate", "slated_gravel")
         gen.addOldPathMapping("blackstoned_blackstone", "blackstoned_gravel")
+        gen.addOldPathMapping("wild_petals", "cold_wildflower")
     }
 }

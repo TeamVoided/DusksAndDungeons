@@ -7,6 +7,7 @@ import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeJsonFactory.getItemId
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.RecipeCategory
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -24,7 +25,6 @@ object FloraRecipes {
         DnDBlockLists.leafPiles.forEachIndexed { idx, pile ->
             e.createPiles(pile, DnDBlockLists.leaves[idx])
         }
-        FabricRecipeProvider.offerShapelessRecipe(e, Items.BLUE_DYE, DnDBlocks.BLUE_PETALS, "blue_dye")
         FabricRecipeProvider.offerShapelessRecipe(e, Items.PURPLE_DYE, DnDItems.MOONBERRIES, "purple_dye")
 
         ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.ROOT_BLOCK)
@@ -36,6 +36,8 @@ object FloraRecipes {
 
         pumpkins(e)
         corn(e)
+
+        flowerbeds(e)
     }
 
     fun pumpkins(e: RecipeExporter) {
@@ -93,5 +95,20 @@ object FloraRecipes {
             RecipeCategory.MISC, DnDItems.CORN,
             RecipeCategory.BUILDING_BLOCKS, DnDBlocks.CORN_BLOCK
         )
+    }
+
+    fun flowerbeds(e: RecipeExporter) {
+        e.toDye(DnDBlocks.COLD_WILDFLOWER, Items.PURPLE_DYE)
+        e.toDye(DnDBlocks.WHITE_PETALS, Items.WHITE_DYE)
+        e.toDye(DnDBlocks.RED_PETALS, Items.RED_DYE)
+        e.toDye(DnDBlocks.ORANGE_PETALS, Items.ORANGE_DYE)
+        e.toDye(DnDBlocks.BLUE_PETALS, Items.LIGHT_BLUE_DYE)
+    }
+
+    fun RecipeExporter.toDye(item: ItemConvertible, dye: ItemConvertible, count: Int = 1) {
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, dye, count)
+            .ingredient(item)
+            .criterion(item)
+            .offerTo(this)
     }
 }

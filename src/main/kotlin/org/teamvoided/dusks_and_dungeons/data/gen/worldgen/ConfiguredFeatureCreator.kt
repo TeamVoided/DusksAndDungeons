@@ -308,7 +308,7 @@ object ConfiguredFeatureCreator {
         this.fairyRing(DnDConfiguredFeature.FAIRY_RING_RED, DnDBlocks.RED_PETALS)
         this.fairyRing(DnDConfiguredFeature.FAIRY_RING_BLUE, DnDBlocks.BLUE_PETALS)
         this.fairyRing(DnDConfiguredFeature.FAIRY_RING_ORANGE, DnDBlocks.ORANGE_PETALS)
-        this.fairyRing(DnDConfiguredFeature.FAIRY_RING_COLD_WILDFLOWER, DnDBlocks.WILD_PETALS)
+        this.fairyRing(DnDConfiguredFeature.FAIRY_RING_COLD_WILDFLOWER, DnDBlocks.COLD_WILDFLOWER)
         this.fairyRing(DnDConfiguredFeature.FAIRY_RING_CRIMSON, DnDBlocks.CRIMSON_VIVIONS, 5)
         this.fairyRing(DnDConfiguredFeature.FAIRY_RING_WARPED, DnDBlocks.WARPED_VIVIONS, 5)
     }

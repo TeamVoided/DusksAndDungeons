@@ -63,7 +63,7 @@ object DnDBlocks {
     val RED_PETALS = register("red_petals", PinkPetalsBlock(Set.petals(MapColor.RED)).plant())
     val ORANGE_PETALS = register("orange_petals", PinkPetalsBlock(Set.petals(MapColor.ORANGE)).plant())
     val BLUE_PETALS = register("blue_petals", PinkPetalsBlock(Set.petals(MapColor.BLUE)).plant())
-    val WILD_PETALS = register("wild_petals", PinkPetalsBlock(Set.petals(MapColor.PURPLE)).plant())
+    val COLD_WILDFLOWER = register("cold_wildflower", PinkPetalsBlock(Set.petals(MapColor.PURPLE)).plant())
     val CRIMSON_VIVIONS = register("crimson_vivions", VivionbedBlock(Set.vivions(MapColor.RED)).plant())
     val WARPED_VIVIONS = register("warped_vivions", VivionbedBlock(Set.vivions(MapColor.WARPED_WART_BLOCK)).plant())
 

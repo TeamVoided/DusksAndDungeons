@@ -25,7 +25,7 @@ object FloraModels {
         gen.registerFlowerbed2(DnDBlocks.RED_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.BLUE_PETALS, false)
-        gen.registerFlowerbed2(DnDBlocks.WILD_PETALS, false, DusksAndDungeons.id("block/parent/wildflowerbed"))
+        gen.registerFlowerbed2(DnDBlocks.COLD_WILDFLOWER, false, DusksAndDungeons.id("block/parent/wildflowerbed"))
         gen.registerFlowerbed(DnDBlocks.CRIMSON_VIVIONS)
         gen.registerFlowerbed(DnDBlocks.WARPED_VIVIONS)
 //        gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
