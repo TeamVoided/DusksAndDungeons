@@ -10,7 +10,6 @@ import net.minecraft.client.color.world.GrassColors
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.CUTOUT_BLOCKS
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
@@ -39,12 +38,6 @@ object DnDBlocksClient {
         CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderLayer.getCutout()) }
         TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderLayer.getTranslucent()) }
         ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS }
-
-        if (!isDev()) {
-            CUTOUT_BLOCKS.clear()
-            TRANSLUCENT_BLOCKS.clear()
-            GRASS_TINT_BLOCKS.clear()
-        }
     }
 
     fun registerTint(provider: BlockColorProvider, vararg blocks: Block) =
