@@ -400,6 +400,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.BIG_CANDLES)
             .forceAddTag(DnDBlockTags.CANDELABRAS)
 
+        getOrCreateTagBuilder(BlockTags.CANDLE_CAKES)
+            .add(DnDBlocks.BIG_CANDLE_CAKES)
+            .add(DnDBlocks.SOUL_CANDLE_CAKES)
+            .add(DnDBlocks.BIG_SOUL_CANDLE_CAKES)
+
         getOrCreateTagBuilder(BlockTags.STONE_BRICKS)
             .add(DnDBlocks.OVERGROWN_STONE_BRICKS.parent)
     }
