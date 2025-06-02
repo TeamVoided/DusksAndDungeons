@@ -5,7 +5,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.util.BETTER_BRICK_NAMES
-import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
+import org.teamvoided.dusks_and_dungeons.util.block.CUTOUT_BLOCKS
 import org.teamvoided.dusks_and_dungeons.util.block.TRANSLUCENT_BLOCKS
 import org.teamvoided.voidlib.helpers.registerBuiltInPack
 
@@ -22,9 +22,9 @@ object DusksAndDungeonsClient {
 
         registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
         if (!isDev()) {
-//            CUTOUT_BLOCKS.clear()
+            CUTOUT_BLOCKS.clear()
             TRANSLUCENT_BLOCKS.clear()
-            GRASS_TINT_BLOCKS.clear()
+//            GRASS_TINT_BLOCKS.clear()
         }
     }
 }
