@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
+import net.minecraft.block.Blocks
 import net.minecraft.item.Items
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.helpers.mc.addAfter
@@ -13,7 +14,16 @@ fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
             DnDBlockLists.woodAndStrippedWood[idx].first,
             DnDItemLists.woodLists[idx] + DnDBlockLists.logPiles[idx]
         )
+        addAfter(
+            DnDBlockLists.plankSlabs[idx],
+            DnDBlockLists.plankWalls[idx]
+        )
     }
+
+    addAfter(Blocks.BAMBOO_BLOCK, DnDBlocks.BAMBOO_PILE)
+    addAfter(Blocks.STRIPPED_BAMBOO_BLOCK, DnDBlocks.STRIPPED_BAMBOO_PILE)
+    addAfter(Blocks.BAMBOO_MOSAIC_SLAB, DnDBlocks.BAMBOO_WALL, DnDBlocks.BAMBOO_MOSAIC_WALL)
+
 //    addAfter(Blocks.BAMBOO_BLOCK, DnDWoodBlocks.HOLLOW_BAMBOO_BLOCK)
 //    addAfter(Blocks.STRIPPED_BAMBOO_BLOCK, DnDWoodBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK)
     if (!leaves) return

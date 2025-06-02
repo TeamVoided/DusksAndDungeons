@@ -219,6 +219,7 @@ object DnDBlocks {
     val CRIMSON_WALL = register("crimson_wall", wallOf(CRIMSON_PLANKS).wood())
     val WARPED_WALL = register("warped_wall", wallOf(WARPED_PLANKS).wood())
     val BAMBOO_WALL = register("bamboo_wall", wallOf(BAMBOO_PLANKS).wood())
+    val BAMBOO_MOSAIC_WALL = register("bamboo_mosaic_wall", wallOf(BAMBOO_MOSAIC).wood())
 
     //(ender) Uses wood because logs have diff map colors based on if top is showing
     val OAK_LOG_PILE = register("oak_log_pile", logPile(Blocks.OAK_WOOD))

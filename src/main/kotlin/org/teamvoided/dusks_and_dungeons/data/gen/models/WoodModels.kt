@@ -58,6 +58,7 @@ object WoodModels {
         gen.wall(DnDBlocks.CRIMSON_WALL, Blocks.CRIMSON_PLANKS)
         gen.wall(DnDBlocks.WARPED_WALL, Blocks.WARPED_PLANKS)
         gen.wall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS)
+        gen.wall(DnDBlocks.BAMBOO_MOSAIC_WALL, Blocks.BAMBOO_MOSAIC)
         gen.wall(DnDBlocks.CASCADE_WALL, DnDBlocks.CASCADE_PLANKS)
 
         DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->

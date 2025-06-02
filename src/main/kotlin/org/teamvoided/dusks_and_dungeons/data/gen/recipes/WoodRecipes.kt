@@ -11,7 +11,9 @@ import net.minecraft.recipe.RecipeCategory
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
+import org.teamvoided.dusks_and_dungeons.util.datagen.recipe.woodWall
 
 object WoodRecipes {
     fun generateWoodRecipes(e: RecipeExporter) {
@@ -24,7 +26,6 @@ object WoodRecipes {
         FabricRecipeProvider.offerBarkBlockRecipe(this, DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
         FabricRecipeProvider.offerBarkBlockRecipe(this, DnDBlocks.STRIPPED_CASCADE_WOOD, DnDBlocks.STRIPPED_CASCADE_LOG)
         FabricRecipeProvider.offerHangingSignRecipe(this, DnDItems.CASCADE_HANGING_SIGN, DnDBlocks.STRIPPED_CASCADE_LOG)
-        this.woodWall(DnDBlocks.CASCADE_WALL, DnDBlocks.CASCADE_PLANKS)
         ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, DnDBlocks.BLUE_DOOR, 3)
             .ingredient('#', Ingredient.ofItems(DnDBlocks.CASCADE_PLANKS.asItem()))
             .ingredient('@', Ingredient.ofItems(Items.GOLD_NUGGET))
@@ -36,26 +37,10 @@ object WoodRecipes {
     }
 
     private fun RecipeExporter.woodWalls() {
-        this.woodWall(DnDBlocks.OAK_WALL, Blocks.OAK_PLANKS)
-        this.woodWall(DnDBlocks.SPRUCE_WALL, Blocks.SPRUCE_PLANKS)
-        this.woodWall(DnDBlocks.BIRCH_WALL, Blocks.BIRCH_PLANKS)
-        this.woodWall(DnDBlocks.JUNGLE_WALL, Blocks.JUNGLE_PLANKS)
-        this.woodWall(DnDBlocks.ACACIA_WALL, Blocks.ACACIA_PLANKS)
-        this.woodWall(DnDBlocks.DARK_OAK_WALL, Blocks.DARK_OAK_PLANKS)
-        this.woodWall(DnDBlocks.MANGROVE_WALL, Blocks.MANGROVE_PLANKS)
-        this.woodWall(DnDBlocks.CHERRY_WALL, Blocks.CHERRY_PLANKS)
-        this.woodWall(DnDBlocks.CRIMSON_WALL, Blocks.CRIMSON_PLANKS)
-        this.woodWall(DnDBlocks.WARPED_WALL, Blocks.WARPED_PLANKS)
-        this.woodWall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS)
-    }
-
-    private fun RecipeExporter.woodWall(wall: ItemConvertible, plank: ItemConvertible) {
-        return ShapedRecipeJsonFactory
-            .create(RecipeCategory.DECORATIONS, wall, 6)
-            .ingredient('#', plank)
-            .pattern("###")
-            .pattern("# #")
-            .criterion(plank)
-            .offerTo(this)
+        DnDBlockLists.plankWalls.forEachIndexed { idx, it ->
+            this.woodWall(it, DnDBlockLists.planks[idx], DnDBlockLists.plankSlabs[idx])
+        }
+        this.woodWall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS, Blocks.BAMBOO_SLAB)
+        this.woodWall(DnDBlocks.BAMBOO_MOSAIC_WALL, Blocks.BAMBOO_MOSAIC, Blocks.BAMBOO_MOSAIC_SLAB)
     }
 }

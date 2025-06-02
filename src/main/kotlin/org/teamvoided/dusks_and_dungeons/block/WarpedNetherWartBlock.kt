@@ -23,10 +23,13 @@ class WarpedNetherWartBlock(settings: Settings) : NetherWartBlock(settings) {
 
     companion object {
         val AGE_TO_SHAPE = arrayOf(
-            createCuboidShape(0.0, 11.0, 0.0, 16.0, 16.0, 16.0),
-            createCuboidShape(0.0, 8.0, 0.0, 16.0, 16.0, 16.0),
-            createCuboidShape(0.0, 5.0, 0.0, 16.0, 16.0, 16.0),
-            createCuboidShape(0.0, 2.0, 0.0, 16.0, 16.0, 16.0)
+            warpedWartShape(11),
+            warpedWartShape(8),
+            warpedWartShape(5),
+            warpedWartShape(2)
         )
+
+        private fun warpedWartShape(size: Int): VoxelShape =
+            createCuboidShape(0.0, size.toDouble(), 0.0, 16.0, 16.0, 16.0)
     }
 }

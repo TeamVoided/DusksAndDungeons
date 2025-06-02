@@ -293,6 +293,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.CRIMSON_WALL)
             .add(DnDBlocks.WARPED_WALL)
             .add(DnDBlocks.BAMBOO_WALL)
+            .add(DnDBlocks.BAMBOO_MOSAIC_WALL)
             .add(DnDBlocks.CASCADE_WALL)
         getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS).forceAddTag(DnDBlockTags.WOOD_STAIRS)
         getOrCreateTagBuilder(BlockTags.WOODEN_SLABS).forceAddTag(DnDBlockTags.WOOD_SLABS)

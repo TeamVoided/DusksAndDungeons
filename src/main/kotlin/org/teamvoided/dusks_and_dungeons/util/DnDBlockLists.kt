@@ -33,6 +33,45 @@ object DnDBlockLists {
         (Blocks.CRIMSON_HYPHAE to Blocks.STRIPPED_CRIMSON_HYPHAE),
         (Blocks.WARPED_HYPHAE to Blocks.STRIPPED_WARPED_HYPHAE)
     )
+    val planks = listOf(
+        Blocks.OAK_PLANKS,
+        Blocks.SPRUCE_PLANKS,
+        Blocks.BIRCH_PLANKS,
+        Blocks.JUNGLE_PLANKS,
+        Blocks.ACACIA_PLANKS,
+        Blocks.DARK_OAK_PLANKS,
+        Blocks.MANGROVE_PLANKS,
+        Blocks.CHERRY_PLANKS,
+        DnDBlocks.CASCADE_PLANKS,
+        Blocks.CRIMSON_PLANKS,
+        Blocks.WARPED_PLANKS,
+    )
+    val plankSlabs = listOf(
+        Blocks.OAK_SLAB,
+        Blocks.SPRUCE_SLAB,
+        Blocks.BIRCH_SLAB,
+        Blocks.JUNGLE_SLAB,
+        Blocks.ACACIA_SLAB,
+        Blocks.DARK_OAK_SLAB,
+        Blocks.MANGROVE_SLAB,
+        Blocks.CHERRY_SLAB,
+        DnDBlocks.CASCADE_SLAB,
+        Blocks.CRIMSON_SLAB,
+        Blocks.WARPED_SLAB,
+    )
+    val plankWalls = listOf(
+        DnDBlocks.OAK_WALL,
+        DnDBlocks.SPRUCE_WALL,
+        DnDBlocks.BIRCH_WALL,
+        DnDBlocks.JUNGLE_WALL,
+        DnDBlocks.ACACIA_WALL,
+        DnDBlocks.DARK_OAK_WALL,
+        DnDBlocks.MANGROVE_WALL,
+        DnDBlocks.CHERRY_WALL,
+        DnDBlocks.CASCADE_WALL,
+        DnDBlocks.CRIMSON_WALL,
+        DnDBlocks.WARPED_WALL,
+    )
     val leaves = listOf(
         Blocks.OAK_LEAVES,
         Blocks.SPRUCE_LEAVES,
