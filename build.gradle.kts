@@ -16,8 +16,6 @@ group = property("maven_group")!!
 version = property("mod_version")!!
 base.archivesName.set(modSettings.modId())
 
-val modrinth_id: String? by project
-val curse_id: String? by project
 
 repositories {
     maven("https://teamvoided.org/releases")
@@ -109,11 +107,11 @@ tasks {
     }
 }
 
-/*publishScript {
-    releaseRepository("TeamVoided", "https://maven.teamvoided.org/snapshots")
-    publication(modSettings.modId(), true)
+publishScript {
+    releaseRepository("TeamVoided", "https://maven.teamvoided.org/releases")
+    publication("DusksAndDungeons", isSnapshot = false)
     publishSources(true)
-}*/
+}
 
 /*uploadConfig {
 //    debugMode = true
