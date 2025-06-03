@@ -8,7 +8,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
 import net.minecraft.state.StateManager
@@ -69,16 +68,16 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
     }
 
     override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) {
-        val blockPosUp = pos.up()
-        val blockPosUp2 = pos.up(2)
+        val blockPosMiddle = pos.up()
+        val blockPosTop = pos.up(2)
         world.setBlockState(
-            blockPosUp,
-            withWaterloggedState(world, blockPosUp, defaultState.with(SECTION, TripleBlockSection.MIDDLE)),
+            blockPosMiddle,
+            withWaterloggedState(world, blockPosMiddle, defaultState.with(SECTION, TripleBlockSection.MIDDLE)),
             3
         )
         world.setBlockState(
-            blockPosUp2,
-            withWaterloggedState(world, blockPosUp2, defaultState.with(SECTION, TripleBlockSection.TOP)),
+            blockPosTop,
+            withWaterloggedState(world, blockPosTop, defaultState.with(SECTION, TripleBlockSection.TOP)),
             3
         )
     }
@@ -108,34 +107,35 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
 
         fun breakOthers(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity?) {
             val blockSection = state.get(SECTION)
+            val bottomPos: BlockPos
             when (blockSection) {
                 TripleBlockSection.TOP -> {
-                    val posBottom = pos.down(2)
-                    val stateBottom = world.getBlockState(posBottom)
+                    bottomPos = pos.down(2)
                     breakOther(world, pos.down(), player)
-                    breakOther(world, posBottom, player)
-                    if (player != null && !player.isCreative) {
-                        dropStacks(stateBottom, world, posBottom, null, player, player.mainHandStack)
-                    }
+                    breakOther(world, bottomPos, player)
                 }
 
                 TripleBlockSection.MIDDLE -> {
-                    val posBottom = pos.down()
-                    val stateBottom = world.getBlockState(posBottom)
+                    bottomPos = pos.down()
                     breakOther(world, pos.up(), player)
-                    breakOther(world, pos.down(), player)
-                    if (player != null && !player.isCreative) {
-                        dropStacks(stateBottom, world, posBottom, null, player, player.mainHandStack)
-                    }
+                    breakOther(world, bottomPos, player)
                 }
 
                 TripleBlockSection.BOTTOM -> {
+                    bottomPos = pos
                     breakOther(world, pos.up(2), player)
                     breakOther(world, pos.up(), player)
-                    if (player != null && !player.isCreative) {
-                        dropStacks(state, world, pos, null, player, player.mainHandStack)
-                    }
                 }
+
+                else -> throw MatchException(
+                    "TripleTallPlantBlock cannot run breakOthers, SECTION state does not have a when: $blockSection",
+                    null
+                )
+            }
+            if (player != null && !player.isCreative) { //head hurt now, fix later
+                dropStacks(world.getBlockState(bottomPos), world, bottomPos, null, player, player.mainHandStack)
+            } else {
+                dropStacks(world.getBlockState(bottomPos), world, bottomPos, null)
             }
         }
 
