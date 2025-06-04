@@ -102,7 +102,7 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
 
         val i = getDistanceFromLog(neighborState) + 1
-        if (i != 1 || state.get(DISTANCE) as Int != i) {
+        if (i != 1 || state.get(DISTANCE) != i) {
             world.scheduleBlockTick(pos, this, 1)
         }
 
@@ -142,7 +142,7 @@ open class LeafPileBlock(settings: Settings) : Block(settings), Waterloggable {
     }
 
     companion object {
-        val MAX_LAYERS = 4
+        const val MAX_LAYERS = 4
 
         val PILE_LAYERS = IntProperty.of("layers", 1, MAX_LAYERS)
         val WATERLOGGED = Properties.WATERLOGGED

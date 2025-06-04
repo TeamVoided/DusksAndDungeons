@@ -46,12 +46,11 @@ open class LogPileBlock(settings: Settings) : TwoWayFacingBlock(settings), Water
         if (oldState.isOf(this))
             return oldState.with(PILE_LAYERS, addLayer(oldState.get(PILE_LAYERS)))
         val state = super.getPlacementState(ctx)
-            .with(HANGING, false)
-            .with(WATERLOGGED, fluidState.fluid === Fluids.WATER)
+            .with(WATERLOGGED, fluidState.fluid == Fluids.WATER)
         val direction = ctx.side
         if (direction != Direction.DOWN && (direction == Direction.UP || !(ctx.hitPos.y - blockPos.y.toDouble() > 0.5)))
             return state
-        return InvertAxis(state.with(HANGING, true), getPlayerHorizontalFacingAxis(ctx))
+        return rotate(state.with(HANGING, true))
     }
 
     override fun isSideInvisible(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
