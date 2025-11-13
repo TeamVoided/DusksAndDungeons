@@ -40,7 +40,7 @@ object DnDWorldgen {
 
 
     fun init() {
-        DnDBiomes.init()
+//        DnDBiomes.init()
         DnDFeatures.init()
 
 //        if (isDev()) DnDSurfaceBuilders.init()
