@@ -36,14 +36,12 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
         val blockPos = ctx.blockPos
         val world = ctx.world
-        if (
+        return if (
             blockPos.y < world.topY - 2 &&
             world.getBlockState(blockPos.up()).canReplace(ctx) &&
             world.getBlockState(blockPos.up(2)).canReplace(ctx)
-        ) return super.getPlacementState(ctx)
-        else {
-            return null
-        }
+        ) super.getPlacementState(ctx)
+        else null
     }
 
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
@@ -57,7 +55,7 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
 
     override fun getStateForNeighborUpdate(
         state: BlockState, direction: Direction, neighborState: BlockState, world: WorldAccess,
-        pos: BlockPos, neighborPos: BlockPos
+        pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
         state.get(SECTION)
         return if (
@@ -91,7 +89,7 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
 
     override fun afterBreak(
         world: World, player: PlayerEntity, pos: BlockPos,
-        state: BlockState, blockEntity: BlockEntity?, stack: ItemStack
+        state: BlockState, blockEntity: BlockEntity?, stack: ItemStack,
     ) = super.afterBreak(world, player, pos, Blocks.AIR.defaultState, blockEntity, stack)
 
     override fun getRenderingSeed(state: BlockState, pos: BlockPos): Long = MathHelper
@@ -99,7 +97,7 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
 
     companion object {
         private val CODEC = createCodec(::TripleTallPlantBlock)
-        val SECTION = EnumProperty.of("section", TripleBlockSection::class.java)
+        val SECTION: EnumProperty<TripleBlockSection> = EnumProperty.of("section", TripleBlockSection::class.java)
 
         fun withWaterloggedState(world: WorldView, pos: BlockPos, state: BlockState): BlockState =
             if (state.contains(Properties.WATERLOGGED)) state.with(Properties.WATERLOGGED, world.isWater(pos))
@@ -107,22 +105,26 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
 
         fun breakOthers(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity?) {
             val blockSection = state.get(SECTION)
-            val bottomPos: BlockPos
+            val breakPos: BlockPos
+            val breakState: BlockState
             when (blockSection) {
                 TripleBlockSection.TOP -> {
-                    bottomPos = pos.down(2)
+                    breakPos = pos.down(2)
+                    breakState = world.getBlockState(breakPos)
                     breakOther(world, pos.down(), player)
-                    breakOther(world, bottomPos, player)
+                    breakOther(world, pos.down(2), player)
                 }
 
                 TripleBlockSection.MIDDLE -> {
-                    bottomPos = pos.down()
+                    breakPos = pos.down()
+                    breakState = world.getBlockState(breakPos)
                     breakOther(world, pos.up(), player)
-                    breakOther(world, bottomPos, player)
+                    breakOther(world, pos.down(), player)
                 }
 
                 TripleBlockSection.BOTTOM -> {
-                    bottomPos = pos
+                    breakPos = pos
+                    breakState = world.getBlockState(breakPos)
                     breakOther(world, pos.up(2), player)
                     breakOther(world, pos.up(), player)
                 }
@@ -132,22 +134,22 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
                     null
                 )
             }
-            if (player != null && !player.isCreative) { //head hurt now, fix later
-                dropStacks(world.getBlockState(bottomPos), world, bottomPos, null, player, player.mainHandStack)
-            } else {
-                dropStacks(world.getBlockState(bottomPos), world, bottomPos, null)
+
+            if (player == null) dropStacks(breakState, world, breakPos)
+            else if (!player.isCreative) {
+                dropStacks(breakState, world, breakPos, null, player, player.mainHandStack)
             }
         }
 
-        private fun breakOther(world: World, breakPos: BlockPos, player: PlayerEntity?) {
-            val blockState = world.getBlockState(breakPos)
+        private fun breakOther(world: World, pos: BlockPos, player: PlayerEntity?) {
+            val blockState = world.getBlockState(pos)
             if (blockState.block is TripleTallPlantBlock) {
                 val fluidState = blockState.fluidState
                 val afterState =
                     if (!fluidState.isEmpty) fluidState.fluid.defaultState.blockState
                     else Blocks.AIR.defaultState
-                world.setBlockState(breakPos, afterState, 35)
-                world.syncWorldEvent(player, 2001, breakPos, getRawIdFromState(blockState))
+                world.setBlockState(pos, afterState, 3)
+                world.syncWorldEvent(player, 2001, pos, getRawIdFromState(blockState))
             }
         }
     }
