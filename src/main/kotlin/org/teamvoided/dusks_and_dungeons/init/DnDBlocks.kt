@@ -30,9 +30,6 @@ import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections.CAN
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
-import kotlin.collections.forEach
-import kotlin.collections.mutableMapOf
-import kotlin.collections.mutableSetOf
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set
 
 
@@ -330,8 +327,8 @@ object DnDBlocks {
 
     // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
 
-    val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS)))
-    val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE)))
+    val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS))).pickaxe()
+    val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE))).pickaxe()
 
     // Polish
     val POLISHED_STONE = registerSet("polished_stone", copy(SMOOTH_STONE)).pickaxe()
@@ -357,9 +354,9 @@ object DnDBlocks {
 
     // region  ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE age --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
 
-    val ICE_SET =
-        register(createHeadlessSet("ice", ICE).noStoneCutting().meltable().buildHeadless())
-            .translucent().pickaxe()
+    val ICE_SET = register(
+        createHeadlessSet("ice", ICE).noStoneCutting().meltable().buildHeadless()
+    ).translucent().pickaxe()
     val PACKED_ICE_SET = registerHeadlessSet("packed_ice", PACKED_ICE).pickaxe()
     val BLUE_ICE_SET = registerHeadlessSet("blue_ice", BLUE_ICE).pickaxe()
     // endregion
