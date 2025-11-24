@@ -56,6 +56,8 @@ dependencies {
 
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
+
+    modCompileOnly("maven.modrinth:not-enough-animations:kaNdqksl")
 }
 
 loom {
