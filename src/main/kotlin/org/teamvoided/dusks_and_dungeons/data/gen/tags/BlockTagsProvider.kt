@@ -24,7 +24,11 @@ import java.util.concurrent.CompletableFuture
 @Suppress("LongMethod")
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
-    val excludeWood: List<AbstractBlockSet> = listOf(DnDBlocks.CRIMSON_HYPHAE, DnDBlocks.WARPED_HYPHAE)
+    val excludeWood: List<AbstractBlockSet> = listOf(
+        DnDBlocks.CRIMSON_HYPHAE, DnDBlocks.WARPED_HYPHAE,
+        DnDBlocks.STRIPPED_CRIMSON_HYPHAE, DnDBlocks.STRIPPED_WARPED_HYPHAE
+    )
+
     override fun configure(arg: HolderLookup.Provider) {
         SETS.filterNot(WOOD_SETS::contains).forEach { it.createSetTags(::getOrCreateTagBuilder) }
         COLOR_CONSORTIUM.forEach { it.createColorTags(::getOrCreateTagBuilder) }
@@ -80,18 +84,33 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.LOG_PILES)
             .forceAddTag(DnDBlockTags.LOG_PILES_THAT_BURN)
-            .add(DnDBlocks.CRIMSON_STEM_PILE)
-            .add(DnDBlocks.WARPED_STEM_PILE)
+            .add(DnDBlocks.CRIMSON_STEM_PILE, DnDBlocks.WARPED_STEM_PILE)
+            .add(DnDBlocks.STRIPPED_CRIMSON_STEM_PILE, DnDBlocks.STRIPPED_WARPED_STEM_PILE)
         getOrCreateTagBuilder(DnDBlockTags.LOG_PILES_THAT_BURN)
-            .add(DnDBlocks.OAK_LOG_PILE)
-            .add(DnDBlocks.SPRUCE_LOG_PILE)
-            .add(DnDBlocks.BIRCH_LOG_PILE)
-            .add(DnDBlocks.JUNGLE_LOG_PILE)
-            .add(DnDBlocks.ACACIA_LOG_PILE)
-            .add(DnDBlocks.DARK_OAK_LOG_PILE)
-            .add(DnDBlocks.MANGROVE_LOG_PILE)
-            .add(DnDBlocks.CHERRY_LOG_PILE)
-            .add(DnDBlocks.CASCADE_LOG_PILE)
+            .add(
+                DnDBlocks.OAK_LOG_PILE,
+                DnDBlocks.SPRUCE_LOG_PILE,
+                DnDBlocks.BIRCH_LOG_PILE,
+                DnDBlocks.JUNGLE_LOG_PILE,
+                DnDBlocks.ACACIA_LOG_PILE,
+                DnDBlocks.DARK_OAK_LOG_PILE,
+                DnDBlocks.MANGROVE_LOG_PILE,
+                DnDBlocks.CHERRY_LOG_PILE,
+                DnDBlocks.CASCADE_LOG_PILE,
+                DnDBlocks.BAMBOO_PILE,
+            )
+            .add(
+                DnDBlocks.STRIPPED_OAK_LOG_PILE,
+                DnDBlocks.STRIPPED_SPRUCE_LOG_PILE,
+                DnDBlocks.STRIPPED_BIRCH_LOG_PILE,
+                DnDBlocks.STRIPPED_JUNGLE_LOG_PILE,
+                DnDBlocks.STRIPPED_ACACIA_LOG_PILE,
+                DnDBlocks.STRIPPED_DARK_OAK_LOG_PILE,
+                DnDBlocks.STRIPPED_MANGROVE_LOG_PILE,
+                DnDBlocks.STRIPPED_CHERRY_LOG_PILE,
+                DnDBlocks.STRIPPED_CASCADE_LOG_PILE,
+                DnDBlocks.STRIPPED_BAMBOO_PILE,
+            )
         getOrCreateTagBuilder(DnDBlockTags.LEAF_PILES)
             .add(DnDBlocks.OAK_LEAF_PILE)
             .add(DnDBlocks.SPRUCE_LEAF_PILE)
@@ -301,16 +320,22 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.WOOD_STAIRS)
             .forceAddTag(DnDBlockTags.WOOD_STAIRS_THAT_BURN)
-            .add(DnDBlocks.CRIMSON_HYPHAE.stairs)
-            .add(DnDBlocks.WARPED_HYPHAE.stairs)
+            .add(
+                DnDBlocks.CRIMSON_HYPHAE.stairs, DnDBlocks.WARPED_HYPHAE.stairs,
+                DnDBlocks.STRIPPED_CRIMSON_HYPHAE.stairs, DnDBlocks.STRIPPED_WARPED_HYPHAE.stairs
+            )
         getOrCreateTagBuilder(DnDBlockTags.WOOD_SLABS)
             .forceAddTag(DnDBlockTags.WOOD_SLABS_THAT_BURN)
-            .add(DnDBlocks.CRIMSON_HYPHAE.slab)
-            .add(DnDBlocks.WARPED_HYPHAE.slab)
+            .add(
+                DnDBlocks.CRIMSON_HYPHAE.slab, DnDBlocks.WARPED_HYPHAE.slab,
+                DnDBlocks.STRIPPED_CRIMSON_HYPHAE.slab, DnDBlocks.STRIPPED_WARPED_HYPHAE.slab
+            )
         getOrCreateTagBuilder(DnDBlockTags.WOOD_WALLS)
             .forceAddTag(DnDBlockTags.WOOD_WALLS_THAT_BURN)
-            .add(DnDBlocks.CRIMSON_HYPHAE.wall)
-            .add(DnDBlocks.WARPED_HYPHAE.wall)
+            .add(
+                DnDBlocks.CRIMSON_HYPHAE.wall, DnDBlocks.WARPED_HYPHAE.wall,
+                DnDBlocks.STRIPPED_CRIMSON_HYPHAE.wall, DnDBlocks.STRIPPED_WARPED_HYPHAE.wall
+            )
 
     }
 

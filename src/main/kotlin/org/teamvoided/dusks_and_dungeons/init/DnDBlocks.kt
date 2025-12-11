@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.AbstractBlock.OffsetType
+import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.AbstractBlock.Settings.copy
 import net.minecraft.block.Blocks.*
 import net.minecraft.block.sapling.SaplingBlock
@@ -154,8 +155,11 @@ object DnDBlocks {
     val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD.parent))
     val STRIPPED_CASCADE_LOG =
         register("stripped_cascade_log", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD))
-    val STRIPPED_CASCADE_WOOD =
-        register("stripped_cascade_wood", PillarBlock(copy(CASCADE_WOOD).mapColor(MapColor.BLUE)))
+    val STRIPPED_CASCADE_WOOD = register(
+        createBlockSet("stripped_cascade_wood", Settings.create().mapColor(MapColor.BLUE)).noStoneCutting()
+            .parent(::PillarBlock).build()
+    ).woodSet()
+    val STRIPPED_CASCADE_LOG_PILE = register("stripped_cascade_log_pile", logPile(STRIPPED_CASCADE_WOOD.parent))
 
     val CASCADE_PLANKS = register("cascade_planks", Block(Set.CASCADE_PLANKS)).flammablePlanks()
     val CASCADE_STAIRS = register("cascade_stairs", stairsOf(CASCADE_PLANKS).wood())
@@ -205,6 +209,20 @@ object DnDBlocks {
     val CRIMSON_HYPHAE = registerWoodenSet("crimson_hyphae", Blocks.CRIMSON_HYPHAE)
     val WARPED_HYPHAE = registerWoodenSet("warped_hyphae", Blocks.WARPED_HYPHAE)
 
+    val STRIPPED_OAK_WOOD = registerWoodenSet("stripped_oak_wood", Blocks.STRIPPED_OAK_WOOD)
+    val STRIPPED_SPRUCE_WOOD = registerWoodenSet("stripped_spruce_wood", Blocks.STRIPPED_SPRUCE_WOOD)
+    val STRIPPED_BIRCH_WOOD = registerWoodenSet("stripped_birch_wood", Blocks.STRIPPED_BIRCH_WOOD)
+    val STRIPPED_JUNGLE_WOOD = registerWoodenSet("stripped_jungle_wood", Blocks.STRIPPED_JUNGLE_WOOD)
+    val STRIPPED_ACACIA_WOOD = registerWoodenSet("stripped_acacia_wood", Blocks.STRIPPED_ACACIA_WOOD)
+    val STRIPPED_DARK_OAK_WOOD = registerWoodenSet("stripped_dark_oak_wood", Blocks.STRIPPED_DARK_OAK_WOOD)
+    val STRIPPED_MANGROVE_WOOD = register(
+        createHeadlessSet("stripped_mangrove_wood", Blocks.STRIPPED_MANGROVE_WOOD)
+            .settings(copy(Blocks.STRIPPED_MANGROVE_WOOD).mapColor(MapColor.RED)).noStoneCutting().buildHeadless()
+    ).woodSet()
+    val STRIPPED_CHERRY_WOOD = registerWoodenSet("stripped_cherry_wood", Blocks.STRIPPED_CHERRY_WOOD)
+    val STRIPPED_CRIMSON_HYPHAE = registerWoodenSet("stripped_crimson_hyphae", Blocks.STRIPPED_CRIMSON_HYPHAE)
+    val STRIPPED_WARPED_HYPHAE = registerWoodenSet("stripped_warped_hyphae", Blocks.STRIPPED_WARPED_HYPHAE)
+
     val OAK_WALL = register("oak_wall", wallOf(OAK_PLANKS).wood())
     val SPRUCE_WALL = register("spruce_wall", wallOf(SPRUCE_PLANKS).wood())
     val BIRCH_WALL = register("birch_wall", wallOf(BIRCH_PLANKS).wood())
@@ -230,6 +248,18 @@ object DnDBlocks {
     val CRIMSON_STEM_PILE = register("crimson_stem_pile", logPile(Blocks.CRIMSON_HYPHAE))
     val WARPED_STEM_PILE = register("warped_stem_pile", logPile(Blocks.WARPED_HYPHAE))
     val BAMBOO_PILE = register("bamboo_pile", logPile(BAMBOO_PLANKS, MapColor.PLANT))
+
+    val STRIPPED_OAK_LOG_PILE = register("stripped_oak_log_pile", logPile(Blocks.STRIPPED_OAK_WOOD))
+    val STRIPPED_SPRUCE_LOG_PILE = register("stripped_spruce_log_pile", logPile(Blocks.STRIPPED_SPRUCE_WOOD))
+    val STRIPPED_BIRCH_LOG_PILE = register("stripped_birch_log_pile", logPile(Blocks.STRIPPED_BIRCH_WOOD))
+    val STRIPPED_JUNGLE_LOG_PILE = register("stripped_jungle_log_pile", logPile(Blocks.STRIPPED_JUNGLE_WOOD))
+    val STRIPPED_ACACIA_LOG_PILE = register("stripped_acacia_log_pile", logPile(Blocks.STRIPPED_ACACIA_WOOD))
+    val STRIPPED_DARK_OAK_LOG_PILE = register("stripped_dark_oak_log_pile", logPile(Blocks.STRIPPED_DARK_OAK_WOOD))
+    val STRIPPED_MANGROVE_LOG_PILE =
+        register("stripped_mangrove_log_pile", logPile(Blocks.STRIPPED_MANGROVE_WOOD, MapColor.RED))
+    val STRIPPED_CHERRY_LOG_PILE = register("stripped_cherry_log_pile", logPile(Blocks.STRIPPED_CHERRY_WOOD))
+    val STRIPPED_CRIMSON_STEM_PILE = register("stripped_crimson_stem_pile", logPile(Blocks.STRIPPED_CRIMSON_HYPHAE))
+    val STRIPPED_WARPED_STEM_PILE = register("stripped_warped_stem_pile", logPile(Blocks.STRIPPED_WARPED_HYPHAE))
     val STRIPPED_BAMBOO_PILE = register("stripped_bamboo_pile", logPile(BAMBOO_PLANKS))
 
     val OAK_LEAF_PILE = register("oak_leaf_pile", leafPile().cutout())
@@ -287,11 +317,17 @@ object DnDBlocks {
     val HOLLOW_CRIMSON_STEM =
         register("hollow_crimson_stem", hollowLog(Blocks.CRIMSON_HYPHAE)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_CRIMSON_STEM =
-        register("hollow_stripped_crimson_stem", hollowLog(STRIPPED_CRIMSON_HYPHAE)).tellWitnessesThatIWasMurdered()
+        register(
+            "hollow_stripped_crimson_stem",
+            hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE)
+        ).tellWitnessesThatIWasMurdered()
     val HOLLOW_WARPED_STEM =
         register("hollow_warped_stem", hollowLog(Blocks.WARPED_HYPHAE)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_WARPED_STEM =
-        register("hollow_stripped_warped_stem", hollowLog(STRIPPED_WARPED_HYPHAE)).tellWitnessesThatIWasMurdered()
+        register(
+            "hollow_stripped_warped_stem",
+            hollowLog(Blocks.STRIPPED_WARPED_HYPHAE)
+        ).tellWitnessesThatIWasMurdered()
 
     val HOLLOW_CASCADE_LOG = register("hollow_cascade_log", hollowLog(CASCADE_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_CASCADE_LOG =
@@ -482,7 +518,7 @@ object DnDBlocks {
     fun init() {
         // Striping
         StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
-        StrippableBlockRegistry.register(CASCADE_WOOD.parent, STRIPPED_CASCADE_WOOD)
+        StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
         // Flammability
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
@@ -496,10 +532,7 @@ object DnDBlocks {
 
     fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
-        // Switch away from this when the file has been merged
         DnDItems.register(id, BlockItem(regBlock, Item.Settings()))
-//        BLOCK_ITEMS[id]?.let { error("It $it already exists in BLOCK_ITEMS") }
-//        BLOCK_ITEMS[id] = BlockItem(regBlock, Item.Settings())
         return regBlock
     }
 

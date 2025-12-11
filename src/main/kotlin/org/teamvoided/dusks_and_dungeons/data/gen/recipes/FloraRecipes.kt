@@ -22,6 +22,9 @@ object FloraRecipes {
         DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
             e.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
+        DnDBlockLists.stripedLogPiles.forEachIndexed { idx, pile ->
+            e.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].second)
+        }
         DnDBlockLists.leafPiles.forEachIndexed { idx, pile ->
             e.createPiles(pile, DnDBlockLists.leaves[idx])
         }

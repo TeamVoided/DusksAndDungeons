@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.minecraft.block.Blocks
 import net.minecraft.item.Items
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.util.DnDItemLists.stripedWoodLists
 import org.teamvoided.voidlib.helpers.mc.addAfter
 
 fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
@@ -13,6 +14,10 @@ fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
         addAfter(
             DnDBlockLists.woodAndStrippedWood[idx].first,
             DnDItemLists.woodLists[idx] + DnDBlockLists.logPiles[idx]
+        )
+        addAfter(
+            DnDBlockLists.woodAndStrippedWood[idx].second,
+            stripedWoodLists[idx] + DnDBlockLists.stripedLogPiles[idx]
         )
         addAfter(
             DnDBlockLists.plankSlabs[idx],

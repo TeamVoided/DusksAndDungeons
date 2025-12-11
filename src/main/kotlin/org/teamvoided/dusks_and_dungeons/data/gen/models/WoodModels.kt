@@ -20,7 +20,7 @@ object WoodModels {
 
         gen.registerLog(DnDBlocks.STRIPPED_CASCADE_LOG)
             .log(DnDBlocks.STRIPPED_CASCADE_LOG)
-            .log(DnDBlocks.STRIPPED_CASCADE_WOOD)
+            .wood(DnDBlocks.STRIPPED_CASCADE_WOOD.parent)
         gen.registerHangingSign(
             DnDBlocks.STRIPPED_CASCADE_LOG,
             DnDBlocks.CASCADE_HANGING_SIGN,
@@ -47,6 +47,18 @@ object WoodModels {
         gen.createWood(DnDBlocks.WARPED_HYPHAE, Blocks.WARPED_STEM)
         gen.createWood(DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
 
+        gen.createWood(DnDBlocks.STRIPPED_OAK_WOOD, Blocks.STRIPPED_OAK_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_BIRCH_WOOD, Blocks.STRIPPED_BIRCH_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_JUNGLE_WOOD, Blocks.STRIPPED_JUNGLE_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_ACACIA_WOOD, Blocks.STRIPPED_ACACIA_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_DARK_OAK_WOOD, Blocks.STRIPPED_DARK_OAK_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_MANGROVE_WOOD, Blocks.STRIPPED_MANGROVE_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_CHERRY_WOOD, Blocks.STRIPPED_CHERRY_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_CRIMSON_HYPHAE, Blocks.STRIPPED_CRIMSON_STEM)
+        gen.createWood(DnDBlocks.STRIPPED_WARPED_HYPHAE, Blocks.STRIPPED_WARPED_STEM)
+        gen.createWood(DnDBlocks.STRIPPED_CASCADE_WOOD, DnDBlocks.STRIPPED_CASCADE_LOG)
+
         gen.wall(DnDBlocks.OAK_WALL, Blocks.OAK_PLANKS)
         gen.wall(DnDBlocks.SPRUCE_WALL, Blocks.SPRUCE_PLANKS)
         gen.wall(DnDBlocks.BIRCH_WALL, Blocks.BIRCH_PLANKS)
@@ -69,11 +81,14 @@ object WoodModels {
         }
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK)
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
-        gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, true)
-        gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, true)
         DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
             gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
+        DnDBlockLists.stripedLogPiles.forEachIndexed { idx, pile ->
+            gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].second)
+        }
+        gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, true)
+        gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, true)
         DnDBlockLists.leafPiles.forEachIndexed { idx, pile -> gen.createLeafPile(pile, DnDBlockLists.leaves[idx]) }
     }
 }

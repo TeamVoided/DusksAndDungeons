@@ -44,8 +44,6 @@ object DnDItemLists {
         DnDItems.CASCADE_SIGN,
         DnDItems.CASCADE_HANGING_SIGN
     )
-    val polishedStone = DnDBlocks.POLISHED_STONE.list
-    val mossyPolishedStone = DnDBlocks.MOSSY_POLISHED_STONE.list
     val overgrownCobblestone = DnDBlocks.OVERGROWN_COBBLESTONE.list
     val overgrownStoneBricks = DnDBlocks.OVERGROWN_STONE_BRICKS.list
     val ice = DnDBlocks.ICE_SET.list + DnDBlocks.PACKED_ICE_SET.list + DnDBlocks.BLUE_ICE_SET.list
@@ -145,6 +143,20 @@ object DnDItemLists {
         warpedHyphaeStuff
     )
 
+    val stripedWoodLists = listOf(
+        DnDBlocks.STRIPPED_OAK_WOOD.headless(),
+        DnDBlocks.STRIPPED_SPRUCE_WOOD.headless(),
+        DnDBlocks.STRIPPED_BIRCH_WOOD.headless(),
+        DnDBlocks.STRIPPED_JUNGLE_WOOD.headless(),
+        DnDBlocks.STRIPPED_ACACIA_WOOD.headless(),
+        DnDBlocks.STRIPPED_DARK_OAK_WOOD.headless(),
+        DnDBlocks.STRIPPED_MANGROVE_WOOD.headless(),
+        DnDBlocks.STRIPPED_CHERRY_WOOD.headless(),
+        DnDBlocks.STRIPPED_CASCADE_WOOD.headless(),
+        DnDBlocks.STRIPPED_CRIMSON_HYPHAE.headless(),
+        DnDBlocks.STRIPPED_WARPED_HYPHAE.headless(),
+    )
+
     val woodStuff =
         /*listOf(DnDWoodBlocks.HOLLOW_OAK_LOG, DnDWoodBlocks.HOLLOW_STRIPPED_OAK_LOG) +*/ oakWoodStuff +
             /* DnDBlocks.HOLLOW_SPRUCE_LOG + DnDBlocks.HOLLOW_STRIPPED_SPRUCE_LOG +*/ spruceWoodStuff +
@@ -159,21 +171,6 @@ object DnDItemLists {
             /*  DnDBlocks.HOLLOW_CRIMSON_STEM + DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM +*/ crimsonHyphaeStuff +
             /*   DnDBlocks.HOLLOW_WARPED_STEM + DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM +*/ warpedHyphaeStuff
 
-    val logPiles = listOf(
-        DnDBlocks.OAK_LOG_PILE,
-        DnDBlocks.SPRUCE_LOG_PILE,
-        DnDBlocks.BIRCH_LOG_PILE,
-        DnDBlocks.JUNGLE_LOG_PILE,
-        DnDBlocks.ACACIA_LOG_PILE,
-        DnDBlocks.DARK_OAK_LOG_PILE,
-        DnDBlocks.MANGROVE_LOG_PILE,
-        DnDBlocks.CHERRY_LOG_PILE,
-        DnDBlocks.CASCADE_LOG_PILE,
-        DnDBlocks.BAMBOO_PILE,
-        DnDBlocks.STRIPPED_BAMBOO_PILE,
-        DnDBlocks.CRIMSON_STEM_PILE,
-        DnDBlocks.WARPED_STEM_PILE,
-    )
     val leafPiles = listOf(
         DnDBlocks.OAK_LEAF_PILE,
         DnDBlocks.SPRUCE_LEAF_PILE,

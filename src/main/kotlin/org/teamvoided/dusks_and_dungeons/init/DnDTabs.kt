@@ -87,7 +87,47 @@ object DnDTabs {
                 )
                 entries.addLists(
                     DnDItemLists.woodStuff,
-                    DnDItemLists.logPiles,
+                    DnDBlocks.STRIPPED_OAK_WOOD,
+                    DnDBlocks.STRIPPED_SPRUCE_WOOD,
+                    DnDBlocks.STRIPPED_BIRCH_WOOD,
+                    DnDBlocks.STRIPPED_JUNGLE_WOOD,
+                    DnDBlocks.STRIPPED_ACACIA_WOOD,
+                    DnDBlocks.STRIPPED_DARK_OAK_WOOD,
+                    DnDBlocks.STRIPPED_MANGROVE_WOOD,
+                    DnDBlocks.STRIPPED_CHERRY_WOOD,
+                    DnDBlocks.STRIPPED_CRIMSON_HYPHAE,
+                    DnDBlocks.STRIPPED_WARPED_HYPHAE,
+                    DnDBlocks.STRIPPED_CASCADE_WOOD.headless()
+                )
+                entries.addItems(
+                    DnDBlocks.OAK_LOG_PILE,
+                    DnDBlocks.SPRUCE_LOG_PILE,
+                    DnDBlocks.BIRCH_LOG_PILE,
+                    DnDBlocks.JUNGLE_LOG_PILE,
+                    DnDBlocks.ACACIA_LOG_PILE,
+                    DnDBlocks.DARK_OAK_LOG_PILE,
+                    DnDBlocks.MANGROVE_LOG_PILE,
+                    DnDBlocks.CHERRY_LOG_PILE,
+                    DnDBlocks.CASCADE_LOG_PILE,
+                    DnDBlocks.BAMBOO_PILE,
+                    DnDBlocks.CRIMSON_STEM_PILE,
+                    DnDBlocks.WARPED_STEM_PILE,
+                    //Striped
+                    DnDBlocks.STRIPPED_OAK_LOG_PILE,
+                    DnDBlocks.STRIPPED_SPRUCE_LOG_PILE,
+                    DnDBlocks.STRIPPED_BIRCH_LOG_PILE,
+                    DnDBlocks.STRIPPED_JUNGLE_LOG_PILE,
+                    DnDBlocks.STRIPPED_ACACIA_LOG_PILE,
+                    DnDBlocks.STRIPPED_DARK_OAK_LOG_PILE,
+                    DnDBlocks.STRIPPED_MANGROVE_LOG_PILE,
+                    DnDBlocks.STRIPPED_CHERRY_LOG_PILE,
+                    DnDBlocks.STRIPPED_CASCADE_LOG_PILE,
+                    DnDBlocks.STRIPPED_BAMBOO_PILE,
+                    DnDBlocks.STRIPPED_CRIMSON_STEM_PILE,
+                    DnDBlocks.STRIPPED_WARPED_STEM_PILE,
+                )
+
+                entries.addLists(
                     DnDItemLists.leafPiles,
                     DnDBlocks.POLISHED_STONE,
                     DnDBlocks.MOSSY_POLISHED_STONE,

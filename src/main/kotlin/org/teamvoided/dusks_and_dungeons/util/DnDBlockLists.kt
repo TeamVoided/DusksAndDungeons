@@ -132,9 +132,21 @@ object DnDBlockLists {
         DnDBlocks.MANGROVE_LOG_PILE,
         DnDBlocks.CHERRY_LOG_PILE,
         DnDBlocks.CASCADE_LOG_PILE,
-//        DnDWoodBlocks.GALLERY_MAPLE_LOG_PILE,
         DnDBlocks.CRIMSON_STEM_PILE,
         DnDBlocks.WARPED_STEM_PILE
+    )
+    val stripedLogPiles = listOf(
+        DnDBlocks.STRIPPED_OAK_LOG_PILE,
+        DnDBlocks.STRIPPED_SPRUCE_LOG_PILE,
+        DnDBlocks.STRIPPED_BIRCH_LOG_PILE,
+        DnDBlocks.STRIPPED_JUNGLE_LOG_PILE,
+        DnDBlocks.STRIPPED_ACACIA_LOG_PILE,
+        DnDBlocks.STRIPPED_DARK_OAK_LOG_PILE,
+        DnDBlocks.STRIPPED_MANGROVE_LOG_PILE,
+        DnDBlocks.STRIPPED_CHERRY_LOG_PILE,
+        DnDBlocks.STRIPPED_CASCADE_LOG_PILE,
+        DnDBlocks.STRIPPED_CRIMSON_STEM_PILE,
+        DnDBlocks.STRIPPED_WARPED_STEM_PILE
     )
     val leafPiles = listOf(
         DnDBlocks.OAK_LEAF_PILE,
