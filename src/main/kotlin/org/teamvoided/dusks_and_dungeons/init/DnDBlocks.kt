@@ -124,7 +124,7 @@ object DnDBlocks {
 
     // The Rest
     val ROOT_BLOCK = register("root_block", MangroveRootsBlock(Set.ROOT_BLOCK).grassLike().flammableLeaves())
-    val WILD_WHEAT = registerNoItem("wild_wheat", TallPlantBlock(Set.WILD_WHEAT).grassLike())
+    val WILD_WHEAT = registerNoItem("wild_wheat", TallSpreadableBlock(Set.WILD_WHEAT).grassLike())
     val GOLDEN_BEETROOTS = registerNoItem("golden_beetroots", GoldenBeetrootsBlock(Set.GOLDEN_BEETROOT).grassLike())
     val MOONBERRY_VINE = register(
         "moonberry_vine", MoonberryVineBlock(Set.moonbery().moonberryLuminance(8, 11))

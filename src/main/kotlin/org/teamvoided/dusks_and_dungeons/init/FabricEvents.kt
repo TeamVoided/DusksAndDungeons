@@ -26,7 +26,7 @@ fun InitializeFabricEvents() {
 
 @Suppress("UNUSED_PARAMETER")
 fun modifyLootTables(
-    key: RegistryKey<LootTable>, builder: LootTable.Builder, src: LootTableSource, lookup: HolderLookup.Provider
+    key: RegistryKey<LootTable>, builder: LootTable.Builder, src: LootTableSource, lookup: HolderLookup.Provider,
 ): Any = when (key) {
     PIGLIN_BARTERING_GAMEPLAY -> addToExistingPools(builder, BARTERING_ADD_VIVIONS)
     SNIFFER_DIGGING_GAMEPLAY -> addToExistingPools(builder, SNIFFER_ADD_MOONBERRY)
@@ -52,6 +52,7 @@ fun addCommonWanderingTrades(trades: MutableList<TradeOffers.Factory>) {
     trades.add1for1(DnDItems.CORN_KERNELS, 12)
     trades.add1for1(DnDItems.CORN, 4)
 
+    trades.add1for1(DnDBlocks.WILD_WHEAT, 16)
 //    trades.addSell(DnDBlocks.GOLDEN_MUSHROOM, 1, 1, 12)
 
     DnDBlockLists.flowerbedBlocks.forEach { flowerbed ->
