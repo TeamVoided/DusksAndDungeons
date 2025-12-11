@@ -89,10 +89,11 @@ object DnDTabs {
                     DnDItemLists.woodStuff,
                     DnDItemLists.logPiles,
                     DnDItemLists.leafPiles,
-                    DnDItemLists.polishedStone,
-                    DnDItemLists.mossyPolishedStone,
-                    DnDItemLists.overgrownCobblestone,
-                    DnDItemLists.overgrownStoneBricks,
+                    DnDBlocks.POLISHED_STONE,
+                    DnDBlocks.MOSSY_POLISHED_STONE,
+                    DnDBlocks.OVERGROWN_POLISHED_STONE,
+                    DnDBlocks.OVERGROWN_COBBLESTONE,
+                    DnDBlocks.OVERGROWN_STONE_BRICKS,
                     DnDItemLists.ice
                 )
                 entries.addItems(
