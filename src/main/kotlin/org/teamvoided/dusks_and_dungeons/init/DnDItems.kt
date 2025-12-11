@@ -22,6 +22,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_PALE_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.item.DnDFoodComponents
 import org.teamvoided.dusks_and_dungeons.item.ScarecrowItem
 import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
+import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem
 
 
@@ -44,7 +45,7 @@ object DnDItems {
             countSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
         )
     )
-    val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(countSettings(16)))
+    val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(countSettings(16))).tellWitnessesThatIWasMurdered()
     val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, Settings()))
 
     val LANTERN_PUMPKIN_SEEDS =
