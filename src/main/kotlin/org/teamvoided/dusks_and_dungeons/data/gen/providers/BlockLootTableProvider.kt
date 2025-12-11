@@ -59,7 +59,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDBlocks.CASCADE_SAPLING) }
         add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
         add(DnDBlocks.CASCADE_LEAVES) {
-            oakLeavesDrops(it, DnDBlocks.CASCADE_SAPLING, *JUNGLE_SAPLING_DROP_CHANCES)
+            oakLeavesDrops(it, DnDBlocks.CASCADE_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
         }
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
