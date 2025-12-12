@@ -3,7 +3,6 @@ package org.teamvoided.dusks_and_dungeons.entity
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer
 import net.minecraft.client.model.Dilation
 import net.minecraft.client.model.TexturedModelData
-import net.minecraft.client.render.entity.model.BipedArmorEntityModel
 import net.minecraft.client.render.entity.model.EntityModelLayer
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
@@ -31,12 +30,6 @@ object DnDEntityModelLayers {
 
     private fun createScarecrowOuterArmor(): TexturedModelData =
         TexturedModelData.of(ScarecrowArmorEntityModel.getModelData(Dilation(1.0F)), 64, 32)
-
-    private fun createInnerArmor(): TexturedModelData =
-        TexturedModelData.of(BipedArmorEntityModel.getModelData(Dilation(0.5F)), 64, 32)
-
-    private fun createOuterArmor(): TexturedModelData =
-        TexturedModelData.of(BipedArmorEntityModel.getModelData(Dilation(1.0F)), 64, 32)
 
     private fun registerMain(id: String): EntityModelLayer {
         return register(id, "main")

@@ -1,8 +1,9 @@
 package org.teamvoided.dusks_and_dungeons.entity.scarecrow.render
 
-import com.google.common.collect.Maps
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.client.MinecraftClient
+import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.TexturedRenderLayers
@@ -21,7 +22,10 @@ import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.trim.ArmorTrimPermutation
 import net.minecraft.registry.Holder
 import net.minecraft.registry.tag.ItemTags
+import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.Axis
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowEntityModel
@@ -31,54 +35,18 @@ class ScarecrowArmorFeatureRenderer(
     context: FeatureRendererContext<ScarecrowEntity, ScarecrowEntityModel>,
     private val leggingsModel: ScarecrowArmorEntityModel,
     private val bodyModel: ScarecrowArmorEntityModel,
-    modelManager: BakedModelManager
+    modelManager: BakedModelManager,
 ) : FeatureRenderer<ScarecrowEntity, ScarecrowEntityModel>(context) {
     private val armorAtlas: SpriteAtlasTexture = modelManager.getAtlas(TexturedRenderLayers.ARMOR_TRIMS_ATLAS_TEXTURE)
 
     override fun render(
-        matrices: MatrixStack,
-        vertexConsumers: VertexConsumerProvider,
-        light: Int,
-        livingEntity: ScarecrowEntity,
-        f: Float,
-        g: Float,
-        h: Float,
-        j: Float,
-        k: Float,
-        l: Float
+        matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, livingEntity: ScarecrowEntity,
+        f: Float, g: Float, h: Float, j: Float, k: Float, l: Float,
     ) {
-        this.renderArmor(
-            matrices,
-            vertexConsumers,
-            livingEntity,
-            EquipmentSlot.HEAD,
-            light,
-            this.getArmor(EquipmentSlot.HEAD)
-        )
-        this.renderArmor(
-            matrices,
-            vertexConsumers,
-            livingEntity,
-            EquipmentSlot.CHEST,
-            light,
-            this.getArmor(EquipmentSlot.CHEST)
-        )
-        this.renderArmor(
-            matrices,
-            vertexConsumers,
-            livingEntity,
-            EquipmentSlot.LEGS,
-            light,
-            this.getArmor(EquipmentSlot.LEGS)
-        )
-        this.renderArmor(
-            matrices,
-            vertexConsumers,
-            livingEntity,
-            EquipmentSlot.FEET,
-            light,
-            this.getArmor(EquipmentSlot.FEET)
-        )
+        renderArmor(matrices, vertexConsumers, livingEntity, EquipmentSlot.HEAD, light, bodyModel)
+        renderArmor(matrices, vertexConsumers, livingEntity, EquipmentSlot.CHEST, light, bodyModel)
+        renderArmor(matrices, vertexConsumers, livingEntity, EquipmentSlot.LEGS, light, leggingsModel)
+        renderArmor(matrices, vertexConsumers, livingEntity, EquipmentSlot.FEET, light, bodyModel)
     }
 
     private fun renderArmor(
@@ -87,50 +55,71 @@ class ScarecrowArmorFeatureRenderer(
         entity: ScarecrowEntity,
         armorSlot: EquipmentSlot,
         light: Int,
-        model: ScarecrowArmorEntityModel
+        model: ScarecrowArmorEntityModel,
     ) {
-        val itemStack = entity.getEquippedStack(armorSlot)
-        val item = itemStack.item
-        if (item is ArmorItem) {
-            if (item.preferredSlot == armorSlot) {
+        val stack = entity.getEquippedStack(armorSlot)
+        val item = stack.item
+        if (item is ArmorItem && item.preferredSlot == armorSlot) {
 
-                this.contextModel.setAttributes(model)
-//                this.leggingsModel.setAttributesM(model)
-//                this.bodyModel.setAttributesM(model)
+            contextModel.setAttributes(model)
 
-                this.setVisible(model, armorSlot)
+            setVisible(model, armorSlot)
 
-                val useSecondLayer = this.usesSecondLayer(armorSlot)
+            val textList = mapOf(
+                "Slot: " to armorSlot.name,
+                "Stack: " to stack,
+                "Item: " to item,
+                "Head_Shown:" to model.head.visible,
+                "Hat_Shown:" to model.hat.visible,
+            )
+            val client = MinecraftClient.getInstance()
+            matrices.push()
+            matrices.rotateAround(Axis.Z_NEGATIVE.rotationDegrees(180f), 0f, 0f, 0f)
+            matrices.translate(0f, 1.3f, 0f)
+            matrices.scale(0.025f, -0.025f, 0.025f)
+            matrices.rotateAround(Axis.Y_POSITIVE.rotationDegrees(180f), 0f, 0f, 0f)
 
-                val armorMaterial = item.material.value()
-                val dyeTint = if (itemStack.isIn(ItemTags.DYEABLE)) Argb32.toOpaque(
-                    DyedColorComponent.getColorOrDefault(
-                        itemStack,
-                        -6265536
-                    )
-                ) else -1
-                armorMaterial.layers().forEach { layer ->
-                    val tint = if (layer.isDyeable) dyeTint else -1
-                    this.renderArmorParts(matrices, vertexConsumers, light, model, tint, layer.texture(useSecondLayer))
-                }
 
-                val armorTrimPermutation = itemStack.get(DataComponentTypes.TRIM)
-                if (armorTrimPermutation != null) {
-                    this.renderArmor(
-                        item.material,
-                        matrices,
-                        vertexConsumers,
-                        light,
-                        armorTrimPermutation,
-                        model,
-                        useSecondLayer
-                    )
-                }
-
-                if (itemStack.hasGlint()) {
-                    this.renderArmorGlint(matrices, vertexConsumers, light, model)
-                }
+            val color = 0xff_ff_ff_ff.toInt()
+            val font = client.textRenderer
+            for ((idx, rawText) in textList.toList().withIndex()) {
+                val text = Text.literal(rawText.first)
+                    .append(Text.literal("${rawText.second}").formatted(Formatting.GREEN))
+                font.draw(
+                    text, font.getWidth(text) / -2f, idx * -(1f + font.fontHeight), color,
+                    true, matrices.peek().model, vertexConsumers,
+                    TextRenderer.TextLayerType.NORMAL, 0, 15728880
+                )
             }
+
+            matrices.pop()
+
+            val useSecondLayer = usesSecondLayer(armorSlot)
+
+            val armorMaterial = item.material.value()
+            val dyeTint = if (stack.isIn(ItemTags.DYEABLE)) Argb32.toOpaque(
+                DyedColorComponent.getColorOrDefault(stack, DyedColorComponent.DEFAULT_COLOR)
+            ) else -1
+            armorMaterial.layers().forEach { layer ->
+                val tint = if (layer.isDyeable) dyeTint else -1
+                renderArmorParts(matrices, vertexConsumers, light, model, tint, layer.texture(useSecondLayer))
+            }
+
+            val armorTrimPermutation = stack.get(DataComponentTypes.TRIM)
+            if (armorTrimPermutation != null) {
+                renderArmor(
+                    item.material,
+                    matrices,
+                    vertexConsumers,
+                    light,
+                    armorTrimPermutation,
+                    model,
+                    useSecondLayer
+                )
+            }
+
+            if (stack.hasGlint())
+                renderArmorGlint(matrices, vertexConsumers, light, model)
         }
     }
 
@@ -138,7 +127,7 @@ class ScarecrowArmorFeatureRenderer(
         scarecrowArmor.setArmorVisible(false)
         when (slot) {
             EquipmentSlot.HEAD -> {
-                scarecrowArmor.headNotFun.visible = true
+                scarecrowArmor.head.visible = true
                 scarecrowArmor.hat.visible = true
             }
 
@@ -164,12 +153,9 @@ class ScarecrowArmorFeatureRenderer(
     }
 
     private fun renderArmorParts(
-        matrices: MatrixStack,
-        vertexConsumers: VertexConsumerProvider,
-        light: Int,
-        model: ScarecrowArmorEntityModel,
-        i: Int,
-        texture: Identifier
+        matrices: MatrixStack, vertexConsumers: VertexConsumerProvider,
+        light: Int, model: ScarecrowArmorEntityModel,
+        i: Int, texture: Identifier,
     ) {
         val vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(texture))
         model.method_2828(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, i)
@@ -182,7 +168,7 @@ class ScarecrowArmorFeatureRenderer(
         light: Int,
         permutation: ArmorTrimPermutation,
         model: ScarecrowArmorEntityModel,
-        hasGlint: Boolean
+        hasGlint: Boolean,
     ) {
         val sprite = armorAtlas.getSprite(
             if (hasGlint) permutation.getLeggingsTexture(holder) else permutation.getBodyTexture(holder)
@@ -194,25 +180,12 @@ class ScarecrowArmorFeatureRenderer(
     }
 
     private fun renderArmorGlint(
-        matrices: MatrixStack,
-        vertexConsumers: VertexConsumerProvider,
-        light: Int,
-        model: ScarecrowArmorEntityModel
+        matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, model: ScarecrowArmorEntityModel,
     ) {
         model.method_60879(
             matrices, vertexConsumers.getBuffer(RenderLayer.getArmorEntityGlint()), light, OverlayTexture.DEFAULT_UV
         )
     }
 
-    private fun getArmor(slot: EquipmentSlot): ScarecrowArmorEntityModel {
-        return if (this.usesSecondLayer(slot)) this.leggingsModel else this.bodyModel
-    }
-
-    private fun usesSecondLayer(slot: EquipmentSlot): Boolean {
-        return slot == EquipmentSlot.LEGS
-    }
-
-    companion object {
-        private val ARMOR_TEXTURE_CACHE: Map<String, Identifier> = Maps.newHashMap()
-    }
+    fun usesSecondLayer(slot: EquipmentSlot): Boolean = slot == EquipmentSlot.LEGS
 }

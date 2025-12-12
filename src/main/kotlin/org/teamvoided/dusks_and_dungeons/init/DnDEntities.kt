@@ -12,8 +12,8 @@ import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 object DnDEntities {
     val SCARECROW = register(
         "scarecrow", EntityType.Builder.create(EntityType.EntityFactory(::ScarecrowEntity), SpawnGroup.MISC)
-            .setDimensions(0.5F, 2.375F)
-            .setEyeHeight(2.175F)
+            .setDimensions(0.5F, 2.4375f)
+            .setEyeHeight(2.2375F)
             .maxTrackingRange(10)
     )
 
