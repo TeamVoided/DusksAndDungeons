@@ -492,7 +492,7 @@ fun BlockStateModelGenerator.registerGoldenMushroomPlant(block: Block) {
 
 fun BlockStateModelGenerator.registerMushroomBlockDiffInside(
     block: Block,
-    insideTexture: Identifier = block.model().suffix("_inventory")
+    insideTexture: Identifier = block.model().suffix("_inside")
 ) {
     val texture = Models.TEMPLATE_SINGLE_FACE.upload(
         block, Texture.texture(block),

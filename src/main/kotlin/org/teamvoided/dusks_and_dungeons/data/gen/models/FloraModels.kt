@@ -17,7 +17,7 @@ object FloraModels {
         gen.registerGoldenMushroomPlant(DnDBlocks.GOLDEN_MUSHROOM)
         gen.registerMushroomBlockDiffInside(DnDBlocks.GOLDEN_MUSHROOM_BLOCK)
         gen.registerMushroomBlockDiffInside(
-            DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK, DnDBlocks.GOLDEN_MUSHROOM_BLOCK.model().suffix("_inventory")
+            DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK, DnDBlocks.GOLDEN_MUSHROOM_BLOCK.model().suffix("_inside")
         )
 
 //        gen.registerSpiderlilly(DnDBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
