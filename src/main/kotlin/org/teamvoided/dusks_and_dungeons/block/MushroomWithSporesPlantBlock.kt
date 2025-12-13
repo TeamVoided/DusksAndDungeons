@@ -28,7 +28,7 @@ class MushroomWithSporesPlantBlock(
         context: ShapeContext
     ): VoxelShape {
         val offset = state.getModelOffset(world, pos)
-        return LARGER_SHAPE.offset(offset.x, offset.y, offset.z)
+        return LARGER_SHAPE.offset(offset.x, 0.0, offset.z)
     }
 
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
@@ -52,6 +52,6 @@ class MushroomWithSporesPlantBlock(
     }
 
     companion object {
-        val LARGER_SHAPE = createCuboidShape(5.0, 0.0, 5.0, 11.0, 8.0, 11.0)
+        val LARGER_SHAPE: VoxelShape = createCuboidShape(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
     }
 }
