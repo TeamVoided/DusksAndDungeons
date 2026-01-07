@@ -3,7 +3,6 @@ package org.teamvoided.dusks_and_dungeons.block
 import com.mojang.serialization.MapCodec
 import net.minecraft.advancement.criterion.Criteria
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.block.ShapeContext
 import net.minecraft.block.TransparentBlock
 import net.minecraft.entity.Entity
@@ -14,12 +13,14 @@ import net.minecraft.entity.vehicle.BoatEntity
 import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import kotlin.math.abs
 
 class CornSyrupBlock(settings: Settings) : TransparentBlock(settings) {
@@ -100,14 +101,12 @@ class CornSyrupBlock(settings: Settings) : TransparentBlock(settings) {
         fun addRegularParticles(entity: Entity) = addParticles(entity, 5)
         fun addRichParticles(entity: Entity) = addParticles(entity, 10)
         private fun addParticles(entity: Entity, count: Int) {
-            if (entity.world.isClient) {
-                val blockState = Blocks.HONEY_BLOCK.defaultState
-                for (i in 0 until count) {
-                    entity.world.addParticle(
-                        BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
-                        entity.x, entity.y, entity.z, 0.0, 0.0, 0.0
-                    )
-                }
+            if (entity.world is ServerWorld) {
+                val blockState = DnDBlocks.CORN_SYRUP_BLOCK.defaultState
+                (entity.world as ServerWorld).spawnParticles(
+                    BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
+                    entity.x, entity.y, entity.z, count, 0.0, 0.0, 0.0, 0.0
+                )
             }
         }
     }
