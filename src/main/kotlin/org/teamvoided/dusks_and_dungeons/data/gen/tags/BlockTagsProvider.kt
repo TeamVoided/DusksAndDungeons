@@ -373,6 +373,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE)
             .forceAddTag(DnDBlockTags.PUMPKINS)
             .forceAddTag(DnDBlockTags.CARVED_PUMPKINS)
+            .add(DnDBlocks.GOLDEN_MUSHROOM)
 
 
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)

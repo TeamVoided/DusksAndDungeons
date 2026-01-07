@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture
 class ItemTagsProvider(
     output: FabricDataOutput,
     registriesFuture: CompletableFuture<HolderLookup.Provider>,
-    blockTags: BlockTagsProvider
+    blockTags: BlockTagsProvider,
 ) :
     FabricTagProvider.ItemTagProvider(output, registriesFuture, blockTags) {
     override fun configure(arg: HolderLookup.Provider) {
@@ -195,5 +195,8 @@ class ItemTagsProvider(
 
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
             .add(DnDItems.EVIL_ITEMS)
+
+        getOrCreateTagBuilder(ConventionalItemTags.MUSHROOMS)
+            .add(DnDBlocks.GOLDEN_MUSHROOM.asItem())
     }
 }

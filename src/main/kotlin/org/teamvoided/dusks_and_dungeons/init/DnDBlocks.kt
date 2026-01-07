@@ -486,18 +486,15 @@ object DnDBlocks {
 
     // TODO add this
     val GOLDEN_MUSHROOM = register(
-        "golden_mushroom", MushroomWithSporesPlantBlock(
-            TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM
-        ).cutout()
-    ).tellWitnessesThatIWasMurdered()
+        "golden_mushroom",
+        MushroomWithSporesPlantBlock(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM)
+    ).cutout().axe().sword().tellWitnessesThatIWasMurdered()
     val GOLDEN_MUSHROOM_BLOCK = register(
-        "golden_mushroom_block", MushroomWithSporesBlock(
-            0xFFD800, 0.5, Set.GOLDEN_MUSHROOM_BLOCK.luminance(11)
-        )
-    ).tellWitnessesThatIWasMurdered()
-    val GOLDEN_MUSHROOM_STEM_BLOCK = register(
-        "golden_mushroom_stem_block", MushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9))
-    ).tellWitnessesThatIWasMurdered()
+        "golden_mushroom_block", MushroomWithSporesBlock(0xFFD800, 0.5, Set.GOLDEN_MUSHROOM_BLOCK.luminance(11))
+    ).axe().tellWitnessesThatIWasMurdered()
+    val GOLDEN_MUSHROOM_STEM_BLOCK =
+        register("golden_mushroom_stem_block", MushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9)))
+            .axe().tellWitnessesThatIWasMurdered()
 
     /* Future Content
     val MOLTEN_LAVASPONGE = register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe()
