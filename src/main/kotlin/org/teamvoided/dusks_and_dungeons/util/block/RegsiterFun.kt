@@ -3,8 +3,6 @@ package org.teamvoided.dusks_and_dungeons.util.block
 import net.minecraft.block.AbstractBlock.Settings
 import net.minecraft.block.Block
 import net.minecraft.item.Item
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
 import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
@@ -23,8 +21,6 @@ import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 
 fun registerHeadEquipable(id: String, block: Block): Block {
     val regBlock = registerNoItem(id, block)
-//    BLOCK_ITEMS[id]?.let { error("Id $it already exists in BLOCK_ITEMS") }
-    if (isDev()) log.warn("Fix registerHeadEquipable in the near future!")
     DnDItems.register(id, EquipableBlockItem(regBlock, Item.Settings()))
     return regBlock
 }

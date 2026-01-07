@@ -23,6 +23,7 @@ import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AttachedToTrunkT
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.ThreeWideTrunkPlacer
 
+@Suppress("SameParameterValue")
 object DnDWorldgen {
 
     val ALTER_GROUND_RADIUS = registerTreeDecorator("alter_ground_radius", AlterGroundRadiusTreeDecorator.CODEC)
