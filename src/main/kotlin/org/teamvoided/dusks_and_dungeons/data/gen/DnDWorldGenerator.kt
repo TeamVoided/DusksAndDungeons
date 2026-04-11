@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
+import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import java.util.concurrent.CompletableFuture
 
 class DnDWorldGenerator(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
@@ -23,5 +24,6 @@ class DnDWorldGenerator(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_FEATURE))
 
         e.addAll(reg.getLookupOrThrow(RegistryKeys.WOLF_VARIANT))
+        e.addAll(reg.getLookupOrThrow(DnDRegistryKeys.RACCOON_VARIANT))
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.client.model.Dilation
 import net.minecraft.client.model.TexturedModelData
 import net.minecraft.client.render.entity.model.EntityModelLayer
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.entity.raccoon.RaccoonEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowWoodModel
@@ -15,6 +16,7 @@ object DnDEntityModelLayers {
     val SCARECROW_INNER_ARMOR: EntityModelLayer = createInnerArmor("scarecrow")
     val SCARECROW_OUTER_ARMOR: EntityModelLayer = createOuterArmor("scarecrow")
     val SCARECROW_WOOD: EntityModelLayer = register("scarecrow", "wood")
+    val RACCOON: EntityModelLayer = registerMain("raccoon")
 
     // experimental
 
@@ -23,6 +25,7 @@ object DnDEntityModelLayers {
         registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
         registerModelLayer(SCARECROW_INNER_ARMOR, ::createScarecrowInnerArmor)
         registerModelLayer(SCARECROW_OUTER_ARMOR, ::createScarecrowOuterArmor)
+        registerModelLayer(RACCOON, RaccoonEntityModel::texturedModelData)
     }
 
     private fun createScarecrowInnerArmor(): TexturedModelData =

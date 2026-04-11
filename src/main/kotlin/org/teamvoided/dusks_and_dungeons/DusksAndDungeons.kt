@@ -43,6 +43,8 @@ object DusksAndDungeons {
         DnDParticles.init()
         DnDSoundEvents.init()
         DnDTabs.init()
+        DnDRegistryKeys.init()
+        DnDAttachmentTypes.init()
         InitializeFabricEvents()
 
         if (isDev()) CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->

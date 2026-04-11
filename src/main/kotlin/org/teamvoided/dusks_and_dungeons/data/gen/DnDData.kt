@@ -27,11 +27,13 @@ import org.teamvoided.dusks_and_dungeons.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.EntityTypeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.variants.RaccoonVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.variants.WolfVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.NoiseCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.PlacedFeatureCreator
+import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import java.util.*
 
 @Suppress("unused")
@@ -72,6 +74,7 @@ class DnDData : DataGeneratorEntrypoint {
         gen.add(RegistryKeys.STRUCTURE_SET, StructureSetCreator::bootstrap)
         gen.add(RegistryKeys.STRUCTURE_FEATURE, StructureFeatureCreator::bootstrap)
         gen.add(RegistryKeys.WOLF_VARIANT, WolfVariants::bootstrap)
+        gen.add(DnDRegistryKeys.RACCOON_VARIANT, RaccoonVariants::bootstrap)
     }
 
     private fun createResource(o: DataPackOutput, description: Text): PackMetadataProvider {
