@@ -8,9 +8,9 @@ data class RaccoonVariant(val texture: Identifier) {
 
     companion object {
         val CODEC: Codec<RaccoonVariant> = RecordCodecBuilder.create { instance ->
-            instance.group(
-                Identifier.CODEC.fieldOf("texture").forGetter { it.texture }
-            ).apply(instance) { RaccoonVariant(it) }
+            instance
+                .group(Identifier.CODEC.fieldOf("texture").forGetter(RaccoonVariant::texture))
+                .apply(instance, ::RaccoonVariant)
         }
     }
 }

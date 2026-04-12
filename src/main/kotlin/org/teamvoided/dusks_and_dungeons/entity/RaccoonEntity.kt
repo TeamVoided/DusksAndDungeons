@@ -20,10 +20,9 @@ import org.teamvoided.dusks_and_dungeons.entity.goal.FindBarrelGoal
 import org.teamvoided.dusks_and_dungeons.entity.goal.PickBerriesGoal
 import org.teamvoided.dusks_and_dungeons.entity.goal.WashFoodGoal
 import org.teamvoided.dusks_and_dungeons.init.DnDAttachmentTypes
-import org.teamvoided.dusks_and_dungeons.init.DnDRaccoonVariants
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 
-class RaccoonEntity(entityType: EntityType<out AnimalEntity>, world: World) : AnimalEntity(entityType, world),
+class RaccoonEntity(type: EntityType<out AnimalEntity>, world: World) : AnimalEntity(type, world),
     VariantProvider<Holder<RaccoonVariant>> {
 
     override fun initGoals() {
@@ -44,7 +43,6 @@ class RaccoonEntity(entityType: EntityType<out AnimalEntity>, world: World) : An
 
     override fun writeCustomDataToNbt(nbt: NbtCompound) {
         super.writeCustomDataToNbt(nbt)
-        val barrelPos = getBarrelPos()
         nbt.putInt("barrel_x", barrelPos.x)
         nbt.putInt("barrel_y", barrelPos.y)
         nbt.putInt("barrel_z", barrelPos.z)
@@ -52,24 +50,21 @@ class RaccoonEntity(entityType: EntityType<out AnimalEntity>, world: World) : An
 
     override fun readCustomDataFromNbt(nbt: NbtCompound) {
         super.readCustomDataFromNbt(nbt)
-        setBarrelPos(BlockPos(nbt.getInt("barrel_x"), nbt.getInt("barrel_y"), nbt.getInt("barrel_z")))
+        barrelPos = BlockPos(nbt.getInt("barrel_x"), nbt.getInt("barrel_y"), nbt.getInt("barrel_z"))
     }
 
     override fun tick() {
         super.tick()
-        if (!world.getBlockState(getBarrelPos()).isOf(Blocks.BARREL)) {
-            setBarrelPos(BlockPos.ORIGIN)
+        if (!world.getBlockState(barrelPos).isOf(Blocks.BARREL)) {
+            barrelPos = BlockPos.ORIGIN
         }
     }
 
     override fun isBreedingItem(stack: ItemStack?): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 
-    override fun createChild(
-        world: ServerWorld?,
-        entity: PassiveEntity?
-    ): PassiveEntity? {
+    override fun createChild(world: ServerWorld?, entity: PassiveEntity?): PassiveEntity? {
         TODO("Not yet implemented")
     }
 
@@ -79,22 +74,19 @@ class RaccoonEntity(entityType: EntityType<out AnimalEntity>, world: World) : An
     }
 
     @Suppress("UnstableApiUsage")
-    override fun getVariant(): Holder<RaccoonVariant>? {
-        return world.registryManager.getLookupOrThrow(DnDRegistryKeys.RACCOON_VARIANT).getHolderOrThrow(
-            getAttachedOrElse(DnDAttachmentTypes.RACCOON_VARIANT, DnDRaccoonVariants.DEFAULT)
-        )
+    override fun getVariant(): Holder<RaccoonVariant> {
+        return world.registryManager.getLookupOrThrow(DnDRegistryKeys.RACCOON_VARIANT)
+            .getHolderOrThrow(getAttachedOrCreate(DnDAttachmentTypes.RACCOON_VARIANT))
     }
 
-    fun getBarrelPos(): BlockPos {
-        return dataTracker.get(BARREL_POS)
-    }
+    var barrelPos: BlockPos
+        get() = dataTracker.get(BARREL_POS)
+        set(value) = dataTracker.set(BARREL_POS, value)
 
-    fun setBarrelPos(pos: BlockPos) {
-        dataTracker.set(BARREL_POS, pos)
-    }
 
     companion object {
         val BARREL_POS: TrackedData<BlockPos> =
             DataTracker.registerData(RaccoonEntity::class.java, TrackedDataHandlerRegistry.BLOCK_POS)
     }
+
 }

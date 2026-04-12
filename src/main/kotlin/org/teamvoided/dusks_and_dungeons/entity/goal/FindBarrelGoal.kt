@@ -18,13 +18,14 @@ class FindBarrelGoal(private val raccoon: RaccoonEntity, speed: Double, range: I
     override fun tick() {
         if (hasReached()) {
             if (raccoon.world.getBlockState(targetPos).isOf(Blocks.BARREL)) {
-                raccoon.setBarrelPos(targetPos)
+                raccoon.barrelPos = targetPos
             }
         }
         super.tick()
     }
 
     override fun canStart(): Boolean {
-        return !raccoon.isSleeping && raccoon.getBarrelPos() == BlockPos.ORIGIN && super.canStart()
+        return !raccoon.isSleeping && raccoon.barrelPos == BlockPos.ORIGIN && super.canStart()
     }
+
 }
