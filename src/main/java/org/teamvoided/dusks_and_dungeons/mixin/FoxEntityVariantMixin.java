@@ -21,6 +21,7 @@ import java.util.function.IntFunction;
 @SuppressWarnings({"SameParameterValue", "deprecation"})
 @Mixin(FoxEntity.Variant.class)
 public class FoxEntityVariantMixin {
+    // TODO replace with with mixin extentions
     @Mutable
     @Shadow
     @Final
