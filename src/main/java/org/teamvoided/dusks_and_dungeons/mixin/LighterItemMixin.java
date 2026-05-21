@@ -15,6 +15,6 @@ public class LighterItemMixin {
 
     @ModifyExpressionValue(method = "useOnBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/CampfireBlock;canBeLit(Lnet/minecraft/block/BlockState;)Z"))
     boolean additionCanBeLitChecks(boolean original, @Local BlockState state) {
-        return original ^ CandelabraBlock.canBeLit(state);
+        return original ^ CandelabraBlock.canLiteCandelabra(state);
     }
 }

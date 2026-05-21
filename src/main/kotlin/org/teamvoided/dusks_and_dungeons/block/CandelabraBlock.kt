@@ -202,7 +202,7 @@ open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCand
         )
 
         @JvmStatic
-        fun canBeLit(state: BlockState): Boolean {
+        fun canLiteCandelabra(state: BlockState): Boolean {
             return state.isInAndMatches(DnDBlockTags.CANDELABRAS) { it.contains(LIT) && it.contains(WATERLOGGED) }
                     && !state.get(LIT) && !state.get(WATERLOGGED)
         }
