@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.util.block
 
-import net.minecraft.block.AbstractBlock.Settings
-import net.minecraft.block.Block
-import net.minecraft.item.Item
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.item.Item
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
 import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
@@ -21,7 +21,7 @@ import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 
 fun registerHeadEquipable(id: String, block: Block): Block {
     val regBlock = registerNoItem(id, block)
-    DnDItems.register(id, EquipableBlockItem(regBlock, Item.Settings()))
+    DnDItems.register(id, EquipableBlockItem(regBlock, Item.Properties()))
     return regBlock
 }
 
@@ -83,10 +83,10 @@ fun <T : AbstractBlockSet> register(set: T): T {
     return set
 }
 
-fun registerSet(name: String, settings: Settings) =
+fun registerSet(name: String, settings: Properties) =
     register(createBlockSet(name, settings).build())
 
-fun registerSet(name: String, settings: Settings, sfx: String) =
+fun registerSet(name: String, settings: Properties, sfx: String) =
     register(createBlockSet(name, settings).parentSuffix(sfx).build())
 
 fun registerHeadlessSet(name: String, parent: Block) =
@@ -98,9 +98,9 @@ fun registerWoodenSet(name: String, parent: Block) =
 
 // Gravestones
 internal fun registerGravestone(name: String, block: Block) =
-    register(name, GravestoneBlock(gravestoneShape, centerGravestoneShape, Settings.copy(block).solid()))
+    register(name, GravestoneBlock(gravestoneShape, centerGravestoneShape, Properties.ofFullCopy(block).forceSolidOn()))
         .pickaxe()
 
 internal fun registerSmallGravestone(name: String, block: Block) =
-    register(name, GravestoneBlock(smallGravestoneShape, centerSmallGravestoneShape, Settings.copy(block)))
+    register(name, GravestoneBlock(smallGravestoneShape, centerSmallGravestoneShape, Properties.ofFullCopy(block)))
         .pickaxe()

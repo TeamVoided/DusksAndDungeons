@@ -1,31 +1,31 @@
 package org.teamvoided.dusks_and_dungeons.entity.goal
 
-import net.minecraft.block.Blocks
-import net.minecraft.entity.ai.goal.MoveToTargetPosGoal
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.WorldView
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.LevelReader
 import org.teamvoided.dusks_and_dungeons.entity.RaccoonEntity
 
 class FindBarrelGoal(private val raccoon: RaccoonEntity, speed: Double, range: Int) :
-    MoveToTargetPosGoal(raccoon, speed, range) {
+    MoveToBlockGoal(raccoon, speed, range) {
 
-    override fun isTargetPos(world: WorldView, pos: BlockPos?): Boolean {
-        return world.getBlockState(pos).isOf(Blocks.BARREL)
+    override fun isValidTarget(world: LevelReader, pos: BlockPos?): Boolean {
+        return world.getBlockState(pos).`is`(Blocks.BARREL)
     }
 
-    override fun getDesiredSquaredDistanceToTarget(): Double = 5.0
+    override fun acceptedDistance(): Double = 5.0
 
     override fun tick() {
-        if (hasReached()) {
-            if (raccoon.world.getBlockState(targetPos).isOf(Blocks.BARREL)) {
-                raccoon.barrelPos = targetPos
+        if (isReachedTarget) {
+            if (raccoon.level().getBlockState(blockPos).`is`(Blocks.BARREL)) {
+                raccoon.barrelPos = blockPos
             }
         }
         super.tick()
     }
 
-    override fun canStart(): Boolean {
-        return !raccoon.isSleeping && raccoon.barrelPos == BlockPos.ORIGIN && super.canStart()
+    override fun canUse(): Boolean {
+        return !raccoon.isSleeping && raccoon.barrelPos == BlockPos.ZERO && super.canUse()
     }
 
 }

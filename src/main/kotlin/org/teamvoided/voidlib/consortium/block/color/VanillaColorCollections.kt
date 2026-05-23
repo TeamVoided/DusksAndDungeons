@@ -1,7 +1,7 @@
 package org.teamvoided.voidlib.consortium.block.color
 
-import net.minecraft.block.Blocks
-import net.minecraft.block.Blocks.*
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.Blocks.*
 
 @Suppress("unused")
 object VanillaColorCollections {

@@ -1,23 +1,23 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.PinkPetalsBlock
-import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.PinkPetalsBlock
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
 import kotlin.math.abs
 
-class FlowerbedParticleBlock(settings: Settings) : PinkPetalsBlock(settings) {
+class FlowerbedParticleBlock(settings: Properties) : PinkPetalsBlock(settings) {
 
 
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        super.randomDisplayTick(state, world, pos, random)
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        super.animateTick(state, world, pos, random)
 
         if (random.nextInt(3) == 0) addFlowerParticle(state, world, pos, random)
         //if (random.nextInt(1 + MAX_PETAL_AMOUNT + state.get(AMOUNT)) == 0) {
@@ -31,11 +31,11 @@ class FlowerbedParticleBlock(settings: Settings) : PinkPetalsBlock(settings) {
     }
 
     //sweet berry bush
-    override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
+    override fun entityInside(state: BlockState, world: Level, pos: BlockPos, entity: Entity) {
         if (entity is LivingEntity) {
-            if (!world.isClient && entity.y < pos.y + 0.25 && (entity.lastRenderX != entity.x || entity.lastRenderZ != entity.z)) {
-                val x = abs(entity.x - entity.lastRenderX)
-                val z = abs(entity.z - entity.lastRenderZ)
+            if (!world.isClientSide && entity.y < pos.y + 0.25 && (entity.xOld != entity.x || entity.zOld != entity.z)) {
+                val x = abs(entity.x - entity.xOld)
+                val z = abs(entity.z - entity.zOld)
                 if (x >= 0.003 || z >= 0.003) {
                     addFlowerParticle(state, world, pos, world.random)
                 }
@@ -50,16 +50,16 @@ class FlowerbedParticleBlock(settings: Settings) : PinkPetalsBlock(settings) {
         const val PARTICLE_HORIZONTAL_RANGE = 5
         const val PARTICLE_VERTICAL_RANGE = 5
 
-        fun addFlowerParticle(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-            val petalCount = state.get(AMOUNT)
-            if (petalCount == MAX_PETAL_AMOUNT) {
+        fun addFlowerParticle(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+            val petalCount = state.getValue(AMOUNT)
+            if (petalCount == MAX_FLOWERS) {
                 addParticle(world, pos, random)
             } else {
                 val x = random.nextDouble()
                 if (petalCount > 3 || x <= 0.5) {
                     val z = random.nextDouble()
                     if (petalCount > 2 || z <= 0.5) {
-                        val dir = state.get(FACING)
+                        val dir = state.getValue(FACING)
                         addParticle(rotatePartPos(x, z, dir), rotatePartPos(z, x, dir), world, pos, random)
                     }
                 }
@@ -76,10 +76,10 @@ class FlowerbedParticleBlock(settings: Settings) : PinkPetalsBlock(settings) {
             }
         }
 
-        fun addParticle(world: World, pos: BlockPos, random: RandomGenerator) =
+        fun addParticle(world: Level, pos: BlockPos, random: RandomSource) =
             addParticle(random.nextDouble(), random.nextDouble(), world, pos, random)
 
-        fun addParticle(x: Double, z: Double, world: World, pos: BlockPos, random: RandomGenerator) =
+        fun addParticle(x: Double, z: Double, world: Level, pos: BlockPos, random: RandomSource) =
             world.addParticle(
                 ColorableParticleEffect(0xAAFFAA),
                 pos.x + x,

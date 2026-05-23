@@ -2,18 +2,18 @@ package org.teamvoided.dusks_and_dungeons.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider
-import net.minecraft.item.Item
-import net.minecraft.loot.LootTable
-import net.minecraft.loot.context.LootContextTypes
-import net.minecraft.loot.entry.ItemEntry
-import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.RegistryKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.core.HolderLookup
+import net.minecraft.resources.ResourceKey
 import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
 
 class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    SimpleFabricLootTableProvider(o, r, LootContextTypes.CHEST) {
-    override fun generate(gen: BiConsumer<RegistryKey<LootTable>, LootTable.Builder>) {
+    SimpleFabricLootTableProvider(o, r, LootContextParamSets.CHEST) {
+    override fun generate(gen: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>) {
 
         // eStrongholdLibraryLootTable
 
@@ -47,6 +47,6 @@ class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLo
     }
 
     companion object {
-        private fun item(item: Item) = ItemEntry.builder(item)
+        private fun item(item: Item) = LootItem.lootTableItem(item)
     }
 }

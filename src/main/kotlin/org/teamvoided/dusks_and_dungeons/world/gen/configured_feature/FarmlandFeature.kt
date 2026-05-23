@@ -2,21 +2,21 @@ package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature
 
 
 import com.mojang.serialization.Codec
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.FenceBlock
-import net.minecraft.block.HorizontalConnectingBlock
-import net.minecraft.registry.tag.BlockTags
-import net.minecraft.registry.tag.FluidTags
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.VerticalSurfaceType
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.StructureWorldAccess
-import net.minecraft.world.WorldAccess
-import net.minecraft.world.gen.chunk.ChunkGenerator
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.util.FeatureContext
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.tags.BlockTags
+import net.minecraft.tags.FluidTags
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.WorldGenLevel
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.CrossCollisionBlock
+import net.minecraft.world.level.block.FenceBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.chunk.ChunkGenerator
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
+import net.minecraft.world.level.levelgen.placement.CaveSurface
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FarmlandConfig
 import java.util.function.Predicate
 import kotlin.math.min
@@ -24,14 +24,14 @@ import kotlin.math.min
 
 open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfig>(codec) {
 
-    override fun place(context: FeatureContext<FarmlandConfig>): Boolean {
-        val worldAccess = context.world
-        val config = context.config
-        val random = context.random
-        val pos = context.origin
-        val replaceable = { state: BlockState -> state.isIn(config.farmlandReplaceable) }
-        val widthX = random.range(3, config.farmWidth[random] + 1)
-        val widthZ = random.range(3, config.farmWidth[random] + 1)
+    override fun place(context: FeaturePlaceContext<FarmlandConfig>): Boolean {
+        val worldAccess = context.level()
+        val config = context.config()
+        val random = context.random()
+        val pos = context.origin()
+        val replaceable = { state: BlockState -> state.`is`(config.farmlandReplaceable) }
+        val widthX = random.nextInt(3, config.farmWidth.sample(random) + 1)
+        val widthZ = random.nextInt(3, config.farmWidth.sample(random) + 1)
 
         val set = placeGroundAndGetPositions(worldAccess, config, random, pos, replaceable, widthX, widthZ)
         if (set.isNotEmpty()) {
@@ -44,17 +44,17 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
     }
 
     protected open fun placeGroundAndGetPositions(
-        world: StructureWorldAccess,
+        world: WorldGenLevel,
         config: FarmlandConfig,
-        random: RandomGenerator,
+        random: RandomSource,
         pos: BlockPos,
         replaceable: Predicate<BlockState>,
         radiusX: Int,
-        radiusZ: Int
+        radiusZ: Int,
     ): Set<BlockPos> {
-        val mutable = pos.mutableCopy()
-        val mutable2 = mutable.mutableCopy()
-        val direction = VerticalSurfaceType.FLOOR.direction
+        val mutable = pos.mutable()
+        val mutable2 = mutable.mutable()
+        val direction = CaveSurface.FLOOR.direction
         val direction2 = direction.opposite
         val set: MutableSet<BlockPos> = HashSet()
 
@@ -70,30 +70,30 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                 if (isCorner) continue@loopBreak
                 if (isEdgeNotCorner || (random.nextFloat() > 0.75f)) continue@loopBreak
                 if (random.nextFloat() > config.farmlandChance) continue@loopBreak
-                if (world.getBlockState(mutable).fluidState.isIn(FluidTags.WATER)) continue@loopBreak
+                if (world.getBlockState(mutable).fluidState.`is`(FluidTags.WATER)) continue@loopBreak
 
-                mutable[pos, i, 0] = j
+                mutable.setWithOffset(pos, i, 0, j)
                 var k = 0
-                while (world.testBlockState(mutable) { it.isIn(config.farmlandCanPlaceUnder) }) {
+                while (world.isStateAtPosition(mutable) { it.`is`(config.farmlandCanPlaceUnder) }) {
                     if (k >= config.farmVerticalRange) break
-                    if (world.getBlockState(mutable).fluidState.isIn(FluidTags.WATER)) continue@loopBreak
+                    if (world.getBlockState(mutable).fluidState.`is`(FluidTags.WATER)) continue@loopBreak
                     mutable.move(direction)
                     ++k
                 }
                 k = 0
-                while (world.testBlockState(mutable) { !it.isIn(config.farmlandCanPlaceUnder) }) {
+                while (world.isStateAtPosition(mutable) { !it.`is`(config.farmlandCanPlaceUnder) }) {
                     if (k >= config.farmVerticalRange) break
                     mutable.move(direction2)
                     ++k
                 }
-                mutable2[mutable] = direction
+                mutable2.setWithOffset(mutable, direction)
                 val blockState = world.getBlockState(mutable2)
                 if ((world.getBlockState(mutable)
-                        .isIn(config.farmlandCanPlaceUnder)) && blockState.isSideSolidFullSquare(
+                        .`is`(config.farmlandCanPlaceUnder)) && blockState.isFaceSturdy(
                         world, mutable2, direction2
                     )
                 ) {
-                    val blockPos = mutable2.toImmutable()
+                    val blockPos = mutable2.immutable()
                     if (placeGround(world, config, random, mutable2, replaceable)) {
                         set.add(blockPos)
                     }
@@ -107,15 +107,15 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
         radiusX: Int,
         radiusZ: Int,
         config: FarmlandConfig,
-        random: RandomGenerator,
-        world: StructureWorldAccess,
-        pos: BlockPos
+        random: RandomSource,
+        world: WorldGenLevel,
+        pos: BlockPos,
     ): List<BlockPos> {
         val fencePositions = mutableListOf<BlockPos>()
         val biggerRadX = radiusX + 1
         val biggerRadZ = radiusZ + 1
-        val fenceLengthX = min(config.fenceLength[random], biggerRadX)
-        val fenceLengthZ = min(config.fenceLength[random], biggerRadZ)
+        val fenceLengthX = min(config.fenceLength.sample(random), biggerRadX)
+        val fenceLengthZ = min(config.fenceLength.sample(random), biggerRadZ)
         for (i in -biggerRadX..biggerRadX) {
             val isEdgeX = i == -biggerRadX || i == biggerRadX
             loopBreak@ for (j in -biggerRadZ..biggerRadZ) {
@@ -126,7 +126,7 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
                 if (!(edgeZValid || edgeXValid)) continue@loopBreak
                 if (random.nextFloat() >= config.fenceChance) continue@loopBreak
 
-                val fencePos = pos.offset(Direction.Axis.X, i).offset(Direction.Axis.Z, j)
+                val fencePos = pos.relative(Direction.Axis.X, i).relative(Direction.Axis.Z, j)
                 placeFence(world, config, random, fencePos)?.let { fencePositions.add(it) }
             }
         }
@@ -134,48 +134,48 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
     }
 
     private fun generateVegetation(
-        context: FeatureContext<FarmlandConfig>,
-        world: StructureWorldAccess,
+        context: FeaturePlaceContext<FarmlandConfig>,
+        world: WorldGenLevel,
         config: FarmlandConfig,
-        random: RandomGenerator,
+        random: RandomSource,
         positions: Set<BlockPos>,
-        centerBlock: BlockPos
+        centerBlock: BlockPos,
     ) {
         positions.forEach {
             if (config.cropFeatureChance > 0.0f && random.nextFloat() < config.cropFeatureChance && it != centerBlock) {
-                generateCropFeature(world, config, context.generator, random, it.offset(Direction.UP))
+                generateCropFeature(world, config, context.chunkGenerator(), random, it.relative(Direction.UP))
             }
         }
-        if (config.cropGuarantee) generateCropFeature(world, config, context.generator, random, centerBlock)
+        if (config.cropGuarantee) generateCropFeature(world, config, context.chunkGenerator(), random, centerBlock)
     }
 
     protected open fun generateCropFeature(
-        world: StructureWorldAccess,
+        world: WorldGenLevel,
         config: FarmlandConfig,
         generator: ChunkGenerator,
-        random: RandomGenerator,
-        pos: BlockPos
+        random: RandomSource,
+        pos: BlockPos,
     ) = config.cropFeature.value().place(world, generator, random, pos)
 
     private fun placeGround(
-        world: StructureWorldAccess,
+        world: WorldGenLevel,
         config: FarmlandConfig,
-        random: RandomGenerator,
-        pos: BlockPos.Mutable,
-        replaceable: Predicate<BlockState>
+        random: RandomSource,
+        pos: BlockPos.MutableBlockPos,
+        replaceable: Predicate<BlockState>,
     ): Boolean {
-        val farmBlock = config.farmlandBlock.getBlockState(random, pos)
-        val waterBlock = config.waterBlock.getBlockState(random, pos)
+        val farmBlock = config.farmlandBlock.getState(random, pos)
+        val waterBlock = config.waterBlock.getState(random, pos)
         val worldBlock = world.getBlockState(pos)
-        if (!farmBlock.isOf(worldBlock.block)) {
+        if (!farmBlock.`is`(worldBlock.block)) {
             if (!replaceable.test(worldBlock)) return false
             if (config.waterChance > 0.0f &&
                 random.nextFloat() < config.cropFeatureChance &&
                 canPlaceWater(world, pos)
             ) {
-                world.setBlockState(pos, waterBlock, 2)
+                world.setBlock(pos, waterBlock, 2)
             } else {
-                world.setBlockState(pos, farmBlock, 2)
+                world.setBlock(pos, farmBlock, 2)
             }
             pos.move(Direction.DOWN)
         }
@@ -183,14 +183,14 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
     }
 
     private fun canPlaceWater(
-        world: WorldAccess,
-        pos: BlockPos
+        world: LevelAccessor,
+        pos: BlockPos,
     ): Boolean {
         val directions = Direction.entries.toTypedArray()
         val directionsLeft = directions.size
         for (looper in 0 until directionsLeft) {
             val direction = directions[looper]
-            val bl = world.getBlockState(pos.offset(direction)).isIn(BlockTags.REPLACEABLE)
+            val bl = world.getBlockState(pos.relative(direction)).`is`(BlockTags.REPLACEABLE)
             if (bl && direction != Direction.UP || !bl && direction == Direction.UP) {
                 return false
             }
@@ -201,38 +201,38 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
     // It does now :)
     //    this, in fact, does not update neighbors when placed with placed features
     private fun placeFence(
-        world: StructureWorldAccess, config: FarmlandConfig, random: RandomGenerator, posIn: BlockPos
+        world: WorldGenLevel, config: FarmlandConfig, random: RandomSource, posIn: BlockPos,
     ): BlockPos? {
         var pos = posIn
         var x = 0
 
         while (!dropFence(world, pos)) {
-            pos = pos.up()
+            pos = pos.above()
             x++
             if (x >= config.farmVerticalRange) return null
         }
         x = 0
 
-        if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return null
+        if (world.getBlockState(pos).fluidState.`is`(FluidTags.WATER)) return null
 
         while (dropFence(world, pos)) {
-            pos = pos.down()
-            if (world.getBlockState(pos).fluidState.isIn(FluidTags.WATER)) return null
+            pos = pos.below()
+            if (world.getBlockState(pos).fluidState.`is`(FluidTags.WATER)) return null
             x++
             if (x >= config.farmVerticalRange) return null
         }
 
-        val fenceBlock = config.fenceBlock.getBlockState(random, pos)
-        world.setBlockState(pos, fenceBlock, Block.NOTIFY_ALL)
+        val fenceBlock = config.fenceBlock.getState(random, pos)
+        world.setBlock(pos, fenceBlock, Block.UPDATE_ALL)
         return pos
     }
 
-    fun dropFence(world: StructureWorldAccess, pos: BlockPos): Boolean {
-        val block = world.getBlockState(pos.down())
-        return (block.isIn(BlockTags.REPLACEABLE) || block.isIn(BlockTags.REPLACEABLE_BY_TREES))
+    fun dropFence(world: WorldGenLevel, pos: BlockPos): Boolean {
+        val block = world.getBlockState(pos.below())
+        return (block.`is`(BlockTags.REPLACEABLE) || block.`is`(BlockTags.REPLACEABLE_BY_TREES))
     }
 
-    private fun updateFence(pos: BlockPos, world: StructureWorldAccess) {
+    private fun updateFence(pos: BlockPos, world: WorldGenLevel) {
         val fenceBlock = world.getBlockState(pos)
         if (fenceBlock.block is FenceBlock) {
             val fence = fenceBlock.block as FenceBlock
@@ -247,25 +247,25 @@ open class FarmlandFeature(codec: Codec<FarmlandConfig>) : Feature<FarmlandConfi
             val state4 = world.getBlockState(west)
 
             val updatedFence = fenceBlock
-                .with(
-                    HorizontalConnectingBlock.NORTH,
-                    fence.canConnect(state, state.isSideSolidFullSquare(world, north, Direction.SOUTH), Direction.SOUTH)
+                .setValue(
+                    CrossCollisionBlock.NORTH,
+                    fence.connectsTo(state, state.isFaceSturdy(world, north, Direction.SOUTH), Direction.SOUTH)
                 )
-                .with(
-                    HorizontalConnectingBlock.EAST,
-                    fence.canConnect(state2, state2.isSideSolidFullSquare(world, east, Direction.WEST), Direction.WEST)
+                .setValue(
+                    CrossCollisionBlock.EAST,
+                    fence.connectsTo(state2, state2.isFaceSturdy(world, east, Direction.WEST), Direction.WEST)
                 )
-                .with(
-                    HorizontalConnectingBlock.SOUTH,
-                    fence.canConnect(
-                        state3, state3.isSideSolidFullSquare(world, south, Direction.NORTH), Direction.NORTH
+                .setValue(
+                    CrossCollisionBlock.SOUTH,
+                    fence.connectsTo(
+                        state3, state3.isFaceSturdy(world, south, Direction.NORTH), Direction.NORTH
                     )
                 )
-                .with(
-                    HorizontalConnectingBlock.WEST,
-                    fence.canConnect(state4, state4.isSideSolidFullSquare(world, west, Direction.EAST), Direction.EAST)
+                .setValue(
+                    CrossCollisionBlock.WEST,
+                    fence.connectsTo(state4, state4.isFaceSturdy(world, west, Direction.EAST), Direction.EAST)
                 )
-            world.setBlockState(pos, updatedFence, Block.UPDATE_NONE)
+            world.setBlock(pos, updatedFence, Block.UPDATE_NONE)
         }
     }
 

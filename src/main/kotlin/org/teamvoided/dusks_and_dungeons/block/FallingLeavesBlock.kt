@@ -1,22 +1,22 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.LeavesBlock
-import net.minecraft.client.util.ParticleUtil
-import net.minecraft.particle.DefaultParticleType
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.World
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.LeavesBlock
+import net.minecraft.util.ParticleUtils
+import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
 
-open class FallingLeavesBlock(val particle: DefaultParticleType, settings: Settings) : LeavesBlock(settings) {
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        super.randomDisplayTick(state, world, pos, random)
+open class FallingLeavesBlock(val particle: SimpleParticleType, settings: Properties) : LeavesBlock(settings) {
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        super.animateTick(state, world, pos, random)
         if (random.nextInt(10) == 0) {
-            val blockPos = pos.down()
+            val blockPos = pos.below()
             val blockState = world.getBlockState(blockPos)
-            if (!isFaceFullSquare(blockState.getCollisionShape(world, blockPos), Direction.UP)) {
-                ParticleUtil.spawnParticle(world, pos, random, particle)
+            if (!isFaceFull(blockState.getCollisionShape(world, blockPos), Direction.UP)) {
+                ParticleUtils.spawnParticleBelow(world, pos, random, particle)
             }
         }
     }

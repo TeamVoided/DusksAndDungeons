@@ -1,13 +1,11 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.structure
 
-import net.minecraft.block.Blocks
-import net.minecraft.registry.BootstrapContext
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.BlockTags
-import net.minecraft.structure.processor.*
-import net.minecraft.structure.rule.AlwaysTrueRuleTest
-import net.minecraft.structure.rule.RandomBlockMatchRuleTest
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.structure.templatesystem.*
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureProcessorLists
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
@@ -16,74 +14,74 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 object StructureProcessorCreator {
     // StructureProcessorLists
     val flowerpotRule = RuleStructureProcessor(
-        StructureProcessorRule(
-            RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.3f),
-            AlwaysTrueRuleTest.INSTANCE,
-            Blocks.POTTED_BLUE_ORCHID.defaultState
+        ProcessorRule(
+            RandomBlockMatchTest(Blocks.FLOWER_POT, 0.3f),
+            AlwaysTrueTest.INSTANCE,
+            Blocks.POTTED_BLUE_ORCHID.defaultBlockState()
         ),
-        StructureProcessorRule(
-            RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
-            AlwaysTrueRuleTest.INSTANCE,
-            Blocks.POTTED_RED_MUSHROOM.defaultState
+        ProcessorRule(
+            RandomBlockMatchTest(Blocks.FLOWER_POT, 0.1f),
+            AlwaysTrueTest.INSTANCE,
+            Blocks.POTTED_RED_MUSHROOM.defaultBlockState()
         ),
-        StructureProcessorRule(
-            RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
-            AlwaysTrueRuleTest.INSTANCE,
-            Blocks.POTTED_BROWN_MUSHROOM.defaultState
+        ProcessorRule(
+            RandomBlockMatchTest(Blocks.FLOWER_POT, 0.2f),
+            AlwaysTrueTest.INSTANCE,
+            Blocks.POTTED_BROWN_MUSHROOM.defaultBlockState()
         ),
-        StructureProcessorRule(
-            RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
-            AlwaysTrueRuleTest.INSTANCE,
-            Blocks.POTTED_CORNFLOWER.defaultState
+        ProcessorRule(
+            RandomBlockMatchTest(Blocks.FLOWER_POT, 0.1f),
+            AlwaysTrueTest.INSTANCE,
+            Blocks.POTTED_CORNFLOWER.defaultBlockState()
         ),
-        StructureProcessorRule(
-            RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
-            AlwaysTrueRuleTest.INSTANCE,
-            DnDBlocks.POTTED_CASCADE_SAPLING.defaultState
+        ProcessorRule(
+            RandomBlockMatchTest(Blocks.FLOWER_POT, 0.1f),
+            AlwaysTrueTest.INSTANCE,
+            DnDBlocks.POTTED_CASCADE_SAPLING.defaultBlockState()
         ),
-        StructureProcessorRule(
-            RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.1f),
-            AlwaysTrueRuleTest.INSTANCE,
-            Blocks.POTTED_DARK_OAK_SAPLING.defaultState
+        ProcessorRule(
+            RandomBlockMatchTest(Blocks.FLOWER_POT, 0.1f),
+            AlwaysTrueTest.INSTANCE,
+            Blocks.POTTED_DARK_OAK_SAPLING.defaultBlockState()
         ),
-        StructureProcessorRule(
-            RandomBlockMatchRuleTest(Blocks.FLOWER_POT, 0.2f),
-            AlwaysTrueRuleTest.INSTANCE,
-            Blocks.POTTED_OAK_SAPLING.defaultState
+        ProcessorRule(
+            RandomBlockMatchTest(Blocks.FLOWER_POT, 0.2f),
+            AlwaysTrueTest.INSTANCE,
+            Blocks.POTTED_OAK_SAPLING.defaultBlockState()
         )
     )
 
     fun bootstrap(c: BootstrapContext<StructureProcessorList>) {
-        val blockTags = c.getRegistryLookup(RegistryKeys.BLOCK)
+        val blockTags = c.lookup(Registries.BLOCK)
         autumnRuinsProcessorLists(c)
     }
 
     fun autumnRuinsProcessorLists(c: BootstrapContext<StructureProcessorList>) {
         c.register(
             DnDStructureProcessorLists.AUTUMN_RUINS_DEFAULT,
-            BlockRotStructureProcessor(0.95f),
+            BlockRotProcessor(0.95f),
             RuleStructureProcessor(
-                StructureProcessorRule(
-                    RandomBlockMatchRuleTest(Blocks.VINE, 0.5f),
-                    AlwaysTrueRuleTest.INSTANCE,
-                    Blocks.AIR.defaultState
+                ProcessorRule(
+                    RandomBlockMatchTest(Blocks.VINE, 0.5f),
+                    AlwaysTrueTest.INSTANCE,
+                    Blocks.AIR.defaultBlockState()
                 ),
-                StructureProcessorRule(
-                    RandomBlockMatchRuleTest(Blocks.DIRT_PATH, 0.2f),
-                    AlwaysTrueRuleTest.INSTANCE,
-                    Blocks.GRASS_BLOCK.defaultState
+                ProcessorRule(
+                    RandomBlockMatchTest(Blocks.DIRT_PATH, 0.2f),
+                    AlwaysTrueTest.INSTANCE,
+                    Blocks.GRASS_BLOCK.defaultBlockState()
                 )
             ),
             flowerpotRule,
-            ProtectedBlocksStructureProcessor(BlockTags.FEATURES_CANNOT_REPLACE)
+            ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE)
         )
     }
 
     private fun BootstrapContext<StructureProcessorList>.register(
-        key: RegistryKey<StructureProcessorList>, vararg procList: StructureProcessor
+        key: ResourceKey<StructureProcessorList>, vararg procList: StructureProcessor,
     ) = this.register(key, StructureProcessorList(procList.toList()))
 
-    private fun RuleStructureProcessor(vararg procRules: StructureProcessorRule): RuleStructureProcessor =
-        RuleStructureProcessor(procRules.toList())
+    private fun RuleStructureProcessor(vararg procRules: ProcessorRule): RuleProcessor =
+        RuleProcessor(procRules.toList())
 
 }

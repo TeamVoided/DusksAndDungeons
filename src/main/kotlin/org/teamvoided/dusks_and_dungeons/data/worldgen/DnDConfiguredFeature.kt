@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.data.worldgen
 
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.world.gen.feature.ConfiguredFeature
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -85,7 +85,7 @@ object DnDConfiguredFeature {
     val BLACKSTONE_NETHER_ORE = create("overlay/blackstone_nether_ore")
 
 
-    fun create(id: String): RegistryKey<ConfiguredFeature<*, *>> =
-        RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id(id))
+    fun create(id: String): ResourceKey<ConfiguredFeature<*, *>> =
+        ResourceKey.create(Registries.CONFIGURED_FEATURE, id(id))
 
 }

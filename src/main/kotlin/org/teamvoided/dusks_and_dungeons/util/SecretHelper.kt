@@ -1,7 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.util
 
-import net.minecraft.block.Block
-import net.minecraft.item.Item
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.item.Item
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet

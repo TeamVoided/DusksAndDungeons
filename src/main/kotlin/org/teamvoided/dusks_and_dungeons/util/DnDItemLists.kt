@@ -1,7 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.util
 
-import net.minecraft.item.ItemConvertible
-import net.minecraft.item.Items
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.item.Items
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
@@ -24,7 +24,7 @@ object DnDItemLists {
         Items.RED_DYE,
         Items.BLACK_DYE,
     )
-    val cascadeWood = listOf<ItemConvertible>(
+    val cascadeWood = listOf<ItemLike>(
         DnDBlocks.CASCADE_LOG,
         DnDBlocks.CASCADE_WOOD,
         DnDBlocks.STRIPPED_CASCADE_LOG,

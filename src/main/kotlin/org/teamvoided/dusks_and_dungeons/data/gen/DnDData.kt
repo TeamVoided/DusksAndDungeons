@@ -2,14 +2,14 @@ package org.teamvoided.dusks_and_dungeons.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
-import net.minecraft.MinecraftVersion
-import net.minecraft.data.DataPackOutput
-import net.minecraft.data.PackMetadataProvider
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.RegistrySetBuilder
-import net.minecraft.resource.ResourceType
-import net.minecraft.resource.pack.metadata.PackResourceMetadataSection
-import net.minecraft.text.Text
+import net.minecraft.DetectedVersion
+import net.minecraft.data.PackOutput
+import net.minecraft.data.metadata.PackMetadataGenerator
+import net.minecraft.core.registries.Registries
+import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection
+import net.minecraft.network.chat.Component
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
@@ -56,30 +56,30 @@ class DnDData : DataGeneratorEntrypoint {
 
         val fancyNamePack = gen.createBuiltinResourcePack(id("fancy_names"))
         fancyNamePack.addProvider(::FancyNameTranslationProvider)
-        fancyNamePack.addProvider { o -> createResource(o, Text.literal("Better Nether Brick Names")) }
+        fancyNamePack.addProvider { o -> createResource(o, Component.literal("Better Nether Brick Names")) }
 //        val fancyNamePackVanilla = gen.createBuiltinResourcePack(mc("fancy_names"))
 //        fancyNamePackVanilla.addProvider(::FancyNameVanillaTranslationProvider)
 
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
-        gen.add(RegistryKeys.NOISE_PARAMETERS, NoiseCreator::bootstrap)
-        gen.add(RegistryKeys.BIOME, BiomeCreator::boostrap)
-        gen.add(RegistryKeys.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
-        gen.add(RegistryKeys.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
-        gen.add(RegistryKeys.STRUCTURE_PROCESSOR_LIST, StructureProcessorCreator::bootstrap)
-        gen.add(RegistryKeys.STRUCTURE_POOL, StructurePoolCreator::bootstrap)
-        gen.add(RegistryKeys.STRUCTURE_SET, StructureSetCreator::bootstrap)
-        gen.add(RegistryKeys.STRUCTURE_FEATURE, StructureFeatureCreator::bootstrap)
-        gen.add(RegistryKeys.WOLF_VARIANT, WolfVariants::bootstrap)
+        gen.add(Registries.NOISE, NoiseCreator::bootstrap)
+        gen.add(Registries.BIOME, BiomeCreator::boostrap)
+        gen.add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
+        gen.add(Registries.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
+        gen.add(Registries.PROCESSOR_LIST, StructureProcessorCreator::bootstrap)
+        gen.add(Registries.TEMPLATE_POOL, StructurePoolCreator::bootstrap)
+        gen.add(Registries.STRUCTURE_SET, StructureSetCreator::bootstrap)
+        gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
+        gen.add(Registries.WOLF_VARIANT, WolfVariants::bootstrap)
         gen.add(DnDRegistryKeys.RACCOON_VARIANT, RaccoonVariants::bootstrap)
     }
 
-    private fun createResource(o: DataPackOutput, description: Text): PackMetadataProvider {
-        return PackMetadataProvider(o).add(
-            PackResourceMetadataSection.TYPE, PackResourceMetadataSection(
+    private fun createResource(o: PackOutput, description: Component): PackMetadataGenerator {
+        return PackMetadataGenerator(o).add(
+            PackMetadataSection.TYPE, PackMetadataSection(
                 description,
-                MinecraftVersion.GAME_VERSION.getResourceVersion(ResourceType.CLIENT_RESOURCES), Optional.empty()
+                DetectedVersion.BUILT_IN.getPackVersion(PackType.CLIENT_RESOURCES), Optional.empty()
             )
         )
     }

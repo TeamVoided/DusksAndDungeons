@@ -1,55 +1,59 @@
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.*
-import net.minecraft.item.ItemConvertible
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.IntProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
+import net.minecraft.world.level.ItemLike
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.CropBlock
+import net.minecraft.world.level.block.MultifaceBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.shapes.CollisionContext
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
-class MoonberryVineletBlock(settings: Settings) : CropBlock(settings) {
-    override fun getCodec(): MapCodec<MoonberryVineletBlock> = CODEC
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+class MoonberryVineletBlock(settings: Properties) : CropBlock(settings) {
+    override fun codec(): MapCodec<MoonberryVineletBlock> = CODEC
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AGE)
     }
 
-    override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext)
+    override fun getShape(state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext)
             : VoxelShape = SHAPE[getAge(state)]
 
-    override fun getAgeProperty(): IntProperty = AGE
+    override fun getAgeProperty(): IntegerProperty = AGE
     override fun getMaxAge(): Int = MAX_AGE
-    override fun getSeedsItem(): ItemConvertible = DnDItems.MOONBERRY_VINELET
-    override fun withAge(age: Int): BlockState {
-        return if (age == MAX_AGE) DnDBlocks.MOONBERRY_VINE.defaultState
-            .with(AbstractLichenBlock.getProperty(Direction.DOWN), true)
-            .with(MoonberryVineBlock.BERRIES, 1)
-        else super.withAge(age)
+    override fun getBaseSeedId(): ItemLike = DnDItems.MOONBERRY_VINELET
+    override fun getStateForAge(age: Int): BlockState {
+        return if (age == MAX_AGE) DnDBlocks.MOONBERRY_VINE.defaultBlockState()
+            .setValue(MultifaceBlock.getFaceProperty(Direction.DOWN), true)
+            .setValue(MoonberryVineBlock.BERRIES, 1)
+        else super.getStateForAge(age)
     }
 
-    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
+    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         if (random.nextInt(3) != 0 && world.isNight) super.randomTick(state, world, pos, random)
     }
 
-    override fun getGrowthAmount(world: World): Int = if (world.isNight) BONE_MEAL_AGE_INCREASE else 0
+    override fun getBonemealAgeIncrease(world: Level): Int = if (world.isNight) BONE_MEAL_AGE_INCREASE else 0
 
     companion object {
-        val CODEC = createCodec(::MoonberryVineletBlock)
+        val CODEC = simpleCodec(::MoonberryVineletBlock)
 
         const val MAX_AGE: Int = 3
-        val AGE = Properties.AGE_2
+        val AGE = BlockStateProperties.AGE_2
         private val SHAPE = arrayOf(
-            createCuboidShape(5.0, -1.0, 5.0, 11.0, 1.0, 11.0),
-            createCuboidShape(3.0, -1.0, 3.0, 13.0, 1.0, 13.0),
-            createCuboidShape(0.0, -1.0, 0.0, 16.0, 1.0, 16.0)
+            box(5.0, -1.0, 5.0, 11.0, 1.0, 11.0),
+            box(3.0, -1.0, 3.0, 13.0, 1.0, 13.0),
+            box(0.0, -1.0, 0.0, 16.0, 1.0, 16.0)
         )
         private const val BONE_MEAL_AGE_INCREASE = 1
     }

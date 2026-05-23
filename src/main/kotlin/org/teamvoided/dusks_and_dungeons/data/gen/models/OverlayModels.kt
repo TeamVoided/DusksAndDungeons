@@ -1,15 +1,15 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
-import net.minecraft.block.Blocks
-import net.minecraft.data.client.model.BlockStateModelGenerator
-import net.minecraft.util.Identifier
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object OverlayModels {
-    fun overlayModels(gen: BlockStateModelGenerator) {
+    fun overlayModels(gen: BlockModelGenerators) {
         val stone = DusksAndDungeons.id("block/cobbled/stone_overlay")
         val deepslate = DusksAndDungeons.id("block/cobbled/deepslate_overlay")
         val blackstone = DusksAndDungeons.id("block/cobbled/blackstone_overlay")
@@ -25,7 +25,7 @@ object OverlayModels {
         gen.rockyBlocks(DnDBlocks.BLACKSTONE_BLOCKS, blackstone)
     }
 
-    fun BlockStateModelGenerator.rockyBlocks(rocks: RockyBlocks, overlay: Identifier) {
+    fun BlockModelGenerators.rockyBlocks(rocks: RockyBlocks, overlay: ResourceLocation) {
         this.cubeAllWithTintedOverlay(rocks.dirt, Blocks.DIRT, overlay)
         this.grassWithOverlay(rocks.grass, Blocks.GRASS_BLOCK, overlay)
         this.cubeSnowableColumnWithOverlay(rocks.podzol, Blocks.PODZOL, overlay)

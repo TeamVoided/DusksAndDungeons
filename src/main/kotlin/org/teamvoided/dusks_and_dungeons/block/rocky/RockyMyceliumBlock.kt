@@ -1,19 +1,19 @@
 package org.teamvoided.dusks_and_dungeons.block.rocky
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.World
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
 
-class RockyMyceliumBlock(dirt: Block, settings: Settings) :
+class RockyMyceliumBlock(dirt: Block, settings: Properties) :
     RockySpreadableBlock(Blocks.MYCELIUM, dirt, settings) {
-    public override fun getCodec(): MapCodec<RockyMyceliumBlock> = CODEC
-    override fun randomDisplayTick(state: BlockState?, world: World, pos: BlockPos, random: RandomGenerator) {
-        super.randomDisplayTick(state, world, pos, random)
+    public override fun codec(): MapCodec<RockyMyceliumBlock> = CODEC
+    override fun animateTick(state: BlockState?, world: Level, pos: BlockPos, random: RandomSource) {
+        super.animateTick(state, world, pos, random)
         if (random.nextInt(10) == 0) world.addParticle(
             ParticleTypes.MYCELIUM,
             pos.x.toDouble() + random.nextDouble(), pos.y.toDouble() + 1.1, pos.z.toDouble() + random.nextDouble(),
@@ -22,6 +22,6 @@ class RockyMyceliumBlock(dirt: Block, settings: Settings) :
     }
 
     companion object {
-        val CODEC = createCodec { RockyMyceliumBlock(Blocks.DIRT, it) }
+        val CODEC = simpleCodec { RockyMyceliumBlock(Blocks.DIRT, it) }
     }
 }

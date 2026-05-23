@@ -1,16 +1,16 @@
 package org.teamvoided.dusks_and_dungeons.item
 
-import net.minecraft.block.BlockState
-import net.minecraft.component.type.AttributeModifiersComponent
-import net.minecraft.component.type.ToolComponent
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.item.component.ItemAttributeModifiers
+import net.minecraft.world.item.component.Tool
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.Level
 
-class FunnyIceSword(settings: Settings) : Item(settings) {
+class FunnyIceSword(settings: Properties) : Item(settings) {
 
 //    main click - normal attack
 //    hold secondary click, then release - spin-around attack
@@ -27,11 +27,11 @@ class FunnyIceSword(settings: Settings) : Item(settings) {
 
     //damage based on speed, ice skating?
 
-    override fun canMine(state: BlockState, world: World, pos: BlockPos, miner: PlayerEntity): Boolean {
+    override fun canAttackBlock(state: BlockState, world: Level, pos: BlockPos, miner: Player): Boolean {
         return !miner.isCreative
     }
 
-    override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean {
+    override fun hurtEnemy(stack: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean {
         return true
     }
 
@@ -39,22 +39,22 @@ class FunnyIceSword(settings: Settings) : Item(settings) {
 //        stack.damageEquipment(1, livingEntity2, EquipmentSlot.MAINHAND)
 //    }
 
-    override fun getEnchantability(): Int {
+    override fun getEnchantmentValue(): Int {
         return 15
     }
 
-    override fun canRepair(stack: ItemStack, ingredient: ItemStack): Boolean {
+    override fun isValidRepairItem(stack: ItemStack, ingredient: ItemStack): Boolean {
         return false//ingredient.isOf(DnDItems.FREEZE_ROD)
     }
 
 
     companion object {
-        fun createToolComponent(): ToolComponent {
-            return ToolComponent(listOf(), 1.0f, 2)
+        fun createToolComponent(): Tool {
+            return Tool(listOf(), 1.0f, 2)
         }
 
-        fun createAttributes(): AttributeModifiersComponent {
-            return AttributeModifiersComponent.builder()
+        fun createAttributes(): ItemAttributeModifiers {
+            return ItemAttributeModifiers.builder()
 //                .add(
 //                    EntityAttributes.GENERIC_ATTACK_DAMAGE, EntityAttributeModifier(
 //                        field_8006, 6.5, EntityAttributeModifier.Operation.ADD_VALUE

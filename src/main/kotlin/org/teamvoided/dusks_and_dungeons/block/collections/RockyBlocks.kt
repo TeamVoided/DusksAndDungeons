@@ -1,7 +1,14 @@
 package org.teamvoided.dusks_and_dungeons.block.collections
 
-import net.minecraft.block.*
-import net.minecraft.util.Color
+import net.minecraft.util.ColorRGBA
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.ColoredFallingBlock
+import net.minecraft.world.level.block.MudBlock
+import net.minecraft.world.level.block.SnowyDirtBlock
+import net.minecraft.world.level.block.SoulSandBlock
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.material.MapColor
 import org.teamvoided.dusks_and_dungeons.block.rocky.RockyDirtPathBlock
 import org.teamvoided.dusks_and_dungeons.block.rocky.RockyGrassBlock
 import org.teamvoided.dusks_and_dungeons.block.rocky.RockyMyceliumBlock
@@ -12,21 +19,21 @@ import org.teamvoided.voidlib.consortium.block.BlockCollection
 data class RockyBlocks(val name: String, val variation: String, val block: Block, val color: MapColor) :
     BlockCollection<Block> {
     constructor(mainName: String, defaultName: String, block: Block)
-            : this(mainName, defaultName, block, block.defaultMapColor)
+            : this(mainName, defaultName, block, block.defaultMapColor())
 
-    val dirt = Block(AbstractBlock.Settings.copy(Blocks.DIRT).mapColor(color))
-    val grass = RockyGrassBlock(dirt, AbstractBlock.Settings.copy(Blocks.GRASS_BLOCK).mapColor(color))
-    val podzol = SnowyBlock(AbstractBlock.Settings.copy(Blocks.PODZOL).mapColor(color))
-    val mycelium = RockyMyceliumBlock(dirt, AbstractBlock.Settings.copy(Blocks.MYCELIUM).mapColor(color))
-    val coarseDirt = Block(AbstractBlock.Settings.copy(Blocks.COARSE_DIRT).mapColor(color))
-    val path = RockyDirtPathBlock(dirt, AbstractBlock.Settings.copy(Blocks.DIRT_PATH).mapColor(color))
-    val mud = MudBlock(AbstractBlock.Settings.copy(Blocks.MUD).mapColor(color))
-    val snow = Block(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK).mapColor(color))
-    val gravel = GravelBlock(Color(-8356741), AbstractBlock.Settings.copy(Blocks.GRAVEL).mapColor(color))
-    val sand = GravelBlock(Color(14406560), AbstractBlock.Settings.copy(Blocks.SAND).mapColor(color))
-    val redSand = GravelBlock(Color(11098145), AbstractBlock.Settings.copy(Blocks.RED_SAND).mapColor(color))
-    val soulSand = SoulSandBlock(AbstractBlock.Settings.copy(Blocks.SOUL_SAND).mapColor(color))
-    val soulSoil = Block(AbstractBlock.Settings.copy(Blocks.SOUL_SOIL).mapColor(color))
+    val dirt = Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT).mapColor(color))
+    val grass = RockyGrassBlock(dirt, BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK).mapColor(color))
+    val podzol = SnowyDirtBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PODZOL).mapColor(color))
+    val mycelium = RockyMyceliumBlock(dirt, BlockBehaviour.Properties.ofFullCopy(Blocks.MYCELIUM).mapColor(color))
+    val coarseDirt = Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COARSE_DIRT).mapColor(color))
+    val path = RockyDirtPathBlock(dirt, BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH).mapColor(color))
+    val mud = MudBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MUD).mapColor(color))
+    val snow = Block(BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK).mapColor(color))
+    val gravel = ColoredFallingBlock(ColorRGBA(-8356741), BlockBehaviour.Properties.ofFullCopy(Blocks.GRAVEL).mapColor(color))
+    val sand = ColoredFallingBlock(ColorRGBA(14406560), BlockBehaviour.Properties.ofFullCopy(Blocks.SAND).mapColor(color))
+    val redSand = ColoredFallingBlock(ColorRGBA(11098145), BlockBehaviour.Properties.ofFullCopy(Blocks.RED_SAND).mapColor(color))
+    val soulSand = SoulSandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SAND).mapColor(color))
+    val soulSoil = Block(BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SOIL).mapColor(color))
 
     override val size: Int = 13
     override val list: List<Block> = listOf(

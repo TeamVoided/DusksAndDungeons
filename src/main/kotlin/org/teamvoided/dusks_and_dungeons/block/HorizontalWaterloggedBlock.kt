@@ -1,55 +1,56 @@
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.HorizontalFacingBlock
-import net.minecraft.block.Waterloggable
-import net.minecraft.fluid.FluidState
-import net.minecraft.fluid.Fluids
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.Properties
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.world.WorldAccess
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.HorizontalDirectionalBlock
+import net.minecraft.world.level.block.SimpleWaterloggedBlock
+import net.minecraft.world.level.material.FluidState
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.level.LevelAccessor
 
-open class HorizontalWaterloggedBlock(settings: Settings) : HorizontalFacingBlock(settings), Waterloggable {
-    override fun getCodec(): MapCodec<HorizontalWaterloggedBlock> = CODEC
+open class HorizontalWaterloggedBlock(settings: Properties) : HorizontalDirectionalBlock(settings),
+    SimpleWaterloggedBlock {
+    override fun codec(): MapCodec<HorizontalWaterloggedBlock> = CODEC
 
     init {
-        this.defaultState = stateManager.defaultState.with(FACING, Direction.NORTH).with(WATERLOGGED, false)
+        this.registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false))
     }
 
-    override fun getStateForNeighborUpdate(
+    override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
+        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
-        if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        if (state.getValue(WATERLOGGED)) {
+            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+        return super.updateShape(state, direction, neighborState, world, pos, neighborPos)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        val waterlogged = ctx.world.getFluidState(ctx.blockPos).fluid === Fluids.WATER
-        return defaultState
-            .with(FACING, ctx.playerFacing.opposite)
-            .with(WATERLOGGED, waterlogged)
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
+        val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
+        return defaultBlockState()
+            .setValue(FACING, ctx.horizontalDirection.opposite)
+            .setValue(WATERLOGGED, waterlogged)
     }
 
     override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false)
+        return if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false)
         else super.getFluidState(state)
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(FACING, WATERLOGGED)
     }
 
     companion object {
-        val CODEC = createCodec(::HorizontalWaterloggedBlock)
-        val FACING = HorizontalFacingBlock.FACING
-        val WATERLOGGED = Properties.WATERLOGGED
+        val CODEC = simpleCodec(::HorizontalWaterloggedBlock)
+        val FACING = HorizontalDirectionalBlock.FACING
+        val WATERLOGGED = BlockStateProperties.WATERLOGGED
     }
 }

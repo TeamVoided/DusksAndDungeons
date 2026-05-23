@@ -1,39 +1,39 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
-import net.minecraft.block.Blocks
-import net.minecraft.data.client.model.BlockStateModelGenerator
-import net.minecraft.data.client.model.TexturedModel
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.model.TexturedModel
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object WoodModels {
-    fun woodModels(gen: BlockStateModelGenerator) {
-        gen.registerFlowerPotPlant(
+    fun woodModels(gen: BlockModelGenerators) {
+        gen.createPlant(
             DnDBlocks.CASCADE_SAPLING,
             DnDBlocks.POTTED_CASCADE_SAPLING,
-            BlockStateModelGenerator.TintType.NOT_TINTED
+            BlockModelGenerators.TintState.NOT_TINTED
         )
-        gen.registerLog(DnDBlocks.CASCADE_LOG)
-            .log(DnDBlocks.CASCADE_LOG)
+        gen.woodProvider(DnDBlocks.CASCADE_LOG)
+            .logWithHorizontal(DnDBlocks.CASCADE_LOG)
             .wood(DnDBlocks.CASCADE_WOOD.parent)
 
-        gen.registerLog(DnDBlocks.STRIPPED_CASCADE_LOG)
-            .log(DnDBlocks.STRIPPED_CASCADE_LOG)
+        gen.woodProvider(DnDBlocks.STRIPPED_CASCADE_LOG)
+            .logWithHorizontal(DnDBlocks.STRIPPED_CASCADE_LOG)
             .wood(DnDBlocks.STRIPPED_CASCADE_WOOD.parent)
-        gen.registerHangingSign(
+        gen.createHangingSign(
             DnDBlocks.STRIPPED_CASCADE_LOG,
             DnDBlocks.CASCADE_HANGING_SIGN,
             DnDBlocks.CASCADE_WALL_HANGING_SIGN
         )
-        gen.registerSingleton(DnDBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
-        gen.registerDoor(DnDBlocks.BLUE_DOOR)
-        gen.registerFlowerPotPlant(
+        gen.createTrivialBlock(DnDBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
+        gen.createDoor(DnDBlocks.BLUE_DOOR)
+        gen.createPlant(
             DnDBlocks.GOLDEN_BIRCH_SAPLING,
             DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
-            BlockStateModelGenerator.TintType.NOT_TINTED
+            BlockModelGenerators.TintState.NOT_TINTED
         )
-        gen.registerSingleton(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
+        gen.createTrivialBlock(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
 
         gen.createWood(DnDBlocks.OAK_WOOD, Blocks.OAK_LOG)
         gen.createWood(DnDBlocks.SPRUCE_WOOD, Blocks.SPRUCE_LOG)

@@ -1,55 +1,59 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.*
-import net.minecraft.registry.tag.FluidTags
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.world.World
+import net.minecraft.tags.FluidTags
+import net.minecraft.sounds.SoundSource
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.BucketPickup
+import net.minecraft.world.level.block.LiquidBlock
+import net.minecraft.world.level.block.state.BlockState
 
 @Suppress("MemberVisibilityCanBePrivate")
-class LavaSpongeBlock(settings: Settings, val maxDepth: Int, val maxIterations: Int, val turnInTo: Block) :
+class LavaSpongeBlock(settings: Properties, val maxDepth: Int, val maxIterations: Int, val turnInTo: Block) :
     Block(settings) {
-    override fun onBlockAdded(state: BlockState, world: World, pos: BlockPos, oldState: BlockState, notify: Boolean) {
-        if (!oldState.isOf(state.block)) this.update(world, pos)
+    override fun onPlace(state: BlockState, world: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {
+        if (!oldState.`is`(state.block)) this.update(world, pos)
     }
 
-    override fun neighborUpdate(
-        state: BlockState, world: World, pos: BlockPos, block: Block, fromPos: BlockPos, notify: Boolean
+    override fun neighborChanged(
+        state: BlockState, world: Level, pos: BlockPos, block: Block, fromPos: BlockPos, notify: Boolean
     ) {
         this.update(world, pos)
-        super.neighborUpdate(state, world, pos, block, fromPos, notify)
+        super.neighborChanged(state, world, pos, block, fromPos, notify)
     }
 
-    fun update(world: World, pos: BlockPos) {
+    fun update(world: Level, pos: BlockPos) {
         if (this.absorbLava(world, pos)) {
-            world.setBlockState(pos, turnInTo.defaultState, 2)
-            world.playSound(null, pos, SoundEvents.BLOCK_SPONGE_ABSORB, SoundCategory.BLOCKS, 1.0f, 1.0f)
+            world.setBlock(pos, turnInTo.defaultBlockState(), 2)
+            world.playSound(null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0f, 1.0f)
         }
     }
 
-    fun absorbLava(world: World, pos: BlockPos): Boolean {
+    fun absorbLava(world: Level, pos: BlockPos): Boolean {
         return BlockPos.breadthFirstTraversal(pos, maxDepth, maxIterations + 1, { blockPos, consumer ->
-            for (direction in Direction.entries) consumer.accept(blockPos.offset(direction))
+            for (direction in Direction.entries) consumer.accept(blockPos.relative(direction))
         }, { checkedPos ->
             if (checkedPos == pos) return@breadthFirstTraversal true
             else {
                 val blockState = world.getBlockState(checkedPos)
                 val fluidState = world.getFluidState(checkedPos)
-                if (!fluidState.isIn(FluidTags.LAVA)) {
+                if (!fluidState.`is`(FluidTags.LAVA)) {
                     return@breadthFirstTraversal false
                 } else {
                     val block = blockState.block
-                    if (block is FluidDrainable) {
-                        if (!block.tryDrainFluid(null, world, checkedPos, blockState).isEmpty)
+                    if (block is BucketPickup) {
+                        if (!block.pickupBlock(null, world, checkedPos, blockState).isEmpty)
                             return@breadthFirstTraversal true
                     }
-                    if (block is FluidBlock) world.setBlockState(checkedPos, Blocks.AIR.defaultState, 3)
+                    if (block is LiquidBlock) world.setBlock(checkedPos, Blocks.AIR.defaultBlockState(), 3)
                     else {
                         val blockEntity = if (blockState.hasBlockEntity()) world.getBlockEntity(checkedPos) else null
-                        dropStacks(blockState, world, checkedPos, blockEntity)
-                        world.setBlockState(checkedPos, Blocks.AIR.defaultState, 3)
+                        dropResources(blockState, world, checkedPos, blockEntity)
+                        world.setBlock(checkedPos, Blocks.AIR.defaultBlockState(), 3)
                     }
 
                     return@breadthFirstTraversal true

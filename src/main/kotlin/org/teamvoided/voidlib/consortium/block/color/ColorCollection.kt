@@ -2,8 +2,8 @@
 
 package org.teamvoided.voidlib.consortium.block.color
 
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks.AIR
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks.AIR
 
 open class ColorCollection(
     val white: Block, val orange: Block,

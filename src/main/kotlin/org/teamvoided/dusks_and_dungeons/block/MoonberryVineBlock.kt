@@ -1,83 +1,89 @@
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.*
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.fluid.FluidState
-import net.minecraft.fluid.Fluids
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.IntProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
-import net.minecraft.util.ItemInteractionResult
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
-import net.minecraft.world.WorldAccess
-import net.minecraft.world.WorldView
-import net.minecraft.world.event.GameEvent
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.BonemealableBlock
+import net.minecraft.world.level.block.MultifaceBlock
+import net.minecraft.world.level.block.MultifaceSpreader
+import net.minecraft.world.level.block.SimpleWaterloggedBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.gameevent.GameEvent
+import net.minecraft.world.level.material.FluidState
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.phys.BlockHitResult
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
-class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Waterloggable, Fertilizable {
-    public override fun getCodec(): MapCodec<MoonberryVineBlock> = CODEC
+class MoonberryVineBlock(settings: Properties) : MultifaceBlock(settings), SimpleWaterloggedBlock, BonemealableBlock {
+    public override fun codec(): MapCodec<MoonberryVineBlock> = CODEC
 
     init {
-        this.defaultState = defaultState.with(WATERLOGGED, false).with(BERRIES, 0)
+        this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(BERRIES, 0))
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        super.appendProperties(builder)
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
         builder.add(WATERLOGGED, BERRIES)
     }
 
-    override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean =
-        context.stack.isOf(DnDBlocks.MOONBERRY_VINE.asItem())
+    override fun canBeReplaced(state: BlockState, context: BlockPlaceContext): Boolean =
+        context.itemInHand.`is`(DnDBlocks.MOONBERRY_VINE.asItem())
 
-    override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState): Boolean = state.get(BERRIES) < 2
-    override fun canFertilize(world: World, random: RandomGenerator, pos: BlockPos, state: BlockState): Boolean =
+    override fun isValidBonemealTarget(world: LevelReader, pos: BlockPos, state: BlockState): Boolean = state.getValue(BERRIES) < 2
+    override fun isBonemealSuccess(world: Level, random: RandomSource, pos: BlockPos, state: BlockState): Boolean =
         world.isNight
 
-    override fun fertilize(world: ServerWorld, random: RandomGenerator, pos: BlockPos, state: BlockState) {
-        world.setBlockState(pos, state.with(BERRIES, state.get(BERRIES) + 1), 2)
+    override fun performBonemeal(world: ServerLevel, random: RandomSource, pos: BlockPos, state: BlockState) {
+        world.setBlock(pos, state.setValue(BERRIES, state.getValue(BERRIES) + 1), 2)
     }
 
-    override fun getStateForNeighborUpdate(
+    override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
+        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
-        if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        if (state.getValue(WATERLOGGED)) {
+            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
         }
-        return if (!hasAnyDirection(state)) {
-            Blocks.AIR.defaultState
+        return if (!hasAnyFace(state)) {
+            Blocks.AIR.defaultBlockState()
         } else {
-            if (hasDirection(state, direction) &&
+            if (hasFace(state, direction) &&
                 !canGrowOnOrOveride(world, direction, neighborPos, neighborState)
-            ) disableDirection(state, getProperty(direction)) else state
+            ) removeFace(state, getFaceProperty(direction)) else state
         }
     }
 
-    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
+    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
         var bl = false
         val var5 = DIRECTIONS
         val var6 = var5.size
 
         for (var7 in 0 until var6) {
             val direction = var5[var7]
-            if (hasDirection(state, direction)) {
-                val blockPos = pos.offset(direction)
+            if (hasFace(state, direction)) {
+                val blockPos = pos.relative(direction)
                 if (!canGrowOnOrOveride(world, direction, blockPos, world.getBlockState(blockPos))
                 ) {
                     return false
@@ -90,80 +96,80 @@ class MoonberryVineBlock(settings: Settings) : AbstractLichenBlock(settings), Wa
         return bl
     }
 
-    override fun canPlace(view: BlockView, state: BlockState, pos: BlockPos, dir: Direction): Boolean {
-        return if (this.canHaveDirection(dir) && (!state.isOf(this) || !hasDirection(state, dir))) {
-            val blockPos = pos.offset(dir)
+    override fun isValidStateForPlacement(view: BlockGetter, state: BlockState, pos: BlockPos, dir: Direction): Boolean {
+        return if (this.isFaceSupported(dir) && (!state.`is`(this) || !hasFace(state, dir))) {
+            val blockPos = pos.relative(dir)
             canGrowOnOrOveride(view, dir, blockPos, view.getBlockState(blockPos))
         } else false
     }
 
-    private fun canGrowOnOrOveride(world: BlockView, direction: Direction, pos: BlockPos, state: BlockState): Boolean {
-        return (isFaceFullSquare(state.getSidesShape(world, pos), direction.opposite)
-                || isFaceFullSquare(state.getCollisionShape(world, pos), direction.opposite)
-                || world.getBlockState(pos).isIn(DnDBlockTags.MOONBERRY_CAN_PLACE_ON))
+    private fun canGrowOnOrOveride(world: BlockGetter, direction: Direction, pos: BlockPos, state: BlockState): Boolean {
+        return (isFaceFull(state.getBlockSupportShape(world, pos), direction.opposite)
+                || isFaceFull(state.getCollisionShape(world, pos), direction.opposite)
+                || world.getBlockState(pos).`is`(DnDBlockTags.MOONBERRY_CAN_PLACE_ON))
     }
 
     override fun getFluidState(state: BlockState): FluidState =
-        if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
+        if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false) else super.getFluidState(state)
 
-    override fun onInteract(
+    override fun useItemOn(
         stack: ItemStack,
         state: BlockState,
-        world: World,
+        world: Level,
         pos: BlockPos,
-        entity: PlayerEntity,
-        hand: Hand,
+        entity: Player,
+        hand: InteractionHand,
         hitResult: BlockHitResult
     ): ItemInteractionResult {
-        val bl = state.get(BERRIES) == 2
-        return if (!bl && stack.isOf(Items.BONE_MEAL)) ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
-        else super.onInteract(stack, state, world, pos, entity, hand, hitResult)
+        val bl = state.getValue(BERRIES) == 2
+        return if (!bl && stack.`is`(Items.BONE_MEAL)) ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
+        else super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
     }
 
-    override fun onUse(
-        state: BlockState, world: World, pos: BlockPos, entity: PlayerEntity, hitResult: BlockHitResult
-    ): ActionResult {
-        val i = state.get(BERRIES)
+    override fun useWithoutItem(
+        state: BlockState, world: Level, pos: BlockPos, entity: Player, hitResult: BlockHitResult
+    ): InteractionResult {
+        val i = state.getValue(BERRIES)
         val bl = i == 3
         if (i > 1) {
             val j = 1 + world.random.nextInt(2)
-            dropStack(world, pos, ItemStack(DnDItems.MOONBERRIES, j + (if (bl) 1 else 0)))
+            popResource(world, pos, ItemStack(DnDItems.MOONBERRIES, j + (if (bl) 1 else 0)))
             world.playSound(
                 null,
                 pos,
-                SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES,
-                SoundCategory.BLOCKS,
+                SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES,
+                SoundSource.BLOCKS,
                 1.0f,
                 0.8f + world.random.nextFloat() * 0.4f
             )
-            val blockState = state.with(BERRIES, 0)
-            world.setBlockState(pos, blockState, 2)
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(entity, blockState))
-            return ActionResult.success(world.isClient)
+            val blockState = state.setValue(BERRIES, 0)
+            world.setBlock(pos, blockState, 2)
+            world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockState))
+            return InteractionResult.sidedSuccess(world.isClientSide)
         } else {
-            return super.onUse(state, world, pos, entity, hitResult)
+            return super.useWithoutItem(state, world, pos, entity, hitResult)
         }
     }
 
-    override fun getRandomTicks(state: BlockState): Boolean = state.get(BERRIES) < 2
-    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
-        val berries = state.get(BERRIES)
+    override fun isRandomlyTicking(state: BlockState): Boolean = state.getValue(BERRIES) < 2
+    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
+        val berries = state.getValue(BERRIES)
         if (berries < 3 && random.nextInt(5) == 0 && world.isNight) {
-            val blockState = state.with(BERRIES, berries + 1)
-            world.setBlockState(pos, blockState, 2)
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.create(blockState))
+            val blockState = state.setValue(BERRIES, berries + 1)
+            world.setBlock(pos, blockState, 2)
+            world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockState))
         }
     }
 
-    override fun getLichenSpreadBehavior(): LichenSpreadBehavior = LichenSpreadBehavior(this)
+    override fun getSpreader(): MultifaceSpreader = MultifaceSpreader(this)
 
     companion object {
-        val CODEC = createCodec(::MoonberryVineBlock)
-        val WATERLOGGED = Properties.WATERLOGGED
-        val BERRIES = IntProperty.of("berries", 0, 2)
-        fun Settings.moonberryLuminance(luminanceLow: Int, luminance: Int): Settings = this.luminance { state ->
-            if (hasAnyDirection(state) && state.get(BERRIES) > 0) {
-                if (state.get(BERRIES) > 1) luminance else luminanceLow
+        val CODEC = simpleCodec(::MoonberryVineBlock)
+        val WATERLOGGED = BlockStateProperties.WATERLOGGED
+        val BERRIES = IntegerProperty.create("berries", 0, 2)
+        fun Properties.moonberryLuminance(luminanceLow: Int, luminance: Int): Properties = this.lightLevel { state ->
+            if (hasAnyFace(state) && state.getValue(BERRIES) > 0) {
+                if (state.getValue(BERRIES) > 1) luminance else luminanceLow
             } else 0
         }
     }

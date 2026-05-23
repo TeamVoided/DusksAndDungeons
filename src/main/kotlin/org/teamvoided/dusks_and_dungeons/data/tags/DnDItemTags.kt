@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.data.tags
 
-import net.minecraft.item.Item
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 object DnDItemTags {
@@ -55,7 +55,7 @@ object DnDItemTags {
     val PUMPKIN_SEEDS = create("pumpkin_seeds")
 
     fun create(id: String): TagKey<Item> {
-        val regTag = TagKey.of(RegistryKeys.ITEM, id(id))
+        val regTag = TagKey.create(Registries.ITEM, id(id))
         ITEM_TAGS.add(regTag)
         return regTag
     }

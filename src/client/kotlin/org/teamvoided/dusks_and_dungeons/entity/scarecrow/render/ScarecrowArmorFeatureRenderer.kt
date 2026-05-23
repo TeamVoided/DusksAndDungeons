@@ -2,45 +2,45 @@ package org.teamvoided.dusks_and_dungeons.entity.scarecrow.render
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.font.TextRenderer
-import net.minecraft.client.render.OverlayTexture
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.TexturedRenderLayers
-import net.minecraft.client.render.VertexConsumerProvider
-import net.minecraft.client.render.entity.feature.FeatureRenderer
-import net.minecraft.client.render.entity.feature.FeatureRendererContext
-import net.minecraft.client.render.model.BakedModelManager
-import net.minecraft.client.texture.SpriteAtlasTexture
-import net.minecraft.client.util.ColorUtil.Argb32
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.DyedColorComponent
-import net.minecraft.entity.EquipmentSlot
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ArmorMaterial
-import net.minecraft.item.trim.ArmorTrimPermutation
-import net.minecraft.registry.Holder
-import net.minecraft.registry.tag.ItemTags
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
-import net.minecraft.util.Identifier
-import net.minecraft.util.math.Axis
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.Font
+import net.minecraft.client.renderer.texture.OverlayTexture
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.Sheets
+import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.entity.layers.RenderLayer
+import net.minecraft.client.renderer.entity.RenderLayerParent
+import net.minecraft.client.resources.model.ModelManager
+import net.minecraft.client.renderer.texture.TextureAtlas
+import net.minecraft.util.FastColor.ARGB32
+import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.component.DyedItemColor
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.item.ArmorItem
+import net.minecraft.world.item.ArmorMaterial
+import net.minecraft.world.item.armortrim.ArmorTrim
+import net.minecraft.core.Holder
+import net.minecraft.tags.ItemTags
+import net.minecraft.network.chat.Component
+import net.minecraft.ChatFormatting
+import net.minecraft.resources.ResourceLocation
+import com.mojang.math.Axis
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowEntityModel
 
 @Environment(EnvType.CLIENT)
 class ScarecrowArmorFeatureRenderer(
-    context: FeatureRendererContext<ScarecrowEntity, ScarecrowEntityModel>,
+    context: RenderLayerParent<ScarecrowEntity, ScarecrowEntityModel>,
     private val leggingsModel: ScarecrowArmorEntityModel,
     private val bodyModel: ScarecrowArmorEntityModel,
-    modelManager: BakedModelManager,
-) : FeatureRenderer<ScarecrowEntity, ScarecrowEntityModel>(context) {
-    private val armorAtlas: SpriteAtlasTexture = modelManager.getAtlas(TexturedRenderLayers.ARMOR_TRIMS_ATLAS_TEXTURE)
+    modelManager: ModelManager,
+) : RenderLayer<ScarecrowEntity, ScarecrowEntityModel>(context) {
+    private val armorAtlas: TextureAtlas = modelManager.getAtlas(Sheets.ARMOR_TRIMS_SHEET)
 
     override fun render(
-        matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, livingEntity: ScarecrowEntity,
+        matrices: PoseStack, vertexConsumers: MultiBufferSource, light: Int, livingEntity: ScarecrowEntity,
         f: Float, g: Float, h: Float, j: Float, k: Float, l: Float,
     ) {
         renderArmor(matrices, vertexConsumers, livingEntity, EquipmentSlot.HEAD, light, bodyModel)
@@ -50,18 +50,18 @@ class ScarecrowArmorFeatureRenderer(
     }
 
     private fun renderArmor(
-        matrices: MatrixStack,
-        vertexConsumers: VertexConsumerProvider,
+        matrices: PoseStack,
+        vertexConsumers: MultiBufferSource,
         entity: ScarecrowEntity,
         armorSlot: EquipmentSlot,
         light: Int,
         model: ScarecrowArmorEntityModel,
     ) {
-        val stack = entity.getEquippedStack(armorSlot)
+        val stack = entity.getItemBySlot(armorSlot)
         val item = stack.item
-        if (item is ArmorItem && item.preferredSlot == armorSlot) {
+        if (item is ArmorItem && item.equipmentSlot == armorSlot) {
 
-            contextModel.setAttributes(model)
+            parentModel.setAttributes(model)
 
             setVisible(model, armorSlot)
 
@@ -72,40 +72,40 @@ class ScarecrowArmorFeatureRenderer(
                 "Head_Shown:" to model.head.visible,
                 "Hat_Shown:" to model.hat.visible,
             )
-            val client = MinecraftClient.getInstance()
-            matrices.push()
-            matrices.rotateAround(Axis.Z_NEGATIVE.rotationDegrees(180f), 0f, 0f, 0f)
+            val client = Minecraft.getInstance()
+            matrices.pushPose()
+            matrices.rotateAround(Axis.ZN.rotationDegrees(180f), 0f, 0f, 0f)
             matrices.translate(0f, 1.3f, 0f)
             matrices.scale(0.025f, -0.025f, 0.025f)
-            matrices.rotateAround(Axis.Y_POSITIVE.rotationDegrees(180f), 0f, 0f, 0f)
+            matrices.rotateAround(Axis.YP.rotationDegrees(180f), 0f, 0f, 0f)
 
 
             val color = 0xff_ff_ff_ff.toInt()
-            val font = client.textRenderer
+            val font = client.font
             for ((idx, rawText) in textList.toList().withIndex()) {
-                val text = Text.literal(rawText.first)
-                    .append(Text.literal("${rawText.second}").formatted(Formatting.GREEN))
-                font.draw(
-                    text, font.getWidth(text) / -2f, idx * -(1f + font.fontHeight), color,
-                    true, matrices.peek().model, vertexConsumers,
-                    TextRenderer.TextLayerType.NORMAL, 0, 15728880
+                val text = Component.literal(rawText.first)
+                    .append(Component.literal("${rawText.second}").withStyle(ChatFormatting.GREEN))
+                font.drawInBatch(
+                    text, font.width(text) / -2f, idx * -(1f + font.lineHeight), color,
+                    true, matrices.last().pose(), vertexConsumers,
+                    Font.DisplayMode.NORMAL, 0, 15728880
                 )
             }
 
-            matrices.pop()
+            matrices.popPose()
 
             val useSecondLayer = usesSecondLayer(armorSlot)
 
             val armorMaterial = item.material.value()
-            val dyeTint = if (stack.isIn(ItemTags.DYEABLE)) Argb32.toOpaque(
-                DyedColorComponent.getColorOrDefault(stack, DyedColorComponent.DEFAULT_COLOR)
+            val dyeTint = if (stack.`is`(ItemTags.DYEABLE)) ARGB32.opaque(
+                DyedItemColor.getOrDefault(stack, DyedItemColor.LEATHER_COLOR)
             ) else -1
             armorMaterial.layers().forEach { layer ->
-                val tint = if (layer.isDyeable) dyeTint else -1
+                val tint = if (layer.dyeable()) dyeTint else -1
                 renderArmorParts(matrices, vertexConsumers, light, model, tint, layer.texture(useSecondLayer))
             }
 
-            val armorTrimPermutation = stack.get(DataComponentTypes.TRIM)
+            val armorTrimPermutation = stack.get(DataComponents.TRIM)
             if (armorTrimPermutation != null) {
                 renderArmor(
                     item.material,
@@ -118,7 +118,7 @@ class ScarecrowArmorFeatureRenderer(
                 )
             }
 
-            if (stack.hasGlint())
+            if (stack.hasFoil())
                 renderArmorGlint(matrices, vertexConsumers, light, model)
         }
     }
@@ -153,37 +153,37 @@ class ScarecrowArmorFeatureRenderer(
     }
 
     private fun renderArmorParts(
-        matrices: MatrixStack, vertexConsumers: VertexConsumerProvider,
+        matrices: PoseStack, vertexConsumers: MultiBufferSource,
         light: Int, model: ScarecrowArmorEntityModel,
-        i: Int, texture: Identifier,
+        i: Int, texture: ResourceLocation,
     ) {
-        val vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(texture))
-        model.method_2828(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, i)
+        val vertexConsumer = vertexConsumers.getBuffer(RenderType.armorCutoutNoCull(texture))
+        model.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, i)
     }
 
     private fun renderArmor(
         holder: Holder<ArmorMaterial>,
-        matrices: MatrixStack,
-        vertexConsumers: VertexConsumerProvider,
+        matrices: PoseStack,
+        vertexConsumers: MultiBufferSource,
         light: Int,
-        permutation: ArmorTrimPermutation,
+        permutation: ArmorTrim,
         model: ScarecrowArmorEntityModel,
         hasGlint: Boolean,
     ) {
         val sprite = armorAtlas.getSprite(
-            if (hasGlint) permutation.getLeggingsTexture(holder) else permutation.getBodyTexture(holder)
+            if (hasGlint) permutation.innerTexture(holder) else permutation.outerTexture(holder)
         )
-        val vertexConsumer = sprite.getTextureSpecificVertexConsumer(
-            vertexConsumers.getBuffer(TexturedRenderLayers.getArmorTrim(permutation.pattern.value().decal()))
+        val vertexConsumer = sprite.wrap(
+            vertexConsumers.getBuffer(Sheets.armorTrimsSheet(permutation.pattern().value().decal()))
         )
-        model.method_60879(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV)
+        model.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY)
     }
 
     private fun renderArmorGlint(
-        matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, model: ScarecrowArmorEntityModel,
+        matrices: PoseStack, vertexConsumers: MultiBufferSource, light: Int, model: ScarecrowArmorEntityModel,
     ) {
-        model.method_60879(
-            matrices, vertexConsumers.getBuffer(RenderLayer.getArmorEntityGlint()), light, OverlayTexture.DEFAULT_UV
+        model.renderToBuffer(
+            matrices, vertexConsumers.getBuffer(RenderType.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY
         )
     }
 

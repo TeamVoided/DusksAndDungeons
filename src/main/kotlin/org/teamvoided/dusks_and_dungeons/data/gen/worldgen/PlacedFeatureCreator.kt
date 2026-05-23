@@ -1,84 +1,101 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
-import net.minecraft.block.Blocks
-import net.minecraft.fluid.Fluid
-import net.minecraft.fluid.Fluids
-import net.minecraft.registry.*
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.int_provider.ClampedIntProvider
-import net.minecraft.util.math.int_provider.ConstantIntProvider
-import net.minecraft.util.math.int_provider.UniformIntProvider
-import net.minecraft.world.gen.YOffset
-import net.minecraft.world.gen.blockpredicate.BlockPredicate
-import net.minecraft.world.gen.decorator.*
-import net.minecraft.world.gen.feature.*
-import net.minecraft.world.gen.feature.util.PlacedFeatureUtil
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.features.OreFeatures
+import net.minecraft.data.worldgen.features.VegetationFeatures
+import net.minecraft.data.worldgen.placement.OrePlacements
+import net.minecraft.util.valueproviders.ClampedInt
+import net.minecraft.util.valueproviders.ConstantInt
+import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
+import net.minecraft.data.worldgen.placement.PlacementUtils
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
+import net.minecraft.world.level.levelgen.placement.BiomeFilter
+import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
+import net.minecraft.world.level.levelgen.placement.CountPlacement
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement
+import net.minecraft.world.level.levelgen.placement.NoiseThresholdCountPlacement
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
+import net.minecraft.world.level.levelgen.placement.PlacementModifier
+import net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement
+import net.minecraft.world.level.levelgen.placement.RarityFilter
+import net.minecraft.world.level.levelgen.placement.SurfaceWaterDepthFilter
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber", "LongMethod")
 object PlacedFeatureCreator {
-    val cascadeSapling: BlockPredicateFilterPlacementModifier =
-        PlacedFeatureUtil.createWouldSurvivePlacementModifier(DnDBlocks.CASCADE_SAPLING)
-    val goldenBirchSapling: BlockPredicateFilterPlacementModifier =
-        PlacedFeatureUtil.createWouldSurvivePlacementModifier(DnDBlocks.GOLDEN_BIRCH_SAPLING)
-    val darkOakSapling: BlockPredicateFilterPlacementModifier =
-        PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.DARK_OAK_SAPLING)
-    val acaciaSapling: BlockPredicateFilterPlacementModifier =
-        PlacedFeatureUtil.createWouldSurvivePlacementModifier(Blocks.ACACIA_SAPLING)
+    val cascadeSapling: BlockPredicateFilter =
+        PlacementUtils.filteredByBlockSurvival(DnDBlocks.CASCADE_SAPLING)
+    val goldenBirchSapling: BlockPredicateFilter =
+        PlacementUtils.filteredByBlockSurvival(DnDBlocks.GOLDEN_BIRCH_SAPLING)
+    val darkOakSapling: BlockPredicateFilter =
+        PlacementUtils.filteredByBlockSurvival(Blocks.DARK_OAK_SAPLING)
+    val acaciaSapling: BlockPredicateFilter =
+        PlacementUtils.filteredByBlockSurvival(Blocks.ACACIA_SAPLING)
 
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
-        val configuredFeatureProvider = c.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+        val configuredFeatureProvider = c.lookup(Registries.CONFIGURED_FEATURE)
         c.register(
             DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER),
-            RarityFilterPlacementModifier.create(7),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER),
+            RarityFilter.onAverageOnceEvery(7),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_TOP_SOLID,
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.PATCH_PUMPKIN_EXTRA,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA),
-            RarityFilterPlacementModifier.create(50),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA),
+            RarityFilter.onAverageOnceEvery(50),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
         )
         c.register(
-            DnDPlacedFeature.DISK_PODZOL, configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.DISK_PODZOL),
-            RarityFilterPlacementModifier.create(40),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
-            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
-            BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK), (Blocks.PODZOL))
+            DnDPlacedFeature.DISK_PODZOL, configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.DISK_PODZOL),
+            RarityFilter.onAverageOnceEvery(40),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_TOP_SOLID,
+            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.matchesBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK), (Blocks.PODZOL))
             ),
-            BiomePlacementModifier.getInstance()
+            BiomeFilter.biome()
         )
         c.register(
-            DnDPlacedFeature.DISK_MUD, configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.DISK_MUD),
-            RarityFilterPlacementModifier.create(10),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
-            RandomOffsetPlacementModifier.vertical(ConstantIntProvider.create(-1)),
-            BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK), (Blocks.PODZOL))
+            DnDPlacedFeature.DISK_MUD, configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.DISK_MUD),
+            RarityFilter.onAverageOnceEvery(10),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_TOP_SOLID,
+            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.matchesBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK), (Blocks.PODZOL))
             ),
-            BiomePlacementModifier.getInstance()
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.DISK_RED_SAND,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.DISK_RED_SAND),
-            CountPlacementModifier.create(3),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.OCEAN_FLOOR_WG_HEIGHTMAP,
-            BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingFluids(*arrayOf<Fluid>(Fluids.WATER))
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.DISK_RED_SAND),
+            CountPlacement.of(3),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_TOP_SOLID,
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.matchesFluids(*arrayOf<Fluid>(Fluids.WATER))
             ),
-            BiomePlacementModifier.getInstance()
+            BiomeFilter.biome()
         )
         saplingFeatures(c, configuredFeatureProvider)
         autumnBiomeFeatures(c, configuredFeatureProvider)
@@ -87,131 +104,131 @@ object PlacedFeatureCreator {
 
     fun saplingFeatures(
         c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderProvider<ConfiguredFeature<*, *>>
+        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>
     ) {
         c.register(
             DnDPlacedFeature.CASCADE_TREE,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.CASCADE_TREE),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CASCADE_TREE),
             cascadeSapling
         )
         c.register(
             DnDPlacedFeature.CASCADE_TREE_BEES,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.CASCADE_TREE_BEES),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CASCADE_TREE_BEES),
             cascadeSapling
         )
         c.register(
             DnDPlacedFeature.GOLDEN_BIRCH_TALL,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL),
             goldenBirchSapling
         )
         c.register(
             DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
             goldenBirchSapling
         )
     }
 
     fun autumnBiomeFeatures(
         c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderProvider<ConfiguredFeature<*, *>>
+        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>
     ) {
         c.register(
             DnDPlacedFeature.ORE_LAPIS_EXTRA,
-            configuredFeatureProvider.getHolderOrThrow(OreConfiguredFeatures.ORE_LAPIS),
+            configuredFeatureProvider.getOrThrow(OreFeatures.ORE_LAPIS),
             commonOrePlacementModifiers(
                 20,
-                HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(80))
+                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(80))
             )
         )
         c.register(
             DnDPlacedFeature.CASCADE_TREE_AUTUMN,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.CASCADE_TREE_AUTUMN),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CASCADE_TREE_AUTUMN),
             cascadeSapling
         )
         c.register(
             DnDPlacedFeature.GOLDEN_BIRCH_TALL_AUTUMN,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN),
             goldenBirchSapling
         )
         c.register(
             DnDPlacedFeature.DARK_OAK_AUTUMN,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.DARK_OAK_AUTUMN),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.DARK_OAK_AUTUMN),
             darkOakSapling
         )
         c.register(
             DnDPlacedFeature.ACACIA_AUTUMN,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.ACACIA_AUTUMN),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.ACACIA_AUTUMN),
             acaciaSapling
         )
         c.register(
             DnDPlacedFeature.ACACIA_BUSH_AUTUMN,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.ACACIA_BUSH_AUTUMN),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.ACACIA_BUSH_AUTUMN),
             acaciaSapling
         )
         c.register(
             DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN,
-            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_GRASS),
-            NoiseThresholdCountPlacementModifier.create(-0.8, 5, 10),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
-            BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(
-                    BlockPos.ORIGIN.down(),
+            configuredFeatureProvider.getOrThrow(VegetationFeatures.PATCH_GRASS),
+            NoiseThresholdCountPlacement.of(-0.8, 5, 10),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.matchesBlocks(
+                    BlockPos.ZERO.below(),
                     *arrayOf(Blocks.GRASS_BLOCK, Blocks.COARSE_DIRT, Blocks.COARSE_DIRT)
                 )
             ),
-            BiomePlacementModifier.getInstance()
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN,
-            configuredFeatureProvider.getHolderOrThrow(VegetationConfiguredFeatures.PATCH_TALL_GRASS),
-            NoiseThresholdCountPlacementModifier.create(-0.8, 0, 7),
-            RarityFilterPlacementModifier.create(32),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-            BlockPredicateFilterPlacementModifier.create(
-                BlockPredicate.matchingBlocks(
-                    BlockPos.ORIGIN.down(),
+            configuredFeatureProvider.getOrThrow(VegetationFeatures.PATCH_TALL_GRASS),
+            NoiseThresholdCountPlacement.of(-0.8, 0, 7),
+            RarityFilter.onAverageOnceEvery(32),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.matchesBlocks(
+                    BlockPos.ZERO.below(),
                     *arrayOf(Blocks.GRASS_BLOCK, Blocks.COARSE_DIRT, Blocks.COARSE_DIRT)
                 )
             ),
-            BiomePlacementModifier.getInstance()
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.AUTUMN_WOODS_VEGETATION,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION),
-            CountPlacementModifier.create(14),
-            InSquarePlacementModifier.getInstance(),
-            SurfaceWaterDepthFilterPlacementModifier.create(0),
-            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION),
+            CountPlacement.of(14),
+            InSquarePlacement.spread(),
+            SurfaceWaterDepthFilter.forMaxDepth(0),
+            PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
-            RarityFilterPlacementModifier.create(2),
-            InSquarePlacementModifier.getInstance(),
-            SurfaceWaterDepthFilterPlacementModifier.create(0),
-            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
+            RarityFilter.onAverageOnceEvery(2),
+            InSquarePlacement.spread(),
+            SurfaceWaterDepthFilter.forMaxDepth(0),
+            PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.GOLDEN_WOODS_VEGETATION,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
-            PlacedFeatureUtil.createCountExtraModifier(10, 0.1f, 1),
-            InSquarePlacementModifier.getInstance(),
-            SurfaceWaterDepthFilterPlacementModifier.create(0),
-            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
+            PlacementUtils.countExtra(10, 0.1f, 1),
+            InSquarePlacement.spread(),
+            SurfaceWaterDepthFilter.forMaxDepth(0),
+            PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
-            RarityFilterPlacementModifier.create(2),
-            InSquarePlacementModifier.getInstance(),
-            SurfaceWaterDepthFilterPlacementModifier.create(0),
-            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
+            RarityFilter.onAverageOnceEvery(2),
+            InSquarePlacement.spread(),
+            SurfaceWaterDepthFilter.forMaxDepth(0),
+            PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
+            BiomeFilter.biome()
         )
 //        c.register(
 //            AUTUMN_WETLANDS_VEGETATION,
@@ -225,94 +242,94 @@ object PlacedFeatureCreator {
 
         c.register(
             DnDPlacedFeature.FLOWER_AUTUMN,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.FLOWER_AUTUMN),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FLOWER_AUTUMN),
             noiseThresholdFlowerPlacement(14)
         )
         c.register(
-            DnDPlacedFeature.BLUE_PETALS, configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.BLUE_PETALS),
+            DnDPlacedFeature.BLUE_PETALS, configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.BLUE_PETALS),
             noiseThresholdFlowerPlacement(18)
         )
         c.register(
             DnDPlacedFeature.FAIRY_RING_RED,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.FAIRY_RING_RED),
-            RarityFilterPlacementModifier.create(7),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FAIRY_RING_RED),
+            RarityFilter.onAverageOnceEvery(7),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.PATCH_ROSEBUSH,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.PATCH_ROSEBUSH),
-            RarityFilterPlacementModifier.create(7),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-            CountPlacementModifier.create(ClampedIntProvider.create(UniformIntProvider.create(-3, 1), 0, 1)),
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.PATCH_ROSEBUSH),
+            RarityFilter.onAverageOnceEvery(7),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            CountPlacement.of(ClampedInt.of(UniformInt.of(-3, 1), 0, 1)),
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.AUTUMN_FARMLANDS,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND),
-            RarityFilterPlacementModifier.create(21),
-            InSquarePlacementModifier.getInstance(),
-            SurfaceWaterDepthFilterPlacementModifier.create(0),
-            PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND),
+            RarityFilter.onAverageOnceEvery(21),
+            InSquarePlacement.spread(),
+            SurfaceWaterDepthFilter.forMaxDepth(0),
+            PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+            BiomeFilter.biome()
         )
         c.register(
             DnDPlacedFeature.CROPS_WILD_WHEAT,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
-            RarityFilterPlacementModifier.create(9),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
+            RarityFilter.onAverageOnceEvery(9),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
         )
     }
 
     fun rockyOres(
         c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderProvider<ConfiguredFeature<*, *>>
+        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>
     ) {
         c.register(
             DnDPlacedFeature.ROCKY_ORE_UPPER,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.ROCKY_OVERWORLD_ORE),
-            OrePlacedFeatures.rareOrePlacementModifiers(
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.ROCKY_OVERWORLD_ORE),
+            OrePlacements.rareOrePlacement(
                 16,
-                HeightRangePlacementModifier.createUniform(YOffset.fixed(64), YOffset.fixed(128))
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128))
             )
         )
         c.register(
             DnDPlacedFeature.ROCKY_ORE_LOWER,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.ROCKY_OVERWORLD_ORE),
-            OrePlacedFeatures.rareOrePlacementModifiers(
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.ROCKY_OVERWORLD_ORE),
+            OrePlacements.rareOrePlacement(
                 8,
-                HeightRangePlacementModifier.createUniform(YOffset.fixed(0), YOffset.fixed(60))
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60))
             )
         )
         c.register(
             DnDPlacedFeature.SLATED_ORE,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.SLATED_OVERWORLD_ORE),
-            OrePlacedFeatures.rareOrePlacementModifiers(
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SLATED_OVERWORLD_ORE),
+            OrePlacements.rareOrePlacement(
                 8,
-                HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.fixed(0))
+                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0))
             )
         )
         c.register(
             DnDPlacedFeature.BLACKSTONED_ORE,
-            configuredFeatureProvider.getHolderOrThrow(DnDConfiguredFeature.BLACKSTONE_NETHER_ORE),
-            OrePlacedFeatures.rareOrePlacementModifiers(
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.BLACKSTONE_NETHER_ORE),
+            OrePlacements.rareOrePlacement(
                 16,
-                HeightRangePlacementModifier.createUniform(YOffset.getBottom(), YOffset.belowTop(128))
+                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.belowTop(128))
             )
         )
     }
 
     fun noiseThresholdFlowerPlacement(rarity: Int): List<PlacementModifier> {
         return listOf(
-            NoiseThresholdCountPlacementModifier.create(-0.8, 15, 4),
-            RarityFilterPlacementModifier.create(rarity),
-            InSquarePlacementModifier.getInstance(),
-            PlacedFeatureUtil.MOTION_BLOCKING_HEIGHTMAP,
-            BiomePlacementModifier.getInstance()
+            NoiseThresholdCountPlacement.of(-0.8, 15, 4),
+            RarityFilter.onAverageOnceEvery(rarity),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
         )
 
     }
@@ -321,29 +338,29 @@ object PlacedFeatureCreator {
         firstModifier: PlacementModifier, secondModifier: PlacementModifier
     ): List<PlacementModifier> {
         return listOf(
-            firstModifier, InSquarePlacementModifier.getInstance(),
-            secondModifier, BiomePlacementModifier.getInstance()
+            firstModifier, InSquarePlacement.spread(),
+            secondModifier, BiomeFilter.biome()
         )
     }
 
     fun commonOrePlacementModifiers(count: Int, modifier: PlacementModifier): List<PlacementModifier> {
-        return orePlacementModifiers(CountPlacementModifier.create(count), modifier)
+        return orePlacementModifiers(CountPlacement.of(count), modifier)
     }
 
     private fun treePlacementModifiersBase(modifier: PlacementModifier): ImmutableList.Builder<PlacementModifier> {
-        return ImmutableList.builder<PlacementModifier>().add(modifier).add(InSquarePlacementModifier.getInstance())
-            .add(SurfaceWaterDepthFilterPlacementModifier.create(0)).add(PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP)
-            .add(BiomePlacementModifier.getInstance())
+        return ImmutableList.builder<PlacementModifier>().add(modifier).add(InSquarePlacement.spread())
+            .add(SurfaceWaterDepthFilter.forMaxDepth(0)).add(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR)
+            .add(BiomeFilter.biome())
     }
 
 
     fun BootstrapContext<PlacedFeature>.register(
-        registryKey: RegistryKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
+        registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
         vararg placementModifiers: PlacementModifier
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers.toList()))
 
     fun BootstrapContext<PlacedFeature>.register(
-        registryKey: RegistryKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
+        registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
         placementModifiers: List<PlacementModifier>
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
 }

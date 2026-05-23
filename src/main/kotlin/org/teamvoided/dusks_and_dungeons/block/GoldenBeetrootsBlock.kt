@@ -1,18 +1,18 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.BeetrootsBlock
-import net.minecraft.block.BlockState
-import net.minecraft.item.ItemConvertible
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.WorldView
+import net.minecraft.world.level.block.BeetrootBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.ItemLike
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.LevelReader
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
-class GoldenBeetrootsBlock(settings: Settings) : BeetrootsBlock(settings) {
-    override fun getSeedsItem(): ItemConvertible = DnDItems.GOLDEN_BEETROOT
-    override fun isFertilizable(world: WorldView?, pos: BlockPos?, state: BlockState?): Boolean = false
-    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
+class GoldenBeetrootsBlock(settings: Properties) : BeetrootBlock(settings) {
+    override fun getBaseSeedId(): ItemLike = DnDItems.GOLDEN_BEETROOT
+    override fun isValidBonemealTarget(world: LevelReader?, pos: BlockPos?, state: BlockState?): Boolean = false
+    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         if (random.nextInt(2) != 0) super.randomTick(state, world, pos, random)
     }
 }

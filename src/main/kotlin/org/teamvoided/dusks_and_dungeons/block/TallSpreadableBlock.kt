@@ -1,30 +1,30 @@
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.Fertilizable
-import net.minecraft.block.TallPlantBlock
-import net.minecraft.block.enums.DoubleBlockHalf
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.World
-import net.minecraft.world.WorldView
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.BonemealableBlock
+import net.minecraft.world.level.block.DoublePlantBlock
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
 
-class TallSpreadableBlock(settings: Settings) : TallPlantBlock(settings), Fertilizable {
+class TallSpreadableBlock(settings: Properties) : DoublePlantBlock(settings), BonemealableBlock {
     companion object {
-        val CODEC: MapCodec<TallSpreadableBlock> = createCodec(::TallSpreadableBlock)
+        val CODEC: MapCodec<TallSpreadableBlock> = simpleCodec(::TallSpreadableBlock)
     }
 
-    override fun getCodec(): MapCodec<TallSpreadableBlock> = CODEC
-    override fun isFertilizable(world: WorldView, usePos: BlockPos, state: BlockState): Boolean {
-        val pos = if (state.get(HALF) == DoubleBlockHalf.UPPER) usePos.down() else usePos
-        for (dir in Direction.Type.HORIZONTAL) {
+    override fun codec(): MapCodec<TallSpreadableBlock> = CODEC
+    override fun isValidBonemealTarget(world: LevelReader, usePos: BlockPos, state: BlockState): Boolean {
+        val pos = if (state.getValue(HALF) == DoubleBlockHalf.UPPER) usePos.below() else usePos
+        for (dir in Direction.Plane.HORIZONTAL) {
             if (
-                world.getBlockState(pos.offset(dir).up()).materialReplaceable()
-                && canPlaceAt(defaultState, world, pos.offset(dir))
+                world.getBlockState(pos.relative(dir).above()).canBeReplaced()
+                && canSurvive(defaultBlockState(), world, pos.relative(dir))
             ) {
                 return true
             }
@@ -32,25 +32,25 @@ class TallSpreadableBlock(settings: Settings) : TallPlantBlock(settings), Fertil
         return false
     }
 
-    override fun canFertilize(world: World, random: RandomGenerator, usePos: BlockPos, state: BlockState): Boolean =
+    override fun isBonemealSuccess(world: Level, random: RandomSource, usePos: BlockPos, state: BlockState): Boolean =
         true
 
-    override fun fertilize(world: ServerWorld, random: RandomGenerator, usePos: BlockPos, state: BlockState) {
-        val pos = if (state.get(HALF) == DoubleBlockHalf.UPPER) usePos.down() else usePos
-        for (dir in Direction.Type.HORIZONTAL) {
-            val offsetPos = pos.offset(dir)
+    override fun performBonemeal(world: ServerLevel, random: RandomSource, usePos: BlockPos, state: BlockState) {
+        val pos = if (state.getValue(HALF) == DoubleBlockHalf.UPPER) usePos.below() else usePos
+        for (dir in Direction.Plane.HORIZONTAL) {
+            val offsetPos = pos.relative(dir)
             if (
-                world.getBlockState(offsetPos.up()).materialReplaceable()
-                && canPlaceAt(defaultState, world, offsetPos)
+                world.getBlockState(offsetPos.above()).canBeReplaced()
+                && canSurvive(defaultBlockState(), world, offsetPos)
             ) {
-                val airState = if (world.isWater(offsetPos)) Blocks.WATER.defaultState else Blocks.AIR.defaultState
-                world.setBlockState(offsetPos.up(), airState, NOTIFY_ALL or REDRAW_ON_MAIN_THREAD or FORCE_STATE)
+                val airState = if (world.isWaterAt(offsetPos)) Blocks.WATER.defaultBlockState() else Blocks.AIR.defaultBlockState()
+                world.setBlock(offsetPos.above(), airState, UPDATE_ALL or UPDATE_IMMEDIATE or UPDATE_KNOWN_SHAPE)
                 // place block
-                world.setBlockState(offsetPos, withWaterloggedState(world, offsetPos, defaultState), NOTIFY_ALL)
-                world.setBlockState(
-                    offsetPos.up(),
-                    withWaterloggedState(world, offsetPos.up(), defaultState.with(HALF, DoubleBlockHalf.UPPER)),
-                    NOTIFY_ALL
+                world.setBlock(offsetPos, copyWaterloggedFrom(world, offsetPos, defaultBlockState()), UPDATE_ALL)
+                world.setBlock(
+                    offsetPos.above(),
+                    copyWaterloggedFrom(world, offsetPos.above(), defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER)),
+                    UPDATE_ALL
                 )
 
                 return

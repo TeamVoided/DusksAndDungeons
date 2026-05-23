@@ -1,30 +1,30 @@
 package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.registry.tag.BlockTags
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.world.BlockView
-import net.minecraft.world.StructureWorldAccess
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.util.FeatureContext
+import net.minecraft.tags.BlockTags
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.WorldGenLevel
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FrozenSpringConfig
 
 class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpringConfig>(codec) {
-    override fun place(context: FeatureContext<FrozenSpringConfig>): Boolean {
-        val frozenSpringFeatureConfig = context.config
-        val structureWorldAccess = context.world
-        val blockPos = context.origin
-        if (!structureWorldAccess.getBlockState(blockPos.up()).isIn(frozenSpringFeatureConfig.allowedPlacement)) {
+    override fun place(context: FeaturePlaceContext<FrozenSpringConfig>): Boolean {
+        val frozenSpringFeatureConfig = context.config()
+        val structureWorldAccess = context.level()
+        val blockPos = context.origin()
+        if (!structureWorldAccess.getBlockState(blockPos.above()).`is`(frozenSpringFeatureConfig.allowedPlacement)) {
             return false
         } else if (
             frozenSpringFeatureConfig.hasExposedDownFace &&
-            !structureWorldAccess.getBlockState(blockPos.down()).isIn(frozenSpringFeatureConfig.allowedPlacement)
+            !structureWorldAccess.getBlockState(blockPos.below()).`is`(frozenSpringFeatureConfig.allowedPlacement)
         ) {
             return false
         } else {
             val blockState = structureWorldAccess.getBlockState(blockPos)
-            if (!blockState.isAir && !blockState.isIn(frozenSpringFeatureConfig.allowedPlacement)) {
+            if (!blockState.isAir && !blockState.`is`(frozenSpringFeatureConfig.allowedPlacement)) {
                 return false
             } else {
 
@@ -35,14 +35,14 @@ class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpri
                 val blockPosSet: MutableSet<BlockPos> = HashSet()
 
                 direction.forEach {
-                    val offsetPos = blockPos.offset(it)
+                    val offsetPos = blockPos.relative(it)
                     if (structureWorldAccess.getBlockState(offsetPos)
-                            .isIn(frozenSpringFeatureConfig.allowedPlacement)
+                            .`is`(frozenSpringFeatureConfig.allowedPlacement)
                     ) {
                         ++isValidBlock
                     }
                     if (structureWorldAccess.getBlockState(offsetPos)
-                            .isIn(frozenSpringFeatureConfig.allowedReplacement)
+                            .`is`(frozenSpringFeatureConfig.allowedReplacement)
                     ) {
                         blockPosSet.add(offsetPos)
                         ++isReplaceableBlock
@@ -52,7 +52,7 @@ class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpri
                     isValidBlock == 5 - frozenSpringFeatureConfig.emptyFacesRequirement &&
                     isReplaceableBlock == frozenSpringFeatureConfig.emptyFacesRequirement
                 ) {
-                    structureWorldAccess.setBlockState(blockPos, frozenSpringFeatureConfig.iceBlock, 2)
+                    structureWorldAccess.setBlock(blockPos, frozenSpringFeatureConfig.iceBlock, 2)
                     blockPosSet.forEach {
                         placeColumnUntilBlocked(structureWorldAccess, frozenSpringFeatureConfig, it, blockPos)
                     }
@@ -64,16 +64,16 @@ class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpri
     }
 
     fun placeColumnUntilBlocked(
-        world: StructureWorldAccess,
+        world: WorldGenLevel,
         config: FrozenSpringConfig,
         blockPos: BlockPos,
         origin: BlockPos
     ) {
         val iceBlock = config.iceBlock
-        world.setBlockState(blockPos, iceBlock, 2)
-        val blockPosDown = blockPos.down()
+        world.setBlock(blockPos, iceBlock, 2)
+        val blockPosDown = blockPos.below()
         val blockStateDown = world.getBlockState(blockPosDown)
-        if (blockStateDown.isIn(config.allowedReplacement) || blockStateDown == iceBlock) {
+        if (blockStateDown.`is`(config.allowedReplacement) || blockStateDown == iceBlock) {
             placeColumnUntilBlocked(world, config, blockPosDown, origin)
         } else if (blockStateDown.isSolid) {
             spreadIceOrDrop(world, config, blockPos, origin, 0)
@@ -81,7 +81,7 @@ class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpri
     }
 
     fun spreadIceOrDrop(
-        world: StructureWorldAccess,
+        world: WorldGenLevel,
         config: FrozenSpringConfig,
         blockPos: BlockPos,
         columnOrigin: BlockPos,
@@ -96,7 +96,7 @@ class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpri
     }
 
     private fun canFlowDownTo(
-        world: BlockView,
+        world: BlockGetter,
         config: FrozenSpringConfig,
         blockPos: BlockPos,
         columnOrigin: BlockPos,
@@ -114,8 +114,8 @@ class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpri
             false
         } else {
             if (state == config.iceBlock) true else
-                return if (!state.isIn(BlockTags.FEATURES_CANNOT_REPLACE)) {
-                    !state.blocksMovement()
+                return if (!state.`is`(BlockTags.FEATURES_CANNOT_REPLACE)) {
+                    !state.blocksMotion()
                 } else {
                     false
                 }
@@ -124,7 +124,7 @@ class FrozenSpringFeature(codec: Codec<FrozenSpringConfig>) : Feature<FrozenSpri
 
     private fun receivesFlow(
         face: Direction,
-        world: BlockView,
+        world: BlockGetter,
         pos: BlockPos,
         fromPos: BlockPos,
         distanceFromColumn: Int //was fromState:BlockState

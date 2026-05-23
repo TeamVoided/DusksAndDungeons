@@ -1,14 +1,14 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
-import net.minecraft.block.Blocks
-import net.minecraft.data.client.model.BlockStateModelGenerator
-import net.minecraft.data.client.model.TexturedModel
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.model.TexturedModel
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object StoneModels {
-    fun stoneModels(gen: BlockStateModelGenerator) {
+    fun stoneModels(gen: BlockModelGenerators) {
         gen.registerGravestones(DnDBlocks.STONE_GRAVESTONE, DnDBlocks.SMALL_STONE_GRAVESTONE)
         gen.registerGravestones(DnDBlocks.DEEPSLATE_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE)
         gen.registerGravestones(DnDBlocks.TUFF_GRAVESTONE, DnDBlocks.SMALL_TUFF_GRAVESTONE)
@@ -16,13 +16,13 @@ object StoneModels {
 
         gen.registerHeadstone(DnDBlocks.HEADSTONE)
 
-        gen.registerAxisRotated(
+        gen.createRotatedPillarWithHorizontalVariant(
             DnDBlocks.STONE_PILLAR,
-            TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+            TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
         )
-        gen.registerAxisRotated(
+        gen.createRotatedPillarWithHorizontalVariant(
             DnDBlocks.DEEPSLATE_PILLAR,
-            TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+            TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
         )
         val mossyPolish = DusksAndDungeons.id("block/overgrown/polished_overlay")
         val mossyCobble = DusksAndDungeons.id("block/overgrown/cobblestone_overlay")

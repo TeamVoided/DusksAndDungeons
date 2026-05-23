@@ -5,10 +5,10 @@ import com.terraformersmc.biolith.api.biome.sub.BiomeParameterTargets
 import com.terraformersmc.biolith.api.biome.sub.Criterion
 import com.terraformersmc.biolith.api.biome.sub.CriterionBuilder
 import com.terraformersmc.biolith.api.surface.SurfaceGeneration
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.Biomes
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
@@ -42,7 +42,7 @@ object DnDBiomes {
         SurfaceGeneration.addOverworldSurfaceRules(id("rules/overworld"), DnDSurfaceRules.overworld())
     }
 
-    fun createAutumnWoodsPlacement(biome: RegistryKey<Biome>) {
+    fun createAutumnWoodsPlacement(biome: ResourceKey<Biome>) {
         BiomePlacement.addSubOverworld(
             biome, AUTUMN_WOODS, CriterionBuilder.allOf(
                 temperature,
@@ -52,7 +52,7 @@ object DnDBiomes {
         )
     }
 
-    fun createAutumnPasturesPlacement(biome: RegistryKey<Biome>) {
+    fun createAutumnPasturesPlacement(biome: ResourceKey<Biome>) {
         BiomePlacement.addSubOverworld(
             biome, AUTUMN_PASTURES, CriterionBuilder.allOf(
                 temperature,
@@ -62,7 +62,7 @@ object DnDBiomes {
         )
     }
 
-    fun createAutumnCascadesPlacement(biome: RegistryKey<Biome>) {
+    fun createAutumnCascadesPlacement(biome: ResourceKey<Biome>) {
         BiomePlacement.addSubOverworld(
             biome, AUTUMN_CASCADES, CriterionBuilder.allOf(
                 temperature,
@@ -76,5 +76,5 @@ object DnDBiomes {
         BiomePlacement.replaceOverworld(AUTUMN_PASTURES, GOLDEN_PASTURES, 0.2)
     }
 
-    fun create(id: String): RegistryKey<Biome> = RegistryKey.of(RegistryKeys.BIOME, id(id))
+    fun create(id: String): ResourceKey<Biome> = ResourceKey.create(Registries.BIOME, id(id))
 }

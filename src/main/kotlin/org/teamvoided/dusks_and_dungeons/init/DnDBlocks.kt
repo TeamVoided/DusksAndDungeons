@@ -2,20 +2,22 @@ package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
-import net.minecraft.block.*
-import net.minecraft.block.AbstractBlock.OffsetType
-import net.minecraft.block.AbstractBlock.Settings
-import net.minecraft.block.AbstractBlock.Settings.copy
-import net.minecraft.block.Blocks.*
-import net.minecraft.block.sapling.SaplingBlock
-import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
-import net.minecraft.item.ScaffoldingItem
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.world.gen.feature.TreeConfiguredFeatures
+import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
+import net.minecraft.world.level.block.Blocks.*
+import net.minecraft.world.level.block.SaplingBlock
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ScaffoldingBlockItem
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.Registry
+import net.minecraft.world.level.block.SoundType
+import net.minecraft.data.worldgen.features.TreeFeatures
+import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.state.properties.BlockSetType
+import net.minecraft.world.level.material.MapColor
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
@@ -59,11 +61,11 @@ object DnDBlocks {
 
     // Petals
     val WHITE_PETALS = register("white_petals", PinkPetalsBlock(Set.petals(MapColor.SNOW)).plant())
-    val RED_PETALS = register("red_petals", PinkPetalsBlock(Set.petals(MapColor.RED)).plant())
-    val ORANGE_PETALS = register("orange_petals", PinkPetalsBlock(Set.petals(MapColor.ORANGE)).plant())
-    val BLUE_PETALS = register("blue_petals", PinkPetalsBlock(Set.petals(MapColor.BLUE)).plant())
-    val COLD_WILDFLOWER = register("cold_wildflower", PinkPetalsBlock(Set.petals(MapColor.PURPLE)).plant())
-    val CRIMSON_VIVIONS = register("crimson_vivions", VivionbedBlock(Set.vivions(MapColor.RED)).plant())
+    val RED_PETALS = register("red_petals", PinkPetalsBlock(Set.petals(MapColor.COLOR_RED)).plant())
+    val ORANGE_PETALS = register("orange_petals", PinkPetalsBlock(Set.petals(MapColor.COLOR_ORANGE)).plant())
+    val BLUE_PETALS = register("blue_petals", PinkPetalsBlock(Set.petals(MapColor.COLOR_BLUE)).plant())
+    val COLD_WILDFLOWER = register("cold_wildflower", PinkPetalsBlock(Set.petals(MapColor.COLOR_PURPLE)).plant())
+    val CRIMSON_VIVIONS = register("crimson_vivions", VivionbedBlock(Set.vivions(MapColor.COLOR_RED)).plant())
     val WARPED_VIVIONS = register("warped_vivions", VivionbedBlock(Set.vivions(MapColor.WARPED_WART_BLOCK)).plant())
 
     // Smol Punkin
@@ -72,7 +74,7 @@ object DnDBlocks {
     val SMALL_PUMPKIN = register("small_pumpkin", sPumpkinOf(SMALL_CARVED_PUMPKIN).axe())
 
     // Lantern ---
-    val CARVED_LANTERN_PUMPKIN = registerHeadEquipable("carved_lantern_pumpkin", carvedPumpkin(MapColor.YELLOW).axe())
+    val CARVED_LANTERN_PUMPKIN = registerHeadEquipable("carved_lantern_pumpkin", carvedPumpkin(MapColor.COLOR_YELLOW).axe())
     val GLOWING_LANTERN_PUMPKIN = register("glowing_lantern_pumpkin", glowingPumpkinOf(CARVED_LANTERN_PUMPKIN).axe())
     val LANTERN_PUMPKIN = register("lantern_pumpkin", pumpkinOf(CARVED_LANTERN_PUMPKIN).axe())
     val SMALL_CARVED_LANTERN_PUMPKIN =
@@ -83,7 +85,7 @@ object DnDBlocks {
     val LANTERN_PUMPKIN_STEM = registerNoItem("lantern_pumpkin_stem", stemOf(LANTERN_PUMPKIN).grassLike())
 
     // Mosskin ---
-    val CARVED_MOSSKIN_PUMPKIN = registerHeadEquipable("carved_mosskin_pumpkin", carvedPumpkin(MapColor.GREEN).axe())
+    val CARVED_MOSSKIN_PUMPKIN = registerHeadEquipable("carved_mosskin_pumpkin", carvedPumpkin(MapColor.COLOR_GREEN).axe())
     val GLOWING_MOSSKIN_PUMPKIN = register("glowing_mosskin_pumpkin", glowingPumpkinOf(CARVED_MOSSKIN_PUMPKIN).axe())
     val MOSSKIN_PUMPKIN = register("mosskin_pumpkin", pumpkinOf(CARVED_MOSSKIN_PUMPKIN).axe())
     val SMALL_CARVED_MOSSKIN_PUMPKIN =
@@ -95,7 +97,7 @@ object DnDBlocks {
 
     // Gloom ---
     val CARVED_GLOOM_PUMPKIN =
-        registerHeadEquipable("carved_gloom_pumpkin", carvedPumpkin(MapColor.PURPLE_TERRACOTTA).axe())
+        registerHeadEquipable("carved_gloom_pumpkin", carvedPumpkin(MapColor.TERRACOTTA_PURPLE).axe())
     val GLOWING_GLOOM_PUMPKIN = register("glowing_gloom_pumpkin", glowingPumpkinOf(CARVED_GLOOM_PUMPKIN).axe())
     val GLOOM_PUMPKIN = register("gloom_pumpkin", pumpkinOf(CARVED_GLOOM_PUMPKIN).axe())
     val SMALL_CARVED_GLOOM_PUMPKIN =
@@ -117,9 +119,9 @@ object DnDBlocks {
     val PALE_PUMPKIN_STEM = registerNoItem("pale_pumpkin_stem", stemOf(PALE_PUMPKIN).grassLike())
 
     // Corn
-    val CORN_CROP = registerNoItem("corn_crop", CornCropBlock(Set.corn().ticksRandomly()).grassLike())
+    val CORN_CROP = registerNoItem("corn_crop", CornCropBlock(Set.corn().randomTicks()).grassLike())
     val CORN = registerNoItem("corn", CornMazeBlock(Set.corn().offsetType(OffsetType.XYZ)).grassLike())
-    val CORN_BLOCK = register("corn_block", PillarBlock(copy(CHERRY_PLANKS).mapColor(MapColor.GOLD)).axe())
+    val CORN_BLOCK = register("corn_block", RotatedPillarBlock(ofFullCopy(CHERRY_PLANKS).mapColor(MapColor.GOLD)).axe())
 
     @JvmField
     val CORN_SYRUP_BLOCK = register("corn_syrup_block", CornSyrupBlock(Set.CORN_SYRUP)).translucent()
@@ -132,7 +134,7 @@ object DnDBlocks {
         "moonberry_vine", MoonberryVineBlock(Set.moonbery().moonberryLuminance(8, 11))
     ).grassLike().flammableLogs()
     val MOONBERRY_VINELET = registerNoItem(
-        "moonberry_vinelet", MoonberryVineletBlock(Set.moonbery().ticksRandomly().breakInstantly())
+        "moonberry_vinelet", MoonberryVineletBlock(Set.moonbery().randomTicks().instabreak())
     ).grassLike().flammableLogs()
     // endregion
 
@@ -140,25 +142,25 @@ object DnDBlocks {
     val CASCADE_SAPLING = register(
         "cascade_sapling", ThreeWideTreeSaplingBlock(SaplingGenerators.CASCADE, Set.CASCADE_SAPLING)
     ).cutout()
-    val POTTED_CASCADE_SAPLING = registerNoItem("potted_cascade_sapling", pottedVariant(CASCADE_SAPLING)).cutout()
+    val POTTED_CASCADE_SAPLING = registerNoItem("potted_cascade_sapling", flowerPot(CASCADE_SAPLING)).cutout()
     val CASCADE_LEAVES = register(
         "cascade_leaves", FallingLeavesBlock(DnDParticles.CASCADE_LEAF_PARTICLE, Set.CASCADE_LEAVES)
     ).leaves()
     val CASCADE_LEAF_PILE = register(
         "cascade_leaf_pile",
-        fallingLeafPile(DnDParticles.CASCADE_LEAF_PARTICLE, MapColor.RED, BlockSoundGroup.AZALEA_LEAVES)
+        fallingLeafPile(DnDParticles.CASCADE_LEAF_PARTICLE, MapColor.COLOR_RED, SoundType.AZALEA_LEAVES)
     ).cutout()
-    val CASCADE_LOG = register("cascade_log", logOf(MapColor.BLUE, MapColor.BROWN, BlockSoundGroup.CHERRY_WOOD))
+    val CASCADE_LOG = register("cascade_log", log(MapColor.COLOR_BLUE, MapColor.COLOR_BROWN, SoundType.CHERRY_WOOD))
     val CASCADE_WOOD =
-        register(createBlockSet("cascade_wood", Set.CASCADE_WOOD).noStoneCutting().parent(::PillarBlock).build())
+        register(createBlockSet("cascade_wood", Set.CASCADE_WOOD).noStoneCutting().parent(::RotatedPillarBlock).build())
             .woodSet()
 
     val CASCADE_LOG_PILE = register("cascade_log_pile", logPile(CASCADE_WOOD.parent))
     val STRIPPED_CASCADE_LOG =
-        register("stripped_cascade_log", logOf(MapColor.BLUE, MapColor.BLUE, BlockSoundGroup.CHERRY_WOOD))
+        register("stripped_cascade_log", log(MapColor.COLOR_BLUE, MapColor.COLOR_BLUE, SoundType.CHERRY_WOOD))
     val STRIPPED_CASCADE_WOOD = register(
-        createBlockSet("stripped_cascade_wood", Settings.create().mapColor(MapColor.BLUE)).noStoneCutting()
-            .parent(::PillarBlock).build()
+        createBlockSet("stripped_cascade_wood", Properties.of().mapColor(MapColor.COLOR_BLUE)).noStoneCutting()
+            .parent(::RotatedPillarBlock).build()
     ).woodSet()
     val STRIPPED_CASCADE_LOG_PILE = register("stripped_cascade_log_pile", logPile(STRIPPED_CASCADE_WOOD.parent))
 
@@ -176,7 +178,7 @@ object DnDBlocks {
         register("cascade_trapdoor", trapdoorOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
     val CASCADE_PRESSURE_PLATE =
         register("cascade_pressure_plate", pressurePlateOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
-    val CASCADE_BUTTON = register("cascade_button", buttonOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE).wood())
+    val CASCADE_BUTTON = register("cascade_button", woodenButton(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE).wood())
     val CASCADE_SIGN = registerNoItem("cascade_sign", signOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", wallSignOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS, CASCADE_SIGN).wood()
@@ -190,14 +192,14 @@ object DnDBlocks {
 
     val GOLDEN_BIRCH_SAPLING = register(
         "golden_birch_sapling",
-        SaplingBlock(SaplingGenerators.GOLDEN_BIRCH, copy(BIRCH_SAPLING).mapColor(MapColor.YELLOW)).cutout()
+        SaplingBlock(SaplingGenerators.GOLDEN_BIRCH, ofFullCopy(BIRCH_SAPLING).mapColor(MapColor.COLOR_YELLOW)).cutout()
     )
     val POTTED_GOLDEN_BIRCH_SAPLING =
-        registerNoItem("potted_golden_birch_sapling", pottedVariant(GOLDEN_BIRCH_SAPLING).cutout())
+        registerNoItem("potted_golden_birch_sapling", flowerPot(GOLDEN_BIRCH_SAPLING).cutout())
     val GOLDEN_BIRCH_LEAVES = register(
-        "golden_birch_leaves", LeavesBlock(copy(BIRCH_LEAVES).mapColor(MapColor.YELLOW)).leaves()
+        "golden_birch_leaves", LeavesBlock(ofFullCopy(BIRCH_LEAVES).mapColor(MapColor.COLOR_YELLOW)).leaves()
     )
-    val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", leafPile(MapColor.YELLOW).cutout())
+    val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", leafPile(MapColor.COLOR_YELLOW).cutout())
 
     val OAK_WOOD = registerWoodenSet("oak_wood", Blocks.OAK_WOOD)
     val SPRUCE_WOOD = registerWoodenSet("spruce_wood", Blocks.SPRUCE_WOOD)
@@ -218,7 +220,7 @@ object DnDBlocks {
     val STRIPPED_DARK_OAK_WOOD = registerWoodenSet("stripped_dark_oak_wood", Blocks.STRIPPED_DARK_OAK_WOOD)
     val STRIPPED_MANGROVE_WOOD = register(
         createHeadlessSet("stripped_mangrove_wood", Blocks.STRIPPED_MANGROVE_WOOD)
-            .settings(copy(Blocks.STRIPPED_MANGROVE_WOOD).mapColor(MapColor.RED)).noStoneCutting().buildHeadless()
+            .settings(ofFullCopy(Blocks.STRIPPED_MANGROVE_WOOD).mapColor(MapColor.COLOR_RED)).noStoneCutting().buildHeadless()
     ).woodSet()
     val STRIPPED_CHERRY_WOOD = registerWoodenSet("stripped_cherry_wood", Blocks.STRIPPED_CHERRY_WOOD)
     val STRIPPED_CRIMSON_HYPHAE = registerWoodenSet("stripped_crimson_hyphae", Blocks.STRIPPED_CRIMSON_HYPHAE)
@@ -257,7 +259,7 @@ object DnDBlocks {
     val STRIPPED_ACACIA_LOG_PILE = register("stripped_acacia_log_pile", logPile(Blocks.STRIPPED_ACACIA_WOOD))
     val STRIPPED_DARK_OAK_LOG_PILE = register("stripped_dark_oak_log_pile", logPile(Blocks.STRIPPED_DARK_OAK_WOOD))
     val STRIPPED_MANGROVE_LOG_PILE =
-        register("stripped_mangrove_log_pile", logPile(Blocks.STRIPPED_MANGROVE_WOOD, MapColor.RED))
+        register("stripped_mangrove_log_pile", logPile(Blocks.STRIPPED_MANGROVE_WOOD, MapColor.COLOR_RED))
     val STRIPPED_CHERRY_LOG_PILE = register("stripped_cherry_log_pile", logPile(Blocks.STRIPPED_CHERRY_WOOD))
     val STRIPPED_CRIMSON_STEM_PILE = register("stripped_crimson_stem_pile", logPile(Blocks.STRIPPED_CRIMSON_HYPHAE))
     val STRIPPED_WARPED_STEM_PILE = register("stripped_warped_stem_pile", logPile(Blocks.STRIPPED_WARPED_HYPHAE))
@@ -272,11 +274,11 @@ object DnDBlocks {
     val MANGROVE_LEAF_PILE = register("mangrove_leaf_pile", leafPile().cutout())
     val CHERRY_LEAF_PILE = register(
         "cherry_leaf_pile",
-        fallingLeafPile(ParticleTypes.CHERRY_LEAVES, MapColor.PINK, BlockSoundGroup.CHERRY_LEAVES).cutout()
+        fallingLeafPile(ParticleTypes.CHERRY_LEAVES, MapColor.COLOR_PINK, SoundType.CHERRY_LEAVES).cutout()
     )
-    val AZALEA_LEAF_PILE = register("azalea_leaf_pile", leafPile(BlockSoundGroup.AZALEA_LEAVES).cutout())
+    val AZALEA_LEAF_PILE = register("azalea_leaf_pile", leafPile(SoundType.AZALEA_LEAVES).cutout())
     val FLOWERING_AZALEA_LEAF_PILE = register(
-        "flowering_azalea_leaf_pile", leafPile(BlockSoundGroup.AZALEA_LEAVES).cutout()
+        "flowering_azalea_leaf_pile", leafPile(SoundType.AZALEA_LEAVES).cutout()
     )
 
     // TODO finish this before release
@@ -337,10 +339,10 @@ object DnDBlocks {
 
     // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Big Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
 
-    val BIG_CHAIN = register("big_chain", BigChainBlock(copy(CHAIN).sounds(bigChainSound)).cutout().pickaxe())
-    val BIG_LANTERN = register("big_lantern", BigLanternBlock(copy(LANTERN).sounds(bigLanternSound)).pickaxe())
+    val BIG_CHAIN = register("big_chain", BigChainBlock(ofFullCopy(CHAIN).sound(bigChainSound)).cutout().pickaxe())
+    val BIG_LANTERN = register("big_lantern", BigLanternBlock(ofFullCopy(LANTERN).sound(bigLanternSound)).pickaxe())
     val BIG_SOUL_LANTERN =
-        register("big_soul_lantern", BigLanternBlock(copy(SOUL_LANTERN).sounds(bigLanternSound)).pickaxe())
+        register("big_soul_lantern", BigLanternBlock(ofFullCopy(SOUL_LANTERN).sound(bigLanternSound)).pickaxe())
 
     //TODO Move this to Variance
     /*   val BIG_REDSTONE_LANTERN = register(
@@ -362,22 +364,22 @@ object DnDBlocks {
     val SOUL_CANDELABRAS = register("soul_candelabra", SOUL_CANDLES.toColorCollection(), ::candelabraOf)
 
     val BIG_SCAFFOLDING =
-        registerScaffolding("big_scaffolding", BigScaffoldingBlock(copy(SCAFFOLDING))).cutout().axe()
+        registerScaffolding("big_scaffolding", BigScaffoldingBlock(ofFullCopy(SCAFFOLDING))).cutout().axe()
     // endregion
 
     // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
 
-    val STONE_PILLAR = register("stone_pillar", PillarBlock(copy(CHISELED_STONE_BRICKS))).pickaxe()
-    val DEEPSLATE_PILLAR = register("deepslate_pillar", PillarBlock(copy(POLISHED_DEEPSLATE))).pickaxe()
+    val STONE_PILLAR = register("stone_pillar", RotatedPillarBlock(ofFullCopy(CHISELED_STONE_BRICKS))).pickaxe()
+    val DEEPSLATE_PILLAR = register("deepslate_pillar", RotatedPillarBlock(ofFullCopy(POLISHED_DEEPSLATE))).pickaxe()
 
     // Polish
-    val POLISHED_STONE = registerSet("polished_stone", copy(SMOOTH_STONE)).pickaxe()
+    val POLISHED_STONE = registerSet("polished_stone", ofFullCopy(SMOOTH_STONE)).pickaxe()
     val MOSSY_POLISHED_STONE = registerSet("mossy_polished_stone", copy(POLISHED_STONE)).pickaxe()
 
     // Overgrown
     val OVERGROWN_POLISHED_STONE = registerSet("overgrown_polished_stone", copy(MOSSY_POLISHED_STONE)).overgrown()
-    val OVERGROWN_COBBLESTONE = registerSet("overgrown_cobblestone", copy(MOSSY_COBBLESTONE)).overgrown()
-    val OVERGROWN_STONE_BRICKS = registerSet("overgrown_stone_brick", copy(MOSSY_STONE_BRICKS), "s").overgrown()
+    val OVERGROWN_COBBLESTONE = registerSet("overgrown_cobblestone", ofFullCopy(MOSSY_COBBLESTONE)).overgrown()
+    val OVERGROWN_STONE_BRICKS = registerSet("overgrown_stone_brick", ofFullCopy(MOSSY_STONE_BRICKS), "s").overgrown()
 
     // Graves
     val STONE_GRAVESTONE = registerGravestone("stone_gravestone", CHISELED_STONE_BRICKS)
@@ -389,7 +391,7 @@ object DnDBlocks {
     val BLACKSTONE_GRAVESTONE = registerGravestone("blackstone_gravestone", CHISELED_POLISHED_BLACKSTONE)
     val SMALL_BLACKSTONE_GRAVESTONE = registerSmallGravestone("small_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
     val HEADSTONE =
-        register("headstone", GravestoneBlock(headstoneShape, centerHeadstoneShape, copy(BIG_CHAIN)).cutout().pickaxe())
+        register("headstone", GravestoneBlock(headstoneShape, centerHeadstoneShape, ofFullCopy(BIG_CHAIN)).cutout().pickaxe())
     // endregion
 
     // region  ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE age --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
@@ -405,76 +407,76 @@ object DnDBlocks {
 
     val NETHERRACK_SET = registerHeadlessSet("netherrack", NETHERRACK).pickaxe()
 
-    val NETHER_BRICK_PILLAR = register("nether_brick_pillar", PillarBlock(copy(NETHER_BRICKS)).pickaxe())
-    val POLISHED_NETHER_BRICKS = registerSet("polished_nether_brick", copy(NETHER_BRICKS), "s").pickaxe()
+    val NETHER_BRICK_PILLAR = register("nether_brick_pillar", RotatedPillarBlock(ofFullCopy(NETHER_BRICKS)).pickaxe())
+    val POLISHED_NETHER_BRICKS = registerSet("polished_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
 
     // Red Nether Bricks
     val POLISHED_RED_NETHER_BRICKS =
-        registerSet("polished_red_nether_brick", copy(RED_NETHER_BRICKS), "s").pickaxe()
+        registerSet("polished_red_nether_brick", ofFullCopy(RED_NETHER_BRICKS), "s").pickaxe()
 
     val CRACKED_RED_NETHER_BRICKS =
-        register("cracked_red_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
+        register("cracked_red_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
     val RED_NETHER_BRICK_FENCE =
-        register("red_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
+        register("red_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_RED_NETHER_BRICKS =
-        register("chiseled_red_nether_bricks", Block(copy(CHISELED_NETHER_BRICKS)).pickaxe())
+        register("chiseled_red_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
     val RED_NETHER_BRICK_PILLAR =
-        register("red_nether_brick_pillar", PillarBlock(copy(RED_NETHER_BRICKS)).pickaxe())
+        register("red_nether_brick_pillar", RotatedPillarBlock(ofFullCopy(RED_NETHER_BRICKS)).pickaxe())
 
-    val MIXED_RED_NETHER_BRICKS = registerSet("mixed_red_nether_brick", copy(NETHER_BRICKS), "s").pickaxe()
+    val MIXED_RED_NETHER_BRICKS = registerSet("mixed_red_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
     val CRACKED_MIXED_RED_NETHER_BRICKS =
-        register("cracked_mixed_red_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
+        register("cracked_mixed_red_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
     val MIXED_RED_NETHER_BRICK_FENCE =
-        register("mixed_red_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
+        register("mixed_red_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_MIXED_RED_NETHER_BRICKS =
-        register("chiseled_mixed_red_nether_bricks", Block(copy(CHISELED_NETHER_BRICKS)).pickaxe())
+        register("chiseled_mixed_red_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
     val MIXED_RED_NETHER_BRICK_PILLAR =
         register("mixed_red_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_RED_NETHER_BRICKS)).pickaxe())
 
     // Blue Nether Bricks
-    val BLUE_NETHER_BRICKS = registerSet("blue_nether_brick", copy(NETHER_BRICKS), "s").pickaxe()
+    val BLUE_NETHER_BRICKS = registerSet("blue_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
     val CRACKED_BLUE_NETHER_BRICKS =
-        register("cracked_blue_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
+        register("cracked_blue_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
     val BLUE_NETHER_BRICK_FENCE =
-        register("blue_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
+        register("blue_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_BLUE_NETHER_BRICKS =
-        register("chiseled_blue_nether_bricks", Block(copy(CHISELED_NETHER_BRICKS)).pickaxe())
+        register("chiseled_blue_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
     val BLUE_NETHER_BRICK_PILLAR =
-        register("blue_nether_brick_pillar", PillarBlock(copy(BLUE_NETHER_BRICKS)).pickaxe())
+        register("blue_nether_brick_pillar", RotatedPillarBlock(copy(BLUE_NETHER_BRICKS)).pickaxe())
 
     val POLISHED_BLUE_NETHER_BRICKS = registerSet("polished_blue_nether_brick", copy(BLUE_NETHER_BRICKS), "s").pickaxe()
 
-    val MIXED_BLUE_NETHER_BRICKS = registerSet("mixed_blue_nether_brick", copy(NETHER_BRICKS), "s").pickaxe()
+    val MIXED_BLUE_NETHER_BRICKS = registerSet("mixed_blue_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
     val CRACKED_MIXED_BLUE_NETHER_BRICKS =
-        register("cracked_mixed_blue_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
+        register("cracked_mixed_blue_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
     val MIXED_BLUE_NETHER_BRICK_FENCE =
-        register("mixed_blue_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
+        register("mixed_blue_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_MIXED_BLUE_NETHER_BRICKS =
-        register("chiseled_mixed_blue_nether_bricks", Block(copy(CHISELED_NETHER_BRICKS)).pickaxe())
+        register("chiseled_mixed_blue_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
     val MIXED_BLUE_NETHER_BRICK_PILLAR = register(
         "mixed_blue_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_BLUE_NETHER_BRICKS)).pickaxe()
     )
 
     // Gray Nether Bricks
-    val GRAY_NETHER_BRICKS = registerSet("gray_nether_brick", copy(NETHER_BRICKS), "s").pickaxe()
+    val GRAY_NETHER_BRICKS = registerSet("gray_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
     val CRACKED_GRAY_NETHER_BRICKS =
-        register("cracked_gray_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
+        register("cracked_gray_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
     val GRAY_NETHER_BRICK_FENCE =
-        register("gray_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
+        register("gray_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_GRAY_NETHER_BRICKS =
-        register("chiseled_gray_nether_bricks", Block(copy(CHISELED_NETHER_BRICKS)).pickaxe())
+        register("chiseled_gray_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
     val GRAY_NETHER_BRICK_PILLAR =
-        register("gray_nether_brick_pillar", PillarBlock(copy(GRAY_NETHER_BRICKS)).pickaxe())
+        register("gray_nether_brick_pillar", RotatedPillarBlock(copy(GRAY_NETHER_BRICKS)).pickaxe())
 
     val POLISHED_GRAY_NETHER_BRICKS = registerSet("polished_gray_nether_brick", copy(GRAY_NETHER_BRICKS), "s").pickaxe()
 
-    val MIXED_GRAY_NETHER_BRICKS = registerSet("mixed_gray_nether_brick", copy(NETHER_BRICKS), "s").pickaxe()
+    val MIXED_GRAY_NETHER_BRICKS = registerSet("mixed_gray_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
     val CRACKED_MIXED_GRAY_NETHER_BRICKS =
-        register("cracked_mixed_gray_nether_bricks", Block(copy(CRACKED_NETHER_BRICKS)).pickaxe())
+        register("cracked_mixed_gray_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
     val MIXED_GRAY_NETHER_BRICK_FENCE =
-        register("mixed_gray_nether_brick_fence", FenceBlock(copy(NETHER_BRICK_FENCE)).pickaxe())
+        register("mixed_gray_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
     val CHISELED_MIXED_GRAY_NETHER_BRICKS =
-        register("chiseled_mixed_gray_nether_bricks", Block(copy(CHISELED_NETHER_BRICKS)).pickaxe())
+        register("chiseled_mixed_gray_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
     val MIXED_GRAY_NETHER_BRICK_PILLAR = register(
         "mixed_gray_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_GRAY_NETHER_BRICKS)).pickaxe()
     )
@@ -491,13 +493,13 @@ object DnDBlocks {
     // TODO add this
     val GOLDEN_MUSHROOM = register(
         "golden_mushroom",
-        MushroomWithSporesPlantBlock(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM)
+        MushroomWithSporesPlantBlock(TreeFeatures.HUGE_BROWN_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM)
     ).cutout().axe().sword().tellWitnessesThatIWasMurdered()
     val GOLDEN_MUSHROOM_BLOCK = register(
         "golden_mushroom_block", MushroomWithSporesBlock(0xFFD800, 0.5, Set.GOLDEN_MUSHROOM_BLOCK.luminance(11))
     ).axe().tellWitnessesThatIWasMurdered()
     val GOLDEN_MUSHROOM_STEM_BLOCK =
-        register("golden_mushroom_stem_block", MushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9)))
+        register("golden_mushroom_stem_block", HugeMushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9)))
             .axe().tellWitnessesThatIWasMurdered()
 
 
@@ -515,7 +517,7 @@ object DnDBlocks {
      */
 
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
-    val GAY_BLOCK = registerSet("gay_block", copy(BEACON))
+    val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))
 
     fun init() {
         // Striping
@@ -534,19 +536,19 @@ object DnDBlocks {
 
     fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
-        DnDItems.register(id, BlockItem(regBlock, Item.Settings()))
+        DnDItems.register(id, BlockItem(regBlock, Item.Properties()))
         return regBlock
     }
 
     fun registerNoItem(id: String, block: Block): Block {
-        val regBlock = Registry.register(Registries.BLOCK, id(id), block)
+        val regBlock = Registry.register(BuiltInRegistries.BLOCK, id(id), block)
         BLOCKS.add(regBlock)
         return regBlock
     }
 
     fun registerScaffolding(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
-        DnDItems.register(id, ScaffoldingItem(regBlock, Item.Settings()))
+        DnDItems.register(id, ScaffoldingBlockItem(regBlock, Item.Properties()))
         return regBlock
     }
 }

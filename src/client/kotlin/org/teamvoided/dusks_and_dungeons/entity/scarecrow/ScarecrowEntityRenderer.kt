@@ -1,14 +1,14 @@
 package org.teamvoided.dusks_and_dungeons.entity.scarecrow
 
-import net.minecraft.client.render.entity.EntityRendererFactory
-import net.minecraft.client.render.entity.LivingEntityRenderer
-import net.minecraft.client.render.entity.feature.ElytraFeatureRenderer
-import net.minecraft.client.render.entity.feature.HeadFeatureRenderer
-import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.Identifier
-import net.minecraft.util.math.Axis
-import net.minecraft.util.math.MathHelper
+import net.minecraft.client.renderer.entity.EntityRendererProvider
+import net.minecraft.client.renderer.entity.LivingEntityRenderer
+import net.minecraft.client.renderer.entity.layers.ElytraLayer
+import net.minecraft.client.renderer.entity.layers.CustomHeadLayer
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer
+import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.resources.ResourceLocation
+import com.mojang.math.Axis
+import net.minecraft.util.Mth
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
@@ -18,52 +18,52 @@ import org.teamvoided.dusks_and_dungeons.entity.scarecrow.render.ScarecrowArmorF
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.render.ScarecrowWoodFeatureRenderer
 import org.teamvoided.dusks_and_dungeons.util.pi
 
-class ScarecrowEntityRenderer(context: EntityRendererFactory.Context) :
+class ScarecrowEntityRenderer(context: EntityRendererProvider.Context) :
     LivingEntityRenderer<ScarecrowEntity, ScarecrowEntityModel>(
         context,
-        ScarecrowEntityModel(context.getPart(DnDEntityModelLayers.SCARECROW)),
+        ScarecrowEntityModel(context.bakeLayer(DnDEntityModelLayers.SCARECROW)),
         0f
     ) {
 
     init {
-        this.addFeature(HeldItemFeatureRenderer(this, context.heldItemRenderer))
-        this.addFeature(HeadFeatureRenderer(this, context.modelLoader, context.heldItemRenderer))
-        this.addFeature(
+        this.addLayer(ItemInHandLayer(this, context.itemInHandRenderer))
+        this.addLayer(CustomHeadLayer(this, context.modelSet, context.itemInHandRenderer))
+        this.addLayer(
             ScarecrowArmorFeatureRenderer(
                 this,
-                ScarecrowArmorEntityModel(context.getPart(DnDEntityModelLayers.SCARECROW_INNER_ARMOR)),
-                ScarecrowArmorEntityModel(context.getPart(DnDEntityModelLayers.SCARECROW_OUTER_ARMOR)),
+                ScarecrowArmorEntityModel(context.bakeLayer(DnDEntityModelLayers.SCARECROW_INNER_ARMOR)),
+                ScarecrowArmorEntityModel(context.bakeLayer(DnDEntityModelLayers.SCARECROW_OUTER_ARMOR)),
                 context.modelManager
             )
         )
-        this.addFeature(ElytraFeatureRenderer(this, context.modelLoader))
-        this.addFeature(ScarecrowWoodFeatureRenderer(this, context.modelLoader))
+        this.addLayer(ElytraLayer(this, context.modelSet))
+        this.addLayer(ScarecrowWoodFeatureRenderer(this, context.modelSet))
     }
 
-    override fun setupTransforms(
+    override fun setupRotations(
         scarecrowEntity: ScarecrowEntity,
-        matrices: MatrixStack,
+        matrices: PoseStack,
         animationProgress: Float,
         bodyYaw: Float,
         tickDelta: Float,
         i: Float
     ) {
-        matrices.rotate(Axis.Y_POSITIVE.rotationDegrees(180f - bodyYaw))
-        val sinceLastHit = (scarecrowEntity.world.time - scarecrowEntity.lastHitTime).toFloat() + tickDelta
+        matrices.mulPose(Axis.YP.rotationDegrees(180f - bodyYaw))
+        val sinceLastHit = (scarecrowEntity.level().gameTime - scarecrowEntity.lastHitTime).toFloat() + tickDelta
         if (sinceLastHit < ScarecrowEntity.WOBBLE_DURATION) {
-            matrices.rotate(Axis.Y_POSITIVE.rotationDegrees(MathHelper.sin(sinceLastHit / 1.5f * pi) * 3f))
+            matrices.mulPose(Axis.YP.rotationDegrees(Mth.sin(sinceLastHit / 1.5f * pi) * 3f))
         }
     }
 
-    override fun hasLabel(scarecrowEntity: ScarecrowEntity): Boolean {
-        val distance = dispatcher.getSquaredDistanceToCamera(scarecrowEntity)
-        val range = if (scarecrowEntity.isInSneakingPose) 32.0f else 64.0f
+    override fun shouldShowName(scarecrowEntity: ScarecrowEntity): Boolean {
+        val distance = entityRenderDispatcher.distanceToSqr(scarecrowEntity)
+        val range = if (scarecrowEntity.isCrouching) 32.0f else 64.0f
         return if (distance >= (range * range).toDouble()) false else scarecrowEntity.isCustomNameVisible
     }
 
-    override fun getTexture(scarecrowEntity: ScarecrowEntity): Identifier = TEXTURE
+    override fun getTextureLocation(scarecrowEntity: ScarecrowEntity): ResourceLocation = TEXTURE
 
     companion object {
-        private val TEXTURE: Identifier = id("minecraft", "textures/block/red_wool.png")
+        private val TEXTURE: ResourceLocation = id("minecraft", "textures/block/red_wool.png")
     }
 }

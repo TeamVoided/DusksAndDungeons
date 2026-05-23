@@ -1,37 +1,37 @@
 package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.registry.tag.BlockTags
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.util.FeatureContext
+import net.minecraft.tags.BlockTags
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.BoulderConfig
 
 class BoulderFeature(codec: Codec<BoulderConfig>) :
     Feature<BoulderConfig>(codec) {
-    override fun place(context: FeatureContext<BoulderConfig>): Boolean {
-        var blockPos = context.origin
-        val structureWorldAccess = context.world
-        val randomGenerator = context.random
-        val config = context.config as BoulderConfig
+    override fun place(context: FeaturePlaceContext<BoulderConfig>): Boolean {
+        var blockPos = context.origin()
+        val structureWorldAccess = context.level()
+        val randomGenerator = context.random()
+        val config = context.config() as BoulderConfig
 
-        var size = config.size[randomGenerator]
-        val boulderCount = config.boulderCount[randomGenerator]
+        var size = config.size.sample(randomGenerator)
+        val boulderCount = config.boulderCount.sample(randomGenerator)
 
-        if (blockPos.y <= structureWorldAccess.bottomY + 1 + size) {
+        if (blockPos.y <= structureWorldAccess.minBuildHeight + 1 + size) {
             return false
         } else {
-            if (!structureWorldAccess.getBlockState(blockPos).isIn(BlockTags.FEATURES_CANNOT_REPLACE)) {
-                structureWorldAccess.setBlockState(blockPos, config.block.getBlockState(randomGenerator, blockPos), 3)
+            if (!structureWorldAccess.getBlockState(blockPos).`is`(BlockTags.FEATURES_CANNOT_REPLACE)) {
+                structureWorldAccess.setBlock(blockPos, config.block.getState(randomGenerator, blockPos), 3)
             }
             for (i in 0..boulderCount) {
-                size = config.size[randomGenerator]
+                size = config.size.sample(randomGenerator)
                 val x = randomGenerator.nextInt(size)
                 val y = randomGenerator.nextInt(size)
                 val z = randomGenerator.nextInt(size)
                 val f = (x + y + z) * 0.333 + 0.5
                 val var11: Iterator<*> =
-                    BlockPos.iterate(blockPos.add(-x, -y, -z), blockPos.add(x, y, z)).iterator()
+                    BlockPos.betweenClosed(blockPos.offset(-x, -y, -z), blockPos.offset(x, y, z)).iterator()
 
                 while (var11.hasNext()) {
                     val blockPosPlace = var11.next() as BlockPos
@@ -39,28 +39,28 @@ class BoulderFeature(codec: Codec<BoulderConfig>) :
                     val yOffset = blockPos.y - blockPosPlace.y
                     val zOffset = blockPos.z - blockPosPlace.z
                     val distance =
-                        (config.weirdness[randomGenerator] * xOffset * xOffset) +
-                                (config.weirdness[randomGenerator] * zOffset * zOffset) +
-                                (config.weirdness[randomGenerator] * yOffset * yOffset)
+                        (config.weirdness.sample(randomGenerator) * xOffset * xOffset) +
+                                (config.weirdness.sample(randomGenerator) * zOffset * zOffset) +
+                                (config.weirdness.sample(randomGenerator) * yOffset * yOffset)
                     if (distance <= (f * f) &&
-                        !structureWorldAccess.getBlockState(blockPosPlace).isIn(BlockTags.FEATURES_CANNOT_REPLACE)
+                        !structureWorldAccess.getBlockState(blockPosPlace).`is`(BlockTags.FEATURES_CANNOT_REPLACE)
                     ) {
-                        structureWorldAccess.setBlockState(
+                        structureWorldAccess.setBlock(
                             blockPosPlace,
-                            config.block.getBlockState(randomGenerator, blockPosPlace),
+                            config.block.getState(randomGenerator, blockPosPlace),
                             3
                         )
                     }
                 }
-                blockPos = blockPos.add(
-                    config.otherBoulderOffset[randomGenerator] - config.otherBoulderOffset[randomGenerator],
+                blockPos = blockPos.offset(
+                    config.otherBoulderOffset.sample(randomGenerator) - config.otherBoulderOffset.sample(randomGenerator),
                     randomGenerator.nextInt(size) - randomGenerator.nextInt(size),
-                    config.otherBoulderOffset[randomGenerator] - config.otherBoulderOffset[randomGenerator]
+                    config.otherBoulderOffset.sample(randomGenerator) - config.otherBoulderOffset.sample(randomGenerator)
                 )
                 if (config.moveDownIfReplaceable)
                     for (i in 0..size) {
-                        if (structureWorldAccess.getBlockState(blockPos).isIn(BlockTags.REPLACEABLE)) {
-                            blockPos.down()
+                        if (structureWorldAccess.getBlockState(blockPos).`is`(BlockTags.REPLACEABLE)) {
+                            blockPos.below()
                         }
                     }
             }

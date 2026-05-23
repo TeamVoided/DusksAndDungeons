@@ -3,43 +3,43 @@ package org.teamvoided.dusks_and_dungeons.world.gen.trunk
 import com.google.common.collect.Lists
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.block.BlockState
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.TestableWorld
-import net.minecraft.world.gen.feature.TreeFeature
-import net.minecraft.world.gen.feature.TreeFeatureConfig
-import net.minecraft.world.gen.foliage.FoliagePlacer
-import net.minecraft.world.gen.trunk.TrunkPlacer
-import net.minecraft.world.gen.trunk.TrunkPlacerType
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.LevelSimulatedReader
+import net.minecraft.world.level.levelgen.feature.TreeFeature
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
 import java.util.function.BiConsumer
 import java.util.function.Function
 
 class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
-    override fun getType(): TrunkPlacerType<*> {
+    override fun type(): TrunkPlacerType<*> {
         return DnDWorldgen.THREE_WIDE_TRUNK_PLACER
     }
 
-    override fun generate(
-        world: TestableWorld,
+    override fun placeTrunk(
+        world: LevelSimulatedReader,
         replacer: BiConsumer<BlockPos, BlockState>,
-        random: RandomGenerator,
+        random: RandomSource,
         height: Int,
         startPos: BlockPos,
-        config: TreeFeatureConfig
-    ): List<FoliagePlacer.TreeNode> {
-        val list: MutableList<FoliagePlacer.TreeNode> = Lists.newArrayList()
-        val blockPos = startPos.down()
-        setToDirt(world, replacer, random, blockPos.north().west(), config)
-        setToDirt(world, replacer, random, blockPos.north(), config)
-        setToDirt(world, replacer, random, blockPos.north().east(), config)
-        setToDirt(world, replacer, random, blockPos.west(), config)
-        setToDirt(world, replacer, random, blockPos, config)
-        setToDirt(world, replacer, random, blockPos.east(), config)
-        setToDirt(world, replacer, random, blockPos.south().west(), config)
-        setToDirt(world, replacer, random, blockPos.south(), config)
-        setToDirt(world, replacer, random, blockPos.south().east(), config)
+        config: TreeConfiguration
+    ): List<FoliagePlacer.FoliageAttachment> {
+        val list: MutableList<FoliagePlacer.FoliageAttachment> = Lists.newArrayList()
+        val blockPos = startPos.below()
+        setDirtAt(world, replacer, random, blockPos.north().west(), config)
+        setDirtAt(world, replacer, random, blockPos.north(), config)
+        setDirtAt(world, replacer, random, blockPos.north().east(), config)
+        setDirtAt(world, replacer, random, blockPos.west(), config)
+        setDirtAt(world, replacer, random, blockPos, config)
+        setDirtAt(world, replacer, random, blockPos.east(), config)
+        setDirtAt(world, replacer, random, blockPos.south().west(), config)
+        setDirtAt(world, replacer, random, blockPos.south(), config)
+        setDirtAt(world, replacer, random, blockPos.south().east(), config)
         val posX = startPos.x
         val posY = startPos.y
         val posZ = startPos.z
@@ -51,20 +51,20 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
             val blockPos2 = BlockPos(posX, r, posZ)
             if (TreeFeature.isAirOrLeaves(world, blockPos2)) {
                 val chance = (height * 1.2 - g).toInt()
-                placeTrunkBlock(world, replacer, random, blockPos2.north().west(), config)
-                placeTrunkBlock(world, replacer, random, blockPos2.north(), config)
-                placeTrunkBlock(world, replacer, random, blockPos2.north().east(), config)
-                placeTrunkBlock(world, replacer, random, blockPos2.west(), config)
-                placeTrunkBlock(world, replacer, random, blockPos2, config)
-                placeTrunkBlock(world, replacer, random, blockPos2.east(), config)
-                placeTrunkBlock(world, replacer, random, blockPos2.south().west(), config)
-                placeTrunkBlock(world, replacer, random, blockPos2.south(), config)
-                placeTrunkBlock(world, replacer, random, blockPos2.south().east(), config)
+                placeLog(world, replacer, random, blockPos2.north().west(), config)
+                placeLog(world, replacer, random, blockPos2.north(), config)
+                placeLog(world, replacer, random, blockPos2.north().east(), config)
+                placeLog(world, replacer, random, blockPos2.west(), config)
+                placeLog(world, replacer, random, blockPos2, config)
+                placeLog(world, replacer, random, blockPos2.east(), config)
+                placeLog(world, replacer, random, blockPos2.south().west(), config)
+                placeLog(world, replacer, random, blockPos2.south(), config)
+                placeLog(world, replacer, random, blockPos2.south().east(), config)
             }
             ++g
         }
 
-        list.add(FoliagePlacer.TreeNode(BlockPos(posX, posYAlt, posZ), 0, true))
+        list.add(FoliagePlacer.FoliageAttachment(BlockPos(posX, posYAlt, posZ), 0, true))
 
         g = -2
         while (g <= 3) {
@@ -77,28 +77,28 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
 
                     for (t in 0 until randMax) {
                         val y = posYAlt - t + randOffset
-                        placeTrunkBlock(
+                        placeLog(
                             world,
                             replacer,
                             random,
                             BlockPos(posX + g, y, posZ + r),
                             config
                         )
-                        placeTrunkBlock(
+                        placeLog(
                             world,
                             replacer,
                             random,
                             BlockPos(posX + g - 1, y, posZ + r),
                             config
                         )
-                        placeTrunkBlock(
+                        placeLog(
                             world,
                             replacer,
                             random,
                             BlockPos(posX + g, y, posZ + r - 1),
                             config
                         )
-                        placeTrunkBlock(
+                        placeLog(
                             world,
                             replacer,
                             random,
@@ -108,7 +108,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
 //              Debug
 //                        placeTrunkBlock(world, replacer, random, BlockPos(posX + q, posYAlt - t + randOffset + 20, posZ + r), config)
                     }
-                    list.add(FoliagePlacer.TreeNode(BlockPos(posX + g, posYAlt + randOffset, posZ + r), 0, false))
+                    list.add(FoliagePlacer.FoliageAttachment(BlockPos(posX + g, posYAlt + randOffset, posZ + r), 0, false))
                 }
                 ++r
             }
@@ -121,20 +121,20 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
     fun placeChance(
         chance: Int,
         currentHeight: Int,
-        world: TestableWorld,
+        world: LevelSimulatedReader,
         replacer: BiConsumer<BlockPos, BlockState>,
-        random: RandomGenerator,
+        random: RandomSource,
         pos: BlockPos,
-        config: TreeFeatureConfig
+        config: TreeConfiguration
     ): Boolean? {
         return if (random.nextInt(chance) > 0 || currentHeight <= 1) {
-            this.placeTrunkBlock(world, replacer, random, pos, config, Function.identity())
+            this.placeLog(world, replacer, random, pos, config, Function.identity())
         } else null
     }
 
     companion object {
         val CODEC: MapCodec<ThreeWideTrunkPlacer> =
-            RecordCodecBuilder.mapCodec { fillTrunkPlacerFields(it).apply(it, ::ThreeWideTrunkPlacer) }
+            RecordCodecBuilder.mapCodec { trunkPlacerParts(it).apply(it, ::ThreeWideTrunkPlacer) }
     }
 //        suprise tool i want to use later
 //        val direction = Direction.Type.HORIZONTAL.random(random)

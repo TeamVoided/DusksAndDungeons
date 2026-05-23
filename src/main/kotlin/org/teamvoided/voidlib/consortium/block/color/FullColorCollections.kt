@@ -1,6 +1,6 @@
 package org.teamvoided.voidlib.consortium.block.color
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 
 open class FullColorCollections(
     private val uncolored: Block,

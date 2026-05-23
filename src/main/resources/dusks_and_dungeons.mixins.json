@@ -9,12 +9,12 @@
     "FoxEntityVariantMixin",
     "ItemStackMixin",
     "LighterItemMixin",
-    "MushroomPlantBlockMixin",
+    "MushroomBlockMixin",
     "NyliumBlockMixin",
-    "PistonBlockEntityMixin",
-    "PistonHandlerMixin",
+    "PistonMovingBlockEntityMixin",
+    "PistonStructureResolverMixin",
     "WallBlockMixin",
-    "WitherSkeletonEntityMixin"
+    "WitherSkeletonMixin"
   ],
   "client": [],
   "injectors": {

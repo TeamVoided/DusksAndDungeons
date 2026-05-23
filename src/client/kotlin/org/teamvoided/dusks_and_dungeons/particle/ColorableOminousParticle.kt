@@ -3,18 +3,18 @@ package org.teamvoided.dusks_and_dungeons.particle
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.particle.*
-import net.minecraft.client.util.ColorUtil.Argb32
-import net.minecraft.client.world.ClientWorld
-import net.minecraft.util.math.MathHelper
+import net.minecraft.util.FastColor.ARGB32
+import net.minecraft.client.multiplayer.ClientLevel
+import net.minecraft.util.Mth
 import java.awt.Color
 
 @Environment(EnvType.CLIENT)
 class ColorableOminousParticle internal constructor(
-    world: ClientWorld,
+    world: ClientLevel,
     xPos: Double, yPos: Double, zPos: Double,
     xVel: Double, yVel: Double, zVel: Double,
     startColor: Color, endColor: Color
-) : SpriteBillboardParticle(world, xPos, yPos, zPos) {
+) : TextureSheetParticle(world, xPos, yPos, zPos) {
     private val positionX: Double
     private val positionY: Double
     private val positionZ: Double
@@ -22,65 +22,65 @@ class ColorableOminousParticle internal constructor(
     private val endColor: Color
 
     init {
-        this.velocityX = xVel
-        this.velocityY = yVel
-        this.velocityZ = zVel
+        this.xd = xVel
+        this.yd = yVel
+        this.zd = zVel
         this.positionX = xPos
         this.positionY = yPos
         this.positionZ = zPos
-        this.prevPosX = xPos + xVel
-        this.prevPosY = yPos + yVel
-        this.prevPosZ = zPos + zVel
-        this.x = this.prevPosX
-        this.y = this.prevPosY
-        this.z = this.prevPosZ
-        this.scale = 0.1f * (random.nextFloat() * 0.5f + 0.2f)
-        this.collidesWithWorld = false
-        this.maxAge = (Math.random() * 5.0).toInt() + 25
+        this.xo = xPos + xVel
+        this.yo = yPos + yVel
+        this.zo = zPos + zVel
+        this.x = this.xo
+        this.y = this.yo
+        this.z = this.zo
+        this.quadSize = 0.1f * (random.nextFloat() * 0.5f + 0.2f)
+        this.hasPhysics = false
+        this.lifetime = (Math.random() * 5.0).toInt() + 25
         this.startColor = startColor
         this.endColor = endColor
     }
 
-    override fun getType(): ParticleTextureSheet {
-        return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE
+    override fun getRenderType(): ParticleRenderType {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE
     }
 
     override fun move(dx: Double, dy: Double, dz: Double) {}
 
-    public override fun getBrightness(tint: Float): Int = 240
+    public override fun getLightColor(tint: Float): Int = 240
 
     override fun tick() {
-        this.prevPosX = this.x
-        this.prevPosY = this.y
-        this.prevPosZ = this.z
-        if (age++ >= this.maxAge) {
-            this.markDead()
+        this.xo = this.x
+        this.yo = this.y
+        this.zo = this.z
+        if (age++ >= this.lifetime) {
+            this.remove()
         } else {
-            val f = age.toFloat() / maxAge.toFloat()
+            val f = age.toFloat() / lifetime.toFloat()
             val g = 1.0f - f
-            this.x = this.positionX + this.velocityX * g.toDouble()
-            this.y = this.positionY + this.velocityY * g.toDouble()
-            this.z = this.positionZ + this.velocityZ * g.toDouble()
-            val color = Argb32.lerp(f, this.startColor.rgb, this.endColor.rgb)
+            this.x = this.positionX + this.xd * g.toDouble()
+            this.y = this.positionY + this.yd * g.toDouble()
+            this.z = this.positionZ + this.zd * g.toDouble()
+            val color = ARGB32.lerp(f, this.startColor.rgb, this.endColor.rgb)
             this.setColor(
-                Argb32.getRed(color).toFloat() / 255.0f,
-                Argb32.getGreen(color).toFloat() / 255.0f,
-                Argb32.getBlue(color).toFloat() / 255.0f
+                ARGB32.red(color).toFloat() / 255.0f,
+                ARGB32.green(color).toFloat() / 255.0f,
+                ARGB32.blue(color).toFloat() / 255.0f
             )
-            this.setColorAlpha(Argb32.getAlpha(color).toFloat() / 255.0f)
+            this.setAlpha(ARGB32.alpha(color).toFloat() / 255.0f)
         }
     }
 
     @Environment(EnvType.CLIENT)
-    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<ColorableParticleEffect> {
+    class Factory(private val spriteProvider: SpriteSet) : ParticleProvider<ColorableParticleEffect> {
         override fun createParticle(
-            type: ColorableParticleEffect, world: ClientWorld,
+            type: ColorableParticleEffect, world: ClientLevel,
             xPos: Double, yPos: Double, zPos: Double,
             xVel: Double, yVel: Double, zVel: Double
         ): Particle {
             val particle = ColorableOminousParticle(world, xPos, yPos, zPos, xVel, yVel, zVel, type.color, Color.white)
-            particle.scale(MathHelper.nextBetween(world.getRandom(), 3.0f, 5.0f))
-            particle.setSprite(this.spriteProvider)
+            particle.scale(Mth.randomBetween(world.getRandom(), 3.0f, 5.0f))
+            particle.pickSprite(this.spriteProvider)
             return particle
         }
     }

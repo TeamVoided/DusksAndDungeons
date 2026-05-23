@@ -2,11 +2,16 @@ package org.teamvoided.dusks_and_dungeons.data.gen.models
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.data.client.ItemModelGenerator
-import net.minecraft.data.client.model.*
-import net.minecraft.util.Identifier
+import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.models.ItemModelGenerators
+import net.minecraft.data.models.model.ModelLocationUtils
+import net.minecraft.data.models.model.ModelTemplate
+import net.minecraft.data.models.model.ModelTemplates
+import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.model.TextureSlot
+import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -22,7 +27,7 @@ import java.util.*
 
 class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
-    private val ALL_KRY: TextureKey = TextureKey.of("all")
+    private val ALL_KRY: TextureSlot = TextureSlot.create("all")
     val excludeModels = WOOD_SETS + listOf(
         ICE_SET,
         DnDBlocks.OVERGROWN_POLISHED_STONE,
@@ -31,10 +36,10 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
     )
 
 
-    override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
+    override fun generateBlockStateModels(gen: BlockModelGenerators) {
 //        gen.registerItemModel(Items.AIR) //fer debug porpoises
         DnDFamilies.modelsBlockFamilies.forEach {
-            gen.registerCubeAllModelTexturePool(it.baseBlock).family(it)
+            gen.family(it.baseBlock).generateFor(it)
         }
 
         BigModels.register(gen)
@@ -81,26 +86,26 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDItems.CORN_SYRUP_BOTTLE,
     )
 
-    override fun generateItemModels(gen: ItemModelGenerator) {
-        single.forEach { gen.register(it, Models.SINGLE_LAYER_ITEM) }
+    override fun generateItemModels(gen: ItemModelGenerators) {
+        single.forEach { gen.generateFlatItem(it, ModelTemplates.FLAT_ITEM) }
     }
 
-    private fun item(parent: String, vararg requiredTextures: TextureKey): Model =
-        Model(Optional.of(id("item/$parent")), Optional.empty(), *requiredTextures)
+    private fun item(parent: String, vararg requiredTextures: TextureSlot): ModelTemplate =
+        ModelTemplate(Optional.of(id("item/$parent")), Optional.empty(), *requiredTextures)
 
-    private fun BlockStateModelGenerator.parentedModel(
-        block: Block, textBlock: Block, parent: Identifier
-    ): Identifier =
-        Model(parent.myb, Optional.empty(), ALL_KRY)
-            .upload(block.model(), Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
+    private fun BlockModelGenerators.parentedModel(
+        block: Block, textBlock: Block, parent: ResourceLocation
+    ): ResourceLocation =
+        ModelTemplate(parent.myb, Optional.empty(), ALL_KRY)
+            .create(block.model(), TextureMapping().put(ALL_KRY, textBlock.model()), this.modelOutput)
 
-    private fun BlockStateModelGenerator.parentedModel(
-        block: Identifier, textBlock: Block, parent: Identifier
-    ): Identifier =
-        Model(parent.myb, Optional.empty(), ALL_KRY)
-            .upload(block, Texture().put(ALL_KRY, textBlock.model()), this.modelCollector)
+    private fun BlockModelGenerators.parentedModel(
+        block: ResourceLocation, textBlock: Block, parent: ResourceLocation
+    ): ResourceLocation =
+        ModelTemplate(parent.myb, Optional.empty(), ALL_KRY)
+            .create(block, TextureMapping().put(ALL_KRY, textBlock.model()), this.modelOutput)
 
     private val <T : Any?> T.myb get() = Optional.ofNullable(this)
-    private fun Identifier.suffix(str: String) = Identifier.of(this.namespace, "${this.path}$str")
-    private fun Block.model(): Identifier = ModelIds.getBlockModelId(this)
+    private fun ResourceLocation.suffix(str: String) = ResourceLocation.fromNamespaceAndPath(this.namespace, "${this.path}$str")
+    private fun Block.model(): ResourceLocation = ModelLocationUtils.getModelLocation(this)
 }

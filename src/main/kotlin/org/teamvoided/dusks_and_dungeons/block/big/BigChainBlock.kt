@@ -1,18 +1,18 @@
 package org.teamvoided.dusks_and_dungeons.block.big
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.ChainBlock
-import net.minecraft.block.ShapeContext
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.world.BlockView
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.ChainBlock
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.level.BlockGetter
 
-class BigChainBlock(settings: Settings) : ChainBlock(settings) {
+class BigChainBlock(settings: Properties) : ChainBlock(settings) {
 
-    override fun getOutlineShape(
-        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
-    ): VoxelShape = when (state.get(AXIS) as Direction.Axis) {
+    override fun getShape(
+        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
+    ): VoxelShape = when (state.getValue(AXIS) as Direction.Axis) {
         Direction.Axis.Y -> Y_SHAPE
         Direction.Axis.Z -> Z_SHAPE
         Direction.Axis.X -> X_SHAPE
@@ -22,8 +22,8 @@ class BigChainBlock(settings: Settings) : ChainBlock(settings) {
     companion object {
         protected const val SHAPE_MIN = 4.5
         protected const val SHAPE_MAX = 11.5
-        val Y_SHAPE = createCuboidShape(SHAPE_MIN, 0.0, SHAPE_MIN, SHAPE_MAX, 16.0, SHAPE_MAX)
-        val Z_SHAPE = createCuboidShape(SHAPE_MIN, SHAPE_MIN, 0.0, SHAPE_MAX, SHAPE_MAX, 16.0)
-        val X_SHAPE = createCuboidShape(0.0, SHAPE_MIN, SHAPE_MIN, 16.0, SHAPE_MAX, SHAPE_MAX)
+        val Y_SHAPE = box(SHAPE_MIN, 0.0, SHAPE_MIN, SHAPE_MAX, 16.0, SHAPE_MAX)
+        val Z_SHAPE = box(SHAPE_MIN, SHAPE_MIN, 0.0, SHAPE_MAX, SHAPE_MAX, 16.0)
+        val X_SHAPE = box(0.0, SHAPE_MIN, SHAPE_MIN, 16.0, SHAPE_MAX, SHAPE_MAX)
     }
 }

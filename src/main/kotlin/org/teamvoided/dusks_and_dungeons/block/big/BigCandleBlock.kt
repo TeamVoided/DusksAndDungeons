@@ -4,56 +4,63 @@ import com.google.common.collect.ImmutableList
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
-import net.minecraft.block.*
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.particle.DefaultParticleType
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.DirectionProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.util.BlockMirror
-import net.minecraft.util.BlockRotation
-import net.minecraft.util.Util
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.Vec3d
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.util.shape.VoxelShapes
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.sounds.SoundSource
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.Mirror
+import net.minecraft.world.level.block.Rotation
+import net.minecraft.Util
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.phys.Vec3
+import net.minecraft.util.RandomSource
+import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.AbstractCandleBlock
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.CandleBlock
+import net.minecraft.world.level.block.HorizontalDirectionalBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.shapes.CollisionContext
 import org.teamvoided.dusks_and_dungeons.util.block.FULL_CUBE
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import java.util.function.Consumer
 
-open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings) : CandleBlock(settings) {
+open class BigCandleBlock(val particle: SimpleParticleType, settings: Properties) : CandleBlock(settings) {
     init {
-        this.defaultState = stateManager.defaultState
-            .with(CANDLES, 1)
-            .with(LIT, false)
-            .with(FACING, Direction.NORTH)
-            .with(WATERLOGGED, false)
+        this.registerDefaultState(
+            stateDefinition.any()
+                .setValue(CANDLES, 1)
+                .setValue(LIT, false)
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
+        )
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? =
-        super.getPlacementState(ctx)?.with(FACING, ctx.playerFacing.opposite)
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? =
+        super.getStateForPlacement(ctx)?.setValue(FACING, ctx.horizontalDirection.opposite)
 
-    override fun getOutlineShape(
-        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
-    ): VoxelShape = (when (state.get(CANDLES)) {
+    override fun getShape(
+        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
+    ): VoxelShape = (when (state.getValue(CANDLES)) {
         1 -> ONE_BIG_CANDLE_SHAPE
         2 -> TWO_BIG_CANDLES_SHAPE
         3 -> THREE_BIG_CANDLES_SHAPE
         4 -> FOUR_BIG_CANDLES_SHAPE
         else -> FULL_CUBE
-    }).rotate(state.get(FACING).horizontal)
+    }).rotate(state.getValue(FACING).get2DDataValue())
 
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        if (state.get(AbstractCandleBlock.LIT)) {
-            getParticleOffsets(state).forEach(Consumer { offset: Vec3d ->
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        if (state.getValue(AbstractCandleBlock.LIT)) {
+            getParticleOffsets(state).forEach(Consumer { offset: Vec3 ->
                 spawnCandleParticles(
                     world,
                     offset.add(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()),
@@ -63,20 +70,20 @@ open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings)
         }
     }
 
-    override fun getParticleOffsets(state: BlockState): Iterable<Vec3d> =
-        BIG_CANDLES_TO_PARTICLE_OFFSETS[state.get(CANDLES)].rotateFlat90(state.get(FACING).horizontal)
+    override fun getParticleOffsets(state: BlockState): Iterable<Vec3> =
+        BIG_CANDLES_TO_PARTICLE_OFFSETS[state.getValue(CANDLES)].rotateFlat90(state.getValue(FACING).get2DDataValue())
 
-    private fun spawnCandleParticles(world: World, vec3d: Vec3d, random: RandomGenerator) {
+    private fun spawnCandleParticles(world: Level, vec3d: Vec3, random: RandomSource) {
         val f = random.nextFloat()
         if (f < 0.3f) {
             world.addParticle(ParticleTypes.SMOKE, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
             if (f < 0.17f) {
-                world.playSound(
+                world.playLocalSound(
                     vec3d.x + 0.5,
                     vec3d.y + 0.5,
                     vec3d.z + 0.5,
-                    SoundEvents.BLOCK_CANDLE_AMBIENT,
-                    SoundCategory.BLOCKS,
+                    SoundEvents.CANDLE_AMBIENT,
+                    SoundSource.BLOCKS,
                     1.0f + random.nextFloat(),
                     random.nextFloat() * 0.7f + 0.3f,
                     false
@@ -87,70 +94,70 @@ open class BigCandleBlock(val particle: DefaultParticleType, settings: Settings)
         world.addParticle(particle, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)
     }
 
-    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
-        state.with(HorizontalFacingBlock.FACING, rotation.rotate(state.get(FACING)))
+    override fun rotate(state: BlockState, rotation: Rotation): BlockState =
+        state.setValue(HorizontalDirectionalBlock.FACING, rotation.rotate(state.getValue(FACING)))
 
-    override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
-        state.rotate(mirror.getRotation(state.get(FACING)))
+    override fun mirror(state: BlockState, mirror: Mirror): BlockState =
+        state.rotate(mirror.getRotation(state.getValue(FACING)))
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        super.appendProperties(builder)
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
         builder.add(FACING)
     }
 
     companion object {
-        val FACING: DirectionProperty = Properties.HORIZONTAL_FACING
+        val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
 
         val ONE_BIG_CANDLE_SHAPE: VoxelShape =
             candle(6.0, 6.0, 12.0)
-        val TWO_BIG_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
+        val TWO_BIG_CANDLES_SHAPE: VoxelShape = Shapes.or(
             candle(9.0, 6.0, 12.0),
             candle(3.0, 7.0, 10.0)
         )
-        val THREE_BIG_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
+        val THREE_BIG_CANDLES_SHAPE: VoxelShape = Shapes.or(
             candle(8.0, 4.0, 12.0),
             candle(3.0, 5.0, 10.0),
             candle(7.0, 9.0, 6.0)
         )
-        val FOUR_BIG_CANDLES_SHAPE: VoxelShape = VoxelShapes.union(
+        val FOUR_BIG_CANDLES_SHAPE: VoxelShape = Shapes.or(
             candle(8.0, 3.0, 12.0),
             candle(3.0, 3.0, 10.0),
             candle(4.0, 8.0, 6.0),
             candle(9.0, 8.0, 10.0)
         )
-        val BIG_CANDLES_TO_PARTICLE_OFFSETS: Int2ObjectMap<List<Vec3d>> = Util.make {
-            val int2ObjectMap: Int2ObjectMap<List<Vec3d>> = Int2ObjectOpenHashMap()
+        val BIG_CANDLES_TO_PARTICLE_OFFSETS: Int2ObjectMap<List<Vec3>> = Util.make {
+            val int2ObjectMap: Int2ObjectMap<List<Vec3>> = Int2ObjectOpenHashMap()
             int2ObjectMap.defaultReturnValue(ImmutableList.of())
             int2ObjectMap.put(
                 1, ImmutableList.of(
-                    Vec3d(0.5, 0.875, 0.5)
+                    Vec3(0.5, 0.875, 0.5)
                 )
             )
             int2ObjectMap.put(
                 2, ImmutableList.of(
-                    Vec3d(0.6875, 0.875, 0.5),
-                    Vec3d(0.3125, 0.75, 0.5625)
+                    Vec3(0.6875, 0.875, 0.5),
+                    Vec3(0.3125, 0.75, 0.5625)
                 )
             )
             int2ObjectMap.put(
                 3, ImmutableList.of(
-                    Vec3d(0.625, 0.875, 0.375),
-                    Vec3d(0.3125, 0.75, 0.4375),
-                    Vec3d(0.5625, 0.5, 0.6875),
+                    Vec3(0.625, 0.875, 0.375),
+                    Vec3(0.3125, 0.75, 0.4375),
+                    Vec3(0.5625, 0.5, 0.6875),
                 )
             )
             int2ObjectMap.put(
                 4, ImmutableList.of(
-                    Vec3d(0.625, 0.875, 0.3125),
-                    Vec3d(0.3125, 0.75, 0.3125),
-                    Vec3d(0.375, 0.5, 0.625),
-                    Vec3d(0.6875, 0.75, 0.625),
+                    Vec3(0.625, 0.875, 0.3125),
+                    Vec3(0.3125, 0.75, 0.3125),
+                    Vec3(0.375, 0.5, 0.625),
+                    Vec3(0.6875, 0.75, 0.625),
                 )
             )
             Int2ObjectMaps.unmodifiable(int2ObjectMap)
         }
 
         fun candle(x: Double, z: Double, height: Double): VoxelShape =
-            createCuboidShape(x, 0.0, z, x + 4, height, z + 4)
+            box(x, 0.0, z, x + 4, height, z + 4)
     }
 }

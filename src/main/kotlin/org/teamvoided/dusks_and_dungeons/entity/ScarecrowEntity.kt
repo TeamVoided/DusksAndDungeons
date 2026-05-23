@@ -1,59 +1,59 @@
 package org.teamvoided.dusks_and_dungeons.entity
 
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.entity.*
-import net.minecraft.entity.EquipmentSlot.Type.HAND
-import net.minecraft.entity.EquipmentSlot.Type.HUMANOID_ARMOR
-import net.minecraft.entity.attribute.DefaultAttributeContainer
-import net.minecraft.entity.attribute.EntityAttributes
-import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.data.DataTracker
-import net.minecraft.entity.data.TrackedData
-import net.minecraft.entity.data.TrackedDataHandlerRegistry
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.vehicle.AbstractMinecartEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.NbtList
-import net.minecraft.particle.BlockStateParticleEffect
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.tag.DamageTypeTags
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundEvent
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Arm
-import net.minecraft.util.Hand
-import net.minecraft.util.collection.DefaultedList
-import net.minecraft.util.math.EulerAngle
-import net.minecraft.util.math.Vec3d
-import net.minecraft.world.World
-import net.minecraft.world.event.GameEvent
-import net.minecraft.world.explosion.Explosion
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.entity.EquipmentSlot.Type.HAND
+import net.minecraft.world.entity.EquipmentSlot.Type.HUMANOID_ARMOR
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier
+import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.network.syncher.SynchedEntityData
+import net.minecraft.network.syncher.EntityDataAccessor
+import net.minecraft.network.syncher.EntityDataSerializers
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.entity.vehicle.AbstractMinecart
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.ListTag
+import net.minecraft.core.particles.BlockParticleOption
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.tags.DamageTypeTags
+import net.minecraft.tags.TagKey
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.HumanoidArm
+import net.minecraft.world.InteractionHand
+import net.minecraft.core.NonNullList
+import net.minecraft.core.Rotations
+import net.minecraft.world.entity.*
+import net.minecraft.world.phys.Vec3
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.gameevent.GameEvent
+import net.minecraft.world.level.Explosion
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDEntities
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import java.util.function.Predicate
 
-class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World) : LivingEntity(entityType, world) {
-    private val heldItems: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
-    private val armorItems: DefaultedList<ItemStack> = DefaultedList.ofSize(4, ItemStack.EMPTY)
-    private val decorationItems: DefaultedList<ItemStack> = DefaultedList.ofSize(4, ItemStack.EMPTY)
+class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: Level) : LivingEntity(entityType, world) {
+    private val heldItems: NonNullList<ItemStack> = NonNullList.withSize(2, ItemStack.EMPTY)
+    private val armorItems: NonNullList<ItemStack> = NonNullList.withSize(4, ItemStack.EMPTY)
+    private val decorationItems: NonNullList<ItemStack> = NonNullList.withSize(4, ItemStack.EMPTY)
     var lastHitTime: Long = 0
-    private var postRotation: EulerAngle
-    private var headRotation: EulerAngle
-    private var bodyRotation: EulerAngle
-    private var leftArmRotation: EulerAngle
-    private var rightArmRotation: EulerAngle
-    private var leftLegRotation: EulerAngle
-    private var rightLegRotation: EulerAngle
+    private var postRotation: Rotations
+    private var headRotation: Rotations
+    private var bodyRotation: Rotations
+    private var leftArmRotation: Rotations
+    private var rightArmRotation: Rotations
+    private var leftLegRotation: Rotations
+    private var rightLegRotation: Rotations
 
-    constructor(world: World, x: Double, y: Double, z: Double) : this(DnDEntities.SCARECROW, world) {
-        this.setPosition(x, y, z)
+    constructor(world: Level, x: Double, y: Double, z: Double) : this(DnDEntities.SCARECROW, world) {
+        this.setPos(x, y, z)
     }
 
     init {
@@ -66,48 +66,48 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         this.rightLegRotation = DEFAULT_RIGHT_LEG_ROTATION
     }
 
-    override fun calculateDimensions() {
+    override fun refreshDimensions() {
         val posX = this.x
         val posY = this.y
         val posZ = this.z
-        super.calculateDimensions()
-        this.setPosition(posX, posY, posZ)
+        super.refreshDimensions()
+        this.setPos(posX, posY, posZ)
     }
 
-    private fun canClip(): Boolean = !this.hasNoGravity()
-    override fun canAiMove(): Boolean = super.canAiMove() && this.canClip()
-    override fun initDataTracker(builder: DataTracker.Builder) {
-        super.initDataTracker(builder)
-        builder.add(TRACKER_IS_SMALL, false)
-        builder.add(TRACKER_HAS_LEGS, false)
-        builder.add(TRACKER_POST_ROTATION, DEFAULT_POST_ROTATION)
-        builder.add(TRACKER_HEAD_ROTATION, DEFAULT_HEAD_ROTATION)
-        builder.add(TRACKER_BODY_ROTATION, DEFAULT_BODY_ROTATION)
-        builder.add(TRACKER_LEFT_ARM_ROTATION, DEFAULT_LEFT_ARM_ROTATION)
-        builder.add(TRACKER_RIGHT_ARM_ROTATION, DEFAULT_RIGHT_ARM_ROTATION)
-        builder.add(TRACKER_LEFT_LEG_ROTATION, DEFAULT_LEFT_LEG_ROTATION)
-        builder.add(TRACKER_RIGHT_LEG_ROTATION, DEFAULT_RIGHT_LEG_ROTATION)
+    private fun canClip(): Boolean = !this.isNoGravity
+    override fun isEffectiveAi(): Boolean = super.isEffectiveAi && this.canClip()
+    override fun defineSynchedData(builder: SynchedEntityData.Builder) {
+        super.defineSynchedData(builder)
+        builder.define(TRACKER_IS_SMALL, false)
+        builder.define(TRACKER_HAS_LEGS, false)
+        builder.define(TRACKER_POST_ROTATION, DEFAULT_POST_ROTATION)
+        builder.define(TRACKER_HEAD_ROTATION, DEFAULT_HEAD_ROTATION)
+        builder.define(TRACKER_BODY_ROTATION, DEFAULT_BODY_ROTATION)
+        builder.define(TRACKER_LEFT_ARM_ROTATION, DEFAULT_LEFT_ARM_ROTATION)
+        builder.define(TRACKER_RIGHT_ARM_ROTATION, DEFAULT_RIGHT_ARM_ROTATION)
+        builder.define(TRACKER_LEFT_LEG_ROTATION, DEFAULT_LEFT_LEG_ROTATION)
+        builder.define(TRACKER_RIGHT_LEG_ROTATION, DEFAULT_RIGHT_LEG_ROTATION)
     }
 
-    override fun writeCustomDataToNbt(nbt: NbtCompound) {
-        super.writeCustomDataToNbt(nbt)
-        val armorItemList = NbtList()
+    override fun addAdditionalSaveData(nbt: CompoundTag) {
+        super.addAdditionalSaveData(nbt)
+        val armorItemList = ListTag()
         val armorItems: Iterator<*> = armorItems.iterator()
         while (armorItems.hasNext()) {
             val armorItemStack = armorItems.next() as ItemStack
-            armorItemList.add(armorItemStack.getEncoded(this.registryManager))
+            armorItemList.add(armorItemStack.saveOptional(this.registryAccess()))
         }
-        val heldItemList = NbtList()
+        val heldItemList = ListTag()
         val heldItems: Iterator<*> = heldItems.iterator()
         while (heldItems.hasNext()) {
             val heldItemStack = heldItems.next() as ItemStack
-            heldItemList.add(heldItemStack.getEncoded(this.registryManager))
+            heldItemList.add(heldItemStack.saveOptional(this.registryAccess()))
         }
-        val decorationItemList = NbtList()
+        val decorationItemList = ListTag()
         val decorationItems: Iterator<*> = decorationItems.iterator()
         while (decorationItems.hasNext()) {
             val decorationItemStack = decorationItems.next() as ItemStack
-            heldItemList.add(decorationItemStack.getEncoded(this.registryManager))
+            heldItemList.add(decorationItemStack.saveOptional(this.registryAccess()))
         }
 
 
@@ -121,18 +121,18 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         nbt.put("Pose", this.poseToNbt())
     }
 
-    override fun readCustomDataFromNbt(nbt: NbtCompound) {
-        super.readCustomDataFromNbt(nbt)
-        var nbtList: NbtList
+    override fun readAdditionalSaveData(nbt: CompoundTag) {
+        super.readAdditionalSaveData(nbt)
+        var nbtList: ListTag
         var iterator: Int
-        var nbtCompound: NbtCompound?
+        var nbtCompound: CompoundTag?
         if (nbt.contains("ArmorItems", 9)) {
             nbtList = nbt.getList("ArmorItems", 10)
 
             iterator = 0
             while (iterator < armorItems.size) {
                 nbtCompound = nbtList.getCompound(iterator)
-                armorItems[iterator] = ItemStack.fromNbt(this.registryManager, nbtCompound)
+                armorItems[iterator] = ItemStack.parseOptional(this.registryAccess(), nbtCompound)
                 ++iterator
             }
         }
@@ -143,7 +143,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             iterator = 0
             while (iterator < heldItems.size) {
                 nbtCompound = nbtList.getCompound(iterator)
-                heldItems[iterator] = ItemStack.fromNbt(this.registryManager, nbtCompound)
+                heldItems[iterator] = ItemStack.parseOptional(this.registryAccess(), nbtCompound)
                 ++iterator
             }
         }
@@ -154,7 +154,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             iterator = 0
             while (iterator < decorationItems.size) {
                 nbtCompound = nbtList.getCompound(iterator)
-                decorationItems[iterator] = ItemStack.fromNbt(this.registryManager, nbtCompound)
+                decorationItems[iterator] = ItemStack.parseOptional(this.registryAccess(), nbtCompound)
                 ++iterator
             }
         }
@@ -162,99 +162,99 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         this.isInvisible = nbt.getBoolean("Invisible")
         this.isSmall = nbt.getBoolean("Small")
         this.hasLegs = nbt.getBoolean("Legs")
-        this.noClip = !this.canClip()
+        this.noPhysics = !this.canClip()
         val nbtCompound2 = nbt.getCompound("Pose")
         this.readPoseNbt(nbtCompound2)
     }
 
-    private fun readPoseNbt(nbt: NbtCompound) {
+    private fun readPoseNbt(nbt: CompoundTag) {
         val postPose = nbt.getList("Post", 5)
-        this.setPostRotation(if (postPose.isEmpty()) DEFAULT_POST_ROTATION else EulerAngle(postPose))
+        this.setPostRotation(if (postPose.isEmpty()) DEFAULT_POST_ROTATION else Rotations(postPose))
         val headPose = nbt.getList("Head", 5)
-        this.setHeadRotation(if (headPose.isEmpty()) DEFAULT_HEAD_ROTATION else EulerAngle(headPose))
+        this.setHeadRotation(if (headPose.isEmpty()) DEFAULT_HEAD_ROTATION else Rotations(headPose))
         val bodyPose = nbt.getList("Body", 5)
-        this.setBodyRotation(if (bodyPose.isEmpty()) DEFAULT_BODY_ROTATION else EulerAngle(bodyPose))
+        this.setBodyRotation(if (bodyPose.isEmpty()) DEFAULT_BODY_ROTATION else Rotations(bodyPose))
         val leftArmPose = nbt.getList("LeftArm", 5)
-        this.setLeftArmRotation(if (leftArmPose.isEmpty()) DEFAULT_LEFT_ARM_ROTATION else EulerAngle(leftArmPose))
+        this.setLeftArmRotation(if (leftArmPose.isEmpty()) DEFAULT_LEFT_ARM_ROTATION else Rotations(leftArmPose))
         val rightArmPose = nbt.getList("RightArm", 5)
-        this.setRightArmRotation(if (rightArmPose.isEmpty()) DEFAULT_RIGHT_ARM_ROTATION else EulerAngle(rightArmPose))
+        this.setRightArmRotation(if (rightArmPose.isEmpty()) DEFAULT_RIGHT_ARM_ROTATION else Rotations(rightArmPose))
         val leftLegPose = nbt.getList("LeftLeg", 5)
-        this.setLeftLegRotation(if (leftLegPose.isEmpty()) DEFAULT_LEFT_LEG_ROTATION else EulerAngle(leftLegPose))
+        this.setLeftLegRotation(if (leftLegPose.isEmpty()) DEFAULT_LEFT_LEG_ROTATION else Rotations(leftLegPose))
         val rightLegPose = nbt.getList("RightLeg", 5)
-        this.setRightLegRotation(if (rightLegPose.isEmpty()) DEFAULT_RIGHT_LEG_ROTATION else EulerAngle(rightLegPose))
+        this.setRightLegRotation(if (rightLegPose.isEmpty()) DEFAULT_RIGHT_LEG_ROTATION else Rotations(rightLegPose))
     }
 
-    private fun poseToNbt(): NbtCompound {
-        val nbtCompound = NbtCompound()
+    private fun poseToNbt(): CompoundTag {
+        val nbtCompound = CompoundTag()
         if (DEFAULT_POST_ROTATION != postRotation) {
-            nbtCompound.put("Post", postRotation.toNbt())
+            nbtCompound.put("Post", postRotation.save())
         }
         if (DEFAULT_HEAD_ROTATION != headRotation) {
-            nbtCompound.put("Head", headRotation.toNbt())
+            nbtCompound.put("Head", headRotation.save())
         }
         if (DEFAULT_BODY_ROTATION != bodyRotation) {
-            nbtCompound.put("Body", bodyRotation.toNbt())
+            nbtCompound.put("Body", bodyRotation.save())
         }
         if (DEFAULT_LEFT_ARM_ROTATION != leftArmRotation) {
-            nbtCompound.put("LeftArm", leftArmRotation.toNbt())
+            nbtCompound.put("LeftArm", leftArmRotation.save())
         }
         if (DEFAULT_RIGHT_ARM_ROTATION != rightArmRotation) {
-            nbtCompound.put("RightArm", rightArmRotation.toNbt())
+            nbtCompound.put("RightArm", rightArmRotation.save())
         }
         if (DEFAULT_LEFT_LEG_ROTATION != leftLegRotation) {
-            nbtCompound.put("LeftLeg", leftLegRotation.toNbt())
+            nbtCompound.put("LeftLeg", leftLegRotation.save())
         }
         if (DEFAULT_RIGHT_LEG_ROTATION != rightLegRotation) {
-            nbtCompound.put("RightLeg", rightLegRotation.toNbt())
+            nbtCompound.put("RightLeg", rightLegRotation.save())
         }
         return nbtCompound
     }
 
     override fun isPushable(): Boolean = false
-    override fun pushAway(entity: Entity) = Unit
-    override fun tickCramming() {
-        val otherEntity = world.getOtherEntities(this, this.bounds, RIDEABLE_MINECART_PREDICATE)
+    override fun doPush(entity: Entity) = Unit
+    override fun pushEntities() {
+        val otherEntity = level().getEntities(this, this.boundingBox, RIDEABLE_MINECART_PREDICATE)
         val otherEntities: Iterator<*> = otherEntity.iterator()
 
         while (otherEntities.hasNext()) {
             val entity = otherEntities.next() as Entity
-            if (this.squaredDistanceTo(entity) <= 0.2) {
-                entity.pushAwayFrom(this)
+            if (this.distanceToSqr(entity) <= 0.2) {
+                entity.push(this)
             }
         }
     }
 
-    override fun getArmorItems(): Iterable<ItemStack> = this.armorItems
-    override fun getHandItems(): Iterable<ItemStack> = this.heldItems
+    override fun getArmorSlots(): Iterable<ItemStack> = this.armorItems
+    override fun getHandSlots(): Iterable<ItemStack> = this.heldItems
     fun getDecorationItems(): Iterable<ItemStack> = this.decorationItems
     override fun canUseSlot(slot: EquipmentSlot): Boolean = slot != EquipmentSlot.BODY
-    override fun interactAt(player: PlayerEntity, hitPos: Vec3d, hand: Hand): ActionResult {
+    override fun interactAt(player: Player, hitPos: Vec3, hand: InteractionHand): InteractionResult {
         super.interactAt(player, hitPos, hand)
-        val playerHandStack = player.getStackInHand(hand)
+        val playerHandStack = player.getItemInHand(hand)
         if (player.isSpectator) {
-            return ActionResult.SUCCESS
-        } else if (player.world.isClient) {
-            return ActionResult.CONSUME
+            return InteractionResult.SUCCESS
+        } else if (player.level().isClientSide) {
+            return InteractionResult.CONSUME
         } else {
             if (!playerHandStack.isEmpty) {
                 //the below is done for ordering
-                val perferEquipmentSlot = this.getPreferredEquipmentSlot(playerHandStack)
+                val perferEquipmentSlot = this.getEquipmentSlotForItem(playerHandStack)
                 if (perferEquipmentSlot.type == HUMANOID_ARMOR &&
                     equip(player, perferEquipmentSlot, playerHandStack)
                 ) {
-                    return ActionResult.SUCCESS
+                    return InteractionResult.SUCCESS
                 } else if (
                     equip(player, EquipmentSlot.MAINHAND, playerHandStack) ||
                     equip(player, EquipmentSlot.OFFHAND, playerHandStack)
                 ) {
-                    return ActionResult.SUCCESS
+                    return InteractionResult.SUCCESS
                 } else if (
                     equipDecor(player, 0, playerHandStack, DnDItemTags.SCARECROW_WOOD_ITEMS) ||
                     equipDecor(player, 1, playerHandStack, DnDItemTags.SCARECROW_BALE_ITEMS) ||
                     equipDecor(player, 2, playerHandStack, DnDItemTags.SCARECROW_HEAD_ITEMS) ||
                     equipDecor(player, 3, playerHandStack, DnDItemTags.SCARECROW_CLOTHES_ITEMS)
                 ) {
-                    return ActionResult.SUCCESS
+                    return InteractionResult.SUCCESS
                 }
             } else {
                 if (
@@ -269,51 +269,51 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
                     unequipDecor(player, 2) ||
                     unequipDecor(player, 3)
                 ) {
-                    return ActionResult.SUCCESS
+                    return InteractionResult.SUCCESS
                 }
             }
         }
         return super.interactAt(player, hitPos, hand)
     }
 
-    fun equip(player: PlayerEntity, slot: EquipmentSlot, playerHandStack: ItemStack): Boolean {
-        if (getEquippedStack(slot).isEmpty && !isSlotDisabled(slot)) {
-            this.equipStack(slot, playerHandStack.copyWithCount(1))
+    fun equip(player: Player, slot: EquipmentSlot, playerHandStack: ItemStack): Boolean {
+        if (getItemBySlot(slot).isEmpty && !isSlotDisabled(slot)) {
+            this.setItemSlot(slot, playerHandStack.copyWithCount(1))
             playerHandStack.consume(1, player)
-            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 0f)
+            this.playSound(SoundEvents.ITEM_PICKUP, 1f, 0f)
             return true
         }
         return false
     }
 
-    fun unequip(player: PlayerEntity, equipmentSlot: EquipmentSlot): Boolean {
-        val equippedStack = getEquippedStack(equipmentSlot)
+    fun unequip(player: Player, equipmentSlot: EquipmentSlot): Boolean {
+        val equippedStack = getItemBySlot(equipmentSlot)
         if (!equippedStack.isEmpty) {
-            this.equipStack(equipmentSlot, ItemStack.EMPTY)
-            player.giveItemStack(equippedStack)
-            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 1f)
+            this.setItemSlot(equipmentSlot, ItemStack.EMPTY)
+            player.addItem(equippedStack)
+            this.playSound(SoundEvents.ITEM_PICKUP, 1f, 1f)
             return true
         }
         return false
     }
 
-    fun equipDecor(player: PlayerEntity, slot: Int, playerHandStack: ItemStack, tag: TagKey<Item>): Boolean {
+    fun equipDecor(player: Player, slot: Int, playerHandStack: ItemStack, tag: TagKey<Item>): Boolean {
         val equippedStack = decorationItems[slot]
-        if (equippedStack.isEmpty && playerHandStack.isIn(tag)) {
+        if (equippedStack.isEmpty && playerHandStack.`is`(tag)) {
             decorationItems.set(slot, playerHandStack.copyWithCount(1))
             playerHandStack.consume(1, player)
-            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 0f)
+            this.playSound(SoundEvents.ITEM_PICKUP, 1f, 0f)
             return true
         }
         return false
     }
 
-    fun unequipDecor(player: PlayerEntity, equipmentSlot: Int): Boolean {
+    fun unequipDecor(player: Player, equipmentSlot: Int): Boolean {
         val equippedStack = decorationItems[equipmentSlot]
         if (!equippedStack.isEmpty) {
             decorationItems.set(equipmentSlot, ItemStack.EMPTY)
-            player.giveItemStack(equippedStack)
-            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1f, 1f)
+            player.addItem(equippedStack)
+            this.playSound(SoundEvents.ITEM_PICKUP, 1f, 1f)
             return true
         }
         return false
@@ -322,76 +322,76 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
     fun isSlotDisabled(slot: EquipmentSlot): Boolean =
         (!this.hasLegs && (slot == EquipmentSlot.FEET || slot == EquipmentSlot.LEGS))
 
-    override fun equipStack(slot: EquipmentSlot, stack: ItemStack) {
-        this.processEquippedStack(stack)
+    override fun setItemSlot(slot: EquipmentSlot, stack: ItemStack) {
+        this.verifyEquippedItem(stack)
         when (slot.type) {
-            HAND -> this.onEquipItem(slot, heldItems.set(slot.entitySlotId, stack), stack)
-            HUMANOID_ARMOR -> this.onEquipItem(slot, armorItems.set(slot.entitySlotId, stack), stack)
+            HAND -> this.onEquipItem(slot, heldItems.set(slot.index, stack), stack)
+            HUMANOID_ARMOR -> this.onEquipItem(slot, armorItems.set(slot.index, stack), stack)
             else -> {}
         }
     }
 
-    override fun canEquip(stack: ItemStack): Boolean {
-        val equipmentSlot = this.getPreferredEquipmentSlot(stack)
-        return getEquippedStack(equipmentSlot).isEmpty
+    override fun canTakeItem(stack: ItemStack): Boolean {
+        val equipmentSlot = this.getEquipmentSlotForItem(stack)
+        return getItemBySlot(equipmentSlot).isEmpty
     }
 
-    override fun getEquippedStack(slot: EquipmentSlot): ItemStack {
+    override fun getItemBySlot(slot: EquipmentSlot): ItemStack {
         return when (slot.type) {
-            HAND -> heldItems[slot.entitySlotId]
-            HUMANOID_ARMOR -> armorItems[slot.entitySlotId]
+            HAND -> heldItems[slot.index]
+            HUMANOID_ARMOR -> armorItems[slot.index]
             else -> ItemStack.EMPTY
         }
     }
 
-    override fun damage(source: DamageSource, amount: Float): Boolean {
+    override fun hurt(source: DamageSource, amount: Float): Boolean {
         if (this.isRemoved) {
             return false
         } else {
-            val serverWorld = this.world
-            if (serverWorld is ServerWorld) {
-                if (source.isTypeIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            val serverWorld = this.level()
+            if (serverWorld is ServerLevel) {
+                if (source.`is`(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
                     this.kill()
                     return false
                 } else if (!this.isInvulnerableTo(source)) {
-                    if (source.isTypeIn(DamageTypeTags.IS_EXPLOSION)) {
+                    if (source.`is`(DamageTypeTags.IS_EXPLOSION)) {
                         this.onBreak(serverWorld, source)
                         this.kill()
                         return false
-                    } else if (source.isTypeIn(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
+                    } else if (source.`is`(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
                         if (this.isOnFire) {
                             this.updateHealth(serverWorld, source, 0.15f)
                         } else {
-                            this.setOnFireForSeconds(5f)
+                            this.igniteForSeconds(5f)
                         }
 
                         return false
-                    } else if (source.isTypeIn(DamageTypeTags.BURNS_ARMOR_STANDS) && this.health > 0.5f) {
+                    } else if (source.`is`(DamageTypeTags.BURNS_ARMOR_STANDS) && this.health > 0.5f) {
                         this.updateHealth(serverWorld, source, 4.0f)
                         return false
                     } else {
-                        val canBreak = source.isTypeIn(DamageTypeTags.CAN_BREAK_ARMOR_STAND)
-                        val willKill = source.isTypeIn(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS)
+                        val canBreak = source.`is`(DamageTypeTags.CAN_BREAK_ARMOR_STAND)
+                        val willKill = source.`is`(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS)
                         if (!canBreak && !willKill) {
                             return false
                         } else {
-                            val attacker = source.attacker
-                            if (attacker is PlayerEntity) {
-                                if (!attacker.abilities.allowModifyWorld) {
+                            val attacker = source.entity
+                            if (attacker is Player) {
+                                if (!attacker.abilities.mayBuild) {
                                     return false
                                 }
                             }
 
-                            if (source.isSourceCreativePlayer) {
+                            if (source.isCreativePlayer) {
                                 this.playBreakSound()
                                 this.spawnBreakParticles()
                                 this.kill()
                                 return true
                             } else {
-                                val time = serverWorld.time
+                                val time = serverWorld.gameTime
                                 if (time - this.lastHitTime > 5L && !willKill) {
-                                    serverWorld.sendEntityStatus(this, 32.toByte())
-                                    this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.attacker)
+                                    serverWorld.broadcastEntityEvent(this, 32.toByte())
+                                    this.gameEvent(GameEvent.ENTITY_DAMAGE, source.entity)
                                     this.lastHitTime = time
                                 } else {
                                     this.breakAndDropItem(serverWorld, source)
@@ -411,8 +411,8 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         }
     }
 
-    override fun shouldRender(distance: Double): Boolean {
-        var d = this.bounds.averageSideLength * 4.0
+    override fun shouldRenderAtSqrDistance(distance: Double): Boolean {
+        var d = this.boundingBox.size * 4.0
         if (java.lang.Double.isNaN(d) || d == 0.0) {
             d = 4.0
         }
@@ -422,20 +422,20 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
     }
 
     private fun spawnBreakParticles() {
-        if (world is ServerWorld) {
-            (world as ServerWorld).spawnParticles(
-                BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.OAK_PLANKS.defaultState),
+        if (level() is ServerLevel) {
+            (level() as ServerLevel).sendParticles(
+                BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_PLANKS.defaultBlockState()),
                 this.x,
-                this.getBodyY(0.6666666666666666),
+                this.getY(0.6666666666666666),
                 this.z, 10,
-                (this.width / 4.0f).toDouble(),
-                (this.height / 4.0f).toDouble(),
-                (this.width / 4.0f).toDouble(), 0.05
+                (this.bbWidth / 4.0f).toDouble(),
+                (this.bbHeight / 4.0f).toDouble(),
+                (this.bbWidth / 4.0f).toDouble(), 0.05
             )
         }
     }
 
-    private fun updateHealth(world: ServerWorld, damageSource: DamageSource, amount: Float) {
+    private fun updateHealth(world: ServerLevel, damageSource: DamageSource, amount: Float) {
         var f = this.health
         f -= amount
         if (f <= 0.5f) {
@@ -443,26 +443,26 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
             this.kill()
         } else {
             this.health = f
-            this.emitGameEvent(GameEvent.ENTITY_DAMAGE, damageSource.attacker)
+            this.gameEvent(GameEvent.ENTITY_DAMAGE, damageSource.entity)
         }
     }
 
-    private fun breakAndDropItem(world: ServerWorld, damageSource: DamageSource) {
+    private fun breakAndDropItem(world: ServerLevel, damageSource: DamageSource) {
         val itemStack = ItemStack(DnDItems.SCARECROW_ITEM)
-        itemStack.set(DataComponentTypes.CUSTOM_NAME, this.customName)
-        Block.dropStack(this.world, this.blockPos, itemStack)
+        itemStack.set(DataComponents.CUSTOM_NAME, this.customName)
+        Block.popResource(this.level(), this.blockPosition(), itemStack)
         this.onBreak(world, damageSource)
     }
 
-    private fun onBreak(world: ServerWorld, damageSource: DamageSource) {
+    private fun onBreak(world: ServerLevel, damageSource: DamageSource) {
         this.playBreakSound()
-        this.drop(world, damageSource)
+        this.dropAllDeathLoot(world, damageSource)
         var itemStack: ItemStack
         var iterator = 0
         while (iterator < heldItems.size) {
             itemStack = heldItems[iterator]
             if (!itemStack.isEmpty) {
-                Block.dropStack(this.world, blockPos.up(), itemStack)
+                Block.popResource(this.level(), blockPosition().above(), itemStack)
                 heldItems[iterator] = ItemStack.EMPTY
             }
             ++iterator
@@ -472,7 +472,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         while (iterator < armorItems.size) {
             itemStack = armorItems[iterator]
             if (!itemStack.isEmpty) {
-                Block.dropStack(this.world, blockPos.up(), itemStack)
+                Block.popResource(this.level(), blockPosition().above(), itemStack)
                 armorItems[iterator] = ItemStack.EMPTY
             }
             ++iterator
@@ -482,67 +482,67 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
         while (iterator < decorationItems.size) {
             itemStack = decorationItems[iterator]
             if (!itemStack.isEmpty) {
-                Block.dropStack(this.world, blockPos.up(), itemStack)
+                Block.popResource(this.level(), blockPosition().above(), itemStack)
                 decorationItems[iterator] = ItemStack.EMPTY
             }
             ++iterator
         }
     }
 
-    private fun playBreakSound() = world.playSound(
-        null, this.x, this.y, this.z, SoundEvents.ENTITY_ARMOR_STAND_BREAK, this.soundCategory, 1.0f, 1.0f
+    private fun playBreakSound() = level().playSound(
+        null, this.x, this.y, this.z, SoundEvents.ARMOR_STAND_BREAK, this.soundSource, 1.0f, 1.0f
     )
 
 
-    override fun turnHead(bodyRotation: Float, headRotation: Float): Float {
-        this.prevBodyYaw = this.prevYaw
-        this.bodyYaw = this.yaw
+    override fun tickHeadTurn(bodyRotation: Float, headRotation: Float): Float {
+        this.yBodyRotO = this.yRotO
+        this.yBodyRot = this.yRot
         return 0f
     }
 
-    override fun travel(movementInput: Vec3d) = if (this.canClip()) super.travel(movementInput) else Unit
-    override fun setBodyYaw(bodyYaw: Float) {
-        this.prevYaw = bodyYaw
-        this.prevBodyYaw = this.prevYaw
-        this.headYaw = bodyYaw
-        this.prevHeadYaw = this.headYaw
+    override fun travel(movementInput: Vec3) = if (this.canClip()) super.travel(movementInput) else Unit
+    override fun setYBodyRot(bodyYaw: Float) {
+        this.yRotO = bodyYaw
+        this.yBodyRotO = this.yRotO
+        this.yHeadRot = bodyYaw
+        this.yHeadRotO = this.yHeadRot
     }
 
-    override fun setHeadYaw(headYaw: Float) {
-        this.prevYaw = headYaw
-        this.prevBodyYaw = this.prevYaw
-        this.headYaw = headYaw
-        this.prevHeadYaw = this.headYaw
+    override fun setYHeadRot(headYaw: Float) {
+        this.yRotO = headYaw
+        this.yBodyRotO = this.yRotO
+        this.yHeadRot = headYaw
+        this.yHeadRotO = this.yHeadRot
     }
 
     override fun tick() {
         super.tick()
-        val headAngle = dataTracker.get(TRACKER_HEAD_ROTATION) as EulerAngle
+        val headAngle = entityData.get(TRACKER_HEAD_ROTATION) as Rotations
         if (headRotation != headAngle) {
             this.setHeadRotation(headAngle)
         }
 
-        val bodyAngle = dataTracker.get(TRACKER_BODY_ROTATION) as EulerAngle
+        val bodyAngle = entityData.get(TRACKER_BODY_ROTATION) as Rotations
         if (bodyRotation != bodyAngle) {
             this.setBodyRotation(bodyAngle)
         }
 
-        val leftArmAngle = dataTracker.get(TRACKER_LEFT_ARM_ROTATION) as EulerAngle
+        val leftArmAngle = entityData.get(TRACKER_LEFT_ARM_ROTATION) as Rotations
         if (leftArmRotation != leftArmAngle) {
             this.setLeftArmRotation(leftArmAngle)
         }
 
-        val rightArmAngle = dataTracker.get(TRACKER_RIGHT_ARM_ROTATION) as EulerAngle
+        val rightArmAngle = entityData.get(TRACKER_RIGHT_ARM_ROTATION) as Rotations
         if (rightArmRotation != rightArmAngle) {
             this.setRightArmRotation(rightArmAngle)
         }
 
-        val leftLegAngle = dataTracker.get(TRACKER_LEFT_LEG_ROTATION) as EulerAngle
+        val leftLegAngle = entityData.get(TRACKER_LEFT_LEG_ROTATION) as Rotations
         if (leftLegRotation != leftLegAngle) {
             this.setLeftLegRotation(leftLegAngle)
         }
 
-        val rightLegAngle = dataTracker.get(TRACKER_RIGHT_LEG_ROTATION) as EulerAngle
+        val rightLegAngle = entityData.get(TRACKER_RIGHT_LEG_ROTATION) as Rotations
         if (rightLegRotation != rightLegAngle) {
             this.setRightLegRotation(rightLegAngle)
         }
@@ -551,118 +551,118 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: World)
     override fun isBaby(): Boolean = this.isSmall
     override fun kill() {
         this.remove(RemovalReason.KILLED)
-        this.emitGameEvent(GameEvent.ENTITY_DIE)
+        this.gameEvent(GameEvent.ENTITY_DIE)
     }
 
-    override fun isImmuneToExplosion(explosion: Explosion): Boolean = this.isInvisible
+    override fun ignoreExplosion(explosion: Explosion): Boolean = this.isInvisible
     var isSmall: Boolean
-        get() = dataTracker[TRACKER_IS_SMALL]
+        get() = entityData[TRACKER_IS_SMALL]
         set(isBaby) {
-            dataTracker[TRACKER_IS_SMALL] = isBaby
+            entityData[TRACKER_IS_SMALL] = isBaby
         }
 
     var hasLegs: Boolean
-        get() = dataTracker[TRACKER_HAS_LEGS]
+        get() = entityData[TRACKER_HAS_LEGS]
         set(hasLegs) {
-            dataTracker[TRACKER_HAS_LEGS] = hasLegs
+            entityData[TRACKER_HAS_LEGS] = hasLegs
         }
 
-    fun setPostRotation(angle: EulerAngle) {
+    fun setPostRotation(angle: Rotations) {
         this.postRotation = angle
-        dataTracker.set(TRACKER_POST_ROTATION, angle)
+        entityData.set(TRACKER_POST_ROTATION, angle)
     }
 
-    fun setHeadRotation(angle: EulerAngle) {
+    fun setHeadRotation(angle: Rotations) {
         this.headRotation = angle
-        dataTracker.set(TRACKER_HEAD_ROTATION, angle)
+        entityData.set(TRACKER_HEAD_ROTATION, angle)
     }
 
-    fun setBodyRotation(angle: EulerAngle) {
+    fun setBodyRotation(angle: Rotations) {
         this.bodyRotation = angle
-        dataTracker.set(TRACKER_BODY_ROTATION, angle)
+        entityData.set(TRACKER_BODY_ROTATION, angle)
     }
 
-    fun setLeftArmRotation(angle: EulerAngle) {
+    fun setLeftArmRotation(angle: Rotations) {
         this.leftArmRotation = angle
-        dataTracker.set(TRACKER_LEFT_ARM_ROTATION, angle)
+        entityData.set(TRACKER_LEFT_ARM_ROTATION, angle)
     }
 
-    fun setRightArmRotation(angle: EulerAngle) {
+    fun setRightArmRotation(angle: Rotations) {
         this.rightArmRotation = angle
-        dataTracker.set(TRACKER_RIGHT_ARM_ROTATION, angle)
+        entityData.set(TRACKER_RIGHT_ARM_ROTATION, angle)
     }
 
-    fun setLeftLegRotation(angle: EulerAngle) {
+    fun setLeftLegRotation(angle: Rotations) {
         this.leftLegRotation = angle
-        dataTracker.set(TRACKER_LEFT_LEG_ROTATION, angle)
+        entityData.set(TRACKER_LEFT_LEG_ROTATION, angle)
     }
 
-    fun setRightLegRotation(angle: EulerAngle) {
+    fun setRightLegRotation(angle: Rotations) {
         this.rightLegRotation = angle
-        dataTracker.set(TRACKER_RIGHT_LEG_ROTATION, angle)
+        entityData.set(TRACKER_RIGHT_LEG_ROTATION, angle)
     }
 
-    fun getPostRotation(): EulerAngle = this.postRotation
-    fun getHeadRotation(): EulerAngle = this.headRotation
-    fun getBodyRotation(): EulerAngle = this.bodyRotation
-    fun getLeftArmRotation(): EulerAngle = this.leftArmRotation
-    fun getRightArmRotation(): EulerAngle = this.rightArmRotation
-    fun getLeftLegRotation(): EulerAngle = this.leftLegRotation
-    fun getRightLegRotation(): EulerAngle = this.rightLegRotation
-    override fun handleAttack(attacker: Entity): Boolean =
-        attacker is PlayerEntity && !world.canPlayerModifyAt(attacker, this.blockPos)
+    fun getPostRotation(): Rotations = this.postRotation
+    fun getHeadRotation(): Rotations = this.headRotation
+    fun getBodyRotation(): Rotations = this.bodyRotation
+    fun getLeftArmRotation(): Rotations = this.leftArmRotation
+    fun getRightArmRotation(): Rotations = this.rightArmRotation
+    fun getLeftLegRotation(): Rotations = this.leftLegRotation
+    fun getRightLegRotation(): Rotations = this.rightLegRotation
+    override fun skipAttackInteraction(attacker: Entity): Boolean =
+        attacker is Player && !level().mayInteract(attacker, this.blockPosition())
 
-    override fun getMainArm(): Arm = Arm.RIGHT
-    override fun getFallSounds(): FallSounds =
-        FallSounds(SoundEvents.ENTITY_ARMOR_STAND_FALL, SoundEvents.ENTITY_ARMOR_STAND_FALL)
+    override fun getMainArm(): HumanoidArm = HumanoidArm.RIGHT
+    override fun getFallSounds(): Fallsounds =
+        Fallsounds(SoundEvents.ARMOR_STAND_FALL, SoundEvents.ARMOR_STAND_FALL)
 
-    override fun getHurtSound(source: DamageSource): SoundEvent = SoundEvents.ENTITY_ARMOR_STAND_HIT
-    override fun getDeathSound(): SoundEvent = SoundEvents.ENTITY_ARMOR_STAND_BREAK
-    fun getWeirdSound(): SoundEvent = SoundEvents.ENTITY_GHAST_SCREAM
-    override fun onStruckByLightning(world: ServerWorld, lightning: LightningEntity) =
-        world.playSound(this.x, this.y, this.z, getWeirdSound(), this.soundCategory, 0.3f, 1.0f, false)
+    override fun getHurtSound(source: DamageSource): SoundEvent = SoundEvents.ARMOR_STAND_HIT
+    override fun getDeathSound(): SoundEvent = SoundEvents.ARMOR_STAND_BREAK
+    fun getWeirdSound(): SoundEvent = SoundEvents.GHAST_SCREAM
+    override fun thunderHit(world: ServerLevel, lightning: LightningBolt) =
+        world.playLocalSound(this.x, this.y, this.z, getWeirdSound(), this.soundSource, 0.3f, 1.0f, false)
 
-    override fun isAffectedBySplashPotions(): Boolean = false
-    override fun isMobOrPlayer(): Boolean = false
-    public override fun getDefaultDimensions(pose: EntityPose): EntityDimensions =
+    override fun isAffectedByPotions(): Boolean = false
+    override fun attackable(): Boolean = false
+    public override fun getDefaultDimensions(pose: Pose): EntityDimensions =
         if (this.isBaby) SMALL_DIMENSIONS else type.dimensions
 
-    override fun getPickBlockStack(): ItemStack = ItemStack(DnDItems.SCARECROW_ITEM)
+    override fun getPickResult(): ItemStack = ItemStack(DnDItems.SCARECROW_ITEM)
 
     companion object {
         const val WOBBLE_DURATION: Float = 5f
-        private val DEFAULT_HEAD_ROTATION = EulerAngle(0f, 0f, 0f)
-        private val DEFAULT_POST_ROTATION = EulerAngle(0f, 0f, 0f)
-        private val DEFAULT_BODY_ROTATION = EulerAngle(0f, 0f, 0f)
-        private val DEFAULT_LEFT_ARM_ROTATION = EulerAngle(0f, 0f, 0f)
-        private val DEFAULT_RIGHT_ARM_ROTATION = EulerAngle(0f, 0f, 0f)
-        private val DEFAULT_LEFT_LEG_ROTATION = EulerAngle(0f, 0f, 0f)
-        private val DEFAULT_RIGHT_LEG_ROTATION = EulerAngle(0f, 0f, 0f)
+        private val DEFAULT_HEAD_ROTATION = Rotations(0f, 0f, 0f)
+        private val DEFAULT_POST_ROTATION = Rotations(0f, 0f, 0f)
+        private val DEFAULT_BODY_ROTATION = Rotations(0f, 0f, 0f)
+        private val DEFAULT_LEFT_ARM_ROTATION = Rotations(0f, 0f, 0f)
+        private val DEFAULT_RIGHT_ARM_ROTATION = Rotations(0f, 0f, 0f)
+        private val DEFAULT_LEFT_LEG_ROTATION = Rotations(0f, 0f, 0f)
+        private val DEFAULT_RIGHT_LEG_ROTATION = Rotations(0f, 0f, 0f)
         private val SMALL_DIMENSIONS: EntityDimensions =
-            DnDEntities.SCARECROW.dimensions.scaled(0.5f).withEyeHeight(0.9875f)
-        val TRACKER_IS_SMALL: TrackedData<Boolean> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN)
-        val TRACKER_HAS_LEGS: TrackedData<Boolean> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.BOOLEAN)
-        val TRACKER_POST_ROTATION: TrackedData<EulerAngle> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
-        val TRACKER_HEAD_ROTATION: TrackedData<EulerAngle> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
-        val TRACKER_BODY_ROTATION: TrackedData<EulerAngle> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
-        val TRACKER_LEFT_ARM_ROTATION: TrackedData<EulerAngle> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
-        val TRACKER_RIGHT_ARM_ROTATION: TrackedData<EulerAngle> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
-        val TRACKER_LEFT_LEG_ROTATION: TrackedData<EulerAngle> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
-        val TRACKER_RIGHT_LEG_ROTATION: TrackedData<EulerAngle> =
-            DataTracker.registerData(ScarecrowEntity::class.java, TrackedDataHandlerRegistry.ROTATION)
+            DnDEntities.SCARECROW.dimensions.scale(0.5f).withEyeHeight(0.9875f)
+        val TRACKER_IS_SMALL: EntityDataAccessor<Boolean> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.BOOLEAN)
+        val TRACKER_HAS_LEGS: EntityDataAccessor<Boolean> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.BOOLEAN)
+        val TRACKER_POST_ROTATION: EntityDataAccessor<Rotations> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.ROTATIONS)
+        val TRACKER_HEAD_ROTATION: EntityDataAccessor<Rotations> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.ROTATIONS)
+        val TRACKER_BODY_ROTATION: EntityDataAccessor<Rotations> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.ROTATIONS)
+        val TRACKER_LEFT_ARM_ROTATION: EntityDataAccessor<Rotations> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.ROTATIONS)
+        val TRACKER_RIGHT_ARM_ROTATION: EntityDataAccessor<Rotations> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.ROTATIONS)
+        val TRACKER_LEFT_LEG_ROTATION: EntityDataAccessor<Rotations> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.ROTATIONS)
+        val TRACKER_RIGHT_LEG_ROTATION: EntityDataAccessor<Rotations> =
+            SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.ROTATIONS)
         private val RIDEABLE_MINECART_PREDICATE =
-            Predicate { entity: Entity? -> entity is AbstractMinecartEntity && entity.minecartType == AbstractMinecartEntity.Type.RIDEABLE }
+            Predicate { entity: Entity? -> entity is AbstractMinecart && entity.minecartType == AbstractMinecart.Type.RIDEABLE }
 
-        fun createAttributes(): DefaultAttributeContainer.Builder {
-            return createLivingAttributes().add(EntityAttributes.GENERIC_STEP_HEIGHT, 0.0)
+        fun createAttributes(): AttributeSupplier.Builder {
+            return createLivingAttributes().add(Attributes.STEP_HEIGHT, 0.0)
         }
     }
 }

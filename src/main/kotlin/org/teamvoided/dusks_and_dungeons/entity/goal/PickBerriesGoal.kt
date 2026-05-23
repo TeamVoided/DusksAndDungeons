@@ -1,77 +1,81 @@
 package org.teamvoided.dusks_and_dungeons.entity.goal
 
-import net.minecraft.block.*
-import net.minecraft.entity.EquipmentSlot
-import net.minecraft.entity.ai.goal.MoveToTargetPosGoal
-import net.minecraft.entity.mob.PathAwareEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.GameRules
-import net.minecraft.world.WorldView
-import net.minecraft.world.event.GameEvent
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal
+import net.minecraft.world.entity.PathfinderMob
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.GameRules
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.CaveVines
+import net.minecraft.world.level.block.SweetBerryBushBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.gameevent.GameEvent
 
-open class PickBerriesGoal(mob: PathAwareEntity, speed: Double, range: Int, maxYDifference: Int) :
-    MoveToTargetPosGoal(mob, speed, range, maxYDifference) {
+open class PickBerriesGoal(mob: PathfinderMob, speed: Double, range: Int, maxYDifference: Int) :
+    MoveToBlockGoal(mob, speed, range, maxYDifference) {
     protected var timer: Int = 0
 
-    override fun getDesiredSquaredDistanceToTarget(): Double = 2.0
+    override fun acceptedDistance(): Double = 2.0
 
-    override fun shouldResetPath(): Boolean = tryingTime % 100 == 0
+    override fun shouldRecalculatePath(): Boolean = tryTicks % 100 == 0
 
-    override fun isTargetPos(world: WorldView, pos: BlockPos?): Boolean {
+    override fun isValidTarget(world: LevelReader, pos: BlockPos?): Boolean {
         val blockState = world.getBlockState(pos)
-        return blockState.isOf(Blocks.SWEET_BERRY_BUSH) && blockState.get(SweetBerryBushBlock.AGE) >= 2 || CaveVines.hasBerries(blockState)
+        return blockState.`is`(Blocks.SWEET_BERRY_BUSH) && blockState.getValue(SweetBerryBushBlock.AGE) >= 2 || CaveVines.hasGlowBerries(blockState)
     }
 
     override fun tick() {
-        if (hasReached()) {
+        if (isReachedTarget) {
             if (timer >= 40) {
                 pickFromTargetPos()
             } else {
                 ++timer
             }
-        } else if (!hasReached() && mob.random.nextFloat() < 0.05f) {
-            mob.playSound(SoundEvents.ENTITY_FOX_SNIFF, 1.0f, 1.0f)
+        } else if (!isReachedTarget && mob.random.nextFloat() < 0.05f) {
+            mob.playSound(SoundEvents.FOX_SNIFF, 1.0f, 1.0f)
         }
 
         super.tick()
     }
 
     protected fun pickFromTargetPos() {
-        if (mob.world.gameRules.getBooleanValue(GameRules.DO_MOB_GRIEFING)) {
-            val blockState: BlockState = mob.world.getBlockState(targetPos)
-            if (blockState.isOf(Blocks.SWEET_BERRY_BUSH)) {
+        if (mob.level().gameRules.getBoolean(GameRules.RULE_MOBGRIEFING)) {
+            val blockState: BlockState = mob.level().getBlockState(blockPos)
+            if (blockState.`is`(Blocks.SWEET_BERRY_BUSH)) {
                 pickSweetBerries(blockState)
-            } else if (CaveVines.hasBerries(blockState)) {
+            } else if (CaveVines.hasGlowBerries(blockState)) {
                 pickGlowBerries(blockState)
             }
         }
     }
 
-    private fun pickGlowBerries(state: BlockState) = CaveVines.pickBerries(mob, state, mob.world, targetPos)
+    private fun pickGlowBerries(state: BlockState) = CaveVines.use(mob, state, mob.level(), blockPos)
 
     private fun pickSweetBerries(state: BlockState) {
-        val i = state.get(SweetBerryBushBlock.AGE) as Int
-        state.with(SweetBerryBushBlock.AGE, 1)
-        var j: Int = 1 + mob.world.random.nextInt(2) + (if (i == 3) 1 else 0)
-        val itemStack: ItemStack = mob.getEquippedStack(EquipmentSlot.MAINHAND)
+        val i = state.getValue(SweetBerryBushBlock.AGE) as Int
+        state.setValue(SweetBerryBushBlock.AGE, 1)
+        var j: Int = 1 + mob.level().random.nextInt(2) + (if (i == 3) 1 else 0)
+        val itemStack: ItemStack = mob.getItemBySlot(EquipmentSlot.MAINHAND)
         if (itemStack.isEmpty) {
-            mob.equipStack(EquipmentSlot.MAINHAND, ItemStack(Items.SWEET_BERRIES))
+            mob.setItemSlot(EquipmentSlot.MAINHAND, ItemStack(Items.SWEET_BERRIES))
             --j
         }
 
         if (j > 0) {
-            Block.dropStack(mob.world, targetPos, ItemStack(Items.SWEET_BERRIES, j))
+            Block.popResource(mob.level(), blockPos, ItemStack(Items.SWEET_BERRIES, j))
         }
 
-        mob.playSound(SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, 1.0f, 1.0f)
-        mob.world.setBlockState(targetPos, state.with(SweetBerryBushBlock.AGE, 1), 2)
-        mob.world.emitGameEvent(GameEvent.BLOCK_CHANGE, targetPos, GameEvent.Context.create(mob))
+        mob.playSound(SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 1.0f, 1.0f)
+        mob.level().setBlock(blockPos, state.setValue(SweetBerryBushBlock.AGE, 1), 2)
+        mob.level().gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(mob))
     }
 
-    override fun canStart(): Boolean = !mob.isSleeping && super.canStart()
+    override fun canUse(): Boolean = !mob.isSleeping && super.canUse()
 
     override fun start() {
         timer = 0

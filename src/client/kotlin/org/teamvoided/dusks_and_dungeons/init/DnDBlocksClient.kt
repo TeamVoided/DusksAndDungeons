@@ -2,14 +2,14 @@ package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
-import net.minecraft.block.Block
-import net.minecraft.client.color.block.BlockColorProvider
-import net.minecraft.client.color.world.BiomeColors
-import net.minecraft.client.color.world.FoliageColors
-import net.minecraft.client.color.world.GrassColors
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.BlockRenderView
+import net.minecraft.world.level.block.Block
+import net.minecraft.client.color.block.BlockColor
+import net.minecraft.client.renderer.BiomeColors
+import net.minecraft.world.level.FoliageColor
+import net.minecraft.world.level.GrassColor
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.BlockAndTintGetter
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.CUTOUT_BLOCKS
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
@@ -32,26 +32,26 @@ object DnDBlocksClient {
             *DnDBlockLists.flowerbedBlocks.toTypedArray()
         )
         registerTint({ _, world, pos, _ -> grassColor(world, pos) }, *GRASS_TINT_BLOCKS.toTypedArray())
-        registerTint(FoliageColors.getSpruceColor(), DnDBlocks.SPRUCE_LEAF_PILE)
-        registerTint(FoliageColors.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE)
+        registerTint(FoliageColor.getEvergreenColor(), DnDBlocks.SPRUCE_LEAF_PILE)
+        registerTint(FoliageColor.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE)
 
-        CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderLayer.getCutout()) }
-        TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderLayer.getTranslucent()) }
+        CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.cutout()) }
+        TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.translucent()) }
         ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS }
     }
 
-    fun registerTint(provider: BlockColorProvider, vararg blocks: Block) =
+    fun registerTint(provider: BlockColor, vararg blocks: Block) =
         ColorProviderRegistry.BLOCK.register(provider, *blocks)
 
     fun registerTint(tint: Int, vararg blocks: Block) = registerTint({ _, _, _, _ -> tint }, *blocks)
 
-    fun grassColor(world: BlockRenderView?, pos: BlockPos?): Int {
-        return if (world != null && pos != null) BiomeColors.getGrassColor(world, pos)
-        else GrassColors.getDefault()
+    fun grassColor(world: BlockAndTintGetter?, pos: BlockPos?): Int {
+        return if (world != null && pos != null) BiomeColors.getAverageGrassColor(world, pos)
+        else GrassColor.getDefaultColor()
     }
 
-    fun foliageColor(world: BlockRenderView?, pos: BlockPos?): Int {
-        return if (world != null && pos != null) BiomeColors.getFoliageColor(world, pos)
-        else FoliageColors.getColor(0.8, 0.4)
+    fun foliageColor(world: BlockAndTintGetter?, pos: BlockPos?): Int {
+        return if (world != null && pos != null) BiomeColors.getAverageFoliageColor(world, pos)
+        else FoliageColor.get(0.8, 0.4)
     }
 }

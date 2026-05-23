@@ -1,76 +1,78 @@
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.HorizontalFacingBlock
-import net.minecraft.block.ShapeContext
-import net.minecraft.entity.ai.pathing.NavigationType
-import net.minecraft.fluid.FluidState
-import net.minecraft.fluid.Fluids
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.Properties
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.world.BlockView
-import net.minecraft.world.WorldAccess
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.HorizontalDirectionalBlock
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.level.pathfinder.PathComputationType
+import net.minecraft.world.level.material.FluidState
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.LevelAccessor
 
-class SmallCarvedPumpkinBlock(settings: Settings) : HorizontalFacingBlock(settings) {
+class SmallCarvedPumpkinBlock(settings: Properties) : HorizontalDirectionalBlock(settings) {
     init {
-        this.defaultState = stateManager.defaultState
-            .with(Properties.WATERLOGGED, false)
-            .with(FACING, Direction.NORTH)
+        this.registerDefaultState(
+            stateDefinition.any()
+                .setValue(BlockStateProperties.WATERLOGGED, false)
+                .setValue(FACING, Direction.NORTH)
+        )
     }
 
-    public override fun getCodec(): MapCodec<SmallCarvedPumpkinBlock> {
+    public override fun codec(): MapCodec<SmallCarvedPumpkinBlock> {
         return CODEC
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        super.appendProperties(builder)
-        builder.add(Properties.WATERLOGGED)
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
+        builder.add(BlockStateProperties.WATERLOGGED)
         builder.add(FACING)
     }
 
-    override fun getStateForNeighborUpdate(
+    override fun updateShape(
         state: BlockState,
         direction: Direction,
         neighborState: BlockState,
-        world: WorldAccess,
+        world: LevelAccessor,
         pos: BlockPos,
         neighborPos: BlockPos
     ): BlockState {
-        if (state.get(Properties.WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        if (state.getValue(BlockStateProperties.WATERLOGGED)) {
+            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+        return super.updateShape(state, direction, neighborState, world, pos, neighborPos)
     }
 
     override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(Properties.WATERLOGGED)) Fluids.WATER.getStill(false)
+        return if (state.getValue(BlockStateProperties.WATERLOGGED)) Fluids.WATER.getSource(false)
         else super.getFluidState(state)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        val fluidState = ctx.world.getFluidState(ctx.blockPos)
-        return defaultState
-            .with(Properties.WATERLOGGED, fluidState.isOf(Fluids.WATER))
-            .with(FACING, ctx.playerFacing.opposite)
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
+        val fluidState = ctx.level.getFluidState(ctx.clickedPos)
+        return defaultBlockState()
+            .setValue(BlockStateProperties.WATERLOGGED, fluidState.`is`(Fluids.WATER))
+            .setValue(FACING, ctx.horizontalDirection.opposite)
     }
 
-    override fun getOutlineShape(
+    override fun getShape(
         state: BlockState,
-        world: BlockView,
+        world: BlockGetter,
         pos: BlockPos,
-        context: ShapeContext
+        context: CollisionContext
     ): VoxelShape = SHAPE
 
-    override fun canPathfindThrough(state: BlockState, navigationType: NavigationType): Boolean = false
+    override fun isPathfindable(state: BlockState, navigationType: PathComputationType): Boolean = false
 
     companion object {
-        val CODEC: MapCodec<SmallCarvedPumpkinBlock> = createCodec(::SmallCarvedPumpkinBlock)
-        private val SHAPE: VoxelShape = createCuboidShape(4.0, 0.0, 4.0, 12.0, 8.0, 12.0)
+        val CODEC: MapCodec<SmallCarvedPumpkinBlock> = simpleCodec(::SmallCarvedPumpkinBlock)
+        private val SHAPE: VoxelShape = box(4.0, 0.0, 4.0, 12.0, 8.0, 12.0)
     }
 }

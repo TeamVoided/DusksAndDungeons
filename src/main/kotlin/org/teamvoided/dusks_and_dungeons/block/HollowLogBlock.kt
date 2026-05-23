@@ -1,61 +1,67 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.*
-import net.minecraft.fluid.FluidState
-import net.minecraft.fluid.Fluids
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.BooleanProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.util.shape.VoxelShapes
-import net.minecraft.world.BlockView
-import net.minecraft.world.WorldAccess
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.SimpleWaterloggedBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.material.FluidState
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.rotateColumn
 
-open class HollowLogBlock(settings: Settings) : PillarBlock(settings), Waterloggable {
+open class HollowLogBlock(settings: Properties) : RotatedPillarBlock(settings), SimpleWaterloggedBlock {
     init {
-        this.defaultState = stateManager.defaultState
-            .with(AXIS, Direction.Axis.X)
-            .with(WATERLOGGED, false)
+        this.registerDefaultState(
+            stateDefinition.any()
+                .setValue(AXIS, Direction.Axis.X)
+                .setValue(WATERLOGGED, false)
+        )
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
-        val waterlogged = ctx.world.getFluidState(ctx.blockPos).fluid == Fluids.WATER
-        return super.getPlacementState(ctx)?.with(WATERLOGGED, waterlogged)
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
+        val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type == Fluids.WATER
+        return super.getStateForPlacement(ctx)?.setValue(WATERLOGGED, waterlogged)
     }
 
-    override fun getStateForNeighborUpdate(
+    override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
+        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
-        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
         return state
     }
 
     override fun getFluidState(state: BlockState): FluidState =
-        if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else super.getFluidState(state)
+        if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false) else super.getFluidState(state)
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AXIS, WATERLOGGED)
     }
 
-    override fun getOutlineShape(
-        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
-    ): VoxelShape = SHAPE.rotateColumn(state.get(AXIS))
+    override fun getShape(
+        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
+    ): VoxelShape = SHAPE.rotateColumn(state.getValue(AXIS))
 
-    override fun getRaycastShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape =
-        VoxelShapes.fullCube()
+    override fun getInteractionShape(state: BlockState, world: BlockGetter, pos: BlockPos): VoxelShape =
+        Shapes.block()
 
     companion object {
-        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
-        val SHAPE = VoxelShapes.union(
-            createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 16.0),
-            createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 16.0),
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 2.0),
-            createCuboidShape(0.0, 0.0, 14.0, 16.0, 16.0, 16.0),
+        val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
+        val SHAPE = Shapes.or(
+            box(0.0, 0.0, 0.0, 2.0, 16.0, 16.0),
+            box(14.0, 0.0, 0.0, 16.0, 16.0, 16.0),
+            box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0),
+            box(0.0, 0.0, 14.0, 16.0, 16.0, 16.0),
         )
     }
 }

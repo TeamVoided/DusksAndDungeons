@@ -2,28 +2,28 @@ package org.teamvoided.dusks_and_dungeons.world.gen.foliage
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.util.math.int_provider.IntProvider
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.TestableWorld
-import net.minecraft.world.gen.feature.TreeFeatureConfig
-import net.minecraft.world.gen.foliage.FoliagePlacer
-import net.minecraft.world.gen.foliage.FoliagePlacerType
+import net.minecraft.util.valueproviders.IntProvider
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.LevelSimulatedReader
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
 import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
 import kotlin.math.max
 
 class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) :
     FoliagePlacer(radius, offset) {
-    override fun getType(): FoliagePlacerType<*> {
+    override fun type(): FoliagePlacerType<*> {
         return DnDWorldgen.MANHATTAN_FOLIAGE_PLACER
     }
 
     override fun createFoliage(
-        world: TestableWorld,
-        placer: Placer,
-        random: RandomGenerator,
-        treeFeatureConfig: TreeFeatureConfig,
+        world: LevelSimulatedReader,
+        placer: FoliageSetter,
+        random: RandomSource,
+        treeFeatureConfig: TreeConfiguration,
         i: Int,
-        treeNode: TreeNode,
+        treeNode: FoliageAttachment,
         j: Int,
         k: Int,
         l: Int
@@ -31,34 +31,34 @@ class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) :
         var m = 0
 
         for (n in l downTo l - j) {
-            this.generateSquare(
+            this.placeLeavesRow(
                 world,
                 placer,
                 random,
                 treeFeatureConfig,
-                treeNode.center,
+                treeNode.pos(),
                 m,
                 n,
-                treeNode.isGiantTrunk
+                treeNode.doubleTrunk()
             )
             if (m >= 1 && n == l - j + 1) {
                 --m
-            } else if (m < k + treeNode.foliageRadius) {
+            } else if (m < k + treeNode.radiusOffset()) {
                 ++m
             }
         }
     }
 
-    override fun getRandomRadius(random: RandomGenerator, baseHeight: Int): Int {
-        return super.getRandomRadius(random, baseHeight) + random.nextInt(max((baseHeight + 1).toDouble(), 1.0).toInt())
+    override fun foliageRadius(random: RandomSource, baseHeight: Int): Int {
+        return super.foliageRadius(random, baseHeight) + random.nextInt(max((baseHeight + 1).toDouble(), 1.0).toInt())
     }
 
-    override fun getRandomHeight(random: RandomGenerator, trunkHeight: Int, config: TreeFeatureConfig): Int {
+    override fun foliageHeight(random: RandomSource, trunkHeight: Int, config: TreeConfiguration): Int {
         return 0
     }
 
-    override fun isInvalidForLeaves(
-        random: RandomGenerator,
+    override fun shouldSkipLocation(
+        random: RandomSource,
         dx: Int,
         y: Int,
         dz: Int,
@@ -70,6 +70,6 @@ class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) :
 
     companion object {
         val CODEC: MapCodec<ManhattanFoliagePlacer> =
-            RecordCodecBuilder.mapCodec { fillFoliagePlacerFields(it).apply(it, ::ManhattanFoliagePlacer) }
+            RecordCodecBuilder.mapCodec { foliagePlacerParts(it).apply(it, ::ManhattanFoliagePlacer) }
     }
 }

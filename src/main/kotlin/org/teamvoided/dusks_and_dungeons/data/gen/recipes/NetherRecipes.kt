@@ -1,12 +1,12 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.recipes
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.block.Blocks
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
-import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RecipeCategory
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.data.recipes.RecipeCategory
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -15,15 +15,15 @@ import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
 
 object NetherRecipes {
-    fun generateNetherRecipes(e: RecipeExporter) {
+    fun generateNetherRecipes(e: RecipeOutput) {
         generateMiscNetherRecipes(e)
         generateNetherBrickRecipes(e)
     }
 
-    private fun generateMiscNetherRecipes(e: RecipeExporter) {
+    private fun generateMiscNetherRecipes(e: RecipeOutput) {
     }
 
-    private fun generateNetherBrickRecipes(e: RecipeExporter) {
+    private fun generateNetherBrickRecipes(e: RecipeOutput) {
         e.createStackedCraft(DnDBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
 
         e.createStonecuttingSet(DnDBlocks.POLISHED_NETHER_BRICKS, Blocks.NETHER_BRICKS)
@@ -32,13 +32,13 @@ object NetherRecipes {
             DnDBlocks.NETHER_BRICK_PILLAR, null, null,
             Blocks.NETHER_BRICK_FENCE
         )
-        FabricRecipeProvider.offerCrackingRecipe(e, DnDBlocks.CRACKED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
+        FabricRecipeProvider.smeltingResultFromBase(e, DnDBlocks.CRACKED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
         e.createFence(DnDBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS, Items.NETHER_BRICK)
-        FabricRecipeProvider.createChiseledBlockRecipe(
+        FabricRecipeProvider.chiseledBuilder(
             RecipeCategory.BUILDING_BLOCKS,
             DnDBlocks.CHISELED_RED_NETHER_BRICKS,
-            Ingredient.ofItems(Blocks.RED_NETHER_BRICK_SLAB)
-        ).criterion(Blocks.RED_NETHER_BRICKS).offerTo(e)
+            Ingredient.of(Blocks.RED_NETHER_BRICK_SLAB)
+        ).criterion(Blocks.RED_NETHER_BRICKS).save(e)
         e.createStackedCraft(DnDBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
         e.createStonecuttedSet(
             listOf(Blocks.RED_NETHER_BRICKS),
@@ -98,40 +98,40 @@ object NetherRecipes {
         e.createStonecutting(DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DnDBlocks.MIXED_GRAY_NETHER_BRICKS)
         e.createStonecutting(DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR, DnDBlocks.MIXED_GRAY_NETHER_BRICKS)
 
-        ShapedRecipeJsonFactory.create(RecipeCategory.COMBAT, DnDItems.BLACKSTONE_SWORD)
-            .ingredient('#', Items.STICK)
-            .ingredient('X', Items.BLACKSTONE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, DnDItems.BLACKSTONE_SWORD)
+            .define('#', Items.STICK)
+            .define('X', Items.BLACKSTONE)
             .pattern("X")
             .pattern("X")
             .pattern("#")
-            .criterion(Items.BLACKSTONE).offerTo(e)
-        ShapedRecipeJsonFactory.create(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_PICKAXE)
-            .ingredient('#', Items.STICK)
-            .ingredient('X', Items.BLACKSTONE)
+            .criterion(Items.BLACKSTONE).save(e)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_PICKAXE)
+            .define('#', Items.STICK)
+            .define('X', Items.BLACKSTONE)
             .pattern("XXX")
             .pattern(" # ")
             .pattern(" # ")
-            .criterion(Items.BLACKSTONE).offerTo(e)
-        ShapedRecipeJsonFactory.create(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_AXE)
-            .ingredient('#', Items.STICK)
-            .ingredient('X', Items.BLACKSTONE)
+            .criterion(Items.BLACKSTONE).save(e)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_AXE)
+            .define('#', Items.STICK)
+            .define('X', Items.BLACKSTONE)
             .pattern("XX")
             .pattern("X#")
             .pattern(" #")
-            .criterion(Items.BLACKSTONE).offerTo(e)
-        ShapedRecipeJsonFactory.create(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_SHOVEL)
-            .ingredient('#', Items.STICK)
-            .ingredient('X', Items.BLACKSTONE)
+            .criterion(Items.BLACKSTONE).save(e)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_SHOVEL)
+            .define('#', Items.STICK)
+            .define('X', Items.BLACKSTONE)
             .pattern("X")
             .pattern("#").pattern("#")
-            .criterion(Items.BLACKSTONE).offerTo(e)
-        ShapedRecipeJsonFactory.create(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_HOE)
-            .ingredient('#', Items.STICK)
-            .ingredient('X', Items.BLACKSTONE)
+            .criterion(Items.BLACKSTONE).save(e)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_HOE)
+            .define('#', Items.STICK)
+            .define('X', Items.BLACKSTONE)
             .pattern("XX")
             .pattern(" #")
             .pattern(" #")
-            .criterion(Items.BLACKSTONE).offerTo(e)
+            .criterion(Items.BLACKSTONE).save(e)
     }
 
 }

@@ -1,19 +1,19 @@
 accessWidener v2 named
-accessible field net/minecraft/data/server/loot_table/VanillaBlockLootTableGenerator JUNGLE_SAPLING_DROP_CHANCES [F
-accessible method net/minecraft/block/Blocks legacyStairsOf (Lnet/minecraft/block/Block;)Lnet/minecraft/block/Block;
-accessible method net/minecraft/world/biome/OverworldBiomeCreator addBasicFeatures (Lnet/minecraft/world/biome/GenerationSettings$Builder;)V
-accessible method net/minecraft/block/SpreadableBlock canSurvive (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z
-accessible method net/minecraft/block/SpreadableBlock canSpread (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z
-accessible method net/minecraft/world/gen/feature/OrePlacedFeatures commonOrePlacementModifiers (ILnet/minecraft/world/gen/feature/PlacementModifier;)Ljava/util/List;
-accessible method net/minecraft/world/gen/feature/OrePlacedFeatures rareOrePlacementModifiers (ILnet/minecraft/world/gen/feature/PlacementModifier;)Ljava/util/List;
-accessible field net/minecraft/data/client/model/BlockStateModelGenerator sandstoneModels Ljava/util/Map;
-mutable field net/minecraft/data/client/model/BlockStateModelGenerator sandstoneModels Ljava/util/Map;
-accessible field net/minecraft/data/client/model/BlockStateModelGenerator stoneStateFactories Ljava/util/Map;
-mutable field net/minecraft/data/client/model/BlockStateModelGenerator stoneStateFactories Ljava/util/Map;
-accessible class net/minecraft/data/client/model/BlockStateModelGenerator$StateFactory
-accessible method net/minecraft/block/AbstractLichenBlock disableDirection (Lnet/minecraft/block/BlockState;Lnet/minecraft/state/property/BooleanProperty;)Lnet/minecraft/block/BlockState;
-accessible method net/minecraft/data/server/advancement/AdventureAdvancementTabGenerator appendEnterAllBiomesCriterion (Lnet/minecraft/advancement/Advancement$Builder;Lnet/minecraft/registry/HolderLookup$Provider;Ljava/util/List;)Lnet/minecraft/advancement/Advancement$Builder;
-accessible method net/minecraft/block/CropBlock hasEnoughLight (Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z
-accessible method net/minecraft/block/CropBlock getAvailableMoisture (Lnet/minecraft/block/Block;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)F
+accessible field net/minecraft/data/loot/packs/VanillaBlockLoot JUNGLE_LEAVES_SAPLING_CHANGES [F
+accessible method net/minecraft/world/level/block/Blocks legacyStair (Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;
+accessible method net/minecraft/data/worldgen/biome/OverworldBiomes globalOverworldGeneration (Lnet/minecraft/world/level/biome/BiomeGenerationSettings$Builder;)V
+accessible method net/minecraft/world/level/block/SpreadingSnowyDirtBlock canBeGrass (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/world/level/block/SpreadingSnowyDirtBlock canPropagate (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/data/worldgen/placement/OrePlacements commonOrePlacement (ILnet/minecraft/world/level/levelgen/placement/PlacementModifier;)Ljava/util/List;
+accessible method net/minecraft/data/worldgen/placement/OrePlacements rareOrePlacement (ILnet/minecraft/world/level/levelgen/placement/PlacementModifier;)Ljava/util/List;
+accessible field net/minecraft/data/models/BlockModelGenerators texturedModels Ljava/util/Map;
+mutable field net/minecraft/data/models/BlockModelGenerators texturedModels Ljava/util/Map;
+accessible field net/minecraft/data/models/BlockModelGenerators fullBlockModelCustomGenerators Ljava/util/Map;
+mutable field net/minecraft/data/models/BlockModelGenerators fullBlockModelCustomGenerators Ljava/util/Map;
+accessible class net/minecraft/data/models/BlockModelGenerators$BlockStateGeneratorSupplier
+accessible method net/minecraft/world/level/block/MultifaceBlock removeFace (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/properties/BooleanProperty;)Lnet/minecraft/world/level/block/state/BlockState;
+accessible method net/minecraft/data/advancements/packs/VanillaAdventureAdvancements addBiomes (Lnet/minecraft/advancements/Advancement$Builder;Lnet/minecraft/core/HolderLookup$Provider;Ljava/util/List;)Lnet/minecraft/advancements/Advancement$Builder;
+accessible method net/minecraft/world/level/block/CropBlock hasSufficientLight (Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/world/level/block/CropBlock getGrowthSpeed (Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F
 
-accessible field net/minecraft/client/render/block/entity/BellBlockEntityRenderer bellBody Lnet/minecraft/client/model/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/BellRenderer bellBody Lnet/minecraft/client/model/geom/ModelPart;

@@ -1,50 +1,50 @@
 package org.teamvoided.dusks_and_dungeons.util.block
 
-import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.sound.SoundEvents
+import net.minecraft.world.level.block.SoundType
+import net.minecraft.sounds.SoundEvents
 
-val bigChainSound = BlockSoundGroup(
+val bigChainSound = SoundType(
     1.0F,
     0.8F,
-    SoundEvents.BLOCK_CHAIN_BREAK,
-    SoundEvents.BLOCK_CHAIN_STEP,
-    SoundEvents.BLOCK_CHAIN_PLACE,
-    SoundEvents.BLOCK_CHAIN_HIT,
-    SoundEvents.BLOCK_CHAIN_FALL
+    SoundEvents.CHAIN_BREAK,
+    SoundEvents.CHAIN_STEP,
+    SoundEvents.CHAIN_PLACE,
+    SoundEvents.CHAIN_HIT,
+    SoundEvents.CHAIN_FALL
 )
-val bigLanternSound = BlockSoundGroup(
+val bigLanternSound = SoundType(
     1.0F,
     0.8F,
-    SoundEvents.BLOCK_LANTERN_BREAK,
-    SoundEvents.BLOCK_LANTERN_STEP,
-    SoundEvents.BLOCK_LANTERN_PLACE,
-    SoundEvents.BLOCK_LANTERN_HIT,
-    SoundEvents.BLOCK_LANTERN_FALL
+    SoundEvents.LANTERN_BREAK,
+    SoundEvents.LANTERN_STEP,
+    SoundEvents.LANTERN_PLACE,
+    SoundEvents.LANTERN_HIT,
+    SoundEvents.LANTERN_FALL
 )
-val bigCandleSound = BlockSoundGroup(
+val bigCandleSound = SoundType(
     1.0F,
     0.8F,
-    SoundEvents.BLOCK_CANDLE_BREAK,
-    SoundEvents.BLOCK_CANDLE_STEP,
-    SoundEvents.BLOCK_CANDLE_PLACE,
-    SoundEvents.BLOCK_CANDLE_HIT,
-    SoundEvents.BLOCK_CANDLE_FALL
+    SoundEvents.CANDLE_BREAK,
+    SoundEvents.CANDLE_STEP,
+    SoundEvents.CANDLE_PLACE,
+    SoundEvents.CANDLE_HIT,
+    SoundEvents.CANDLE_FALL
 )
-val cornSyrupBlockSound = BlockSoundGroup(
+val cornSyrupBlockSound = SoundType(
     1f,
     0.5f,
-    SoundEvents.BLOCK_HONEY_BLOCK_BREAK,
-    SoundEvents.BLOCK_HONEY_BLOCK_STEP,
-    SoundEvents.BLOCK_HONEY_BLOCK_PLACE,
-    SoundEvents.BLOCK_HONEY_BLOCK_HIT,
-    SoundEvents.BLOCK_HONEY_BLOCK_FALL
+    SoundEvents.HONEY_BLOCK_BREAK,
+    SoundEvents.HONEY_BLOCK_STEP,
+    SoundEvents.HONEY_BLOCK_PLACE,
+    SoundEvents.HONEY_BLOCK_HIT,
+    SoundEvents.HONEY_BLOCK_FALL
 )
-val rootBlockSound = BlockSoundGroup(
+val rootBlockSound = SoundType(
     1f,
     0.8f,
-    SoundEvents.BLOCK_HANGING_ROOTS_BREAK,
-    SoundEvents.BLOCK_HANGING_ROOTS_STEP,
-    SoundEvents.BLOCK_HANGING_ROOTS_PLACE,
-    SoundEvents.BLOCK_HANGING_ROOTS_HIT,
-    SoundEvents.BLOCK_HANGING_ROOTS_FALL
+    SoundEvents.HANGING_ROOTS_BREAK,
+    SoundEvents.HANGING_ROOTS_STEP,
+    SoundEvents.HANGING_ROOTS_PLACE,
+    SoundEvents.HANGING_ROOTS_HIT,
+    SoundEvents.HANGING_ROOTS_FALL
 )

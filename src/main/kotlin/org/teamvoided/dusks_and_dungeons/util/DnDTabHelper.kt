@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
-import net.minecraft.block.Blocks
-import net.minecraft.item.Items
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.item.Items
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists.stripedWoodLists
 import org.teamvoided.voidlib.helpers.mc.addAfter

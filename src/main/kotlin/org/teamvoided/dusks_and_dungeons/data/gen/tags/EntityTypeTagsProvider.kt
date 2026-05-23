@@ -2,8 +2,8 @@ package org.teamvoided.dusks_and_dungeons.data.gen.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
-import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.tag.EntityTypeTags
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.EntityTypeTags
 import org.teamvoided.dusks_and_dungeons.init.DnDEntities
 import java.util.concurrent.CompletableFuture
 
@@ -11,7 +11,7 @@ class EntityTypeTagsProvider(output: FabricDataOutput, registriesFuture: Complet
     FabricTagProvider.EntityTypeTagProvider(output, registriesFuture) {
 
 
-    override fun configure(arg: HolderLookup.Provider) {
+    override fun addTags(arg: HolderLookup.Provider) {
         duskTags()
         vanillaTags()
     }

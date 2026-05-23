@@ -1,10 +1,10 @@
 package org.teamvoided.voidlib.helpers.effects
 
-import net.minecraft.entity.effect.StatusEffect
-import net.minecraft.entity.effect.StatusEffectType
-import net.minecraft.particle.ParticleEffect
+import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.effect.MobEffectCategory
+import net.minecraft.core.particles.ParticleOptions
 
-open class VoidStatusEffect : StatusEffect {
-    constructor(type: StatusEffectType, color: Int) : super(type, color)
-    constructor(type: StatusEffectType, color: Int, particle: ParticleEffect) : super(type, color, particle)
+open class VoidStatusEffect : MobEffect {
+    constructor(type: MobEffectCategory, color: Int) : super(type, color)
+    constructor(type: MobEffectCategory, color: Int, particle: ParticleOptions) : super(type, color, particle)
 }

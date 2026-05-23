@@ -1,16 +1,16 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.structure
 
 import com.mojang.datafixers.util.Pair
-import net.minecraft.registry.BootstrapContext
-import net.minecraft.registry.Holder
-import net.minecraft.registry.HolderProvider
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.structure.pool.StructurePool
-import net.minecraft.structure.pool.StructurePoolElement
-import net.minecraft.structure.pool.StructurePools
-import net.minecraft.structure.processor.StructureProcessorList
-import net.minecraft.structure.processor.StructureProcessorLists
-import net.minecraft.world.gen.feature.PlacedFeature
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement
+import net.minecraft.data.worldgen.Pools
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList
+import net.minecraft.data.worldgen.ProcessorLists
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructurePools
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureProcessorLists
@@ -18,32 +18,32 @@ import java.util.function.Function
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
 object StructurePoolCreator {
-    fun bootstrap(c: BootstrapContext<StructurePool>) {
-        val placedFeatures = c.getRegistryLookup(RegistryKeys.PLACED_FEATURE)
-        val structurePools = c.getRegistryLookup(RegistryKeys.STRUCTURE_POOL)
-        val procLists = c.getRegistryLookup(RegistryKeys.STRUCTURE_PROCESSOR_LIST)
+    fun bootstrap(c: BootstrapContext<StructureTemplatePool>) {
+        val placedFeatures = c.lookup(Registries.PLACED_FEATURE)
+        val structurePools = c.lookup(Registries.TEMPLATE_POOL)
+        val procLists = c.lookup(Registries.PROCESSOR_LIST)
 
-        val poolEmpty = structurePools.getHolderOrThrow(StructurePools.EMPTY)
-        val procEmpty = procLists.getHolderOrThrow(StructureProcessorLists.EMPTY)
+        val poolEmpty = structurePools.getOrThrow(Pools.EMPTY)
+        val procEmpty = procLists.getOrThrow(ProcessorLists.EMPTY)
 
         generateAutumnRuins(c, structurePools, poolEmpty, procLists, procEmpty, placedFeatures)
     }
 
     fun generateAutumnRuins(
-        c: BootstrapContext<StructurePool>,
-        structurePools: HolderProvider<StructurePool>,
-        poolEmpty: Holder<StructurePool>,
-        procLists: HolderProvider<StructureProcessorList>,
+        c: BootstrapContext<StructureTemplatePool>,
+        structurePools: HolderGetter<StructureTemplatePool>,
+        poolEmpty: Holder<StructureTemplatePool>,
+        procLists: HolderGetter<StructureProcessorList>,
         procEmpty: Holder.Reference<StructureProcessorList>,
-        placedFeatures: HolderProvider<PlacedFeature>
+        placedFeatures: HolderGetter<PlacedFeature>
 
     ) {
-        val procDefault = procLists.getHolderOrThrow(DnDStructureProcessorLists.AUTUMN_RUINS_DEFAULT)
+        val procDefault = procLists.getOrThrow(DnDStructureProcessorLists.AUTUMN_RUINS_DEFAULT)
         val default = "autumn_ruins/"
         val stone = default + "stone/stone_"
         c.register(
             DnDStructurePools.AUTUMN_RUINS_SINGLE,
-            StructurePool(
+            StructureTemplatePool(
                 poolEmpty,
                 listOf(
                     pairedLegacySingle(default + "well_1", procDefault, 10),
@@ -60,7 +60,7 @@ object StructurePoolCreator {
                     pairedLegacySingle(stone + "watch_1", procDefault, 1),
                     pairedLegacySingle(stone + "watch_2", procDefault, 2),
                 ),
-                StructurePool.Projection.RIGID
+                StructureTemplatePool.Projection.RIGID
             )
         )
     }
@@ -70,32 +70,32 @@ object StructurePoolCreator {
 
     fun pairedSingle(
         str: String, processors: Holder<StructureProcessorList>, weight: Int = 1
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+    ): Pair<Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedSingle(str, processors), weight)
 
     fun processedSingle(
         str: String, processors: Holder<StructureProcessorList>
-    ): Function<StructurePool.Projection, out StructurePoolElement> =
-        StructurePoolElement.ofProcessedSingle(id(str), processors)
+    ): Function<StructureTemplatePool.Projection, out StructurePoolElement> =
+        StructurePoolElement.single(id(str), processors)
 
 
     fun pairedLegacySingle(
         str: String, processors: Holder<StructureProcessorList>, weight: Int = 1
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+    ): Pair<Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedLegacySingle(str, processors), weight)
 
     fun processedLegacySingle(
         str: String, processors: Holder<StructureProcessorList>
-    ): Function<StructurePool.Projection, out StructurePoolElement> =
-        StructurePoolElement.ofProcessedLegacySingle(id(str), processors)
+    ): Function<StructureTemplatePool.Projection, out StructurePoolElement> =
+        StructurePoolElement.legacy(id(str), processors)
 
 
     fun pairedFeature(
         placedFeatures: Holder<PlacedFeature>, weight: Int = 1
-    ): Pair<Function<StructurePool.Projection, out StructurePoolElement>, Int> =
+    ): Pair<Function<StructureTemplatePool.Projection, out StructurePoolElement>, Int> =
         Pair(processedFeature(placedFeatures), weight)
 
-    fun processedFeature(holder: Holder<PlacedFeature>): Function<StructurePool.Projection, out StructurePoolElement> =
-        StructurePoolElement.ofFeature(holder)
+    fun processedFeature(holder: Holder<PlacedFeature>): Function<StructureTemplatePool.Projection, out StructurePoolElement> =
+        StructurePoolElement.feature(holder)
 
 }

@@ -1,6 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.util
 
-import net.minecraft.block.Blocks
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 object DnDBlockLists {

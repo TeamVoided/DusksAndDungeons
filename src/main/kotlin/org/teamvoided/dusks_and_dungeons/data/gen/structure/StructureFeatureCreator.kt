@@ -1,49 +1,49 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.structure
 
-import net.minecraft.registry.BootstrapContext
-import net.minecraft.registry.HolderProvider
-import net.minecraft.registry.HolderSet
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.structure.pool.StructurePool
-import net.minecraft.world.Heightmap
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.gen.GenerationStep
-import net.minecraft.world.gen.YOffset
-import net.minecraft.world.gen.feature.JigsawFeature
-import net.minecraft.world.gen.feature.StructureFeature
-import net.minecraft.world.gen.heightprovider.ConstantHeightProvider
-import net.minecraft.world.gen.structure.TerrainAdjustment
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.core.HolderGetter
+import net.minecraft.core.HolderSet
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
+import net.minecraft.world.level.levelgen.Heightmap
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.levelgen.GenerationStep
+import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure
+import net.minecraft.world.level.levelgen.structure.Structure
+import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight
+import net.minecraft.world.level.levelgen.structure.TerrainAdjustment
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureFeatures
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructurePools
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 
 @Suppress("MagicNumber")
 object StructureFeatureCreator {
-    fun bootstrap(c: BootstrapContext<StructureFeature>) {
-        val biomeTags: HolderProvider<Biome> = c.getRegistryLookup(RegistryKeys.BIOME)
-        val structurePools: HolderProvider<StructurePool> = c.getRegistryLookup(RegistryKeys.STRUCTURE_POOL)
+    fun bootstrap(c: BootstrapContext<Structure>) {
+        val biomeTags: HolderGetter<Biome> = c.lookup(Registries.BIOME)
+        val structurePools: HolderGetter<StructureTemplatePool> = c.lookup(Registries.TEMPLATE_POOL)
 
 
         c.register(
             DnDStructureFeatures.AUTUMN_RUINS,
-            JigsawFeature(
+            JigsawStructure(
                 structureSettings(
-                    biomeTags.getTagOrThrow(DnDBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS),
-                    GenerationStep.Feature.SURFACE_STRUCTURES,
+                    biomeTags.getOrThrow(DnDBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS),
+                    GenerationStep.Decoration.SURFACE_STRUCTURES,
                     TerrainAdjustment.BEARD_THIN
                 ),
-                structurePools.getHolderOrThrow(DnDStructurePools.AUTUMN_RUINS_SINGLE),
+                structurePools.getOrThrow(DnDStructurePools.AUTUMN_RUINS_SINGLE),
                 7,
-                ConstantHeightProvider.create(YOffset.fixed(0)),
+                ConstantHeight.of(VerticalAnchor.absolute(0)),
                 false,
-                Heightmap.Type.OCEAN_FLOOR_WG
+                Heightmap.Types.OCEAN_FLOOR_WG
             )
         )
     }
 
     private fun structureSettings(
         biomes: HolderSet<Biome>,
-        step: GenerationStep.Feature,
+        step: GenerationStep.Decoration,
         terrainAdaptation: TerrainAdjustment
-    ) = StructureFeature.StructureSettings(biomes, mapOf(), step, terrainAdaptation)
+    ) = Structure.StructureSettings(biomes, mapOf(), step, terrainAdaptation)
 }

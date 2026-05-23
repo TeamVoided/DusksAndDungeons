@@ -1,45 +1,55 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.*
-import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.mob.RavagerEntity
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.item.ItemStack
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.IntProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.util.shape.VoxelShapes
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.monster.Ravager
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.item.ItemStack
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.*
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.GameRules
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.BonemealableBlock
+import net.minecraft.world.level.block.CropBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.shapes.CollisionContext
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.lang.Integer.min
 
-class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertilizable {
+class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), BonemealableBlock {
     init {
-        this.defaultState = stateManager.defaultState.with(SECTION, TripleBlockSection.BOTTOM)
+        this.registerDefaultState(stateDefinition.any().setValue(SECTION, TripleBlockSection.BOTTOM))
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        super.appendProperties(builder)
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
         builder.add(AGE)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState = this.defaultState
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState = this.defaultBlockState()
 
-    public override fun getOutlineShape(
-        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
+    public override fun getShape(
+        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
     ): VoxelShape {
-        val age = state.get(AGE)
+        val age = state.getValue(AGE)
         if (age % 2 != 0) {
             return FULL_SHAPE
         }
-        val section = state.get(SECTION)
+        val section = state.getValue(SECTION)
         return if (
             (age == 0 && section == TripleBlockSection.BOTTOM) ||
             (age == 2 && section == TripleBlockSection.MIDDLE) ||
@@ -48,23 +58,23 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         else FULL_SHAPE
     }
 
-    public override fun getStateForNeighborUpdate(
+    public override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
+        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
-        val blockSection = state.get(SECTION)
-        return if (heightAtAge(state.get(AGE), 3)) {
-            super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+        val blockSection = state.getValue(SECTION)
+        return if (heightAtAge(state.getValue(AGE), 3)) {
+            super.updateShape(state, direction, neighborState, world, pos, neighborPos)
         } else if (
-            heightAtAge(state.get(AGE), 2) &&
+            heightAtAge(state.getValue(AGE), 2) &&
             (direction.axis == Direction.Axis.Y) &&
             !(blockSection == TripleBlockSection.MIDDLE && direction == Direction.UP) &&
-            !state.canPlaceAt(world, pos)
+            !state.canSurvive(world, pos)
         ) {
-            Blocks.AIR.defaultState
+            Blocks.AIR.defaultBlockState()
         } else {
-            if (state.canPlaceAt(world, pos)) state
-            else Blocks.AIR.defaultState
+            if (state.canSurvive(world, pos)) state
+            else Blocks.AIR.defaultBlockState()
         }
     }
 
@@ -73,40 +83,40 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         direction: Direction,
         neighborState: BlockState
     ): Boolean {
-        if (heightAtAge(state.get(AGE), 3))
+        if (heightAtAge(state.getValue(AGE), 3))
             return super.neighborUpdatesAboveAndBelow(state, direction, neighborState)
-        else if (heightAtAge(state.get(AGE), 2)) {
-            val section = state.get(SECTION)
-            return ((direction == Direction.UP && section != TripleBlockSection.MIDDLE && neighborState.isOf(this)) ||
-                    (direction == Direction.DOWN && section != TripleBlockSection.BOTTOM && neighborState.isOf(this)))
+        else if (heightAtAge(state.getValue(AGE), 2)) {
+            val section = state.getValue(SECTION)
+            return ((direction == Direction.UP && section != TripleBlockSection.MIDDLE && neighborState.`is`(this)) ||
+                    (direction == Direction.DOWN && section != TripleBlockSection.BOTTOM && neighborState.`is`(this)))
         } else return true
     }
 
-    public override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
+    public override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
         return if (isLowestSection(state) && !hasEnoughLight(world, pos)) false
-        else super.canPlaceAt(state, world, pos)
+        else super.canSurvive(state, world, pos)
     }
 
-    override fun canPlantOnTop(floor: BlockState, world: BlockView, pos: BlockPos): Boolean =
-        floor.isOf(Blocks.FARMLAND)
+    override fun mayPlaceOn(floor: BlockState, world: BlockGetter, pos: BlockPos): Boolean =
+        floor.`is`(Blocks.FARMLAND)
 
-    public override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
-        if (entity is RavagerEntity && world.gameRules.getBooleanValue(GameRules.DO_MOB_GRIEFING)) {
-            world.breakBlock(pos, true, entity)
+    public override fun entityInside(state: BlockState, world: Level, pos: BlockPos, entity: Entity) {
+        if (entity is Ravager && world.gameRules.getBoolean(GameRules.RULE_MOBGRIEFING)) {
+            world.destroyBlock(pos, true, entity)
         }
-        super.onEntityCollision(state, world, pos, entity)
+        super.entityInside(state, world, pos, entity)
     }
 
-    public override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean = false
+    public override fun canBeReplaced(state: BlockState, context: BlockPlaceContext): Boolean = false
 
-    override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) =
+    override fun setPlacedBy(world: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) =
         Unit
 
-    public override fun getRandomTicks(state: BlockState): Boolean =
-        state.get(SECTION) == TripleBlockSection.BOTTOM && !this.isMaxAge(state)
+    public override fun isRandomlyTicking(state: BlockState): Boolean =
+        state.getValue(SECTION) == TripleBlockSection.BOTTOM && !this.isMaxAge(state)
 
-    public override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
-        val moisture = CropBlock.getAvailableMoisture(this, world, pos)
+    public override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
+        val moisture = CropBlock.getGrowthSpeed(this, world, pos)
         val chance = random.nextInt((25f / moisture).toInt() + 1) == 0
         if (chance) {
             this.grow(world, state, pos, 1)
@@ -114,14 +124,14 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
     }
 
     fun withAge(age: Int): BlockState =
-        if (age >= 6) defaultCornPlant().defaultState else defaultCornCrop().defaultState
+        if (age >= 6) defaultCornPlant().defaultBlockState() else defaultCornCrop().defaultBlockState()
 
 
-    private fun grow(world: ServerWorld, state: BlockState, pos: BlockPos, amount: Int) {
-        val newAge = min((state.get(AGE) + amount), MAX_AGE)
+    private fun grow(world: ServerLevel, state: BlockState, pos: BlockPos, amount: Int) {
+        val newAge = min((state.getValue(AGE) + amount), MAX_AGE)
         if (this.canGrow(world, pos, state, newAge)) {
-            val blockState = withAge(newAge).withIfExists(AGE, newAge)
-            world.setBlockState(pos, blockState, 2)
+            val blockState = withAge(newAge).trySetValue(AGE, newAge)
+            world.setBlock(pos, blockState, 2)
             //val height = heightAtAge(newAge)
             //if (height >= 2) {
             //    world.setBlockState(pos.up(), blockState.with(SECTION, TripleBlockSection.MIDDLE), 2)
@@ -132,34 +142,34 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         }
     }
 
-    private fun canGrow(world: WorldView, pos: BlockPos, state: BlockState, age: Int): Boolean {
+    private fun canGrow(world: LevelReader, pos: BlockPos, state: BlockState, age: Int): Boolean {
         return !this.isMaxAge(state) &&
                 hasEnoughLight(world, pos) &&
-                (age > 1 || canGrowInto(world, pos.up()))
+                (age > 1 || canGrowInto(world, pos.above()))
     }
 
-    private fun isMaxAge(state: BlockState): Boolean = state.get(AGE) >= MAX_AGE
+    private fun isMaxAge(state: BlockState): Boolean = state.getValue(AGE) >= MAX_AGE
 
-    private fun getLowerHalf(world: WorldView, pos: BlockPos, state: BlockState): LowerHalfInfo? {
+    private fun getLowerHalf(world: LevelReader, pos: BlockPos, state: BlockState): LowerHalfInfo? {
         if (isLowestSection(state)) {
             return LowerHalfInfo(pos, state)
         } else {
-            val blockPosDown = pos.down(if (state.get(SECTION) == TripleBlockSection.MIDDLE) 1 else 2)
+            val blockPosDown = pos.below(if (state.getValue(SECTION) == TripleBlockSection.MIDDLE) 1 else 2)
             val blockState = world.getBlockState(blockPosDown)
             return if (isLowestSection(blockState)) LowerHalfInfo(blockPosDown, blockState)
             else null
         }
     }
 
-    override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState): Boolean {
+    override fun isValidBonemealTarget(world: LevelReader, pos: BlockPos, state: BlockState): Boolean {
         val lowerHalfInfo = this.getLowerHalf(world, pos, state)
         return if (lowerHalfInfo == null) false
-        else this.canGrow(world, lowerHalfInfo.pos, lowerHalfInfo.state, lowerHalfInfo.state.get(AGE) + 1)
+        else this.canGrow(world, lowerHalfInfo.pos, lowerHalfInfo.state, lowerHalfInfo.state.getValue(AGE) + 1)
     }
 
-    override fun canFertilize(world: World, random: RandomGenerator, pos: BlockPos, state: BlockState): Boolean = true
+    override fun isBonemealSuccess(world: Level, random: RandomSource, pos: BlockPos, state: BlockState): Boolean = true
 
-    override fun fertilize(world: ServerWorld, random: RandomGenerator, pos: BlockPos, state: BlockState) {
+    override fun performBonemeal(world: ServerLevel, random: RandomSource, pos: BlockPos, state: BlockState) {
         val lowerHalfInfo = this.getLowerHalf(world, pos, state)
         if (lowerHalfInfo != null) {
             this.grow(world, lowerHalfInfo.state, lowerHalfInfo.pos, 1)
@@ -173,22 +183,22 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
 
     companion object {
         const val MAX_AGE: Int = 6
-        val AGE: IntProperty = Properties.AGE_5
+        val AGE: IntegerProperty = BlockStateProperties.AGE_5
         private val FULL_SHAPE =
-            VoxelShapes.fullCube()
+            Shapes.block()
         private val HALF_SHAPE =
-            createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)
+            box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)
 
         private fun defaultCornCrop(): Block = DnDBlocks.CORN_CROP
         private fun defaultCornPlant(): Block = DnDBlocks.CORN
-        private fun canGrowInto(world: WorldView, pos: BlockPos): Boolean {
+        private fun canGrowInto(world: LevelReader, pos: BlockPos): Boolean {
             val blockState = world.getBlockState(pos)
-            return blockState.isAir || blockState.isOf(defaultCornCrop())
+            return blockState.isAir || blockState.`is`(defaultCornCrop())
         }
 
-        private fun hasEnoughLight(world: WorldView, pos: BlockPos): Boolean = CropBlock.hasEnoughLight(world, pos)
+        private fun hasEnoughLight(world: LevelReader, pos: BlockPos): Boolean = CropBlock.hasSufficientLight(world, pos)
         private fun isLowestSection(state: BlockState): Boolean =
-            state.isOf(defaultCornCrop()) && state.get(SECTION) == TripleBlockSection.BOTTOM
+            state.`is`(defaultCornCrop()) && state.getValue(SECTION) == TripleBlockSection.BOTTOM
 
         private fun heightAtAge(age: Int, height: Int): Boolean {
             return ((height == 1 && age < 2) ||

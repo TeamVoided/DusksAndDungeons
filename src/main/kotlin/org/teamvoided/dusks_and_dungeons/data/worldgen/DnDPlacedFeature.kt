@@ -1,7 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.data.worldgen
 
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
@@ -42,5 +42,5 @@ object DnDPlacedFeature {
     val BLACKSTONED_ORE = create("blackstoned_ore")
 
 
-    fun create(id: String) = RegistryKey.of(RegistryKeys.PLACED_FEATURE, DusksAndDungeons.id(id))
+    fun create(id: String) = ResourceKey.create(Registries.PLACED_FEATURE, DusksAndDungeons.id(id))
 }

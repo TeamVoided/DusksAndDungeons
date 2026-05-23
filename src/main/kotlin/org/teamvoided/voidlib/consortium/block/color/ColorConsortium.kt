@@ -2,7 +2,7 @@
 
 package org.teamvoided.voidlib.consortium.block.color
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import org.teamvoided.voidlib.consortium.block.BlockCollection
 import java.util.function.BiConsumer
 

@@ -1,9 +1,9 @@
 package org.teamvoided.dusks_and_dungeons.init
 
-import net.minecraft.entity.effect.StatusEffect
-import net.minecraft.registry.Holder
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
+import net.minecraft.world.effect.MobEffect
+import net.minecraft.core.Holder
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.Registry
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 object DnDEffects {
@@ -23,7 +23,7 @@ object DnDEffects {
      )*/
 //    val MADNESS = register("madness", MadnessEffect(StatusEffectType.HARMFUL, 0x3E1663))
 
-    private fun register(id: String, entry: StatusEffect): Holder<StatusEffect> {
-        return Registry.registerHolder(Registries.STATUS_EFFECT, id(id), entry)
+    private fun register(id: String, entry: MobEffect): Holder<MobEffect> {
+        return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, id(id), entry)
     }
 }

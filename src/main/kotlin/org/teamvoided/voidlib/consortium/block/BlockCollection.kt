@@ -1,6 +1,6 @@
 package org.teamvoided.voidlib.consortium.block
 
-import net.minecraft.block.Block
+import net.minecraft.world.level.block.Block
 import org.teamvoided.voidlib.consortium.utils.Registrable
 import java.util.function.BiConsumer
 

@@ -1,21 +1,21 @@
 package org.teamvoided.dusks_and_dungeons.entity.raccoon
 
-import net.minecraft.client.render.entity.EntityRendererFactory
-import net.minecraft.client.render.entity.MobEntityRenderer
-import net.minecraft.util.Identifier
+import net.minecraft.client.renderer.entity.EntityRendererProvider
+import net.minecraft.client.renderer.entity.MobRenderer
+import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.entity.RaccoonEntity
 
-class RaccoonEntityRenderer(context: EntityRendererFactory.Context) :
-    MobEntityRenderer<RaccoonEntity, RaccoonEntityModel>(context, RaccoonEntityModel(context.getPart(
+class RaccoonEntityRenderer(context: EntityRendererProvider.Context) :
+    MobRenderer<RaccoonEntity, RaccoonEntityModel>(context, RaccoonEntityModel(context.bakeLayer(
         DnDEntityModelLayers.RACCOON
     )), 0.75F) {
 
     init {
-        addFeature(RaccoonEntityHeldItemFeatureRenderer(this, context.heldItemRenderer))
+        addLayer(RaccoonEntityHeldItemFeatureRenderer(this, context.itemInHandRenderer))
     }
 
-    override fun getTexture(entity: RaccoonEntity): Identifier {
+    override fun getTextureLocation(entity: RaccoonEntity): ResourceLocation {
         return entity.variant!!.value().texture
     }
 }

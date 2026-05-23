@@ -4,28 +4,28 @@ package org.teamvoided.voidlib.helpers.mc
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.item.ItemConvertible
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
-import net.minecraft.registry.RegistryKey
-import net.minecraft.text.Text
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.ItemStack
+import net.minecraft.resources.ResourceKey
+import net.minecraft.network.chat.Component
 
-fun modifyTab(itemGroup: RegistryKey<ItemGroup>, modifyEntries: FabricItemGroupEntries.() -> Unit) =
+fun modifyTab(itemGroup: ResourceKey<CreativeModeTab>, modifyEntries: FabricItemGroupEntries.() -> Unit) =
     ItemGroupEvents.modifyEntriesEvent(itemGroup).register(modifyEntries)
 
-fun ItemGroup.ItemStackCollector.addItems(vararg items: ItemConvertible) = this.addItems(items.toList())
-fun ItemGroup.ItemStackCollector.addItems(list: Collection<ItemConvertible>) =
-    this.addStacks(list.map { it.asItem().defaultStack })
+fun CreativeModeTab.Output.addItems(vararg items: ItemLike) = this.addItems(items.toList())
+fun CreativeModeTab.Output.addItems(list: Collection<ItemLike>) =
+    this.acceptAll(list.map { it.asItem().defaultInstance })
 
-fun ItemGroup.ItemStackCollector.addLists(vararg lists: Collection<ItemConvertible>) =
-    this.addStacks(lists.flatMap { it.map { it.asItem().defaultStack } })
+fun CreativeModeTab.Output.addLists(vararg lists: Collection<ItemLike>) =
+    this.acceptAll(lists.flatMap { it.map { it.asItem().defaultInstance } })
 
-fun FabricItemGroupEntries.addAfter(item: ItemConvertible, list: Collection<ItemConvertible>) =
-    this.addAfter(item.asItem(), list.map { it.asItem().defaultStack })
+fun FabricItemGroupEntries.addAfter(item: ItemLike, list: Collection<ItemLike>) =
+    this.addAfter(item.asItem(), list.map { it.asItem().defaultInstance })
 
-fun FabricItemGroupEntries.addBefore(item: ItemConvertible, list: Collection<ItemConvertible>) =
-    this.addBefore(item.asItem(), list.map { it.asItem().defaultStack })
+fun FabricItemGroupEntries.addBefore(item: ItemLike, list: Collection<ItemLike>) =
+    this.addBefore(item.asItem(), list.map { it.asItem().defaultInstance })
 
-fun ItemGroup.Builder.icon(item: ItemConvertible): ItemGroup.Builder = this.icon { ItemStack(item) }
-fun ItemGroup.Builder.translation(translation: String): ItemGroup.Builder = this.name(Text.translatable(translation))
-fun ItemGroup.Builder.name(name: String): ItemGroup.Builder = this.name(Text.literal(name))
+fun CreativeModeTab.Builder.icon(item: ItemLike): CreativeModeTab.Builder = this.icon { ItemStack(item) }
+fun CreativeModeTab.Builder.translation(translation: String): CreativeModeTab.Builder = this.title(Component.translatable(translation))
+fun CreativeModeTab.Builder.name(name: String): CreativeModeTab.Builder = this.title(Component.literal(name))

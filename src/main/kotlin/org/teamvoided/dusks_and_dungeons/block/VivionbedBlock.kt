@@ -1,12 +1,12 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.PinkPetalsBlock
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.BlockView
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.PinkPetalsBlock
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.BlockGetter
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 
-class VivionbedBlock(settings: Settings) : PinkPetalsBlock(settings) {
-    override fun canPlantOnTop(floor: BlockState, world: BlockView, pos: BlockPos): Boolean =
-        floor.isIn(DnDBlockTags.VIVIONBED_PLACEABLE)
+class VivionbedBlock(settings: Properties) : PinkPetalsBlock(settings) {
+    override fun mayPlaceOn(floor: BlockState, world: BlockGetter, pos: BlockPos): Boolean =
+        floor.`is`(DnDBlockTags.VIVIONBED_PLACEABLE)
 }

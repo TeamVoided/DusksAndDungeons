@@ -2,14 +2,14 @@ package org.teamvoided.dusks_and_dungeons.data.gen.recipes
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.block.Blocks
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
-import net.minecraft.feature_flags.FeatureFlags
-import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RecipeCategory
-import net.minecraft.registry.HolderLookup
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.world.flag.FeatureFlags
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.core.HolderLookup
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
@@ -20,8 +20,8 @@ import org.teamvoided.voidlib.devin.extensions.recipe.createSet
 import java.util.concurrent.CompletableFuture
 
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
-    override fun generateRecipes(e: RecipeExporter) {
-        recipesBlockFamilies.forEach { generateFamily(e, it, FeatureFlags.VANILLA_SET) }
+    override fun buildRecipes(e: RecipeOutput) {
+        recipesBlockFamilies.forEach { generateRecipes(e, it, FeatureFlags.DEFAULT_FLAGS) }
         SETS.forEach(e::createSet)
 
         WoodRecipes.generateWoodRecipes(e)
@@ -33,23 +33,24 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
 
         temporaryRecipes(e)
 
-        ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DnDItems.FARMERS_HAT)
-            .ingredient('#', Ingredient.ofItems(Items.WHEAT))
-            .ingredient('@', Ingredient.ofItems(Items.STRING))
-            .ingredient('%', Ingredient.ofItems(Items.LEATHER))
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDItems.FARMERS_HAT)
+            .define('#', Ingredient.of(Items.WHEAT))
+            .define('@', Ingredient.of(Items.STRING))
+            .define('%', Ingredient.of(Items.LEATHER))
             .pattern("###")
             .pattern("@%@")
             .pattern("# #")
-            .criterion(DnDItems.FARMERS_HAT).offerTo(e)
+            .criterion(DnDItems.FARMERS_HAT)
+            .save(e)
     }
 
-    private fun temporaryRecipes(e: RecipeExporter) {
+    private fun temporaryRecipes(e: RecipeOutput) {
         /* ShapelessRecipeJsonFactory(RecipeCategory.MISC, DnDBlocks.CHEST_O_SOULS, 1)
              .ingredient(Items.CHEST)
              .ingredient(Items.SOUL_LANTERN)
              .criterion(DnDBlocks.CHEST_O_SOULS).offerTo(e)*/
 
-        createStonecuttingRecipe(
+        stonecutterResultFromBase(
             e, RecipeCategory.BUILDING_BLOCKS,
             DnDBlocks.SMALL_PUMPKIN,
             Blocks.PUMPKIN,

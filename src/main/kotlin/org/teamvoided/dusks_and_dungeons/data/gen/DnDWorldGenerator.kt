@@ -2,8 +2,8 @@ package org.teamvoided.dusks_and_dungeons.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
-import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import java.util.concurrent.CompletableFuture
 
@@ -13,17 +13,17 @@ class DnDWorldGenerator(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
     override fun getName(): String = "Data Gen"
 
     override fun configure(reg: HolderLookup.Provider, e: Entries) {
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.NOISE_PARAMETERS))
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.BIOME))
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.PLACED_FEATURE))
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.CONFIGURED_FEATURE))
+        e.addAll(reg.lookupOrThrow(Registries.NOISE))
+        e.addAll(reg.lookupOrThrow(Registries.BIOME))
+        e.addAll(reg.lookupOrThrow(Registries.PLACED_FEATURE))
+        e.addAll(reg.lookupOrThrow(Registries.CONFIGURED_FEATURE))
 
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_PROCESSOR_LIST))
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_POOL))
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_SET))
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.STRUCTURE_FEATURE))
+        e.addAll(reg.lookupOrThrow(Registries.PROCESSOR_LIST))
+        e.addAll(reg.lookupOrThrow(Registries.TEMPLATE_POOL))
+        e.addAll(reg.lookupOrThrow(Registries.STRUCTURE_SET))
+        e.addAll(reg.lookupOrThrow(Registries.STRUCTURE))
 
-        e.addAll(reg.getLookupOrThrow(RegistryKeys.WOLF_VARIANT))
-        e.addAll(reg.getLookupOrThrow(DnDRegistryKeys.RACCOON_VARIANT))
+        e.addAll(reg.lookupOrThrow(Registries.WOLF_VARIANT))
+        e.addAll(reg.lookupOrThrow(DnDRegistryKeys.RACCOON_VARIANT))
     }
 }

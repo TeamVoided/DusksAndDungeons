@@ -1,16 +1,19 @@
 package org.teamvoided.dusks_and_dungeons.entity.scarecrow.model
 
+import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.model.*
-import net.minecraft.client.render.entity.model.ModelWithArms
-import net.minecraft.client.render.entity.model.ModelWithHead
-import net.minecraft.client.render.entity.model.SinglePartEntityModel
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.Arm
-import net.minecraft.util.math.EulerAngle
+import net.minecraft.client.model.geom.ModelPart
+import net.minecraft.client.model.geom.PartPose
+import net.minecraft.client.model.geom.builders.CubeDeformation
+import net.minecraft.client.model.geom.builders.CubeListBuilder
+import net.minecraft.client.model.geom.builders.LayerDefinition
+import net.minecraft.client.model.geom.builders.MeshDefinition
+import net.minecraft.core.Rotations
+import net.minecraft.world.entity.HumanoidArm
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 
-open class ScarecrowEntityModel(val root: ModelPart) : SinglePartEntityModel<ScarecrowEntity>(), ModelWithArms,
-    ModelWithHead {
+open class ScarecrowEntityModel(val root: ModelPart) : HierarchicalModel<ScarecrowEntity>(), ArmedModel,
+    HeadedModel {
 
     val post: ModelPart = root.getChild("post")
     val body: ModelPart = post.getChild("body")
@@ -33,21 +36,21 @@ open class ScarecrowEntityModel(val root: ModelPart) : SinglePartEntityModel<Sca
     }*/
 
     open fun setAttributes(model: ScarecrowArmorEntityModel) {
-        super.copyStateTo(model)
-        model.head.copyTransform(head)
-        model.body.copyTransform(body)
-        model.rightArm.copyTransform(rightArm)
-        model.leftArm.copyTransform(leftArm)
-        model.rightLeg.copyTransform(rightLeg)
-        model.leftLeg.copyTransform(leftLeg)
+        super.copyPropertiesTo(model)
+        model.head.copyFrom(head)
+        model.body.copyFrom(body)
+        model.rightArm.copyFrom(rightArm)
+        model.leftArm.copyFrom(leftArm)
+        model.rightLeg.copyFrom(rightLeg)
+        model.leftLeg.copyFrom(leftLeg)
     }
 
-    override fun getPart(): ModelPart = root
+    override fun root(): ModelPart = root
     override fun getHead(): ModelPart = head
-    fun getArm(arm: Arm): ModelPart = if (arm == Arm.LEFT) leftArm else rightArm
+    fun getArm(arm: HumanoidArm): ModelPart = if (arm == HumanoidArm.LEFT) leftArm else rightArm
 
-    override fun setArmAngle(arm: Arm, matrices: MatrixStack) = getArm(arm).rotate(matrices)
-    override fun setAngles(
+    override fun translateToHand(arm: HumanoidArm, matrices: PoseStack) = getArm(arm).translateAndRotate(matrices)
+    override fun setupAnim(
         scarecrowEntity: ScarecrowEntity,
         limbAngle: Float, //f
         limbDistance: Float, //g
@@ -67,87 +70,88 @@ open class ScarecrowEntityModel(val root: ModelPart) : SinglePartEntityModel<Sca
     }
 
 
-    fun setRotation(part: ModelPart, angle: EulerAngle) {
+    fun setRotation(part: ModelPart, angle: Rotations) {
         val the = 0.017453292f
-        part.pitch = the * angle.pitch
-        part.roll = the * angle.roll
-        part.yaw = the * angle.yaw
+        part.xRot = the * angle.x
+        part.zRot = the * angle.z
+        part.yRot = the * angle.y
     }
 
 
     companion object {
         const val POST_OFFSET = 24f
         const val BODY_OFFSET = -25f
-        val texturedModelData: TexturedModelData
+        val texturedModelData: LayerDefinition
             get() {
-                val modelData = ModelData()
+                val modelData = MeshDefinition()
                 val modelPartData = modelData.root
-                val post = modelPartData.addChild(
+                val post = modelPartData.addOrReplaceChild(
                     "post",
-                    ModelPartBuilder.create().uv(0, 0).cuboid(
+                    CubeListBuilder.create().texOffs(0, 0).addBox(
                         -2f, -25f, -2f,
                         4f, 26f, 4f
                     ),
-                    ModelTransform.pivot(0f, POST_OFFSET, 0f)
+                    PartPose.offset(0f, POST_OFFSET, 0f)
                 )
-                val body = post.addChild(
+                val body = post.addOrReplaceChild(
                     "body",
-                    ModelPartBuilder.create().uv(0, 0).cuboid(
+                    CubeListBuilder.create().texOffs(0, 0).addBox(
                         -4f, -6f, -2f,
                         8f, 12f, 4f,
-                        Dilation(0.025f)
+                        CubeDeformation(0.025f)
                     ),
-                    ModelTransform.pivot(0f, BODY_OFFSET, 0f)
+                    PartPose.offset(0f, BODY_OFFSET, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "head",
-                    ModelPartBuilder.create()
-                        .uv(0, 0)
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(0, 0)
+                        .addBox(
                             -4f, -8f, -4f,
                             8f, 8f, 8f
                         ),
-                    ModelTransform.pivot(0f, -6f, 0f)
+                    PartPose.offset(0f, -6f, 0f)
                 )
-                body.addChild(
+
+                body.addOrReplaceChild(
                     "right_arm",
-                    ModelPartBuilder.create().uv(0, 0).cuboid(
+                    CubeListBuilder.create().texOffs(0, 0).addBox(
                         -2f, -2f, -2f,
                         4f, 12f, 4f
                     ),
-                    ModelTransform.pivot(-6f, -4f, 0f)
+                    PartPose.offset(-6f, -4f, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "left_arm",
-                    ModelPartBuilder.create()
-                        .uv(0, 0).mirrored()
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(0, 0).mirror()
+                        .addBox(
                             -2f, -2f, -2f,
                             4f, 12f, 4f
                         ),
-                    ModelTransform.pivot(6f, -4f, 0f)
+                    PartPose.offset(6f, -4f, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "right_leg",
-                    ModelPartBuilder.create()
-                        .uv(0, 16)
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(0, 16)
+                        .addBox(
                             -2f, 0f, -2f,
                             4f, 12f, 4f,
-                            Dilation(0.01f)
+                            CubeDeformation(0.01f)
                         ),
-                    ModelTransform.pivot(-1.9f, 6f, 0f)
+                    PartPose.offset(-1.9f, 6f, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "left_leg",
-                    ModelPartBuilder.create()
-                        .uv(0, 16).mirrored()
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(0, 16).mirror()
+                        .addBox(
                             -2f, 0f, -2f,
                             4f, 12f, 4f,
-                            Dilation(0.01f)
+                            CubeDeformation(0.01f)
                         ),
-                    ModelTransform.pivot(1.9f, 6f, 0f)
+                    PartPose.offset(1.9f, 6f, 0f)
                 )
 
                 /*  bale.addChild(
@@ -161,7 +165,7 @@ open class ScarecrowEntityModel(val root: ModelPart) : SinglePartEntityModel<Sca
                           ),
                       ModelTransform.pivot(0f, -8f, 0f)
                   )*/
-                return TexturedModelData.of(modelData, 16, 16)
+                return LayerDefinition.create(modelData, 16, 16)
             }
     }
 }

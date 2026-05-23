@@ -2,18 +2,18 @@ package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.collection.DataPool
-import net.minecraft.util.math.int_provider.BiasedToBottomIntProvider
-import net.minecraft.util.math.int_provider.IntProvider
-import net.minecraft.util.math.int_provider.UniformIntProvider
-import net.minecraft.world.gen.feature.FeatureConfig
-import net.minecraft.world.gen.stateprovider.BlockStateProvider
-import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
+import net.minecraft.util.random.SimpleWeightedRandomList
+import net.minecraft.util.valueproviders.BiasedToBottomInt
+import net.minecraft.util.valueproviders.IntProvider
+import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 
 data class FallenTreeConfig(
@@ -29,48 +29,48 @@ data class FallenTreeConfig(
     val trunkLength: IntProvider = DEFAULT.trunkLength,
     val trunkDistanceFromStump: IntProvider = DEFAULT.trunkDistanceFromStump,
     val trunkVerticalRange: Int = DEFAULT.trunkVerticalRange
-) : FeatureConfig {
+) : FeatureConfiguration {
 
 
     companion object {
-        private val mushrooms = WeightedBlockStateProvider(
-            DataPool.builder<BlockState>()
-                .addWeighted(Blocks.BROWN_MUSHROOM.defaultState, 1)
-                .addWeighted(Blocks.RED_MUSHROOM.defaultState, 1)
+        private val mushrooms = WeightedStateProvider(
+            SimpleWeightedRandomList.builder<BlockState>()
+                .add(Blocks.BROWN_MUSHROOM.defaultBlockState(), 1)
+                .add(Blocks.RED_MUSHROOM.defaultBlockState(), 1)
         )
-        private val vine = BlockStateProvider.of(Blocks.VINE)
+        private val vine = BlockStateProvider.simple(Blocks.VINE)
 
         val DEFAULT = FallenTreeConfig(
-            BlockStateProvider.of(Blocks.OAK_LOG),
-            BlockStateProvider.of(Blocks.OAK_LOG),
+            BlockStateProvider.simple(Blocks.OAK_LOG),
+            BlockStateProvider.simple(Blocks.OAK_LOG),
             DnDBlockTags.FALLEN_TREE_REPLACEABLE,
             -1,
             -1,
-            BlockStateProvider.of(Blocks.AIR),
-            BlockStateProvider.of(Blocks.AIR),
+            BlockStateProvider.simple(Blocks.AIR),
+            BlockStateProvider.simple(Blocks.AIR),
             1,
-            BiasedToBottomIntProvider.create(1, 3),
-            UniformIntProvider.create(2, 4),
-            UniformIntProvider.create(0, 2),
+            BiasedToBottomInt.of(1, 3),
+            UniformInt.of(2, 4),
+            UniformInt.of(0, 2),
             16
         )
         val CODEC =
             RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<FallenTreeConfig> ->
                 instance.group(
-                    BlockStateProvider.TYPE_CODEC.fieldOf("stump_block").forGetter { it.stumpBlock },
-                    BlockStateProvider.TYPE_CODEC.fieldOf("log_block").forGetter { it.logBlock },
-                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("replaceable")
+                    BlockStateProvider.CODEC.fieldOf("stump_block").forGetter { it.stumpBlock },
+                    BlockStateProvider.CODEC.fieldOf("log_block").forGetter { it.logBlock },
+                    TagKey.hashedCodec(Registries.BLOCK).fieldOf("replaceable")
                         .forGetter { it.replaceable },
                     Codec.intRange(-1, 48).fieldOf("log_topper_chance").forGetter { it.logTopperChance },
                     Codec.intRange(-1, 48).fieldOf("stump_sides_chance").forGetter { it.stumpSidesChance },
-                    BlockStateProvider.TYPE_CODEC.fieldOf("log_topper").orElse(BlockStateProvider.of(Blocks.AIR))
+                    BlockStateProvider.CODEC.fieldOf("log_topper").orElse(BlockStateProvider.simple(Blocks.AIR))
                         .forGetter { it.logTopper },
-                    BlockStateProvider.TYPE_CODEC.fieldOf("stump_sides").orElse(BlockStateProvider.of(Blocks.AIR))
+                    BlockStateProvider.CODEC.fieldOf("stump_sides").orElse(BlockStateProvider.simple(Blocks.AIR))
                         .forGetter { it.stumpSides },
                     Codec.intRange(1, 3).fieldOf("tree_width").orElse(1).forGetter { it.treeWidth },
-                    IntProvider.method_35004(1, 32).fieldOf("stump_height").forGetter { it.stumpHeight },
-                    IntProvider.method_35004(1, 32).fieldOf("trunk_length").forGetter { it.trunkLength },
-                    IntProvider.method_35004(0, 16).fieldOf("trunk_distance_from_stump")
+                    IntProvider.codec(1, 32).fieldOf("stump_height").forGetter { it.stumpHeight },
+                    IntProvider.codec(1, 32).fieldOf("trunk_length").forGetter { it.trunkLength },
+                    IntProvider.codec(0, 16).fieldOf("trunk_distance_from_stump")
                         .forGetter { it.trunkDistanceFromStump },
                     Codec.intRange(0, 64).fieldOf("trunk_vertical_range").forGetter { it.trunkVerticalRange }
                 ).apply(instance, ::FallenTreeConfig)

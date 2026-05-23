@@ -1,18 +1,18 @@
 package org.teamvoided.dusks_and_dungeons.particle
 
-import net.minecraft.client.particle.CherryLeafParticle
+import net.minecraft.client.particle.CherryParticle
 import net.minecraft.client.particle.Particle
-import net.minecraft.client.particle.ParticleFactory
-import net.minecraft.client.particle.SpriteProvider
-import net.minecraft.client.world.ClientWorld
-import net.minecraft.particle.DefaultParticleType
+import net.minecraft.client.particle.ParticleProvider
+import net.minecraft.client.particle.SpriteSet
+import net.minecraft.client.multiplayer.ClientLevel
+import net.minecraft.core.particles.SimpleParticleType
 
-class FallingLeafParticle(world: ClientWorld, x: Double, y: Double, z: Double, spriteProvider: SpriteProvider) :
-    CherryLeafParticle(world, x, y, z, spriteProvider) {
+class FallingLeafParticle(world: ClientLevel, x: Double, y: Double, z: Double, spriteProvider: SpriteSet) :
+    CherryParticle(world, x, y, z, spriteProvider) {
     companion object {
-        class FallingLeafFactory(private val spriteProvider: SpriteProvider) : ParticleFactory<DefaultParticleType> {
+        class FallingLeafFactory(private val spriteProvider: SpriteSet) : ParticleProvider<SimpleParticleType> {
             override fun createParticle(
-                defaultParticleType: DefaultParticleType, world: ClientWorld,
+                defaultParticleType: SimpleParticleType, world: ClientLevel,
                 x: Double, y: Double, z: Double, velX: Double, velY: Double, velZ: Double
             ): Particle = FallingLeafParticle(world, x, y, z, spriteProvider)
         }

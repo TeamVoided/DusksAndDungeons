@@ -1,16 +1,16 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.world.gen.foliage.FoliagePlacer
-import net.minecraft.world.gen.foliage.FoliagePlacerType
-import net.minecraft.world.gen.root.RootPlacer
-import net.minecraft.world.gen.root.RootPlacerType
-import net.minecraft.world.gen.treedecorator.TreeDecorator
-import net.minecraft.world.gen.treedecorator.TreeDecoratorType
-import net.minecraft.world.gen.trunk.TrunkPlacer
-import net.minecraft.world.gen.trunk.TrunkPlacerType
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.Registry
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
+import net.minecraft.world.level.levelgen.feature.rootplacers.RootPlacer
+import net.minecraft.world.level.levelgen.feature.rootplacers.RootPlacerType
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
@@ -48,18 +48,18 @@ object DnDWorldgen {
     }
 
     private fun <P : TreeDecorator> registerTreeDecorator(id: String, codec: MapCodec<P>): TreeDecoratorType<P> {
-        return Registry.register(Registries.TREE_DECORATOR_TYPE, id(id), TreeDecoratorType(codec))
+        return Registry.register(BuiltInRegistries.TREE_DECORATOR_TYPE, id(id), TreeDecoratorType(codec))
     }
 
     private fun <P : TrunkPlacer> registerTrunkPlacer(id: String, codec: MapCodec<P>): TrunkPlacerType<P> {
-        return Registry.register(Registries.TRUNK_PLACER_TYPE, id(id), TrunkPlacerType(codec))
+        return Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, id(id), TrunkPlacerType(codec))
     }
 
     private fun <P : FoliagePlacer> registerFoliagePlacer(id: String, codec: MapCodec<P>): FoliagePlacerType<P> {
-        return Registry.register(Registries.FOLIAGE_PLACER_TYPE, id(id), FoliagePlacerType(codec))
+        return Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, id(id), FoliagePlacerType(codec))
     }
 
     private fun <P : RootPlacer> registerRootPlacer(id: String, codec: MapCodec<P>): RootPlacerType<P> {
-        return Registry.register(Registries.ROOT_PLACER_TYPE, id(id), RootPlacerType(codec))
+        return Registry.register(BuiltInRegistries.ROOT_PLACER_TYPE, id(id), RootPlacerType(codec))
     }
 }

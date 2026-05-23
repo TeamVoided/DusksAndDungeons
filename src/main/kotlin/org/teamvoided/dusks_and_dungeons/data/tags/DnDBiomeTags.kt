@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.data.tags
 
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.world.biome.Biome
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
+import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 object DnDBiomeTags {
@@ -15,5 +15,5 @@ object DnDBiomeTags {
 
     val HAS_GLACIERS = create("has_glaciers")
 
-    fun create(id: String): TagKey<Biome> = TagKey.of(RegistryKeys.BIOME, id(id))
+    fun create(id: String): TagKey<Biome> = TagKey.create(Registries.BIOME, id(id))
 }

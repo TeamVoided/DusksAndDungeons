@@ -1,9 +1,9 @@
 package org.teamvoided.voidlib.devin.extensions.recipe
 
-import net.minecraft.data.server.RecipesProvider.createStonecuttingRecipe
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.item.ItemConvertible
-import net.minecraft.recipe.RecipeCategory
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.world.level.ItemLike
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.data.recipes.RecipeProvider.stonecutterResultFromBase
 
-fun RecipeExporter.createStonecutting(output: ItemConvertible, input: ItemConvertible, count: Int = 1) =
-    createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, output, input, count)
+fun RecipeOutput.createStonecutting(output: ItemLike, input: ItemLike, count: Int = 1) =
+    stonecutterResultFromBase(this, RecipeCategory.BUILDING_BLOCKS, output, input, count)

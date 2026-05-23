@@ -1,18 +1,18 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
-import net.minecraft.block.Blocks
-import net.minecraft.data.client.model.BlockStateModelGenerator
-import net.minecraft.data.client.model.Texture
-import net.minecraft.data.client.model.TextureKey
-import net.minecraft.data.client.model.TexturedModel
-import net.minecraft.state.property.Properties
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.model.TextureSlot
+import net.minecraft.data.models.model.TexturedModel
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object FloraModels {
-    fun register(gen: BlockStateModelGenerator) {
+    fun register(gen: BlockModelGenerators) {
 //        gen.registerGalleryRose(DnDBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerGoldenMushroomPlant(DnDBlocks.GOLDEN_MUSHROOM)
         gen.registerMushroomBlockDiffInside(DnDBlocks.GOLDEN_MUSHROOM_BLOCK)
@@ -26,18 +26,18 @@ object FloraModels {
         gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.BLUE_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.COLD_WILDFLOWER, false, DusksAndDungeons.id("block/parent/wildflowerbed"))
-        gen.registerFlowerbed(DnDBlocks.CRIMSON_VIVIONS)
-        gen.registerFlowerbed(DnDBlocks.WARPED_VIVIONS)
+        gen.createFlowerBed(DnDBlocks.CRIMSON_VIVIONS)
+        gen.createFlowerBed(DnDBlocks.WARPED_VIVIONS)
 //        gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
 
-        gen.registerDoubleBlock(DnDBlocks.WILD_WHEAT, BlockStateModelGenerator.TintType.NOT_TINTED)
-        gen.registerCrop(DnDBlocks.GOLDEN_BEETROOTS, Properties.AGE_3, 0, 1, 2, 3)
+        gen.createDoublePlant(DnDBlocks.WILD_WHEAT, BlockModelGenerators.TintState.NOT_TINTED)
+        gen.createCropBlock(DnDBlocks.GOLDEN_BEETROOTS, BlockStateProperties.AGE_3, 0, 1, 2, 3)
         gen.registerCropWithParent(
             DnDBlocks.MOONBERRY_VINELET, DusksAndDungeons.id("block/parent/floor_plant"),
-            Properties.AGE_2, 0, 1, 2
+            BlockStateProperties.AGE_2, 0, 1, 2
         )
         gen.createMoonberryVine(DnDBlocks.MOONBERRY_VINE)
-        gen.registerItemModel(DnDItems.MOONBERRIES)
+        gen.createSimpleFlatItemModel(DnDItems.MOONBERRIES)
 
         gen.registerSmallPumpkins(
             DnDBlocks.SMALL_PUMPKIN, DnDBlocks.SMALL_CARVED_PUMPKIN, DnDBlocks.SMALL_GLOWING_PUMPKIN, Blocks.PUMPKIN
@@ -65,15 +65,15 @@ object FloraModels {
         )
         gen.registerCornCrop(DnDBlocks.CORN_CROP)
         gen.registerCorn(DnDBlocks.CORN, DnDItems.CORN_STALK)
-        gen.registerAxisRotated(
+        gen.createRotatedPillarWithHorizontalVariant(
             DnDBlocks.CORN_BLOCK,
-            TexturedModel.END_FOR_TOP_CUBE_COLUMN, TexturedModel.END_FOR_TOP_CUBE_COLUMN_HORIZONTAL
+            TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
         )
         gen.registerParentedItemModel(DnDBlocks.CORN_SYRUP_BLOCK)
 
-        gen.registerSingleton(
+        gen.createTrivialBlock(
             DnDBlocks.ROOT_BLOCK,
-            TexturedModel.makeFactory(Texture::all, block("parent/cube_in_eighths", TextureKey.ALL))
+            TexturedModel.createDefault(TextureMapping::cube, block("parent/cube_in_eighths", TextureSlot.ALL))
         )
     }
 }

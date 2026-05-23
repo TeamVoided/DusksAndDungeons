@@ -1,28 +1,28 @@
 package org.teamvoided.dusks_and_dungeons.block.rocky
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.SpreadableBlock
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.random.RandomGenerator
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.SpreadingSnowyDirtBlock
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
 
-abstract class RockySpreadableBlock(val spreadBlock: Block, val dirt: Block, settings: Settings) :
-    SpreadableBlock(settings) {
+abstract class RockySpreadableBlock(val spreadBlock: Block, val dirt: Block, settings: Properties) :
+    SpreadingSnowyDirtBlock(settings) {
     val canSpreadTo = Blocks.DIRT
-    abstract override fun getCodec(): MapCodec<out SpreadableBlock>
-    override fun randomTick(state: BlockState?, world: ServerWorld, pos: BlockPos, random: RandomGenerator) {
-        if (!canSurvive(state, world, pos)) world.setBlockState(pos, dirt.defaultState)
-        else if (world.getLightLevel(pos.up()) >= 9) {
-            val spreadBlock = spreadBlock.defaultState
+    abstract override fun codec(): MapCodec<out SpreadingSnowyDirtBlock>
+    override fun randomTick(state: BlockState?, world: ServerLevel, pos: BlockPos, random: RandomSource) {
+        if (!canBeGrass(state, world, pos)) world.setBlockAndUpdate(pos, dirt.defaultBlockState())
+        else if (world.getMaxLocalRawBrightness(pos.above()) >= 9) {
+            val spreadBlock = spreadBlock.defaultBlockState()
             for (i in 0..3) {
-                val blockPos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1)
-                if (world.getBlockState(blockPos).isOf(canSpreadTo) && canSpread(spreadBlock, world, blockPos)) {
-                    world.setBlockState(
+                val blockPos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1)
+                if (world.getBlockState(blockPos).`is`(canSpreadTo) && canPropagate(spreadBlock, world, blockPos)) {
+                    world.setBlockAndUpdate(
                         blockPos,
-                        spreadBlock.with(SNOWY, world.getBlockState(blockPos.up()).isOf(Blocks.SNOW))
+                        spreadBlock.setValue(SNOWY, world.getBlockState(blockPos.above()).`is`(Blocks.SNOW))
                     )
                 }
             }

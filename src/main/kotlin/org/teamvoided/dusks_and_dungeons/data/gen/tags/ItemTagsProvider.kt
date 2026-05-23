@@ -4,10 +4,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.item.Items
-import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.tag.BlockTags
-import net.minecraft.registry.tag.ItemTags
+import net.minecraft.world.item.Items
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.BlockTags
+import net.minecraft.tags.ItemTags
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
@@ -24,7 +24,7 @@ class ItemTagsProvider(
     blockTags: BlockTagsProvider,
 ) :
     FabricTagProvider.ItemTagProvider(output, registriesFuture, blockTags) {
-    override fun configure(arg: HolderLookup.Provider) {
+    override fun addTags(arg: HolderLookup.Provider) {
         duskTags()
         woodTags()
         vanillaTags()

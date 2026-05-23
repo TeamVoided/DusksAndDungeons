@@ -1,62 +1,61 @@
 package org.teamvoided.dusks_and_dungeons.util.datagen
 
-import net.minecraft.block.Block
-import net.minecraft.block.DecoratedPotBlock
-import net.minecraft.block.SlabBlock
-import net.minecraft.block.TallPlantBlock
-import net.minecraft.block.enums.DoubleBlockHalf
-import net.minecraft.block.enums.SlabType
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.data.server.loot_table.BlockLootTableGenerator
-import net.minecraft.loot.LootPool
-import net.minecraft.loot.LootTable
-import net.minecraft.loot.condition.BlockStatePropertyLootCondition
-import net.minecraft.loot.entry.AlternativeEntry
-import net.minecraft.loot.entry.DynamicEntry
-import net.minecraft.loot.entry.ItemEntry
-import net.minecraft.loot.entry.LootTableEntry
-import net.minecraft.loot.function.CopyComponentsLootFunction
-import net.minecraft.loot.function.CopyComponentsLootFunction.C_zcqyfuyv
-import net.minecraft.loot.function.SetCountLootFunction
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider
-import net.minecraft.predicate.StatePredicate
-import net.minecraft.state.property.Property
-import net.minecraft.util.StringIdentifiable
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.DecoratedPotBlock
+import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.block.DoublePlantBlock
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
+import net.minecraft.world.level.block.state.properties.SlabType
+import net.minecraft.core.component.DataComponents
+import net.minecraft.data.loot.BlockLootSubProvider
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry
+import net.minecraft.world.level.storage.loot.entries.DynamicLoot
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
+import net.minecraft.advancements.critereon.StatePropertiesPredicate
+import net.minecraft.world.level.block.state.properties.Property
+import net.minecraft.util.StringRepresentable
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 
-fun BlockLootTableGenerator.leafPile(pile: Block, leaves: Block): LootTable.Builder {
-    return LootTable.builder().pool(
-        LootPool.builder().with(
-            AlternativeEntry.builder(LeafPileBlock.PILE_LAYERS.values) { layers ->
-                if (layers == 4) LootTableEntry.method_428(leaves.lootTableId)
-                else ItemEntry.builder(pile)
-                    .apply(SetCountLootFunction.builder(constNum(layers)))
-                    .conditionally(
-                        BlockStatePropertyLootCondition.builder(pile).properties(
-                            StatePredicate.Builder.create().exactMatch(LeafPileBlock.PILE_LAYERS, layers)
+fun BlockLootSubProvider.leafPile(pile: Block, leaves: Block): LootTable.Builder {
+    return LootTable.lootTable().withPool(
+        LootPool.lootPool().add(
+            AlternativesEntry.alternatives(LeafPileBlock.PILE_LAYERS.possibleValues) { layers ->
+                if (layers == 4) NestedLootTable.lootTableReference(leaves.lootTable)
+                else LootItem.lootTableItem(pile)
+                    .apply(SetItemCountFunction.setCount(constNum(layers)))
+                    .`when`(
+                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(pile).setProperties(
+                            StatePropertiesPredicate.Builder.properties().hasProperty(LeafPileBlock.PILE_LAYERS, layers)
                         )
-                    ).conditionally(this.method_60392())
+                    ).`when`(this.hasShearsOrSilkTouch())
             }
         )
     )
 }
 
-fun BlockLootTableGenerator.logPile(drop: Block): LootTable.Builder {
-    return LootTable.builder().pool(
-        LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
+fun BlockLootSubProvider.logPile(drop: Block): LootTable.Builder {
+    return LootTable.lootTable().withPool(
+        LootPool.lootPool().setRolls(ConstantValue.exactly(1.0f)).add(
             applyExplosionDecay(
-                drop, ItemEntry.builder(drop).apply(
+                drop, LootItem.lootTableItem(drop).apply(
                     listOf(2, 3, 4)
                 ) { count: Int ->
-                    SetCountLootFunction.builder(
-                        ConstantLootNumberProvider.create(count.toFloat())
-                    ).conditionally(
-                        BlockStatePropertyLootCondition.builder(drop).properties(
-                            StatePredicate.Builder.create().exactMatch(LogPileBlock.PILE_LAYERS, count)
+                    SetItemCountFunction.setCount(
+                        ConstantValue.exactly(count.toFloat())
+                    ).`when`(
+                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(drop).setProperties(
+                            StatePropertiesPredicate.Builder.properties().hasProperty(LogPileBlock.PILE_LAYERS, count)
                         )
                     )
                 })
@@ -64,13 +63,13 @@ fun BlockLootTableGenerator.logPile(drop: Block): LootTable.Builder {
     )
 }
 
-fun BlockLootTableGenerator.candelabraDrops(drop: Block): LootTable.Builder {
-    return LootTable.builder().pool(
-        LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
-            applyExplosionDecay(drop, ItemEntry.builder(drop).apply(listOf(2, 3, 4, 5)) { count: Int ->
-                SetCountLootFunction.builder(constNum(count)).conditionally(
-                    BlockStatePropertyLootCondition.builder(drop).properties(
-                        StatePredicate.Builder.create().exactMatch(CandelabraBlock.CANDLES, count)
+fun BlockLootSubProvider.candelabraDrops(drop: Block): LootTable.Builder {
+    return LootTable.lootTable().withPool(
+        LootPool.lootPool().setRolls(ConstantValue.exactly(1.0f)).add(
+            applyExplosionDecay(drop, LootItem.lootTableItem(drop).apply(listOf(2, 3, 4, 5)) { count: Int ->
+                SetItemCountFunction.setCount(constNum(count)).`when`(
+                    LootItemBlockStatePropertyCondition.hasBlockStateProperties(drop).setProperties(
+                        StatePropertiesPredicate.Builder.properties().hasProperty(CandelabraBlock.CANDLES, count)
                     )
                 )
             })
@@ -78,15 +77,15 @@ fun BlockLootTableGenerator.candelabraDrops(drop: Block): LootTable.Builder {
     )
 }
 
-fun BlockLootTableGenerator.addIceSlab(block: Block) {
+fun BlockLootSubProvider.addIceSlab(block: Block) {
     return add(
-        block, LootTable.builder().pool(
-            LootPool.builder().conditionally(this.method_60390()).rolls(ConstantLootNumberProvider.create(1.0f))
-                .with(
-                    ItemEntry.builder(block).apply(
-                        SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0f)).conditionally(
-                            BlockStatePropertyLootCondition.builder(block).properties(
-                                StatePredicate.Builder.create().exactMatch(SlabBlock.TYPE, SlabType.DOUBLE)
+        block, LootTable.lootTable().withPool(
+            LootPool.lootPool().`when`(this.hasSilkTouch()).setRolls(ConstantValue.exactly(1.0f))
+                .add(
+                    LootItem.lootTableItem(block).apply(
+                        SetItemCountFunction.setCount(ConstantValue.exactly(2.0f)).`when`(
+                            LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(
+                                StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)
                             )
                         )
                     )
@@ -96,15 +95,15 @@ fun BlockLootTableGenerator.addIceSlab(block: Block) {
 }
 
 fun decoratedPotDrops(pot: Block): LootTable.Builder {
-    return LootTable.builder().pool(
-        LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
-            DynamicEntry.builder(DecoratedPotBlock.SHERDS).conditionally(
-                BlockStatePropertyLootCondition.builder(pot)
-                    .properties(StatePredicate.Builder.create().exactMatch(DecoratedPotBlock.CRACKED, true))
-            ).alternatively(
-                ItemEntry.builder(pot).apply(
-                    CopyComponentsLootFunction.method_57637(C_zcqyfuyv.BLOCK_ENTITY)
-                        .method_58730(DataComponentTypes.POT_DECORATIONS)
+    return LootTable.lootTable().withPool(
+        LootPool.lootPool().setRolls(ConstantValue.exactly(1.0f)).add(
+            DynamicLoot.dynamicEntry(DecoratedPotBlock.SHERDS_DYNAMIC_DROP_ID).`when`(
+                LootItemBlockStatePropertyCondition.hasBlockStateProperties(pot)
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DecoratedPotBlock.CRACKED, true))
+            ).otherwise(
+                LootItem.lootTableItem(pot).apply(
+                    CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                        .include(DataComponents.POT_DECORATIONS)
                 )
             )
         )
@@ -129,30 +128,30 @@ fun decoratedPotDrops(pot: Block): LootTable.Builder {
     )
 }*/
 
-fun BlockLootTableGenerator.twoTallDrop(block: Block) {
-    add(block) { this.customDropsWithPropertyValue(it, TallPlantBlock.HALF, DoubleBlockHalf.LOWER) }
+fun BlockLootSubProvider.twoTallDrop(block: Block) {
+    add(block) { this.customDropsWithPropertyValue(it, DoublePlantBlock.HALF, DoubleBlockHalf.LOWER) }
 }
 
-fun BlockLootTableGenerator.threeTallDrop(block: Block): LootTable.Builder {
+fun BlockLootSubProvider.threeTallDrop(block: Block): LootTable.Builder {
     return this.customDropsWithPropertyValue(block, TripleTallPlantBlock.SECTION, TripleBlockSection.BOTTOM)
 }
 
-fun <T> BlockLootTableGenerator.customDropsWithPropertyValue(
+fun <T> BlockLootSubProvider.customDropsWithPropertyValue(
     drop: Block,
     property: Property<T>,
     value: T
-): LootTable.Builder where T : Comparable<T>, T : StringIdentifiable? {
-    return LootTable.builder().pool(
-        applySurvivesExplosionCondition(
-            drop, LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
-                ItemEntry.builder(drop).conditionally(
-                    BlockStatePropertyLootCondition.builder(drop)
-                        .properties(StatePredicate.Builder.create().exactMatch(property, value))
+): LootTable.Builder where T : Comparable<T>, T : StringRepresentable? {
+    return LootTable.lootTable().withPool(
+        applyExplosionCondition(
+            drop, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0f)).add(
+                LootItem.lootTableItem(drop).`when`(
+                    LootItemBlockStatePropertyCondition.hasBlockStateProperties(drop)
+                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, value))
                 )
             )
         )
     )
 }
 
-fun constNum(i: Number): ConstantLootNumberProvider =
-    ConstantLootNumberProvider.create(i.toFloat())
+fun constNum(i: Number): ConstantValue =
+    ConstantValue.exactly(i.toFloat())

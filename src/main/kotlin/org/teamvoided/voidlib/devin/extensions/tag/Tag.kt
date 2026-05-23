@@ -5,10 +5,10 @@ package org.teamvoided.voidlib.devin.extensions.tag
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.block.Block
-import net.minecraft.item.Item
-import net.minecraft.registry.tag.BlockTags
-import net.minecraft.registry.tag.TagKey
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.item.Item
+import net.minecraft.tags.BlockTags
+import net.minecraft.tags.TagKey
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 

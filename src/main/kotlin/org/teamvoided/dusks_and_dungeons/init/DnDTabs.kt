@@ -1,13 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.minecraft.block.Blocks
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemGroups
-import net.minecraft.item.Items
-import net.minecraft.registry.Holder
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.CreativeModeTabs
+import net.minecraft.world.item.Items
+import net.minecraft.core.Holder
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.Registry
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
@@ -24,7 +24,7 @@ object DnDTabs {
     val DUSKS_AND_DUNGEONS = register(
         MODID, FabricItemGroup.builder()
             .icon(DnDBlocks.CASCADE_SAPLING).translation("itemGroup.$MODID.$MODID")
-            .entries { _, entries ->
+            .displayItems { _, entries ->
                 entries.addLists(DnDItemLists.cascadeWood, DnDItemLists.cascadeSigns)
                 entries.addItems(
                     DnDItems.BLUE_DOOR,
@@ -166,9 +166,9 @@ object DnDTabs {
                         )
                     }
                 )
-                entries.addItem(DnDBlocks.WARPED_WART)
+                entries.accept(DnDBlocks.WARPED_WART)
                 entries.addLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
-                entries.addItem(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
+                entries.accept(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
                 entries.addLists(
                     DnDItemLists.redNetherBrickStuff,
                     DnDItemLists.mixedRedNetherBrickStuff,
@@ -183,25 +183,25 @@ object DnDTabs {
     val OVERLAY_BLOCKS = register(
         "overlay_blocks", FabricItemGroup.builder()
             .icon(DnDBlocks.ROCKY_BLOCKS.grass).translation("itemGroup.$MODID.overlay_blocks")
-            .entries { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
+            .displayItems { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
     )
 
     // Dev Tabs
     val DND_EVERYTHING = register(
         "dnd_everything", FabricItemGroup.builder()
             .icon(DnDBlocks.STONE_PILLAR).name("DnD Everything")
-            .entries { _, entries ->
+            .displayItems { _, entries ->
                 if (isDev()) entries.addLists(DnDItems.ITEMS)
             }
     )
     val DND_EXPERIMENTAL = register(
         "dnd_experimental", FabricItemGroup.builder()
             .icon(Blocks.BARRIER).name("DnD Experimental")
-            .entries { _, entries -> if (isDev()) entries.addLists(EVIL_ITEMS) }
+            .displayItems { _, entries -> if (isDev()) entries.addLists(EVIL_ITEMS) }
     )
 
     fun init() {
-        modifyTab(ItemGroups.BUILDING_BLOCKS) {
+        modifyTab(CreativeModeTabs.BUILDING_BLOCKS) {
             addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
             addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
@@ -219,9 +219,9 @@ object DnDTabs {
             addWoodStuffAndLeafPiles(false)
         }
 
-        modifyTab(ItemGroups.COLORED_BLOCKS) { addCandles() }
+        modifyTab(CreativeModeTabs.COLORED_BLOCKS) { addCandles() }
 
-        modifyTab(ItemGroups.FUNCTIONAL_BLOCKS) {
+        modifyTab(CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
             addAfter(Items.LANTERN, DnDBlocks.BIG_LANTERN)
             addAfter(Items.SOUL_LANTERN, DnDBlocks.BIG_SOUL_LANTERN)
@@ -233,7 +233,7 @@ object DnDTabs {
             addCandles()
         }
 
-        modifyTab(ItemGroups.NATURAL_BLOCKS) {
+        modifyTab(CreativeModeTabs.NATURAL_BLOCKS) {
             addAfter(Items.CHERRY_LOG, DnDBlocks.CASCADE_LOG)
             addBefore(Items.PINK_PETALS, DnDBlockLists.flowerbedBlocks)
             addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
@@ -276,12 +276,12 @@ object DnDTabs {
             addAfter(Items.HONEY_BLOCK, DnDBlocks.CORN_SYRUP_BLOCK)
         }
 
-        modifyTab(ItemGroups.COMBAT) {
+        modifyTab(CreativeModeTabs.COMBAT) {
             addAfter(Items.STONE_SWORD, DnDItems.BLACKSTONE_SWORD)
             addAfter(Items.STONE_AXE, DnDItems.BLACKSTONE_AXE)
         }
 
-        modifyTab(ItemGroups.TOOLS_AND_UTILITIES) {
+        modifyTab(CreativeModeTabs.TOOLS_AND_UTILITIES) {
             addAfter( // this is what you should have done dusk >:( // L plus M N O P =)
                 Items.STONE_HOE,
                 DnDItems.BLACKSTONE_SHOVEL, DnDItems.BLACKSTONE_PICKAXE,
@@ -289,17 +289,17 @@ object DnDTabs {
             )
         }
 
-        modifyTab(ItemGroups.FOOD_AND_DRINKS) {
+        modifyTab(CreativeModeTabs.FOOD_AND_DRINKS) {
             addAfter(Items.SWEET_BERRIES, DnDItems.MOONBERRIES)
             addAfter(Items.GOLDEN_CARROT, DnDItems.CORN)
             addAfter(Items.BEETROOT, DnDItems.GOLDEN_BEETROOT)
             addAfter(Items.HONEY_BOTTLE, DnDItems.CORN_SYRUP_BOTTLE)
         }
-        modifyTab(ItemGroups.REDSTONE_BLOCKS) {
+        modifyTab(CreativeModeTabs.REDSTONE_BLOCKS) {
             addAfter(Items.HONEY_BLOCK, DnDBlocks.CORN_SYRUP_BLOCK)
         }
     }
 
-    fun register(name: String, itemGroup: ItemGroup.Builder): Holder.Reference<ItemGroup> =
-        Registry.registerHolder(Registries.ITEM_GROUP, id(name), itemGroup.build())
+    fun register(name: String, itemGroup: CreativeModeTab.Builder): Holder.Reference<CreativeModeTab> =
+        Registry.registerForHolder(BuiltInRegistries.CREATIVE_MODE_TAB, id(name), itemGroup.build())
 }

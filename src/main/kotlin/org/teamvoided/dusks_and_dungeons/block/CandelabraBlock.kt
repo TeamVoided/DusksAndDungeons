@@ -1,30 +1,36 @@
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.*
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.fluid.FluidState
-import net.minecraft.fluid.Fluids
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.item.ItemStack
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.BooleanProperty
-import net.minecraft.state.property.EnumProperty
-import net.minecraft.state.property.IntProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.util.Hand
-import net.minecraft.util.ItemInteractionResult
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.Vec3d
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.util.shape.VoxelShapes
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
-import net.minecraft.world.WorldAccess
-import net.minecraft.world.WorldView
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.AbstractCandleBlock
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.CandleBlock
+import net.minecraft.world.level.block.SimpleWaterloggedBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.material.FluidState
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.Vec3
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.util.block.FULL_CUBE
@@ -34,25 +40,28 @@ import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Compan
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import java.util.function.ToIntFunction
 
-open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCandleBlock(settings), Waterloggable {
-    override fun getCodec(): MapCodec<out AbstractCandleBlock> = CODEC
+open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCandleBlock(settings),
+    SimpleWaterloggedBlock {
+    override fun codec(): MapCodec<out AbstractCandleBlock> = CODEC
 
     init {
-        this.defaultState = stateManager.defaultState
-            .with(WATERLOGGED, false)
-            .with(HORIZONTAL_AXIS, Direction.Axis.X)
-            .with(CANDLES, 1)
-            .with(LIT, false)
+        this.registerDefaultState(
+            stateDefinition.any()
+                .setValue(WATERLOGGED, false)
+                .setValue(HORIZONTAL_AXIS, Direction.Axis.X)
+                .setValue(CANDLES, 1)
+                .setValue(LIT, false)
+        )
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        super.appendProperties(builder)
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
         builder.add(WATERLOGGED, HORIZONTAL_AXIS, CANDLES, LIT)
     }
 
-    override fun getOutlineShape(
-        state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
-    ): VoxelShape = when (state.get(CANDLES)) {
+    override fun getShape(
+        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
+    ): VoxelShape = when (state.getValue(CANDLES)) {
         1 -> SINGLE_SHAPE
         2 -> DOUBLE_SHAPE
         3 -> TRIPLE_SHAPE
@@ -62,151 +71,151 @@ open class CandelabraBlock(val candle: Block, settings: Settings) : AbstractCand
     }.rotate(state.getRotations())
 
     // Particles
-    override fun getParticleOffsets(state: BlockState): Iterable<Vec3d> {
-        return CANDLE_PARTICLE_OFFSETS[state.get(CANDLES) - 1].rotateFlat90(state.getRotations())
+    override fun getParticleOffsets(state: BlockState): Iterable<Vec3> {
+        return CANDLE_PARTICLE_OFFSETS[state.getValue(CANDLES) - 1].rotateFlat90(state.getRotations())
     }
 
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        if (state.get(AbstractCandleBlock.LIT)) getParticleOffsets(state).forEach {
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        if (state.getValue(AbstractCandleBlock.LIT)) getParticleOffsets(state).forEach {
             spawnParticles(world, it.add(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()), random)
         }
     }
 
-    private fun spawnParticles(world: World, offset: Vec3d, random: RandomGenerator): Unit = when (candle) {
+    private fun spawnParticles(world: Level, offset: Vec3, random: RandomSource): Unit = when (candle) {
         is SoulCandleBlock -> candle.spawnCandleParticles(world, offset, random)
         is CandleBlock -> world.spawnCandleParticles(offset, random)
         else -> Unit
     }
 
     // Waterlogging
-    override fun getStateForNeighborUpdate(
+    override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: WorldAccess, pos: BlockPos, neighborPos: BlockPos
+        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
-        if (state.get(HorizontalWaterloggedBlock.WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        if (state.getValue(HorizontalWaterloggedBlock.WATERLOGGED)) {
+            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+        return super.updateShape(state, direction, neighborState, world, pos, neighborPos)
     }
 
     override fun getFluidState(state: BlockState): FluidState {
-        return if (state.get(HorizontalWaterloggedBlock.WATERLOGGED)) Fluids.WATER.getStill(false)
+        return if (state.getValue(HorizontalWaterloggedBlock.WATERLOGGED)) Fluids.WATER.getSource(false)
         else super.getFluidState(state)
     }
 
-    override fun tryFillWithFluid(
-        world: WorldAccess, pos: BlockPos, state: BlockState, fluidState: FluidState
+    override fun placeLiquid(
+        world: LevelAccessor, pos: BlockPos, state: BlockState, fluidState: FluidState
     ): Boolean {
-        return if (!state.get(WATERLOGGED) && fluidState.fluid === Fluids.WATER) {
-            val blockState = state.with(WATERLOGGED, true)
-            if (state.get(LIT) as Boolean) extinguish(null, blockState, world, pos)
-            else world.setBlockState(pos, blockState, NOTIFY_ALL)
+        return if (!state.getValue(WATERLOGGED) && fluidState.type === Fluids.WATER) {
+            val blockState = state.setValue(WATERLOGGED, true)
+            if (state.getValue(LIT) as Boolean) extinguish(null, blockState, world, pos)
+            else world.setBlock(pos, blockState, UPDATE_ALL)
 
-            world.scheduleFluidTick(pos, fluidState.fluid, fluidState.fluid.getTickRate(world))
+            world.scheduleTick(pos, fluidState.type, fluidState.type.getTickDelay(world))
             true
         } else false
     }
 
     // Logic
-    override fun canReplace(state: BlockState, context: ItemPlacementContext): Boolean {
-        return (!context.shouldCancelInteraction() && context.stack.item === asItem() && state.get(CANDLES) < 5) ||
-                super.canReplace(state, context)
+    override fun canBeReplaced(state: BlockState, context: BlockPlaceContext): Boolean {
+        return (!context.isSecondaryUseActive && context.itemInHand.item === asItem() && state.getValue(CANDLES) < 5) ||
+                super.canBeReplaced(state, context)
     }
 
-    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean =
-        sideCoversSmallSquare(world, pos.down(), Direction.UP) && !world.getBlockState(pos.down()).isOf(this)
+    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean =
+        canSupportCenter(world, pos.below(), Direction.UP) && !world.getBlockState(pos.below()).`is`(this)
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
-        val blockState = ctx.world.getBlockState(ctx.blockPos)
-        if (blockState.isOf(this)) {
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
+        val blockState = ctx.level.getBlockState(ctx.clickedPos)
+        if (blockState.`is`(this)) {
             return blockState.cycle(CANDLES)
         }
-        val waterlogged = ctx.world.getFluidState(ctx.blockPos).fluid === Fluids.WATER
-        return super.getPlacementState(ctx)
-            ?.with(CANDLES, 1)
-            ?.with(HorizontalWaterloggedBlock.WATERLOGGED, waterlogged)
-            ?.with(HORIZONTAL_AXIS, ctx.playerFacing.axis.invert())
+        val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
+        return super.getStateForPlacement(ctx)
+            ?.setValue(CANDLES, 1)
+            ?.setValue(HorizontalWaterloggedBlock.WATERLOGGED, waterlogged)
+            ?.setValue(HORIZONTAL_AXIS, ctx.horizontalDirection.axis.invert())
     }
 
-    override fun onInteract(
-        stack: ItemStack, state: BlockState, world: World, pos: BlockPos,
-        entity: PlayerEntity, hand: Hand, hitResult: BlockHitResult
+    override fun useItemOn(
+        stack: ItemStack, state: BlockState, world: Level, pos: BlockPos,
+        entity: Player, hand: InteractionHand, hitResult: BlockHitResult
     ): ItemInteractionResult {
-        return if (stack.isEmpty && entity.abilities.allowModifyWorld && state.get(CandleBlock.LIT)) {
+        return if (stack.isEmpty && entity.abilities.mayBuild && state.getValue(CandleBlock.LIT)) {
             extinguish(entity, state, world, pos)
-            ItemInteractionResult.success(world.isClient)
-        } else super.onInteract(stack, state, world, pos, entity, hand, hitResult)
+            ItemInteractionResult.sidedSuccess(world.isClientSide)
+        } else super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
     }
 
-    override fun isNotLit(state: BlockState): Boolean = !state.get(CandleBlock.WATERLOGGED) && super.isNotLit(state)
+    override fun canBeLit(state: BlockState): Boolean = !state.getValue(CandleBlock.WATERLOGGED) && super.canBeLit(state)
 
     companion object {
-        val CODEC: MapCodec<CandelabraBlock> = createCodec { CandelabraBlock(Blocks.CANDLE, it) }
+        val CODEC: MapCodec<CandelabraBlock> = simpleCodec { CandelabraBlock(Blocks.CANDLE, it) }
 
-        val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
-        val HORIZONTAL_AXIS: EnumProperty<Direction.Axis> = Properties.HORIZONTAL_AXIS
-        val CANDLES: IntProperty = IntProperty.of("candles", 1, 5)
-        val LIT: BooleanProperty = Properties.LIT
-        val LUMINANCE = ToIntFunction<BlockState> { if (it.get(LIT)) 3 * it.get(CANDLES) as Int else 0 }
+        val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
+        val HORIZONTAL_AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS
+        val CANDLES: IntegerProperty = IntegerProperty.create("candles", 1, 5)
+        val LIT: BooleanProperty = BlockStateProperties.LIT
+        val LUMINANCE = ToIntFunction<BlockState> { if (it.getValue(LIT)) 3 * it.getValue(CANDLES) as Int else 0 }
 
-        val SINGLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(6.0, 0.0, 6.0, 10.0, 8.0, 10.0),
-            createCuboidShape(7.0, 8.0, 7.0, 9.0, 14.0, 9.0)
+        val SINGLE_SHAPE: VoxelShape = Shapes.or(
+            box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0),
+            box(7.0, 8.0, 7.0, 9.0, 14.0, 9.0)
         )
-        val DOUBLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(6.0, 0.0, 6.0, 10.0, 4.0, 10.0),
-            createCuboidShape(2.0, 4.0, 6.0, 14.0, 8.0, 10.0),
+        val DOUBLE_SHAPE: VoxelShape = Shapes.or(
+            box(6.0, 0.0, 6.0, 10.0, 4.0, 10.0),
+            box(2.0, 4.0, 6.0, 14.0, 8.0, 10.0),
             // Candles
-            createCuboidShape(3.0, 8.0, 7.0, 5.0, 14.0, 9.0),
-            createCuboidShape(11.0, 8.0, 7.0, 13.0, 14.0, 9.0),
+            box(3.0, 8.0, 7.0, 5.0, 14.0, 9.0),
+            box(11.0, 8.0, 7.0, 13.0, 14.0, 9.0),
         )
-        val TRIPLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
-            createCuboidShape(6.0, 0.0, 6.0, 10.0, 10.0, 10.0),
+        val TRIPLE_SHAPE: VoxelShape = Shapes.or(
+            box(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
+            box(6.0, 0.0, 6.0, 10.0, 10.0, 10.0),
             // Candles
-            createCuboidShape(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
-            createCuboidShape(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
-            createCuboidShape(7.0, 10.0, 7.0, 9.0, 16.0, 9.0),
+            box(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
+            box(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
+            box(7.0, 10.0, 7.0, 9.0, 16.0, 9.0),
         )
-        val QUADRUPLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(6.0, 0.0, 6.0, 10.0, 4.0, 10.0),
-            createCuboidShape(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
-            createCuboidShape(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
+        val QUADRUPLE_SHAPE: VoxelShape = Shapes.or(
+            box(6.0, 0.0, 6.0, 10.0, 4.0, 10.0),
+            box(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
+            box(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
             // Candles
-            createCuboidShape(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
-            createCuboidShape(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
-            createCuboidShape(7.0, 8.0, 2.0, 9.0, 14.0, 4.0),
-            createCuboidShape(7.0, 8.0, 12.0, 9.0, 14.0, 14.0),
+            box(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
+            box(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
+            box(7.0, 8.0, 2.0, 9.0, 14.0, 4.0),
+            box(7.0, 8.0, 12.0, 9.0, 14.0, 14.0),
         )
-        val QUINTUPLE_SHAPE: VoxelShape = VoxelShapes.union(
-            createCuboidShape(6.0, 0.0, 6.0, 10.0, 10.0, 10.0),
-            createCuboidShape(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
-            createCuboidShape(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
+        val QUINTUPLE_SHAPE: VoxelShape = Shapes.or(
+            box(6.0, 0.0, 6.0, 10.0, 10.0, 10.0),
+            box(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
+            box(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
             // Candles
-            createCuboidShape(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
-            createCuboidShape(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
-            createCuboidShape(7.0, 8.0, 2.0, 9.0, 14.0, 4.0),
-            createCuboidShape(7.0, 8.0, 12.0, 9.0, 14.0, 14.0),
-            createCuboidShape(7.0, 10.0, 7.0, 9.0, 16.0, 9.0),
+            box(2.0, 8.0, 7.0, 4.0, 14.0, 9.0),
+            box(12.0, 8.0, 7.0, 14.0, 14.0, 9.0),
+            box(7.0, 8.0, 2.0, 9.0, 14.0, 4.0),
+            box(7.0, 8.0, 12.0, 9.0, 14.0, 14.0),
+            box(7.0, 10.0, 7.0, 9.0, 16.0, 9.0),
         )
         val CANDLE_PARTICLE_OFFSETS = listOf(
-            listOf(Vec3d(0.5, 1.0, 0.5)),
-            listOf(Vec3d(0.25, 1.0, 0.5), Vec3d(0.75, 1.0, 0.5)),
-            listOf(Vec3d(0.5, 1.125, 0.5), Vec3d(0.1875, 1.0, 0.5), Vec3d(0.8125, 1.0, 0.5)),
-            listOf(Vec3d(0.1875, 1.0, 0.5), Vec3d(0.8125, 1.0, 0.5), Vec3d(0.5, 1.0, 0.1875), Vec3d(0.5, 1.0, 0.8125)),
+            listOf(Vec3(0.5, 1.0, 0.5)),
+            listOf(Vec3(0.25, 1.0, 0.5), Vec3(0.75, 1.0, 0.5)),
+            listOf(Vec3(0.5, 1.125, 0.5), Vec3(0.1875, 1.0, 0.5), Vec3(0.8125, 1.0, 0.5)),
+            listOf(Vec3(0.1875, 1.0, 0.5), Vec3(0.8125, 1.0, 0.5), Vec3(0.5, 1.0, 0.1875), Vec3(0.5, 1.0, 0.8125)),
             listOf(
-                Vec3d(0.1875, 1.0, 0.5), Vec3d(0.8125, 1.0, 0.5),
-                Vec3d(0.5, 1.125, 0.5),
-                Vec3d(0.5, 1.0, 0.1875), Vec3d(0.5, 1.0, 0.8125)
+                Vec3(0.1875, 1.0, 0.5), Vec3(0.8125, 1.0, 0.5),
+                Vec3(0.5, 1.125, 0.5),
+                Vec3(0.5, 1.0, 0.1875), Vec3(0.5, 1.0, 0.8125)
             )
         )
 
         @JvmStatic
         fun canLiteCandelabra(state: BlockState): Boolean {
-            return state.isInAndMatches(DnDBlockTags.CANDELABRAS) { it.contains(LIT) && it.contains(WATERLOGGED) }
-                    && !state.get(LIT) && !state.get(WATERLOGGED)
+            return state.`is`(DnDBlockTags.CANDELABRAS) { it.hasProperty(LIT) && it.hasProperty(WATERLOGGED) }
+                    && !state.getValue(LIT) && !state.getValue(WATERLOGGED)
         }
 
-        fun BlockState.getRotations(): Int = if (this.get(HORIZONTAL_AXIS) == Direction.Axis.X) 0 else 1
+        fun BlockState.getRotations(): Int = if (this.getValue(HORIZONTAL_AXIS) == Direction.Axis.X) 0 else 1
     }
 }

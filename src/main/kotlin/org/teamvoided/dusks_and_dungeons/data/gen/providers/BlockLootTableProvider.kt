@@ -1,20 +1,20 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.minecraft.block.*
-import net.minecraft.data.server.loot_table.VanillaBlockLootTableGenerator.JUNGLE_SAPLING_DROP_CHANCES
-import net.minecraft.enchantment.Enchantments
-import net.minecraft.loot.LootPool
-import net.minecraft.loot.LootTable
-import net.minecraft.loot.condition.BlockStatePropertyLootCondition
-import net.minecraft.loot.entry.ItemEntry
-import net.minecraft.loot.function.ApplyBonusLootFunction
-import net.minecraft.loot.function.SetCountLootFunction
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider
-import net.minecraft.loot.provider.number.UniformLootNumberProvider
-import net.minecraft.predicate.StatePredicate
-import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
+import net.minecraft.advancements.critereon.StatePropertiesPredicate
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.*
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
@@ -37,50 +37,50 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
     override fun generate() {
         // this is here cuz yeah
 //        SETS.forEach(this::setDrops)
-        val enchantmentLookup = getLookup().getLookupOrThrow(RegistryKeys.ENCHANTMENT)
+        val enchantmentLookup = getLookup().lookupOrThrow(Registries.ENCHANTMENT)
         DnDBlocks.BLOCKS.filterNot(manualList::contains).forEach {
             when (it) {
-                is SlabBlock -> add(it, ::slabDrops)
-                is DoorBlock -> add(it, ::doorDrops)
+                is SlabBlock -> add(it, ::createSlabItemTable)
+                is DoorBlock -> add(it, ::createDoorTable)
                 is LogPileBlock -> add(it, ::logPile)
                 is CandelabraBlock -> add(it, ::candelabraDrops)
-                is CandleBlock -> add(it, ::candleDrops)
+                is CandleBlock -> add(it, ::createCandleDrops)
                 is TripleTallPlantBlock -> add(it, ::threeTallDrop)
-                is PinkPetalsBlock -> add(it, ::flowerbedDrops)
+                is PinkPetalsBlock -> add(it, ::createPetalsDrops)
                 is DecoratedPotBlock -> add(it, ::decoratedPotDrops)
-                else -> addDrop(it)
+                else -> dropSelf(it)
             }
         }
 
-        bigCandles.forEach { (candle, cake) -> add(cake) { candleCakeDrops(candle) } }
-        soulCandles.forEach { (candle, cake) -> add(cake) { candleCakeDrops(candle) } }
-        bigSoulCandles.forEach { (candle, cake) -> add(cake) { candleCakeDrops(candle) } }
+        bigCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
+        soulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
+        bigSoulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         leafPiles.forEachIndexed { idx, pile -> add(pile) { leafPile(it, DnDBlockLists.leaves[idx]) } }
-        add(DnDBlocks.POTTED_CASCADE_SAPLING) { pottedPlantDrops(DnDBlocks.CASCADE_SAPLING) }
-        add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { pottedPlantDrops(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
+        add(DnDBlocks.POTTED_CASCADE_SAPLING) { createPotFlowerItemTable(DnDBlocks.CASCADE_SAPLING) }
+        add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { createPotFlowerItemTable(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
         add(DnDBlocks.CASCADE_LEAVES) {
-            oakLeavesDrops(it, DnDBlocks.CASCADE_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
+            createOakLeavesDrops(it, DnDBlocks.CASCADE_SAPLING, *NORMAL_LEAVES_SAPLING_CHANCES)
         }
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
-            leavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *LEAVES_SAPLING_DROP_CHANCES)
+            createLeavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *NORMAL_LEAVES_SAPLING_CHANCES)
         }
 //        twoTallDrop(DnDBlocks.SPIDERLILY)
-        addDropWithSilkTouch(ICE_SET.slab)
+        dropWhenSilkTouch(ICE_SET.slab)
         addIceSlab(ICE_SET.slab)
-        addDropWithSilkTouch(ICE_SET.wall)
+        dropWhenSilkTouch(ICE_SET.wall)
 //        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
         add(DnDBlocks.WARPED_WART) {
-            val state = BlockStatePropertyLootCondition.builder(it)
-                .properties(StatePredicate.Builder.create().exactMatch(NetherWartBlock.AGE, 3))
-            LootTable.builder().pool(
+            val state = LootItemBlockStatePropertyCondition.hasBlockStateProperties(it)
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(NetherWartBlock.AGE, 3))
+            LootTable.lootTable().withPool(
                 applyExplosionDecay(
-                    it, LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).with(
-                        ItemEntry.builder(DnDBlocks.WARPED_WART).apply(
-                            SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))
-                                .conditionally(state)
+                    it, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0f)).add(
+                        LootItem.lootTableItem(DnDBlocks.WARPED_WART).apply(
+                            SetItemCountFunction.setCount(UniformGenerator.between(2.0f, 4.0f))
+                                .`when`(state)
                         ).apply(
-                            ApplyBonusLootFunction.method_456(enchantmentLookup.getHolderOrThrow(Enchantments.FORTUNE))
-                                .conditionally(state)
+                            ApplyBonusCount.addOreBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE))
+                                .`when`(state)
                         )
                     )
                 )
@@ -90,12 +90,12 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
 //        add(DnDBlocks.CORN_CROP) { block: Block -> cornCrop() }
         add(
             DnDBlocks.GOLDEN_BEETROOTS,
-            this.cropDrops(
+            this.createCropDrops(
                 DnDBlocks.GOLDEN_BEETROOTS,
                 DnDItems.GOLDEN_BEETROOT,
                 DnDItems.GOLDEN_BEETROOT,
-                BlockStatePropertyLootCondition.builder(Blocks.BEETROOTS).properties(
-                    StatePredicate.Builder.create().exactMatch(BeetrootsBlock.AGE, 3)
+                LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.BEETROOTS).setProperties(
+                    StatePropertiesPredicate.Builder.properties().hasProperty(BeetrootBlock.AGE, 3)
                 )
             )
         )

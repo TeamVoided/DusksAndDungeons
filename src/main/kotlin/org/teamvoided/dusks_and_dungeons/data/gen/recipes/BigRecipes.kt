@@ -1,29 +1,29 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.recipes
 
-import net.minecraft.block.Blocks
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
-import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RecipeCategory
-import net.minecraft.registry.tag.ItemTags
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.tags.ItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object BigRecipes {
-    fun generateBigRecipes(e: RecipeExporter) {
+    fun generateBigRecipes(e: RecipeOutput) {
         // Chains and Lanterns
-        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.BIG_CHAIN, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.BIG_CHAIN, 1)
             .pattern("I")
             .pattern("N")
             .pattern("I")
-            .ingredient('I', Ingredient.ofItems(Items.IRON_INGOT))
-            .ingredient('N', Ingredient.ofItems(Items.IRON_NUGGET))
+            .define('I', Ingredient.of(Items.IRON_INGOT))
+            .define('N', Ingredient.of(Items.IRON_NUGGET))
             .criterion(Items.IRON_NUGGET)
             .criterion(Items.IRON_INGOT)
-            .offerTo(e)
+            .save(e)
         e.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         e.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
         // Candles

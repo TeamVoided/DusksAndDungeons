@@ -1,65 +1,65 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.CarvedPumpkinBlock
-import net.minecraft.entity.ItemEntity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.stat.Stats
-import net.minecraft.util.Hand
-import net.minecraft.util.ItemInteractionResult
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.world.World
-import net.minecraft.world.event.GameEvent
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.CarvedPumpkinBlock
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.sounds.SoundSource
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.stats.Stats
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.gameevent.GameEvent
 
-open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Settings) : Block(settings) {
+open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Properties) : Block(settings) {
     private var seedsItem = Items.PUMPKIN_SEEDS
     open val seeds = 4
-    override fun onInteract(
-        stack: ItemStack, state: BlockState, world: World,
-        pos: BlockPos, entity: PlayerEntity, hand: Hand, hitResult: BlockHitResult
+    override fun useItemOn(
+        stack: ItemStack, state: BlockState, world: Level,
+        pos: BlockPos, entity: Player, hand: InteractionHand, hitResult: BlockHitResult
     ): ItemInteractionResult {
-        return if (!stack.isOf(Items.SHEARS)) super.onInteract(stack, state, world, pos, entity, hand, hitResult)
-        else if (world.isClient) ItemInteractionResult.success(world.isClient)
+        return if (!stack.`is`(Items.SHEARS)) super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
+        else if (world.isClientSide) ItemInteractionResult.sidedSuccess(world.isClientSide)
         else {
-            val direction = hitResult.side
-            val direction2 = if (direction.axis == Direction.Axis.Y) entity.horizontalFacing.opposite else direction
+            val direction = hitResult.direction
+            val direction2 = if (direction.axis == Direction.Axis.Y) entity.direction.opposite else direction
             world.playSound(
                 null,
                 pos,
-                SoundEvents.BLOCK_PUMPKIN_CARVE,
-                SoundCategory.BLOCKS,
+                SoundEvents.PUMPKIN_CARVE,
+                SoundSource.BLOCKS,
                 1.0f,
                 1.0f
             )
-            world.setBlockState(
+            world.setBlock(
                 pos,
-                carvedBlock.defaultState.with(CarvedPumpkinBlock.FACING, direction2),
+                carvedBlock.defaultBlockState().setValue(CarvedPumpkinBlock.FACING, direction2),
                 11
             )
             val itemEntity = ItemEntity(
                 world,
-                pos.x.toDouble() + 0.5 + direction2.offsetX.toDouble() * 0.65, pos.y.toDouble() + 0.1,
-                pos.z.toDouble() + 0.5 + direction2.offsetZ.toDouble() * 0.65, ItemStack(seedsItem, seeds)
+                pos.x.toDouble() + 0.5 + direction2.stepX.toDouble() * 0.65, pos.y.toDouble() + 0.1,
+                pos.z.toDouble() + 0.5 + direction2.stepZ.toDouble() * 0.65, ItemStack(seedsItem, seeds)
             )
-            itemEntity.setVelocity(
-                0.05 * direction2.offsetX.toDouble() + world.random.nextDouble() * 0.02,
+            itemEntity.setDeltaMovement(
+                0.05 * direction2.stepX.toDouble() + world.random.nextDouble() * 0.02,
                 0.05,
-                0.05 * direction2.offsetZ.toDouble() + world.random.nextDouble() * 0.02
+                0.05 * direction2.stepZ.toDouble() + world.random.nextDouble() * 0.02
             )
-            world.spawnEntity(itemEntity)
-            stack.damageEquipment(1, entity, LivingEntity.getHand(hand))
-            world.emitGameEvent(entity, GameEvent.SHEAR, pos)
-            entity.incrementStat(Stats.USED.getOrCreateStat(Items.SHEARS))
-            ItemInteractionResult.success(world.isClient)
+            world.addFreshEntity(itemEntity)
+            stack.hurtAndBreak(1, entity, LivingEntity.getSlotForHand(hand))
+            world.gameEvent(entity, GameEvent.SHEAR, pos)
+            entity.awardStat(Stats.ITEM_USED.get(Items.SHEARS))
+            ItemInteractionResult.sidedSuccess(world.isClientSide)
         }
     }
 

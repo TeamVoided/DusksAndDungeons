@@ -1,11 +1,11 @@
 package org.teamvoided.voidlib.reef.world.gen.foliage
 
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.int_provider.IntProvider
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.TestableWorld
-import net.minecraft.world.gen.feature.TreeFeatureConfig
-import net.minecraft.world.gen.foliage.FoliagePlacer
+import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
+import net.minecraft.util.valueproviders.IntProvider
+import net.minecraft.world.level.LevelSimulatedReader
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -16,35 +16,35 @@ typealias ShapePredicate = (dx: Int, dz: Int) -> Boolean
 abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : FoliagePlacer(radius, offset) {
 
     fun genSquareRounded(
-        world: TestableWorld,
-        place: Placer,
-        random: RandomGenerator,
-        config: TreeFeatureConfig,
+        world: LevelSimulatedReader,
+        place: FoliageSetter,
+        random: RandomSource,
+        config: TreeConfiguration,
         centerPos: BlockPos,
         isEven: Boolean,
         y: Int,
         radius: Int,
-        rounding: Double = 2.0
+        rounding: Double = 2.0,
     ) = genShapeAbsInputs(world, place, random, config, centerPos, isEven, y, radius)
     { dx, dz -> dx + dz <= radius * 2 - rounding }
 
     fun genCircle(
-        world: TestableWorld,
-        place: Placer,
-        random: RandomGenerator,
-        config: TreeFeatureConfig,
+        world: LevelSimulatedReader,
+        place: FoliageSetter,
+        random: RandomSource,
+        config: TreeConfiguration,
         centerPos: BlockPos,
         isEven: Boolean,
         y: Int,
-        radius: Int
+        radius: Int,
     ) = genShapeAbsInputs(world, place, random, config, centerPos, isEven, y, radius)
     { dx, dz -> !(if (dx + dz >= 7) true else dx * dx + dz * dz > radius * radius) }
 
     fun genSquareNoCorners(
-        world: TestableWorld,
-        place: Placer,
-        random: RandomGenerator,
-        config: TreeFeatureConfig,
+        world: LevelSimulatedReader,
+        place: FoliageSetter,
+        random: RandomSource,
+        config: TreeConfiguration,
         centerPos: BlockPos,
         isEven: Boolean,
         y: Int,
@@ -53,23 +53,23 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
     { dx, dz -> !(dx == radius && dz == radius) }
 
     fun genSquareRandomNoCorners(
-        world: TestableWorld,
-        place: Placer,
-        random: RandomGenerator,
-        config: TreeFeatureConfig,
+        world: LevelSimulatedReader,
+        place: FoliageSetter,
+        random: RandomSource,
+        config: TreeConfiguration,
         centerPos: BlockPos,
         isEven: Boolean,
         y: Int,
         radius: Int,
-        cornerChance: Float = 0.5f
+        cornerChance: Float = 0.5f,
     ) = genShapeAbsInputs(world, place, random, config, centerPos, isEven, y, radius)
     { dx, dz -> !(dx == radius && dz == radius) || random.nextFloat() > cornerChance }
 
     fun genSquare(
-        world: TestableWorld,
-        place: Placer,
-        random: RandomGenerator,
-        config: TreeFeatureConfig,
+        world: LevelSimulatedReader,
+        place: FoliageSetter,
+        random: RandomSource,
+        config: TreeConfiguration,
         centerPos: BlockPos,
         isEven: Boolean,
         y: Int,
@@ -77,15 +77,15 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
     ) = genShape(world, place, random, config, centerPos, isEven, y, radius) { _, _ -> true }
 
     fun genShapeAbsInputs(
-        world: TestableWorld,
-        place: Placer,
-        random: RandomGenerator,
-        config: TreeFeatureConfig,
+        world: LevelSimulatedReader,
+        place: FoliageSetter,
+        random: RandomSource,
+        config: TreeConfiguration,
         centerPos: BlockPos,
         isEven: Boolean,
         y: Int,
         radius: Int,
-        predicate: ShapePredicate
+        predicate: ShapePredicate,
     ) = genShape(world, place, random, config, centerPos, isEven, y, radius) { x, z ->
         val dx = if (isEven) min(abs(x), abs((x - 1))) else abs(x)
         val dz = if (isEven) min(abs(z), abs((z - 1))) else abs(z)
@@ -93,30 +93,30 @@ abstract class FoliageHelper(radius: IntProvider, offset: IntProvider) : Foliage
     }
 
     fun genShape(
-        world: TestableWorld,
-        place: Placer,
-        random: RandomGenerator,
-        config: TreeFeatureConfig,
+        world: LevelSimulatedReader,
+        place: FoliageSetter,
+        random: RandomSource,
+        config: TreeConfiguration,
         centerPos: BlockPos,
         isEven: Boolean,
         y: Int,
         radius: Int,
-        predicate: ShapePredicate
+        predicate: ShapePredicate,
     ) {
         val i = if (isEven) 1 else 0
-        val mutable = BlockPos.Mutable()
+        val mutable = BlockPos.MutableBlockPos()
 
         for (j in -radius..radius + i) {
             for (k in -radius..radius + i) {
                 if (predicate(j, k)) {
-                    mutable[centerPos, j, y] = k
-                    placeFoliageBlock(world, place, random, config, mutable)
+                    mutable.setWithOffset(centerPos, j, y, k)
+                    tryPlaceLeaf(world, place, random, config, mutable)
                 }
             }
         }
     }
 
-    override fun isInvalidForLeaves(
-        random: RandomGenerator, dx: Int, y: Int, dz: Int, radius: Int, giantTrunk: Boolean
+    override fun shouldSkipLocation(
+        random: RandomSource, dx: Int, y: Int, dz: Int, radius: Int, giantTrunk: Boolean,
     ): Boolean = false
 }

@@ -1,14 +1,15 @@
 package org.teamvoided.dusks_and_dungeons.init
 
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.AttributeModifiersComponent
-import net.minecraft.component.type.DyedColorComponent
-import net.minecraft.item.*
-import net.minecraft.item.Item.Settings
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.core.Registry
+import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.food.Foods
+import net.minecraft.world.item.*
+import net.minecraft.world.item.Item.Properties
+import net.minecraft.world.item.component.DyedItemColor
+import net.minecraft.world.item.component.ItemAttributeModifiers
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDPumpkinBlock.Companion.setSeeds
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.GLOOM_PUMPKIN
@@ -31,8 +32,8 @@ object DnDItems {
     val ITEMS = mutableListOf<Item>()
     val EVIL_ITEMS = mutableSetOf<Item>()
 
-    val CASCADE_DOOR = register("cascade_door", TallBlockItem(DnDBlocks.CASCADE_DOOR, Settings()))
-    val BLUE_DOOR = register("blue_door", TallBlockItem(DnDBlocks.BLUE_DOOR, Settings()))
+    val CASCADE_DOOR = register("cascade_door", DoubleHighBlockItem(DnDBlocks.CASCADE_DOOR, Properties()))
+    val BLUE_DOOR = register("blue_door", DoubleHighBlockItem(DnDBlocks.BLUE_DOOR, Properties()))
     val CASCADE_SIGN = register(
         "cascade_sign", SignItem(countSettings(16), DnDBlocks.CASCADE_SIGN, DnDBlocks.CASCADE_WALL_SIGN)
     )
@@ -42,50 +43,50 @@ object DnDItems {
     )
     val FARMERS_HAT = register(
         "farmers_hat", EquipableItem(
-            countSettings(1).component(DataComponentTypes.DYED_COLOR, DyedColorComponent(0xb26c20, true))
+            countSettings(1).component(DataComponents.DYED_COLOR, DyedItemColor(0xb26c20, true))
         )
     )
     val SCARECROW_ITEM = register("scarecrow", ScarecrowItem(countSettings(16))).tellWitnessesThatIWasMurdered()
-    val WILD_WHEAT = register("wild_wheat", TallBlockItem(DnDBlocks.WILD_WHEAT, Settings()))
+    val WILD_WHEAT = register("wild_wheat", DoubleHighBlockItem(DnDBlocks.WILD_WHEAT, Properties()))
 
     val LANTERN_PUMPKIN_SEEDS =
-        register("lantern_pumpkin_seeds", AliasedBlockItem(DnDBlocks.LANTERN_PUMPKIN_STEM, Settings()))
+        register("lantern_pumpkin_seeds", ItemNameBlockItem(DnDBlocks.LANTERN_PUMPKIN_STEM, Properties()))
     val MOSSKIN_PUMPKIN_SEEDS =
-        register("mosskin_pumpkin_seeds", AliasedBlockItem(DnDBlocks.MOSSKIN_PUMPKIN_STEM, Settings()))
+        register("mosskin_pumpkin_seeds", ItemNameBlockItem(DnDBlocks.MOSSKIN_PUMPKIN_STEM, Properties()))
     val PALE_PUMPKIN_SEEDS =
-        register("pale_pumpkin_seeds", AliasedBlockItem(DnDBlocks.PALE_PUMPKIN_STEM, Settings()))
+        register("pale_pumpkin_seeds", ItemNameBlockItem(DnDBlocks.PALE_PUMPKIN_STEM, Properties()))
     val GLOOM_PUMPKIN_SEEDS =
-        register("gloom_pumpkin_seeds", AliasedBlockItem(DnDBlocks.GLOOM_PUMPKIN_STEM, Settings()))
+        register("gloom_pumpkin_seeds", ItemNameBlockItem(DnDBlocks.GLOOM_PUMPKIN_STEM, Properties()))
 
-    val CORN_KERNELS = register("corn_kernels", AliasedBlockItem(DnDBlocks.CORN_CROP, Settings()))
-    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDBlocks.CORN, Settings()))
-    val CORN = register("corn", Item(Settings().food(DnDFoodComponents.CORN)))
+    val CORN_KERNELS = register("corn_kernels", ItemNameBlockItem(DnDBlocks.CORN_CROP, Properties()))
+    val CORN_STALK = register("corn_stalk", TripleTallBlockItem(DnDBlocks.CORN, Properties()))
+    val CORN = register("corn", Item(Properties().food(DnDFoodComponents.CORN)))
     val CORN_SYRUP_BOTTLE = register(
         "corn_syrup_bottle", HoneyBottleItem(
-            Settings().recipeRemainder(Items.GLASS_BOTTLE).food(FoodComponents.HONEY_BOTTLE).maxCount(16)
+            Properties().craftRemainder(Items.GLASS_BOTTLE).food(Foods.HONEY_BOTTLE).stacksTo(16)
         )
     )
 
     val GOLDEN_BEETROOT = register(
         "golden_beetroot",
-        AliasedBlockItem(DnDBlocks.GOLDEN_BEETROOTS, Settings().food(DnDFoodComponents.GOLDEN_BEETROOT))
+        ItemNameBlockItem(DnDBlocks.GOLDEN_BEETROOTS, Properties().food(DnDFoodComponents.GOLDEN_BEETROOT))
     )
 
-    val MOONBERRY_VINELET = register("moonberry_vinelet", AliasedBlockItem(DnDBlocks.MOONBERRY_VINELET, Settings()))
-    val MOONBERRIES = register("moonberries", Item((Settings()).food(DnDFoodComponents.MOONBERRIES)))
+    val MOONBERRY_VINELET = register("moonberry_vinelet", ItemNameBlockItem(DnDBlocks.MOONBERRY_VINELET, Properties()))
+    val MOONBERRIES = register("moonberries", Item((Properties()).food(DnDFoodComponents.MOONBERRIES)))
 
     @JvmField
     val BLACKSTONE_SWORD = register(
         "blackstone_sword", SwordItem(
-            ToolMaterials.STONE, attributeSettings(
-                SwordItem.createAttributes(ToolMaterials.STONE, 3, -2.4f)
+            Tiers.STONE, attributeSettings(
+                SwordItem.createAttributes(Tiers.STONE, 3, -2.4f)
             )
         )
     )
     val BLACKSTONE_PICKAXE = register(
         "blackstone_pickaxe", PickaxeItem(
-            ToolMaterials.STONE, attributeSettings(
-                PickaxeItem.createAttributes(ToolMaterials.STONE, 1.0f, -2.8f)
+            Tiers.STONE, attributeSettings(
+                PickaxeItem.createAttributes(Tiers.STONE, 1.0f, -2.8f)
             )
         )
     )
@@ -93,22 +94,22 @@ object DnDItems {
     @JvmField
     val BLACKSTONE_AXE = register(
         "blackstone_axe", AxeItem(
-            ToolMaterials.STONE, attributeSettings(
-                AxeItem.createAttributes(ToolMaterials.STONE, 7.0f, -3.2f)
+            Tiers.STONE, attributeSettings(
+                AxeItem.createAttributes(Tiers.STONE, 7.0f, -3.2f)
             )
         )
     )
     val BLACKSTONE_SHOVEL = register(
         "blackstone_shovel", ShovelItem(
-            ToolMaterials.STONE, attributeSettings(
-                ShovelItem.createAttributes(ToolMaterials.STONE, 1.5f, -3.0f)
+            Tiers.STONE, attributeSettings(
+                ShovelItem.createAttributes(Tiers.STONE, 1.5f, -3.0f)
             )
         )
     )
     val BLACKSTONE_HOE = register(
         "blackstone_hoe", HoeItem(
-            ToolMaterials.STONE, attributeSettings(
-                HoeItem.createAttributes(ToolMaterials.STONE, -1.0f, -2.0f)
+            Tiers.STONE, attributeSettings(
+                HoeItem.createAttributes(Tiers.STONE, -1.0f, -2.0f)
             )
         )
     )
@@ -126,17 +127,17 @@ object DnDItems {
     }
 
     fun register(id: String, item: Item): Item {
-        val regItem = Registry.register(Registries.ITEM, id(id), item)
+        val regItem = Registry.register(BuiltInRegistries.ITEM, id(id), item)
         ITEMS.add(regItem)
         return regItem
     }
 
-    private fun createRegistryKey(name: String): RegistryKey<ItemGroup> {
-        return RegistryKey.of(RegistryKeys.ITEM_GROUP, id(name))
+    private fun createRegistryKey(name: String): ResourceKey<CreativeModeTab> {
+        return ResourceKey.create(Registries.CREATIVE_MODE_TAB, id(name))
     }
 
-    fun attributeSettings(comp: AttributeModifiersComponent): Settings = Settings().attributeModifiersComponent(comp)
-    fun countSettings(count: Int): Settings = Settings().maxCount(count)
+    fun attributeSettings(comp: ItemAttributeModifiers): Properties = Properties().attributes(comp)
+    fun countSettings(count: Int): Properties = Properties().stacksTo(count)
 
     // TODO move to voidlib
     @JvmField

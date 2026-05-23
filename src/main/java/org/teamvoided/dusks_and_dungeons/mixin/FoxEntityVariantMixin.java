@@ -1,11 +1,11 @@
 package org.teamvoided.dusks_and_dungeons.mixin;
 
-import net.minecraft.entity.passive.FoxEntity;
-import net.minecraft.registry.Holder;
-import net.minecraft.registry.tag.BiomeTags;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.collection.IdListUtil;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.core.Holder;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.world.level.biome.Biome;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,52 +19,52 @@ import java.util.Arrays;
 import java.util.function.IntFunction;
 
 @SuppressWarnings({"SameParameterValue", "deprecation"})
-@Mixin(FoxEntity.Variant.class)
+@Mixin(Fox.Type.class)
 public class FoxEntityVariantMixin {
     // TODO replace with with mixin extentions
     @Mutable
     @Shadow
     @Final
-    private static FoxEntity.Variant[] field_18003;
+    private static Fox.Type[] $VALUES;
     @Mutable
     @Shadow
     @Final
-    public static StringIdentifiable.EnumCodec<FoxEntity.Variant> CODEC;
+    public static StringRepresentable.EnumCodec<Fox.Type> CODEC;
     @Mutable
     @Shadow
     @Final
-    private static IntFunction<FoxEntity.Variant> VARIANTS;
+    private static IntFunction<Fox.Type> BY_ID;
 
 
-    @Inject(method = "fromBiome", at = @At("HEAD"), cancellable = true)
-    private static void fixBiomeSpawning(Holder<Biome> biome, CallbackInfoReturnable<FoxEntity.Variant> cir) {
+    @Inject(method = "byBiome", at = @At("HEAD"), cancellable = true)
+    private static void fixBiomeSpawning(Holder<Biome> biome, CallbackInfoReturnable<Fox.Type> cir) {
         int id = 0;
-        if (biome.isIn(BiomeTags.SPAWNS_SNOW_FOXES)) id = 1;
-        else if (biome.isIn(DnDBiomeTags.SPAWNS_SILVER_FOXES)) id = 2;
+        if (biome.is(BiomeTags.SPAWNS_SNOW_FOXES)) id = 1;
+        else if (biome.is(DnDBiomeTags.SPAWNS_SILVER_FOXES)) id = 2;
 
-        cir.setReturnValue(FoxEntity.Variant.get(id));
+        cir.setReturnValue(Fox.Type.byId(id));
     }
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void clInit(CallbackInfo ci) {
         register("SILVER", 2, "silver");
-        CODEC = StringIdentifiable.createEnumCodec(() -> field_18003);
-        VARIANTS = IdListUtil.sortArray(FoxEntity.Variant::getId, field_18003, IdListUtil.OutOfBoundsHandler.ZERO);
+        CODEC = StringRepresentable.fromEnum(() -> $VALUES);
+        BY_ID = ByIdMap.continuous(Fox.Type::getId, $VALUES, ByIdMap.OutOfBoundsStrategy.ZERO);
     }
 
     @Invoker("<init>")
-    private static FoxEntity.Variant invokeInit(String name, int id, int id2, String typeName) {
+    private static Fox.Type invokeInit(String name, int id, int id2, String typeName) {
         throw new AssertionError();
     }
 
 
     @SuppressWarnings({"UnusedReturnValue", "SequencedCollectionMethodCanBeUsed"})
     @Unique
-    private static FoxEntity.Variant register(String name, int id, String typeName) {
-        ArrayList<FoxEntity.Variant> values = new ArrayList<>(Arrays.asList(field_18003));
-        FoxEntity.Variant type = invokeInit(name, values.get(values.size() - 1).ordinal() + 1, id, typeName);
+    private static Fox.Type register(String name, int id, String typeName) {
+        ArrayList<Fox.Type> values = new ArrayList<>(Arrays.asList($VALUES));
+        Fox.Type type = invokeInit(name, values.get(values.size() - 1).ordinal() + 1, id, typeName);
         values.add(type);
-        field_18003 = values.toArray(new FoxEntity.Variant[]{});
+        $VALUES = values.toArray(new Fox.Type[]{});
         return type;
     }
 }

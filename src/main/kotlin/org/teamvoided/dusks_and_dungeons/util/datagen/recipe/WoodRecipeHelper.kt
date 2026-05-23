@@ -1,18 +1,18 @@
 package org.teamvoided.dusks_and_dungeons.util.datagen.recipe
 
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
-import net.minecraft.item.ItemConvertible
-import net.minecraft.recipe.RecipeCategory
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.world.level.ItemLike
+import net.minecraft.data.recipes.RecipeCategory
 import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
 
-fun RecipeExporter.woodWall(wall: ItemConvertible, plank: ItemConvertible, slab: ItemConvertible) {
-    return ShapedRecipeJsonFactory
-        .create(RecipeCategory.DECORATIONS, wall, 6)
-        .ingredient('#', plank)
-        .ingredient('=', slab)
+fun RecipeOutput.woodWall(wall: ItemLike, plank: ItemLike, slab: ItemLike) {
+    return ShapedRecipeBuilder
+        .shaped(RecipeCategory.DECORATIONS, wall, 6)
+        .define('#', plank)
+        .define('=', slab)
         .pattern("#=#")
         .pattern("###")
         .criterion(plank)
-        .offerTo(this)
+        .save(this)
 }

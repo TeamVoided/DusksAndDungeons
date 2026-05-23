@@ -1,295 +1,299 @@
 package org.teamvoided.dusks_and_dungeons.util.datagen
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.data.server.RecipesProvider.*
-import net.minecraft.data.server.recipe.*
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
-import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RecipeCategory
-import net.minecraft.registry.tag.ItemTags
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
+import net.minecraft.data.recipes.RecipeBuilder
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.recipes.RecipeProvider.*
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder
+import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 
-fun RecipeJsonFactory.criterion(item: ItemConvertible): RecipeJsonFactory =
-    this.criterion(hasItem(item), conditionsFromItem(item))
+fun RecipeBuilder.criterion(item: ItemLike): RecipeBuilder =
+    this.unlockedBy(getHasName(item), has(item))
 
-fun RecipeJsonFactory.criterion(tag: TagKey<Item>): RecipeJsonFactory =
-    this.criterion("has_${tag.id.path}", conditionsFromTag(tag))
+fun RecipeBuilder.criterion(tag: TagKey<Item>): RecipeBuilder =
+    this.unlockedBy("has_${tag.location.path}", has(tag))
 
-fun RecipeExporter.createBigLantern(
-    block: ItemConvertible,
-    torch: ItemConvertible,
-    smallLantern: ItemConvertible? = null
+fun RecipeOutput.createBigLantern(
+    block: ItemLike,
+    torch: ItemLike,
+    smallLantern: ItemLike? = null
 ) {
     val criteriaItem = smallLantern ?: torch
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, block)
-        .ingredient('#', Ingredient.ofItems(torch))
-        .ingredient('O', Ingredient.ofItems(Items.IRON_INGOT))
-        .ingredient('X', Ingredient.ofItems(Items.IRON_NUGGET))
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block)
+        .define('#', Ingredient.of(torch))
+        .define('O', Ingredient.of(Items.IRON_INGOT))
+        .define('X', Ingredient.of(Items.IRON_NUGGET))
         .pattern("XOX")
         .pattern("O#O")
         .pattern("XOX")
         .criterion(criteriaItem)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createCandle(
-    candle: ItemConvertible,
-    honeycomb: ItemConvertible,
+fun RecipeOutput.createCandle(
+    candle: ItemLike,
+    honeycomb: ItemLike,
     soul: TagKey<Item>? = null
 ) {
     if (soul == null) {
-        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, candle, 1)
-            .ingredient('S', Ingredient.ofItems(Items.STRING))
-            .ingredient('H', Ingredient.ofItems(honeycomb))
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candle, 1)
+            .define('S', Ingredient.of(Items.STRING))
+            .define('H', Ingredient.of(honeycomb))
             .pattern("S")
             .pattern("H")
             .criterion(Items.STRING)
             .criterion(honeycomb)
-            .offerTo(this)
+            .save(this)
     } else {
-        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, candle, 1)
-            .ingredient('S', Ingredient.ofItems(Items.STRING))
-            .ingredient('H', Ingredient.ofItems(honeycomb))
-            .ingredient('#', Ingredient.ofTag(soul))
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candle, 1)
+            .define('S', Ingredient.of(Items.STRING))
+            .define('H', Ingredient.of(honeycomb))
+            .define('#', Ingredient.of(soul))
             .pattern("S")
             .pattern("H")
             .pattern("#")
             .criterion(soul)
-            .offerTo(this)
+            .save(this)
     }
 }
 
-fun RecipeExporter.createCandelabra(candelabra: Block) {
+fun RecipeOutput.createCandelabra(candelabra: Block) {
     if (candelabra !is CandelabraBlock) error("Block provided isn't a CandelabraBlock!")
 
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, candelabra, 1)
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candelabra, 1)
         .pattern("NCN")
         .pattern(" N ")
-        .ingredient('C', Ingredient.ofItems(candelabra.candle))
-        .ingredient('N', Ingredient.ofItems(Items.IRON_NUGGET))
+        .define('C', Ingredient.of(candelabra.candle))
+        .define('N', Ingredient.of(Items.IRON_NUGGET))
         .criterion(candelabra.candle)
-        .offerTo(this)
+        .save(this)
 
 }
 
-fun RecipeExporter.createDyed(
-    dyedBlock: ItemConvertible,
-    input: ItemConvertible,
-    dye: ItemConvertible,
+fun RecipeOutput.createDyed(
+    dyedBlock: ItemLike,
+    input: ItemLike,
+    dye: ItemLike,
     sufixed: Boolean = false
 ) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, dyedBlock)
-        .ingredient(Ingredient.ofItems(input))
-        .ingredient(Ingredient.ofItems(dye))
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, dyedBlock)
+        .requires(Ingredient.of(input))
+        .requires(Ingredient.of(dye))
         .criterion(dye)
-        .offerTo(this, if (sufixed) id("${dyedBlock.id.path}_dyed") else dyedBlock.id)
+        .save(this, if (sufixed) id("${dyedBlock.id.path}_dyed") else dyedBlock.id)
 }
 
-fun RecipeExporter.createGragestones(
-    gravestone: ItemConvertible, smallGravestone: ItemConvertible, block: ItemConvertible
+fun RecipeOutput.createGragestones(
+    gravestone: ItemLike, smallGravestone: ItemLike, block: ItemLike
 ) {
     this.createGravestone(gravestone, block)
     this.createStonecutting(smallGravestone, gravestone)
 //    this.createStonecutting(hauntedSmallGravestone, hauntedGravestone)
 }
 
-fun RecipeExporter.createGravestone(output: ItemConvertible, input: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
-        .ingredient('#', input)
-        .ingredient('0', ItemTags.SOUL_FIRE_BASE_BLOCKS)
+fun RecipeOutput.createGravestone(output: ItemLike, input: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output)
+        .define('#', input)
+        .define('0', ItemTags.SOUL_FIRE_BASE_BLOCKS)
         .pattern("###")
         .pattern("#0#")
         .criterion(input)
         .criterion(ItemTags.SOUL_FIRE_BASE_BLOCKS)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createPumpkinPie(output: ItemConvertible, pumpkin: ItemConvertible, carvedPumpkin: ItemConvertible) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.FOOD, output)
-        .ingredient(pumpkin)
-        .ingredient(Items.SUGAR)
-        .ingredient(Items.EGG)
+fun RecipeOutput.createPumpkinPie(output: ItemLike, pumpkin: ItemLike, carvedPumpkin: ItemLike) {
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, output)
+        .requires(pumpkin)
+        .requires(Items.SUGAR)
+        .requires(Items.EGG)
         .criterion(carvedPumpkin)
         .criterion(pumpkin)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createPumpkinStuffs(
-    pumpkin: ItemConvertible,
-    carvedPumpkin: ItemConvertible,
-    glowingPumpkin: ItemConvertible,
-    smallPumpkin: ItemConvertible,
-    smallCarvedPumpkin: ItemConvertible,
-    smallGlowingPumpkin: ItemConvertible,
-    seeds: ItemConvertible
+fun RecipeOutput.createPumpkinStuffs(
+    pumpkin: ItemLike,
+    carvedPumpkin: ItemLike,
+    glowingPumpkin: ItemLike,
+    smallPumpkin: ItemLike,
+    smallCarvedPumpkin: ItemLike,
+    smallGlowingPumpkin: ItemLike,
+    seeds: ItemLike
 ) {
     this.createStackedCraft(glowingPumpkin, carvedPumpkin, Items.TORCH)
     this.createStackedCraft(smallGlowingPumpkin, smallCarvedPumpkin, Items.TORCH)
-    createStonecuttingRecipe(
+    stonecutterResultFromBase(
         this, RecipeCategory.BUILDING_BLOCKS,
         smallPumpkin,
         pumpkin,
         4
     )
     this.create1to4(seeds, pumpkin)
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, seeds, 2)
-        .ingredient(smallPumpkin)
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, seeds, 2)
+        .requires(smallPumpkin)
         .criterion(smallPumpkin)
-        .offerTo(this, seeds.id.suffix("_from_small"))
+        .save(this, seeds.id.suffix("_from_small"))
 }
 
-fun RecipeExporter.smeltDefault(
-    output: ItemConvertible,
-    input: ItemConvertible
+fun RecipeOutput.smeltDefault(
+    output: ItemLike,
+    input: ItemLike
 ) {
-    CookingRecipeJsonFactory.createSmelting(
-        Ingredient.ofItems(input),
+    SimpleCookingRecipeBuilder.smelting(
+        Ingredient.of(input),
         RecipeCategory.BUILDING_BLOCKS, output.asItem(), 0.1f, 200
     )
         .criterion(input)
-        .offerTo(this, Identifier.parse(getRecipeName(output)).toString() + "_smelt")
+        .save(this, ResourceLocation.parse(getSimpleRecipeName(output)).toString() + "_smelt")
 }
 
-fun RecipeExporter.createOvergrown(
-    output: ItemConvertible,
-    input: ItemConvertible
+fun RecipeOutput.createOvergrown(
+    output: ItemLike,
+    input: ItemLike
 ) {
     this.createTwoPiece(output, input, ItemTags.LEAVES)
 }
 
-fun RecipeExporter.createTwoPiece(
-    output: ItemConvertible,
-    input1: ItemConvertible,
-    input2: ItemConvertible,
+fun RecipeOutput.createTwoPiece(
+    output: ItemLike,
+    input1: ItemLike,
+    input2: ItemLike,
     suffix: String = "",
-    id: Identifier = output.id.extendPath(suffix)
+    id: ResourceLocation = output.id.withSuffix(suffix)
 ) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
-        .ingredient(Ingredient.ofItems(input1))
-        .ingredient(Ingredient.ofItems(input2))
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
+        .requires(Ingredient.of(input1))
+        .requires(Ingredient.of(input2))
         .criterion(input1)
         .criterion(input2)
-        .offerTo(this, id)
+        .save(this, id)
 }
 
-fun RecipeExporter.createTwoPiece(
-    output: ItemConvertible,
-    input1: ItemConvertible,
+fun RecipeOutput.createTwoPiece(
+    output: ItemLike,
+    input1: ItemLike,
     input2: TagKey<Item>
 ) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
-        .ingredient(Ingredient.ofItems(input1))
-        .ingredient(Ingredient.ofTag(input2))
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
+        .requires(Ingredient.of(input1))
+        .requires(Ingredient.of(input2))
         .criterion(input1)
         .criterion(input2)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createSmallSquare(output: ItemConvertible, input: ItemConvertible, count: Int = 1) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, count)
-        .ingredient('#', input)
+fun RecipeOutput.createSmallSquare(output: ItemLike, input: ItemLike, count: Int = 1) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+        .define('#', input)
         .pattern("##")
         .pattern("##")
         .criterion(input)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createFullSquare(output: ItemConvertible, input: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
-        .ingredient('#', input)
+fun RecipeOutput.createFullSquare(output: ItemLike, input: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
+        .define('#', input)
         .pattern("##")
         .pattern("##")
         .criterion(input)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createCount(output: ItemConvertible, input: ItemConvertible, countOutput: Int) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, countOutput)
-        .ingredient(input)
+fun RecipeOutput.createCount(output: ItemLike, input: ItemLike, countOutput: Int) {
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, countOutput)
+        .requires(input)
         .criterion(input)
-        .offerTo(this)
+        .save(this)
 }
 
 
-fun RecipeExporter.offerReversibleCompactingRecipes4(
+fun RecipeOutput.offerReversibleCompactingRecipes4(
     reverseCategory: RecipeCategory,
-    baseItem: ItemConvertible,
+    baseItem: ItemLike,
     compactingCategory: RecipeCategory,
-    compactedItem: ItemConvertible
+    compactedItem: ItemLike
 ) {
     offerReversibleCompactingRecipes4(
         reverseCategory,
         baseItem,
         compactingCategory,
         compactedItem,
-        getRecipeName(compactedItem),
+        getSimpleRecipeName(compactedItem),
         null as String?,
-        getRecipeName(baseItem),
+        getSimpleRecipeName(baseItem),
         null as String?
     )
 }
 
-fun RecipeExporter.offerReversibleCompactingRecipes4(
+fun RecipeOutput.offerReversibleCompactingRecipes4(
     reverseCategory: RecipeCategory,
-    baseItem: ItemConvertible,
+    baseItem: ItemLike,
     compactingCategory: RecipeCategory,
-    compactedItem: ItemConvertible,
+    compactedItem: ItemLike,
     compactingId: String,
     compactingGroup: String?,
     reverseId: String,
     reverseGroup: String?
 ) {
-    ShapelessRecipeJsonFactory.create(reverseCategory, baseItem, 4)
-        .ingredient(compactedItem)
+    ShapelessRecipeBuilder.shapeless(reverseCategory, baseItem, 4)
+        .requires(compactedItem)
         .group(reverseGroup)
-        .criterion(hasItem(compactedItem), conditionsFromItem(compactedItem))
-        .offerTo(this, Identifier.parse(reverseId))
-    ShapedRecipeJsonFactory.create(compactingCategory, compactedItem)
-        .ingredient('#', baseItem)
+        .unlockedBy(getHasName(compactedItem), has(compactedItem))
+        .save(this, ResourceLocation.parse(reverseId))
+    ShapedRecipeBuilder.shaped(compactingCategory, compactedItem)
+        .define('#', baseItem)
         .pattern("##")
         .pattern("##")
         .group(compactingGroup)
-        .criterion(hasItem(baseItem), conditionsFromItem(baseItem))
-        .offerTo(this, Identifier.parse(compactingId))
+        .unlockedBy(getHasName(baseItem), has(baseItem))
+        .save(this, ResourceLocation.parse(compactingId))
 }
 
-fun RecipeExporter.createStonecuttedSet(
+fun RecipeOutput.createStonecuttedSet(
     input: List<Block>,
-    polish: ItemConvertible?,
-    stair: ItemConvertible?,
-    slab: ItemConvertible?,
-    wall: ItemConvertible?,
-    extra: List<ItemConvertible>? = null
+    polish: ItemLike?,
+    stair: ItemLike?,
+    slab: ItemLike?,
+    wall: ItemLike?,
+    extra: List<ItemLike>? = null
 ) {
     input.forEach {
-        if (polish != null && polish.asItem().name.string != it.asItem().name.string)
-            FabricRecipeProvider.createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, polish, it)
-        if (stair != null) FabricRecipeProvider.createStonecuttingRecipe(
+        if (polish != null && polish.asItem().description.string != it.asItem().description.string)
+            FabricRecipeProvider.stonecutterResultFromBase(this, RecipeCategory.BUILDING_BLOCKS, polish, it)
+        if (stair != null) FabricRecipeProvider.stonecutterResultFromBase(
             this,
             RecipeCategory.BUILDING_BLOCKS,
             stair,
             it
         )
-        if (slab != null) FabricRecipeProvider.createStonecuttingRecipe(
+        if (slab != null) FabricRecipeProvider.stonecutterResultFromBase(
             this,
             RecipeCategory.BUILDING_BLOCKS,
             slab,
             it,
             2
         )
-        if (wall != null) FabricRecipeProvider.createStonecuttingRecipe(this, RecipeCategory.DECORATIONS, wall, it)
+        if (wall != null) FabricRecipeProvider.stonecutterResultFromBase(this, RecipeCategory.DECORATIONS, wall, it)
         extra?.forEach { special ->
-            if (special.asItem().name.string != it.asItem().name.string) {
-                FabricRecipeProvider.createStonecuttingRecipe(
+            if (special.asItem().description.string != it.asItem().description.string) {
+                FabricRecipeProvider.stonecutterResultFromBase(
                     this,
                     RecipeCategory.BUILDING_BLOCKS,
                     special,
@@ -300,151 +304,151 @@ fun RecipeExporter.createStonecuttedSet(
     }
 }
 
-fun RecipeExporter.createStonecuttedFromList(output: ItemConvertible, vararg input: Block) =
+fun RecipeOutput.createStonecuttedFromList(output: ItemLike, vararg input: Block) =
     this.createStonecuttedFromList(input.toList(), output)
 
-fun RecipeExporter.createStonecuttedFromList(
+fun RecipeOutput.createStonecuttedFromList(
     input: List<Block>,
-    output: ItemConvertible?
+    output: ItemLike?
 ) {
     input.forEach {
-        FabricRecipeProvider.createStonecuttingRecipe(this, RecipeCategory.BUILDING_BLOCKS, output, it)
+        FabricRecipeProvider.stonecutterResultFromBase(this, RecipeCategory.BUILDING_BLOCKS, output, it)
     }
 }
 
-fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConvertible, itemTag: TagKey<Item>) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
-        .ingredient('#', block)
+fun RecipeOutput.createStackedCraft(output: ItemLike, block: ItemLike, itemTag: TagKey<Item>) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .define('#', block)
         .pattern("#")
         .pattern("#")
         .criterion(itemTag)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createStackedCraft(output: ItemConvertible, block1: ItemConvertible, block2: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 1)
-        .ingredient('#', block1)
-        .ingredient('%', block2)
+fun RecipeOutput.createStackedCraft(output: ItemLike, block1: ItemLike, block2: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 1)
+        .define('#', block1)
+        .define('%', block2)
         .pattern("#")
         .pattern("%")
         .criterion(block1)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createStackedCraft(output: ItemConvertible, block: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
-        .ingredient('#', block)
+fun RecipeOutput.createStackedCraft(output: ItemLike, block: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .define('#', block)
         .pattern("#")
         .pattern("#")
         .criterion(block)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createDoubleCraft(output: ItemConvertible, input1: ItemConvertible, input2: ItemConvertible) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
-        .ingredient(input1)
-        .ingredient(input2)
+fun RecipeOutput.createDoubleCraft(output: ItemLike, input1: ItemLike, input2: ItemLike) {
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .requires(input1)
+        .requires(input2)
         .criterion(input1)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.create1to4(output: ItemConvertible, input1: ItemConvertible) {
-    ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
-        .ingredient(input1)
+fun RecipeOutput.create1to4(output: ItemLike, input1: ItemLike) {
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 4)
+        .requires(input1)
         .criterion(input1)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createStair(output: ItemConvertible, block: ItemConvertible) {
+fun RecipeOutput.createStair(output: ItemLike, block: ItemLike) {
     createStair(output, block, block)
 }
 
-fun RecipeExporter.createSlab(output: ItemConvertible, block: ItemConvertible) {
+fun RecipeOutput.createSlab(output: ItemLike, block: ItemLike) {
     createSlab(output, block, block)
 }
 
-fun RecipeExporter.createWall(output: ItemConvertible, block: ItemConvertible) {
+fun RecipeOutput.createWall(output: ItemLike, block: ItemLike) {
     createWall(output, block, block)
 }
 
-fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible) {
+fun RecipeOutput.createFence(output: ItemLike, block: ItemLike) {
     createFence(output, block, block)
 }
 
-fun RecipeExporter.createStair(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
-        .ingredient('#', block)
+fun RecipeOutput.createStair(output: ItemLike, block: ItemLike, item: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 4)
+        .define('#', block)
         .pattern("#  ")
         .pattern("## ")
         .pattern("###")
         .criterion(item)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createSlab(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
-        .ingredient('#', block)
+fun RecipeOutput.createSlab(output: ItemLike, block: ItemLike, item: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
+        .define('#', block)
         .pattern("###")
         .criterion(item)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createWall(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
-        .ingredient('#', block)
+fun RecipeOutput.createWall(output: ItemLike, block: ItemLike, item: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
+        .define('#', block)
         .pattern("###")
         .pattern("###")
         .criterion(item)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createFence(output: ItemConvertible, block: ItemConvertible, item: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
-        .ingredient('#', block)
-        .ingredient('+', item)
+fun RecipeOutput.createFence(output: ItemLike, block: ItemLike, item: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .define('#', block)
+        .define('+', item)
         .pattern("#+#")
         .pattern("#+#")
         .criterion(item)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createDiagonalRecipe(
-    output: ItemConvertible,
-    primary: ItemConvertible,
-    secondary: ItemConvertible,
+fun RecipeOutput.createDiagonalRecipe(
+    output: ItemLike,
+    primary: ItemLike,
+    secondary: ItemLike,
 ) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
-        .ingredient('#', primary)
-        .ingredient('%', secondary)
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .define('#', primary)
+        .define('%', secondary)
         .pattern("#%")
         .pattern("%#")
         .criterion(primary)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createDiagonalRecipe(
-    output: ItemConvertible,
+fun RecipeOutput.createDiagonalRecipe(
+    output: ItemLike,
     primary: TagKey<Item>,
-    secondary: ItemConvertible
+    secondary: ItemLike
 ) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 2)
-        .ingredient('#', primary)
-        .ingredient('%', secondary)
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
+        .define('#', primary)
+        .define('%', secondary)
         .pattern("#%")
         .pattern("%#")
         .criterion(primary)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.createPiles(output: ItemConvertible, input: ItemConvertible) {
-    ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 8)
-        .ingredient('#', Ingredient.ofItems(input))
+fun RecipeOutput.createPiles(output: ItemLike, input: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, output, 8)
+        .define('#', Ingredient.of(input))
         .pattern("##")
         .criterion(input)
-        .offerTo(this)
+        .save(this)
 }
 
-fun RecipeExporter.cobbled() {
+fun RecipeOutput.cobbled() {
     DnDBlocks.OVERLAYS.forEach {
         val overlay = it.block
         this.createDiagonalRecipe(it.dirt, Blocks.DIRT, overlay)

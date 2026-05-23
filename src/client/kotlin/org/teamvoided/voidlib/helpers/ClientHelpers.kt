@@ -6,19 +6,19 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.ModContainer
-import net.minecraft.text.Text
-import net.minecraft.util.Identifier
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import java.util.function.Consumer
 
 fun registerBuiltInPack(
-    modId: String, id: Identifier, packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL
+    modId: String, id: ResourceLocation, packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL
 ) = useMod(modId) {
     assert(ResourceManagerHelper.registerBuiltinResourcePack(id, it, packType))
     { "Failed to register built-in pack \"$id\" !" }
 }
 
 fun registerBuiltInPack(
-    modId: String, id: Identifier, name: Text,
+    modId: String, id: ResourceLocation, name: Component,
     packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL
 ) = useMod(modId) {
     assert(ResourceManagerHelper.registerBuiltinResourcePack(id, it, name, packType))

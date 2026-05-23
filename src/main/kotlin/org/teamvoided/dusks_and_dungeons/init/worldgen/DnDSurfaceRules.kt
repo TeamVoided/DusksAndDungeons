@@ -1,17 +1,17 @@
 package org.teamvoided.dusks_and_dungeons.init.worldgen
 
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.world.gen.YOffset
-import net.minecraft.world.gen.noise.NoiseParametersKeys
-import net.minecraft.world.gen.surfacebuilder.SurfaceRules.*
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.Noises
+import net.minecraft.world.level.levelgen.SurfaceRules.*
 
 object DnDSurfaceRules {
     val podzol = sequence(
-        condition(
-            water(-1, 0),
+        ifTrue(
+            waterBlockCheck(-1, 0),
             sequence(
-                condition(
+                ifTrue(
                     ON_FLOOR, block(Blocks.PODZOL)
                 ),
                 block(Blocks.DIRT)
@@ -19,31 +19,31 @@ object DnDSurfaceRules {
         )
     )
 
-    val autumnBiomes = biome(
+    val autumnBiomes = isBiome(
         DnDBiomes.AUTUMN_WOODS,
         DnDBiomes.AUTUMN_PASTURES,
         DnDBiomes.AUTUMN_CASCADES,
         DnDBiomes.AUTUMN_WETLANDS
     )
 
-    fun overworld(): MaterialRule {
-        val autumnMud = condition(
-            autumnBiomes, condition(
+    fun overworld(): RuleSource {
+        val autumnMud = ifTrue(
+            autumnBiomes, ifTrue(
                 mudRegionThreshold(0.0),
-                condition(
-                    not(aboveY(YOffset.fixed(65), 0)),
+                ifTrue(
+                    not(yBlockCheck(VerticalAnchor.absolute(65), 0)),
                     sequence(
-                        condition(
+                        ifTrue(
                             UNDER_FLOOR,
-                            condition(
+                            ifTrue(
                                 mudThreshold(0.0),
                                 block(Blocks.MUD)
                             )
                         ),
-                        condition(
+                        ifTrue(
                             ON_FLOOR,
-                            condition(
-                                not(aboveY(YOffset.fixed(63), 0)),
+                            ifTrue(
+                                not(yBlockCheck(VerticalAnchor.absolute(63), 0)),
                                 block(Blocks.MUD)
                             )
                         )
@@ -51,8 +51,8 @@ object DnDSurfaceRules {
                 )
             )
         )
-        val defaultAutumnPasturesSurface = condition(
-            biome(DnDBiomes.AUTUMN_PASTURES), sequence(
+        val defaultAutumnPasturesSurface = ifTrue(
+            isBiome(DnDBiomes.AUTUMN_PASTURES), sequence(
 //                condition(
 //                    ON_FLOOR, sequence(
 //                        condition(
@@ -61,9 +61,9 @@ object DnDSurfaceRules {
 //                        )
 //                    )
 //                ),
-                condition(
+                ifTrue(
                     UNDER_FLOOR, sequence(
-                        condition(
+                        ifTrue(
                             surfaceSecondaryNoiseThreshold(1.25),
                             block(Blocks.COARSE_DIRT)
                         )
@@ -71,11 +71,11 @@ object DnDSurfaceRules {
                 )
             )
         )
-        val defaultAutumnWoodsSurface = condition(
-            biome(DnDBiomes.AUTUMN_WOODS), sequence(
-                condition(
+        val defaultAutumnWoodsSurface = ifTrue(
+            isBiome(DnDBiomes.AUTUMN_WOODS), sequence(
+                ifTrue(
                     UNDER_FLOOR, sequence(
-                        condition(
+                        ifTrue(
                             surfaceNoiseThreshold(-0.75, 0.75),
                             block(Blocks.COARSE_DIRT)
                         )
@@ -92,12 +92,12 @@ object DnDSurfaceRules {
             )
         )
 
-        val surface = condition(
+        val surface = ifTrue(
             abovePreliminarySurface(),
             sequence(
 //                autumnMud,
-                condition(
-                    water(-6, 0),
+                ifTrue(
+                    waterBlockCheck(-6, 0),
                     sequence(
                         defaultAutumnWoodsSurface,
                         defaultAutumnPasturesSurface
@@ -107,31 +107,31 @@ object DnDSurfaceRules {
         )
 
         // Return a surface-only sequence of surface rules
-        return condition(
-            aboveY(YOffset.fixed(-55), 0),
+        return ifTrue(
+            yBlockCheck(VerticalAnchor.absolute(-55), 0),
             surface
         )
     }
 
-    private fun block(block: Block): MaterialRule = block(block.defaultState)
-    fun mudThreshold(min: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.SURFACE_SWAMP, min, Double.MAX_VALUE)
+    private fun block(block: Block): RuleSource = state(block.defaultBlockState())
+    fun mudThreshold(min: Double): ConditionSource {
+        return noiseCondition(Noises.SWAMP, min, Double.MAX_VALUE)
     }
 
-    fun mudRegionThreshold(min: Double): MaterialCondition {
-        return noiseThreshold(NoiseParametersKeys.PACKED_ICE, min, Double.MAX_VALUE)
+    fun mudRegionThreshold(min: Double): ConditionSource {
+        return noiseCondition(Noises.PACKED_ICE, min, Double.MAX_VALUE)
     }
 
-    private fun surfaceSecondaryNoiseThreshold(min: Double): MaterialCondition =
-        noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25)
+    private fun surfaceSecondaryNoiseThreshold(min: Double): ConditionSource =
+        noiseCondition(Noises.SURFACE_SECONDARY, min / 8.25)
 
-    private fun surfaceSecondaryNoiseThreshold(min: Double, max: Double): MaterialCondition =
-        noiseThreshold(NoiseParametersKeys.SURFACE_SECONDARY, min / 8.25, max / 8.25)
+    private fun surfaceSecondaryNoiseThreshold(min: Double, max: Double): ConditionSource =
+        noiseCondition(Noises.SURFACE_SECONDARY, min / 8.25, max / 8.25)
 
-    private fun surfaceNoiseThreshold(min: Double): MaterialCondition =
-        noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25)
+    private fun surfaceNoiseThreshold(min: Double): ConditionSource =
+        noiseCondition(Noises.SURFACE, min / 8.25)
 
-    fun surfaceNoiseThreshold(min: Double, max: Double): MaterialCondition =
-        noiseThreshold(NoiseParametersKeys.SURFACE, min / 8.25, max / 8.25)
+    fun surfaceNoiseThreshold(min: Double, max: Double): ConditionSource =
+        noiseCondition(Noises.SURFACE, min / 8.25, max / 8.25)
 
 }

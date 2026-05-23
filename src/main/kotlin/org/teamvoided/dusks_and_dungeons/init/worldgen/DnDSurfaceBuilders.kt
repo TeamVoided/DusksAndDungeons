@@ -1,16 +1,16 @@
 package org.teamvoided.dusks_and_dungeons.init.worldgen
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.noise.DoublePerlinNoiseSampler
-import net.minecraft.world.Heightmap
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.source.BiomeAccess
-import net.minecraft.world.chunk.Chunk
-import net.minecraft.world.gen.RandomState
-import net.minecraft.world.gen.chunk.BlockColumn
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.tags.TagKey
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.levelgen.synth.NormalNoise
+import net.minecraft.world.level.levelgen.Heightmap
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.BiomeManager
+import net.minecraft.world.level.chunk.ChunkAccess
+import net.minecraft.world.level.levelgen.RandomState
+import net.minecraft.world.level.chunk.BlockColumn
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoise
 import org.teamvoided.reef.api.events.CustomSurfaceBuilder
@@ -22,11 +22,11 @@ object DnDSurfaceBuilders {
 
 
     //    var glacierIceOld: DoublePerlinNoiseSampler? = null
-    var glacierIce: DoublePerlinNoiseSampler? = null
-    var glacierJaggedness: DoublePerlinNoiseSampler? = null
-    var glacierSnow: DoublePerlinNoiseSampler? = null
-    var glacierWaterRoof: DoublePerlinNoiseSampler? = null
-    var glacierBorders: DoublePerlinNoiseSampler? = null
+    var glacierIce: NormalNoise? = null
+    var glacierJaggedness: NormalNoise? = null
+    var glacierSnow: NormalNoise? = null
+    var glacierWaterRoof: NormalNoise? = null
+    var glacierBorders: NormalNoise? = null
 
 
     fun init() {
@@ -45,13 +45,13 @@ object DnDSurfaceBuilders {
 
         random: RandomState,
         seaLevel: Int,
-        biome: BiomeAccess,
-        chunk: Chunk,
+        biome: BiomeManager,
+        chunk: ChunkAccess,
         blockColumn: BlockColumn,
         x: Int,
         z: Int
     ) {
-        if (biome.getBiome(BlockPos(x, seaLevel, z)).isIn(oreVeinBiomes)) {
+        if (biome.getBiome(BlockPos(x, seaLevel, z)).`is`(oreVeinBiomes)) {
             val veinClamp = 1
             val veinA = 1
             val veinB = 1
@@ -80,26 +80,26 @@ object DnDSurfaceBuilders {
     fun createGlaciers(
         random: RandomState,
         seaLevel: Int,
-        biome: BiomeAccess,
-        chunk: Chunk,
+        biome: BiomeManager,
+        chunk: ChunkAccess,
         blockColumn: BlockColumn,
         x: Int,
         z: Int
     ) {
         if (glacierIce == null) glacierIce =
-            random.getOrCreateNoiseSampler(DnDNoise.GLACIER_ICE_PICKER)
+            random.getOrCreateNoise(DnDNoise.GLACIER_ICE_PICKER)
         if (glacierJaggedness == null) glacierJaggedness =
-            random.getOrCreateNoiseSampler(DnDNoise.GLACIER_JAGGEDNESS)
+            random.getOrCreateNoise(DnDNoise.GLACIER_JAGGEDNESS)
         if (glacierSnow == null) glacierSnow =
-            random.getOrCreateNoiseSampler(DnDNoise.GLACIER_SNOW_SURFACE)
+            random.getOrCreateNoise(DnDNoise.GLACIER_SNOW_SURFACE)
         if (glacierWaterRoof == null) glacierWaterRoof =
-            random.getOrCreateNoiseSampler(DnDNoise.GLACIER_WATER_ROOF)
+            random.getOrCreateNoise(DnDNoise.GLACIER_WATER_ROOF)
         if (glacierBorders == null) glacierBorders =
-            random.getOrCreateNoiseSampler(DnDNoise.GLACIER_BORDERS)
+            random.getOrCreateNoise(DnDNoise.GLACIER_BORDERS)
 
-        val y = chunk.sampleHeightmap(Heightmap.Type.OCEAN_FLOOR_WG, x, z) + 1
+        val y = chunk.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z) + 1
 
-        if (biome.getBiome(BlockPos(x, y, z)).isIn(DnDBiomeTags.HAS_GLACIERS)) {
+        if (biome.getBiome(BlockPos(x, y, z)).`is`(DnDBiomeTags.HAS_GLACIERS)) {
             val glacierJaggednessRange: Double =
                 glacierJaggedness!!.sample(150 * x, 0.0, 150 * z)
             val glacierJaggedness: Double = if (glacierJaggednessRange > 0) {
@@ -111,16 +111,16 @@ object DnDSurfaceBuilders {
             val bias = seaLevel + 40
             val glacierYLevel: Int = ((y - bias) * 0.175 + bias + glacierJaggedness).toInt()
 
-            val snowSurface: Double = glacierSnow!!.sample(x * 0.75, 0.0, z * 0.75) * 1.5
+            val snowSurface: Double = glacierSnow!!.getValue(x * 0.75, 0.0, z * 0.75) * 1.5
             val snowLevel: Int = (glacierYLevel + ceil(snowSurface * 10)).toInt()
 
             var isCorner = false
             for (offset in listOf(-5, 5)) {
                 val negativeOffset = -offset
                 if (!biome.getBiome(BlockPos(x + offset, y, z + negativeOffset))
-                        .isIn(DnDBiomeTags.HAS_GLACIERS) ||
+                        .`is`(DnDBiomeTags.HAS_GLACIERS) ||
                     !biome.getBiome(BlockPos(x + negativeOffset, y, z + offset))
-                        .isIn(DnDBiomeTags.HAS_GLACIERS)
+                        .`is`(DnDBiomeTags.HAS_GLACIERS)
                 ) {
                     isCorner = true
                     break
@@ -129,8 +129,8 @@ object DnDSurfaceBuilders {
 
             val glacierIce: Double = glacierIce!!.sample(x, y, z)
             if (y < seaLevel || isCorner) {
-                val sampledNoise: Double = if (isCorner) glacierBorders!!.sample(x * 0.35, 0.0, z * 0.35) + 0.3
-                else glacierWaterRoof!!.sample(x * 0.75, 0.0, z * 0.75) * 1.5
+                val sampledNoise: Double = if (isCorner) glacierBorders!!.getValue(x * 0.35, 0.0, z * 0.35) + 0.3
+                else glacierWaterRoof!!.getValue(x * 0.75, 0.0, z * 0.75) * 1.5
                 var fill = false
                 for (yLevel in y..glacierYLevel) {
                     if (fill) {
@@ -143,7 +143,7 @@ object DnDSurfaceBuilders {
             } else {
                 for (yLevel in glacierYLevel downTo y) {
                     if (yLevel % 4 == 0 &&
-                        !biome.getBiome(BlockPos(x, yLevel, z)).isIn(DnDBiomeTags.HAS_GLACIERS)
+                        !biome.getBiome(BlockPos(x, yLevel, z)).`is`(DnDBiomeTags.HAS_GLACIERS)
                     ) break
                     placeGlacierBlock(yLevel, blockColumn, snowLevel, glacierIce)
                 }
@@ -160,14 +160,14 @@ object DnDSurfaceBuilders {
             else if (icePicker > 3.2) Blocks.PACKED_ICE
             else Blocks.ICE
 
-        blockColumn.setState(yLevel, block.defaultState)
+        blockColumn.setBlock(yLevel, block.defaultBlockState())
     }
 
     private fun halfNegative(double: Double): Double {
         return if (double < 0) double / 2 else double
     }
 
-    fun DoublePerlinNoiseSampler.sample(x: Number, y: Number, z: Number): Double {
-        return this.sample(x.toDouble(), y.toDouble(), z.toDouble())
+    fun NormalNoise.sample(x: Number, y: Number, z: Number): Double {
+        return this.getValue(x.toDouble(), y.toDouble(), z.toDouble())
     }
 }

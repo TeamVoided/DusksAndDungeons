@@ -3,22 +3,40 @@ package org.teamvoided.dusks_and_dungeons.util.datagen
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
-import net.minecraft.block.*
-import net.minecraft.block.enums.BlockHalf
-import net.minecraft.block.enums.SlabType
-import net.minecraft.block.enums.StairShape
-import net.minecraft.block.enums.WallShape
-import net.minecraft.data.client.model.*
-import net.minecraft.data.client.model.BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations
-import net.minecraft.data.client.model.TextureKey.*
-import net.minecraft.data.client.model.VariantSettings.Rotation
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
-import net.minecraft.registry.Registries
-import net.minecraft.state.property.Properties
-import net.minecraft.state.property.Property
-import net.minecraft.util.Identifier
-import net.minecraft.util.math.Direction
+import net.minecraft.world.level.block.state.properties.Half
+import net.minecraft.world.level.block.state.properties.SlabType
+import net.minecraft.world.level.block.state.properties.StairsShape
+import net.minecraft.world.level.block.state.properties.WallSide
+import net.minecraft.data.models.BlockModelGenerators.createRotatedVariants
+import net.minecraft.data.models.model.TextureSlot.*
+import net.minecraft.data.models.blockstates.VariantProperties.Rotation
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.Property
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.Direction
+import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.blockstates.BlockStateGenerator
+import net.minecraft.data.models.blockstates.Condition
+import net.minecraft.data.models.blockstates.MultiPartGenerator
+import net.minecraft.data.models.blockstates.MultiVariantGenerator
+import net.minecraft.data.models.blockstates.PropertyDispatch
+import net.minecraft.data.models.blockstates.Variant
+import net.minecraft.data.models.blockstates.VariantProperties
+import net.minecraft.data.models.blockstates.VariantProperty
+import net.minecraft.data.models.model.ModelLocationUtils
+import net.minecraft.data.models.model.ModelTemplate
+import net.minecraft.data.models.model.ModelTemplates
+import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.model.TextureSlot
+import net.minecraft.data.models.model.TexturedModel
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.MultifaceBlock
+import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.SnowyDirtBlock
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
@@ -26,219 +44,219 @@ import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.util.*
 
-val INNER: TextureKey = of("inner")
-val SMALL: TextureKey = of("small")
+val INNER: TextureSlot = create("inner")
+val SMALL: TextureSlot = create("small")
 
-fun BlockStateModelGenerator.cubeOverlay(overlay: Identifier) {
-    val texture = Texture().put(ALL, overlay)
-    Models.CUBE_ALL.upload(overlay, texture, this.modelCollector)
+fun BlockModelGenerators.cubeOverlay(overlay: ResourceLocation) {
+    val texture = TextureMapping().put(ALL, overlay)
+    ModelTemplates.CUBE_ALL.create(overlay, texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.tintedCubeOverlay(overlay: Identifier) {
-    val texture = Texture().put(ALL, overlay)
-    block("parent/cube_tinted_all", ALL).upload(overlay, texture, this.modelCollector)
+fun BlockModelGenerators.tintedCubeOverlay(overlay: ResourceLocation) {
+    val texture = TextureMapping().put(ALL, overlay)
+    block("parent/cube_tinted_all", ALL).create(overlay, texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.cube15Overlay(overlay: Identifier) {
-    val texture = Texture().put(ALL, overlay)
-    block("parent/cube_15_all", ALL).upload(overlay.suffix("_15"), texture, this.modelCollector)
+fun BlockModelGenerators.cube15Overlay(overlay: ResourceLocation) {
+    val texture = TextureMapping().put(ALL, overlay)
+    block("parent/cube_15_all", ALL).create(overlay.suffix("_15"), texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.tintedStairAllOverlay(overlay: Identifier) {
+fun BlockModelGenerators.tintedStairAllOverlay(overlay: ResourceLocation) {
     this.tintedStairOverlay(overlay, overlay, overlay, overlay)
 }
 
-fun BlockStateModelGenerator.tintedStairOverlay(
-    overlay: Identifier,
-    overlayTop: Identifier,
-    overlayBottom: Identifier,
-    overlaySide: Identifier
+fun BlockModelGenerators.tintedStairOverlay(
+    overlay: ResourceLocation,
+    overlayTop: ResourceLocation,
+    overlayBottom: ResourceLocation,
+    overlaySide: ResourceLocation
 ) {
-    val texture: Texture = Texture()
+    val texture: TextureMapping = TextureMapping()
         .put(TOP, overlayTop)
         .put(BOTTOM, overlayBottom)
         .put(SIDE, overlaySide)
 
     block("parent/stairs_with_tint", TOP, BOTTOM, SIDE)
-        .upload(overlay.suffix("_stairs"), texture, this.modelCollector)
+        .create(overlay.suffix("_stairs"), texture, this.modelOutput)
     block("parent/stairs_inner_with_tint", TOP, BOTTOM, SIDE)
-        .upload(overlay.suffix("_stairs_inner"), texture, this.modelCollector)
+        .create(overlay.suffix("_stairs_inner"), texture, this.modelOutput)
     block("parent/stairs_outer_with_tint", TOP, BOTTOM, SIDE)
-        .upload(overlay.suffix("_stairs_outer"), texture, this.modelCollector)
+        .create(overlay.suffix("_stairs_outer"), texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.tintedSlabAllOverlay(overlay: Identifier) {
+fun BlockModelGenerators.tintedSlabAllOverlay(overlay: ResourceLocation) {
     this.tintedSlabOverlay(overlay, overlay, overlay, overlay)
 }
 
-fun BlockStateModelGenerator.tintedSlabOverlay(
-    overlay: Identifier,
-    overlayTop: Identifier,
-    overlayBottom: Identifier,
-    overlaySide: Identifier
+fun BlockModelGenerators.tintedSlabOverlay(
+    overlay: ResourceLocation,
+    overlayTop: ResourceLocation,
+    overlayBottom: ResourceLocation,
+    overlaySide: ResourceLocation
 ) {
-    val texture = Texture()
+    val texture = TextureMapping()
         .put(TOP, overlayTop)
         .put(BOTTOM, overlayBottom)
         .put(SIDE, overlaySide)
     block("parent/slab_with_tint", "_post", TOP, BOTTOM, SIDE)
-        .upload(overlay.suffix("_slab"), texture, this.modelCollector)
+        .create(overlay.suffix("_slab"), texture, this.modelOutput)
     block("parent/slab_top_with_tint", "_side", TOP, BOTTOM, SIDE)
-        .upload(overlay.suffix("_slab_top"), texture, this.modelCollector)
+        .create(overlay.suffix("_slab_top"), texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.tintedWallOverlay(overlay: Identifier) {
-    val texture = Texture().put(WALL, overlay)
+fun BlockModelGenerators.tintedWallOverlay(overlay: ResourceLocation) {
+    val texture = TextureMapping().put(WALL, overlay)
     block("parent/wall_post_with_tint", "_post", WALL)
-        .upload(overlay.suffix("_wall_post"), texture, this.modelCollector)
+        .create(overlay.suffix("_wall_post"), texture, this.modelOutput)
     block("parent/wall_side_with_tint", "_side", WALL)
-        .upload(overlay.suffix("_wall_side"), texture, this.modelCollector)
+        .create(overlay.suffix("_wall_side"), texture, this.modelOutput)
     block("parent/wall_side_tall_with_tint", "_side", WALL)
-        .upload(overlay.suffix("_wall_side_tall"), texture, this.modelCollector)
+        .create(overlay.suffix("_wall_side_tall"), texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.registerTintedOverlay(overlay: Identifier) {
+fun BlockModelGenerators.registerTintedOverlay(overlay: ResourceLocation) {
     this.tintedCubeOverlay(overlay)
     this.tintedStairAllOverlay(overlay)
     this.tintedSlabAllOverlay(overlay)
     this.tintedWallOverlay(overlay)
 }
 
-fun BlockStateModelGenerator.cubeAllWithTintedOverlay(block: Block, reference: Block, overlay: Identifier) {
+fun BlockModelGenerators.cubeAllWithTintedOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
     this.cubeWithOverlay(block, reference, overlay)
     this.cubeItemAllWithOverlay(block, reference, overlay)
 }
 
-fun BlockStateModelGenerator.cube15WithOverlay(block: Block, reference: Block, overlay: Identifier) {
+fun BlockModelGenerators.cube15WithOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
     this.cubeWithOverlay(block, reference, overlay.suffix("_15"))
     this.cubeItem15WithOverlay(block, reference, overlay)
 }
 
-fun BlockStateModelGenerator.rotatableCubeAllWithOverlay(block: Block, reference: Block, overlay: Identifier) {
+fun BlockModelGenerators.rotatableCubeAllWithOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
     this.rotatableCubeWithOverlay(block, reference, overlay)
     this.cubeItemAllWithOverlay(block, reference, overlay)
 }
 
-fun BlockStateModelGenerator.cubeSnowableColumnWithOverlay(block: Block, reference: Block, overlay: Identifier) {
+fun BlockModelGenerators.cubeSnowableColumnWithOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
     this.cubeSnowableColumnOverlay(block, reference, overlay)
     this.cubeSnowableColumnOverlayItem(block, reference, overlay)
 }
 
-fun BlockStateModelGenerator.grassWithOverlay(block: Block, reference: Block, overlay: Identifier) {
+fun BlockModelGenerators.grassWithOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
     this.cubeSnowableColumnOverlay(block, reference, overlay)
-    val texture = Texture()
+    val texture = TextureMapping()
         .put(BOTTOM, Blocks.DIRT.model())
         .put(TOP, reference.model("_top"))
         .put(LAYER0, reference.model("_side"))
         .put(LAYER1, reference.model("_side_overlay"))
         .put(LAYER2, overlay)
     block("parent/grass_block_with_overlay_inventory", BOTTOM, TOP, LAYER0, LAYER1, LAYER2)
-        .upload(ModelIds.getItemModelId(block.asItem()), texture, this.modelCollector)
+        .create(ModelLocationUtils.getModelLocation(block.asItem()), texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.cubeItemAllWithOverlay(block: Block, reference: Block, overlay: Identifier) {
+fun BlockModelGenerators.cubeItemAllWithOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
 //    yes this is a lazy snow block edge case
-    val texture = Texture()
+    val texture = TextureMapping()
         .put(
-            ALL, if (reference == Blocks.SNOW_BLOCK) Identifier.of(
+            ALL, if (reference == Blocks.SNOW_BLOCK) ResourceLocation.fromNamespaceAndPath(
                 reference.model().namespace,
                 reference.model().path.removeSuffix("_block")
             ) else reference.model()
         )
         .put(DIRT, overlay)
-    block("parent/cube_all_overlay_inventory", ALL, DIRT).upload(
-        ModelIds.getItemModelId(block.asItem()), texture,
-        this.modelCollector
+    block("parent/cube_all_overlay_inventory", ALL, DIRT).create(
+        ModelLocationUtils.getModelLocation(block.asItem()), texture,
+        this.modelOutput
     )
 }
 
-fun BlockStateModelGenerator.cubeItem15WithOverlay(block: Block, reference: Block, overlay: Identifier) {
-    val texture = Texture()
+fun BlockModelGenerators.cubeItem15WithOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
+    val texture = TextureMapping()
         .put(BOTTOM, Blocks.DIRT.model())
         .put(TOP, reference.model("_top"))
         .put(SIDE, reference.model("_side"))
         .put(DIRT, overlay)
     block("parent/cube_15_overlay_inventory", BOTTOM, TOP, SIDE, DIRT)
-        .upload(ModelIds.getItemModelId(block.asItem()), texture, this.modelCollector)
+        .create(ModelLocationUtils.getModelLocation(block.asItem()), texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.cubeSnowableColumnOverlayItem(block: Block, reference: Block, overlay: Identifier) {
-    val texture = Texture()
+fun BlockModelGenerators.cubeSnowableColumnOverlayItem(block: Block, reference: Block, overlay: ResourceLocation) {
+    val texture = TextureMapping()
         .put(DIRT, overlay)
         .put(DOWN, Blocks.DIRT.model())
         .put(UP, reference.model("_top"))
         .put(SIDE, reference.model("_side"))
     block("parent/cube_bottom_top_overlay_inventory", DIRT, DOWN, UP, SIDE)
-        .upload(ModelIds.getItemModelId(block.asItem()), texture, this.modelCollector)
+        .create(ModelLocationUtils.getModelLocation(block.asItem()), texture, this.modelOutput)
 }
 
-fun BlockStateModelGenerator.cubeWithOverlay(block: Block, reference: Block, overlay: Identifier) {
-    val model = MultipartBlockStateSupplier.create(block)
+fun BlockModelGenerators.cubeWithOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
+    val model = MultiPartGenerator.multiPart(block)
     model.with(
-        BlockStateVariant.create()
-            .put(
-                VariantSettings.MODEL,
+        Variant.variant()
+            .with(
+                VariantProperties.MODEL,
                 reference.model()
             )
     )
     model.with(
-        BlockStateVariant.create()
-            .put(
-                VariantSettings.MODEL,
+        Variant.variant()
+            .with(
+                VariantProperties.MODEL,
                 overlay
             )
     )
-    this.blockStateCollector.accept(model)
+    this.blockStateOutput.accept(model)
 }
 
-fun BlockStateModelGenerator.rotatableCubeWithOverlay(block: Block, reference: Block, overlay: Identifier) {
-    val model = MultipartBlockStateSupplier.create(block)
+fun BlockModelGenerators.rotatableCubeWithOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
+    val model = MultiPartGenerator.multiPart(block)
     model.with(
-        listOf(*createModelVariantWithRandomHorizontalRotations(reference.model()))
+        listOf(*createRotatedVariants(reference.model()))
     )
     model.with(
-        BlockStateVariant.create()
-            .put(
-                VariantSettings.MODEL,
+        Variant.variant()
+            .with(
+                VariantProperties.MODEL,
                 overlay
             )
     )
-    this.blockStateCollector.accept(model)
+    this.blockStateOutput.accept(model)
 }
 
-fun BlockStateModelGenerator.cubeSnowableColumnOverlay(block: Block, reference: Block, overlay: Identifier) {
-    val model = MultipartBlockStateSupplier.create(block)
+fun BlockModelGenerators.cubeSnowableColumnOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
+    val model = MultiPartGenerator.multiPart(block)
     model.with(
-        When.create().set(SnowyBlock.SNOWY, false),
-        listOf(*createModelVariantWithRandomHorizontalRotations(reference.model()))
+        Condition.condition().term(SnowyDirtBlock.SNOWY, false),
+        listOf(*createRotatedVariants(reference.model()))
     )
     model.with(
-        When.create().set(SnowyBlock.SNOWY, true),
-        BlockStateVariant.create()
-            .put(
-                VariantSettings.MODEL,
+        Condition.condition().term(SnowyDirtBlock.SNOWY, true),
+        Variant.variant()
+            .with(
+                VariantProperties.MODEL,
                 Blocks.GRASS_BLOCK.model("_snow")
             )
     )
     model.with(
-        BlockStateVariant.create()
-            .put(
-                VariantSettings.MODEL,
+        Variant.variant()
+            .with(
+                VariantProperties.MODEL,
                 overlay
             )
     )
-    this.blockStateCollector.accept(model)
+    this.blockStateOutput.accept(model)
 }
 
-fun BlockStateModelGenerator.stairsWithTintedOverlay(
-    stairsBlock: Block, baseBlock: Block, overlay: Identifier
+fun BlockModelGenerators.stairsWithTintedOverlay(
+    stairsBlock: Block, baseBlock: Block, overlay: ResourceLocation
 ) {
     val regularModelId = "_stairs"
     val innerModelId = "_stairs_inner"
     val outerModelId = "_stairs_outer"
     val half = listOf(
-        (BlockHalf.BOTTOM to Rotation.R0),
-        (BlockHalf.TOP to Rotation.R180)
+        (Half.BOTTOM to Rotation.R0),
+        (Half.TOP to Rotation.R180)
     )
     val directions = listOf(
         (Direction.EAST to Rotation.R0),
@@ -247,20 +265,20 @@ fun BlockStateModelGenerator.stairsWithTintedOverlay(
         (Direction.NORTH to Rotation.R270)
     )
     val stairShape = listOf(
-        (StairShape.STRAIGHT to regularModelId),
-        (StairShape.INNER_LEFT to innerModelId),
-        (StairShape.INNER_RIGHT to innerModelId),
-        (StairShape.OUTER_LEFT to outerModelId),
-        (StairShape.OUTER_RIGHT to outerModelId)
+        (StairsShape.STRAIGHT to regularModelId),
+        (StairsShape.INNER_LEFT to innerModelId),
+        (StairsShape.INNER_RIGHT to innerModelId),
+        (StairsShape.OUTER_LEFT to outerModelId),
+        (StairsShape.OUTER_RIGHT to outerModelId)
     )
 
-    val model = MultipartBlockStateSupplier.create(stairsBlock)
+    val model = MultiPartGenerator.multiPart(stairsBlock)
     var rotatY: Rotation
 
     half.forEach { (half, rotationX) ->
         directions.forEach { (direction, rotationY) ->
             stairShape.forEach { (shape, models) ->
-                rotatY = if (shape == StairShape.INNER_LEFT || shape == StairShape.OUTER_LEFT) {
+                rotatY = if (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT) {
                     when (rotationY) {
                         Rotation.R0 -> Rotation.R270
                         Rotation.R90 -> Rotation.R0
@@ -271,59 +289,59 @@ fun BlockStateModelGenerator.stairsWithTintedOverlay(
                     rotationY
                 }
                 model.with(
-                    When.create()
-                        .set(Properties.HORIZONTAL_FACING, direction)
-                        .set(Properties.BLOCK_HALF, half)
-                        .set(Properties.STAIR_SHAPE, shape),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
+                    Condition.condition()
+                        .term(BlockStateProperties.HORIZONTAL_FACING, direction)
+                        .term(BlockStateProperties.HALF, half)
+                        .term(BlockStateProperties.STAIRS_SHAPE, shape),
+                    Variant.variant()
+                        .with(
+                            VariantProperties.MODEL,
                             stairTitle(baseBlock, models)
                         )
-                        .put(VariantSettings.X, rotationX)
-                        .put(VariantSettings.Y, rotatY)
-                        .put(VariantSettings.UVLOCK, true)
+                        .with(VariantProperties.X_ROT, rotationX)
+                        .with(VariantProperties.Y_ROT, rotatY)
+                        .with(VariantProperties.UV_LOCK, true)
                 ).with(
-                    When.create()
-                        .set(Properties.HORIZONTAL_FACING, direction)
-                        .set(Properties.BLOCK_HALF, half)
-                        .set(Properties.STAIR_SHAPE, shape),
-                    BlockStateVariant.create()
-                        .put(
-                            VariantSettings.MODEL,
+                    Condition.condition()
+                        .term(BlockStateProperties.HORIZONTAL_FACING, direction)
+                        .term(BlockStateProperties.HALF, half)
+                        .term(BlockStateProperties.STAIRS_SHAPE, shape),
+                    Variant.variant()
+                        .with(
+                            VariantProperties.MODEL,
                             overlay.suffix(models)
                         )
-                        .put(VariantSettings.X, rotationX)
-                        .put(VariantSettings.Y, rotatY)
-                        .put(VariantSettings.UVLOCK, true)
+                        .with(VariantProperties.X_ROT, rotationX)
+                        .with(VariantProperties.Y_ROT, rotatY)
+                        .with(VariantProperties.UV_LOCK, true)
                 )
             }
         }
     }
-    this.blockStateCollector.accept(model)
-    val texture: Texture = Texture.texture(stairsBlock)
-        .put(BOTTOM, Texture.getId(baseBlock))
-        .put(SIDE, Texture.getId(baseBlock))
-        .put(TOP, Texture.getId(baseBlock))
+    this.blockStateOutput.accept(model)
+    val texture: TextureMapping = TextureMapping.defaultTexture(stairsBlock)
+        .put(BOTTOM, TextureMapping.getBlockTexture(baseBlock))
+        .put(SIDE, TextureMapping.getBlockTexture(baseBlock))
+        .put(TOP, TextureMapping.getBlockTexture(baseBlock))
         .put(DOWN, overlay)
         .put(NORTH, overlay)
         .put(UP, overlay)
-    this.registerParentedItemModel(
+    this.delegateItemModel(
         stairsBlock,
         slabOrStairWithOverlayModel("parent/stairs_inventory_with_tinted_overlay")
-            .upload(stairsBlock, texture, this.modelCollector)
+            .create(stairsBlock, texture, this.modelOutput)
     )
 }
 
-fun stairTitle(block: Block, suffix: String): Identifier {
-    return Identifier.of(block.model().namespace, block.model().path.removeSuffix("s")).suffix(suffix)
+fun stairTitle(block: Block, suffix: String): ResourceLocation {
+    return ResourceLocation.fromNamespaceAndPath(block.model().namespace, block.model().path.removeSuffix("s")).suffix(suffix)
 }
 
-fun BlockStateModelGenerator.slabWithTintedOverlay(
-    slab: Block, baseBlock: Block, overlay: Identifier
+fun BlockModelGenerators.slabWithTintedOverlay(
+    slab: Block, baseBlock: Block, overlay: ResourceLocation
 ) {
-    val slabOfTexture = Identifier.of(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
-    val model = MultipartBlockStateSupplier.create(slab)
+    val slabOfTexture = ResourceLocation.fromNamespaceAndPath(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
+    val model = MultiPartGenerator.multiPart(slab)
     val slabType = listOf(
         (SlabType.BOTTOM to "_slab"),
         (SlabType.TOP to "_slab_top"),
@@ -331,40 +349,40 @@ fun BlockStateModelGenerator.slabWithTintedOverlay(
     )
     slabType.forEach { (type, suffix) ->
         model.with(
-            When.create().set(Properties.SLAB_TYPE, type),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, if (suffix == "") baseBlock.model() else slabOfTexture.suffix(suffix))
+            Condition.condition().term(BlockStateProperties.SLAB_TYPE, type),
+            Variant.variant()
+                .with(VariantProperties.MODEL, if (suffix == "") baseBlock.model() else slabOfTexture.suffix(suffix))
         ).with(
-            When.create().set(Properties.SLAB_TYPE, type),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, overlay.suffix(suffix))
+            Condition.condition().term(BlockStateProperties.SLAB_TYPE, type),
+            Variant.variant()
+                .with(VariantProperties.MODEL, overlay.suffix(suffix))
         )
     }
-    this.blockStateCollector.accept(model)
+    this.blockStateOutput.accept(model)
 
 
-    val texture: Texture = Texture.texture(slab)
-        .put(BOTTOM, Texture.getId(baseBlock))
-        .put(SIDE, Texture.getId(baseBlock))
-        .put(TOP, Texture.getId(baseBlock))
+    val texture: TextureMapping = TextureMapping.defaultTexture(slab)
+        .put(BOTTOM, TextureMapping.getBlockTexture(baseBlock))
+        .put(SIDE, TextureMapping.getBlockTexture(baseBlock))
+        .put(TOP, TextureMapping.getBlockTexture(baseBlock))
         .put(DOWN, overlay)
         .put(NORTH, overlay)
         .put(UP, overlay)
-    this.registerParentedItemModel(
+    this.delegateItemModel(
         slab,
         slabOrStairWithOverlayModel("parent/slab_inventory_with_tinted_overlay")
-            .upload(slab, texture, this.modelCollector)
+            .create(slab, texture, this.modelOutput)
     )
 }
 
 
-fun slabOrStairWithOverlayModel(parent: String): Model {
+fun slabOrStairWithOverlayModel(parent: String): ModelTemplate {
     return block(parent, BOTTOM, TOP, SIDE, DOWN, UP, NORTH)
 }
 
-fun BlockStateModelGenerator.wallWithTintedOverlay(wall: Block, baseBlock: Block, overlay: Identifier) {
-    val wallOf = Identifier.of(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
-    this.blockStateCollector.accept(
+fun BlockModelGenerators.wallWithTintedOverlay(wall: Block, baseBlock: Block, overlay: ResourceLocation) {
+    val wallOf = ResourceLocation.fromNamespaceAndPath(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
+    this.blockStateOutput.accept(
         createWallBlockStateWithOverlay(
             wall,
             wallOf.suffix("_wall_post"),
@@ -375,198 +393,198 @@ fun BlockStateModelGenerator.wallWithTintedOverlay(wall: Block, baseBlock: Block
             overlay.suffix("_wall_side_tall")
         )
     )
-    val texture = Texture.texture(wall)
-        .put(WALL, Texture.getId(baseBlock))
+    val texture = TextureMapping.defaultTexture(wall)
+        .put(WALL, TextureMapping.getBlockTexture(baseBlock))
         .put(DIRT, overlay)
-    this.registerParentedItemModel(
+    this.delegateItemModel(
         wall, block("parent/wall_inventory_with_tinted_overlay", "_inventory", WALL, DIRT)
-            .upload(wall, texture, this.modelCollector)
+            .create(wall, texture, this.modelOutput)
     )
 }
 
 fun createWallBlockStateWithOverlay(
     wallBlock: Block,
-    postModelId: Identifier,
-    postOverlayModelId: Identifier,
-    lowSideModelId: Identifier,
-    lowSideOverlayModelId: Identifier,
-    tallSideModelId: Identifier,
-    tallSideOverlayModelId: Identifier
-): BlockStateSupplier {
+    postModelId: ResourceLocation,
+    postOverlayModelId: ResourceLocation,
+    lowSideModelId: ResourceLocation,
+    lowSideOverlayModelId: ResourceLocation,
+    tallSideModelId: ResourceLocation,
+    tallSideOverlayModelId: ResourceLocation
+): BlockStateGenerator {
     val directions = listOf(
-        (Properties.NORTH_WALL_SHAPE to Rotation.R0),
-        (Properties.EAST_WALL_SHAPE to Rotation.R90),
-        (Properties.SOUTH_WALL_SHAPE to Rotation.R180),
-        (Properties.WEST_WALL_SHAPE to Rotation.R270)
+        (BlockStateProperties.NORTH_WALL to Rotation.R0),
+        (BlockStateProperties.EAST_WALL to Rotation.R90),
+        (BlockStateProperties.SOUTH_WALL to Rotation.R180),
+        (BlockStateProperties.WEST_WALL to Rotation.R270)
     )
-    val model = MultipartBlockStateSupplier.create(wallBlock)
+    val model = MultiPartGenerator.multiPart(wallBlock)
     model.with(
-        When.create().set(Properties.UP, true),
-        BlockStateVariant.create().put(VariantSettings.MODEL, postModelId)
+        Condition.condition().term(BlockStateProperties.UP, true),
+        Variant.variant().with(VariantProperties.MODEL, postModelId)
     ).with(
-        When.create().set(Properties.UP, true),
-        BlockStateVariant.create().put(VariantSettings.MODEL, postOverlayModelId)
+        Condition.condition().term(BlockStateProperties.UP, true),
+        Variant.variant().with(VariantProperties.MODEL, postOverlayModelId)
     )
     directions.forEach { (shape, rotation) ->
         model.with(
-            When.create().set(shape, WallShape.LOW),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, lowSideModelId)
-                .put(VariantSettings.UVLOCK, true)
-                .put(VariantSettings.Y, rotation)
+            Condition.condition().term(shape, WallSide.LOW),
+            Variant.variant()
+                .with(VariantProperties.MODEL, lowSideModelId)
+                .with(VariantProperties.UV_LOCK, true)
+                .with(VariantProperties.Y_ROT, rotation)
         ).with(
-            When.create().set(shape, WallShape.LOW),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, lowSideOverlayModelId)
-                .put(VariantSettings.UVLOCK, true)
-                .put(VariantSettings.Y, rotation)
+            Condition.condition().term(shape, WallSide.LOW),
+            Variant.variant()
+                .with(VariantProperties.MODEL, lowSideOverlayModelId)
+                .with(VariantProperties.UV_LOCK, true)
+                .with(VariantProperties.Y_ROT, rotation)
         )
         model.with(
-            When.create().set(shape, WallShape.TALL),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, tallSideModelId)
-                .put(VariantSettings.UVLOCK, true)
-                .put(VariantSettings.Y, rotation)
+            Condition.condition().term(shape, WallSide.TALL),
+            Variant.variant()
+                .with(VariantProperties.MODEL, tallSideModelId)
+                .with(VariantProperties.UV_LOCK, true)
+                .with(VariantProperties.Y_ROT, rotation)
         ).with(
-            When.create().set(shape, WallShape.TALL),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, tallSideOverlayModelId)
-                .put(VariantSettings.UVLOCK, true)
-                .put(VariantSettings.Y, rotation)
+            Condition.condition().term(shape, WallSide.TALL),
+            Variant.variant()
+                .with(VariantProperties.MODEL, tallSideOverlayModelId)
+                .with(VariantProperties.UV_LOCK, true)
+                .with(VariantProperties.Y_ROT, rotation)
         )
     }
     return model
 }
 
-fun getRandomYRotations(model: Identifier): Array<BlockStateVariant> {
-    var array = arrayOf<BlockStateVariant>()
+fun getRandomYRotations(model: ResourceLocation): Array<Variant> {
+    var array = arrayOf<Variant>()
     Rotation.entries.forEach {
-        val variant = BlockStateVariant.create().put(VariantSettings.MODEL, model)
-        if (it != Rotation.R0) variant.put(VariantSettings.Y, it)
+        val variant = Variant.variant().with(VariantProperties.MODEL, model)
+        if (it != Rotation.R0) variant.with(VariantProperties.Y_ROT, it)
         array += variant
     }
     return array
 }
 
-fun getRandomYXRotations(model: Identifier): Array<BlockStateVariant> {
-    var array = arrayOf<BlockStateVariant>()
+fun getRandomYXRotations(model: ResourceLocation): Array<Variant> {
+    var array = arrayOf<Variant>()
     Rotation.entries.forEach { itY ->
         Rotation.entries.forEach { itX ->
-            val variant = BlockStateVariant.create().put(VariantSettings.MODEL, model)
-            if (itY != Rotation.R0) variant.put(VariantSettings.Y, itY)
-            if (itX != Rotation.R0) variant.put(VariantSettings.X, itX)
+            val variant = Variant.variant().with(VariantProperties.MODEL, model)
+            if (itY != Rotation.R0) variant.with(VariantProperties.Y_ROT, itY)
+            if (itX != Rotation.R0) variant.with(VariantProperties.X_ROT, itX)
             array += variant
         }
     }
     return array
 }
 
-fun BlockStateModelGenerator.createVerdureGrowth(block: Block, top: Identifier, bottom: Identifier) {
-    val texture = Texture.texture(block)
-        .put(PARTICLE, Texture.getId(block))
+fun BlockModelGenerators.createVerdureGrowth(block: Block, top: ResourceLocation, bottom: ResourceLocation) {
+    val texture = TextureMapping.defaultTexture(block)
+        .put(PARTICLE, TextureMapping.getBlockTexture(block))
         .put(TOP, top)
-        .put(SIDE, Texture.getId(block))
+        .put(SIDE, TextureMapping.getBlockTexture(block))
         .put(BOTTOM, bottom)
-    val model = Models.CUBE_BOTTOM_TOP.upload(block, texture, this.modelCollector)
-    blockStateCollector.accept(
-        BlockStateModelGenerator.createBlockStateWithRandomHorizontalRotations(block, model)
+    val model = ModelTemplates.CUBE_BOTTOM_TOP.create(block, texture, this.modelOutput)
+    blockStateOutput.accept(
+        BlockModelGenerators.createRotatedVariant(block, model)
     )
 }
 
-fun BlockStateModelGenerator.registerGoldenMushroomPlant(block: Block) {
-    this.registerItemModel(block, "_1")
-    var array = arrayOf<BlockStateVariant>()
+fun BlockModelGenerators.registerGoldenMushroomPlant(block: Block) {
+    this.createSimpleFlatItemModel(block, "_1")
+    var array = arrayOf<Variant>()
     var loop = 1
     repeat(3) {
-        val texture = Texture.texture(block).put(CROSS, Texture.getSubId(block, "_$loop"))
-        val model = Models.CROSS.upload(block, "_$loop", texture, this.modelCollector)
-        array += BlockStateVariant.create().put(VariantSettings.MODEL, model)
+        val texture = TextureMapping.defaultTexture(block).put(CROSS, TextureMapping.getBlockTexture(block, "_$loop"))
+        val model = ModelTemplates.CROSS.createWithSuffix(block, "_$loop", texture, this.modelOutput)
+        array += Variant.variant().with(VariantProperties.MODEL, model)
         loop += 1
     }
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(
             block, *array
         )
     )
 }
 
-fun BlockStateModelGenerator.registerMushroomBlockDiffInside(
+fun BlockModelGenerators.registerMushroomBlockDiffInside(
     block: Block,
-    insideTexture: Identifier = block.model().suffix("_inside")
+    insideTexture: ResourceLocation = block.model().suffix("_inside")
 ) {
-    val texture = Models.TEMPLATE_SINGLE_FACE.upload(
-        block, Texture.texture(block),
-        this.modelCollector
+    val texture = ModelTemplates.SINGLE_FACE.create(
+        block, TextureMapping.defaultTexture(block),
+        this.modelOutput
     )
-    val blockstate: MultipartBlockStateSupplier = MultipartBlockStateSupplier.create(block)
+    val blockstate: MultiPartGenerator = MultiPartGenerator.multiPart(block)
     listOf(true, false).forEach { loop ->
         listOf(
-            Properties.NORTH,
-            Properties.EAST,
-            Properties.SOUTH,
-            Properties.WEST,
-            Properties.DOWN,
-            Properties.UP
+            BlockStateProperties.NORTH,
+            BlockStateProperties.EAST,
+            BlockStateProperties.SOUTH,
+            BlockStateProperties.WEST,
+            BlockStateProperties.DOWN,
+            BlockStateProperties.UP
         ).forEach { direction ->
-            val variant = BlockStateVariant.create().put(VariantSettings.MODEL, if (loop) texture else insideTexture)
+            val variant = Variant.variant().with(VariantProperties.MODEL, if (loop) texture else insideTexture)
             val variant2 = when (direction) {
-                Properties.EAST -> variant.put(VariantSettings.Y, Rotation.R90)
-                Properties.SOUTH -> variant.put(VariantSettings.Y, Rotation.R180)
-                Properties.WEST -> variant.put(VariantSettings.Y, Rotation.R270)
-                Properties.DOWN -> variant.put(VariantSettings.X, Rotation.R90)
-                Properties.UP -> variant.put(VariantSettings.X, Rotation.R270)
+                BlockStateProperties.EAST -> variant.with(VariantProperties.Y_ROT, Rotation.R90)
+                BlockStateProperties.SOUTH -> variant.with(VariantProperties.Y_ROT, Rotation.R180)
+                BlockStateProperties.WEST -> variant.with(VariantProperties.Y_ROT, Rotation.R270)
+                BlockStateProperties.DOWN -> variant.with(VariantProperties.X_ROT, Rotation.R90)
+                BlockStateProperties.UP -> variant.with(VariantProperties.X_ROT, Rotation.R270)
                 else -> variant
             }
             blockstate.with(
-                When.create().set(direction, loop),
-                variant2.put(VariantSettings.UVLOCK, loop)
+                Condition.condition().term(direction, loop),
+                variant2.with(VariantProperties.UV_LOCK, loop)
             )
         }
     }
 
-    this.blockStateCollector.accept(blockstate)
-    this.registerParentedItemModel(
-        block, TexturedModel.CUBE_ALL.createWithSuffix(
+    this.blockStateOutput.accept(blockstate)
+    this.delegateItemModel(
+        block, TexturedModel.CUBE.createWithSuffix(
             block, "_inventory",
-            this.modelCollector
+            this.modelOutput
         )
     )
 }
 
-fun BlockStateModelGenerator.registerTreeMushroom(block: Block, parentModel: String) {
-    this.registerItemModel(block)
-    val texture = Texture.texture(block)
-        .put(TOP, Texture.getSubId(block, "_top"))
-        .put(BOTTOM, Texture.getSubId(block, "_bottom"))
-        .put(SMALL, Texture.getSubId(block, "_small"))
+fun BlockModelGenerators.registerTreeMushroom(block: Block, parentModel: String) {
+    this.createSimpleFlatItemModel(block)
+    val texture = TextureMapping.defaultTexture(block)
+        .put(TOP, TextureMapping.getBlockTexture(block, "_top"))
+        .put(BOTTOM, TextureMapping.getBlockTexture(block, "_bottom"))
+        .put(SMALL, TextureMapping.getBlockTexture(block, "_small"))
     val model = block(
         parentModel,
         TOP,
         BOTTOM,
         SMALL
     )
-    this.registerSingleton(block, texture, model)
+    this.createTrivialBlock(block, texture, model)
 }
 
 
-fun BlockStateModelGenerator.registerFlowerbed2(
+fun BlockModelGenerators.registerFlowerbed2(
     block: Block,
     useDefault: Boolean = true,
-    parent: Identifier = mc("block/flowerbed")
+    parent: ResourceLocation = mc("block/flowerbed")
 ) {
-    this.registerItemModel(block.asItem())
-    val texture = Texture()
-        .put(FLOWERBED, Texture.getId(block))
-        .put(STEM, if (useDefault) Texture.getSubId(block, "_stem") else id("block/petals_stem"))
+    this.createSimpleFlatItemModel(block.asItem())
+    val texture = TextureMapping()
+        .put(FLOWERBED, TextureMapping.getBlockTexture(block))
+        .put(STEM, if (useDefault) TextureMapping.getBlockTexture(block, "_stem") else id("block/petals_stem"))
     val identifier = block(parent.suffix("_1"), "_1", FLOWERBED, STEM)
-        .upload(block, texture, this.modelCollector)
+        .create(block, texture, this.modelOutput)
     val identifier2 = block(parent.suffix("_2"), "_2", FLOWERBED, STEM)
-        .upload(block, texture, this.modelCollector)
+        .create(block, texture, this.modelOutput)
     val identifier3 = block(parent.suffix("_3"), "_3", FLOWERBED, STEM)
-        .upload(block, texture, this.modelCollector)
+        .create(block, texture, this.modelOutput)
     val identifier4 = block(parent.suffix("_4"), "_4", FLOWERBED, STEM)
-        .upload(block, texture, this.modelCollector)
-    val flowerbed = MultipartBlockStateSupplier.create(block)
+        .create(block, texture, this.modelOutput)
+    val flowerbed = MultiPartGenerator.multiPart(block)
     val directionAndRotation = listOf(
         (Direction.NORTH to Rotation.R0),
         (Direction.EAST to Rotation.R90),
@@ -575,39 +593,39 @@ fun BlockStateModelGenerator.registerFlowerbed2(
     )
     directionAndRotation.forEach { (direction, rotation) ->
         flowerbed.with(
-            When.create()
-                .set(Properties.FLOWER_AMOUNT, 1, 2, 3, 4)
-                .set(Properties.HORIZONTAL_FACING, direction),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, identifier)
-                .put(VariantSettings.Y, rotation)
+            Condition.condition()
+                .term(BlockStateProperties.FLOWER_AMOUNT, 1, 2, 3, 4)
+                .term(BlockStateProperties.HORIZONTAL_FACING, direction),
+            Variant.variant()
+                .with(VariantProperties.MODEL, identifier)
+                .with(VariantProperties.Y_ROT, rotation)
         ).with(
-            When.create()
-                .set(Properties.FLOWER_AMOUNT, 2, 3, 4)
-                .set(Properties.HORIZONTAL_FACING, direction),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, identifier2)
-                .put(VariantSettings.Y, rotation)
+            Condition.condition()
+                .term(BlockStateProperties.FLOWER_AMOUNT, 2, 3, 4)
+                .term(BlockStateProperties.HORIZONTAL_FACING, direction),
+            Variant.variant()
+                .with(VariantProperties.MODEL, identifier2)
+                .with(VariantProperties.Y_ROT, rotation)
         ).with(
-            When.create()
-                .set(Properties.FLOWER_AMOUNT, 3, 4)
-                .set(Properties.HORIZONTAL_FACING, direction),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, identifier3)
-                .put(VariantSettings.Y, rotation)
+            Condition.condition()
+                .term(BlockStateProperties.FLOWER_AMOUNT, 3, 4)
+                .term(BlockStateProperties.HORIZONTAL_FACING, direction),
+            Variant.variant()
+                .with(VariantProperties.MODEL, identifier3)
+                .with(VariantProperties.Y_ROT, rotation)
         ).with(
-            When.create()
-                .set(Properties.FLOWER_AMOUNT, 4)
-                .set(Properties.HORIZONTAL_FACING, direction),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, identifier4)
-                .put(VariantSettings.Y, rotation)
+            Condition.condition()
+                .term(BlockStateProperties.FLOWER_AMOUNT, 4)
+                .term(BlockStateProperties.HORIZONTAL_FACING, direction),
+            Variant.variant()
+                .with(VariantProperties.MODEL, identifier4)
+                .with(VariantProperties.Y_ROT, rotation)
         )
     }
-    this.blockStateCollector.accept(flowerbed)
+    this.blockStateOutput.accept(flowerbed)
 }
 
-fun BlockStateModelGenerator.registerPumpkinSet(
+fun BlockModelGenerators.registerPumpkinSet(
     pumpkin: Block,
     carved: Block,
     glowing: Block,
@@ -624,115 +642,115 @@ fun BlockStateModelGenerator.registerPumpkinSet(
     this.pumpkinStem(stem)
 }
 
-fun BlockStateModelGenerator.registerPumpkins(pumpkin: Block, carved: Block, glowing: Block) {
-    val texture = Texture()
-        .put(END, Texture.getSubId(pumpkin, "_top"))
-        .put(SIDE, Texture.getSubId(pumpkin, "_side"))
-    val model = Models.CUBE_COLUMN.upload(pumpkin, texture, this.modelCollector)
-    Models.ORIENTABLE.upload(carved, texture.put(FRONT, Texture.getId(carved)), this.modelCollector)
-    Models.ORIENTABLE.upload(glowing, texture.put(FRONT, Texture.getId(glowing)), this.modelCollector)
+fun BlockModelGenerators.registerPumpkins(pumpkin: Block, carved: Block, glowing: Block) {
+    val texture = TextureMapping()
+        .put(END, TextureMapping.getBlockTexture(pumpkin, "_top"))
+        .put(SIDE, TextureMapping.getBlockTexture(pumpkin, "_side"))
+    val model = ModelTemplates.CUBE_COLUMN.create(pumpkin, texture, this.modelOutput)
+    ModelTemplates.CUBE_ORIENTABLE.create(carved, texture.put(FRONT, TextureMapping.getBlockTexture(carved)), this.modelOutput)
+    ModelTemplates.CUBE_ORIENTABLE.create(glowing, texture.put(FRONT, TextureMapping.getBlockTexture(glowing)), this.modelOutput)
 
-    blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
-    this.registerNorthDefaultHorizontalRotation(carved)
-    this.registerNorthDefaultHorizontalRotation(glowing)
+    blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(pumpkin, model))
+    this.createNonTemplateHorizontalBlock(carved)
+    this.createNonTemplateHorizontalBlock(glowing)
 }
 
-fun BlockStateModelGenerator.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
-    val texture = Texture()
-        .put(ALL, Texture.getId(pumpkin))
-        .put(PARTICLE, Texture.getSubId(particle, "_side"))
+fun BlockModelGenerators.registerSmallPumpkins(pumpkin: Block, carved: Block, glowing: Block, particle: Block) {
+    val texture = TextureMapping()
+        .put(ALL, TextureMapping.getBlockTexture(pumpkin))
+        .put(PARTICLE, TextureMapping.getBlockTexture(particle, "_side"))
     val model = block(
         "parent/small_pumpkin",
         PARTICLE,
         ALL
-    ).upload(pumpkin, texture, this.modelCollector)
+    ).create(pumpkin, texture, this.modelOutput)
     block(
         "parent/small_carved_pumpkin",
         PARTICLE,
         ALL
-    ).upload(carved, texture, this.modelCollector)
+    ).create(carved, texture, this.modelOutput)
     block(
         "parent/small_glowing_pumpkin",
         PARTICLE,
         ALL
-    ).upload(glowing, texture, this.modelCollector)
+    ).create(glowing, texture, this.modelOutput)
 
-    blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
-    this.registerNorthDefaultHorizontalRotation(carved)
-    this.registerNorthDefaultHorizontalRotation(glowing)
+    blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(pumpkin, model))
+    this.createNonTemplateHorizontalBlock(carved)
+    this.createNonTemplateHorizontalBlock(glowing)
 }
 
-fun BlockStateModelGenerator.registerSmallPumpkin(
+fun BlockModelGenerators.registerSmallPumpkin(
     pumpkin: Block,
     texture: Block,
-    particle: Identifier,
+    particle: ResourceLocation,
     modelString: String = ""
 ) {
-    val modelTexture = Texture()
-        .put(ALL, Texture.getId(texture))
+    val modelTexture = TextureMapping()
+        .put(ALL, TextureMapping.getBlockTexture(texture))
         .put(PARTICLE, particle)
     val model = block(
         "parent/small_" + modelString + "pumpkin",
         PARTICLE,
         ALL
-    ).upload(pumpkin, modelTexture, this.modelCollector)
-    blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(pumpkin, model))
+    ).create(pumpkin, modelTexture, this.modelOutput)
+    blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(pumpkin, model))
 }
 
-fun BlockStateModelGenerator.pumpkinStem(block: Block) {
-    val texture = Texture.stem(block)
+fun BlockModelGenerators.pumpkinStem(block: Block) {
+    val texture = TextureMapping.stem(block)
     val textureAttach =
-        Texture().put(STEM, Texture.getId(block)).put(UPPERSTEM, block.prefixed("attached_"))
+        TextureMapping().put(STEM, TextureMapping.getBlockTexture(block)).put(UPPER_STEM, block.prefixed("attached_"))
 
-    Properties.AGE_7.values.forEach { age ->
-        Models.STEM_GROWTH_STAGES[age].upload(block, texture, this.modelCollector)
+    BlockStateProperties.AGE_7.possibleValues.forEach { age ->
+        ModelTemplates.STEMS[age].create(block, texture, this.modelOutput)
     }
-    Models.STEM_FRUIT.upload(block, "_stage7_attached", textureAttach, this.modelCollector)
+    ModelTemplates.ATTACHED_STEM.createWithSuffix(block, "_stage7_attached", textureAttach, this.modelOutput)
     println("you best do the " + block.model().path + " blockstate file because waaaaaaa")
 }
 
-fun BlockStateModelGenerator.registerGravestones(gravestone: Block, smallGravestone: Block) {
+fun BlockModelGenerators.registerGravestones(gravestone: Block, smallGravestone: Block) {
     this.registerGravestone(gravestone, gravestone.model())
     this.registerSmallGravestone(smallGravestone, gravestone.model())
 }
 
-fun BlockStateModelGenerator.registerGravestone(gravestone: Block, texture: Identifier = gravestone.model()) {
-    val texture = Texture()
+fun BlockModelGenerators.registerGravestone(gravestone: Block, texture: ResourceLocation = gravestone.model()) {
+    val texture = TextureMapping()
         .put(FRONT, texture.suffix("_front"))
         .put(SIDE, texture.suffix("_side"))
     block(
         "parent/gravestone",
         FRONT,
         SIDE
-    ).upload(gravestone, texture, this.modelCollector)
+    ).create(gravestone, texture, this.modelOutput)
     val centerModel = block(
         "parent/gravestone_centered",
         FRONT,
         SIDE
-    ).upload(gravestone, "_centered", texture, this.modelCollector)
+    ).createWithSuffix(gravestone, "_centered", texture, this.modelOutput)
 
-    this.registerParentedItemModel(gravestone, centerModel)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(gravestone).coordinate(
+    this.delegateItemModel(gravestone, centerModel)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(gravestone).with(
             gravestoneBlockstates(gravestone)
         )
     )
 }
 
-fun BlockStateModelGenerator.registerSmallGravestone(
+fun BlockModelGenerators.registerSmallGravestone(
     gravestone: Block,
-    textureId: Identifier = gravestone.model(),
+    textureId: ResourceLocation = gravestone.model(),
     hauntedGravestone: Block? = null
 ) {
-    val texture = Texture()
+    val texture = TextureMapping()
         .put(FRONT, textureId.suffix("_front"))
     block("parent/small_gravestone", FRONT)
-        .upload(gravestone, texture, this.modelCollector)
+        .create(gravestone, texture, this.modelOutput)
     val centerModel = block("parent/small_gravestone_centered", FRONT)
-        .upload(gravestone, "_centered", texture, this.modelCollector)
-    this.registerParentedItemModel(gravestone, centerModel)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(gravestone).coordinate(
+        .createWithSuffix(gravestone, "_centered", texture, this.modelOutput)
+    this.delegateItemModel(gravestone, centerModel)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(gravestone).with(
             gravestoneBlockstates(gravestone)
         )
     )
@@ -740,144 +758,144 @@ fun BlockStateModelGenerator.registerSmallGravestone(
         this.registerHauntedGravestone(hauntedGravestone, gravestone, centerModel)
 }
 
-fun BlockStateModelGenerator.registerHauntedGravestone(
+fun BlockModelGenerators.registerHauntedGravestone(
     hauntedGravestone: Block,
     gravestone: Block,
-    centerModel: Identifier
+    centerModel: ResourceLocation
 ) {
-    this.registerParentedItemModel(hauntedGravestone, centerModel)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(hauntedGravestone).coordinate(
+    this.delegateItemModel(hauntedGravestone, centerModel)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(hauntedGravestone).with(
             gravestoneBlockstates(gravestone)
         )
     )
 }
 
-fun BlockStateModelGenerator.registerHeadstone(headstone: Block) {
-    val texture = Texture().put(ALL, Texture.getId(headstone))
+fun BlockModelGenerators.registerHeadstone(headstone: Block) {
+    val texture = TextureMapping().put(ALL, TextureMapping.getBlockTexture(headstone))
     block("parent/headstone", ALL)
-        .upload(headstone, texture, this.modelCollector)
+        .create(headstone, texture, this.modelOutput)
     block("parent/headstone_centered", ALL)
-        .upload(headstone, "_centered", texture, this.modelCollector)
-    this.registerItemModel(headstone)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(headstone).coordinate(
+        .createWithSuffix(headstone, "_centered", texture, this.modelOutput)
+    this.createSimpleFlatItemModel(headstone)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(headstone).with(
             gravestoneBlockstates(headstone)
         )
     )
 }
 
-fun gravestoneBlockstates(gravestone: Block): BlockStateVariantMap.DoubleProperty<Direction, Boolean> {
-    val variants = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, GravestoneBlock.CENTERED)
-    GravestoneBlock.CENTERED.values.forEach {
-        Properties.HORIZONTAL_FACING.values.forEach { direction ->
+fun gravestoneBlockstates(gravestone: Block): PropertyDispatch.C2<Direction, Boolean> {
+    val variants = PropertyDispatch.properties(BlockStateProperties.HORIZONTAL_FACING, GravestoneBlock.CENTERED)
+    GravestoneBlock.CENTERED.possibleValues.forEach {
+        BlockStateProperties.HORIZONTAL_FACING.possibleValues.forEach { direction ->
             val string = if (it) "_centered" else ""
-            val variant = BlockStateVariant.create()
-                .put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(gravestone, string))
+            val variant = Variant.variant()
+                .with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(gravestone, string))
             val variant2 = when (direction) {
-                Direction.NORTH -> variant.put(VariantSettings.Y, Rotation.R180)
-                Direction.EAST -> variant.put(VariantSettings.Y, Rotation.R270)
-                Direction.WEST -> variant.put(VariantSettings.Y, Rotation.R90)
+                Direction.NORTH -> variant.with(VariantProperties.Y_ROT, Rotation.R180)
+                Direction.EAST -> variant.with(VariantProperties.Y_ROT, Rotation.R270)
+                Direction.WEST -> variant.with(VariantProperties.Y_ROT, Rotation.R90)
                 else -> variant
             }
-            variants.register(direction, it, variant2)
+            variants.select(direction, it, variant2)
         }
     }
     return variants
 }
 
-fun BlockStateModelGenerator.registerCorn(block: Block, item: Item) {
+fun BlockModelGenerators.registerCorn(block: Block, item: Item) {
 //    this.registerItemModel(block, "_top") //this one is for if the names are the same, they are not
-    Models.SINGLE_LAYER_ITEM.upload(
-        ModelIds.getItemModelId(item), Texture.layer0(Texture.getSubId(block, "_top")),
-        this.modelCollector
+    ModelTemplates.FLAT_ITEM.create(
+        ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(TextureMapping.getBlockTexture(block, "_top")),
+        this.modelOutput
     )
-    val textureTop = Texture().put(ALL, Texture.getSubId(block, "_top"))
-    val textureMiddle = Texture().put(ALL, Texture.getSubId(block, "_middle"))
-    val textureBottom = Texture().put(ALL, Texture.getSubId(block, "_bottom"))
+    val textureTop = TextureMapping().put(ALL, TextureMapping.getBlockTexture(block, "_top"))
+    val textureMiddle = TextureMapping().put(ALL, TextureMapping.getBlockTexture(block, "_middle"))
+    val textureBottom = TextureMapping().put(ALL, TextureMapping.getBlockTexture(block, "_bottom"))
     val model = block(
         "parent/corn",
         ALL
     )
-    val top = model.upload(block, "_top", textureTop, this.modelCollector)
-    val middle = model.upload(block, "_middle", textureMiddle, this.modelCollector)
-    val bottom = model.upload(block, "_bottom", textureBottom, this.modelCollector)
-    blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(block).coordinate(
-            BlockStateVariantMap.create(
+    val top = model.createWithSuffix(block, "_top", textureTop, this.modelOutput)
+    val middle = model.createWithSuffix(block, "_middle", textureMiddle, this.modelOutput)
+    val bottom = model.createWithSuffix(block, "_bottom", textureBottom, this.modelOutput)
+    blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(block).with(
+            PropertyDispatch.property(
                 TripleTallPlantBlock.SECTION
-            ).register(
+            ).select(
                 TripleBlockSection.TOP,
-                BlockStateVariant.create().put(VariantSettings.MODEL, top)
-            ).register(
+                Variant.variant().with(VariantProperties.MODEL, top)
+            ).select(
                 TripleBlockSection.MIDDLE,
-                BlockStateVariant.create().put(VariantSettings.MODEL, middle)
-            ).register(
+                Variant.variant().with(VariantProperties.MODEL, middle)
+            ).select(
                 TripleBlockSection.BOTTOM,
-                BlockStateVariant.create().put(VariantSettings.MODEL, bottom)
+                Variant.variant().with(VariantProperties.MODEL, bottom)
             )
         )
     )
 }
 
-fun BlockStateModelGenerator.registerCornCrop(block: Block) {
+fun BlockModelGenerators.registerCornCrop(block: Block) {
     val model = block(
         "parent/corn_crop",
         CROP
     )
-    val blockStateVariantMap = BlockStateVariantMap.create(CornCropBlock.AGE, TripleTallPlantBlock.SECTION)
-        .register { age: Int, section: TripleBlockSection ->
+    val blockStateVariantMap = PropertyDispatch.properties(CornCropBlock.AGE, TripleTallPlantBlock.SECTION)
+        .generate { age: Int, section: TripleBlockSection ->
             val suffix = "_$section" + "_stage_$age"
-            val texture = Texture().put(CROP, Texture.getSubId(block, suffix))
+            val texture = TextureMapping().put(CROP, TextureMapping.getBlockTexture(block, suffix))
             if (section == TripleBlockSection.BOTTOM) {
-                val modelBottom = model.upload(block, suffix, texture, this.modelCollector)
-                BlockStateVariant.create().put(
-                    VariantSettings.MODEL,
+                val modelBottom = model.createWithSuffix(block, suffix, texture, this.modelOutput)
+                Variant.variant().with(
+                    VariantProperties.MODEL,
                     modelBottom
                 )
             } else if (age > 1 && section == TripleBlockSection.MIDDLE) {
-                val modelMiddle = model.upload(block, suffix, texture, this.modelCollector)
-                BlockStateVariant.create().put(
-                    VariantSettings.MODEL,
+                val modelMiddle = model.createWithSuffix(block, suffix, texture, this.modelOutput)
+                Variant.variant().with(
+                    VariantProperties.MODEL,
                     modelMiddle
                 )
             } else if (age > 3 && section == TripleBlockSection.TOP) {
-                val modelTop = model.upload(block, suffix, texture, this.modelCollector)
-                BlockStateVariant.create().put(
-                    VariantSettings.MODEL,
+                val modelTop = model.createWithSuffix(block, suffix, texture, this.modelOutput)
+                Variant.variant().with(
+                    VariantProperties.MODEL,
                     modelTop
                 )
             } else {
-                BlockStateVariant.create().put(
-                    VariantSettings.MODEL,
-                    ModelIds.getBlockModelId(Blocks.AIR)
+                Variant.variant().with(
+                    VariantProperties.MODEL,
+                    ModelLocationUtils.getModelLocation(Blocks.AIR)
                 )
             }
         }
-    this.blockStateCollector.accept(VariantsBlockStateSupplier.create(block).coordinate(blockStateVariantMap))
+    this.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block).with(blockStateVariantMap))
 }
 
-fun BlockStateModelGenerator.registerBigChain(block: Block) {
-    this.registerItemModel(block.asItem())
-    val texture = Texture()
-        .put(PARTICLE, Texture.getId(block))
-        .put(ALL, Texture.getId(block))
+fun BlockModelGenerators.registerBigChain(block: Block) {
+    this.createSimpleFlatItemModel(block.asItem())
+    val texture = TextureMapping()
+        .put(PARTICLE, TextureMapping.getBlockTexture(block))
+        .put(ALL, TextureMapping.getBlockTexture(block))
     val model = block(
         "parent/big_chain",
         PARTICLE,
         ALL
-    ).upload(block, texture, this.modelCollector)
-    this.registerAxisRotated(block, model)
+    ).create(block, texture, this.modelOutput)
+    this.createAxisAlignedPillarBlockCustomModel(block, model)
 }
 
-fun BlockStateModelGenerator.registerBigLantern(
+fun BlockModelGenerators.registerBigLantern(
     block: Block,
-    bottom: Identifier = id("block/big_lantern_bottom")
+    bottom: ResourceLocation = id("block/big_lantern_bottom")
 ) {
-    this.registerItemModel(block)
-    val texture = Texture()
-        .put(PARTICLE, Texture.getId(block))
-        .put(SIDE, Texture.getId(block))
+    this.createSimpleFlatItemModel(block)
+    val texture = TextureMapping()
+        .put(PARTICLE, TextureMapping.getBlockTexture(block))
+        .put(SIDE, TextureMapping.getBlockTexture(block))
         .put(END, bottom)
     val model = block(
         "parent/big_lantern",
@@ -885,432 +903,432 @@ fun BlockStateModelGenerator.registerBigLantern(
         SIDE,
         END
     )
-    val modelHanging = model.upload(block, "_hanging", texture, this.modelCollector)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(block).coordinate(
-            BlockStateVariantMap.create(Properties.HANGING)
-                .register(
-                    false, BlockStateVariant.create()
-                        .put(VariantSettings.MODEL, model.upload(block, texture, this.modelCollector))
+    val modelHanging = model.createWithSuffix(block, "_hanging", texture, this.modelOutput)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(block).with(
+            PropertyDispatch.property(BlockStateProperties.HANGING)
+                .select(
+                    false, Variant.variant()
+                        .with(VariantProperties.MODEL, model.create(block, texture, this.modelOutput))
                 )
-                .register(
-                    true, BlockStateVariant.create()
-                        .put(VariantSettings.X, Rotation.R180)
-                        .put(VariantSettings.MODEL, modelHanging)
+                .select(
+                    true, Variant.variant()
+                        .with(VariantProperties.X_ROT, Rotation.R180)
+                        .with(VariantProperties.MODEL, modelHanging)
                 )
         )
     )
 }
 
-fun BlockStateModelGenerator.registerBigCandle(pair: Pair<Block, Block?>) =
+fun BlockModelGenerators.registerBigCandle(pair: Pair<Block, Block?>) =
     this.registerBigCandle(pair.first, pair.second)
 
-fun BlockStateModelGenerator.registerBigCandle(candle: Block, cake: Block?) {
+fun BlockModelGenerators.registerBigCandle(candle: Block, cake: Block?) {
     this.registerPrefixedItemModel(candle, "candle/")
-    val texture = Texture.all(candle.prefixed("candle/"))
-    val textureLit = Texture.all(candle.prefixed("candle/").suffix("_lit"))
-    val oneCandle = bigCandleModel("1").upload(candle, "_one_candle", texture, this.modelCollector)
-    val twoCandle = bigCandleModel("2").upload(candle, "_two_candles", texture, this.modelCollector)
-    val threeCandle = bigCandleModel("3").upload(candle, "_three_candles", texture, this.modelCollector)
-    val fourCandle = bigCandleModel("4").upload(candle, "_four_candles", texture, this.modelCollector)
-    val oneCandleLit = bigCandleModel("1").upload(candle, "_one_candle_lit", textureLit, this.modelCollector)
-    val twoCandleLit = bigCandleModel("2").upload(candle, "_two_candles_lit", textureLit, this.modelCollector)
-    val threeCandleLit = bigCandleModel("3").upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
-    val fourCandleLit = bigCandleModel("4").upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(candle)
-            .coordinate(BlockStateModelGenerator.createSouthDefaultHorizontalRotationStates())
-            .coordinate(
-                BlockStateVariantMap.create(Properties.CANDLES, Properties.LIT)
-                    .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
-                    .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
-                    .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
-                    .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
-                    .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
-                    .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
-                    .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
-                    .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
+    val texture = TextureMapping.cube(candle.prefixed("candle/"))
+    val textureLit = TextureMapping.cube(candle.prefixed("candle/").suffix("_lit"))
+    val oneCandle = bigCandleModel("1").createWithSuffix(candle, "_one_candle", texture, this.modelOutput)
+    val twoCandle = bigCandleModel("2").createWithSuffix(candle, "_two_candles", texture, this.modelOutput)
+    val threeCandle = bigCandleModel("3").createWithSuffix(candle, "_three_candles", texture, this.modelOutput)
+    val fourCandle = bigCandleModel("4").createWithSuffix(candle, "_four_candles", texture, this.modelOutput)
+    val oneCandleLit = bigCandleModel("1").createWithSuffix(candle, "_one_candle_lit", textureLit, this.modelOutput)
+    val twoCandleLit = bigCandleModel("2").createWithSuffix(candle, "_two_candles_lit", textureLit, this.modelOutput)
+    val threeCandleLit = bigCandleModel("3").createWithSuffix(candle, "_three_candles_lit", textureLit, this.modelOutput)
+    val fourCandleLit = bigCandleModel("4").createWithSuffix(candle, "_four_candles_lit", textureLit, this.modelOutput)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(candle)
+            .with(BlockModelGenerators.createHorizontalFacingDispatchAlt())
+            .with(
+                PropertyDispatch.properties(BlockStateProperties.CANDLES, BlockStateProperties.LIT)
+                    .select(1, false, Variant.variant().with(VariantProperties.MODEL, oneCandle))
+                    .select(2, false, Variant.variant().with(VariantProperties.MODEL, twoCandle))
+                    .select(3, false, Variant.variant().with(VariantProperties.MODEL, threeCandle))
+                    .select(4, false, Variant.variant().with(VariantProperties.MODEL, fourCandle))
+                    .select(1, true, Variant.variant().with(VariantProperties.MODEL, oneCandleLit))
+                    .select(2, true, Variant.variant().with(VariantProperties.MODEL, twoCandleLit))
+                    .select(3, true, Variant.variant().with(VariantProperties.MODEL, threeCandleLit))
+                    .select(4, true, Variant.variant().with(VariantProperties.MODEL, fourCandleLit))
             )
     )
     if (cake != null) {
-        val candleCake = bigCandleCakeModel().upload(
+        val candleCake = bigCandleCakeModel().create(
             cake, candleCake(candle, false),
-            this.modelCollector
+            this.modelOutput
         )
-        val candleCakeLit = bigCandleCakeModel().upload(
+        val candleCakeLit = bigCandleCakeModel().createWithSuffix(
             cake, "_lit", candleCake(candle, true),
-            this.modelCollector
+            this.modelOutput
         )
-        this.blockStateCollector.accept(
-            VariantsBlockStateSupplier.create(cake).coordinate(
-                BlockStateModelGenerator.createBooleanModelMap(
-                    Properties.LIT, candleCakeLit, candleCake
+        this.blockStateOutput.accept(
+            MultiVariantGenerator.multiVariant(cake).with(
+                BlockModelGenerators.createBooleanModelDispatch(
+                    BlockStateProperties.LIT, candleCakeLit, candleCake
                 )
             )
         )
     }
 }
 
-fun BlockStateModelGenerator.registerCandle2(pair: Pair<Block, Block?>) = this.registerCandle2(pair.first, pair.second)
-fun BlockStateModelGenerator.registerCandle2(candle: Block, cake: Block?) {
+fun BlockModelGenerators.registerCandle2(pair: Pair<Block, Block?>) = this.registerCandle2(pair.first, pair.second)
+fun BlockModelGenerators.registerCandle2(candle: Block, cake: Block?) {
     this.registerPrefixedItemModel(candle, "candle/")
-    val texture = Texture.all(candle.prefixed("candle/"))
-    val textureLit = Texture.all(candle.prefixed("candle/").suffix("_lit"))
-    val oneCandle = Models.TEMPLATE_CANDLE.upload(candle, "_one_candle", texture, this.modelCollector)
-    val twoCandle = Models.TEMPLATE_TWO_CANDLES.upload(candle, "_two_candles", texture, this.modelCollector)
-    val threeCandle = Models.TEMPLATE_THREE_CANDLES.upload(candle, "_three_candles", texture, this.modelCollector)
-    val fourCandle = Models.TEMPLATE_FOUR_CANDLES.upload(candle, "_four_candles", texture, this.modelCollector)
-    val oneCandleLit = Models.TEMPLATE_CANDLE.upload(candle, "_one_candle_lit", textureLit, this.modelCollector)
-    val twoCandleLit = Models.TEMPLATE_TWO_CANDLES.upload(candle, "_two_candles_lit", textureLit, this.modelCollector)
+    val texture = TextureMapping.cube(candle.prefixed("candle/"))
+    val textureLit = TextureMapping.cube(candle.prefixed("candle/").suffix("_lit"))
+    val oneCandle = ModelTemplates.CANDLE.createWithSuffix(candle, "_one_candle", texture, this.modelOutput)
+    val twoCandle = ModelTemplates.TWO_CANDLES.createWithSuffix(candle, "_two_candles", texture, this.modelOutput)
+    val threeCandle = ModelTemplates.THREE_CANDLES.createWithSuffix(candle, "_three_candles", texture, this.modelOutput)
+    val fourCandle = ModelTemplates.FOUR_CANDLES.createWithSuffix(candle, "_four_candles", texture, this.modelOutput)
+    val oneCandleLit = ModelTemplates.CANDLE.createWithSuffix(candle, "_one_candle_lit", textureLit, this.modelOutput)
+    val twoCandleLit = ModelTemplates.TWO_CANDLES.createWithSuffix(candle, "_two_candles_lit", textureLit, this.modelOutput)
     val threeCandleLit =
-        Models.TEMPLATE_THREE_CANDLES.upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
+        ModelTemplates.THREE_CANDLES.createWithSuffix(candle, "_three_candles_lit", textureLit, this.modelOutput)
     val fourCandleLit =
-        Models.TEMPLATE_FOUR_CANDLES.upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(candle).coordinate(
-            BlockStateVariantMap.create(
-                Properties.CANDLES, Properties.LIT
+        ModelTemplates.FOUR_CANDLES.createWithSuffix(candle, "_four_candles_lit", textureLit, this.modelOutput)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(candle).with(
+            PropertyDispatch.properties(
+                BlockStateProperties.CANDLES, BlockStateProperties.LIT
             )
-                .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
-                .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
-                .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
-                .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
-                .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
-                .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
-                .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
-                .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
+                .select(1, false, Variant.variant().with(VariantProperties.MODEL, oneCandle))
+                .select(2, false, Variant.variant().with(VariantProperties.MODEL, twoCandle))
+                .select(3, false, Variant.variant().with(VariantProperties.MODEL, threeCandle))
+                .select(4, false, Variant.variant().with(VariantProperties.MODEL, fourCandle))
+                .select(1, true, Variant.variant().with(VariantProperties.MODEL, oneCandleLit))
+                .select(2, true, Variant.variant().with(VariantProperties.MODEL, twoCandleLit))
+                .select(3, true, Variant.variant().with(VariantProperties.MODEL, threeCandleLit))
+                .select(4, true, Variant.variant().with(VariantProperties.MODEL, fourCandleLit))
         )
     )
     if (cake != null) {
-        val candleCake = Models.TEMPLATE_CAKE_WITH_CANDLE.upload(
+        val candleCake = ModelTemplates.CANDLE_CAKE.create(
             cake, candleCake(candle, false),
-            this.modelCollector
+            this.modelOutput
         )
-        val candleCakeLit = Models.TEMPLATE_CAKE_WITH_CANDLE.upload(
+        val candleCakeLit = ModelTemplates.CANDLE_CAKE.createWithSuffix(
             cake, "_lit", candleCake(candle, true),
-            this.modelCollector
+            this.modelOutput
         )
-        this.blockStateCollector.accept(
-            VariantsBlockStateSupplier.create(cake).coordinate(
-                BlockStateModelGenerator.createBooleanModelMap(
-                    Properties.LIT, candleCakeLit, candleCake
+        this.blockStateOutput.accept(
+            MultiVariantGenerator.multiVariant(cake).with(
+                BlockModelGenerators.createBooleanModelDispatch(
+                    BlockStateProperties.LIT, candleCakeLit, candleCake
                 )
             )
         )
     }
 }
 
-fun candleCake(block: Block, lit: Boolean): Texture {
-    return Texture()
-        .put(PARTICLE, Texture.getSubId(Blocks.CAKE, "_side"))
-        .put(BOTTOM, Texture.getSubId(Blocks.CAKE, "_bottom"))
-        .put(TOP, Texture.getSubId(Blocks.CAKE, "_top"))
-        .put(SIDE, Texture.getSubId(Blocks.CAKE, "_side"))
+fun candleCake(block: Block, lit: Boolean): TextureMapping {
+    return TextureMapping()
+        .put(PARTICLE, TextureMapping.getBlockTexture(Blocks.CAKE, "_side"))
+        .put(BOTTOM, TextureMapping.getBlockTexture(Blocks.CAKE, "_bottom"))
+        .put(TOP, TextureMapping.getBlockTexture(Blocks.CAKE, "_top"))
+        .put(SIDE, TextureMapping.getBlockTexture(Blocks.CAKE, "_side"))
         .put(CANDLE, block.prefixed("candle/").suffix(if (lit) "_lit" else ""))
 }
 
-fun BlockStateModelGenerator.registerBigTallCandle(candle: Block) {
+fun BlockModelGenerators.registerBigTallCandle(candle: Block) {
     this.registerPrefixedItemModel(candle, "candle/")
-    val texture = Texture.all(candle.prefixed("candle/"))
-    val textureLit = Texture.all(candle.prefixed("candle/").suffix("_lit"))
-    val oneCandle = bigTallCandleModel("1").upload(candle, "_one_candle", texture, this.modelCollector)
-    val twoCandle = bigTallCandleModel("2").upload(candle, "_two_candles", texture, this.modelCollector)
-    val threeCandle = bigTallCandleModel("3").upload(candle, "_three_candles", texture, this.modelCollector)
-    val fourCandle = bigTallCandleModel("4").upload(candle, "_four_candles", texture, this.modelCollector)
-    val oneCandleLit = bigTallCandleModel("1").upload(candle, "_one_candle_lit", textureLit, this.modelCollector)
-    val twoCandleLit = bigTallCandleModel("2").upload(candle, "_two_candles_lit", textureLit, this.modelCollector)
-    val threeCandleLit = bigTallCandleModel("3").upload(candle, "_three_candles_lit", textureLit, this.modelCollector)
-    val fourCandleLit = bigTallCandleModel("4").upload(candle, "_four_candles_lit", textureLit, this.modelCollector)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(candle)
-            .coordinate(
-                BlockStateVariantMap.create(Properties.CANDLES, Properties.LIT)
-                    .register(1, false, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandle))
-                    .register(2, false, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandle))
-                    .register(3, false, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandle))
-                    .register(4, false, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandle))
-                    .register(1, true, BlockStateVariant.create().put(VariantSettings.MODEL, oneCandleLit))
-                    .register(2, true, BlockStateVariant.create().put(VariantSettings.MODEL, twoCandleLit))
-                    .register(3, true, BlockStateVariant.create().put(VariantSettings.MODEL, threeCandleLit))
-                    .register(4, true, BlockStateVariant.create().put(VariantSettings.MODEL, fourCandleLit))
+    val texture = TextureMapping.cube(candle.prefixed("candle/"))
+    val textureLit = TextureMapping.cube(candle.prefixed("candle/").suffix("_lit"))
+    val oneCandle = bigTallCandleModel("1").createWithSuffix(candle, "_one_candle", texture, this.modelOutput)
+    val twoCandle = bigTallCandleModel("2").createWithSuffix(candle, "_two_candles", texture, this.modelOutput)
+    val threeCandle = bigTallCandleModel("3").createWithSuffix(candle, "_three_candles", texture, this.modelOutput)
+    val fourCandle = bigTallCandleModel("4").createWithSuffix(candle, "_four_candles", texture, this.modelOutput)
+    val oneCandleLit = bigTallCandleModel("1").createWithSuffix(candle, "_one_candle_lit", textureLit, this.modelOutput)
+    val twoCandleLit = bigTallCandleModel("2").createWithSuffix(candle, "_two_candles_lit", textureLit, this.modelOutput)
+    val threeCandleLit = bigTallCandleModel("3").createWithSuffix(candle, "_three_candles_lit", textureLit, this.modelOutput)
+    val fourCandleLit = bigTallCandleModel("4").createWithSuffix(candle, "_four_candles_lit", textureLit, this.modelOutput)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(candle)
+            .with(
+                PropertyDispatch.properties(BlockStateProperties.CANDLES, BlockStateProperties.LIT)
+                    .select(1, false, Variant.variant().with(VariantProperties.MODEL, oneCandle))
+                    .select(2, false, Variant.variant().with(VariantProperties.MODEL, twoCandle))
+                    .select(3, false, Variant.variant().with(VariantProperties.MODEL, threeCandle))
+                    .select(4, false, Variant.variant().with(VariantProperties.MODEL, fourCandle))
+                    .select(1, true, Variant.variant().with(VariantProperties.MODEL, oneCandleLit))
+                    .select(2, true, Variant.variant().with(VariantProperties.MODEL, twoCandleLit))
+                    .select(3, true, Variant.variant().with(VariantProperties.MODEL, threeCandleLit))
+                    .select(4, true, Variant.variant().with(VariantProperties.MODEL, fourCandleLit))
             )
     )
 }
 
-fun bigCandleModel(suffix: String): Model {
+fun bigCandleModel(suffix: String): ModelTemplate {
     val variant = if (suffix == "1") "" else "_$suffix"
     return block("parent/big_candle$variant", ALL, PARTICLE)
 }
 
-fun bigCandleCakeModel(): Model {
+fun bigCandleCakeModel(): ModelTemplate {
     return block("parent/cake_with_big_candle", CANDLE, PARTICLE)
 }
 
-fun bigTallCandleModel(suffix: String): Model {
+fun bigTallCandleModel(suffix: String): ModelTemplate {
     val variant = if (suffix == "1") "" else "_$suffix"
     return block("parent/big_tall_candle$variant", ALL, PARTICLE)
 }
 
-fun BlockStateModelGenerator.registerMixedNetherBrickPillar(block: Block, mix: Block) {
-    val texture1 = Texture()
-        .put(SIDE, Texture.getId(block))
-        .put(TOP, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
-        .put(BOTTOM, Texture.getSubId(mix, "_top"))
-    val texture2 = Texture()
-        .put(SIDE, Texture.getSubId(block, "_inverse"))
-        .put(TOP, Texture.getSubId(mix, "_top"))
-        .put(BOTTOM, Texture.getSubId(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
-    val model1 = Models.CUBE_BOTTOM_TOP.upload(block, texture1, this.modelCollector)
-    val model2 = Models.CUBE_BOTTOM_TOP.upload(block, "_inverse", texture2, this.modelCollector)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(block).coordinate(
-            BlockStateVariantMap.create(Properties.FACING)
-                .register(
-                    Direction.UP, BlockStateVariant.create()
-                        .put(VariantSettings.MODEL, model1)
+fun BlockModelGenerators.registerMixedNetherBrickPillar(block: Block, mix: Block) {
+    val texture1 = TextureMapping()
+        .put(SIDE, TextureMapping.getBlockTexture(block))
+        .put(TOP, TextureMapping.getBlockTexture(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
+        .put(BOTTOM, TextureMapping.getBlockTexture(mix, "_top"))
+    val texture2 = TextureMapping()
+        .put(SIDE, TextureMapping.getBlockTexture(block, "_inverse"))
+        .put(TOP, TextureMapping.getBlockTexture(mix, "_top"))
+        .put(BOTTOM, TextureMapping.getBlockTexture(DnDBlocks.NETHER_BRICK_PILLAR, "_top"))
+    val model1 = ModelTemplates.CUBE_BOTTOM_TOP.create(block, texture1, this.modelOutput)
+    val model2 = ModelTemplates.CUBE_BOTTOM_TOP.createWithSuffix(block, "_inverse", texture2, this.modelOutput)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(block).with(
+            PropertyDispatch.property(BlockStateProperties.FACING)
+                .select(
+                    Direction.UP, Variant.variant()
+                        .with(VariantProperties.MODEL, model1)
                 )
-                .register(
-                    Direction.DOWN, BlockStateVariant.create()
-                        .put(VariantSettings.MODEL, model2)
+                .select(
+                    Direction.DOWN, Variant.variant()
+                        .with(VariantProperties.MODEL, model2)
                 )
-                .register(
+                .select(
                     Direction.NORTH,
-                    BlockStateVariant.create()
-                        .put(VariantSettings.X, Rotation.R90)
-                        .put(VariantSettings.MODEL, model1)
+                    Variant.variant()
+                        .with(VariantProperties.X_ROT, Rotation.R90)
+                        .with(VariantProperties.MODEL, model1)
                 )
-                .register(
-                    Direction.SOUTH, BlockStateVariant.create()
-                        .put(VariantSettings.X, Rotation.R90)
-                        .put(VariantSettings.MODEL, model2)
+                .select(
+                    Direction.SOUTH, Variant.variant()
+                        .with(VariantProperties.X_ROT, Rotation.R90)
+                        .with(VariantProperties.MODEL, model2)
                 )
-                .register(
+                .select(
                     Direction.EAST,
-                    BlockStateVariant.create()
-                        .put(VariantSettings.X, Rotation.R90)
-                        .put(VariantSettings.Y, Rotation.R90)
-                        .put(VariantSettings.MODEL, model1)
+                    Variant.variant()
+                        .with(VariantProperties.X_ROT, Rotation.R90)
+                        .with(VariantProperties.Y_ROT, Rotation.R90)
+                        .with(VariantProperties.MODEL, model1)
                 )
-                .register(
+                .select(
                     Direction.WEST,
-                    BlockStateVariant.create()
-                        .put(VariantSettings.X, Rotation.R90)
-                        .put(VariantSettings.Y, Rotation.R90)
-                        .put(VariantSettings.MODEL, model2)
+                    Variant.variant()
+                        .with(VariantProperties.X_ROT, Rotation.R90)
+                        .with(VariantProperties.Y_ROT, Rotation.R90)
+                        .with(VariantProperties.MODEL, model2)
                 )
         )
     )
 }
 
-fun BlockStateModelGenerator.iceStairs(
+fun BlockModelGenerators.iceStairs(
     block: Block,
     parent: Block
 ) {
-    val texture: Texture = Texture.texture(parent)
+    val texture: TextureMapping = TextureMapping.defaultTexture(parent)
         .put(BOTTOM, parent.model())
         .put(SIDE, parent.model())
         .put(TOP, parent.model())
-    val ner: Identifier = block("parent/translucent_stairs", BOTTOM, TOP, SIDE)
-        .upload(block, texture, this.modelCollector)
-    val inner: Identifier =
+    val ner: ResourceLocation = block("parent/translucent_stairs", BOTTOM, TOP, SIDE)
+        .create(block, texture, this.modelOutput)
+    val inner: ResourceLocation =
         block("parent/translucent_inner_stairs", "_inner", BOTTOM, TOP, SIDE)
-            .upload(block, texture, this.modelCollector)
-    val outer: Identifier =
+            .create(block, texture, this.modelOutput)
+    val outer: ResourceLocation =
         block("parent/translucent_outer_stairs", "_outer", BOTTOM, TOP, SIDE)
-            .upload(block, texture, this.modelCollector)
+            .create(block, texture, this.modelOutput)
 
-    this.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(block, inner, ner, outer))
-    this.registerParentedItemModel(block, ner)
+    this.blockStateOutput.accept(BlockModelGenerators.createStairs(block, inner, ner, outer))
+    this.delegateItemModel(block, ner)
 }
 
 //shamelessley stolen from voidUtils :)
-fun BlockStateModelGenerator.stairs(block: Block) =
+fun BlockModelGenerators.stairs(block: Block) =
     stairs(block, block, block, block)
 
-fun BlockStateModelGenerator.stairs(block: Block, texture: Block) =
+fun BlockModelGenerators.stairs(block: Block, texture: Block) =
     stairs(block, texture, texture, texture)
 
-fun BlockStateModelGenerator.stairs(block: Block, texture: Block, suffix: String) =
+fun BlockModelGenerators.stairs(block: Block, texture: Block, suffix: String) =
     stairs(block, texture.model(suffix), texture.model(suffix), texture.model(suffix))
 
-fun BlockStateModelGenerator.stairs(block: Block, bottom: Block, side: Block, top: Block) =
+fun BlockModelGenerators.stairs(block: Block, bottom: Block, side: Block, top: Block) =
     stairs(block, bottom.model(), side.model(), top.model())
 
-fun BlockStateModelGenerator.stairs(block: Block, ends: Identifier, side: Identifier) =
+fun BlockModelGenerators.stairs(block: Block, ends: ResourceLocation, side: ResourceLocation) =
     stairs(block, ends, side, ends)
 
-fun BlockStateModelGenerator.stairs(
+fun BlockModelGenerators.stairs(
     block: Block,
-    bottom: Identifier,
-    side: Identifier,
-    top: Identifier,
+    bottom: ResourceLocation,
+    side: ResourceLocation,
+    top: ResourceLocation,
 ) {
-    val texture: Texture = Texture()
+    val texture: TextureMapping = TextureMapping()
         .put(BOTTOM, bottom)
         .put(SIDE, side)
         .put(TOP, top)
-    val id: Identifier = Models.INNER_STAIRS.upload(block, texture, this.modelCollector)
-    val id2: Identifier = Models.STAIRS.upload(block, texture, this.modelCollector)
-    val id3: Identifier = Models.OUTER_STAIRS.upload(block, texture, this.modelCollector)
+    val id: ResourceLocation = ModelTemplates.STAIRS_INNER.create(block, texture, this.modelOutput)
+    val id2: ResourceLocation = ModelTemplates.STAIRS_STRAIGHT.create(block, texture, this.modelOutput)
+    val id3: ResourceLocation = ModelTemplates.STAIRS_OUTER.create(block, texture, this.modelOutput)
 
-    this.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(block, id, id2, id3))
-    this.registerParentedItemModel(block, id2)
+    this.blockStateOutput.accept(BlockModelGenerators.createStairs(block, id, id2, id3))
+    this.delegateItemModel(block, id2)
 }
 
-fun BlockStateModelGenerator.slab(block: Block) = slab(block, block)
-fun BlockStateModelGenerator.slab(block: Block, texture: Block) =
+fun BlockModelGenerators.slab(block: Block) = slab(block, block)
+fun BlockModelGenerators.slab(block: Block, texture: Block) =
     slab(block, texture, texture, texture, texture)
 
-fun BlockStateModelGenerator.slab(block: Block, texture: Block, full: Block) =
+fun BlockModelGenerators.slab(block: Block, texture: Block, full: Block) =
     slab(block, slabTexture(texture), full)
 
-fun BlockStateModelGenerator.slab(block: Block, bottom: Block, side: Block, top: Block, full: Block) =
+fun BlockModelGenerators.slab(block: Block, bottom: Block, side: Block, top: Block, full: Block) =
     slab(
-        block, Texture.texture(block.model())
+        block, TextureMapping.defaultTexture(block.model())
             .put(BOTTOM, bottom.model())
             .put(SIDE, side.model())
             .put(TOP, top.model()),
         full
     )
 
-fun BlockStateModelGenerator.slab(block: Block, texture: Texture, full: Block) {
-    val id = Models.SLAB.upload(block, texture, this.modelCollector)
-    val id2 = Models.SLAB_TOP.upload(block, texture, this.modelCollector)
+fun BlockModelGenerators.slab(block: Block, texture: TextureMapping, full: Block) {
+    val id = ModelTemplates.SLAB_BOTTOM.create(block, texture, this.modelOutput)
+    val id2 = ModelTemplates.SLAB_TOP.create(block, texture, this.modelOutput)
     val id3 = full.model()
-    this.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(block, id, id2, id3))
-    this.registerParentedItemModel(block, id)
+    this.blockStateOutput.accept(BlockModelGenerators.createSlab(block, id, id2, id3))
+    this.delegateItemModel(block, id)
 }
 
-fun slabTexture(texture: Block): Texture = Texture.texture(texture.model())
+fun slabTexture(texture: Block): TextureMapping = TextureMapping.defaultTexture(texture.model())
     .put(BOTTOM, texture.model())
     .put(SIDE, texture.model())
     .put(TOP, texture.model())
 
-fun BlockStateModelGenerator.wall(block: Block) = wall(block, block.model())
-fun BlockStateModelGenerator.wall(block: Block, texture: Block) = wall(block, texture.model())
+fun BlockModelGenerators.wall(block: Block) = wall(block, block.model())
+fun BlockModelGenerators.wall(block: Block, texture: Block) = wall(block, texture.model())
 
-fun BlockStateModelGenerator.wall(wallBlock: Block, inId: Identifier) {
-    val texture = Texture.texture(wallBlock.model()).put(WALL, inId)
-    val id = Models.TEMPLATE_WALL_POST.upload(wallBlock, texture, this.modelCollector)
-    val id2 = Models.TEMPLATE_WALL_SIDE.upload(wallBlock, texture, this.modelCollector)
-    val id3 = Models.TEMPLATE_WALL_SIDE_TALL.upload(wallBlock, texture, this.modelCollector)
-    this.blockStateCollector.accept(BlockStateModelGenerator.createWallBlockState(wallBlock, id, id2, id3))
-    this.registerParentedItemModel(wallBlock, Models.WALL_INVENTORY.upload(wallBlock, texture, this.modelCollector))
+fun BlockModelGenerators.wall(wallBlock: Block, inId: ResourceLocation) {
+    val texture = TextureMapping.defaultTexture(wallBlock.model()).put(WALL, inId)
+    val id = ModelTemplates.WALL_POST.create(wallBlock, texture, this.modelOutput)
+    val id2 = ModelTemplates.WALL_LOW_SIDE.create(wallBlock, texture, this.modelOutput)
+    val id3 = ModelTemplates.WALL_TALL_SIDE.create(wallBlock, texture, this.modelOutput)
+    this.blockStateOutput.accept(BlockModelGenerators.createWall(wallBlock, id, id2, id3))
+    this.delegateItemModel(wallBlock, ModelTemplates.WALL_INVENTORY.create(wallBlock, texture, this.modelOutput))
 }
 
-fun BlockStateModelGenerator.fence(fenceBlock: Block, reference: Block) {
-    val texture = Texture.texture(reference)
-    val id = Models.FENCE_POST.upload(fenceBlock, texture, this.modelCollector)
-    val id2 = Models.FENCE_SIDE.upload(fenceBlock, texture, this.modelCollector)
-    val id3 = Models.FENCE_INVENTORY.upload(fenceBlock, texture, this.modelCollector)
-    this.blockStateCollector.accept(BlockStateModelGenerator.createFenceBlockState(fenceBlock, id, id2))
-    this.registerParentedItemModel(fenceBlock, id3)
+fun BlockModelGenerators.fence(fenceBlock: Block, reference: Block) {
+    val texture = TextureMapping.defaultTexture(reference)
+    val id = ModelTemplates.FENCE_POST.create(fenceBlock, texture, this.modelOutput)
+    val id2 = ModelTemplates.FENCE_SIDE.create(fenceBlock, texture, this.modelOutput)
+    val id3 = ModelTemplates.FENCE_INVENTORY.create(fenceBlock, texture, this.modelOutput)
+    this.blockStateOutput.accept(BlockModelGenerators.createFence(fenceBlock, id, id2))
+    this.delegateItemModel(fenceBlock, id3)
 }
 
-fun BlockStateModelGenerator.registerHandheldItem(item: Item) {
-    Models.HANDHELD.upload(
-        ModelIds.getItemModelId(item),
-        Texture.layer0(item),
-        this.modelCollector
+fun BlockModelGenerators.registerHandheldItem(item: Item) {
+    ModelTemplates.FLAT_HANDHELD_ITEM.create(
+        ModelLocationUtils.getModelLocation(item),
+        TextureMapping.layer0(item),
+        this.modelOutput
     )
 }
 
-fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block) {
+fun BlockModelGenerators.hollowLog(hollowLog: Block, log: Block) {
     this.hollowLog(hollowLog, log, log.model())
 }
 
-fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, strippedLog: Block) {
+fun BlockModelGenerators.hollowLog(hollowLog: Block, log: Block, strippedLog: Block) {
     this.hollowLog(hollowLog, log, strippedLog.model())
 }
 
-fun BlockStateModelGenerator.hollowLog(hollowLog: Block, log: Block, innerTexture: Identifier) {
-    val texture: Texture = Texture.texture(hollowLog)
+fun BlockModelGenerators.hollowLog(hollowLog: Block, log: Block, innerTexture: ResourceLocation) {
+    val texture: TextureMapping = TextureMapping.defaultTexture(hollowLog)
         .put(SIDE, log.model())
         .put(END, log.model("_top"))
         .put(INNER, innerTexture)
-    Direction.Type.HORIZONTAL.forEach {
+    Direction.Plane.HORIZONTAL.forEach {
         block("parent/hollow_log_$it", SIDE, END, INNER)
-            .upload(hollowLog, "_$it", texture, this.modelCollector)
+            .createWithSuffix(hollowLog, "_$it", texture, this.modelOutput)
     }
     this.hollowBlock(hollowLog)
-    this.registerParentedItemModel(
+    this.delegateItemModel(
         hollowLog, block("parent/hollow_log", SIDE, END, INNER)
-            .upload(hollowLog, texture, this.modelCollector)
+            .create(hollowLog, texture, this.modelOutput)
     )
 }
 
-fun BlockStateModelGenerator.hollowBambooBlock(hollowBamboo: Block, bambooBlock: Block) {
-    val texture: Texture = Texture.texture(hollowBamboo)
+fun BlockModelGenerators.hollowBambooBlock(hollowBamboo: Block, bambooBlock: Block) {
+    val texture: TextureMapping = TextureMapping.defaultTexture(hollowBamboo)
         .put(SIDE, bambooBlock.model())
         .put(END, bambooBlock.model("_top"))
-    Direction.Type.HORIZONTAL.forEach {
+    Direction.Plane.HORIZONTAL.forEach {
         block("parent/hollow_bamboo_block_$it", SIDE, END)
-            .upload(hollowBamboo, "_$it", texture, this.modelCollector)
+            .createWithSuffix(hollowBamboo, "_$it", texture, this.modelOutput)
     }
     this.hollowBlock(hollowBamboo)
-    this.registerParentedItemModel(
+    this.delegateItemModel(
         hollowBamboo, block("parent/hollow_bamboo_block", SIDE, END)
-            .upload(hollowBamboo, texture, this.modelCollector)
+            .create(hollowBamboo, texture, this.modelOutput)
     )
 }
 
-fun BlockStateModelGenerator.hollowBlock(block: Block) {
-    val model = MultipartBlockStateSupplier.create(block)
-    var modelId: Identifier
-    val allDirectionFalse = When.create()
-        .set(HollowLogWithCuttingBlock.NORTH, false)
-        .set(HollowLogWithCuttingBlock.SOUTH, false)
-        .set(HollowLogWithCuttingBlock.EAST, false)
-        .set(HollowLogWithCuttingBlock.WEST, false)
+fun BlockModelGenerators.hollowBlock(block: Block) {
+    val model = MultiPartGenerator.multiPart(block)
+    var modelId: ResourceLocation
+    val allDirectionFalse = Condition.condition()
+        .term(HollowLogWithCuttingBlock.NORTH, false)
+        .term(HollowLogWithCuttingBlock.SOUTH, false)
+        .term(HollowLogWithCuttingBlock.EAST, false)
+        .term(HollowLogWithCuttingBlock.WEST, false)
     val directionsX = listOf(
         Direction.WEST,
         Direction.SOUTH,
         Direction.EAST,
         Direction.NORTH,
     )
-    Direction.Type.HORIZONTAL.forEachIndexed { idx, it ->
+    Direction.Plane.HORIZONTAL.forEachIndexed { idx, it ->
         modelId = block.model("_$it")
         model.with(
-            When.create()
-                .set(PillarBlock.AXIS, Direction.Axis.X)
-                .set(HollowLogWithCuttingBlock.getProperty(it), true),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, block.model("_" + directionsX[idx].toString()))
-                .put(VariantSettings.Y, Rotation.R90)
+            Condition.condition()
+                .term(RotatedPillarBlock.AXIS, Direction.Axis.X)
+                .term(HollowLogWithCuttingBlock.getProperty(it), true),
+            Variant.variant()
+                .with(VariantProperties.MODEL, block.model("_" + directionsX[idx].toString()))
+                .with(VariantProperties.Y_ROT, Rotation.R90)
         )
         model.with(
             allDirectionFalse,
-            BlockStateVariant.create().put(VariantSettings.MODEL, modelId)
+            Variant.variant().with(VariantProperties.MODEL, modelId)
         )
         model.with(
-            When.create()
-                .set(PillarBlock.AXIS, Direction.Axis.Y)
-                .set(HollowLogWithCuttingBlock.getProperty(it), true),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, modelId)
-                .put(VariantSettings.X, Rotation.R270)
-        )
-        model.with(
-            allDirectionFalse,
-            BlockStateVariant.create().put(VariantSettings.MODEL, modelId)
-        )
-        model.with(
-            When.create()
-                .set(PillarBlock.AXIS, Direction.Axis.Z)
-                .set(HollowLogWithCuttingBlock.getProperty(it), true),
-            BlockStateVariant.create()
-                .put(VariantSettings.MODEL, modelId)
+            Condition.condition()
+                .term(RotatedPillarBlock.AXIS, Direction.Axis.Y)
+                .term(HollowLogWithCuttingBlock.getProperty(it), true),
+            Variant.variant()
+                .with(VariantProperties.MODEL, modelId)
+                .with(VariantProperties.X_ROT, Rotation.R270)
         )
         model.with(
             allDirectionFalse,
-            BlockStateVariant.create().put(VariantSettings.MODEL, modelId)
+            Variant.variant().with(VariantProperties.MODEL, modelId)
+        )
+        model.with(
+            Condition.condition()
+                .term(RotatedPillarBlock.AXIS, Direction.Axis.Z)
+                .term(HollowLogWithCuttingBlock.getProperty(it), true),
+            Variant.variant()
+                .with(VariantProperties.MODEL, modelId)
+        )
+        model.with(
+            allDirectionFalse,
+            Variant.variant().with(VariantProperties.MODEL, modelId)
         )
     }
-    this.blockStateCollector.accept(model)
+    this.blockStateOutput.accept(model)
 }
 
 
-fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block, bamboo: Boolean = false) {
+fun BlockModelGenerators.createLogPile(logPile: Block, log: Block, bamboo: Boolean = false) {
     val layer1 = this.parentedLogPileModel(logPile, log, bamboo, "_1")
     val layer2 = this.parentedLogPileModel(logPile, log, bamboo, "_2")
     val layer3 = this.parentedLogPileModel(logPile, log, bamboo, "_3")
@@ -1318,63 +1336,63 @@ fun BlockStateModelGenerator.createLogPile(logPile: Block, log: Block, bamboo: B
     val hanging2 = this.parentedLogPileModel(logPile, log, bamboo, "_hanging_2")
     val hanging3 = this.parentedLogPileModel(logPile, log, bamboo, "_hanging_3")
     val full = this.parentedLogPileModel(logPile, log, bamboo)
-    this.registerParentedItemModel(logPile, layer2)
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(logPile)
-            .coordinate(
-                BlockStateVariantMap.create(
+    this.delegateItemModel(logPile, layer2)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(logPile)
+            .with(
+                PropertyDispatch.properties(
                     LogPileBlock.PILE_LAYERS,
-                    Properties.HANGING
-                ).register(
+                    BlockStateProperties.HANGING
+                ).select(
                     1, false,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
-                ).register(
+                    Variant.variant().with(VariantProperties.MODEL, layer1)
+                ).select(
                     2, false,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
-                ).register(
+                    Variant.variant().with(VariantProperties.MODEL, layer2)
+                ).select(
                     3, false,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
-                ).register(
+                    Variant.variant().with(VariantProperties.MODEL, layer3)
+                ).select(
                     1, true,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
-                ).register(
+                    Variant.variant().with(VariantProperties.MODEL, hanging1)
+                ).select(
                     2, true,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
-                ).register(
+                    Variant.variant().with(VariantProperties.MODEL, hanging2)
+                ).select(
                     3, true,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
-                ).register(
+                    Variant.variant().with(VariantProperties.MODEL, hanging3)
+                ).select(
                     4, false,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, full)
-                ).register(
+                    Variant.variant().with(VariantProperties.MODEL, full)
+                ).select(
                     4, true,
-                    BlockStateVariant.create().put(VariantSettings.MODEL, full)
+                    Variant.variant().with(VariantProperties.MODEL, full)
                 )
-            ).coordinate(
-                BlockStateVariantMap.create(Properties.HORIZONTAL_AXIS)
-                    .register(Direction.Axis.X, BlockStateVariant.create())
-                    .register(Direction.Axis.Z, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90))
+            ).with(
+                PropertyDispatch.property(BlockStateProperties.HORIZONTAL_AXIS)
+                    .select(Direction.Axis.X, Variant.variant())
+                    .select(Direction.Axis.Z, Variant.variant().with(VariantProperties.Y_ROT, Rotation.R90))
             )
     )
 }
 
-fun BlockStateModelGenerator.parentedLogPileModel(
+fun BlockModelGenerators.parentedLogPileModel(
     block: Block,
     textBlock: Block,
     bamboo: Boolean,
     parent: String = ""
-): Identifier {
+): ResourceLocation {
     val pileModel = if (bamboo) id("block/parent/bamboo_pile") else id("block/parent/log_pile")
-    return Model(pileModel.suffix(parent).myb, Optional.empty(), SIDE, END)
-        .upload(
-            block.model(parent), Texture()
+    return ModelTemplate(pileModel.suffix(parent).myb, Optional.empty(), SIDE, END)
+        .create(
+            block.model(parent), TextureMapping()
                 .put(SIDE, textBlock.model())
                 .put(END, textBlock.model("_top")),
-            this.modelCollector
+            this.modelOutput
         )
 }
 
-fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
+fun BlockModelGenerators.createLeafPile(leafPile: Block, leaves: Block) {
     val pileModel = id("block/parent/leaf_pile")
     val layer1 = this.parentedModel(leafPile, leaves, pileModel)
     val layer2 = this.parentedModel(leafPile.model("_8"), leaves, pileModel.suffix("_8"))
@@ -1383,29 +1401,29 @@ fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
     val hanging2 = this.parentedModel(leafPile.model("_hanging_8"), leaves, pileModel.suffix("_hanging_8"))
     val hanging3 = this.parentedModel(leafPile.model("_hanging_12"), leaves, pileModel.suffix("_hanging_12"))
     val full = this.parentedModel(leafPile.model("_full"), leaves, pileModel.suffix("_full"))
-    this.blockStateCollector.accept(
-        MultipartBlockStateSupplier.create(leafPile)
+    this.blockStateOutput.accept(
+        MultiPartGenerator.multiPart(leafPile)
             .with(
-                When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, false),
-                BlockStateVariant.create().put(VariantSettings.MODEL, layer1)
+                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 1).term(BlockStateProperties.HANGING, false),
+                Variant.variant().with(VariantProperties.MODEL, layer1)
             ).with(
-                When.create().set(LeafPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, false),
-                BlockStateVariant.create().put(VariantSettings.MODEL, layer2)
+                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 2).term(BlockStateProperties.HANGING, false),
+                Variant.variant().with(VariantProperties.MODEL, layer2)
             ).with(
-                When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, false),
-                BlockStateVariant.create().put(VariantSettings.MODEL, layer3)
+                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 3).term(BlockStateProperties.HANGING, false),
+                Variant.variant().with(VariantProperties.MODEL, layer3)
             ).with(
-                When.create().set(LeafPileBlock.PILE_LAYERS, 1).set(Properties.HANGING, true),
-                BlockStateVariant.create().put(VariantSettings.MODEL, hanging1)
+                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 1).term(BlockStateProperties.HANGING, true),
+                Variant.variant().with(VariantProperties.MODEL, hanging1)
             ).with(
-                When.create().set(LeafPileBlock.PILE_LAYERS, 2).set(Properties.HANGING, true),
-                BlockStateVariant.create().put(VariantSettings.MODEL, hanging2)
+                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 2).term(BlockStateProperties.HANGING, true),
+                Variant.variant().with(VariantProperties.MODEL, hanging2)
             ).with(
-                When.create().set(LeafPileBlock.PILE_LAYERS, 3).set(Properties.HANGING, true),
-                BlockStateVariant.create().put(VariantSettings.MODEL, hanging3)
+                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 3).term(BlockStateProperties.HANGING, true),
+                Variant.variant().with(VariantProperties.MODEL, hanging3)
             ).with(
-                When.create().set(LeafPileBlock.PILE_LAYERS, 4),
-                BlockStateVariant.create().put(VariantSettings.MODEL, full)
+                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 4),
+                Variant.variant().with(VariantProperties.MODEL, full)
             )
     )
 }
@@ -1413,45 +1431,45 @@ fun BlockStateModelGenerator.createLeafPile(leafPile: Block, leaves: Block) {
 //for future reference since i still havent watched tutorials
 //private fun leafPileHanging(num: String? = null): Identifier =
 //    id("block/parent/leaf_pile_hanging${if (num != null) "_$num" else ""}")
-fun BlockStateModelGenerator.registerCropWithParent(
+fun BlockModelGenerators.registerCropWithParent(
     crop: Block,
-    model: Identifier,
+    model: ResourceLocation,
     ageProperty: Property<Int>,
     vararg ageTextureIndices: Int
 ) {
-    require(ageProperty.values.size == ageTextureIndices.size)
-    val int2ObjectMap: Int2ObjectMap<Identifier> = Int2ObjectOpenHashMap()
-    val blockStateVariantMap = BlockStateVariantMap.create(ageProperty).register { age: Int ->
+    require(ageProperty.possibleValues.size == ageTextureIndices.size)
+    val int2ObjectMap: Int2ObjectMap<ResourceLocation> = Int2ObjectOpenHashMap()
+    val blockStateVariantMap = PropertyDispatch.property(ageProperty).generate { age: Int ->
         val stage = ageTextureIndices[age]
         val identifier = int2ObjectMap.computeIfAbsent(
             stage,
             Int2ObjectFunction { _: Int ->
-                this.createSubModel(
+                this.createSuffixedVariant(
                     crop,
                     "_stage$stage",
                     block(model, CROP)
-                ) { id: Identifier ->
-                    Texture.crop(
+                ) { id: ResourceLocation ->
+                    TextureMapping.crop(
                         id
                     )
                 }
             })
-        BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+        Variant.variant().with(VariantProperties.MODEL, identifier)
     }
-    this.registerItemModel(crop.asItem())
-    this.blockStateCollector.accept(VariantsBlockStateSupplier.create(crop).coordinate(blockStateVariantMap))
+    this.createSimpleFlatItemModel(crop.asItem())
+    this.blockStateOutput.accept(MultiVariantGenerator.multiVariant(crop).with(blockStateVariantMap))
 }
 
-fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
-    excludeFromSimpleItemModelGeneration(block)
-    val allDirectionFalse = When.create()
-        .set(AbstractLichenBlock.getProperty(Direction.NORTH), false)
-        .set(AbstractLichenBlock.getProperty(Direction.SOUTH), false)
-        .set(AbstractLichenBlock.getProperty(Direction.EAST), false)
-        .set(AbstractLichenBlock.getProperty(Direction.WEST), false)
-        .set(AbstractLichenBlock.getProperty(Direction.DOWN), false)
-        .set(AbstractLichenBlock.getProperty(Direction.UP), false)
-    val model = MultipartBlockStateSupplier.create(block)
+fun BlockModelGenerators.createMoonberryVine(block: Block) {
+    skipAutoItemBlock(block)
+    val allDirectionFalse = Condition.condition()
+        .term(MultifaceBlock.getFaceProperty(Direction.NORTH), false)
+        .term(MultifaceBlock.getFaceProperty(Direction.SOUTH), false)
+        .term(MultifaceBlock.getFaceProperty(Direction.EAST), false)
+        .term(MultifaceBlock.getFaceProperty(Direction.WEST), false)
+        .term(MultifaceBlock.getFaceProperty(Direction.DOWN), false)
+        .term(MultifaceBlock.getFaceProperty(Direction.UP), false)
+    val model = MultiPartGenerator.multiPart(block)
     val directions = listOf(
         (Direction.NORTH to Rotation.R0),
         (Direction.EAST to Rotation.R90),
@@ -1460,12 +1478,12 @@ fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
         (Direction.DOWN to Rotation.R90),
         (Direction.UP to Rotation.R270)
     )
-    var modelId: Identifier
-    var axis: VariantSetting<Rotation>
+    var modelId: ResourceLocation
+    var axis: VariantProperty<Rotation>
     var variantRotation: Rotation
 
     directions.forEach { (direction, rotation) ->
-        axis = VariantSettings.Y
+        axis = VariantProperties.Y_ROT
         for (berries in 0..2) {
             modelId = id("block/parent/moonberry_vine_$berries")
             variantRotation = rotation
@@ -1479,148 +1497,148 @@ fun BlockStateModelGenerator.createMoonberryVine(block: Block) {
                             Rotation.R180
                         }
                 }
-                axis = VariantSettings.X
+                axis = VariantProperties.X_ROT
             }
             model.with(
-                When.create().set(AbstractLichenBlock.getProperty(direction), true)
-                    .set(MoonberryVineBlock.BERRIES, berries),
-                BlockStateVariant.create()
-                    .put(
-                        VariantSettings.MODEL,
+                Condition.condition().term(MultifaceBlock.getFaceProperty(direction), true)
+                    .term(MoonberryVineBlock.BERRIES, berries),
+                Variant.variant()
+                    .with(
+                        VariantProperties.MODEL,
                         modelId
-                    ).put(axis, variantRotation)
+                    ).with(axis, variantRotation)
             )
         }
         model.with(
             allDirectionFalse,
-            BlockStateVariant.create()
-                .put(
-                    VariantSettings.MODEL,
+            Variant.variant()
+                .with(
+                    VariantProperties.MODEL,
                     id("block/parent/moonberry_vine_0")
-                ).put(axis, rotation)
+                ).with(axis, rotation)
         )
     }
-    this.blockStateCollector.accept(model)
+    this.blockStateOutput.accept(model)
 }
 
-fun BlockStateModelGenerator.registerDnDCandelabra(candelabra: Block) =
+fun BlockModelGenerators.registerDnDCandelabra(candelabra: Block) =
     this.registerCandelabra(candelabra, true)
 
-fun BlockStateModelGenerator.registerCandelabra(candelabra: Block, isDnD: Boolean = false) {
+fun BlockModelGenerators.registerCandelabra(candelabra: Block, isDnD: Boolean = false) {
     if (candelabra !is CandelabraBlock) error("Provided blocks is not a CandelabraBlock!")
-    this.blockStateCollector.accept(
-        VariantsBlockStateSupplier.create(candelabra)
-            .coordinate(
-                BlockStateVariantMap.create(Properties.HORIZONTAL_AXIS)
-                    .register(Direction.Axis.X, BlockStateVariant.create())
-                    .register(Direction.Axis.Z, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90))
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(candelabra)
+            .with(
+                PropertyDispatch.property(BlockStateProperties.HORIZONTAL_AXIS)
+                    .select(Direction.Axis.X, Variant.variant())
+                    .select(Direction.Axis.Z, Variant.variant().with(VariantProperties.Y_ROT, Rotation.R90))
             )
-            .coordinate(this.candelabraStates(candelabra, isDnD))
+            .with(this.candelabraStates(candelabra, isDnD))
     )
-    this.registerParentedItemModel(candelabra, candelabra.model("_1"))
+    this.delegateItemModel(candelabra, candelabra.model("_1"))
 }
 
-fun BlockStateModelGenerator.candelabraStates(
+fun BlockModelGenerators.candelabraStates(
     candelabra: CandelabraBlock, isDnD: Boolean
-): BlockStateVariantMap {
+): PropertyDispatch {
     val candle = candelabra.candle.prefixed(if (isDnD) "candle/" else "")
 
-    val texture = Texture.texture(candelabra)
+    val texture = TextureMapping.defaultTexture(candelabra)
         .put(CANDLE, candle)
         .put(TEXTURE, id("block/candelabra_iron"))
-    val textureLit = Texture.texture(candelabra)
+    val textureLit = TextureMapping.defaultTexture(candelabra)
         .put(CANDLE, candle.suffix("_lit"))
         .put(TEXTURE, id("block/candelabra_iron"))
     val models = listOf(CANDELABRA_1, CANDELABRA_2, CANDELABRA_3, CANDELABRA_4, CANDELABRA_5)
 
-    return BlockStateVariantMap.create(Properties.LIT, CandelabraBlock.CANDLES).register { isLit, candles ->
+    return PropertyDispatch.properties(BlockStateProperties.LIT, CandelabraBlock.CANDLES).generate { isLit, candles ->
         val model = models[candles - 1]
-        BlockStateVariant.create().put(
-            VariantSettings.MODEL,
-            if (isLit) model.upload(candelabra, "_lit", textureLit, this.modelCollector)
-            else model.upload(candelabra, texture, this.modelCollector)
+        Variant.variant().with(
+            VariantProperties.MODEL,
+            if (isLit) model.createWithSuffix(candelabra, "_lit", textureLit, this.modelOutput)
+            else model.create(candelabra, texture, this.modelOutput)
         )
     }
 }
 
-fun parentedItemModel(id: Identifier) = Model(Optional.of(id.withPrefix("item/")), Optional.empty())
-fun BlockStateModelGenerator.registerParentedItemModel(block: Block) =
-    this.registerParentedItemModel(block, block.model())
+fun parentedItemModel(id: ResourceLocation) = ModelTemplate(Optional.of(id.withPrefix("item/")), Optional.empty())
+fun BlockModelGenerators.registerParentedItemModel(block: Block) =
+    this.delegateItemModel(block, block.model())
 
-fun block(model: Identifier, vararg requiredTextures: TextureKey): Model {
-    return Model(
+fun block(model: ResourceLocation, vararg requiredTextures: TextureSlot): ModelTemplate {
+    return ModelTemplate(
         Optional.of(
             model
         ), Optional.empty(), *requiredTextures
     )
 }
 
-fun block(model: Identifier, variant: String, vararg requiredTextures: TextureKey): Model {
-    return Model(
+fun block(model: ResourceLocation, variant: String, vararg requiredTextures: TextureSlot): ModelTemplate {
+    return ModelTemplate(
         Optional.of(
             model
         ), Optional.of(variant), *requiredTextures
     )
 }
 
-fun block(parent: String, vararg requiredTextures: TextureKey): Model {
-    return Model(
+fun block(parent: String, vararg requiredTextures: TextureSlot): ModelTemplate {
+    return ModelTemplate(
         Optional.of(
             id("block/$parent")
         ), Optional.empty(), *requiredTextures
     )
 }
 
-fun block(parent: String, variant: String, vararg requiredTextures: TextureKey): Model {
-    return Model(
+fun block(parent: String, variant: String, vararg requiredTextures: TextureSlot): ModelTemplate {
+    return ModelTemplate(
         Optional.of(
             id("block/$parent")
         ), Optional.of(variant), *requiredTextures
     )
 }
 
-fun BlockStateModelGenerator.parentedModel(
+fun BlockModelGenerators.parentedModel(
     block: Block,
     textBlock: Block,
-    parent: Identifier
-): Identifier =
-    Model(parent.myb, Optional.empty(), ALL)
-        .upload(block.model(), Texture().put(ALL, textBlock.model()), this.modelCollector)
+    parent: ResourceLocation
+): ResourceLocation =
+    ModelTemplate(parent.myb, Optional.empty(), ALL)
+        .create(block.model(), TextureMapping().put(ALL, textBlock.model()), this.modelOutput)
 
-fun BlockStateModelGenerator.parentedModel(
-    block: Identifier,
+fun BlockModelGenerators.parentedModel(
+    block: ResourceLocation,
     textBlock: Block,
-    parent: Identifier
-): Identifier =
-    Model(parent.myb, Optional.empty(), ALL)
-        .upload(block, Texture().put(ALL, textBlock.model()), this.modelCollector)
+    parent: ResourceLocation
+): ResourceLocation =
+    ModelTemplate(parent.myb, Optional.empty(), ALL)
+        .create(block, TextureMapping().put(ALL, textBlock.model()), this.modelOutput)
 
-fun BlockStateModelGenerator.registerPrefixedItemModel(block: Block, prefix: String) {
+fun BlockModelGenerators.registerPrefixedItemModel(block: Block, prefix: String) {
     val item = block.asItem()
-    Models.SINGLE_LAYER_ITEM.upload(
-        ModelIds.getItemModelId(item), Texture.layer0(item.prefixed(prefix)),
-        this.modelCollector
+    ModelTemplates.FLAT_ITEM.create(
+        ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(item.prefixed(prefix)),
+        this.modelOutput
     )
 }
 
 private
 val <T : Any?> T.myb get() = Optional.ofNullable(this)
 
-fun Block.model(): Identifier = ModelIds.getBlockModelId(this)
+fun Block.model(): ResourceLocation = ModelLocationUtils.getModelLocation(this)
 fun Block.model(str: String) = this.model().suffix(str)
 
-fun Block.prefixed(str: String): Identifier = this.id.withPrefix("block/$str")
+fun Block.prefixed(str: String): ResourceLocation = this.id.withPrefix("block/$str")
 
 
-fun Item.model(): Identifier = ModelIds.getItemModelId(this)
+fun Item.model(): ResourceLocation = ModelLocationUtils.getModelLocation(this)
 fun Item.model(str: String) = this.model().suffix(str)
-fun Item.prefixed(str: String): Identifier = this.id.withPrefix("item/$str")
+fun Item.prefixed(str: String): ResourceLocation = this.id.withPrefix("item/$str")
 
-fun Identifier.toVariant(): BlockStateVariant = BlockStateVariant.create().put(VariantSettings.MODEL, this)
+fun ResourceLocation.toVariant(): Variant = Variant.variant().with(VariantProperties.MODEL, this)
 
-fun Identifier.suffix(str: String) = Identifier.of(this.namespace, "${this.path}$str")
+fun ResourceLocation.suffix(str: String) = ResourceLocation.fromNamespaceAndPath(this.namespace, "${this.path}$str")
 
 
-val Item.id get() = Registries.ITEM.getId(this)
-val ItemConvertible.id get() = this.asItem().id
-val Block.id get() = Registries.BLOCK.getId(this)
+val Item.id get() = BuiltInRegistries.ITEM.getKey(this)
+val ItemLike.id get() = this.asItem().id
+val Block.id get() = BuiltInRegistries.BLOCK.getKey(this)

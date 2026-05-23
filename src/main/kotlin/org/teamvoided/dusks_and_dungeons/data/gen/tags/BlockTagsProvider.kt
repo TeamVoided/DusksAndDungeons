@@ -3,9 +3,9 @@ package org.teamvoided.dusks_and_dungeons.data.gen.tags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
-import net.minecraft.block.Blocks
-import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.tag.BlockTags
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.BlockTags
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -29,7 +29,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         DnDBlocks.STRIPPED_CRIMSON_HYPHAE, DnDBlocks.STRIPPED_WARPED_HYPHAE
     )
 
-    override fun configure(arg: HolderLookup.Provider) {
+    override fun addTags(arg: HolderLookup.Provider) {
         SETS.filterNot(WOOD_SETS::contains).forEach { it.createSetTags(::getOrCreateTagBuilder) }
         COLOR_CONSORTIUM.forEach { it.createColorTags(::getOrCreateTagBuilder) }
         duskTags()
@@ -297,7 +297,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         WOOD_SETS.filterNot(excludeWood::contains).forEach { it.createWoodTags(::getOrCreateTagBuilder) }
         // TODO make wood walls work as part of walls tags
         // getOrCreateTagBuilder(BlockTags.WALLS).forceAddTag(DnDBlockTags.WOODEN_WALLS)
-        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).forceAddTag(DnDBlockTags.WOODEN_WALLS)
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE).forceAddTag(DnDBlockTags.WOODEN_WALLS)
 
         getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS)
             .forceAddTag(DnDBlockTags.WOOD_WALLS)
@@ -379,14 +379,14 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
             .add(SWORDABLE)
-        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
             .add(PICKAXABLE)
-        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE)
             .forceAddTag(DnDBlockTags.LOG_PILES)
             .add(AXABLE)
-        getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_SHOVEL)
             .add(SHOVELABLE)
-        getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_HOE)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
             .add(HOEABLE)
 

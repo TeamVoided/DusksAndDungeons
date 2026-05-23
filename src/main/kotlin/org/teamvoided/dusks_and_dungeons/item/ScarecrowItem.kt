@@ -1,70 +1,70 @@
 package org.teamvoided.dusks_and_dungeons.item
 
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.SpawnReason
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.item.ItemUsageContext
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.ActionResult
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.MathHelper
-import net.minecraft.util.math.Vec3d
-import net.minecraft.world.event.GameEvent
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.MobSpawnType
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundSource
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.InteractionResult
+import net.minecraft.core.Direction
+import net.minecraft.util.Mth
+import net.minecraft.world.phys.Vec3
+import net.minecraft.world.level.gameevent.GameEvent
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 import org.teamvoided.dusks_and_dungeons.init.DnDEntities
 
-class ScarecrowItem(settings: Settings) : Item(settings) {
-    override fun useOnBlock(context: ItemUsageContext): ActionResult {
-        val direction = context.side
+class ScarecrowItem(settings: Properties) : Item(settings) {
+    override fun useOn(context: UseOnContext): InteractionResult {
+        val direction = context.clickedFace
         if (direction == Direction.DOWN) {
-            return ActionResult.FAIL
+            return InteractionResult.FAIL
         } else {
-            val world = context.world
-            val itemPlacementContext = ItemPlacementContext(context)
-            val blockPos = itemPlacementContext.blockPos
-            val itemStack = context.stack
-            val vec3d = Vec3d.ofBottomCenter(blockPos)
-            val box = DnDEntities.SCARECROW.dimensions.getBoxAt(vec3d.getX(), vec3d.getY(), vec3d.getZ())
-            if (world.isSpaceEmpty(null as Entity?, box) && world.getOtherEntities(null as Entity?, box).isEmpty()) {
-                if (world is ServerWorld) {
+            val world = context.level
+            val itemPlacementContext = BlockPlaceContext(context)
+            val blockPos = itemPlacementContext.clickedPos
+            val itemStack = context.itemInHand
+            val vec3d = Vec3.atBottomCenterOf(blockPos)
+            val box = DnDEntities.SCARECROW.dimensions.makeBoundingBox(vec3d.x(), vec3d.y(), vec3d.z())
+            if (world.noCollision(null as Entity?, box) && world.getEntities(null as Entity?, box).isEmpty()) {
+                if (world is ServerLevel) {
                     val consumer =
-                        EntityType.createDefaultStackSpawnConfig<ScarecrowEntity>(world, itemStack, context.player)
+                        EntityType.createDefaultStackConfig<ScarecrowEntity>(world, itemStack, context.player)
                     val scarecrowEntity =
-                        DnDEntities.SCARECROW.create(world, consumer, blockPos, SpawnReason.SPAWN_EGG, true, true)
-                            ?: return ActionResult.FAIL
+                        DnDEntities.SCARECROW.create(world, consumer, blockPos, MobSpawnType.SPAWN_EGG, true, true)
+                            ?: return InteractionResult.FAIL
 
                     val yaw =
-                        MathHelper.floor((MathHelper.wrapDegrees(context.playerYaw - 180.0f) + 22.5f) / TURN) * TURN
-                    scarecrowEntity.refreshPositionAndAngles(
+                        Mth.floor((Mth.wrapDegrees(context.rotation - 180.0f) + 22.5f) / TURN) * TURN
+                    scarecrowEntity.moveTo(
                         scarecrowEntity.x,
                         scarecrowEntity.y,
                         scarecrowEntity.z,
                         yaw,
                         0.0f
                     )
-                    world.spawnEntityAndPassengers(scarecrowEntity)
+                    world.addFreshEntityWithPassengers(scarecrowEntity)
                     world.playSound(
-                        null as PlayerEntity?,
+                        null as Player?,
                         scarecrowEntity.x,
                         scarecrowEntity.y,
                         scarecrowEntity.z,
-                        SoundEvents.ENTITY_ARMOR_STAND_PLACE,
-                        SoundCategory.BLOCKS,
+                        SoundEvents.ARMOR_STAND_PLACE,
+                        SoundSource.BLOCKS,
                         0.75f,
                         0.8f
                     )
-                    scarecrowEntity.emitGameEvent(GameEvent.ENTITY_PLACE, context.player)
+                    scarecrowEntity.gameEvent(GameEvent.ENTITY_PLACE, context.player)
                 }
 
-                itemStack.decrement(1)
-                return ActionResult.success(world.isClient)
+                itemStack.shrink(1)
+                return InteractionResult.sidedSuccess(world.isClientSide)
             } else {
-                return ActionResult.FAIL
+                return InteractionResult.FAIL
             }
         }
     }

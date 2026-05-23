@@ -1,6 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.block.sapling
 
-import net.minecraft.block.sapling.TreeGrower
+import net.minecraft.world.level.block.grower.TreeGrower
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import java.util.*

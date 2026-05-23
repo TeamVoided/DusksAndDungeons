@@ -2,9 +2,9 @@
 
 package org.teamvoided.voidlib.helpers.block
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.item.BlockItem
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.item.BlockItem
 
 interface BlockConvertable {
     fun asBlock(): Block
@@ -13,6 +13,6 @@ interface BlockConvertable {
 
 fun Block.asBlock(): Block = this
 fun BlockItem.asBlock(): Block = this.block
-fun BlockItem.getDefaultState(): BlockState = this.block.defaultState
+fun BlockItem.getDefaultState(): BlockState = this.block.defaultBlockState()
 fun BlockState.asBlock(): Block = this.block
-fun BlockState.getDefaultState(): BlockState = this.block.defaultState
+fun BlockState.getDefaultState(): BlockState = this.block.defaultBlockState()

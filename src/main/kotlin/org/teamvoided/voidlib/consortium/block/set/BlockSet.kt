@@ -2,10 +2,10 @@
 
 package org.teamvoided.voidlib.consortium.block.set
 
-import net.minecraft.block.AbstractBlock.Settings
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.StairsBlock
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.StairBlock
 
 open class BlockSet(
     val parentName: String,
@@ -22,8 +22,8 @@ open class HeadlessBlockSet(
 ) : AbstractBlockSet(name, parent, stairs, slab, wall, hasStoneCutting)
 
 fun createBlockSet(name: String) = BlockSetBuilder(name)
-fun createBlockSet(name: String, settings: Settings) = BlockSetBuilder(name).settings(settings)
+fun createBlockSet(name: String, settings: Properties) = BlockSetBuilder(name).settings(settings)
 fun createHeadlessSet(name: String, parent: Block) = BlockSetBuilder(name).parent(parent)
 
-typealias BlockMaker<T> = (Block, Settings) -> T
-typealias StairMaker = (BlockState, Settings) -> StairsBlock
+typealias BlockMaker<T> = (Block, Properties) -> T
+typealias StairMaker = (BlockState, Properties) -> StairBlock

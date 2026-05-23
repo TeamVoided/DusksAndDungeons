@@ -1,25 +1,25 @@
 package org.teamvoided.dusks_and_dungeons.entity.raccoon
 
-import net.minecraft.client.render.VertexConsumerProvider
-import net.minecraft.client.render.entity.feature.FeatureRenderer
-import net.minecraft.client.render.entity.feature.FeatureRendererContext
-import net.minecraft.client.render.item.HeldItemRenderer
-import net.minecraft.client.render.model.json.ModelTransformationMode
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.entity.EquipmentSlot
+import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.entity.layers.RenderLayer
+import net.minecraft.client.renderer.entity.RenderLayerParent
+import net.minecraft.client.renderer.ItemInHandRenderer
+import net.minecraft.world.item.ItemDisplayContext
+import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.world.entity.EquipmentSlot
 import org.teamvoided.dusks_and_dungeons.entity.RaccoonEntity
 
 class RaccoonEntityHeldItemFeatureRenderer(
-    context: FeatureRendererContext<RaccoonEntity, RaccoonEntityModel>,
-    private val heldItemRenderer: HeldItemRenderer
+    context: RenderLayerParent<RaccoonEntity, RaccoonEntityModel>,
+    private val heldItemRenderer: ItemInHandRenderer
 ) :
-    FeatureRenderer<RaccoonEntity, RaccoonEntityModel>(
+    RenderLayer<RaccoonEntity, RaccoonEntityModel>(
         context
     ) {
 
     override fun render(
-        matrices: MatrixStack,
-        vertexConsumers: VertexConsumerProvider,
+        matrices: PoseStack,
+        vertexConsumers: MultiBufferSource,
         light: Int,
         entity: RaccoonEntity,
         limbAngle: Float,
@@ -29,13 +29,13 @@ class RaccoonEntityHeldItemFeatureRenderer(
         headYaw: Float,
         headPitch: Float
     ) {
-        matrices.push()
+        matrices.pushPose()
         matrices.translate(0.0, -0.1, 0.0)
-        val stack = entity.getEquippedStack(EquipmentSlot.MAINHAND)
+        val stack = entity.getItemBySlot(EquipmentSlot.MAINHAND)
         heldItemRenderer.renderItem(entity, stack,
-            ModelTransformationMode.GROUND, false,
+            ItemDisplayContext.GROUND, false,
             matrices, vertexConsumers, light
         )
-        matrices.pop()
+        matrices.popPose()
     }
 }

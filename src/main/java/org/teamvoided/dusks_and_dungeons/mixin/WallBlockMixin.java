@@ -1,24 +1,28 @@
 package org.teamvoided.dusks_and_dungeons.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.block.*;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags;
 
 @Mixin(WallBlock.class)
-public abstract class WallBlockMixin extends Block implements Waterloggable {
+public abstract class WallBlockMixin extends Block implements SimpleWaterloggedBlock {
 
-    protected WallBlockMixin(AbstractBlock.Settings settings) {
+    protected WallBlockMixin(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
-    @ModifyReturnValue(method = "shouldConnectTo", at = @At("RETURN"))
+    @ModifyReturnValue(method = "connectsTo", at = @At("RETURN"))
     private boolean connectToWoodenOrRegular(boolean original, BlockState state) {
-        if (this.getDefaultState().isIn(DnDBlockTags.WOODEN_WALLS)) {
-            if (state.isIn(DnDBlockTags.WOODEN_WALLS)) return true;
-            else if (state.isIn(BlockTags.WALLS)) return false;
+        if (this.defaultBlockState().is(DnDBlockTags.WOODEN_WALLS)) {
+            if (state.is(DnDBlockTags.WOODEN_WALLS)) return true;
+            else if (state.is(BlockTags.WALLS)) return false;
         }
         return original;
     }

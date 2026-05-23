@@ -1,12 +1,12 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.recipes
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.block.Blocks
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
-import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RecipeCategory
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.data.recipes.RecipeCategory
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -15,35 +15,35 @@ import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
 import org.teamvoided.dusks_and_dungeons.util.datagen.recipe.woodWall
 
 object WoodRecipes {
-    fun generateWoodRecipes(e: RecipeExporter) {
+    fun generateWoodRecipes(e: RecipeOutput) {
         e.cascade()
         e.woodWalls()
     }
 
-    private fun RecipeExporter.cascade() {
-        FabricRecipeProvider.offerPlanksRecipe(this, DnDBlocks.CASCADE_PLANKS, DnDItemTags.CASCADE_LOGS, 4)
-        FabricRecipeProvider.offerBarkBlockRecipe(this, DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
-        FabricRecipeProvider.offerBarkBlockRecipe(this, DnDBlocks.STRIPPED_CASCADE_WOOD, DnDBlocks.STRIPPED_CASCADE_LOG)
-        FabricRecipeProvider.offerHangingSignRecipe(this, DnDItems.CASCADE_HANGING_SIGN, DnDBlocks.STRIPPED_CASCADE_LOG)
-        ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, DnDBlocks.BLUE_DOOR, 3)
-            .ingredient('#', Ingredient.ofItems(DnDBlocks.CASCADE_PLANKS.asItem()))
-            .ingredient('@', Ingredient.ofItems(Items.GOLD_NUGGET))
+    private fun RecipeOutput.cascade() {
+        FabricRecipeProvider.planksFromLogs(this, DnDBlocks.CASCADE_PLANKS, DnDItemTags.CASCADE_LOGS, 4)
+        FabricRecipeProvider.woodFromLogs(this, DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
+        FabricRecipeProvider.woodFromLogs(this, DnDBlocks.STRIPPED_CASCADE_WOOD, DnDBlocks.STRIPPED_CASCADE_LOG)
+        FabricRecipeProvider.hangingSign(this, DnDItems.CASCADE_HANGING_SIGN, DnDBlocks.STRIPPED_CASCADE_LOG)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, DnDBlocks.BLUE_DOOR, 3)
+            .define('#', Ingredient.of(DnDBlocks.CASCADE_PLANKS.asItem()))
+            .define('@', Ingredient.of(Items.GOLD_NUGGET))
             .pattern("## ")
             .pattern("##@")
             .pattern("## ")
             .criterion(DnDBlocks.CASCADE_PLANKS.asItem())
-            .offerTo(this)
-        ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
-            .ingredient('|', Ingredient.ofItems(Items.BAMBOO_PLANKS))
-            .ingredient('~', Ingredient.ofItems(Items.STRING))
+            .save(this)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
+            .define('|', Ingredient.of(Items.BAMBOO_PLANKS))
+            .define('~', Ingredient.of(Items.STRING))
             .pattern("|~|")
             .pattern("| |")
             .pattern("| |")
             .criterion(Items.BAMBOO_PLANKS)
-            .offerTo(this)
+            .save(this)
     }
 
-    private fun RecipeExporter.woodWalls() {
+    private fun RecipeOutput.woodWalls() {
         DnDBlockLists.plankWalls.forEachIndexed { idx, it ->
             this.woodWall(it, DnDBlockLists.planks[idx], DnDBlockLists.plankSlabs[idx])
         }

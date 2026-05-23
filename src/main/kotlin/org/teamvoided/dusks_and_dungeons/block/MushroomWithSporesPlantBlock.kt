@@ -1,44 +1,44 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.MushroomPlantBlock
-import net.minecraft.block.ShapeContext
-import net.minecraft.registry.RegistryKey
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
-import net.minecraft.world.WorldView
-import net.minecraft.world.gen.feature.ConfiguredFeature
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.MushroomBlock
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
 
 class MushroomWithSporesPlantBlock(
-    registryKey: RegistryKey<ConfiguredFeature<*, *>>,
+    registryKey: ResourceKey<ConfiguredFeature<*, *>>,
     private val color: Int,
     private val particleChance: Double,
-    settings: Settings
-) : MushroomPlantBlock(registryKey, settings) {
+    settings: Properties
+) : MushroomBlock(registryKey, settings) {
 
-    override fun getOutlineShape(
+    override fun getShape(
         state: BlockState,
-        world: BlockView,
+        world: BlockGetter,
         pos: BlockPos,
-        context: ShapeContext
+        context: CollisionContext
     ): VoxelShape {
-        val offset = state.getModelOffset(world, pos)
-        return LARGER_SHAPE.offset(offset.x, 0.0, offset.z)
+        val offset = state.getOffset(world, pos)
+        return LARGER_SHAPE.move(offset.x, 0.0, offset.z)
     }
 
-    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
-        return sideCoversSmallSquare(world, pos.down(), Direction.UP)
+    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
+        return canSupportCenter(world, pos.below(), Direction.UP)
     }
 
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: RandomGenerator) {
-        super.randomDisplayTick(state, world, pos, random)
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        super.animateTick(state, world, pos, random)
         if (random.nextDouble() >= particleChance) {
-            val offset = state.getModelOffset(world, pos)
+            val offset = state.getOffset(world, pos)
             world.addParticle(
                 ColorableParticleEffect(color),
                 pos.x + offset.x + (random.nextDouble() * 0.6 + 0.2),
@@ -52,6 +52,6 @@ class MushroomWithSporesPlantBlock(
     }
 
     companion object {
-        val LARGER_SHAPE: VoxelShape = createCuboidShape(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
+        val LARGER_SHAPE: VoxelShape = box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
     }
 }

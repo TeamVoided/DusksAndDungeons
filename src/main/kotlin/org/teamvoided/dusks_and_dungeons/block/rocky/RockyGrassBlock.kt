@@ -1,57 +1,58 @@
 package org.teamvoided.dusks_and_dungeons.block.rocky
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.Fertilizable
-import net.minecraft.block.Fertilizable.FertilizationType
-import net.minecraft.registry.Holder
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.World
-import net.minecraft.world.WorldView
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.gen.feature.ConfiguredFeature
-import net.minecraft.world.gen.feature.RandomPatchFeatureConfig
-import net.minecraft.world.gen.feature.VegetationPlacedFeatures
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.BonemealableBlock
+import net.minecraft.world.level.block.BonemealableBlock.Type
+import net.minecraft.core.Holder
+import net.minecraft.core.registries.Registries
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration
+import net.minecraft.data.worldgen.placement.VegetationPlacements
 
-class RockyGrassBlock(dirt: Block, settings: Settings) :
-    RockySpreadableBlock(Blocks.GRASS_BLOCK, dirt, settings), Fertilizable {
-    public override fun getCodec(): MapCodec<RockyGrassBlock> = CODEC
-    override fun isFertilizable(world: WorldView, pos: BlockPos, state: BlockState?): Boolean =
-        world.getBlockState(pos.up()).isAir
+class RockyGrassBlock(dirt: Block, settings: Properties) :
+    RockySpreadableBlock(Blocks.GRASS_BLOCK, dirt, settings), BonemealableBlock {
+    public override fun codec(): MapCodec<RockyGrassBlock> = CODEC
+    override fun isValidBonemealTarget(world: LevelReader, pos: BlockPos, state: BlockState?): Boolean =
+        world.getBlockState(pos.above()).isAir
 
-    override fun canFertilize(world: World?, random: RandomGenerator?, pos: BlockPos?, state: BlockState?): Boolean =
+    override fun isBonemealSuccess(world: Level?, random: RandomSource?, pos: BlockPos?, state: BlockState?): Boolean =
         true
 
-    override fun fertilize(world: ServerWorld, random: RandomGenerator, pos: BlockPos, state: BlockState?) {
-        val blockPos = pos.up()
-        val blockState = Blocks.SHORT_GRASS.defaultState
+    override fun performBonemeal(world: ServerLevel, random: RandomSource, pos: BlockPos, state: BlockState?) {
+        val blockPos = pos.above()
+        val blockState = Blocks.SHORT_GRASS.defaultBlockState()
         val optional =
-            world.registryManager.get(RegistryKeys.PLACED_FEATURE).getHolder(VegetationPlacedFeatures.GRASS_BONE_MEAL)
+            world.registryAccess()
+                .registryOrThrow(Registries.PLACED_FEATURE).getHolder(VegetationPlacements.GRASS_BONEMEAL)
 
         label49@ for (i in 0..127) {
             var blockPos2 = blockPos
 
             for (j in 0 until i / 16) {
-                blockPos2 = blockPos2.add(
+                blockPos2 = blockPos2.offset(
                     random.nextInt(3) - 1,
                     (random.nextInt(3) - 1) * random.nextInt(3) / 2,
                     random.nextInt(3) - 1
                 )
-                if (!world.getBlockState(blockPos2.down()).isOf(this) || world.getBlockState(blockPos2)
-                        .isFullCube(world, blockPos2)
+                if (!world.getBlockState(blockPos2.below()).`is`(this) || world.getBlockState(blockPos2)
+                        .isCollisionShapeFullBlock(world, blockPos2)
                 ) {
                     continue@label49
                 }
             }
 
             val blockState2 = world.getBlockState(blockPos2)
-            if (blockState2.isOf(blockState.block) && random.nextInt(10) == 0) {
-                (blockState.block as Fertilizable).fertilize(world, random, blockPos2, blockState2)
+            if (blockState2.`is`(blockState.block) && random.nextInt(10) == 0) {
+                (blockState.block as BonemealableBlock).performBonemeal(world, random, blockPos2, blockState2)
             }
 
             if (blockState2.isAir) {
@@ -62,7 +63,7 @@ class RockyGrassBlock(dirt: Block, settings: Settings) :
                         continue
                     }
 
-                    holder = ((list[0] as ConfiguredFeature<*, *>).config as RandomPatchFeatureConfig).feature()
+                    holder = ((list[0] as ConfiguredFeature<*, *>).config() as RandomPatchConfiguration).feature()
                 } else {
                     if (!optional.isPresent) {
                         continue
@@ -71,14 +72,14 @@ class RockyGrassBlock(dirt: Block, settings: Settings) :
                     holder = optional.get()
                 }
 
-                holder.value().place(world, world.chunkManager.chunkGenerator, random, blockPos2)
+                holder.value().place(world, world.chunkSource.generator, random, blockPos2)
             }
         }
     }
 
-    override fun getType(): FertilizationType = FertilizationType.NEIGHBOR_SPREADER
+    override fun getType(): Type = Type.NEIGHBOR_SPREADER
 
     companion object {
-        val CODEC: MapCodec<RockyGrassBlock> = createCodec { RockyGrassBlock(Blocks.DIRT, it) }
+        val CODEC: MapCodec<RockyGrassBlock> = simpleCodec { RockyGrassBlock(Blocks.DIRT, it) }
     }
 }

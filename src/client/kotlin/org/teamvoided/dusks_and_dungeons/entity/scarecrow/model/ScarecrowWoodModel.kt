@@ -1,11 +1,15 @@
 package org.teamvoided.dusks_and_dungeons.entity.scarecrow.model
 
-import net.minecraft.client.model.*
+import net.minecraft.client.model.geom.ModelPart
+import net.minecraft.client.model.geom.PartPose
+import net.minecraft.client.model.geom.builders.CubeListBuilder
+import net.minecraft.client.model.geom.builders.LayerDefinition
+import net.minecraft.client.model.geom.builders.MeshDefinition
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 
 class ScarecrowWoodModel(root: ModelPart) : ScarecrowEntityModel(root) {
 
-    override fun setAngles(
+    override fun setupAnim(
         scarecrowEntity: ScarecrowEntity,
         limbAngle: Float,
         limbDistance: Float,
@@ -13,78 +17,78 @@ class ScarecrowWoodModel(root: ModelPart) : ScarecrowEntityModel(root) {
         headYaw: Float,
         headPitch: Float
     ) {
-        super.setAngles(scarecrowEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch)
+        super.setupAnim(scarecrowEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch)
     }
 
     companion object {
-        val texturedModelData: TexturedModelData
+        val texturedModelData: LayerDefinition
             get() {
-                val modelData = ModelData()
+                val modelData = MeshDefinition()
                 val modelPartData = modelData.root
-                val post = modelPartData.addChild(
+                val post = modelPartData.addOrReplaceChild(
                     "post",
-                    ModelPartBuilder.create().uv(0, 0).cuboid(
+                    CubeListBuilder.create().texOffs(0, 0).addBox(
                         -2f, -25f, -2f,
                         4f, 26f, 4f
                     ),
-                    ModelTransform.pivot(0f, POST_OFFSET, 0f)
+                    PartPose.offset(0f, POST_OFFSET, 0f)
                 )
-                val body = post.addChild(
+                val body = post.addOrReplaceChild(
                     "body",
-                    ModelPartBuilder.create()
-                        .uv(16, 0)
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(16, 0)
+                        .addBox(
                             -4f, -10f, -1f,
                             8f, 2f, 2f
                         ),
-                    ModelTransform.pivot(0f, BODY_OFFSET, 0f)
+                    PartPose.offset(0f, BODY_OFFSET, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "head",
-                    ModelPartBuilder.create(),
-                    ModelTransform.pivot(0f, 0f, 0f)
+                    CubeListBuilder.create(),
+                    PartPose.offset(0f, 0f, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "right_arm",
-                    ModelPartBuilder.create()
-                        .uv(16, 16)
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(16, 16)
+                        .addBox(
                             -2f, -2f, -2f,
                             4f, 12f, 4f
                         ),
-                    ModelTransform.pivot(-6f, -4f, 0f)
+                    PartPose.offset(-6f, -4f, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "left_arm",
-                    ModelPartBuilder.create()
-                        .uv(16, 16).mirrored()
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(16, 16).mirror()
+                        .addBox(
                             -2f, -2f, -2f,
                             4f, 12f, 4f
                         ),
-                    ModelTransform.pivot(6f, -4f, 0f)
+                    PartPose.offset(6f, -4f, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "right_leg",
-                    ModelPartBuilder.create()
-                        .uv(32, 16)
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(32, 16)
+                        .addBox(
                             -2f, 0f, -2f,
                             4f, 12f, 4f
                         ),
-                    ModelTransform.pivot(-1.9f, 6f, 0f)
+                    PartPose.offset(-1.9f, 6f, 0f)
                 )
-                body.addChild(
+                body.addOrReplaceChild(
                     "left_leg",
-                    ModelPartBuilder.create()
-                        .uv(32, 16).mirrored()
-                        .cuboid(
+                    CubeListBuilder.create()
+                        .texOffs(32, 16).mirror()
+                        .addBox(
                             -2f, 0f, -2f,
                             4f, 12f, 4f
                         ),
-                    ModelTransform.pivot(1.9f, 6f, 0f)
+                    PartPose.offset(1.9f, 6f, 0f)
                 )
-                return TexturedModelData.of(modelData, 64, 32)
+                return LayerDefinition.create(modelData, 64, 32)
             }
     }
 }

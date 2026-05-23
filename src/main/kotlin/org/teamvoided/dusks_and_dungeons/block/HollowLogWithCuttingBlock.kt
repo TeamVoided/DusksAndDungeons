@@ -1,74 +1,76 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.ConnectingBlock
-import net.minecraft.block.ShapeContext
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.fluid.Fluids
-import net.minecraft.item.ItemStack
-import net.minecraft.registry.tag.ItemTags
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.BooleanProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.state.property.Property
-import net.minecraft.util.Hand
-import net.minecraft.util.ItemInteractionResult
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.Vec3d
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.util.shape.VoxelShapes
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
-import net.minecraft.world.event.GameEvent
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.PipeBlock
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.item.ItemStack
+import net.minecraft.tags.ItemTags
+import net.minecraft.sounds.SoundSource
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.Property
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.phys.Vec3
+import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.gameevent.GameEvent
 import org.teamvoided.dusks_and_dungeons.util.rotateColumn
 
-open class HollowLogWithCuttingBlock(settings: Settings) : HollowLogBlock(settings) {
+open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(settings) {
     open val special1: Double = 0.0625
     open val special2: Double = 0.9375
 
     init {
-        this.defaultState = stateManager.defaultState
-            .with(AXIS, Direction.Axis.X)
-            .with(NORTH, true)
-            .with(SOUTH, true)
-            .with(EAST, true)
-            .with(WEST, true)
-            .with(WATERLOGGED, false)
+        this.registerDefaultState(
+            stateDefinition.any()
+                .setValue(AXIS, Direction.Axis.X)
+                .setValue(NORTH, true)
+                .setValue(SOUTH, true)
+                .setValue(EAST, true)
+                .setValue(WEST, true)
+                .setValue(WATERLOGGED, false)
+        )
     }
 
-    override fun onInteract(
+    override fun useItemOn(
         stack: ItemStack,
         state: BlockState,
-        world: World,
+        world: Level,
         pos: BlockPos,
-        entity: PlayerEntity,
-        hand: Hand,
+        entity: Player,
+        hand: InteractionHand,
         hitResult: BlockHitResult
     ): ItemInteractionResult {
         val getHit = this.getRelativeHitCoordinates(hitResult, state, pos)
-        return if (getHit != null && !stack.isEmpty && entity.abilities.allowModifyWorld && stack.isIn(ItemTags.AXES)) {
-            if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world))
+        return if (getHit != null && !stack.isEmpty && entity.abilities.mayBuild && stack.`is`(ItemTags.AXES)) {
+            if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
             setBlockState(world, pos, entity, getHit)
-            world.updateNeighbor(pos, this, pos)
-            ItemInteractionResult.success(world.isClient)
-        } else super.onInteract(stack, state, world, pos, entity, hand, hitResult)
+            world.neighborChanged(pos, this, pos)
+            ItemInteractionResult.sidedSuccess(world.isClientSide)
+        } else super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
     }
 
     private fun getRelativeHitCoordinates(
         blockHitResult: BlockHitResult, state: BlockState, pos: BlockPos
     ): BlockState? {
         if (howManyTrueSides(state) <= 1) return null
-        val vec3d: Vec3d = blockHitResult.pos.subtract(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
-        val directionAxis = state.get(AXIS)
+        val vec3d: Vec3 = blockHitResult.location.subtract(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
+        val directionAxis = state.getValue(AXIS)
         val north: Direction
         val east: Direction
         val up: Direction
-        var directionHit: Direction = blockHitResult.side
+        var directionHit: Direction = blockHitResult.direction
         when (directionAxis) {
             Direction.Axis.X -> {
                 north = Direction.NORTH
@@ -137,84 +139,84 @@ open class HollowLogWithCuttingBlock(settings: Settings) : HollowLogBlock(settin
     }
 
     fun upDownSurfaceCase(x: Double, z: Double, state: BlockState): BlockState? {
-        return if (state.get(NORTH) == true && x > z && x < (1 - z)) {
-            state.with(NORTH, false)
-        } else if (state.get(SOUTH) == true && x < z && x > (1 - z)) {
-            state.with(SOUTH, false)
-        } else if (state.get(EAST) == true && x > z && x > (1 - z)) {
-            state.with(EAST, false)
-        } else if (state.get(WEST) == true && x < z && x < (1 - z)) {
-            state.with(WEST, false)
+        return if (state.getValue(NORTH) == true && x > z && x < (1 - z)) {
+            state.setValue(NORTH, false)
+        } else if (state.getValue(SOUTH) == true && x < z && x > (1 - z)) {
+            state.setValue(SOUTH, false)
+        } else if (state.getValue(EAST) == true && x > z && x > (1 - z)) {
+            state.setValue(EAST, false)
+        } else if (state.getValue(WEST) == true && x < z && x < (1 - z)) {
+            state.setValue(WEST, false)
         } else null
     }
 
     fun stateOrNull(direction: Property<Boolean>, state: BlockState): BlockState? {
-        return if (state.get(direction) == false) null
+        return if (state.getValue(direction) == false) null
         else {
-            state.with(direction, false)
+            state.setValue(direction, false)
         }
     }
 
     private fun howManyTrueSides(state: BlockState): Int {
         return listOf(
-            (state.get(NORTH) == true),
-            (state.get(SOUTH) == true),
-            (state.get(EAST) == true),
-            (state.get(WEST) == true)
+            (state.getValue(NORTH) == true),
+            (state.getValue(SOUTH) == true),
+            (state.getValue(EAST) == true),
+            (state.getValue(WEST) == true)
         ).count {
             it
         }
     }
 
     private fun setBlockState(
-        world: World,
+        world: Level,
         pos: BlockPos,
-        player: PlayerEntity,
+        player: Player,
         state: BlockState
     ) {
-        if (!world.isClient) {
-            val soundEvent = SoundEvents.ITEM_AXE_STRIP
-            world.setBlockState(pos, state)
-            world.playSound(null as PlayerEntity?, pos, soundEvent, SoundCategory.BLOCKS, 1.0f, 1.0f)
-            world.emitGameEvent(player, GameEvent.BLOCK_CHANGE, pos)
+        if (!world.isClientSide) {
+            val soundEvent = SoundEvents.AXE_STRIP
+            world.setBlockAndUpdate(pos, state)
+            world.playSound(null as Player?, pos, soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f)
+            world.gameEvent(player, GameEvent.BLOCK_CHANGE, pos)
         }
     }
 
-    override fun getOutlineShape(
+    override fun getShape(
         state: BlockState,
-        world: BlockView,
+        world: BlockGetter,
         pos: BlockPos,
-        context: ShapeContext
+        context: CollisionContext
     ): VoxelShape {
-        var shape = VoxelShapes.empty()
-        if (state.get(NORTH)) shape = VoxelShapes.union(shape, NORTH_SHAPE)
-        if (state.get(SOUTH)) shape = VoxelShapes.union(shape, SOUTH_SHAPE)
-        if (state.get(EAST)) shape = VoxelShapes.union(shape, EAST_SHAPE)
-        if (state.get(WEST)) shape = VoxelShapes.union(shape, WEST_SHAPE)
-        return shape.rotateColumn(state.get(AXIS))
+        var shape = Shapes.empty()
+        if (state.getValue(NORTH)) shape = Shapes.or(shape, NORTH_SHAPE)
+        if (state.getValue(SOUTH)) shape = Shapes.or(shape, SOUTH_SHAPE)
+        if (state.getValue(EAST)) shape = Shapes.or(shape, EAST_SHAPE)
+        if (state.getValue(WEST)) shape = Shapes.or(shape, WEST_SHAPE)
+        return shape.rotateColumn(state.getValue(AXIS))
     }
 
-    override fun getRaycastShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
-        return VoxelShapes.empty()
+    override fun getInteractionShape(state: BlockState, world: BlockGetter, pos: BlockPos): VoxelShape {
+        return Shapes.empty()
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AXIS, NORTH, SOUTH, EAST, WEST, WATERLOGGED)
     }
 
     companion object {
-        val NORTH = Properties.NORTH
-        val SOUTH = Properties.SOUTH
-        val EAST = Properties.EAST
-        val WEST = Properties.WEST
-        val DIRECTION_PROPERTIES = ConnectingBlock.FACING_PROPERTIES
+        val NORTH = BlockStateProperties.NORTH
+        val SOUTH = BlockStateProperties.SOUTH
+        val EAST = BlockStateProperties.EAST
+        val WEST = BlockStateProperties.WEST
+        val DIRECTION_PROPERTIES = PipeBlock.PROPERTY_BY_DIRECTION
         fun getProperty(direction: Direction): BooleanProperty? {
             return DIRECTION_PROPERTIES[direction]
         }
 
-        val NORTH_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
-        val SOUTH_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 14.0, 16.0, 16.0, 16.0)
-        val EAST_SHAPE: VoxelShape = createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 16.0)
-        val WEST_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 16.0)
+        val NORTH_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
+        val SOUTH_SHAPE: VoxelShape = box(0.0, 0.0, 14.0, 16.0, 16.0, 16.0)
+        val EAST_SHAPE: VoxelShape = box(14.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+        val WEST_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 2.0, 16.0, 16.0)
     }
 }

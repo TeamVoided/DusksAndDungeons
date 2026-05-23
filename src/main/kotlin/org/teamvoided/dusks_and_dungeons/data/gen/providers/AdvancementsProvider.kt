@@ -2,18 +2,18 @@ package org.teamvoided.dusks_and_dungeons.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
-import net.minecraft.advancement.Advancement
-import net.minecraft.advancement.AdvancementHolder
-import net.minecraft.advancement.AdvancementRewards
-import net.minecraft.advancement.AdvancementType
-import net.minecraft.advancement.criterion.TameAnimalCriterionTrigger
-import net.minecraft.data.server.advancement.AdventureAdvancementTabGenerator
-import net.minecraft.predicate.entity.EntityPredicate
-import net.minecraft.predicate.entity.EntitySubPredicateTypes
-import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.HolderSet
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.text.Text
+import net.minecraft.advancements.Advancement
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementRewards
+import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.critereon.TameAnimalTrigger
+import net.minecraft.data.advancements.packs.VanillaAdventureAdvancements
+import net.minecraft.advancements.critereon.EntityPredicate
+import net.minecraft.advancements.critereon.EntitySubPredicates
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
+import net.minecraft.core.registries.Registries
+import net.minecraft.network.chat.Component
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
@@ -67,44 +67,44 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
 //        ).build(c, "story/mine_stone")
 
 
-        AdventureAdvancementTabGenerator.appendEnterAllBiomesCriterion(
-            Advancement.Builder.create(),
+        VanillaAdventureAdvancements.addBiomes(
+            Advancement.Builder.advancement(),
             provider,
             autumnBiomes
         ).display(
             DnDBlocks.CASCADE_SAPLING,
-            Text.of("Fall!"),
-            Text.of("Visit the autumn biomes!"),
+            Component.nullToEmpty("Fall!"),
+            Component.nullToEmpty("Visit the autumn biomes!"),
             null,
             AdvancementType.CHALLENGE,
             true,
             true,
             false
         ).rewards(AdvancementRewards.Builder.experience(50)).parent(adventuringTime)
-            .build(c, id("adventure/fall").toString())
-        Advancement.Builder.create()
-            .putCriteria(
-                DnDWolfVariants.AUTUMN.toString(), TameAnimalCriterionTrigger.Conditions.create(
-                    EntityPredicate.Builder.create().typeSpecific(
-                        EntitySubPredicateTypes.method_59667(
-                            HolderSet.createDirect(
-                                provider.getLookupOrThrow(RegistryKeys.WOLF_VARIANT)
-                                    .getHolderOrThrow(DnDWolfVariants.AUTUMN)
+            .save(c, id("adventure/fall").toString())
+        Advancement.Builder.advancement()
+            .addCriterion(
+                DnDWolfVariants.AUTUMN.toString(), TameAnimalTrigger.TriggerInstance.tamedAnimal(
+                    EntityPredicate.Builder.entity().subPredicate(
+                        EntitySubPredicates.wolfVariant(
+                            HolderSet.direct(
+                                provider.lookupOrThrow(Registries.WOLF_VARIANT)
+                                    .getOrThrow(DnDWolfVariants.AUTUMN)
                             )
                         )
                     )
                 )
             ).display(
                 DnDBlocks.CASCADE_LOG,
-                Text.of("Woof"),
-                Text.of("Find the Autumn Wolf"),
+                Component.nullToEmpty("Woof"),
+                Component.nullToEmpty("Find the Autumn Wolf"),
                 null,
                 AdvancementType.CHALLENGE,
                 true,
                 true,
                 false
             ).rewards(AdvancementRewards.Builder.experience(5)).parent(theWholePack)
-            .build(c, id("husbandry/woof").toString())
+            .save(c, id("husbandry/woof").toString())
     }
 
 }

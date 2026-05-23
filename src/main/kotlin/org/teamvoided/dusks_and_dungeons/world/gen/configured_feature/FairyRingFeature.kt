@@ -1,25 +1,25 @@
 package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.state.property.Properties
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.StructureWorldAccess
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.util.FeatureContext
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.WorldGenLevel
+import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import org.teamvoided.dusks_and_dungeons.util.nextHorizontalDirection
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FairyRingConfig
 
 open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
     Feature<FairyRingConfig>(codec) {
-    override fun place(context: FeatureContext<FairyRingConfig>): Boolean {
-        val blockPos = context.origin
-        val structureWorldAccess = context.world
-        val randomGenerator = context.random
-        val config = context.config as FairyRingConfig
+    override fun place(context: FeaturePlaceContext<FairyRingConfig>): Boolean {
+        val blockPos = context.origin()
+        val structureWorldAccess = context.level()
+        val randomGenerator = context.random()
+        val config = context.config() as FairyRingConfig
 
-        if (blockPos.y <= structureWorldAccess.bottomY + 1) {
+        if (blockPos.y <= structureWorldAccess.minBuildHeight + 1) {
             return false
         } else {
 //            config.feature.value().place(structureWorldAccess, context.generator, randomGenerator, blockPos)
@@ -33,28 +33,28 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
         rotation: Direction,
         flowerbedCount: Int,
         config: FairyRingConfig,
-        world: StructureWorldAccess,
-        random: RandomGenerator
+        world: WorldGenLevel,
+        random: RandomSource
     ) {
         var placePos = pos
         if (!world.getFluidState(pos).isEmpty) return
-        val placeblock = config.block.getBlockState(random, pos)
-            .withIfExists(Properties.HORIZONTAL_FACING, rotation)
-            .withIfExists(Properties.FLOWER_AMOUNT, flowerbedCount)
+        val placeblock = config.block.getState(random, pos)
+            .trySetValue(BlockStateProperties.HORIZONTAL_FACING, rotation)
+            .trySetValue(BlockStateProperties.FLOWER_AMOUNT, flowerbedCount)
         if (config.verticalRange > 0) {
             var offset = 0
-            while (world.getBlockState(placePos).isIn(config.replaceable) && config.verticalRange > offset) {
-                placePos = placePos.down()
+            while (world.getBlockState(placePos).`is`(config.replaceable) && config.verticalRange > offset) {
+                placePos = placePos.below()
                 offset++
             }
             offset = 0
-            while (!world.getBlockState(placePos).isIn(config.replaceable) && config.verticalRange > offset) {
-                placePos = placePos.up()
+            while (!world.getBlockState(placePos).`is`(config.replaceable) && config.verticalRange > offset) {
+                placePos = placePos.above()
                 offset++
             }
         }
-        if (world.getBlockState(placePos).isIn(config.replaceable) && placeblock.canPlaceAt(world, placePos)) {
-            world.setBlockState(
+        if (world.getBlockState(placePos).`is`(config.replaceable) && placeblock.canSurvive(world, placePos)) {
+            world.setBlock(
                 placePos,
                 placeblock,
                 3
@@ -66,10 +66,10 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
     open fun placeRing(
         config: FairyRingConfig,
         origin: BlockPos,
-        world: StructureWorldAccess,
-        random: RandomGenerator
+        world: WorldGenLevel,
+        random: RandomSource
     ) {
-        when (config.size.get(random)) {
+        when (config.size.sample(random)) {
             1 -> ::placeRing1
             2 -> ::placeRing2
             3 -> ::placeRing3
@@ -80,36 +80,36 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
     fun placeRing1(
         config: FairyRingConfig,
         origin: BlockPos,
-        world: StructureWorldAccess,
-        random: RandomGenerator
+        world: WorldGenLevel,
+        random: RandomSource
     ) {
-        Direction.Type.HORIZONTAL.forEach { direction: Direction ->
-            placeBlock(origin.offset(direction), nextHorizontalDirection(direction, 3), 2, config, world, random)
+        Direction.Plane.HORIZONTAL.forEach { direction: Direction ->
+            placeBlock(origin.relative(direction), nextHorizontalDirection(direction, 3), 2, config, world, random)
         }
     }
 
     fun placeRing2(
         config: FairyRingConfig,
         origin: BlockPos,
-        world: StructureWorldAccess,
-        random: RandomGenerator
+        world: WorldGenLevel,
+        random: RandomSource
     ) {
-        Direction.Type.HORIZONTAL.forEach { direction: Direction ->
+        Direction.Plane.HORIZONTAL.forEach { direction: Direction ->
             var pos: BlockPos =
                 origin
-                    .offset(direction)
-                    .offset(nextHorizontalDirection(direction, 3))
+                    .relative(direction)
+                    .relative(nextHorizontalDirection(direction, 3))
             var flowerFacing: Direction = direction
             placeBlock(pos, flowerFacing, 1, config, world, random)
 
-            pos = pos.offset(direction)
+            pos = pos.relative(direction)
             flowerFacing = nextHorizontalDirection(direction, 3)
             placeBlock(pos, flowerFacing, 2, config, world, random)
 
-            pos = pos.offset(nextHorizontalDirection(direction))
+            pos = pos.relative(nextHorizontalDirection(direction))
             placeBlock(pos, flowerFacing.opposite, 4, config, world, random)
 
-            pos = pos.offset(nextHorizontalDirection(direction))
+            pos = pos.relative(nextHorizontalDirection(direction))
             placeBlock(pos, flowerFacing, 2, config, world, random)
         }
     }
@@ -117,33 +117,33 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
     fun placeRing3(
         config: FairyRingConfig,
         origin: BlockPos,
-        world: StructureWorldAccess,
-        random: RandomGenerator
+        world: WorldGenLevel,
+        random: RandomSource
     ) {
-        Direction.Type.HORIZONTAL.forEach { direction: Direction ->
+        Direction.Plane.HORIZONTAL.forEach { direction: Direction ->
             var pos: BlockPos =
                 origin
-                    .offset(direction, 2)
-                    .offset(nextHorizontalDirection(direction, 3), 2)
+                    .relative(direction, 2)
+                    .relative(nextHorizontalDirection(direction, 3), 2)
             var flowerFacing: Direction = nextHorizontalDirection(direction)
             placeBlock(pos, flowerFacing, 3, config, world, random)
 
-            pos = pos.offset(direction)
+            pos = pos.relative(direction)
             flowerFacing = direction.opposite
             placeBlock(pos, flowerFacing, 1, config, world, random)
 
-            pos = pos.offset(nextHorizontalDirection(direction))
+            pos = pos.relative(nextHorizontalDirection(direction))
             flowerFacing = nextHorizontalDirection(direction, 3)
             placeBlock(pos, flowerFacing, 3, config, world, random)
 
-            pos = pos.offset(nextHorizontalDirection(direction))
+            pos = pos.relative(nextHorizontalDirection(direction))
             flowerFacing = nextHorizontalDirection(direction)
             placeBlock(pos, flowerFacing, 2, config, world, random)
 
-            pos = pos.offset(nextHorizontalDirection(direction))
+            pos = pos.relative(nextHorizontalDirection(direction))
             placeBlock(pos, direction, 3, config, world, random)
 
-            pos = pos.offset(nextHorizontalDirection(direction))
+            pos = pos.relative(nextHorizontalDirection(direction))
             flowerFacing = nextHorizontalDirection(direction, 3)
             placeBlock(pos, flowerFacing, 1, config, world, random)
         }

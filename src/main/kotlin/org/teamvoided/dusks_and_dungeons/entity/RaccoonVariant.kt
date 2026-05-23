@@ -2,14 +2,14 @@ package org.teamvoided.dusks_and_dungeons.entity
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.util.Identifier
+import net.minecraft.resources.ResourceLocation
 
-data class RaccoonVariant(val texture: Identifier) {
+data class RaccoonVariant(val texture: ResourceLocation) {
 
     companion object {
         val CODEC: Codec<RaccoonVariant> = RecordCodecBuilder.create { instance ->
             instance
-                .group(Identifier.CODEC.fieldOf("texture").forGetter(RaccoonVariant::texture))
+                .group(ResourceLocation.CODEC.fieldOf("texture").forGetter(RaccoonVariant::texture))
                 .apply(instance, ::RaccoonVariant)
         }
     }

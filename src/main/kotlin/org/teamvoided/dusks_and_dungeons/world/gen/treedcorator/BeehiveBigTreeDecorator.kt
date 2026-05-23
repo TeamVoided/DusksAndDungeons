@@ -2,26 +2,26 @@ package org.teamvoided.dusks_and_dungeons.world.gen.treedcorator
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.BeehiveBlock
-import net.minecraft.block.Blocks
-import net.minecraft.block.entity.BeehiveBlockEntity.Occupant
-import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.util.math.Direction
-import net.minecraft.world.gen.treedecorator.TreeDecorator
-import net.minecraft.world.gen.treedecorator.TreeDecoratorType
+import net.minecraft.world.level.block.BeehiveBlock
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.entity.BeehiveBlockEntity.Occupant
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.core.Direction
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
 import kotlin.math.max
 import kotlin.math.min
 
 class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() {
-    override fun getType(): TreeDecoratorType<*> = DnDWorldgen.BEEHIVE_BIG_TREE_DECORATOR
+    override fun type(): TreeDecoratorType<*> = DnDWorldgen.BEEHIVE_BIG_TREE_DECORATOR
 
-    override fun generate(placer: Placer) {
-        val randomGenerator = placer.random
+    override fun place(placer: Context) {
+        val randomGenerator = placer.random()
         if (!(randomGenerator.nextFloat() >= this.probability)) {
-            val leafPos = placer.leafPositions.toList()
-            val logPos = placer.logPositions.toList()
+            val leafPos = placer.leaves().toList()
+            val logPos = placer.logs().toList()
             val i = if (leafPos.isNotEmpty()) max((leafPos[0].y - 1).toDouble(), (logPos[0].y + 1).toDouble()).toInt()
             else min(
                 (logPos[0].y + 1 + randomGenerator.nextInt(3)).toDouble(),
@@ -29,22 +29,22 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
             ).toInt()
             val placementPos = logPos.filter { it.y >= i - 2 }.flatMap { pos ->
                 if (pos == null) return
-                SPAWN_DIRECTIONS.map(pos::offset)
+                SPAWN_DIRECTIONS.map(pos::relative)
             }
             if (placementPos.isNotEmpty()) {
                 val finalPos = placementPos.shuffled()
                     .firstOrNull {
-                        placer.isAir(it) && !placer.isAir(it.up()) && placer.isAir(it.offset(WORLDGEN_FACING))
+                        placer.isAir(it) && !placer.isAir(it.above()) && placer.isAir(it.relative(WORLDGEN_FACING))
                     }
                 if (finalPos != null) {
-                    placer.replace(
+                    placer.setBlock(
                         finalPos,
-                        Blocks.BEE_NEST.defaultState.with(BeehiveBlock.FACING, WORLDGEN_FACING)
+                        Blocks.BEE_NEST.defaultBlockState().setValue(BeehiveBlock.FACING, WORLDGEN_FACING)
                     )
-                    placer.world.getBlockEntity(finalPos, BlockEntityType.BEEHIVE)
+                    placer.level().getBlockEntity(finalPos, BlockEntityType.BEEHIVE)
                         .ifPresent {
                             for (ignored in 0 until 2 + randomGenerator.nextInt(2)) {
-                                it.addBee(Occupant.create(randomGenerator.nextInt(599)))
+                                it.storeBee(Occupant.create(randomGenerator.nextInt(599)))
                             }
                         }
                     return
@@ -73,6 +73,6 @@ class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() 
 
         private val WORLDGEN_FACING = Direction.SOUTH
         private val SPAWN_DIRECTIONS =
-            Direction.Type.HORIZONTAL.filter { it != WORLDGEN_FACING.opposite }.toTypedArray()
+            Direction.Plane.HORIZONTAL.filter { it != WORLDGEN_FACING.opposite }.toTypedArray()
     }
 }

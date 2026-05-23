@@ -1,9 +1,9 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import com.terraformersmc.biolith.api.biome.BiomePlacement
-import net.minecraft.registry.RegistryKey
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.source.util.MultiNoiseUtil
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Climate
 
 
 data class Range(val min: Number, val max: Number) {
@@ -11,12 +11,12 @@ data class Range(val min: Number, val max: Number) {
 
     fun min() = min.toFloat()
     fun max() = max.toFloat()
-    fun toParameterRange(): MultiNoiseUtil.ParameterRange = MultiNoiseUtil.ParameterRange.of(min(), max())
+    fun toParameterRange(): Climate.Parameter = Climate.Parameter.span(min(), max())
 }
 
 
 fun addOverworld(
-    biome: RegistryKey<Biome>, temperature: Range, humidity: Range,
+    biome: ResourceKey<Biome>, temperature: Range, humidity: Range,
     continentalness: Range, erosion: Range, weirdness: Range
 ) {
     BiomePlacement.addOverworld(
@@ -48,7 +48,7 @@ fun addOverworld(
 fun createNoise(
     temperature: Range, humidity: Range, continentalness: Range, erosion: Range,
     depth: Range, weirdness: Range, offset: Long
-): MultiNoiseUtil.NoiseHypercube = MultiNoiseUtil.NoiseHypercube(
+): Climate.ParameterPoint = Climate.ParameterPoint(
     temperature.toParameterRange(),
     humidity.toParameterRange(),
     continentalness.toParameterRange(),

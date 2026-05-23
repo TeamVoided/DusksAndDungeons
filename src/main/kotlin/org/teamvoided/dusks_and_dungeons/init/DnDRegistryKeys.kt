@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
+import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceKey
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.RaccoonVariant
 
@@ -14,6 +14,6 @@ object DnDRegistryKeys {
         DynamicRegistries.registerSynced(RACCOON_VARIANT, RaccoonVariant.CODEC)
     }
 
-    fun <T> key(id: String): RegistryKey<Registry<T>> = RegistryKey.ofRegistry(id(id))
+    fun <T> key(id: String): ResourceKey<Registry<T>> = ResourceKey.createRegistryKey(id(id))
 
 }

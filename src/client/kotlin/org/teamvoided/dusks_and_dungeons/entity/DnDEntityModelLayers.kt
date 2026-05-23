@@ -1,9 +1,9 @@
 package org.teamvoided.dusks_and_dungeons.entity
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer
-import net.minecraft.client.model.Dilation
-import net.minecraft.client.model.TexturedModelData
-import net.minecraft.client.render.entity.model.EntityModelLayer
+import net.minecraft.client.model.geom.builders.CubeDeformation
+import net.minecraft.client.model.geom.builders.LayerDefinition
+import net.minecraft.client.model.geom.ModelLayerLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.raccoon.RaccoonEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
@@ -12,11 +12,11 @@ import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowWoodMod
 
 @Suppress("SameParameterValue")
 object DnDEntityModelLayers {
-    val SCARECROW: EntityModelLayer = registerMain("scarecrow")
-    val SCARECROW_INNER_ARMOR: EntityModelLayer = createInnerArmor("scarecrow")
-    val SCARECROW_OUTER_ARMOR: EntityModelLayer = createOuterArmor("scarecrow")
-    val SCARECROW_WOOD: EntityModelLayer = register("scarecrow", "wood")
-    val RACCOON: EntityModelLayer = registerMain("raccoon")
+    val SCARECROW: ModelLayerLocation = registerMain("scarecrow")
+    val SCARECROW_INNER_ARMOR: ModelLayerLocation = createInnerArmor("scarecrow")
+    val SCARECROW_OUTER_ARMOR: ModelLayerLocation = createOuterArmor("scarecrow")
+    val SCARECROW_WOOD: ModelLayerLocation = register("scarecrow", "wood")
+    val RACCOON: ModelLayerLocation = registerMain("raccoon")
 
     // experimental
 
@@ -28,30 +28,30 @@ object DnDEntityModelLayers {
         registerModelLayer(RACCOON, RaccoonEntityModel::texturedModelData)
     }
 
-    private fun createScarecrowInnerArmor(): TexturedModelData =
-        TexturedModelData.of(ScarecrowArmorEntityModel.getModelData(Dilation(0.5F)), 64, 32)
+    private fun createScarecrowInnerArmor(): LayerDefinition =
+        LayerDefinition.create(ScarecrowArmorEntityModel.getModelData(CubeDeformation(0.5F)), 64, 32)
 
-    private fun createScarecrowOuterArmor(): TexturedModelData =
-        TexturedModelData.of(ScarecrowArmorEntityModel.getModelData(Dilation(1.0F)), 64, 32)
+    private fun createScarecrowOuterArmor(): LayerDefinition =
+        LayerDefinition.create(ScarecrowArmorEntityModel.getModelData(CubeDeformation(1.0F)), 64, 32)
 
-    private fun registerMain(id: String): EntityModelLayer {
+    private fun registerMain(id: String): ModelLayerLocation {
         return register(id, "main")
     }
 
-    private fun createInnerArmor(id: String): EntityModelLayer {
+    private fun createInnerArmor(id: String): ModelLayerLocation {
         return register(id, "inner_armor")
     }
 
-    private fun createOuterArmor(id: String): EntityModelLayer {
+    private fun createOuterArmor(id: String): ModelLayerLocation {
         return register(id, "outer_armor")
     }
 
-    private fun register(id: String, layer: String): EntityModelLayer {
+    private fun register(id: String, layer: String): ModelLayerLocation {
         val entityModelLayer = create(id, layer)
         return entityModelLayer
     }
 
-    private fun create(id: String, layer: String): EntityModelLayer {
-        return EntityModelLayer(id(id), layer)
+    private fun create(id: String, layer: String): ModelLayerLocation {
+        return ModelLayerLocation(id(id), layer)
     }
 }

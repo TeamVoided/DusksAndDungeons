@@ -2,11 +2,11 @@ package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.world.gen.feature.FeatureConfig
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
 
 data class FrozenSpringConfig(
     val iceBlock: BlockState,
@@ -16,15 +16,15 @@ data class FrozenSpringConfig(
     val horizontalRange: Int,
     val emptyFacesRequirement: Int,
     val hasExposedDownFace: Boolean,
-) : FeatureConfig {
+) : FeatureConfiguration {
     companion object {
         val CODEC =
             RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<FrozenSpringConfig> ->
                 instance.group(
                     BlockState.CODEC.fieldOf("ice_block").forGetter { it.iceBlock },
-                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_replacement")
+                    TagKey.hashedCodec(Registries.BLOCK).fieldOf("allowed_replacement")
                         .forGetter { it.allowedReplacement },
-                    TagKey.createHashedCodec(RegistryKeys.BLOCK).fieldOf("allowed_placement")
+                    TagKey.hashedCodec(Registries.BLOCK).fieldOf("allowed_placement")
                         .forGetter { it.allowedPlacement },
                     Codec.intRange(1, 16).fieldOf("spread_range").forGetter { it.spreadRange },
                     Codec.intRange(1, 16).fieldOf("horizontal_range").orElse(1).forGetter { it.horizontalRange },

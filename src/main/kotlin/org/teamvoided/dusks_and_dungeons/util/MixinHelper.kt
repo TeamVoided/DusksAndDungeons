@@ -1,10 +1,10 @@
 package org.teamvoided.dusks_and_dungeons.util
 
-import net.minecraft.util.math.Vec3d
-import net.minecraft.util.random.RandomGenerator
-import net.minecraft.world.World
+import net.minecraft.world.phys.Vec3
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
 import org.teamvoided.dusks_and_dungeons.mixin.AbstractCandleBlockAccessor
 
 
-fun World.spawnCandleParticles(vec3d: Vec3d, random: RandomGenerator) =
-    AbstractCandleBlockAccessor.invokeSpawnCandleParticles(this, vec3d, random)
+fun Level.spawnCandleParticles(vec3d: Vec3, random: RandomSource) =
+    AbstractCandleBlockAccessor.invokeAddParticlesAndSound(this, vec3d, random)

@@ -2,28 +2,28 @@
 
 package org.teamvoided.voidlib.helpers.mc
 
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.entity.EquipmentSlot
-import net.minecraft.item.ItemStack
-import net.minecraft.loot.LootTable
-import net.minecraft.registry.RegistryKey
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.Hand
-import net.minecraft.util.math.Vec3d
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.resources.ResourceKey
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.phys.Vec3
 
-fun Hand.toSlot() = if (this == Hand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
+fun InteractionHand.toSlot() = if (this == InteractionHand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
 
-fun ItemStack.hasEnchantment(enchantment: RegistryKey<Enchantment>): Boolean =
-    this.enchantments.enchantments.any { it.isRegistryKey(enchantment) }
+fun ItemStack.hasEnchantment(enchantment: ResourceKey<Enchantment>): Boolean =
+    this.enchantments.keySet().any { it.`is`(enchantment) }
 
-fun Iterable<Vec3d>.rotateFlat90(times: Int): Iterable<Vec3d> =
+fun Iterable<Vec3>.rotateFlat90(times: Int): Iterable<Vec3> =
     this.map { it.rotateFlat90(times) }
 
-fun Vec3d.rotateFlat90(times: Int): Vec3d {
+fun Vec3.rotateFlat90(times: Int): Vec3 {
     if (times == 0) return this
     var vector = this
-    repeat(times) { vector = Vec3d(1 - vector.z, y, vector.x) }
+    repeat(times) { vector = Vec3(1 - vector.z, y, vector.x) }
     return vector
 }
 
-fun ServerWorld.getLootTable(key: RegistryKey<LootTable>): LootTable = this.server.method_58576().getLootTable(key)
+fun ServerLevel.getLootTable(key: ResourceKey<LootTable>): LootTable = this.server.reloadableRegistries().getLootTable(key)

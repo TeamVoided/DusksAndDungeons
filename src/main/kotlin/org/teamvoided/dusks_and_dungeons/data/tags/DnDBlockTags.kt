@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.data.tags
 
-import net.minecraft.block.Block
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
+import net.minecraft.world.level.block.Block
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 object DnDBlockTags {
@@ -71,5 +71,5 @@ object DnDBlockTags {
     @JvmField
     val BLOCKS_CANNOT_CONNECT_TO = create("blocks_cannot_connect_to")
 
-    fun create(id: String): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id(id))
+    fun create(id: String): TagKey<Block> = TagKey.create(Registries.BLOCK, id(id))
 }
