@@ -10,6 +10,7 @@ import net.minecraft.block.Blocks.*
 import net.minecraft.block.sapling.SaplingBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import net.minecraft.item.ScaffoldingItem
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -496,6 +497,10 @@ object DnDBlocks {
         register("golden_mushroom_stem_block", MushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9)))
             .axe().tellWitnessesThatIWasMurdered()
 
+    val STRONG_SCAFFOLDING =
+        registerScaffolding("strong_scaffolding", StrongScaffoldingBlock(copy(SCAFFOLDING))).cutout()
+
+
     /* Future Content
     val MOLTEN_LAVASPONGE = register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe()
     val BRITTLE_LAVASPONGE = register("brittle_lavasponge", LavaSpongeBlock(copy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
@@ -536,6 +541,12 @@ object DnDBlocks {
     fun registerNoItem(id: String, block: Block): Block {
         val regBlock = Registry.register(Registries.BLOCK, id(id), block)
         BLOCKS.add(regBlock)
+        return regBlock
+    }
+
+    fun registerScaffolding(id: String, block: Block): Block {
+        val regBlock = registerNoItem(id, block)
+        DnDItems.register(id, ScaffoldingItem(regBlock, Item.Settings()))
         return regBlock
     }
 }

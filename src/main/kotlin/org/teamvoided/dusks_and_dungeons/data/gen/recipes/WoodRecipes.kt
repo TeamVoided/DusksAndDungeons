@@ -34,6 +34,14 @@ object WoodRecipes {
             .pattern("## ")
             .criterion(DnDBlocks.CASCADE_PLANKS.asItem())
             .offerTo(this)
+        ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DnDBlocks.STRONG_SCAFFOLDING, 6)
+            .ingredient('|', Ingredient.ofItems(Items.BAMBOO_PLANKS))
+            .ingredient('~', Ingredient.ofItems(Items.STRING))
+            .pattern("|~|")
+            .pattern("| |")
+            .pattern("| |")
+            .criterion(Items.BAMBOO_PLANKS)
+            .offerTo(this)
     }
 
     private fun RecipeExporter.woodWalls() {

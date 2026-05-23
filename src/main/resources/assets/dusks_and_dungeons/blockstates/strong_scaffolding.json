@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "bottom=false": {
+      "model": "dusks_and_dungeons:block/strong_scaffolding_stable"
+    },
+    "bottom=true": {
+      "model": "dusks_and_dungeons:block/strong_scaffolding_unstable"
+    }
+  }
+}

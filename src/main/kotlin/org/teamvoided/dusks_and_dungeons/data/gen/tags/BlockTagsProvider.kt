@@ -393,6 +393,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
             .add(Blocks.ICE, Blocks.SNOW)
+
+        getOrCreateTagBuilder(BlockTags.CLIMBABLE)
+            .add(DnDBlocks.STRONG_SCAFFOLDING)
+
     }
 
     private fun vanillaBlockTypesTags() {
