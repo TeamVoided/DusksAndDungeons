@@ -31,6 +31,7 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState = this.defaultState
+
     public override fun getOutlineShape(
         state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext
     ): VoxelShape {
@@ -65,6 +66,20 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
             if (state.canPlaceAt(world, pos)) state
             else Blocks.AIR.defaultState
         }
+    }
+
+    override fun neighborUpdatesAboveAndBelow(
+        state: BlockState,
+        direction: Direction,
+        neighborState: BlockState
+    ): Boolean {
+        if (heightAtAge(state.get(AGE), 3))
+            return super.neighborUpdatesAboveAndBelow(state, direction, neighborState)
+        else if (heightAtAge(state.get(AGE), 2)) {
+            val section = state.get(SECTION)
+            return ((direction == Direction.UP && section != TripleBlockSection.MIDDLE && neighborState.isOf(this)) ||
+                    (direction == Direction.DOWN && section != TripleBlockSection.BOTTOM && neighborState.isOf(this)))
+        } else return true
     }
 
     public override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
@@ -107,13 +122,13 @@ class CornCropBlock(settings: Settings) : TripleTallPlantBlock(settings), Fertil
         if (this.canGrow(world, pos, state, newAge)) {
             val blockState = withAge(newAge).withIfExists(AGE, newAge)
             world.setBlockState(pos, blockState, 2)
-            val height = heightAtAge(newAge)
-            if (height >= 2) {
-                world.setBlockState(pos.up(), blockState.with(SECTION, TripleBlockSection.MIDDLE), 3)
-                if (height >= 3) {
-                    world.setBlockState(pos.up(2), blockState.with(SECTION, TripleBlockSection.TOP), 3)
-                }
-            }
+            //val height = heightAtAge(newAge)
+            //if (height >= 2) {
+            //    world.setBlockState(pos.up(), blockState.with(SECTION, TripleBlockSection.MIDDLE), 2)
+            //    if (height >= 3) {
+            //        world.setBlockState(pos.up(2), blockState.with(SECTION, TripleBlockSection.TOP), 2)
+            //    }
+            //}
         }
     }
 

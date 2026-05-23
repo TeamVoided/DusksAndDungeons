@@ -20,20 +20,20 @@ class FlowerbedParticleBlock(settings: Settings) : PinkPetalsBlock(settings) {
         super.randomDisplayTick(state, world, pos, random)
 
         if (random.nextInt(3) == 0) addFlowerParticle(state, world, pos, random)
-        if (random.nextInt(5) == 0) {
-            if (!world.isDay || world.getLightLevel(pos) <= 13) {
-                val x: Double = pos.x + ((random.nextDouble() * PARTICLE_HORIZONTAL_RANGE) - PARTICLE_VERTICAL_RANGE)
-                val y: Double = pos.y + (random.nextDouble() * PARTICLE_VERTICAL_RANGE)
-                val z: Double = pos.z + ((random.nextDouble() * PARTICLE_HORIZONTAL_RANGE) - PARTICLE_VERTICAL_RANGE)
-                //add ambient particles
-            }
-        }
+        //if (random.nextInt(1 + MAX_PETAL_AMOUNT + state.get(AMOUNT)) == 0) {
+        //    if (!world.isDay || world.getLightLevel(pos) <= 13) {
+        //        val x: Double = pos.x + ((random.nextDouble() * PARTICLE_HORIZONTAL_RANGE) - PARTICLE_VERTICAL_RANGE)
+        //        val y: Double = pos.y + (random.nextDouble() * PARTICLE_VERTICAL_RANGE)
+        //        val z: Double = pos.z + ((random.nextDouble() * PARTICLE_HORIZONTAL_RANGE) - PARTICLE_VERTICAL_RANGE)
+        //        //add ambient particles
+        //    }
+        //}
     }
 
     //sweet berry bush
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
         if (entity is LivingEntity) {
-            if (!world.isClient && (entity.lastRenderX != entity.x || entity.lastRenderZ != entity.z)) {
+            if (!world.isClient && entity.y < pos.y + 0.25 && (entity.lastRenderX != entity.x || entity.lastRenderZ != entity.z)) {
                 val x = abs(entity.x - entity.lastRenderX)
                 val z = abs(entity.z - entity.lastRenderZ)
                 if (x >= 0.003 || z >= 0.003) {
@@ -43,9 +43,8 @@ class FlowerbedParticleBlock(settings: Settings) : PinkPetalsBlock(settings) {
         }
     }
 
-
-    override fun canPlantOnTop(floor: BlockState, world: BlockView, pos: BlockPos): Boolean =
-        floor.isIn(DnDBlockTags.VIVIONBED_PLACEABLE)
+    //override fun canPlantOnTop(floor: BlockState, world: BlockView, pos: BlockPos): Boolean =
+    //    floor.isIn(DnDBlockTags.VIVIONBED_PLACEABLE)
 
     companion object {
         const val PARTICLE_HORIZONTAL_RANGE = 5
@@ -61,29 +60,19 @@ class FlowerbedParticleBlock(settings: Settings) : PinkPetalsBlock(settings) {
                     val z = random.nextDouble()
                     if (petalCount > 2 || z <= 0.5) {
                         val dir = state.get(FACING)
-                        addParticle(rotatePartPos(x, z, dir), rotatePartPos(x, z, dir, true), world, pos, random)
+                        addParticle(rotatePartPos(x, z, dir), rotatePartPos(z, x, dir), world, pos, random)
                     }
                 }
             }
         }
 
-        fun rotatePartPos(x: Double, z: Double, horDir: Direction, getZ: Boolean = false): Double {
-            return if (!getZ) {
-                when (horDir) {
-                    Direction.NORTH -> x
-                    Direction.WEST -> z
-                    Direction.SOUTH -> 1 - x
-                    Direction.EAST -> 1 - z
-                    else -> error("flowerbed particle should only be horizontally rotated")
-                }
-            } else {
-                when (horDir) {
-                    Direction.NORTH -> z
-                    Direction.WEST -> x
-                    Direction.SOUTH -> 1 - z
-                    Direction.EAST -> 1 - x
-                    else -> error("flowerbed particle should only be horizontally rotated")
-                }
+        fun rotatePartPos(a: Double, b: Double, horDir: Direction): Double {
+            return when (horDir) {
+                Direction.NORTH -> a
+                Direction.WEST -> b
+                Direction.SOUTH -> 1 - a
+                Direction.EAST -> 1 - b
+                else -> error("flowerbed particle should only be horizontally rotated")
             }
         }
 

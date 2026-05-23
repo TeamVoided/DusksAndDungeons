@@ -57,12 +57,18 @@ open class TripleTallPlantBlock(settings: Settings) : AbstractPlantBlock(setting
         state: BlockState, direction: Direction, neighborState: BlockState, world: WorldAccess,
         pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
-        state.get(SECTION)
         return if (
-            (direction.axis == Direction.Axis.Y) &&
-            !state.canPlaceAt(world, pos)
-        ) Blocks.AIR.defaultState
-        else super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+            !state.canPlaceAt(world, pos) &&
+            neighborUpdatesAboveAndBelow(state, direction, neighborState)
+        ) {
+            Blocks.AIR.defaultState
+        } else super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+    }
+
+    open fun neighborUpdatesAboveAndBelow(state: BlockState, direction: Direction, neighborState: BlockState): Boolean {
+        val section = state.get(SECTION)
+        return ((direction == Direction.UP && section != TripleBlockSection.TOP && !neighborState.isOf(this)) ||
+                (direction == Direction.DOWN && section != TripleBlockSection.BOTTOM && !neighborState.isOf(this)))
     }
 
     override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) {
