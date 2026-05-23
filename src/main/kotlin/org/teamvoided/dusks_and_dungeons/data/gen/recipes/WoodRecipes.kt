@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory
-import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeCategory
@@ -34,7 +33,7 @@ object WoodRecipes {
             .pattern("## ")
             .criterion(DnDBlocks.CASCADE_PLANKS.asItem())
             .offerTo(this)
-        ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DnDBlocks.STRONG_SCAFFOLDING, 6)
+        ShapedRecipeJsonFactory.create(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
             .ingredient('|', Ingredient.ofItems(Items.BAMBOO_PLANKS))
             .ingredient('~', Ingredient.ofItems(Items.STRING))
             .pattern("|~|")

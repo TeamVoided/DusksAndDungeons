@@ -204,6 +204,7 @@ object DnDTabs {
         modifyTab(ItemGroups.BUILDING_BLOCKS) {
             addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
+            addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
             addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
             addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
             addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
@@ -224,6 +225,8 @@ object DnDTabs {
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
             addAfter(Items.LANTERN, DnDBlocks.BIG_LANTERN)
             addAfter(Items.SOUL_LANTERN, DnDBlocks.BIG_SOUL_LANTERN)
+
+            addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
 
             addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
 

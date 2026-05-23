@@ -395,7 +395,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(Blocks.ICE, Blocks.SNOW)
 
         getOrCreateTagBuilder(BlockTags.CLIMBABLE)
-            .add(DnDBlocks.STRONG_SCAFFOLDING)
+            .add(DnDBlocks.BIG_SCAFFOLDING)
 
     }
 

@@ -21,8 +21,8 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-class StrongScaffoldingBlock(settings: Settings) : Block(settings), Waterloggable {
-    public override fun getCodec(): MapCodec<StrongScaffoldingBlock> = CODEC
+class BigScaffoldingBlock(settings: Settings) : Block(settings), Waterloggable {
+    public override fun getCodec(): MapCodec<BigScaffoldingBlock> = CODEC
 
     init {
         this.defaultState = stateManager.defaultState
@@ -128,7 +128,7 @@ class StrongScaffoldingBlock(settings: Settings) : Block(settings), Waterloggabl
     }
 
     companion object {
-        val CODEC: MapCodec<StrongScaffoldingBlock> = createCodec(::StrongScaffoldingBlock)
+        val CODEC: MapCodec<BigScaffoldingBlock> = createCodec(::BigScaffoldingBlock)
         private val COLLISION_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0)
         private val OUTLINE_SHAPE: VoxelShape = VoxelShapes.fullCube().offset(0.0, -1.0, 0.0)
         private val NORMAL_OUTLINE_SHAPE: VoxelShape = VoxelShapes.union(

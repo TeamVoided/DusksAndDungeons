@@ -360,6 +360,9 @@ object DnDBlocks {
     val BIG_SOUL_CANDLE_CAKES =
         registerNoItem("big_", "soul_candle_cake", BIG_SOUL_CANDLES.toColorCollection(), ::bigSoulCandleCakeOf)
     val SOUL_CANDELABRAS = register("soul_candelabra", SOUL_CANDLES.toColorCollection(), ::candelabraOf)
+
+    val BIG_SCAFFOLDING =
+        registerScaffolding("big_scaffolding", BigScaffoldingBlock(copy(SCAFFOLDING))).cutout().axe()
     // endregion
 
     // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
@@ -496,9 +499,6 @@ object DnDBlocks {
     val GOLDEN_MUSHROOM_STEM_BLOCK =
         register("golden_mushroom_stem_block", MushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9)))
             .axe().tellWitnessesThatIWasMurdered()
-
-    val STRONG_SCAFFOLDING =
-        registerScaffolding("strong_scaffolding", StrongScaffoldingBlock(copy(SCAFFOLDING))).cutout()
 
 
     /* Future Content
