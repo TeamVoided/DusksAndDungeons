@@ -2,23 +2,22 @@ package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
-import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
-import net.minecraft.world.level.block.Blocks.*
-import net.minecraft.world.level.block.SaplingBlock
+import net.minecraft.core.Registry
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.data.worldgen.features.TreeFeatures
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ScaffoldingBlockItem
-import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.Registry
-import net.minecraft.world.level.block.SoundType
-import net.minecraft.data.worldgen.features.TreeFeatures
 import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.Blocks.*
+import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.material.MapColor
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.api.BlockStrippingRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
@@ -74,7 +73,8 @@ object DnDBlocks {
     val SMALL_PUMPKIN = register("small_pumpkin", sPumpkinOf(SMALL_CARVED_PUMPKIN).axe())
 
     // Lantern ---
-    val CARVED_LANTERN_PUMPKIN = registerHeadEquipable("carved_lantern_pumpkin", carvedPumpkin(MapColor.COLOR_YELLOW).axe())
+    val CARVED_LANTERN_PUMPKIN =
+        registerHeadEquipable("carved_lantern_pumpkin", carvedPumpkin(MapColor.COLOR_YELLOW).axe())
     val GLOWING_LANTERN_PUMPKIN = register("glowing_lantern_pumpkin", glowingPumpkinOf(CARVED_LANTERN_PUMPKIN).axe())
     val LANTERN_PUMPKIN = register("lantern_pumpkin", pumpkinOf(CARVED_LANTERN_PUMPKIN).axe())
     val SMALL_CARVED_LANTERN_PUMPKIN =
@@ -85,7 +85,8 @@ object DnDBlocks {
     val LANTERN_PUMPKIN_STEM = registerNoItem("lantern_pumpkin_stem", stemOf(LANTERN_PUMPKIN).grassLike())
 
     // Mosskin ---
-    val CARVED_MOSSKIN_PUMPKIN = registerHeadEquipable("carved_mosskin_pumpkin", carvedPumpkin(MapColor.COLOR_GREEN).axe())
+    val CARVED_MOSSKIN_PUMPKIN =
+        registerHeadEquipable("carved_mosskin_pumpkin", carvedPumpkin(MapColor.COLOR_GREEN).axe())
     val GLOWING_MOSSKIN_PUMPKIN = register("glowing_mosskin_pumpkin", glowingPumpkinOf(CARVED_MOSSKIN_PUMPKIN).axe())
     val MOSSKIN_PUMPKIN = register("mosskin_pumpkin", pumpkinOf(CARVED_MOSSKIN_PUMPKIN).axe())
     val SMALL_CARVED_MOSSKIN_PUMPKIN =
@@ -220,7 +221,8 @@ object DnDBlocks {
     val STRIPPED_DARK_OAK_WOOD = registerWoodenSet("stripped_dark_oak_wood", Blocks.STRIPPED_DARK_OAK_WOOD)
     val STRIPPED_MANGROVE_WOOD = register(
         createHeadlessSet("stripped_mangrove_wood", Blocks.STRIPPED_MANGROVE_WOOD)
-            .settings(ofFullCopy(Blocks.STRIPPED_MANGROVE_WOOD).mapColor(MapColor.COLOR_RED)).noStoneCutting().buildHeadless()
+            .settings(ofFullCopy(Blocks.STRIPPED_MANGROVE_WOOD).mapColor(MapColor.COLOR_RED)).noStoneCutting()
+            .buildHeadless()
     ).woodSet()
     val STRIPPED_CHERRY_WOOD = registerWoodenSet("stripped_cherry_wood", Blocks.STRIPPED_CHERRY_WOOD)
     val STRIPPED_CRIMSON_HYPHAE = registerWoodenSet("stripped_crimson_hyphae", Blocks.STRIPPED_CRIMSON_HYPHAE)
@@ -391,7 +393,10 @@ object DnDBlocks {
     val BLACKSTONE_GRAVESTONE = registerGravestone("blackstone_gravestone", CHISELED_POLISHED_BLACKSTONE)
     val SMALL_BLACKSTONE_GRAVESTONE = registerSmallGravestone("small_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
     val HEADSTONE =
-        register("headstone", GravestoneBlock(headstoneShape, centerHeadstoneShape, ofFullCopy(BIG_CHAIN)).cutout().pickaxe())
+        register(
+            "headstone",
+            GravestoneBlock(headstoneShape, centerHeadstoneShape, ofFullCopy(BIG_CHAIN)).cutout().pickaxe()
+        )
     // endregion
 
     // region  ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE age --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
@@ -522,7 +527,33 @@ object DnDBlocks {
     fun init() {
         // Striping
         StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
-        StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
+        StrippableBlockRegistry.register(CASCADE_WOOD.parent, STRIPPED_CASCADE_WOOD.parent)
+
+        registerStrippedSet(CASCADE_WOOD, STRIPPED_CASCADE_WOOD)
+        registerStrippedSet(OAK_WOOD, STRIPPED_OAK_WOOD)
+        registerStrippedSet(SPRUCE_WOOD, STRIPPED_SPRUCE_WOOD)
+        registerStrippedSet(BIRCH_WOOD, STRIPPED_BIRCH_WOOD)
+        registerStrippedSet(JUNGLE_WOOD, STRIPPED_JUNGLE_WOOD)
+        registerStrippedSet(ACACIA_WOOD, STRIPPED_ACACIA_WOOD)
+        registerStrippedSet(DARK_OAK_WOOD, STRIPPED_DARK_OAK_WOOD)
+        registerStrippedSet(MANGROVE_WOOD, STRIPPED_MANGROVE_WOOD)
+        registerStrippedSet(CHERRY_WOOD, STRIPPED_CHERRY_WOOD)
+        registerStrippedSet(CRIMSON_HYPHAE, STRIPPED_CRIMSON_HYPHAE)
+        registerStrippedSet(WARPED_HYPHAE, STRIPPED_WARPED_HYPHAE)
+
+        BlockStrippingRegistry.register(CASCADE_LOG_PILE, STRIPPED_CASCADE_LOG_PILE)
+        BlockStrippingRegistry.register(OAK_LOG_PILE, STRIPPED_OAK_LOG_PILE)
+        BlockStrippingRegistry.register(SPRUCE_LOG_PILE, STRIPPED_SPRUCE_LOG_PILE)
+        BlockStrippingRegistry.register(BIRCH_LOG_PILE, STRIPPED_BIRCH_LOG_PILE)
+        BlockStrippingRegistry.register(JUNGLE_LOG_PILE, STRIPPED_JUNGLE_LOG_PILE)
+        BlockStrippingRegistry.register(ACACIA_LOG_PILE, STRIPPED_ACACIA_LOG_PILE)
+        BlockStrippingRegistry.register(DARK_OAK_LOG_PILE, STRIPPED_DARK_OAK_LOG_PILE)
+        BlockStrippingRegistry.register(MANGROVE_LOG_PILE, STRIPPED_MANGROVE_LOG_PILE)
+        BlockStrippingRegistry.register(CHERRY_LOG_PILE, STRIPPED_CHERRY_LOG_PILE)
+        BlockStrippingRegistry.register(CRIMSON_STEM_PILE, STRIPPED_CRIMSON_STEM_PILE)
+        BlockStrippingRegistry.register(WARPED_STEM_PILE, STRIPPED_WARPED_STEM_PILE)
+        BlockStrippingRegistry.register(BAMBOO_PILE, STRIPPED_BAMBOO_PILE)
+
         // Flammability
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
@@ -532,6 +563,12 @@ object DnDBlocks {
             it.grass.grass()
             it.init()
         }
+    }
+
+    fun registerStrippedSet(set: AbstractBlockSet, strippedSet: AbstractBlockSet) {
+        BlockStrippingRegistry.register(set.stairs, strippedSet.stairs)
+        BlockStrippingRegistry.register(set.slab, strippedSet.slab)
+        BlockStrippingRegistry.register(set.wall, strippedSet.wall)
     }
 
     fun register(id: String, block: Block): Block {

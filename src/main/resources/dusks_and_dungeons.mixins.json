@@ -14,7 +14,8 @@
     "PistonMovingBlockEntityMixin",
     "PistonStructureResolverMixin",
     "WallBlockMixin",
-    "WitherSkeletonMixin"
+    "WitherSkeletonMixin",
+    "apis.AxeItemMixin"
   ],
   "client": [],
   "injectors": {
