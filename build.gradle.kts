@@ -47,10 +47,6 @@ dependencies {
     modImplementation(libs.voidmill)
     include(libs.voidmill)
 
-
-    // Gay
-    modImplementation(libs.transition)
-
     // Dev
     modImplementation(libs.modmenu)
 
