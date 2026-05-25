@@ -1561,6 +1561,17 @@ fun BlockModelGenerators.candelabraStates(
     }
 }
 
+fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
+    // TODO make this be parented models instead
+    val stable = ModelLocationUtils.getModelLocation(scaffolding, "_stable")
+    val unstable = ModelLocationUtils.getModelLocation(scaffolding, "_unstable")
+    delegateItemModel(scaffolding, stable)
+    blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(scaffolding)
+            .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.BOTTOM, unstable, stable))
+    )
+}
+
 fun parentedItemModel(id: ResourceLocation) = ModelTemplate(Optional.of(id.withPrefix("item/")), Optional.empty())
 fun BlockModelGenerators.registerParentedItemModel(block: Block) =
     this.delegateItemModel(block, block.model())

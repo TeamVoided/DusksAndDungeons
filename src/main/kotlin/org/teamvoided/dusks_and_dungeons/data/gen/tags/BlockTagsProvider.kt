@@ -3,11 +3,12 @@ package org.teamvoided.dusks_and_dungeons.data.gen.tags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
+import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
@@ -482,6 +483,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     private fun conventionTags() {
         getOrCreateTagBuilder(ConventionalBlockTags.COBBLESTONES).add(DnDBlocks.OVERGROWN_COBBLESTONE.parent)
         getOrCreateTagBuilder(ConventionalBlockTags.CHAINS).add(DnDBlocks.BIG_CHAIN)
+
+        getOrCreateTagBuilder(CBlockTags.SCAFFOLDING).add(Blocks.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
     }
 
     private fun overlayTags() {

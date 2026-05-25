@@ -17,5 +17,8 @@ object BigModels {
 
         DnDBlockLists.candelabras.forEach(gen::registerCandelabra)
         DnDBlockLists.soulCandelabras.forEach(gen::registerDnDCandelabra)
+
+        gen.createBigScaffolding(DnDBlocks.BIG_SCAFFOLDING)
+
     }
 }

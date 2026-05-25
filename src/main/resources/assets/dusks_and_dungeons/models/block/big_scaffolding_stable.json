@@ -1,9 +1,9 @@
 {
   "parent": "block/block",
   "textures": {
-    "bottom": "dusks_and_dungeons:block/strong_scaffolding_bottom",
-    "side": "dusks_and_dungeons:block/strong_scaffolding_side",
-    "top": "dusks_and_dungeons:block/strong_scaffolding_top",
+    "bottom": "dusks_and_dungeons:block/big_scaffolding_bottom",
+    "side": "dusks_and_dungeons:block/big_scaffolding_side",
+    "top": "dusks_and_dungeons:block/big_scaffolding_top",
     "particle": "#top"
   },
   "elements": [

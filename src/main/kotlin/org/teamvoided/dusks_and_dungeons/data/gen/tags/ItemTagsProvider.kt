@@ -11,6 +11,8 @@ import net.minecraft.tags.ItemTags
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
+import org.teamvoided.dusks_and_dungeons.data.tags.c.CItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.voidlib.devin.extensions.tag.add
@@ -173,6 +175,7 @@ class ItemTagsProvider(
         copyColorTags(::copy)
         copy(ConventionalBlockTags.COBBLESTONES, ConventionalItemTags.COBBLESTONES)
         copy(ConventionalBlockTags.CHAINS, ConventionalItemTags.CHAINS)
+        copy(CBlockTags.SCAFFOLDING, CItemTags.SCAFFOLDING)
 
         getOrCreateTagBuilder(ConventionalItemTags.STORAGE_BLOCKS)
             .forceAddTag(DnDItemTags.CORN_STORAGE)

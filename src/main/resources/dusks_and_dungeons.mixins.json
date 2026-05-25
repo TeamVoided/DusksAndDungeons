@@ -15,7 +15,9 @@
     "PistonStructureResolverMixin",
     "WallBlockMixin",
     "WitherSkeletonMixin",
-    "apis.AxeItemMixin"
+    "apis.AxeItemMixin",
+    "taglighting.FallLocationMixin",
+    "taglighting.LivingEntityMixin"
   ],
   "client": [],
   "injectors": {
