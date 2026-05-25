@@ -1,38 +1,41 @@
 package org.teamvoided.dusks_and_dungeons.block.big
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.IntProperty
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.IntegerProperty
 
-class BigJarWithLayersBlock(settings: Settings) : BigJarBlock(settings) {
+class BigJarWithLayersBlock(settings: Properties) : BigJarBlock(settings) {
 
     init {
-        defaultState = stateManager.defaultState.with(LEVEL_1_6, 1)
+        registerDefaultState(stateDefinition.any().setValue(LEVEL_1_6, 1))
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
         builder.add(LEVEL_1_6)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
         val fromItem = 1
-        return defaultState.with(LEVEL_1_6, fromItem)
+        return super.getStateForPlacement(ctx)?.setValue(LEVEL_1_6, fromItem)
     }
 
-    override fun isFull(state: BlockState): Boolean = state.get(LEVEL_1_6) == MAX_LEVEL
+    override fun isFull(state: BlockState): Boolean = state.getValue(LEVEL_1_6) == MAX_LEVEL
 
-    override fun getFluidHeight(state: BlockState): Double = (1 + 2 * state.get(LEVEL_1_6)) / 16.0
+    override fun getFluidHeight(state: BlockState): Double = (1 + 2 * state.getValue(LEVEL_1_6)) / 16.0
 
-    override fun hasComparatorOutput(state: BlockState): Boolean = true
+    override fun hasAnalogOutputSignal(state: BlockState): Boolean = true
 
-    override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = state.get(LEVEL_1_6)
+    override fun getAnalogOutputSignal(state: BlockState, level: Level, blockPos: BlockPos): Int {
+        return state.getValue(LEVEL_1_6)
+    }
 
     companion object {
         const val MAX_LEVEL = 6
-        val LEVEL_1_6: IntProperty = IntProperty.of("level", 1, MAX_LEVEL)
+        val LEVEL_1_6: IntegerProperty = IntegerProperty.create("level", 1, MAX_LEVEL)
     }
 }
