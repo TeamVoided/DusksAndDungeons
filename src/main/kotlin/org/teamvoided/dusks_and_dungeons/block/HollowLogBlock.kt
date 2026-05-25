@@ -19,6 +19,7 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.rotateColumn
 
+// TODO fix rotation, they are broken in axiom
 open class HollowLogBlock(settings: Properties) : RotatedPillarBlock(settings), SimpleWaterloggedBlock {
     init {
         this.registerDefaultState(
