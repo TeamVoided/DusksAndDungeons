@@ -1,15 +1,12 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.recipes
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.data.recipes.RecipeProvider
-import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.*
 import net.minecraft.data.recipes.RecipeBuilder.getDefaultRecipeId
-import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.data.recipes.ShapelessRecipeBuilder
-import net.minecraft.world.level.ItemLike
+import net.minecraft.data.recipes.RecipeProvider.getConversionRecipeName
 import net.minecraft.world.item.Items
-import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
@@ -37,6 +34,16 @@ object FloraRecipes {
             .criterion(Blocks.HANGING_ROOTS)
             .save(e)
         e.createCount(Blocks.HANGING_ROOTS, DnDBlocks.ROOT_BLOCK, 4)
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.RABBIT_STEW)
+            .requires(Items.BAKED_POTATO)
+            .requires(Items.COOKED_RABBIT)
+            .requires(Items.BOWL)
+            .requires(Items.CARROT)
+            .requires(DnDBlocks.GOLDEN_MUSHROOM)
+            .group("rabbit_stew")
+            .criterion(Items.COOKED_RABBIT)
+            .save(e, getConversionRecipeName(Items.RABBIT_STEW, DnDBlocks.GOLDEN_MUSHROOM))
 
         pumpkins(e)
         corn(e)
