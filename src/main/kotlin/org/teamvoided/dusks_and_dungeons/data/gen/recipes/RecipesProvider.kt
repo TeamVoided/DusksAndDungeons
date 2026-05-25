@@ -31,6 +31,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         FloraRecipes.generateFloraRecipes(e)
         e.cobbled()
 
+        MinecraftRecipeOverrides.generate(e)
+
         temporaryRecipes(e)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDItems.FARMERS_HAT)

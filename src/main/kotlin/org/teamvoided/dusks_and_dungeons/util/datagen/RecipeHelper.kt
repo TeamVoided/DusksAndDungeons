@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_and_dungeons.util.datagen
 
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -117,16 +116,6 @@ fun RecipeOutput.createGravestone(output: ItemLike, input: ItemLike) {
         .save(this)
 }
 
-fun RecipeOutput.createPumpkinPie(output: ItemLike, pumpkin: ItemLike, carvedPumpkin: ItemLike) {
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, output)
-        .requires(pumpkin)
-        .requires(Items.SUGAR)
-        .requires(Items.EGG)
-        .criterion(carvedPumpkin)
-        .criterion(pumpkin)
-        .save(this)
-}
-
 fun RecipeOutput.createPumpkinStuffs(
     pumpkin: ItemLike,
     carvedPumpkin: ItemLike,
@@ -167,7 +156,7 @@ fun RecipeOutput.createOvergrown(
     output: ItemLike,
     input: ItemLike
 ) {
-    this.createTwoPiece(output, input, ItemTags.LEAVES)
+    createTwoPiece(output, input, ItemTags.LEAVES, "_leaves")
 }
 
 fun RecipeOutput.createTwoPiece(
@@ -188,14 +177,16 @@ fun RecipeOutput.createTwoPiece(
 fun RecipeOutput.createTwoPiece(
     output: ItemLike,
     input1: ItemLike,
-    input2: TagKey<Item>
+    input2: TagKey<Item>,
+    suffix: String = "",
+    id: ResourceLocation = output.id.withSuffix(suffix)
 ) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
         .requires(Ingredient.of(input1))
         .requires(Ingredient.of(input2))
         .criterion(input1)
         .criterion(input2)
-        .save(this)
+        .save(this, id)
 }
 
 fun RecipeOutput.createSmallSquare(output: ItemLike, input: ItemLike, count: Int = 1) {
@@ -276,24 +267,24 @@ fun RecipeOutput.createStonecuttedSet(
 ) {
     input.forEach {
         if (polish != null && polish.asItem().description.string != it.asItem().description.string)
-            FabricRecipeProvider.stonecutterResultFromBase(this, RecipeCategory.BUILDING_BLOCKS, polish, it)
-        if (stair != null) FabricRecipeProvider.stonecutterResultFromBase(
+            stonecutterResultFromBase(this, RecipeCategory.BUILDING_BLOCKS, polish, it)
+        if (stair != null) stonecutterResultFromBase(
             this,
             RecipeCategory.BUILDING_BLOCKS,
             stair,
             it
         )
-        if (slab != null) FabricRecipeProvider.stonecutterResultFromBase(
+        if (slab != null) stonecutterResultFromBase(
             this,
             RecipeCategory.BUILDING_BLOCKS,
             slab,
             it,
             2
         )
-        if (wall != null) FabricRecipeProvider.stonecutterResultFromBase(this, RecipeCategory.DECORATIONS, wall, it)
+        if (wall != null) stonecutterResultFromBase(this, RecipeCategory.DECORATIONS, wall, it)
         extra?.forEach { special ->
             if (special.asItem().description.string != it.asItem().description.string) {
-                FabricRecipeProvider.stonecutterResultFromBase(
+                stonecutterResultFromBase(
                     this,
                     RecipeCategory.BUILDING_BLOCKS,
                     special,
@@ -309,10 +300,10 @@ fun RecipeOutput.createStonecuttedFromList(output: ItemLike, vararg input: Block
 
 fun RecipeOutput.createStonecuttedFromList(
     input: List<Block>,
-    output: ItemLike?
+    output: ItemLike
 ) {
     input.forEach {
-        FabricRecipeProvider.stonecutterResultFromBase(this, RecipeCategory.BUILDING_BLOCKS, output, it)
+        stonecutterResultFromBase(this, RecipeCategory.BUILDING_BLOCKS, output, it)
     }
 }
 

@@ -1,14 +1,17 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.recipes
 
-import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.world.item.Items
-import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
 
 object StoneRecipes {
@@ -42,6 +45,10 @@ object StoneRecipes {
             Blocks.COBBLED_DEEPSLATE, Blocks.DEEPSLATE_BRICKS, Blocks.POLISHED_DEEPSLATE,
         )
         e.createSmallSquare(DnDBlocks.POLISHED_STONE, Blocks.STONE, 4)
+
+        e.createSmallSquare(Blocks.MOSSY_STONE_BRICKS, DnDBlocks.MOSSY_POLISHED_STONE, 4)
+        e.createSmallSquare(DnDBlocks.OVERGROWN_STONE_BRICKS, DnDBlocks.OVERGROWN_POLISHED_STONE, 4)
+
         e.createTwoPiece(DnDBlocks.MOSSY_POLISHED_STONE, DnDBlocks.POLISHED_STONE, Items.MOSS_BLOCK, "_from_moss")
         e.createTwoPiece(DnDBlocks.MOSSY_POLISHED_STONE, DnDBlocks.POLISHED_STONE, Items.VINE, "_from_vine")
 
@@ -49,8 +56,31 @@ object StoneRecipes {
         e.createOvergrown(DnDBlocks.OVERGROWN_COBBLESTONE, Blocks.COBBLESTONE)
         e.createOvergrown(DnDBlocks.OVERGROWN_STONE_BRICKS, Blocks.STONE_BRICKS)
 
-        e.createStonecuttingSet(DnDBlocks.POLISHED_STONE, Blocks.STONE, Blocks.STONE_BRICKS)
-        e.createStonecuttingSet(DnDBlocks.MOSSY_POLISHED_STONE, Blocks.MOSSY_STONE_BRICKS)
-        e.createStonecuttingSet(DnDBlocks.OVERGROWN_POLISHED_STONE, DnDBlocks.OVERGROWN_STONE_BRICKS.parent)
+        e.createStonecuttingSet(DnDBlocks.POLISHED_STONE, Blocks.STONE)
+
+        e.cutVariants(
+            DnDBlocks.POLISHED_STONE,
+            Blocks.STONE_BRICK_STAIRS, Blocks.STONE_BRICK_SLAB, Blocks.STONE_BRICK_WALL
+        )
+
+        e.cutVariants(
+            DnDBlocks.OVERGROWN_POLISHED_STONE,
+            DnDBlocks.OVERGROWN_STONE_BRICKS.stairs,
+            DnDBlocks.OVERGROWN_STONE_BRICKS.slab,
+            DnDBlocks.OVERGROWN_STONE_BRICKS.wall
+        )
+
+        e.cutVariants(
+            DnDBlocks.MOSSY_POLISHED_STONE,
+            Blocks.MOSSY_STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICK_SLAB, Blocks.MOSSY_STONE_BRICK_WALL
+        )
+//        e.createStonecuttingSet(DnDBlocks.MOSSY_POLISHED_STONE, Blocks.MOSSY_STONE_BRICKS)
+//        e.createStonecuttingSet(DnDBlocks.OVERGROWN_POLISHED_STONE, DnDBlocks.OVERGROWN_STONE_BRICKS.parent)
+    }
+
+    fun RecipeOutput.cutVariants(input: ItemLike, stair: Block, slab: Block, wall: Block) {
+        createStonecutting(stair, input)
+        createStonecutting(slab, input, 2)
+        createStonecutting(wall, input)
     }
 }
