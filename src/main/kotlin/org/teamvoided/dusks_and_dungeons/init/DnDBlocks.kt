@@ -136,6 +136,20 @@ object DnDBlocks {
     val MOONBERRY_VINELET = registerNoItem(
         "moonberry_vinelet", MoonberryVineletBlock(Set.moonbery().randomTicks().instabreak())
     ).grassLike().flammableLogs()
+
+    val GOLDEN_MUSHROOM = register(
+        "golden_mushroom",
+        MushroomWithSporesPlantBlock(TreeFeatures.HUGE_BROWN_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM)
+    ).cutout().axe().sword()
+        .tellWitnessesThatIWasMurdered()
+    val GOLDEN_MUSHROOM_BLOCK = register(
+        "golden_mushroom_block", MushroomWithSporesBlock(0xFFD800, 0.5, Set.GOLDEN_MUSHROOM_BLOCK.luminance(11))
+    ).axe()
+        .tellWitnessesThatIWasMurdered()
+    val GOLDEN_MUSHROOM_STEM_BLOCK =
+        register("golden_mushroom_stem_block", HugeMushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9))).axe()
+            .tellWitnessesThatIWasMurdered()
+
     // endregion
 
     // region 🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳 --- Sold Oxygen --- 🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳
@@ -491,20 +505,6 @@ object DnDBlocks {
     val SLATE_BLOCKS = register(RockyBlocks("slate", "slated", COBBLED_DEEPSLATE)).rocky()
     val BLACKSTONE_BLOCKS = register(RockyBlocks("blackstone", "blackstoned", BLACKSTONE)).rocky()
     // endregion
-
-
-    // TODO add this
-    val GOLDEN_MUSHROOM = register(
-        "golden_mushroom",
-        MushroomWithSporesPlantBlock(TreeFeatures.HUGE_BROWN_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM)
-    ).cutout().axe().sword().tellWitnessesThatIWasMurdered()
-    val GOLDEN_MUSHROOM_BLOCK = register(
-        "golden_mushroom_block", MushroomWithSporesBlock(0xFFD800, 0.5, Set.GOLDEN_MUSHROOM_BLOCK.luminance(11))
-    ).axe().tellWitnessesThatIWasMurdered()
-    val GOLDEN_MUSHROOM_STEM_BLOCK =
-        register("golden_mushroom_stem_block", HugeMushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9)))
-            .axe().tellWitnessesThatIWasMurdered()
-
 
     /* Future Content
     val MOLTEN_LAVASPONGE = register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe()

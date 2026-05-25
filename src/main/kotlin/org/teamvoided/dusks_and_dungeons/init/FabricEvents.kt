@@ -75,6 +75,10 @@ fun compostItems() {
     compost(DnDBlocks.ROOT_BLOCK, 0.65)
     DnDBlockLists.flowerbedBlocks.forEach { compost(it, 0.3) }
 
+    compost(DnDBlocks.GOLDEN_MUSHROOM, 0.65)
+    compost(DnDBlocks.GOLDEN_MUSHROOM_BLOCK, 0.85)
+    compost(DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK, 0.65)
+
     compost(DnDItems.LANTERN_PUMPKIN_SEEDS, 0.3)
     compost(DnDItems.MOSSKIN_PUMPKIN_SEEDS, 0.3)
     compost(DnDItems.GLOOM_PUMPKIN_SEEDS, 0.3)
