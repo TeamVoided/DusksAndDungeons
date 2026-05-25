@@ -4,21 +4,19 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    alias(libs.plugins.fabric.loom)
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.fabric.loom)
     alias(libs.plugins.iridium)
     alias(libs.plugins.iridium.publish)
     alias(libs.plugins.iridium.upload)
 }
 
-group = property("maven_group")!!
-version = property("mod_version")!!
 base.archivesName.set(modSettings.modId())
 
 
 repositories {
     maven("https://teamvoided.org/releases")
+    maven("https://teamvoided.org/snapshots")
     maven("https://api.modrinth.com/maven")
     maven("https://maven.terraformersmc.com/") { name = "TerraformersMC" }
     maven("https://maven.fzzyhmstrs.me/") { name = "FzzyMaven" }
@@ -53,6 +51,7 @@ dependencies {
     modCompileOnly("${libs.emi.get()}:api")
     modLocalRuntime(libs.emi)
 
+    modImplementation(libs.bundles.cw)
     modCompileOnly("maven.modrinth:not-enough-animations:kaNdqksl")
 }
 
@@ -75,6 +74,17 @@ loom {
                 runDir("run")
                 programArgs("--quickPlaySingleplayer", "test")
             }
+        }
+        forEach {
+            it.vmArgs(
+                // If enabled this you can hotswap basally anything
+                // Requires a JetBrains runtime!
+                "-XX:+AllowEnhancedClassRedefinition",
+                // If enabled this you can hotswap mixins
+                // Requires you to add MIXIN_PATH to your .env file
+                // Here is how to find the path: https://docs.fabricmc.net/develop/getting-started/intellij-idea/launching-the-game#1-locate-the-mixin-library-jar
+//                "-javaagent:${System.getProperty("MIXIN_PATH")}"
+            )
         }
     }
 }
