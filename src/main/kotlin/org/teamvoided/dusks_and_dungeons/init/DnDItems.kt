@@ -73,6 +73,11 @@ object DnDItems {
     val MOONBERRIES = register("moonberries", Item((Properties()).food(DnDFoodComponents.MOONBERRIES)))
 
     val BIG_SCAFFOLDING = register("big_scaffolding", ScaffoldingBlockItem(DnDBlocks.BIG_SCAFFOLDING, Properties()))
+    val GLOWING_LAVASPONGE = register(
+        "glowing_lavasponge",
+        BlockItem(DnDBlocks.GLOWING_LAVASPONGE, Properties().craftRemainder(DnDBlocks.LAVASPONGE.asItem()))
+    )
+        .tellWitnessesThatIWasMurdered()
 
     // region Blackstone Tools
     @JvmField

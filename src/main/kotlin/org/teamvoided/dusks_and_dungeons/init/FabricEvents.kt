@@ -109,5 +109,7 @@ fun compostItems() {
 
 fun createFuels() {
     fuel(DnDItems.BIG_SCAFFOLDING, 300)
+    fuel(DnDBlocks.MOLTEN_LAVASPONGE, 20000)
+    fuel(DnDItems.GLOWING_LAVASPONGE, 20000)
 }
 

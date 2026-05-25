@@ -1,12 +1,15 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.recipes
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.RecipeProvider.getItemName
+import net.minecraft.data.recipes.RecipeProvider.has
 import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.SmithingTransformRecipeBuilder
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -15,15 +18,21 @@ import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
 
 object NetherRecipes {
-    fun generateNetherRecipes(e: RecipeOutput) {
-        generateMiscNetherRecipes(e)
-        generateNetherBrickRecipes(e)
+    fun generateNetherRecipes(o: RecipeOutput) {
+        generateNetherBrickRecipes(o)
+
+        SmithingTransformRecipeBuilder.smithing(
+            Ingredient.of(Items.NETHERITE_SCRAP),
+            Ingredient.of(DnDBlocks.BRITTLE_LAVASPONGE),
+            Ingredient.of(),
+            RecipeCategory.BUILDING_BLOCKS,
+            DnDBlocks.LAVASPONGE.asItem()
+        )
+            .unlocks("has_netherite_scrap", has(Items.NETHERITE_SCRAP))
+            .save(o, getItemName(DnDBlocks.LAVASPONGE) + "_smithing")
     }
 
-    private fun generateMiscNetherRecipes(e: RecipeOutput) {
-    }
-
-    private fun generateNetherBrickRecipes(e: RecipeOutput) {
+    fun generateNetherBrickRecipes(e: RecipeOutput) {
         e.createStackedCraft(DnDBlocks.NETHER_BRICK_PILLAR, Blocks.NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
 
         e.createStonecuttingSet(DnDBlocks.POLISHED_NETHER_BRICKS, Blocks.NETHER_BRICKS)

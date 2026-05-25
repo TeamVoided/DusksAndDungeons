@@ -196,6 +196,7 @@ class ItemTagsProvider(
             .add(DnDItems.BLACKSTONE_SWORD)
             .add(DnDItems.BLACKSTONE_AXE)
 
+        // TODO turn in to emi plugin
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
             .add(DnDItems.EVIL_ITEMS)
 

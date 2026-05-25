@@ -60,5 +60,10 @@ object NetherModels {
         )
         gen.fence(DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DnDBlocks.MIXED_GRAY_NETHER_BRICKS.parent)
         gen.registerMixedNetherBrickPillar(DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR, DnDBlocks.GRAY_NETHER_BRICK_PILLAR)
+
+        gen.createTrivialCube(DnDBlocks.MOLTEN_LAVASPONGE)
+        gen.createTrivialCube(DnDBlocks.BRITTLE_LAVASPONGE)
+        gen.createTrivialCube(DnDBlocks.GLOWING_LAVASPONGE)
+        gen.createTrivialCube(DnDBlocks.LAVASPONGE)
     }
 }

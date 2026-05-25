@@ -506,18 +506,28 @@ object DnDBlocks {
     val BLACKSTONE_BLOCKS = register(RockyBlocks("blackstone", "blackstoned", BLACKSTONE)).rocky()
     // endregion
 
+    val MOLTEN_LAVASPONGE = register("molten_lavasponge", BreakTransformationBlock(ofFullCopy(BASALT), LAVA)).pickaxe()
+        .tellWitnessesThatIWasMurdered()
+    val BRITTLE_LAVASPONGE =
+        register("brittle_lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
+            .tellWitnessesThatIWasMurdered()
+
+    val FUSED_LAVASPONGE = register("fused_lavasponge", Block(ofFullCopy(BASALT))).pickaxe()
+        .tellWitnessesThatIWasMurdered()
+    val GLOWING_LAVASPONGE = registerNoItem(
+        "glowing_lavasponge",
+        ContactTransformationBlock(ofFullCopy(BASALT), FUSED_LAVASPONGE, WATER)
+    ).pickaxe()
+        .tellWitnessesThatIWasMurdered()
+    val LAVASPONGE = register("lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
+        .tellWitnessesThatIWasMurdered()
+
     /* Future Content
-    val MOLTEN_LAVASPONGE = register("molten_lavasponge", TransformingBlock(copy(BASALT), LAVA)).pickaxe()
-    val BRITTLE_LAVASPONGE = register("brittle_lavasponge", LavaSpongeBlock(copy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
-
-    val GLOWING_LAVASPONGE = register("glowing_lavasponge", Block(copy(BASALT))).pickaxe()
-    val LAVASPONGE = register("lavasponge", LavaSpongeBlock(copy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
-
-     val SNOWY_STONE_BRICKS = registerSet("snowy_stone_brick", copy(STONE_BRICKS), "s").pickaxe()
-    val ICE_BRICKS = register(createBlockSet("ice_brick", Set.ICE).s().noStoneCutting().parent(::IceBlock).meltable().build()).translucent().pickaxe()
-    val PACKED_ICE_BRICKS = registerSet("packed_ice_brick", copy(PACKED_ICE), "s").pickaxe()
-    val BLUE_ICE_BRICKS = registerSet("blue_ice_brick", copy(BLUE_ICE), "s").pickaxe()
-     */
+        val SNOWY_STONE_BRICKS = registerSet("snowy_stone_brick", copy(STONE_BRICKS), "s").pickaxe()
+        val ICE_BRICKS = register(createBlockSet("ice_brick", Set.ICE).s().noStoneCutting().parent(::IceBlock).meltable().build()).translucent().pickaxe()
+        val PACKED_ICE_BRICKS = registerSet("packed_ice_brick", copy(PACKED_ICE), "s").pickaxe()
+        val BLUE_ICE_BRICKS = registerSet("blue_ice_brick", copy(BLUE_ICE), "s").pickaxe()
+    */
 
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
     val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))
