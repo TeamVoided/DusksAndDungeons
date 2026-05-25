@@ -3,13 +3,13 @@ package org.teamvoided.dusks_and_dungeons.init
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.fabricmc.fabric.api.loot.v3.LootTableSource
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.storage.loot.LootTable
-import net.minecraft.world.level.storage.loot.BuiltInLootTables.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.entity.npc.VillagerTrades
 import net.minecraft.world.entity.npc.VillagerProfession
+import net.minecraft.world.entity.npc.VillagerTrades
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.storage.loot.BuiltInLootTables.*
+import net.minecraft.world.level.storage.loot.LootTable
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.BARTERING_ADD_VIVIONS
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SNIFFER_ADD_MOONBERRY
@@ -22,6 +22,7 @@ fun InitializeFabricEvents() {
     TradeOfferHelper.registerWanderingTraderOffers(1, ::addCommonWanderingTrades)
     TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 2, ::addLevel2FarmerTrades)
     compostItems()
+    createFuels()
 }
 
 @Suppress("UNUSED_PARAMETER")
@@ -100,5 +101,9 @@ fun compostItems() {
     compost(DnDBlocks.SMALL_CARVED_MOSSKIN_PUMPKIN, 0.45)
     compost(DnDBlocks.SMALL_CARVED_GLOOM_PUMPKIN, 0.45)
     compost(DnDBlocks.SMALL_CARVED_PALE_PUMPKIN, 0.45)
+}
+
+fun createFuels() {
+    fuel(DnDItems.BIG_SCAFFOLDING, 300)
 }
 

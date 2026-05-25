@@ -3,8 +3,6 @@ package org.teamvoided.dusks_and_dungeons.init
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
 import net.minecraft.world.item.Item.Properties
@@ -27,7 +25,6 @@ import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem
 
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 object DnDItems {
     val ITEMS = mutableListOf<Item>()
     val EVIL_ITEMS = mutableSetOf<Item>()
@@ -75,44 +72,34 @@ object DnDItems {
     val MOONBERRY_VINELET = register("moonberry_vinelet", ItemNameBlockItem(DnDBlocks.MOONBERRY_VINELET, Properties()))
     val MOONBERRIES = register("moonberries", Item((Properties()).food(DnDFoodComponents.MOONBERRIES)))
 
+    val BIG_SCAFFOLDING = register("big_scaffolding", ScaffoldingBlockItem(DnDBlocks.BIG_SCAFFOLDING, Properties()))
+
+    // region Blackstone Tools
     @JvmField
     val BLACKSTONE_SWORD = register(
-        "blackstone_sword", SwordItem(
-            Tiers.STONE, attributeSettings(
-                SwordItem.createAttributes(Tiers.STONE, 3, -2.4f)
-            )
-        )
+        "blackstone_sword",
+        SwordItem(Tiers.STONE, attributeSettings(SwordItem.createAttributes(Tiers.STONE, 3, -2.4f)))
     )
+
     val BLACKSTONE_PICKAXE = register(
-        "blackstone_pickaxe", PickaxeItem(
-            Tiers.STONE, attributeSettings(
-                PickaxeItem.createAttributes(Tiers.STONE, 1.0f, -2.8f)
-            )
-        )
+        "blackstone_pickaxe",
+        PickaxeItem(Tiers.STONE, attributeSettings(PickaxeItem.createAttributes(Tiers.STONE, 1.0f, -2.8f)))
     )
 
     @JvmField
     val BLACKSTONE_AXE = register(
-        "blackstone_axe", AxeItem(
-            Tiers.STONE, attributeSettings(
-                AxeItem.createAttributes(Tiers.STONE, 7.0f, -3.2f)
-            )
-        )
+        "blackstone_axe",
+        AxeItem(Tiers.STONE, attributeSettings(AxeItem.createAttributes(Tiers.STONE, 7.0f, -3.2f)))
     )
     val BLACKSTONE_SHOVEL = register(
-        "blackstone_shovel", ShovelItem(
-            Tiers.STONE, attributeSettings(
-                ShovelItem.createAttributes(Tiers.STONE, 1.5f, -3.0f)
-            )
-        )
+        "blackstone_shovel",
+        ShovelItem(Tiers.STONE, attributeSettings(ShovelItem.createAttributes(Tiers.STONE, 1.5f, -3.0f)))
     )
     val BLACKSTONE_HOE = register(
-        "blackstone_hoe", HoeItem(
-            Tiers.STONE, attributeSettings(
-                HoeItem.createAttributes(Tiers.STONE, -1.0f, -2.0f)
-            )
-        )
+        "blackstone_hoe",
+        HoeItem(Tiers.STONE, attributeSettings(HoeItem.createAttributes(Tiers.STONE, -1.0f, -2.0f)))
     )
+    // endregion
 
     fun init() {
         LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
@@ -130,10 +117,6 @@ object DnDItems {
         val regItem = Registry.register(BuiltInRegistries.ITEM, id(id), item)
         ITEMS.add(regItem)
         return regItem
-    }
-
-    private fun createRegistryKey(name: String): ResourceKey<CreativeModeTab> {
-        return ResourceKey.create(Registries.CREATIVE_MODE_TAB, id(name))
     }
 
     fun attributeSettings(comp: ItemAttributeModifiers): Properties = Properties().attributes(comp)

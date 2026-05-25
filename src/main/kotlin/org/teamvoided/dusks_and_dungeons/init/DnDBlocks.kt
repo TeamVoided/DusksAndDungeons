@@ -8,7 +8,6 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.worldgen.features.TreeFeatures
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ScaffoldingBlockItem
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.Blocks.*
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
@@ -365,8 +364,7 @@ object DnDBlocks {
         registerNoItem("big_", "soul_candle_cake", BIG_SOUL_CANDLES.toColorCollection(), ::bigSoulCandleCakeOf)
     val SOUL_CANDELABRAS = register("soul_candelabra", SOUL_CANDLES.toColorCollection(), ::candelabraOf)
 
-    val BIG_SCAFFOLDING =
-        registerScaffolding("big_scaffolding", BigScaffoldingBlock(ofFullCopy(SCAFFOLDING))).cutout().axe()
+    val BIG_SCAFFOLDING = registerNoItem("big_scaffolding", BigScaffoldingBlock(ofFullCopy(SCAFFOLDING))).cutout().axe()
     // endregion
 
     // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
@@ -583,9 +581,4 @@ object DnDBlocks {
         return regBlock
     }
 
-    fun registerScaffolding(id: String, block: Block): Block {
-        val regBlock = registerNoItem(id, block)
-        DnDItems.register(id, ScaffoldingBlockItem(regBlock, Item.Properties()))
-        return regBlock
-    }
 }

@@ -1,6 +1,7 @@
 package org.teamvoided.voidlib.helpers.mc
 
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
+import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -9,8 +10,10 @@ import net.minecraft.world.level.storage.loot.entries.NestedLootTable
 import net.minecraft.resources.ResourceKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.npc.VillagerTrades
 import net.minecraft.world.entity.npc.VillagerTrades.EmeraldForItems
+import net.minecraft.world.item.Item
 
 /*
      Put all this in Voidlib
@@ -41,3 +44,7 @@ fun addTable(table: ResourceLocation): LootPoolSingletonContainer.Builder<*> =
 
 // Compositing
 fun compost(item: ItemLike, chance: Double = 1.0) = CompostingChanceRegistry.INSTANCE.add(item, chance.toFloat())
+
+// Fuel Registry
+fun fuel(item: ItemLike, time: Int) = FuelRegistry.INSTANCE.add(item, time)
+fun fuel(tag: TagKey<Item>, time: Int) = FuelRegistry.INSTANCE.add(tag, time)
