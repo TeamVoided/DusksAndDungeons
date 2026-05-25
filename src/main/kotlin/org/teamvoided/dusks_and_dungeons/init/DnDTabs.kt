@@ -154,6 +154,7 @@ object DnDTabs {
                     DnDBlocks.BIG_CHAIN,
                     DnDBlocks.BIG_LANTERN,
                     DnDBlocks.BIG_SOUL_LANTERN,
+                    DnDBlocks.BIG_SCAFFOLDING
                 )
                 entries.addItems( // This adds the candles in a nice way
                     DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
@@ -204,7 +205,6 @@ object DnDTabs {
         modifyTab(CreativeModeTabs.BUILDING_BLOCKS) {
             addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
-            addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
             addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
             addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
             addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
