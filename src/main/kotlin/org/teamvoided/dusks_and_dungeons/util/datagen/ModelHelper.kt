@@ -334,13 +334,15 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
 }
 
 fun stairTitle(block: Block, suffix: String): ResourceLocation {
-    return ResourceLocation.fromNamespaceAndPath(block.model().namespace, block.model().path.removeSuffix("s")).suffix(suffix)
+    return ResourceLocation.fromNamespaceAndPath(block.model().namespace, block.model().path.removeSuffix("s"))
+        .suffix(suffix)
 }
 
 fun BlockModelGenerators.slabWithTintedOverlay(
     slab: Block, baseBlock: Block, overlay: ResourceLocation
 ) {
-    val slabOfTexture = ResourceLocation.fromNamespaceAndPath(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
+    val slabOfTexture =
+        ResourceLocation.fromNamespaceAndPath(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
     val model = MultiPartGenerator.multiPart(slab)
     val slabType = listOf(
         (SlabType.BOTTOM to "_slab"),
@@ -381,7 +383,8 @@ fun slabOrStairWithOverlayModel(parent: String): ModelTemplate {
 }
 
 fun BlockModelGenerators.wallWithTintedOverlay(wall: Block, baseBlock: Block, overlay: ResourceLocation) {
-    val wallOf = ResourceLocation.fromNamespaceAndPath(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
+    val wallOf =
+        ResourceLocation.fromNamespaceAndPath(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
     this.blockStateOutput.accept(
         createWallBlockStateWithOverlay(
             wall,
@@ -647,8 +650,16 @@ fun BlockModelGenerators.registerPumpkins(pumpkin: Block, carved: Block, glowing
         .put(END, TextureMapping.getBlockTexture(pumpkin, "_top"))
         .put(SIDE, TextureMapping.getBlockTexture(pumpkin, "_side"))
     val model = ModelTemplates.CUBE_COLUMN.create(pumpkin, texture, this.modelOutput)
-    ModelTemplates.CUBE_ORIENTABLE.create(carved, texture.put(FRONT, TextureMapping.getBlockTexture(carved)), this.modelOutput)
-    ModelTemplates.CUBE_ORIENTABLE.create(glowing, texture.put(FRONT, TextureMapping.getBlockTexture(glowing)), this.modelOutput)
+    ModelTemplates.CUBE_ORIENTABLE.create(
+        carved,
+        texture.put(FRONT, TextureMapping.getBlockTexture(carved)),
+        this.modelOutput
+    )
+    ModelTemplates.CUBE_ORIENTABLE.create(
+        glowing,
+        texture.put(FRONT, TextureMapping.getBlockTexture(glowing)),
+        this.modelOutput
+    )
 
     blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(pumpkin, model))
     this.createNonTemplateHorizontalBlock(carved)
@@ -933,7 +944,8 @@ fun BlockModelGenerators.registerBigCandle(candle: Block, cake: Block?) {
     val fourCandle = bigCandleModel("4").createWithSuffix(candle, "_four_candles", texture, this.modelOutput)
     val oneCandleLit = bigCandleModel("1").createWithSuffix(candle, "_one_candle_lit", textureLit, this.modelOutput)
     val twoCandleLit = bigCandleModel("2").createWithSuffix(candle, "_two_candles_lit", textureLit, this.modelOutput)
-    val threeCandleLit = bigCandleModel("3").createWithSuffix(candle, "_three_candles_lit", textureLit, this.modelOutput)
+    val threeCandleLit =
+        bigCandleModel("3").createWithSuffix(candle, "_three_candles_lit", textureLit, this.modelOutput)
     val fourCandleLit = bigCandleModel("4").createWithSuffix(candle, "_four_candles_lit", textureLit, this.modelOutput)
     this.blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(candle)
@@ -979,7 +991,8 @@ fun BlockModelGenerators.registerCandle2(candle: Block, cake: Block?) {
     val threeCandle = ModelTemplates.THREE_CANDLES.createWithSuffix(candle, "_three_candles", texture, this.modelOutput)
     val fourCandle = ModelTemplates.FOUR_CANDLES.createWithSuffix(candle, "_four_candles", texture, this.modelOutput)
     val oneCandleLit = ModelTemplates.CANDLE.createWithSuffix(candle, "_one_candle_lit", textureLit, this.modelOutput)
-    val twoCandleLit = ModelTemplates.TWO_CANDLES.createWithSuffix(candle, "_two_candles_lit", textureLit, this.modelOutput)
+    val twoCandleLit =
+        ModelTemplates.TWO_CANDLES.createWithSuffix(candle, "_two_candles_lit", textureLit, this.modelOutput)
     val threeCandleLit =
         ModelTemplates.THREE_CANDLES.createWithSuffix(candle, "_three_candles_lit", textureLit, this.modelOutput)
     val fourCandleLit =
@@ -1036,9 +1049,12 @@ fun BlockModelGenerators.registerBigTallCandle(candle: Block) {
     val threeCandle = bigTallCandleModel("3").createWithSuffix(candle, "_three_candles", texture, this.modelOutput)
     val fourCandle = bigTallCandleModel("4").createWithSuffix(candle, "_four_candles", texture, this.modelOutput)
     val oneCandleLit = bigTallCandleModel("1").createWithSuffix(candle, "_one_candle_lit", textureLit, this.modelOutput)
-    val twoCandleLit = bigTallCandleModel("2").createWithSuffix(candle, "_two_candles_lit", textureLit, this.modelOutput)
-    val threeCandleLit = bigTallCandleModel("3").createWithSuffix(candle, "_three_candles_lit", textureLit, this.modelOutput)
-    val fourCandleLit = bigTallCandleModel("4").createWithSuffix(candle, "_four_candles_lit", textureLit, this.modelOutput)
+    val twoCandleLit =
+        bigTallCandleModel("2").createWithSuffix(candle, "_two_candles_lit", textureLit, this.modelOutput)
+    val threeCandleLit =
+        bigTallCandleModel("3").createWithSuffix(candle, "_three_candles_lit", textureLit, this.modelOutput)
+    val fourCandleLit =
+        bigTallCandleModel("4").createWithSuffix(candle, "_four_candles_lit", textureLit, this.modelOutput)
     this.blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(candle)
             .with(
@@ -1569,6 +1585,56 @@ fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
     blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(scaffolding)
             .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.BOTTOM, unstable, stable))
+    )
+}
+
+fun BlockModelGenerators.rotatedLikeNetherrack(block: Block, modelProvider: TexturedModel.Provider) {
+    val model = modelProvider.create(block, this.modelOutput)
+    this.blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(
+            Blocks.NETHERRACK, *arrayOf<Variant>(
+                Variant.variant().with(VariantProperties.MODEL, model),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.X_ROT, Rotation.R90),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.X_ROT, Rotation.R180),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.X_ROT, Rotation.R270),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R90),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R90)
+                    .with(VariantProperties.X_ROT, Rotation.R90),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R90)
+                    .with(VariantProperties.X_ROT, Rotation.R180),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R90)
+                    .with(VariantProperties.X_ROT, Rotation.R270),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R180),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R180)
+                    .with(VariantProperties.X_ROT, Rotation.R90),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R180)
+                    .with(VariantProperties.X_ROT, Rotation.R180),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R180)
+                    .with(VariantProperties.X_ROT, Rotation.R270),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R270),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R270)
+                    .with(VariantProperties.X_ROT, Rotation.R90),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R270)
+                    .with(VariantProperties.X_ROT, Rotation.R180),
+                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(VariantProperties.Y_ROT, Rotation.R270)
+                    .with(VariantProperties.X_ROT, Rotation.R270)
+            )
+        )
     )
 }
 

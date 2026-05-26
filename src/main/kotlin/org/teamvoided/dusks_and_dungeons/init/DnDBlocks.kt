@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.material.MapColor
+import org.teamvoided.dusk_debris.block.OvergrowthBlock
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.api.BlockStrippingRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
@@ -56,6 +57,14 @@ object DnDBlocks {
     // region 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 --- Flora --- 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄 🎄
 
     val WARPED_WART = register("warped_wart", WarpedNetherWartBlock(Set.WARPED_WART).grassLike())
+
+    // Overgrowth
+    val OVERGROWTH_BLOCK = register("overgrowth_block", OvergrowthBlock(ofFullCopy(MOSS_BLOCK))).grass().hoe()
+        //overgrowth carpet (DELETE THIS CLASS WHEN PORTING TO FUTURE VERSIONS, USE PALE MOSS CARPET CLASS)
+    val OVERGROWTH_BUSH = register("overgrowth_bush", OvergrowthBushBlock(ofFullCopy(AZALEA))).cutout().grass()
+    val OVERGROWTH_LEAVES = register("overgrowth_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().hoe()
+        //hanging overgrowth
+        //overgrowth (covering) (also use this block class for the overlay replacements, may also want to make a moss and pale moss variant of this)
 
     // Petals
     val WHITE_PETALS = register("white_petals", PinkPetalsBlock(Set.petals(MapColor.SNOW)).plant())

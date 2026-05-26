@@ -1,10 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.blockstates.MultiVariantGenerator
+import net.minecraft.data.models.blockstates.Variant
+import net.minecraft.data.models.blockstates.VariantProperties
 import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.data.models.model.TexturedModel
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -12,15 +15,17 @@ import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object FloraModels {
+
     fun register(gen: BlockModelGenerators) {
-//        gen.registerGalleryRose(DnDBlocks.PAINTED_ROSE, BlockStateModelGenerator.TintType.NOT_TINTED)
         gen.registerGoldenMushroomPlant(DnDBlocks.GOLDEN_MUSHROOM)
         gen.registerMushroomBlockDiffInside(DnDBlocks.GOLDEN_MUSHROOM_BLOCK)
         gen.registerMushroomBlockDiffInside(
             DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK, DnDBlocks.GOLDEN_MUSHROOM_BLOCK.model().suffix("_inside")
         )
 
-//        gen.registerSpiderlilly(DnDBlocks.SPIDERLILY, BlockStateModelGenerator.TintType.NOT_TINTED)
+        gen.createTrivialBlock(DnDBlocks.OVERGROWTH_LEAVES, TexturedModel.LEAVES)
+        gen.rotatedLikeNetherrack(DnDBlocks.OVERGROWTH_BLOCK, TexturedModel.LEAVES)
+
         gen.registerFlowerbed2(DnDBlocks.WHITE_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.RED_PETALS, false)
         gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS, false)
@@ -28,7 +33,6 @@ object FloraModels {
         gen.registerFlowerbed2(DnDBlocks.COLD_WILDFLOWER, false, DusksAndDungeons.id("block/parent/wildflowerbed"))
         gen.createFlowerBed(DnDBlocks.CRIMSON_VIVIONS)
         gen.createFlowerBed(DnDBlocks.WARPED_VIVIONS)
-//        gen.registerTreeMushroom(DnDBlocks.BROWN_TREE_FUNGUS, "parent/brown_tree_fungus")
 
         gen.createDoublePlant(DnDBlocks.WILD_WHEAT, BlockModelGenerators.TintState.NOT_TINTED)
         gen.createCropBlock(DnDBlocks.GOLDEN_BEETROOTS, BlockStateProperties.AGE_3, 0, 1, 2, 3)
