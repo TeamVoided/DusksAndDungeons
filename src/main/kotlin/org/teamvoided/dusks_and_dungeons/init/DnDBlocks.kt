@@ -10,14 +10,12 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.Blocks.*
-import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
-import org.teamvoided.dusks_and_dungeons.block.OvergrowthBlock
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.api.BlockStrippingRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
@@ -61,18 +59,24 @@ object DnDBlocks {
     val WARPED_WART = register("warped_wart", WarpedNetherWartBlock(Set.WARPED_WART).grassLike())
 
     // Overgrowth
-    val OVERGROWTH_BLOCK = register("overgrowth_block", OvergrowthBlock(ofFullCopy(MOSS_BLOCK))).grass().hoe()
-    val OVERGROWTH_CARPET = register("overgrowth_carpet", OvergrowthCarpetBlock(ofFullCopy(MOSS_CARPET))).grass().hoe()
-        .tellWitnessesThatIWasMurdered() //block class not done :(
-    val OVERGROWTH_BUSH = register("overgrowth_bush", OvergrowthBushBlock(ofFullCopy(AZALEA))).cutout().grass()
-    val OVERGROWTH_LEAVES = register("overgrowth_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().hoe()
+    val OVERGROWTH_BLOCK = register("overgrowth_block", OvergrowthBlock(ofFullCopy(MOSS_BLOCK))).grass().tint().hoe()
+        .tellWitnessesThatIWasMurdered()
+    val OVERGROWTH_CARPET = register("overgrowth_carpet", MossyCarpetBlock(ofFullCopy(MOSS_CARPET).noOcclusion()))
+        .cutout().grass().tint().hoe()
+        .tellWitnessesThatIWasMurdered()
+    val OVERGROWTH_BUSH = register("overgrowth_bush", OvergrowthBushBlock(ofFullCopy(AZALEA))).cutout().grass().tint()
+        .tellWitnessesThatIWasMurdered()
+    val OVERGROWTH_LEAVES =
+        register("overgrowth_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().tint().hoe()
+            .tellWitnessesThatIWasMurdered()
     val HANGING_OVERGROWTH = register(
         "hanging_overgrowth",
         HangingFloraBlock(
             Properties.of().mapColor(OVERGROWTH_BLOCK.defaultMapColor()).instabreak().sound(SoundType.CAVE_VINES)
                 .pushReaction(PushReaction.DESTROY)
         )
-    ).cutout().grass().hoe()
+    ).cutout().grass().tint().hoe()
+        .tellWitnessesThatIWasMurdered()
     //overgrowth (covering) (also use this block class for the overlay replacements, may also want to make a moss and pale moss variant of this)
 
     // Petals
@@ -537,8 +541,9 @@ object DnDBlocks {
         "glowing_lavasponge", FilledLavaspongeBlock(ofFullCopy(BASALT), FUSED_LAVASPONGE, WATER)
     ).pickaxe()
         .tellWitnessesThatIWasMurdered()
-    val LAVASPONGE = registerNoItem("lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 10, 256, GLOWING_LAVASPONGE)).pickaxe()
-        .tellWitnessesThatIWasMurdered()
+    val LAVASPONGE =
+        registerNoItem("lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 10, 256, GLOWING_LAVASPONGE)).pickaxe()
+            .tellWitnessesThatIWasMurdered()
 
     /* Future Content
         val SNOWY_STONE_BRICKS = registerSet("snowy_stone_brick", copy(STONE_BRICKS), "s").pickaxe()

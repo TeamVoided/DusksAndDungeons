@@ -1,6 +1,7 @@
 {
 	"parent": "block/thin_block",
 	"textures": {
+		"wool": "dusks_and_dungeons:block/overgrowth_block",
 		"particle": "#wool"
 	},
 	"elements": [

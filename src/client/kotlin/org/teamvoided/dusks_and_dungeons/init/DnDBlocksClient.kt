@@ -13,6 +13,7 @@ import net.minecraft.world.level.BlockAndTintGetter
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.CUTOUT_BLOCKS
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
+import org.teamvoided.dusks_and_dungeons.util.block.TINT_PARTICLES
 import org.teamvoided.dusks_and_dungeons.util.block.TRANSLUCENT_BLOCKS
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE as BlockRenderLayerMap
 
@@ -37,7 +38,7 @@ object DnDBlocksClient {
 
         CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.cutout()) }
         TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.translucent()) }
-        ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS }
+        ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS || state.block in TINT_PARTICLES }
     }
 
     fun registerTint(provider: BlockColor, vararg blocks: Block) =
