@@ -16,20 +16,10 @@ internal fun AbstractBlockSet.tellWitnessesThatIWasMurdered(): AbstractBlockSet 
 }
 
 
+// TODO bring back
 @JvmField
 internal val dataFixerBlackList = listOf(
-    "chill_charge",
+    "raccoon",
     "scarecrow",
-    // Remove
-    "celestal_bell",
-    "chest_o_souls",
-    "quarter_block_pile",
-    "bunny_grave",
-    "hauted_block",
-    "haunted_gravestone_block",
-    "die",
-    "flying_pumpkin",
-    "dust_bunny",
-    "piffling_pumpkin",
 )
 
