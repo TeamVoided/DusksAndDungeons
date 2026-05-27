@@ -73,6 +73,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )*/
 
         SETS.filterNot(excludeModels::contains).forEach(gen::createBlockSet)
+        gen.delegateItemModel(DnDItems.RACCOON_SPAWN_EGG, ModelLocationUtils.decorateItemModelLocation("template_spawn_egg"));
     }
 
     private val single = listOf(
