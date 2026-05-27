@@ -9,13 +9,13 @@ import org.teamvoided.dusks_and_dungeons.entity.RaccoonEntity
 class RaccoonEntityRenderer(context: EntityRendererProvider.Context) :
     MobRenderer<RaccoonEntity, RaccoonEntityModel>(context, RaccoonEntityModel(context.bakeLayer(
         DnDEntityModelLayers.RACCOON
-    )), 0.75F) {
+    )), 0.55F) {
 
     init {
         addLayer(RaccoonEntityHeldItemFeatureRenderer(this, context.itemInHandRenderer))
     }
 
     override fun getTextureLocation(entity: RaccoonEntity): ResourceLocation {
-        return entity.variant!!.value().texture
+        return entity.variant.value().texture
     }
 }
