@@ -27,6 +27,7 @@ modSettings {
     entrypoint("main", "org.teamvoided.dusks_and_dungeons.DusksAndDungeons::init")
     entrypoint("client", "org.teamvoided.dusks_and_dungeons.DusksAndDungeonsClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.dusks_and_dungeons.data.gen.DnDData")
+    entrypoint("emi", "org.teamvoided.dusks_and_dungeons.compat.DnDEmiPlugin")
 
     mixinFile("dusks_and_dungeons.mixins.json")
     mixinFile("dusks_and_dungeons.client.mixins.json")

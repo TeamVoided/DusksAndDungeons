@@ -15,7 +15,6 @@ import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.voidlib.devin.extensions.tag.add
 import org.teamvoided.voidlib.devin.extensions.tag.copyColorTags
 import java.util.concurrent.CompletableFuture
 
@@ -195,10 +194,6 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS)
             .add(DnDItems.BLACKSTONE_SWORD)
             .add(DnDItems.BLACKSTONE_AXE)
-
-        // TODO turn in to emi plugin
-        getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
-            .add(DnDItems.EVIL_ITEMS)
 
         getOrCreateTagBuilder(ConventionalItemTags.MUSHROOMS)
             .add(DnDBlocks.GOLDEN_MUSHROOM.asItem())
