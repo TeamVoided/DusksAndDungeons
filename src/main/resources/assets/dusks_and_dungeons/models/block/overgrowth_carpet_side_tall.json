@@ -1,0 +1,7 @@
+{
+	"format_version": "1.21.11",
+	"parent": "dusks_and_dungeons:block/parent/overgrown_carpet_side",
+	"textures": {
+		"side": "dusks_and_dungeons:block/overgrowth_carpet_side_tall"
+	}
+}

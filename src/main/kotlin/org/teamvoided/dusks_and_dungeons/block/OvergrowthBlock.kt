@@ -1,4 +1,4 @@
-package org.teamvoided.dusk_debris.block
+package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries

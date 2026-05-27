@@ -10,12 +10,14 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.Blocks.*
+import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.material.MapColor
-import org.teamvoided.dusk_debris.block.OvergrowthBlock
+import net.minecraft.world.level.material.PushReaction
+import org.teamvoided.dusks_and_dungeons.block.OvergrowthBlock
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.api.BlockStrippingRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
@@ -60,11 +62,18 @@ object DnDBlocks {
 
     // Overgrowth
     val OVERGROWTH_BLOCK = register("overgrowth_block", OvergrowthBlock(ofFullCopy(MOSS_BLOCK))).grass().hoe()
-        //overgrowth carpet (DELETE THIS CLASS WHEN PORTING TO FUTURE VERSIONS, USE PALE MOSS CARPET CLASS)
+    val OVERGROWTH_CARPET = register("overgrowth_carpet", OvergrowthCarpetBlock(ofFullCopy(MOSS_CARPET))).grass().hoe()
+        .tellWitnessesThatIWasMurdered() //block class not done :(
     val OVERGROWTH_BUSH = register("overgrowth_bush", OvergrowthBushBlock(ofFullCopy(AZALEA))).cutout().grass()
     val OVERGROWTH_LEAVES = register("overgrowth_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().hoe()
-        //hanging overgrowth
-        //overgrowth (covering) (also use this block class for the overlay replacements, may also want to make a moss and pale moss variant of this)
+    val HANGING_OVERGROWTH = register(
+        "hanging_overgrowth",
+        HangingFloraBlock(
+            Properties.of().mapColor(OVERGROWTH_BLOCK.defaultMapColor()).instabreak().sound(SoundType.CAVE_VINES)
+                .pushReaction(PushReaction.DESTROY)
+        )
+    ).cutout().grass().hoe()
+    //overgrowth (covering) (also use this block class for the overlay replacements, may also want to make a moss and pale moss variant of this)
 
     // Petals
     val WHITE_PETALS = register("white_petals", PinkPetalsBlock(Set.petals(MapColor.SNOW)).plant())

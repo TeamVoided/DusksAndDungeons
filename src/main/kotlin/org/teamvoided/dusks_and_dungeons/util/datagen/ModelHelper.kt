@@ -1588,6 +1588,23 @@ fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
     )
 }
 
+fun BlockModelGenerators.hangingFlora(block: Block, tinted: BlockModelGenerators.TintState){
+    this.createSimpleFlatItemModel(block)
+    val model = this.createSuffixedVariant(
+        block,
+        "",
+        tinted.cross,
+        TextureMapping::cross
+    )
+    val tip = this.createSuffixedVariant(
+        block,
+        "_tip",
+        tinted.cross,
+        TextureMapping::cross
+    )
+    this.createDoubleBlock(block, model, tip)
+}
+
 fun BlockModelGenerators.rotatedLikeNetherrack(block: Block, modelProvider: TexturedModel.Provider) {
     val model = modelProvider.create(block, this.modelOutput)
     this.blockStateOutput.accept(
