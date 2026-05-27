@@ -524,20 +524,20 @@ object DnDBlocks {
     val BLACKSTONE_BLOCKS = register(RockyBlocks("blackstone", "blackstoned", BLACKSTONE)).rocky()
     // endregion
 
-    val MOLTEN_LAVASPONGE = register("molten_lavasponge", BreakTransformationBlock(ofFullCopy(BASALT), LAVA)).pickaxe()
-        .tellWitnessesThatIWasMurdered()
+    val MOLTEN_LAVASPONGE =
+        register("molten_lavasponge", FilledLavaspongeBlock(ofFullCopy(BASALT), OBSIDIAN, WATER, LAVA)).pickaxe()
+            .tellWitnessesThatIWasMurdered()
     val BRITTLE_LAVASPONGE =
-        register("brittle_lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 3, 32, MOLTEN_LAVASPONGE)).pickaxe()
+        registerNoItem("brittle_lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 6, 64, MOLTEN_LAVASPONGE)).pickaxe()
             .tellWitnessesThatIWasMurdered()
 
-    val FUSED_LAVASPONGE = register("fused_lavasponge", Block(ofFullCopy(BASALT))).pickaxe()
+    val FUSED_LAVASPONGE = registerNoItem("fused_lavasponge", Block(ofFullCopy(OBSIDIAN))).pickaxe()
         .tellWitnessesThatIWasMurdered()
     val GLOWING_LAVASPONGE = registerNoItem(
-        "glowing_lavasponge",
-        ContactTransformationBlock(ofFullCopy(BASALT), FUSED_LAVASPONGE, WATER)
+        "glowing_lavasponge", FilledLavaspongeBlock(ofFullCopy(BASALT), FUSED_LAVASPONGE, WATER)
     ).pickaxe()
         .tellWitnessesThatIWasMurdered()
-    val LAVASPONGE = register("lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 6, 64, GLOWING_LAVASPONGE)).pickaxe()
+    val LAVASPONGE = registerNoItem("lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 10, 256, GLOWING_LAVASPONGE)).pickaxe()
         .tellWitnessesThatIWasMurdered()
 
     /* Future Content

@@ -26,10 +26,10 @@ object NetherRecipes {
             Ingredient.of(DnDBlocks.BRITTLE_LAVASPONGE),
             Ingredient.of(),
             RecipeCategory.BUILDING_BLOCKS,
-            DnDBlocks.LAVASPONGE.asItem()
+            DnDItems.LAVASPONGE
         )
             .unlocks("has_netherite_scrap", has(Items.NETHERITE_SCRAP))
-            .save(o, getItemName(DnDBlocks.LAVASPONGE) + "_smithing")
+            .save(o, getItemName(DnDItems.LAVASPONGE) + "_smithing")
     }
 
     fun generateNetherBrickRecipes(e: RecipeOutput) {

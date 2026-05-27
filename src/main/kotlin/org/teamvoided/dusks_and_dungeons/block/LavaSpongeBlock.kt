@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.BucketPickup
 import net.minecraft.world.level.block.LiquidBlock
 import net.minecraft.world.level.block.state.BlockState
 
-@Suppress("MemberVisibilityCanBePrivate")
 class LavaSpongeBlock(
     settings: Properties,
     val maxDepth: Int,
@@ -20,18 +19,20 @@ class LavaSpongeBlock(
     val turnInTo: Block,
 ) : Block(settings) {
     override fun onPlace(state: BlockState, world: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {
-        if (!oldState.`is`(state.block)) this.update(world, pos)
+        if (!oldState.`is`(state.block)) {
+            checkIfCanAbsorb(world, pos)
+        }
     }
 
     override fun neighborChanged(
         state: BlockState, world: Level, pos: BlockPos, block: Block, fromPos: BlockPos, notify: Boolean,
     ) {
-        this.update(world, pos)
+        checkIfCanAbsorb(world, pos)
         super.neighborChanged(state, world, pos, block, fromPos, notify)
     }
 
-    fun update(world: Level, pos: BlockPos) {
-        if (this.absorbLava(world, pos)) {
+    fun checkIfCanAbsorb(world: Level, pos: BlockPos) {
+        if (absorbLava(world, pos)) {
             world.setBlock(pos, turnInTo.defaultBlockState(), 2)
             world.playSound(null, pos, SoundEvents.SPONGE_ABSORB, SoundSource.BLOCKS, 1.0f, 1.0f)
         }

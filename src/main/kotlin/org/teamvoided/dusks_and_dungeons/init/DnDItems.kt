@@ -73,9 +73,30 @@ object DnDItems {
     val MOONBERRIES = register("moonberries", Item((Properties()).food(DnDFoodComponents.MOONBERRIES)))
 
     val BIG_SCAFFOLDING = register("big_scaffolding", ScaffoldingBlockItem(DnDBlocks.BIG_SCAFFOLDING, Properties()))
+
+    // TODO replace `PlaceOnWaterBlockItem` with custom item
+    val BRITTLE_LAVASPONGE = register(
+        "brittle_lavasponge", PlaceOnWaterBlockItem(DnDBlocks.BRITTLE_LAVASPONGE, Properties())
+    )
+        .tellWitnessesThatIWasMurdered()
+
+    val FUSED_LAVASPONGE = register(
+        "fused_lavasponge", BlockItem(DnDBlocks.FUSED_LAVASPONGE, Properties().fireResistant())
+    )
+        .tellWitnessesThatIWasMurdered()
+
+    // TODO replace `PlaceOnWaterBlockItem` with custom item
+    val LAVASPONGE = register("lavasponge", PlaceOnWaterBlockItem(DnDBlocks.LAVASPONGE, Properties().fireResistant()))
+        .tellWitnessesThatIWasMurdered()
+
+    // LAVASPONGE has to be before GLOWING_LAVASPONGE or
+    // the `.craftRemainder(DnDBlocks.LAVASPONGE.asItem())` will cause it to return air, which will brick the game
     val GLOWING_LAVASPONGE = register(
         "glowing_lavasponge",
-        BlockItem(DnDBlocks.GLOWING_LAVASPONGE, Properties().craftRemainder(DnDBlocks.LAVASPONGE.asItem()))
+        BlockItem(
+            DnDBlocks.GLOWING_LAVASPONGE,
+            Properties().fireResistant().craftRemainder(DnDBlocks.LAVASPONGE.asItem())
+        )
     )
         .tellWitnessesThatIWasMurdered()
 

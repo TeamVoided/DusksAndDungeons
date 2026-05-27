@@ -63,6 +63,7 @@ object NetherModels {
 
         gen.createTrivialCube(DnDBlocks.MOLTEN_LAVASPONGE)
         gen.createTrivialCube(DnDBlocks.BRITTLE_LAVASPONGE)
+        gen.createTrivialCube(DnDBlocks.FUSED_LAVASPONGE)
         gen.createTrivialCube(DnDBlocks.GLOWING_LAVASPONGE)
         gen.createTrivialCube(DnDBlocks.LAVASPONGE)
     }

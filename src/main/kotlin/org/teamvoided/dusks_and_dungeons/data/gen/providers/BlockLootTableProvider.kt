@@ -1,20 +1,20 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.minecraft.world.item.enchantment.Enchantments
-import net.minecraft.world.level.storage.loot.LootPool
-import net.minecraft.world.level.storage.loot.LootTable
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
-import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.level.block.Block
+import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.*
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
@@ -31,24 +31,28 @@ import org.teamvoided.voidlib.devin.provider.OpenBlockLootTableProvider
 import java.util.concurrent.CompletableFuture
 
 @Suppress("MemberVisibilityCanBePrivate")
-class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    OpenBlockLootTableProvider(o, r) {
-    val manualList: List<Block> = listOf(DnDBlocks.MOONBERRY_VINE)
+class BlockLootTableProvider(o: FabricDataOutput, p: CompletableFuture<HolderLookup.Provider>) :
+    OpenBlockLootTableProvider(o, p) {
+    val manualList: List<Block> = listOf(
+        DnDBlocks.MOONBERRY_VINE,
+        DnDBlocks.MOLTEN_LAVASPONGE,
+        DnDBlocks.FUSED_LAVASPONGE,
+    )
+
     override fun generate() {
-        // this is here cuz yeah
-//        SETS.forEach(this::setDrops)
         val enchantmentLookup = getLookup().lookupOrThrow(Registries.ENCHANTMENT)
-        DnDBlocks.BLOCKS.filterNot(manualList::contains).forEach {
-            when (it) {
-                is SlabBlock -> add(it, ::createSlabItemTable)
-                is DoorBlock -> add(it, ::createDoorTable)
-                is LogPileBlock -> add(it, ::logPile)
-                is CandelabraBlock -> add(it, ::candelabraDrops)
-                is CandleBlock -> add(it, ::createCandleDrops)
-                is TripleTallPlantBlock -> add(it, ::threeTallDrop)
-                is PinkPetalsBlock -> add(it, ::createPetalsDrops)
-                is DecoratedPotBlock -> add(it, ::decoratedPotDrops)
-                else -> dropSelf(it)
+
+        for (block in DnDBlocks.BLOCKS.filterNot(manualList::contains)) {
+            when (block) {
+                is SlabBlock -> add(block, ::createSlabItemTable)
+                is DoorBlock -> add(block, ::createDoorTable)
+                is LogPileBlock -> add(block, ::logPile)
+                is CandelabraBlock -> add(block, ::candelabraDrops)
+                is CandleBlock -> add(block, ::createCandleDrops)
+                is TripleTallPlantBlock -> add(block, ::threeTallDrop)
+                is PinkPetalsBlock -> add(block, ::createPetalsDrops)
+                is DecoratedPotBlock -> add(block, ::decoratedPotDrops)
+                else -> dropSelf(block)
             }
         }
 
@@ -56,6 +60,7 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         soulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         bigSoulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         leafPiles.forEachIndexed { idx, pile -> add(pile) { leafPile(it, DnDBlockLists.leaves[idx]) } }
+
         add(DnDBlocks.POTTED_CASCADE_SAPLING) { createPotFlowerItemTable(DnDBlocks.CASCADE_SAPLING) }
         add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { createPotFlowerItemTable(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
         add(DnDBlocks.CASCADE_LEAVES) {
@@ -64,11 +69,11 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
         add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
             createLeavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *NORMAL_LEAVES_SAPLING_CHANCES)
         }
-//        twoTallDrop(DnDBlocks.SPIDERLILY)
+
         dropWhenSilkTouch(ICE_SET.slab)
         addIceSlab(ICE_SET.slab)
         dropWhenSilkTouch(ICE_SET.wall)
-//        add(DnDBlocks.TALL_REDSTONE_CRYSTAL, ::redstoneCrystalDrops)
+
         add(DnDBlocks.WARPED_WART) {
             val state = LootItemBlockStatePropertyCondition.hasBlockStateProperties(it)
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(NetherWartBlock.AGE, 3))
@@ -87,7 +92,6 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
             )
         }
 
-//        add(DnDBlocks.CORN_CROP) { block: Block -> cornCrop() }
         add(
             DnDBlocks.GOLDEN_BEETROOTS,
             this.createCropDrops(
@@ -99,38 +103,21 @@ class BlockLootTableProvider(o: FabricDataOutput, r: CompletableFuture<HolderLoo
                 )
             )
         )
+
         twoTallDrop(DnDBlocks.WILD_WHEAT)
+
+        dropWhenSilkTouch(DnDBlocks.MOLTEN_LAVASPONGE)
+        add(DnDBlocks.FUSED_LAVASPONGE) { block ->
+            createSilkTouchDispatchTable(
+                block, NestedLootTable.inlineLootTable(
+                    LootTable.lootTable()
+                        .withPool(LootPool.lootPool().add(LootItem.lootTableItem(DnDBlocks.LAVASPONGE)))
+                        .withPool(LootPool.lootPool().add(LootItem.lootTableItem(Blocks.OBSIDIAN)))
+                        .build()
+                )
+            )
+        }
 
     }
 
-    /*   private fun cornCrop(): LootTable.Builder {
-           return applyExplosionDecay(
-               DnDBlocks.CORN_CROP, LootTable.builder().pool(
-                   LootPool.builder().with(AlternativeEntry.builder(
-                       PitcherCropBlock.AGE.values
-                   ) { integer: Int ->
-                       val builder =
-                           BlockStatePropertyLootCondition.builder(DnDBlocks.CORN_CROP).properties(
-                               StatePredicate.Builder.create()
-                                   .exactMatch(TripleTallPlantBlock.SECTION, TripleBlockSection.BOTTOM)
-                           )
-                       val builder2 =
-                           BlockStatePropertyLootCondition.builder(DnDBlocks.CORN_CROP).properties(
-                               StatePredicate.Builder.create().exactMatch(
-                                   Properties.AGE_7,
-                                   integer
-                               )
-                           )
-                       if (integer == CornCropBlock.MAX_AGE) ItemEntry.builder(DnDItems.CORN_STALK)
-                           .conditionally(builder2).conditionally(builder).apply(
-                               SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f))
-                           )
-                       else ItemEntry.builder(DnDItems.CORN_KERNELS)
-                           .conditionally(builder2).conditionally(builder).apply(
-                               SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f))
-                           )
-                   })
-               )
-           )
-       }*/
 }
