@@ -60,11 +60,11 @@ class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, w
         }
     }
 
-    override fun isFood(stack: ItemStack?): Boolean {
+    override fun isFood(stack: ItemStack): Boolean {
         return false
     }
 
-    override fun getBreedOffspring(world: ServerLevel?, entity: AgeableMob?): AgeableMob? {
+    override fun getBreedOffspring(world: ServerLevel, entity: AgeableMob): AgeableMob? {
         TODO("Not yet implemented")
     }
 

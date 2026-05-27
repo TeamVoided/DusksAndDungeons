@@ -9,7 +9,7 @@ import org.teamvoided.dusks_and_dungeons.entity.RaccoonEntity
 class FindBarrelGoal(private val raccoon: RaccoonEntity, speed: Double, range: Int) :
     MoveToBlockGoal(raccoon, speed, range) {
 
-    override fun isValidTarget(world: LevelReader, pos: BlockPos?): Boolean {
+    override fun isValidTarget(world: LevelReader, pos: BlockPos): Boolean {
         return world.getBlockState(pos).`is`(Blocks.BARREL)
     }
 

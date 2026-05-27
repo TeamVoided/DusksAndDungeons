@@ -11,7 +11,7 @@ class WashFoodGoal(mob: PathfinderMob?, speed: Double, range: Int) : MoveToBlock
 
     private var timer: Int = 0
 
-    override fun isValidTarget(world: LevelReader, pos: BlockPos?): Boolean {
+    override fun isValidTarget(world: LevelReader, pos: BlockPos): Boolean {
         return world.getBlockState(pos).`is`(Blocks.WATER)
     }
 
