@@ -12,6 +12,7 @@
     biolith = "3.0.1"
     reef = "0.2.0-beta.2"
     voidmill = "1.0.4"
+    taglighting = "1.0.0+1.21.1"
     # Compatibility
     # Runtime
     modmenu = "11.0.3"
@@ -30,6 +31,7 @@
     biolith = { module = "com.terraformersmc:biolith-fabric", version.ref = "biolith" }
     reef = { module = "org.teamvoided:reef", version.ref = "reef" }
     voidmill = { module = "org.teamvoided:voidmill", version.ref = "voidmill" }
+    taglighting = { module = "org.teamvoided:taglighting", version.ref = "taglighting" }
     # Compatibility
     # Runtime
     modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }

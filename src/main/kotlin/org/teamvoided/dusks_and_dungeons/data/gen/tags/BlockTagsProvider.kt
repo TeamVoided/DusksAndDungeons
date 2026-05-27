@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Blocks
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -16,6 +15,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.datagen.createWoodTags
+import org.teamvoided.taglighting.data.tags.TaglightingBlockTags
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.devin.extensions.tag.add
 import org.teamvoided.voidlib.devin.extensions.tag.createColorTags
@@ -37,6 +37,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         woodTags()
         vanillaTags()
         conventionTags()
+
+        getOrCreateTagBuilder(TaglightingBlockTags.MOB_MOVING_STICKY_BLOCK)
+            .add(DnDBlocks.CORN_SYRUP_BLOCK)
 
         overlayTags()
     }
@@ -142,7 +145,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DnDBlockTags.VIVIONBEDS)
             .add(DnDBlockLists.vivionbedBlocks)
         getOrCreateTagBuilder(DnDBlockTags.VIVIONBED_PLACEABLE)
-            .addOptionalTag(id("nullium", "support/nylium_plants"))
+            .addOptionalTag(TaglightingBlockTags.SUPPORTS_NYLIUM_PLANTS)
             .forceAddTag(BlockTags.DIRT)
             .forceAddTag(BlockTags.NYLIUM)
             .add(Blocks.FARMLAND)
@@ -204,7 +207,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
 
         getOrCreateTagBuilder(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
-            .addOptionalTag(id("nullium", "support/nether_wart"))
+            .addOptionalTag(TaglightingBlockTags.SUPPORTS_NETHER_WART)
             .add(Blocks.SOUL_SAND)
         getOrCreateTagBuilder(DnDBlockTags.CHILL_CHARGE_AFFECTS)
             .forceAddTag(BlockTags.CANDLES)
@@ -288,7 +291,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.SMALL_GLOWING_PALE_PUMPKIN)
             .add(DnDBlocks.SMALL_GLOWING_GLOOM_PUMPKIN)
 
-        getOrCreateTagBuilder(DnDBlockTags.BLOCKS_CANNOT_CONNECT_TO)
+        getOrCreateTagBuilder(TaglightingBlockTags.CANNOT_CONNECT_TO)
             .forceAddTag(DnDBlockTags.PUMPKINS)
             .forceAddTag(DnDBlockTags.CARVED_PUMPKINS)
             .forceAddTag(DnDBlockTags.GLOWING_PUMPKINS)

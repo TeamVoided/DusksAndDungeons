@@ -45,6 +45,8 @@ dependencies {
     modImplementation(libs.voidmill)
     include(libs.voidmill)
 
+    modImplementation(libs.taglighting)
+
     // Dev
     modImplementation(libs.modmenu)
 

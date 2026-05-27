@@ -67,9 +67,5 @@ object DnDBlockTags {
     val CANDELABRAS = create("candelabras")
     val SOUL_CANDELABRAS = create("soul_candelabras")
 
-
-    @JvmField
-    val BLOCKS_CANNOT_CONNECT_TO = create("blocks_cannot_connect_to")
-
     fun create(id: String): TagKey<Block> = TagKey.create(Registries.BLOCK, id(id))
 }
