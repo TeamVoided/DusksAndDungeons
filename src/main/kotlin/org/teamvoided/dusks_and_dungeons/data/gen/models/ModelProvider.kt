@@ -3,15 +3,11 @@ package org.teamvoided.dusks_and_dungeons.data.gen.models
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.ItemModelGenerators
+import net.minecraft.data.models.model.*
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.data.models.ItemModelGenerators
-import net.minecraft.data.models.model.ModelLocationUtils
-import net.minecraft.data.models.model.ModelTemplate
-import net.minecraft.data.models.model.ModelTemplates
-import net.minecraft.data.models.model.TextureMapping
-import net.minecraft.data.models.model.TextureSlot
-import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -19,6 +15,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.block.WOOD_SETS
+import org.teamvoided.dusks_and_dungeons.util.datagen.createTrivialState
 import org.teamvoided.dusks_and_dungeons.util.datagen.iceStairs
 import org.teamvoided.dusks_and_dungeons.util.datagen.slab
 import org.teamvoided.dusks_and_dungeons.util.datagen.wall
@@ -73,7 +70,14 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         )*/
 
         SETS.filterNot(excludeModels::contains).forEach(gen::createBlockSet)
-        gen.delegateItemModel(DnDItems.RACCOON_SPAWN_EGG, ModelLocationUtils.decorateItemModelLocation("template_spawn_egg"));
+
+        gen.createTrivialBlock(DnDBlocks.TINTED_SAND, TexturedModel.LEAVES)
+        gen.createTrivialState(DnDBlocks.TINTED_SANDSTONE)
+        gen.createTrivialState(DnDBlocks.CHISELED_TINTED_SANDSTONE)
+        gen.createTrivialState(DnDBlocks.CUT_TINTED_SANDSTONE)
+
+        gen.delegateItemModel(DnDItems.RACCOON_SPAWN_EGG, ModelLocationUtils.decorateItemModelLocation("template_spawn_egg"))
+
     }
 
     private val single = listOf(
@@ -95,13 +99,13 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         ModelTemplate(Optional.of(id("item/$parent")), Optional.empty(), *requiredTextures)
 
     private fun BlockModelGenerators.parentedModel(
-        block: Block, textBlock: Block, parent: ResourceLocation
+        block: Block, textBlock: Block, parent: ResourceLocation,
     ): ResourceLocation =
         ModelTemplate(parent.myb, Optional.empty(), ALL_KRY)
             .create(block.model(), TextureMapping().put(ALL_KRY, textBlock.model()), this.modelOutput)
 
     private fun BlockModelGenerators.parentedModel(
-        block: ResourceLocation, textBlock: Block, parent: ResourceLocation
+        block: ResourceLocation, textBlock: Block, parent: ResourceLocation,
     ): ResourceLocation =
         ModelTemplate(parent.myb, Optional.empty(), ALL_KRY)
             .create(block, TextureMapping().put(ALL_KRY, textBlock.model()), this.modelOutput)

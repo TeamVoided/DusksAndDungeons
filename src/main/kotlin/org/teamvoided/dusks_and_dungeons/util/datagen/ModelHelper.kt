@@ -1655,6 +1655,10 @@ fun BlockModelGenerators.rotatedLikeNetherrack(block: Block, modelProvider: Text
     )
 }
 
+fun BlockModelGenerators.createTrivialState(block: Block) {
+    blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, block.model()))
+}
+
 fun parentedItemModel(id: ResourceLocation) = ModelTemplate(Optional.of(id.withPrefix("item/")), Optional.empty())
 fun BlockModelGenerators.registerParentedItemModel(block: Block) =
     this.delegateItemModel(block, block.model())

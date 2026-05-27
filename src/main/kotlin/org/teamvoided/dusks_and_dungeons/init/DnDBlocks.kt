@@ -6,6 +6,7 @@ import net.minecraft.core.Registry
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.worldgen.features.TreeFeatures
+import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
@@ -14,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
 import net.minecraft.world.level.block.state.properties.BlockSetType
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
@@ -519,14 +521,6 @@ object DnDBlocks {
     val MIXED_GRAY_NETHER_BRICK_PILLAR = register(
         "mixed_gray_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_GRAY_NETHER_BRICKS)).pickaxe()
     )
-    // endregion
-
-    // region  🌿 🌿 🌿 🌿 🌿 🌿  --- Grass Is Greener Here ---  🌿 🌿 🌿 🌿 🌿
-
-    val ROCKY_BLOCKS = register(RockyBlocks("rocks", "rocky", COBBLESTONE)).rocky()
-    val SLATE_BLOCKS = register(RockyBlocks("slate", "slated", COBBLED_DEEPSLATE)).rocky()
-    val BLACKSTONE_BLOCKS = register(RockyBlocks("blackstone", "blackstoned", BLACKSTONE)).rocky()
-    // endregion
 
     val MOLTEN_LAVASPONGE =
         register("molten_lavasponge", FilledLavaspongeBlock(ofFullCopy(BASALT), OBSIDIAN, WATER, LAVA)).pickaxe()
@@ -544,6 +538,34 @@ object DnDBlocks {
     val LAVASPONGE =
         registerNoItem("lavasponge", LavaSpongeBlock(ofFullCopy(BASALT), 10, 256, GLOWING_LAVASPONGE)).pickaxe()
             .tellWitnessesThatIWasMurdered()
+    // endregion
+
+    // region  🌿 🌿 🌿 🌿 🌿 🌿  --- Grass Is Greener Here ---  🌿 🌿 🌿 🌿 🌿
+
+    val ROCKY_BLOCKS = register(RockyBlocks("rocks", "rocky", COBBLESTONE)).rocky()
+    val SLATE_BLOCKS = register(RockyBlocks("slate", "slated", COBBLED_DEEPSLATE)).rocky()
+    val BLACKSTONE_BLOCKS = register(RockyBlocks("blackstone", "blackstoned", BLACKSTONE)).rocky()
+    // endregion
+
+    val TINTED_SAND = register(
+        "tinted_sand",
+        ColoredFallingBlock(
+            ColorRGBA(14406560),
+            Properties.of()
+                .mapColor(MapColor.WATER)
+                .instrument(NoteBlockInstrument.SNARE)
+                .strength(0.5F)
+                .sound(SoundType.SAND)
+        )
+    )
+        .tellWitnessesThatIWasMurdered()
+
+    val TINTED_SANDSTONE = register("sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
+        .tellWitnessesThatIWasMurdered()
+    val CHISELED_TINTED_SANDSTONE = register("chiseled_sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
+        .tellWitnessesThatIWasMurdered()
+    val CUT_TINTED_SANDSTONE = register("cut_sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
+        .tellWitnessesThatIWasMurdered()
 
     /* Future Content
         val SNOWY_STONE_BRICKS = registerSet("snowy_stone_brick", copy(STONE_BRICKS), "s").pickaxe()

@@ -2,14 +2,14 @@ package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
-import net.minecraft.world.level.block.Block
 import net.minecraft.client.color.block.BlockColor
 import net.minecraft.client.renderer.BiomeColors
-import net.minecraft.world.level.FoliageColor
-import net.minecraft.world.level.GrassColor
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockAndTintGetter
+import net.minecraft.world.level.FoliageColor
+import net.minecraft.world.level.GrassColor
+import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.CUTOUT_BLOCKS
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
@@ -36,6 +36,14 @@ object DnDBlocksClient {
         registerTint(FoliageColor.getEvergreenColor(), DnDBlocks.SPRUCE_LEAF_PILE)
         registerTint(FoliageColor.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE)
 
+        registerTint(
+            { _, world, pos, _ -> waterColor(world, pos) },
+            DnDBlocks.TINTED_SAND,
+            DnDBlocks.TINTED_SANDSTONE,
+            DnDBlocks.CHISELED_TINTED_SANDSTONE,
+            DnDBlocks.CUT_TINTED_SANDSTONE,
+        )
+
         CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.cutout()) }
         TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.translucent()) }
         ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS || state.block in TINT_PARTICLES }
@@ -54,5 +62,10 @@ object DnDBlocksClient {
     fun foliageColor(world: BlockAndTintGetter?, pos: BlockPos?): Int {
         return if (world != null && pos != null) BiomeColors.getAverageFoliageColor(world, pos)
         else FoliageColor.get(0.8, 0.4)
+    }
+
+    fun waterColor(world: BlockAndTintGetter?, pos: BlockPos?): Int {
+        return if (world != null && pos != null) BiomeColors.getAverageWaterColor(world, pos)
+        else -1
     }
 }

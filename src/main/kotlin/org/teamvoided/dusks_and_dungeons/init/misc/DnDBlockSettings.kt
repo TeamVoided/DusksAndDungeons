@@ -1,14 +1,14 @@
 package org.teamvoided.dusks_and_dungeons.init.misc
 
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.Blocks.*
+import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.Blocks.*
-import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
+import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
-import net.minecraft.world.level.block.SoundType
 import org.teamvoided.dusks_and_dungeons.util.block.cornSyrupBlockSound
 import org.teamvoided.dusks_and_dungeons.util.block.luminance
 import org.teamvoided.dusks_and_dungeons.util.block.rootBlockSound
@@ -100,6 +100,12 @@ object DnDBlockSettings {
         .offsetType(OffsetType.XYZ)
         .hasPostProcess(Blocks::always)
         .pushReaction(PushReaction.DESTROY)
+
+    val TINTED_SANDSTONE: Properties = Properties.of()
+        .mapColor(MapColor.WATER)
+        .instrument(NoteBlockInstrument.BASEDRUM)
+        .requiresCorrectToolForDrops()
+        .strength(0.8f)
 
     // Fun!
     fun petals(color: MapColor): Properties = ofFullCopy(PINK_PETALS).mapColor(color)
