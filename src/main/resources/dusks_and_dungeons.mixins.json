@@ -16,6 +16,7 @@
     "WallBlockMixin",
     "WitherSkeletonMixin",
     "apis.AxeItemMixin",
+    "debug.ItemDisplayBuilderMixin",
     "taglighting.FallLocationMixin",
     "taglighting.LivingEntityMixin"
   ],
