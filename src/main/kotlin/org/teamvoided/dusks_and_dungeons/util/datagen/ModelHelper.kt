@@ -1609,7 +1609,7 @@ fun BlockModelGenerators.rotatedLikeNetherrack(block: Block, modelProvider: Text
     val model = modelProvider.create(block, this.modelOutput)
     this.blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(
-            Blocks.NETHERRACK, *arrayOf<Variant>(
+            block, *arrayOf<Variant>(
                 Variant.variant().with(VariantProperties.MODEL, model),
                 Variant.variant().with(VariantProperties.MODEL, model)
                     .with(VariantProperties.X_ROT, Rotation.R90),
