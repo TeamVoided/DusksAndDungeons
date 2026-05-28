@@ -1,19 +1,21 @@
 package org.teamvoided.dusks_and_dungeons.block.meltable
 
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.SlabBlock
-import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.state.BlockState
 
 class MeltableSlabBlock(settings: Properties) : SlabBlock(settings) {
-    override fun skipRendering(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean =
-        if (stateFrom.`is`(this)) true else super.skipRendering(state, stateFrom, direction)
+    override fun skipRendering(state: BlockState, neighborState: BlockState, direction: Direction): Boolean {
+        return Meltable.shouldCullFace(state, neighborState, direction)
+                || super.skipRendering(state, neighborState, direction)
+    }
 
     override fun playerDestroy(
         world: Level,
@@ -21,7 +23,7 @@ class MeltableSlabBlock(settings: Properties) : SlabBlock(settings) {
         pos: BlockPos,
         state: BlockState,
         blockEntity: BlockEntity?,
-        stack: ItemStack
+        stack: ItemStack,
     ) {
         super.playerDestroy(world, player, pos, state, blockEntity, stack)
         Meltable.meltAfterBreak(world, pos, stack)
