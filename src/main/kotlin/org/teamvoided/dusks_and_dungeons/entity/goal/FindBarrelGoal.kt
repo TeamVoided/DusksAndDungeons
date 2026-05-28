@@ -27,5 +27,4 @@ class FindBarrelGoal(private val raccoon: RaccoonEntity, speed: Double, range: I
     override fun canUse(): Boolean {
         return !raccoon.isSleeping && raccoon.barrelPos == BlockPos.ZERO && super.canUse()
     }
-
 }

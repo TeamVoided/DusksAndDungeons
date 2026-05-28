@@ -24,7 +24,7 @@ open class PickBerriesGoal(mob: PathfinderMob, speed: Double, range: Int, maxYDi
 
     override fun shouldRecalculatePath(): Boolean = tryTicks % 100 == 0
 
-    override fun isValidTarget(world: LevelReader, pos: BlockPos?): Boolean {
+    override fun isValidTarget(world: LevelReader, pos: BlockPos): Boolean {
         val blockState = world.getBlockState(pos)
         return blockState.`is`(Blocks.SWEET_BERRY_BUSH) && blockState.getValue(SweetBerryBushBlock.AGE) >= 2 || CaveVines.hasGlowBerries(blockState)
     }

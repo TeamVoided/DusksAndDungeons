@@ -54,6 +54,8 @@ object DnDItemTags {
 
     val PUMPKIN_SEEDS = create("pumpkin_seeds")
 
+    val RACCOON_FOOD = create("raccoon_food")
+
     fun create(id: String): TagKey<Item> {
         val regTag = TagKey.create(Registries.ITEM, id(id))
         ITEM_TAGS.add(regTag)
