@@ -23,7 +23,6 @@ object DnDSurfaceRules {
         DnDBiomes.AUTUMN_WOODS,
         DnDBiomes.AUTUMN_PASTURES,
         DnDBiomes.AUTUMN_CASCADES,
-        DnDBiomes.AUTUMN_WETLANDS
     )
 
     fun overworld(): RuleSource {
