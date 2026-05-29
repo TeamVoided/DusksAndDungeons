@@ -1,20 +1,20 @@
 package org.teamvoided.dusks_and_dungeons.util
 
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.entity.projectile.Projectile
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import net.minecraft.core.particles.ParticleOptions
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleOptions
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
-import net.minecraft.world.phys.Vec3
-import net.minecraft.world.phys.shapes.VoxelShape
-import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.entity.projectile.Projectile
 import net.minecraft.world.level.LevelWriter
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
+import net.minecraft.world.phys.Vec3
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 
 const val pi = 3.1415927f
 const val degToRad = 0.017453292f
@@ -98,6 +98,20 @@ fun nextHorizontalDirection(direction: Direction): Direction {
         Direction.WEST -> Direction.NORTH
         else -> Direction.NORTH
     }
+}
+
+
+fun Direction.counterClockWise(rotations: Int): Direction {
+    if (axis.isVertical) {
+        return this
+    }
+
+    var directionReturn = this
+    repeat(rotations) {
+        directionReturn = directionReturn.counterClockWise
+    }
+
+    return directionReturn
 }
 
 fun VoxelShape.rotate(times: Int): VoxelShape {

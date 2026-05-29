@@ -7,7 +7,9 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -22,8 +24,10 @@ import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.EntityCollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.util.rotateColumn
 import org.teamvoided.voidlib.helpers.mc.isZ
 import org.teamvoided.voidlib.helpers.mc.opposite
@@ -176,6 +180,17 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
         pos: BlockPos,
         context: CollisionContext,
     ): VoxelShape {
+        // TODO add custom Custom Collision Context & hollow log item tags
+        if (context is EntityCollisionContext) {
+            val entity = context.entity
+            if (entity is LivingEntity) {
+                val item = entity.mainHandItem.item
+                if (item is BlockItem && item.block.defaultBlockState().`is`(DnDBlockTags.HOLLOW_LOGS)) {
+                    return Shapes.block()
+                }
+            }
+        }
+
         var shape = Shapes.empty()
         // TODO turn this in to a map lookup with binary keys
         if (state.getValue(NORTH)) shape = Shapes.or(shape, NORTH_SHAPE)
@@ -186,9 +201,7 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
         return shape.rotateColumn(state.getValue(AXIS))
     }
 
-    override fun getInteractionShape(state: BlockState, world: BlockGetter, pos: BlockPos): VoxelShape {
-        return Shapes.empty()
-    }
+    override fun getInteractionShape(state: BlockState, world: BlockGetter, pos: BlockPos): VoxelShape = Shapes.empty()
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AXIS, NORTH, SOUTH, EAST, WEST, WATERLOGGED)
