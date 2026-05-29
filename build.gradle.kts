@@ -20,6 +20,14 @@ repositories {
     maven("https://api.modrinth.com/maven")
     maven("https://maven.terraformersmc.com/") { name = "TerraformersMC" }
     maven("https://maven.fzzyhmstrs.me/") { name = "FzzyMaven" }
+    exclusiveContent { // ImGuiMC
+        forRepository {
+            maven("https://maven.ryanhcode.dev/releases") { name = "RyanHCode Maven" }
+        }
+        filter {
+            includeGroup("foundry.imguimc")
+        }
+    }
     mavenCentral()
 }
 
