@@ -28,10 +28,12 @@ object BiomeCreator {
         context.register(DnDBiomes.AUTUMN_WOODS, createAutumnForest(context))
         context.register(DnDBiomes.AUTUMN_PASTURES, createAutumnPlains(context))
         context.register(DnDBiomes.AUTUMN_CASCADES, createAutumnRiver(context))
-        context.register(DnDBiomes.AUTUMN_WETLANDS, createAutumnWetlands(context))
 
         context.register(DnDBiomes.GOLDEN_WOODS, createAutumnForest(context, true))
         context.register(DnDBiomes.GOLDEN_PASTURES, createAutumnPlains(context, true))
+
+
+        //OVERGROWN_GROTTO grass = 91DB60, water = 4CBF61
     }
 
     //no access widener?
@@ -65,26 +67,13 @@ object BiomeCreator {
         }
     }
 
-    private fun addAutumnSwampFeatures(generationSettings: BiomeGenerationSettings.Builder) {
-        generationSettings.addFeature(vd9, VegetationPlacements.FLOWER_SWAMP)
-        generationSettings.addFeature(vd9, VegetationPlacements.PATCH_GRASS_NORMAL)
-        generationSettings.addFeature(vd9, VegetationPlacements.PATCH_DEAD_BUSH)
-        generationSettings.addFeature(vd9, VegetationPlacements.PATCH_WATERLILY)
-        generationSettings.addFeature(vd9, VegetationPlacements.BROWN_MUSHROOM_SWAMP)
-        generationSettings.addFeature(vd9, VegetationPlacements.RED_MUSHROOM_SWAMP)
-    }
-
-
     fun createAutumnForest(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
         val spawnSettings = MobSpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
         BiomeDefaultFeatures.commonSpawns(spawnSettings)
 
         val generationSettings = BiomeGenerationSettings
-            .Builder(
-                c.lookup(Registries.PLACED_FEATURE),
-                c.lookup(Registries.CONFIGURED_CARVER)
-            )
+            .Builder(c.lookup(Registries.PLACED_FEATURE), c.lookup(Registries.CONFIGURED_CARVER))
         OverworldBiomes.globalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
@@ -123,10 +112,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.commonSpawns(spawnSettings)
 
         val generationSettings = BiomeGenerationSettings
-            .Builder(
-                c.lookup(Registries.PLACED_FEATURE),
-                c.lookup(Registries.CONFIGURED_CARVER)
-            )
+            .Builder(c.lookup(Registries.PLACED_FEATURE), c.lookup(Registries.CONFIGURED_CARVER))
         OverworldBiomes.globalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
@@ -188,45 +174,6 @@ object BiomeCreator {
                 .skyColor(getSkyColor(0.25f))
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                 .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST))
-                .build()
-        ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
-    }
-
-    fun createAutumnWetlands(context: BootstrapContext<Biome>): Biome {
-        val spawnSettings = MobSpawnSettings.Builder()
-        addAutumnAnimals(spawnSettings)
-        BiomeDefaultFeatures.commonSpawns(spawnSettings)
-        spawnSettings.addSpawn(MobCategory.MONSTER, SpawnerData(EntityType.SLIME, 1, 1, 1))
-        spawnSettings.addSpawn(MobCategory.CREATURE, SpawnerData(EntityType.FROG, 10, 2, 5))
-        val generationSettings = BiomeGenerationSettings
-            .Builder(
-                context.lookup(Registries.PLACED_FEATURE),
-                context.lookup(Registries.CONFIGURED_CARVER)
-            )
-        BiomeDefaultFeatures.addFossilDecoration(generationSettings)
-        OverworldBiomes.globalOverworldGeneration(generationSettings)
-        BiomeDefaultFeatures.addDefaultOres(generationSettings)
-        BiomeDefaultFeatures.addSwampClayDisk(generationSettings)
-        addAutumnSwampFeatures(generationSettings)
-//        generationSettings.feature(
-//            vegetal_decoration_9,
-//            DnDPlacedFeature.AUTUMN_WETLANDS_VEGETATION
-//        )
-        BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
-        addAutumnFeatures(generationSettings)
-        BiomeDefaultFeatures.addSwampExtraVegetation(generationSettings)
-        generationSettings.addFeature(vd9, AquaticPlacements.SEAGRASS_SWAMP)
-        return Biome.BiomeBuilder().temperature(0.25f).downfall(0.9f).specialEffects(
-            BiomeSpecialEffects.Builder()
-                .waterColor(4476844)
-                .waterFogColor(1383204)
-                .fogColor(12638463)
-                .skyColor(OverworldBiomes.calculateSkyColor(0.25f))
-                .grassColorOverride(16366449)
-                .foliageColorOverride(13533233)
-//                .grassColorModifier(GrassColorModifier.SWAMP)
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SWAMP))
                 .build()
         ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
     }

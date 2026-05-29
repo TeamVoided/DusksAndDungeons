@@ -16,7 +16,6 @@ object DnDBiomes {
     val AUTUMN_WOODS = create("autumn_woods")
     val AUTUMN_PASTURES = create("autumn_pastures")
     val AUTUMN_CASCADES = create("autumn_cascades")
-    val AUTUMN_WETLANDS = create("autumn_wetlands")
 
     val GOLDEN_WOODS = create("golden_woods")
     val GOLDEN_PASTURES = create("golden_pastures")
