@@ -1592,7 +1592,7 @@ fun BlockModelGenerators.hangingFlora(block: Block, tinted: BlockModelGenerators
     this.createSimpleFlatItemModel(block)
     val model = this.createSuffixedVariant(
         block,
-        "",
+        "_full",
         tinted.cross,
         TextureMapping::cross
     )
@@ -1602,7 +1602,7 @@ fun BlockModelGenerators.hangingFlora(block: Block, tinted: BlockModelGenerators
         tinted.cross,
         TextureMapping::cross
     )
-//    this.createDoubleBlock(block, model, tip)
+    this.createDoubleBlock(block, model, tip)
 }
 
 fun BlockModelGenerators.rotatedLikeNetherrack(block: Block, modelProvider: TexturedModel.Provider) {
