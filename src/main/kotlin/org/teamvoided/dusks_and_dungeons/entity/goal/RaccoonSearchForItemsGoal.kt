@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.entity.goal
 
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.ai.goal.Goal
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
@@ -15,7 +14,7 @@ internal class RaccoonSearchForItemsGoal(val raccoon: RaccoonEntity) : Goal() {
     }
 
     override fun canUse(): Boolean {
-        val stack = raccoon.getItemBySlot(EquipmentSlot.MAINHAND)
+        val stack = raccoon.getHeldItem()
         if (!raccoon.canPickup(stack)) {
             return false
         } else if (raccoon.target == null && raccoon.lastHurtByMob == null) {
@@ -42,7 +41,7 @@ internal class RaccoonSearchForItemsGoal(val raccoon: RaccoonEntity) : Goal() {
             ALLOWED_ITEMS
         )
 
-        val stack: ItemStack = raccoon.getItemBySlot(EquipmentSlot.MAINHAND)
+        val stack: ItemStack = raccoon.getHeldItem()
         if (raccoon.canPickup(stack) && !list.isEmpty()) {
             raccoon.getNavigation().moveTo(list[0] as Entity, 1.2)
         }

@@ -25,8 +25,8 @@ open class PickBerriesGoal(mob: PathfinderMob, speed: Double, range: Int, maxYDi
     override fun shouldRecalculatePath(): Boolean = tryTicks % 100 == 0
 
     override fun isValidTarget(world: LevelReader, pos: BlockPos): Boolean {
-        val blockState = world.getBlockState(pos)
-        return blockState.`is`(Blocks.SWEET_BERRY_BUSH) && blockState.getValue(SweetBerryBushBlock.AGE) >= 2 || CaveVines.hasGlowBerries(blockState)
+        val state = world.getBlockState(pos)
+        return state.`is`(Blocks.SWEET_BERRY_BUSH) && state.getValue(SweetBerryBushBlock.AGE) >= 2 || CaveVines.hasGlowBerries(state)
     }
 
     override fun tick() {
@@ -45,11 +45,11 @@ open class PickBerriesGoal(mob: PathfinderMob, speed: Double, range: Int, maxYDi
 
     protected fun pickFromTargetPos() {
         if (mob.level().gameRules.getBoolean(GameRules.RULE_MOBGRIEFING)) {
-            val blockState: BlockState = mob.level().getBlockState(blockPos)
-            if (blockState.`is`(Blocks.SWEET_BERRY_BUSH)) {
-                pickSweetBerries(blockState)
-            } else if (CaveVines.hasGlowBerries(blockState)) {
-                pickGlowBerries(blockState)
+            val state: BlockState = mob.level().getBlockState(blockPos)
+            if (state.`is`(Blocks.SWEET_BERRY_BUSH)) {
+                pickSweetBerries(state)
+            } else if (CaveVines.hasGlowBerries(state)) {
+                pickGlowBerries(state)
             }
         }
     }
@@ -79,7 +79,7 @@ open class PickBerriesGoal(mob: PathfinderMob, speed: Double, range: Int, maxYDi
 
     override fun start() {
         timer = 0
-//        mob.setSitting(false)
+//        mob.setSitting(false) TODO
         super.start()
     }
 }

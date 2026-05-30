@@ -1,13 +1,12 @@
 package org.teamvoided.dusks_and_dungeons.entity.goal
 
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal
-import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.LevelReader
+import org.teamvoided.dusks_and_dungeons.entity.RaccoonEntity
 
-class WashFoodGoal(mob: PathfinderMob?, speed: Double, range: Int) : MoveToBlockGoal(mob, speed, range) {
+class WashFoodGoal(val raccoon: RaccoonEntity, speed: Double, range: Int) : MoveToBlockGoal(raccoon, speed, range) {
 
     private var timer: Int = 0
 
@@ -26,7 +25,7 @@ class WashFoodGoal(mob: PathfinderMob?, speed: Double, range: Int) : MoveToBlock
         super.tick()
     }
 
-    override fun canUse(): Boolean = !mob.isSleeping && !mob.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty && super.canUse()
+    override fun canUse(): Boolean = !raccoon.isSleeping && raccoon.isFood(raccoon.getHeldItem()) && super.canUse()
 
     override fun start() {
         timer = 0
