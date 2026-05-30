@@ -71,6 +71,10 @@ object DnDBlocks {
     val OVERGROWTH_LEAVES =
         register("overgrowth_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().tint().hoe()
             .tellWitnessesThatIWasMurdered()
+    val OVERGROWTH_LEAF_PILE = register(
+        "overgrowth_leaf_pile",
+        leafPile(OVERGROWTH_LEAVES.defaultMapColor(), SoundType.AZALEA_LEAVES)
+    ).cutout()
     val HANGING_OVERGROWTH = register(
         "hanging_overgrowth",
         HangingFloraBlock(
@@ -238,6 +242,51 @@ object DnDBlocks {
         "golden_birch_leaves", LeavesBlock(ofFullCopy(BIRCH_LEAVES).mapColor(MapColor.COLOR_YELLOW)).leaves()
     )
     val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", leafPile(MapColor.COLOR_YELLOW).cutout())
+
+
+    val VERDANT_LOG = register("cascade_log", log(MapColor.GRASS, MapColor.COLOR_BROWN)).grass()
+    val VERDANT_WOOD = register(
+        createBlockSet("cascade_wood", Set.VERDANT_WOOD).noStoneCutting().parent(::RotatedPillarBlock).build()
+    ).woodSet().grass()
+
+    val VERDANT_LOG_PILE = register("cascade_log_pile", logPile(VERDANT_WOOD.parent)).grass()
+    val STRIPPED_VERDANT_LOG = register("stripped_cascade_log", log(MapColor.GRASS, MapColor.GRASS)).grass()
+    val STRIPPED_VERDANT_WOOD = register(
+        createBlockSet("stripped_cascade_wood", Properties.of().mapColor(MapColor.GRASS)).noStoneCutting()
+            .parent(::RotatedPillarBlock).build()
+    ).woodSet().grass()
+    val STRIPPED_VERDANT_LOG_PILE = register("stripped_cascade_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent)).grass()
+
+    val VERDANT_PLANKS = register("verdant_planks", Block(Set.VERDANT_PLANKS)).flammablePlanks().grass()
+    val VERDANT_STAIRS = register("verdant_stairs", stairsOf(VERDANT_PLANKS).wood()).grass()
+    val VERDANT_SLAB = register("verdant_slab", slabOf(VERDANT_PLANKS).wood()).grass()
+    val VERDANT_WALL = register("verdant_plank_wall", wallOf(VERDANT_PLANKS).wood()).grass()
+    val VERDANT_FENCE = register("verdant_fence", fenceOf(VERDANT_PLANKS).wood()).grass()
+    val VERDANT_FENCE_GATE =
+        register("verdant_fence_gate", fenceGateOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS).wood()).grass()
+    val VERDANT_DOOR =
+        registerNoItem("verdant_door", doorOf(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()).grass()
+    val VERDANT_TRAPDOOR =
+        register("verdant_trapdoor", trapdoorOf(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()).grass()
+    val VERDANT_PRESSURE_PLATE = register(
+        "verdant_pressure_plate",
+        pressurePlateOf(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()
+    ).grass()
+    val VERDANT_BUTTON = register("verdant_button", woodenButton(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE).wood()).grass()
+    val VERDANT_SIGN =
+        registerNoItem("verdant_sign", signOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS).wood()).grass()
+    val VERDANT_WALL_SIGN = registerNoItem(
+        "verdant_wall_sign",
+        wallSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_SIGN).wood()
+    ).grass()
+    val VERDANT_HANGING_SIGN = registerNoItem(
+        "verdant_hanging_sign",
+        hangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS).wood()
+    ).grass()
+    val VERDANT_WALL_HANGING_SIGN = registerNoItem(
+        "verdant_wall_hanging_sign",
+        wallHangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_HANGING_SIGN).wood()
+    ).grass()
 
     val OAK_WOOD = registerWoodenSet("oak_wood", Blocks.OAK_WOOD)
     val SPRUCE_WOOD = registerWoodenSet("spruce_wood", Blocks.SPRUCE_WOOD)
