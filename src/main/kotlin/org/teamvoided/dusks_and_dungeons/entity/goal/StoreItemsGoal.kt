@@ -16,25 +16,32 @@ class StoreItemsGoal(raccoon: RaccoonEntity, speed: Double, range: Int) :
 
         val blockEntity = raccoon.level().getBlockEntity(blockPos)
         if (blockEntity is BarrelBlockEntity) {
-            var firstEmptySlot = -1
-            for (i in 0..<blockEntity.containerSize) run {
-                val stack = blockEntity.getItem(i)
-                if (stack.isEmpty) {
-                    if (firstEmptySlot == -1) {
-                        firstEmptySlot = i
-                    }
-                } else if (stack.count < stack.maxStackSize
-                    && ItemStack.isSameItemSameComponents(stack, raccoon.getHeldItem())
-                ) {
-                    putItemInSlot(stack, i, blockEntity)
-                    if (heldItem.isEmpty) {
-                        return
-                    }
-                }
+            interactionDelay++
+            if (interactionDelay == 0) {
+                playBarrelSound(true)
             }
 
-            if (firstEmptySlot != -1) {
-                putItemInSlot(blockEntity.getItem(firstEmptySlot), firstEmptySlot, blockEntity)
+            if (interactionDelay >= MAX_INTERACTION_DELAY) {
+                var firstEmptySlot = -1
+                for (i in 0..<blockEntity.containerSize) run {
+                    val stack = blockEntity.getItem(i)
+                    if (stack.isEmpty) {
+                        if (firstEmptySlot == -1) {
+                            firstEmptySlot = i
+                        }
+                    } else if (stack.count < stack.maxStackSize
+                        && ItemStack.isSameItemSameComponents(stack, raccoon.getHeldItem())
+                    ) {
+                        putItemInSlot(stack, i, blockEntity)
+                        if (heldItem.isEmpty) {
+                            return
+                        }
+                    }
+                }
+
+                if (firstEmptySlot != -1) {
+                    putItemInSlot(blockEntity.getItem(firstEmptySlot), firstEmptySlot, blockEntity)
+                }
             }
         }
     }
@@ -58,7 +65,6 @@ class StoreItemsGoal(raccoon: RaccoonEntity, speed: Double, range: Int) :
     }
 
     override fun findNearestBlock(): Boolean {
-        blockPos = raccoon.barrelPos
-        return true
+        return findHomeBarrel()
     }
 }

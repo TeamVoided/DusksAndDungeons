@@ -3,6 +3,7 @@ package org.teamvoided.dusks_and_dungeons.entity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.particles.ItemParticleOption
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -10,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.*
 import net.minecraft.world.entity.ai.goal.*
 import net.minecraft.world.entity.animal.Animal
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.entity.goal.*
 import org.teamvoided.dusks_and_dungeons.init.DnDAttachmentTypes
@@ -27,7 +30,9 @@ import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, world),
     VariantHolder<Holder<RaccoonVariant>> {
 
-    var ticksSinceEaten: Int = 0
+    var eatTicks = 0
+    var hunger = 0
+    var hasWashedFood = false
 
     init {
         setCanPickUpLoot(true)
@@ -39,6 +44,7 @@ class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, w
         goalSelector.addGoal(7, ClaimBarrelGoal(this, 1.2, 12))
         goalSelector.addGoal(7, WashFoodGoal(this, 1.2, 12))
         goalSelector.addGoal(8, PickBerriesGoal(this, 1.2, 12, 1))
+        goalSelector.addGoal(8, GetFoodFromBarrelGoal(this, 1.2, 12))
         goalSelector.addGoal(9, WaterAvoidingRandomStrollGoal(this, 1.0))
         goalSelector.addGoal(9, RaccoonSearchForItemsGoal(this))
         goalSelector.addGoal(9, StoreItemsGoal(this, 1.2, 12))
@@ -53,6 +59,10 @@ class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, w
 
     override fun addAdditionalSaveData(tag: CompoundTag) {
         super.addAdditionalSaveData(tag)
+        tag.putInt("hunger", hunger)
+        tag.putInt("eat_ticks", eatTicks)
+        tag.putBoolean("has_wash_food", hasWashedFood)
+
         if (barrelPos != DEFAULT_BARREL_POS) {
             val barrelPosTag = CompoundTag()
             barrelPosTag.putInt("x", barrelPos.x)
@@ -64,6 +74,10 @@ class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, w
 
     override fun readAdditionalSaveData(tag: CompoundTag) {
         super.readAdditionalSaveData(tag)
+        hunger = tag.getInt("hunger")
+        eatTicks = tag.getInt("eat_ticks")
+        hasWashedFood = tag.getBoolean("has_washed_food")
+
         if (tag.contains("barrel_pos", Tag.TAG_COMPOUND.toInt())) {
             val barrelPosTag = tag.getCompound("barrel_pos")
             barrelPos = BlockPos(barrelPosTag.getInt("x"), barrelPosTag.getInt("y"), barrelPosTag.getInt("z"))
@@ -80,30 +94,106 @@ class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, w
         }
     }
 
-    override fun handleEntityEvent(b: Byte) {
-        if (b == EntityEvent.VILLAGER_HAPPY) {
-            for (i in 0..5) {
-                level().addParticle(
-                    ParticleTypes.HAPPY_VILLAGER,
-                    getRandomX(1.0),
-                    randomY,
-                    getRandomZ(1.0),
-                    random.nextGaussian() * 0.02,
-                    random.nextGaussian() * 0.02,
-                    random.nextGaussian() * 0.02
-                )
+    override fun aiStep() {
+        if (!level().isClientSide && isAlive && isEffectiveAi) {
+            val heldItem = getHeldItem()
+            if (hasWashedFood && canEat(heldItem) && target == null && onGround() && !isSleeping) {
+                eatTicks++
+                if (eatTicks >= 40) {
+                    val remainingStack = heldItem.finishUsingItem(level(), this)
+                    if (!remainingStack.isEmpty) {
+                        if (!remainingStack.`is`(heldItem.item)) {
+                            hasWashedFood = false
+                        }
+
+                        setItemSlot(EquipmentSlot.MAINHAND, remainingStack)
+                    }
+
+                    eatTicks = 0
+                    hunger += heldItem.get(DataComponents.FOOD)?.nutrition ?: 0
+                } else if (random.nextFloat() < 0.1F) {
+                    playSound(getEatingSound(heldItem), 1F, 1F)
+                    level().broadcastEntityEvent(this, EntityEvent.FOX_EAT)
+                }
             }
-        } else if (b == EntityEvent.VILLAGER_ANGRY) {
-            for (i in 0..5) {
-                level().addParticle(
-                    ParticleTypes.ANGRY_VILLAGER,
-                    getRandomX(1.0),
-                    randomY,
-                    getRandomZ(1.0),
-                    random.nextGaussian() * 0.02,
-                    random.nextGaussian() * 0.02,
-                    random.nextGaussian() * 0.02
-                )
+        }
+        super.aiStep()
+    }
+
+    fun canEat(stack: ItemStack): Boolean {
+        val properties = stack.get(DataComponents.FOOD)
+        return isFood(stack) && (isStarving() || hunger <= MAX_HUNGER - (properties?.nutrition ?: 0))
+    }
+
+    fun isStarving(): Boolean {
+        return hunger < 5
+    }
+
+    override fun handleEntityEvent(b: Byte) {
+        when (b) {
+            EntityEvent.VILLAGER_HAPPY -> {
+                for (i in 0..5) {
+                    level().addParticle(
+                        ParticleTypes.HAPPY_VILLAGER,
+                        getRandomX(1.0),
+                        randomY,
+                        getRandomZ(1.0),
+                        random.nextGaussian() * 0.02,
+                        random.nextGaussian() * 0.02,
+                        random.nextGaussian() * 0.02
+                    )
+                }
+            }
+
+            EntityEvent.VILLAGER_ANGRY -> {
+                for (i in 0..5) {
+                    level().addParticle(
+                        ParticleTypes.ANGRY_VILLAGER,
+                        getRandomX(1.0),
+                        randomY,
+                        getRandomZ(1.0),
+                        random.nextGaussian() * 0.02,
+                        random.nextGaussian() * 0.02,
+                        random.nextGaussian() * 0.02
+                    )
+                }
+            }
+
+            EntityEvent.FOX_EAT -> {
+                val heldItem = getHeldItem()
+                if (!heldItem.isEmpty) {
+                    for (i in 0..7) {
+                        val speeds = Vec3((random.nextFloat() - 0.5) * 0.1, random.nextDouble() * 0.1 + 0.1, 0.0)
+                            .xRot(-xRot * Mth.DEG_TO_RAD)
+                            .yRot(-yRot * Mth.DEG_TO_RAD)
+                        level().addParticle(
+                            ItemParticleOption(ParticleTypes.ITEM, heldItem),
+                            x + lookAngle.x / 2.0,
+                            y,
+                            z + lookAngle.z / 2.0,
+                            speeds.x,
+                            speeds.y + 0.05,
+                            speeds.z
+                        )
+                    }
+                }
+            }
+
+            EntityEvent.VILLAGER_SWEAT -> {
+                for (i in 0..10) {
+                    val speeds = Vec3((random.nextFloat() - 0.5) * 0.1, random.nextDouble() * 0.1 + 0.1, 0.0)
+                        .xRot(-xRot * Mth.DEG_TO_RAD)
+                        .yRot(-yRot * Mth.DEG_TO_RAD)
+                    level().addParticle(
+                        ParticleTypes.SPLASH,
+                        x + lookAngle.x / 2.0,
+                        y,
+                        z + lookAngle.z / 2.0,
+                        speeds.x,
+                        speeds.y + 0.05,
+                        speeds.z
+                    )
+                }
             }
         }
     }
@@ -119,10 +209,10 @@ class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, w
     }
 
     override fun canHoldItem(stack: ItemStack): Boolean {
-        val heldStack = getHeldItem()
-        return heldStack.isEmpty ||
-                (heldStack.count < heldStack.maxStackSize && ItemStack.isSameItemSameComponents(heldStack, stack))
-                || (ticksSinceEaten > 0 && stack.has(DataComponents.FOOD) && !heldStack.has(DataComponents.FOOD))
+        val heldItem = getHeldItem()
+        return heldItem.isEmpty ||
+                (heldItem.count < heldItem.maxStackSize && ItemStack.isSameItemSameComponents(heldItem, stack))
+                || (if (isStarving()) isFood(stack) && !isFood(heldItem) else canEat(stack) && !canEat(heldItem))
     }
 
     fun dropItemStack(stack: ItemStack) {
@@ -147,7 +237,7 @@ class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, w
             setGuaranteedDrop(EquipmentSlot.MAINHAND)
             take(itemEntity, stack.count)
             itemEntity.discard()
-            ticksSinceEaten = 0
+            hasWashedFood = false
         }
     }
 
@@ -189,5 +279,6 @@ class RaccoonEntity(type: EntityType<out Animal>, world: Level) : Animal(type, w
         val BARREL_POS: EntityDataAccessor<BlockPos> =
             SynchedEntityData.defineId(RaccoonEntity::class.java, EntityDataSerializers.BLOCK_POS)
         val DEFAULT_BARREL_POS = BlockPos(Int.MAX_VALUE, Int.MAX_VALUE, Int.MAX_VALUE)
+        const val MAX_HUNGER = 20
     }
 }

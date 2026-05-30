@@ -81,6 +81,10 @@ class ItemTagsProvider(
             .add(DnDItems.PALE_PUMPKIN_SEEDS)
             .add(DnDItems.MOSSKIN_PUMPKIN_SEEDS)
             .add(DnDItems.GLOOM_PUMPKIN_SEEDS)
+
+        getOrCreateTagBuilder(DnDItemTags.RACCOON_FOOD)
+            .add(Items.SWEET_BERRIES)
+            .add(Items.GLOW_BERRIES)
     }
 
     private fun woodTags() {
