@@ -16,12 +16,7 @@ import net.minecraft.world.level.BlockGetter
 
 open class BigTallCandleBlock(particle: SimpleParticleType, settings: Properties) : BigCandleBlock(particle, settings) {
 
-    override fun getShape(
-        state: BlockState,
-        world: BlockGetter,
-        pos: BlockPos,
-        context: CollisionContext
-    ): VoxelShape {
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
         return (when (state.getValue(CANDLES)) {
             1 -> ONE_BIG_CANDLE_SHAPE
             2 -> TWO_BIG_CANDLES_SHAPE

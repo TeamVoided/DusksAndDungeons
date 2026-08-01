@@ -17,8 +17,7 @@ fun InteractionHand.toSlot() = if (this == InteractionHand.MAIN_HAND) EquipmentS
 fun ItemStack.hasEnchantment(enchantment: ResourceKey<Enchantment>): Boolean =
     this.enchantments.keySet().any { it.`is`(enchantment) }
 
-fun Iterable<Vec3>.rotateFlat90(times: Int): Iterable<Vec3> =
-    this.map { it.rotateFlat90(times) }
+fun Iterable<Vec3>.rotateFlat90(times: Int): Iterable<Vec3> = map { it.rotateFlat90(times) }
 
 fun Vec3.rotateFlat90(times: Int): Vec3 {
     if (times == 0) return this
