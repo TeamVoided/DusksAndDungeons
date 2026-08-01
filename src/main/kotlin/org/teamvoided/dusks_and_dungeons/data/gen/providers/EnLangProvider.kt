@@ -43,8 +43,8 @@ class EnLangProvider(val output: FDOutput, r: FutureLookup) : FabricLanguageProv
         try {
             fn()
         } catch (e: Exception) {
-            LOGGER.warn("Exception found when gen lang entry for [${reference}]: ", e)
             if (output.isStrictValidationEnabled) {
+                LOGGER.warn("Exception found when gen lang entry for [${reference}]: ", e)
             }
         }
     }
