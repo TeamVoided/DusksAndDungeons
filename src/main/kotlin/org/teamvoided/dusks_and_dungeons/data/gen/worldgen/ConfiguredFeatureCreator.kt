@@ -52,6 +52,7 @@ import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.Bou
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FairyRingConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FallenTreeConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FarmlandConfig
+import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.MushroomFeatureConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer
@@ -111,6 +112,19 @@ object ConfiguredFeatureCreator {
                 0.1f,
                 true,
                 listOf()
+            )
+        )
+
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.HUGE_GOLD_MUSHROOM,
+            DnDFeatures.HUGE_GOLDEN_MUSHROOM,
+            MushroomFeatureConfig(
+                BlockTags.REPLACEABLE,
+                BlockTags.REPLACEABLE,
+                BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK),
+                BiasedToBottomInt.of(3, 6),
+                BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM_BLOCK),
+                BiasedToBottomInt.of(1, 7),
             )
         )
     }

@@ -28,6 +28,7 @@ import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
 import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
+import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
@@ -167,7 +168,7 @@ object DnDBlocks {
 
     val GOLDEN_MUSHROOM = register(
         "golden_mushroom",
-        MushroomWithSporesPlantBlock(TreeFeatures.HUGE_BROWN_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM)
+        MushroomWithSporesPlantBlock(DnDConfiguredFeature.HUGE_GOLD_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM)
     ).cutout().axe().sword()
         .tellWitnessesThatIWasMurdered()
     val GOLDEN_MUSHROOM_BLOCK = register(
