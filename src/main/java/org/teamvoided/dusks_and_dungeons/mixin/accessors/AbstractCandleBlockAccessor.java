@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin;
+package org.teamvoided.dusks_and_dungeons.mixin.accessors;
 
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.phys.Vec3;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(AbstractCandleBlock.class)
 public interface AbstractCandleBlockAccessor {
     @Invoker("addParticlesAndSound")
-    static void invokeAddParticlesAndSound(Level world, Vec3 vec3d, RandomSource random) {
+    static void dnd_addParticlesAndSound(Level world, Vec3 vec3d, RandomSource random) {
         throw new AssertionError();
     }
 }
