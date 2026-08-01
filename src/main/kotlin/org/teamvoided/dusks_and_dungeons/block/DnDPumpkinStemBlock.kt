@@ -1,22 +1,23 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.world.level.ItemLike
-import net.minecraft.tags.BlockTags
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.BlockTags
 import net.minecraft.util.Mth
 import net.minecraft.util.RandomSource
-import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import kotlin.math.min
 
@@ -32,7 +33,7 @@ class DnDPumpkinStemBlock(private val gourdBlock: Block, settings: Properties) :
 
     override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
+        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
         val facing = state.getValue(FACING)
         return if (facing != Direction.UP && direction != Direction.DOWN) {
@@ -42,11 +43,10 @@ class DnDPumpkinStemBlock(private val gourdBlock: Block, settings: Properties) :
     }
 
     override fun getShape(
-        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
+        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext,
     ): VoxelShape {
-        val attached = state.getValue(FACING)
-        return if (state.getValue(FACING) == Direction.UP) shape(state.getValue(AGE) + 1.0)
-        else ATTACHED_SHAPE.rotate(attached.get2DDataValue())
+        return if (state.getValue(FACING) == Direction.UP) SHAPE_BY_AGE[state.getValue(AGE)]
+        else SHAPE_BY_FACING[state.getValue(FACING)]!!
     }
 
 
@@ -76,7 +76,9 @@ class DnDPumpkinStemBlock(private val gourdBlock: Block, settings: Properties) :
         floor.`is`(Blocks.FARMLAND)
 
     override fun getBaseSeedId(): ItemLike = this.asItem()
+
     override fun isRandomlyTicking(state: BlockState): Boolean = state.getValue(FACING) == Direction.UP
+
     override fun performBonemeal(world: ServerLevel, random: RandomSource, pos: BlockPos, state: BlockState) {
         val newAge = min(7, (state.getValue(AGE) + Mth.nextInt(world.random, 2, 5)))
         val blockState = state.setValue(AGE, newAge)
@@ -90,8 +92,27 @@ class DnDPumpkinStemBlock(private val gourdBlock: Block, settings: Properties) :
     }
 
     companion object {
+
         val FACING: DirectionProperty = DirectionProperty.create("facing") { it != Direction.DOWN }
         val ATTACHED_SHAPE: VoxelShape = box(6.0, 0.0, 6.0, 10.0, 10.0, 16.0)
+        val SHAPE_BY_FACING = FACING.possibleValues.associateWith {
+            if (it == Direction.UP) Shapes.block()
+            else ATTACHED_SHAPE.rotate(it.get2DDataValue())
+        }
+
         fun shape(height: Double): VoxelShape = box(7.0, 0.0, 7.0, 9.0, height, 9.0)
+
+        // From StemBlock.class
+        val SHAPE_BY_AGE = arrayOf(
+            shape(2.0),
+            shape(4.0),
+            shape(6.0),
+            shape(8.0),
+            shape(10.0),
+            shape(12.0),
+            shape(14.0),
+            shape(16.0)
+        )
+
     }
 }
