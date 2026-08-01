@@ -82,10 +82,9 @@ open class LeafPileBlock(settings: Properties) : Block(settings), SimpleWaterlog
     override fun getShape(
         state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext,
     ): VoxelShape {
-        return if (state.getValue(HANGING))
-            HANGING_LAYERS_TO_SHAPE[state.getValue(PILE_LAYERS) - 1]
-        else
-            DEFAULT_LAYERS_TO_SHAPE[state.getValue(PILE_LAYERS) - 1]
+        return (
+                if (state.getValue(HANGING)) HANGING_LAYERS_TO_SHAPE else DEFAULT_LAYERS_TO_SHAPE
+                )[state.getValue(PILE_LAYERS) - 1]
     }
 
     override fun getCollisionShape(
