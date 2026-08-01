@@ -13,11 +13,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
-import net.minecraft.world.level.block.AbstractCandleBlock
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.CandleBlock
-import net.minecraft.world.level.block.SimpleWaterloggedBlock
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -59,20 +55,14 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
         builder.add(WATERLOGGED, HORIZONTAL_AXIS, CANDLES, LIT)
     }
 
-    override fun getShape(
-        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
-    ): VoxelShape = when (state.getValue(CANDLES)) {
-        1 -> SINGLE_SHAPE
-        2 -> DOUBLE_SHAPE
-        3 -> TRIPLE_SHAPE
-        4 -> QUADRUPLE_SHAPE
-        5 -> QUINTUPLE_SHAPE
-        else -> FULL_CUBE
-    }.rotate(state.getRotations())
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        return CANDELABRA_SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
+    }
 
     // Particles
     override fun getParticleOffsets(state: BlockState): Iterable<Vec3> {
-        return CANDLE_PARTICLE_OFFSETS[state.getValue(CANDLES) - 1].rotateFlat90(state.getRotations())
+        return CANDELABRA_PARTICLE_OFFSETS[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES))
+            ?: RAW_OFFSETS[0]
     }
 
     override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
@@ -90,7 +80,7 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
     // Waterlogging
     override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
+        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
         if (state.getValue(HorizontalWaterloggedBlock.WATERLOGGED)) {
             world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
@@ -104,7 +94,7 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
     }
 
     override fun placeLiquid(
-        world: LevelAccessor, pos: BlockPos, state: BlockState, fluidState: FluidState
+        world: LevelAccessor, pos: BlockPos, state: BlockState, fluidState: FluidState,
     ): Boolean {
         return if (!state.getValue(WATERLOGGED) && fluidState.type === Fluids.WATER) {
             val blockState = state.setValue(WATERLOGGED, true)
@@ -139,7 +129,7 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
 
     override fun useItemOn(
         stack: ItemStack, state: BlockState, world: Level, pos: BlockPos,
-        entity: Player, hand: InteractionHand, hitResult: BlockHitResult
+        entity: Player, hand: InteractionHand, hitResult: BlockHitResult,
     ): ItemInteractionResult {
         return if (stack.isEmpty && entity.abilities.mayBuild && state.getValue(CandleBlock.LIT)) {
             extinguish(entity, state, world, pos)
@@ -147,7 +137,7 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
         } else super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
     }
 
-    override fun canBeLit(state: BlockState): Boolean = !state.getValue(CandleBlock.WATERLOGGED) && super.canBeLit(state)
+    override fun canBeLit(state: BlockState): Boolean = !state.getValue(WATERLOGGED) && super.canBeLit(state)
 
     companion object {
         val CODEC: MapCodec<CandelabraBlock> = simpleCodec { CandelabraBlock(Blocks.CANDLE, it) }
@@ -198,7 +188,21 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
             box(7.0, 8.0, 12.0, 9.0, 14.0, 14.0),
             box(7.0, 10.0, 7.0, 9.0, 16.0, 9.0),
         )
-        val CANDLE_PARTICLE_OFFSETS = listOf(
+
+        val CANDELABRA_SHAPES = HORIZONTAL_AXIS.possibleValues.associateWith { dir ->
+            CANDLES.possibleValues.associateWith { count ->
+                when (count) {
+                    1 -> SINGLE_SHAPE
+                    2 -> DOUBLE_SHAPE
+                    3 -> TRIPLE_SHAPE
+                    4 -> QUADRUPLE_SHAPE
+                    5 -> QUINTUPLE_SHAPE
+                    else -> FULL_CUBE
+                }.rotate(dir.getRotations())
+            }
+        }
+
+        val RAW_OFFSETS = listOf(
             listOf(Vec3(0.5, 1.0, 0.5)),
             listOf(Vec3(0.25, 1.0, 0.5), Vec3(0.75, 1.0, 0.5)),
             listOf(Vec3(0.5, 1.125, 0.5), Vec3(0.1875, 1.0, 0.5), Vec3(0.8125, 1.0, 0.5)),
@@ -210,12 +214,17 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
             )
         )
 
+        val CANDELABRA_PARTICLE_OFFSETS = HORIZONTAL_AXIS.possibleValues.associateWith { dir ->
+            CANDLES.possibleValues.associateWith { count -> RAW_OFFSETS[count - 1].rotateFlat90(dir.getRotations()) }
+        }
+
         @JvmStatic
         fun canLiteCandelabra(state: BlockState): Boolean {
             return state.`is`(DnDBlockTags.CANDELABRAS) { it.hasProperty(LIT) && it.hasProperty(WATERLOGGED) }
                     && !state.getValue(LIT) && !state.getValue(WATERLOGGED)
         }
 
-        fun BlockState.getRotations(): Int = if (this.getValue(HORIZONTAL_AXIS) == Direction.Axis.X) 0 else 1
+        fun Direction.Axis.getRotations(): Int = if (this == Direction.Axis.X) 0 else 1
+
     }
 }
