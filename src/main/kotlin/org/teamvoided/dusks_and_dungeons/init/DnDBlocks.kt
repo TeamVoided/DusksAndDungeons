@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.core.Registry
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.data.worldgen.features.TreeFeatures
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
@@ -170,14 +169,11 @@ object DnDBlocks {
         "golden_mushroom",
         MushroomWithSporesPlantBlock(DnDConfiguredFeature.HUGE_GOLD_MUSHROOM, 0xFFD800, 0.5, Set.GOLDEN_MUSHROOM)
     ).cutout().axe().sword()
-        .tellWitnessesThatIWasMurdered()
     val GOLDEN_MUSHROOM_BLOCK = register(
         "golden_mushroom_block", MushroomWithSporesBlock(0xFFD800, 0.5, Set.GOLDEN_MUSHROOM_BLOCK.luminance(11))
     ).axe()
-        .tellWitnessesThatIWasMurdered()
     val GOLDEN_MUSHROOM_STEM_BLOCK =
         register("golden_mushroom_stem_block", HugeMushroomBlock(Set.GOLDEN_MUSHROOM_BLOCK.luminance(9))).axe()
-            .tellWitnessesThatIWasMurdered()
 
     // endregion
 

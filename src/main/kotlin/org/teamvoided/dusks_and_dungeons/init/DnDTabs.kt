@@ -1,13 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.Holder
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Items
-import net.minecraft.core.Holder
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.Registry
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
@@ -40,6 +40,11 @@ object DnDTabs {
                 entries.addLists(
                     DnDBlockLists.flowerbedBlocks,
                     DnDBlockLists.vivionbedBlocks,
+                )
+                entries.addItems(
+                    DnDBlocks.GOLDEN_MUSHROOM,
+                    DnDBlocks.GOLDEN_MUSHROOM_BLOCK,
+                    DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK,
                 )
                 entries.addItems(
                     DnDItems.CORN_STALK,
