@@ -1,22 +1,22 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.shapes.CollisionContext
-import net.minecraft.world.level.block.SimpleWaterloggedBlock
-import net.minecraft.world.level.material.FluidState
-import net.minecraft.world.level.material.Fluids
-import net.minecraft.world.item.context.BlockPlaceContext
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.IntegerProperty
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.world.phys.shapes.VoxelShape
-import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.SimpleWaterloggedBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.material.FluidState
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import kotlin.math.min
 
@@ -66,17 +66,17 @@ open class LogPileBlock(settings: Properties) : TwoWayFacingBlock(settings), Sim
         else super.skipRendering(state, stateFrom, direction)
     }
 
-    override fun getShape(
-        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
-    ): VoxelShape {
-        val rotations = if (state.getValue(AXIS) == Direction.Axis.Z) 1 else 0
-        return (if (state.getValue(HANGING)) HANGING_LAYERS_TO_SHAPE[state.getValue(PILE_LAYERS) - 1]
-        else DEFAULT_LAYERS_TO_SHAPE[state.getValue(PILE_LAYERS) - 1]).rotate(rotations)
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        val axis = if (state.getValue(AXIS) == Direction.Axis.Z) 1 else 0
+        return (
+                if (state.getValue(HANGING)) HANGING_SHAPES[axis]?.get(state.getValue(PILE_LAYERS))
+                else DEFAULT_SHAPES[axis]?.get(state.getValue(PILE_LAYERS))
+                ) ?: Shapes.block()
     }
 
     override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
+        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
         if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
         return state
@@ -102,18 +102,27 @@ open class LogPileBlock(settings: Properties) : TwoWayFacingBlock(settings), Sim
         val LAYER_3 = layer(8.0)
         val LAYER_4 = layer(12.0, true)
 
-        val DEFAULT_LAYERS_TO_SHAPE: List<VoxelShape> = listOf(
-            LAYER_1,
-            Shapes.or(LAYER_1, LAYER_2),
-            Shapes.or(LAYER_1, LAYER_2, LAYER_3),
-            Shapes.or(LAYER_1, LAYER_2, LAYER_3, LAYER_4)
+        val DEFAULT_LAYERS_TO_SHAPE = mapOf(
+            1 to LAYER_1,
+            2 to Shapes.or(LAYER_1, LAYER_2),
+            3 to Shapes.or(LAYER_1, LAYER_2, LAYER_3),
+            4 to Shapes.or(LAYER_1, LAYER_2, LAYER_3, LAYER_4)
         )
-        val HANGING_LAYERS_TO_SHAPE: List<VoxelShape> = listOf(
-            LAYER_4,
-            Shapes.or(LAYER_4, LAYER_3),
-            Shapes.or(LAYER_4, LAYER_3, LAYER_2),
-            Shapes.or(LAYER_4, LAYER_3, LAYER_2, LAYER_1)
+
+        val HANGING_LAYERS_TO_SHAPE = mapOf(
+            1 to LAYER_4,
+            2 to Shapes.or(LAYER_4, LAYER_3),
+            3 to Shapes.or(LAYER_4, LAYER_3, LAYER_2),
+            4 to Shapes.or(LAYER_4, LAYER_3, LAYER_2, LAYER_1)
         )
+
+        val DEFAULT_SHAPES = (0..1).associateWith { axis ->
+            (DEFAULT_LAYERS_TO_SHAPE.map { (i, shape) -> i to shape.rotate(axis) }.toMap())
+        }
+
+        val HANGING_SHAPES = (0..1).associateWith { axis ->
+            (HANGING_LAYERS_TO_SHAPE.map { (i, shape) -> i to shape.rotate(axis) }.toMap())
+        }
 
         fun layer(height: Double, z: Boolean = false): VoxelShape =
             if (z) box(2.0, height, 0.0, 14.0, height + 4, 16.0)
