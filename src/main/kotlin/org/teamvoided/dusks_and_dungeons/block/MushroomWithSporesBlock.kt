@@ -1,11 +1,11 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.HugeMushroomBlock
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.HugeMushroomBlock
+import net.minecraft.world.level.block.state.BlockState
 import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
 
 class MushroomWithSporesBlock(private val color: Int, private val particleChance: Double, settings: Properties) :
@@ -14,27 +14,42 @@ class MushroomWithSporesBlock(private val color: Int, private val particleChance
         super.animateTick(state, world, pos, random)
         if (random.nextDouble() < particleChance) return
 
-        val direction = getValidDir(state).randomOrNull() ?: return
-        val blockPos = pos.relative(direction)
+        val side = getOpenSides(state).randomOrNull() ?: return
+        val blockPos = pos.relative(side)
         val blockState = world.getBlockState(blockPos)
-        if (!state.canOcclude() || !blockState.isFaceSturdy(world, blockPos, direction.opposite)) {
-            val d = if (direction.stepX == 0) random.nextDouble() else 0.5 + direction.stepX.toDouble() * 0.65
-            val e = if (direction.stepY == 0) random.nextDouble() else 0.5 + direction.stepY.toDouble() * 0.65
-            val f = if (direction.stepZ == 0) random.nextDouble() else 0.5 + direction.stepZ.toDouble() * 0.65
+        if (!state.canOcclude() || !blockState.isFaceSturdy(world, blockPos, side.opposite)) {
+            val xOffset = if (side.stepX == 0) random.nextDouble() else 0.5 + side.stepX * 0.65
+            val yOffset = if (side.stepY == 0) random.nextDouble() else 0.5 + side.stepY * 0.65
+            val zOffset = if (side.stepZ == 0) random.nextDouble() else 0.5 + side.stepZ * 0.65
             world.addParticle(
                 ColorableParticleEffect(color),
-                pos.x.toDouble() + d, pos.y.toDouble() + e, pos.z.toDouble() + f,
-                0.0, 0.0, 0.0
+                pos.x + xOffset, pos.y + yOffset, pos.z + zOffset,
+                (random.nextDouble() - random.nextDouble()) * 0.125,
+                (random.nextDouble() * -0.1) - 0.1,
+                (random.nextDouble() - random.nextDouble()) * 0.125
             )
         }
     }
 
-    fun getValidDir(state: BlockState): List<Direction> = buildList {
-        if (state.getValue(UP)) add(Direction.UP)
-        if (state.getValue(DOWN)) add(Direction.DOWN)
-        if (state.getValue(NORTH)) add(Direction.NORTH)
-        if (state.getValue(EAST)) add(Direction.EAST)
-        if (state.getValue(SOUTH)) add(Direction.SOUTH)
-        if (state.getValue(WEST)) add(Direction.WEST)
+    companion object {
+
+        val SIDE_LIST_CACHE = mutableMapOf<BlockState, List<Direction>>()
+
+        fun getOpenSides(state: BlockState): List<Direction> {
+            var dirList = SIDE_LIST_CACHE[state]
+            if (dirList == null) {
+                dirList = buildList {
+                    if (state.getValue(UP)) add(Direction.UP)
+                    if (state.getValue(DOWN)) add(Direction.DOWN)
+                    if (state.getValue(NORTH)) add(Direction.NORTH)
+                    if (state.getValue(EAST)) add(Direction.EAST)
+                    if (state.getValue(SOUTH)) add(Direction.SOUTH)
+                    if (state.getValue(WEST)) add(Direction.WEST)
+                }
+                SIDE_LIST_CACHE[state] = dirList
+            }
+            return dirList
+        }
+
     }
 }
