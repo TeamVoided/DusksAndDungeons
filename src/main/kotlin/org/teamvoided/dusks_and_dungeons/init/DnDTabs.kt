@@ -182,8 +182,8 @@ object DnDTabs {
             }
     )
     val OVERLAY_BLOCKS = register(
-        "overlay_blocks", FabricItemGroup.builder()
-            .icon(DnDBlocks.ROCKY_BLOCKS.grass).translation("itemGroup.$MODID.overlay_blocks")
+        "rocky_blocks", FabricItemGroup.builder()
+            .icon(DnDBlocks.ROCKY_BLOCKS.grass).translation("itemGroup.$MODID.rocky_blocks")
             .displayItems { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
     )
 

@@ -2,17 +2,19 @@ package org.teamvoided.dusks_and_dungeons.data.gen.recipes
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.data.recipes.RecipeCategory
-import net.minecraft.core.HolderLookup
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.CASCADE_WOOD
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.STRIPPED_CASCADE_WOOD
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.datagen.cobbled
 import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
@@ -22,7 +24,7 @@ import java.util.concurrent.CompletableFuture
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
     override fun buildRecipes(e: RecipeOutput) {
         recipesBlockFamilies.forEach { generateRecipes(e, it, FeatureFlags.DEFAULT_FLAGS) }
-        SETS.forEach(e::createSet)
+        SETS.filterNot { it == CASCADE_WOOD || it == STRIPPED_CASCADE_WOOD }.forEach(e::createSet)
 
         WoodRecipes.generateWoodRecipes(e)
         BigRecipes.generateBigRecipes(e)
