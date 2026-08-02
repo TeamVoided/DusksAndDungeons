@@ -20,7 +20,6 @@ import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.block.FULL_CUBE
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 
@@ -118,7 +117,7 @@ open class BigCandleBlock(val particle: SimpleParticleType, settings: Properties
                     2 -> TWO_BIG_CANDLES_SHAPE
                     3 -> THREE_BIG_CANDLES_SHAPE
                     4 -> FOUR_BIG_CANDLES_SHAPE
-                    else -> FULL_CUBE
+                    else -> Shapes.block()
                 }.rotate(dir.get2DDataValue())
             }
         }

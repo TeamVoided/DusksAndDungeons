@@ -29,7 +29,6 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.dusks_and_dungeons.util.block.FULL_CUBE
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
@@ -197,7 +196,7 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
                     3 -> TRIPLE_SHAPE
                     4 -> QUADRUPLE_SHAPE
                     5 -> QUINTUPLE_SHAPE
-                    else -> FULL_CUBE
+                    else -> Shapes.block()
                 }.rotate(dir.getRotations())
             }
         }

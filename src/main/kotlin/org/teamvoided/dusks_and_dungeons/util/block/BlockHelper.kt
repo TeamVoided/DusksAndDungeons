@@ -42,7 +42,6 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 import java.util.function.ToIntFunction
 
 
-val FULL_CUBE = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 fun symmetricalBox(xzMin: Double, yMin: Double, xzMax: Double, yMax: Double): VoxelShape =
     Block.box(xzMin, yMin, xzMin, xzMax, yMax, xzMax)
 
