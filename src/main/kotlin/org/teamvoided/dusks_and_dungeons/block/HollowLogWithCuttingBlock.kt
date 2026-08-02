@@ -180,8 +180,9 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
         pos: BlockPos,
         context: CollisionContext,
     ): VoxelShape {
-        // TODO add custom Custom Collision Context & hollow log item tags
         if (context is EntityCollisionContext) {
+            // TODO add custom hollow log item tags
+//            if (context.isHoldingItem(DnDItemTags.HOLLOW_LOGS)){
             val entity = context.entity
             if (entity is LivingEntity) {
                 val item = entity.mainHandItem.item
@@ -189,6 +190,7 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
                     return Shapes.block()
                 }
             }
+            //}
         }
 
         var shape = Shapes.empty()

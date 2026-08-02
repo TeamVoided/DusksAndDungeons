@@ -4,7 +4,6 @@
   "package": "org.teamvoided.dusks_and_dungeons.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "accessors.AbstractCandleBlockAccessor",
     "FoxEntityVariantMixin",
     "IceBlockMixin",
     "ItemStackMixin",
@@ -13,7 +12,9 @@
     "NyliumBlockMixin",
     "WallBlockMixin",
     "WitherSkeletonMixin",
+    "accessors.AbstractCandleBlockAccessor",
     "apis.AxeItemMixin",
+    "apis.EntityCollisionContextMixin",
     "debug.ItemDisplayBuilderMixin",
     "taglighting.FallLocationMixin",
     "taglighting.LivingEntityMixin"
