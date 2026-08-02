@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [ "${authors}" ],
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "org.teamvoided.dusks_and_dungeons.DusksAndDungeons::init"
+      }
+    ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "org.teamvoided.dusks_and_dungeons.DusksAndDungeonsClient::init"
+      }
+    ],
+    "fabric-datagen": [
+      {
+        "adapter": "kotlin",
+        "value": "org.teamvoided.dusks_and_dungeons.data.gen.DnDData"
+      }
+    ],
+    "emi": [
+      {
+        "adapter": "kotlin",
+        "value": "org.teamvoided.dusks_and_dungeons.compat.DnDEmiPlugin"
+      }
+    ]
+  },
+  "mixins": [
+    "dusks_and_dungeons.mixins.json",
+    {
+      "config": "dusks_and_dungeons.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "accessWidener": "dusks_and_dungeons.classtweaker",
+  "depends": {
+    "java": ">=${java}",
+    "minecraft": "${version_range}",
+    "fabricloader": "*",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=${fabric_kotlin}",
+    "fzzy_config": ">=${fzzy_config}"
+  },
+  "contact": {
+    "homepage": "https://github.com/${github_repo}",
+    "issues": "https://github.com/${github_repo}/issues",
+    "sources": "https://github.com/${github_repo}",
+    "discord": "${discord_invite}"
+  },
+  "license": "${license}",
+  "icon": "assets/dusks_and_dungeons/icon.png"
+}
