@@ -2,13 +2,13 @@ package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
+import net.minecraft.ChatFormatting
 import net.minecraft.client.color.item.ItemColor
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.component.DyedItemColor
 import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.GrassColor
-import net.minecraft.world.item.component.DyedItemColor
-import net.minecraft.world.item.Item
-import net.minecraft.network.chat.Component
-import net.minecraft.ChatFormatting
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
 
 object DnDItemsClient {
@@ -30,7 +30,7 @@ object DnDItemsClient {
 
         ItemTooltipCallback.EVENT.register { stack, _, _, lines ->
             if (DnDItems.EVIL_ITEMS.contains(stack.item)) lines.addLast(
-                Component.literal("Experimental item, may disappear in future updates!").withStyle(ChatFormatting.RED)
+                Component.literal("Experimental! May corrupt your worlds or disappear in future updates!").withStyle(ChatFormatting.RED)
             )
         }
     }
