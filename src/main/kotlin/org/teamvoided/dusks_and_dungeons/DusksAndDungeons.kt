@@ -39,6 +39,7 @@ object DusksAndDungeons {
         DnDTabs.init()
         DnDRegistryKeys.init()
         DnDAttachmentTypes.init()
+        DnDNetworking.init()
         InitializeFabricEvents()
 
         if (isDev()) {
@@ -46,9 +47,9 @@ object DusksAndDungeons {
         }
     }
 
-    fun id(path: String) = ResourceLocation.fromNamespaceAndPath(MODID, path)
-    fun mc(path: String) = ResourceLocation.withDefaultNamespace(path)
-    fun id(modId: String, path: String) = ResourceLocation.fromNamespaceAndPath(modId, path)
+    fun id(modId: String, path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
+    fun mc(path: String): ResourceLocation = ResourceLocation.withDefaultNamespace(path)
+    fun id(path: String) = id(MODID, path)
 
     @JvmStatic
     fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment

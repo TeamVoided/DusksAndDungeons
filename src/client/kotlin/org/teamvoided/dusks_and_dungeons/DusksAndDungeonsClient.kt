@@ -19,6 +19,7 @@ object DusksAndDungeonsClient {
         DnDParticlesClient.init()
         DnDEntitiesClient.init()
         DnDBlockEntitiesClient.init()
+        DnDClientNetworking.init()
 
         registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
         if (!isDev()) {

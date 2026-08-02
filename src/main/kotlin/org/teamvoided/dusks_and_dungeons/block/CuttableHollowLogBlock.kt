@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
@@ -28,6 +29,8 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDLevelEvents.CUT_HOLLOW_LOG
+import org.teamvoided.dusks_and_dungeons.util.dndLevelEvent
 import org.teamvoided.dusks_and_dungeons.util.rotateColumn
 import org.teamvoided.voidlib.helpers.mc.isZ
 import org.teamvoided.voidlib.helpers.mc.opposite
@@ -35,12 +38,12 @@ import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import org.teamvoided.voidlib.helpers.mc.rotateOnAxis
 import kotlin.math.round
 
-open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(settings) {
-    open val special1: Double = 0.0625
-    open val special2: Double = 0.9375
+open class CuttableHollowLogBlock(settings: Properties) : HollowLogBlock(settings) {
+    open val shapeMap: Map<Direction.Axis, Array<VoxelShape>> =
+        crateShapeMap(NORTH_SHAPE, EAST_SHAPE, SOUTH_SHAPE, WEST_SHAPE)
 
     init {
-        this.registerDefaultState(
+        registerDefaultState(
             stateDefinition.any()
                 .setValue(AXIS, Direction.Axis.X)
                 .setValue(NORTH, true)
@@ -52,25 +55,24 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
     }
 
     override fun useItemOn(
-        stack: ItemStack,
-        state: BlockState,
-        world: Level,
-        pos: BlockPos,
-        entity: Player,
-        hand: InteractionHand,
-        hitResult: BlockHitResult,
+        stack: ItemStack, state: BlockState, level: Level, pos: BlockPos,
+        player: Player, hand: InteractionHand, hit: BlockHitResult,
     ): ItemInteractionResult {
-        // TODO rewrite this so you do the less expense checks first
-        val hitState = this.getHitState(hitResult, state, pos)
-        return if (hitState != null && !stack.isEmpty && entity.abilities.mayBuild && stack.`is`(ItemTags.AXES)) {
-            if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
-            setBlockState(world, pos, entity, hitState)
-            world.neighborChanged(pos, this, pos)
-            ItemInteractionResult.sidedSuccess(world.isClientSide)
-        } else super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
+        if (!stack.isEmpty && player.abilities.mayBuild && stack.`is`(ItemTags.AXES)) {
+            val hitData = getHitState(hit, state, pos)
+            if (hitData != null) {
+                if (state.getValue(WATERLOGGED)) {
+                    level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level))
+                }
+                level.updateBlock(pos, hitData, player)
+                level.neighborChanged(pos, this, pos)
+                return ItemInteractionResult.sidedSuccess(level.isClientSide)
+            }
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hit)
     }
 
-    fun getHitState(hit: BlockHitResult, state: BlockState, pos: BlockPos): BlockState? {
+    fun getHitState(hit: BlockHitResult, state: BlockState, pos: BlockPos): Pair<BlockState, BooleanProperty>? {
         if (howManySidesExist(state) <= 1) return null
         var vec3 = hit.location.subtract(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
         val axis = state.getValue(AXIS)
@@ -118,7 +120,7 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
         // If not we assume that they cant be taken
         var side = SIDE_MAP[keyVec]
         if (side != null && state.getValue(side)) {
-            return state.trySetValue(side, false)
+            return state.trySetValue(side, false) to side
         }
 
         if (dirAxis.isHorizontal) {
@@ -151,7 +153,7 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
 
         side = SIDE_MAP[keyVec]
         if (side != null && state.getValue(side)) {
-            return state.trySetValue(side, false)
+            return state.trySetValue(side, false) to side
         }
 
         // This should never run so :)
@@ -159,31 +161,25 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
     }
 
     fun howManySidesExist(state: BlockState): Int {
-        return listOf(state.getValue(NORTH), state.getValue(SOUTH), state.getValue(EAST), state.getValue(WEST))
-            .count { it }
+        return listOf(
+            state.getValue(NORTH), state.getValue(SOUTH), state.getValue(EAST), state.getValue(WEST)
+        ).count { it }
     }
 
-    private fun setBlockState(
-        world: Level, pos: BlockPos, player: Player, state: BlockState,
-    ) {
-        if (!world.isClientSide) {
-            val soundEvent = SoundEvents.AXE_STRIP
-            world.setBlockAndUpdate(pos, state)
-            world.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 1.0f, 1.0f)
-            world.gameEvent(player, GameEvent.BLOCK_CHANGE, pos)
+    fun Level.updateBlock(pos: BlockPos, hitData: Pair<BlockState, BooleanProperty>, player: Player?) {
+        if (!isClientSide) {
+            setBlockAndUpdate(pos, hitData.first)
+            playSound(null, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0f, 1.0f)
+            gameEvent(player, GameEvent.BLOCK_CHANGE, pos)
+            dndLevelEvent(CUT_HOLLOW_LOG, pos, PROP_ARR[hitData.second]!!)
         }
     }
 
-    override fun getShape(
-        state: BlockState,
-        world: BlockGetter,
-        pos: BlockPos,
-        context: CollisionContext,
-    ): VoxelShape {
-        if (context is EntityCollisionContext) {
-            // TODO add custom hollow log item tags
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        if (ctx is EntityCollisionContext) {
+            // TODO add hollow log item tags
 //            if (context.isHoldingItem(DnDItemTags.HOLLOW_LOGS)){
-            val entity = context.entity
+            val entity = ctx.entity
             if (entity is LivingEntity) {
                 val item = entity.mainHandItem.item
                 if (item is BlockItem && item.block.defaultBlockState().`is`(DnDBlockTags.HOLLOW_LOGS)) {
@@ -193,17 +189,18 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
             //}
         }
 
-        var shape = Shapes.empty()
-        // TODO turn this in to a map lookup with binary keys
-        if (state.getValue(NORTH)) shape = Shapes.or(shape, NORTH_SHAPE)
-        if (state.getValue(SOUTH)) shape = Shapes.or(shape, SOUTH_SHAPE)
-        if (state.getValue(EAST)) shape = Shapes.or(shape, EAST_SHAPE)
-        if (state.getValue(WEST)) shape = Shapes.or(shape, WEST_SHAPE)
-        if (shape.isEmpty) return Shapes.block()
-        return shape.rotateColumn(state.getValue(AXIS))
+        var bitKey = 0
+        for ((idx, dir) in DIRECTIONS.withIndex()) {
+            if (state.getValue(DIRECTION_PROPERTIES[dir]!!)) {
+                bitKey = bitKey or (1 shl idx)
+            }
+        }
+        if (bitKey == 0) return Shapes.block()
+
+        return shapeMap[state.getValue(AXIS)]?.get(bitKey) ?: Shapes.block()
     }
 
-    override fun getInteractionShape(state: BlockState, world: BlockGetter, pos: BlockPos): VoxelShape = Shapes.empty()
+    override fun getInteractionShape(state: BlockState, level: BlockGetter, pos: BlockPos): VoxelShape = Shapes.empty()
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AXIS, NORTH, SOUTH, EAST, WEST, WATERLOGGED)
@@ -215,7 +212,11 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
         val SOUTH: BooleanProperty = BlockStateProperties.SOUTH
         val EAST: BooleanProperty = BlockStateProperties.EAST
         val WEST: BooleanProperty = BlockStateProperties.WEST
+        val PROP_ARR = mapOf(NORTH to 1, EAST to 2, SOUTH to 4, WEST to 8)
+
+        val AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.AXIS
         val DIRECTION_PROPERTIES: Map<Direction, BooleanProperty> = PipeBlock.PROPERTY_BY_DIRECTION
+        val DIRECTIONS = Direction.Plane.HORIZONTAL.stream().toList().toList()
         fun getProperty(direction: Direction): BooleanProperty? = DIRECTION_PROPERTIES[direction]
 
         val SIDE_MAP = mapOf(
@@ -230,5 +231,25 @@ open class HollowLogWithCuttingBlock(settings: Properties) : HollowLogBlock(sett
         val EAST_SHAPE: VoxelShape = box(14.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         val WEST_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 2.0, 16.0, 16.0)
 
+        fun crateShapeMap(
+            north: VoxelShape, east: VoxelShape, south: VoxelShape, west: VoxelShape,
+        ): Map<Direction.Axis, Array<VoxelShape>> {
+            val array = arrayOfNulls<VoxelShape>(32)
+
+            var shape: VoxelShape
+            for (idx in 0..<32) {
+                shape = Shapes.empty()
+                if ((idx and 1) == 1) shape = Shapes.or(shape, north)
+                if (((idx shr 1) and 1) == 1) shape = Shapes.or(shape, east)
+                if (((idx shr 2) and 1) == 1) shape = Shapes.or(shape, south)
+                if (((idx shr 3) and 1) == 1) shape = Shapes.or(shape, west)
+
+                array[idx] = shape
+            }
+
+            return Direction.Axis.entries.associateWith {
+                array.mapNotNull { shape -> shape?.rotateColumn(it) }.toTypedArray()
+            }
+        }
     }
 }

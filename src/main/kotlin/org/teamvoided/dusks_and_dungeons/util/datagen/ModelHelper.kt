@@ -1292,10 +1292,10 @@ fun BlockModelGenerators.hollowBlock(block: Block) {
     val model = MultiPartGenerator.multiPart(block)
     var modelId: ResourceLocation
     val allDirectionFalse = Condition.condition()
-        .term(HollowLogWithCuttingBlock.NORTH, false)
-        .term(HollowLogWithCuttingBlock.SOUTH, false)
-        .term(HollowLogWithCuttingBlock.EAST, false)
-        .term(HollowLogWithCuttingBlock.WEST, false)
+        .term(CuttableHollowLogBlock.NORTH, false)
+        .term(CuttableHollowLogBlock.SOUTH, false)
+        .term(CuttableHollowLogBlock.EAST, false)
+        .term(CuttableHollowLogBlock.WEST, false)
     val directionsX = listOf(
         Direction.WEST,
         Direction.SOUTH,
@@ -1307,7 +1307,7 @@ fun BlockModelGenerators.hollowBlock(block: Block) {
         model.with(
             Condition.condition()
                 .term(RotatedPillarBlock.AXIS, Direction.Axis.X)
-                .term(HollowLogWithCuttingBlock.getProperty(it), true),
+                .term(CuttableHollowLogBlock.getProperty(it), true),
             Variant.variant()
                 .with(VariantProperties.MODEL, block.model("_" + directionsX[idx].toString()))
                 .with(VariantProperties.Y_ROT, Rotation.R90)
@@ -1319,7 +1319,7 @@ fun BlockModelGenerators.hollowBlock(block: Block) {
         model.with(
             Condition.condition()
                 .term(RotatedPillarBlock.AXIS, Direction.Axis.Y)
-                .term(HollowLogWithCuttingBlock.getProperty(it), true),
+                .term(CuttableHollowLogBlock.getProperty(it), true),
             Variant.variant()
                 .with(VariantProperties.MODEL, modelId)
                 .with(VariantProperties.X_ROT, Rotation.R270)
@@ -1331,7 +1331,7 @@ fun BlockModelGenerators.hollowBlock(block: Block) {
         model.with(
             Condition.condition()
                 .term(RotatedPillarBlock.AXIS, Direction.Axis.Z)
-                .term(HollowLogWithCuttingBlock.getProperty(it), true),
+                .term(CuttableHollowLogBlock.getProperty(it), true),
             Variant.variant()
                 .with(VariantProperties.MODEL, modelId)
         )

@@ -19,10 +19,9 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.rotateColumn
 
-// TODO fix rotation, they are broken in axiom
 open class HollowLogBlock(settings: Properties) : RotatedPillarBlock(settings), SimpleWaterloggedBlock {
     init {
-        this.registerDefaultState(
+        registerDefaultState(
             stateDefinition.any()
                 .setValue(AXIS, Direction.Axis.X)
                 .setValue(WATERLOGGED, false)
@@ -30,39 +29,44 @@ open class HollowLogBlock(settings: Properties) : RotatedPillarBlock(settings), 
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
-        val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type == Fluids.WATER
-        return super.getStateForPlacement(ctx)?.setValue(WATERLOGGED, waterlogged)
+        return super.getStateForPlacement(ctx)
+            ?.setValue(WATERLOGGED, ctx.level.getFluidState(ctx.clickedPos).type == Fluids.WATER)
     }
 
     override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
+        level: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
-        if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
+        if (state.getValue(WATERLOGGED)) level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level))
         return state
     }
 
-    override fun getFluidState(state: BlockState): FluidState =
-        if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false) else super.getFluidState(state)
+    override fun getFluidState(state: BlockState): FluidState {
+        return if (state.getValue(WATERLOGGED))
+            Fluids.WATER.getSource(false)
+        else
+            super.getFluidState(state)
+    }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AXIS, WATERLOGGED)
     }
 
-    override fun getShape(
-        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
-    ): VoxelShape = SHAPE.rotateColumn(state.getValue(AXIS))
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        return SHAPES[state.getValue(AXIS)] ?: Shapes.block()
+    }
 
-    override fun getInteractionShape(state: BlockState, world: BlockGetter, pos: BlockPos): VoxelShape =
-        Shapes.block()
+    override fun getInteractionShape(state: BlockState, level: BlockGetter, pos: BlockPos): VoxelShape = Shapes.block()
 
     companion object {
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
-        val SHAPE = Shapes.or(
+        val SHAPE: VoxelShape = Shapes.or(
             box(0.0, 0.0, 0.0, 2.0, 16.0, 16.0),
             box(14.0, 0.0, 0.0, 16.0, 16.0, 16.0),
             box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0),
             box(0.0, 0.0, 14.0, 16.0, 16.0, 16.0),
         )
+
+        val SHAPES = Direction.Axis.entries.associateWith { SHAPE.rotateColumn(it) }
     }
 }

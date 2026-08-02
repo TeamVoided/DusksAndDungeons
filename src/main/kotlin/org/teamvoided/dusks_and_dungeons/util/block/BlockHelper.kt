@@ -196,7 +196,7 @@ fun bigSoulCandleOf(candle: Block) = BigCandleBlock(SOUL_FIRE_FLAME, ofFullCopy(
 fun bigSoulCandleCakeOf(block: Block) = BigCandleCakeBlock(block, SOUL_FIRE_FLAME, ofFullCopy(CANDLE_CAKE))
 
 // Other
-fun hollowLog(log: Block): Block = HollowLogWithCuttingBlock(ofFullCopy(log))
+fun hollowLog(log: Block): Block = CuttableHollowLogBlock(ofFullCopy(log))
 fun hollowBambooBlock(bambooBlock: Block): Block = HollowBambooBlock(ofFullCopy(bambooBlock))
 fun logPile(log: Block): Block = LogPileBlock(ofFullCopy(log).noOcclusion())
 fun logPile(log: Block, mapColor: MapColor): Block =
