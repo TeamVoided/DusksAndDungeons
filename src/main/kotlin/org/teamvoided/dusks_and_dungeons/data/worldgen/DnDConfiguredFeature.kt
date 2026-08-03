@@ -84,7 +84,8 @@ object DnDConfiguredFeature {
     val SLATED_OVERWORLD_ORE = create("overlay/slated_overworld_ore")
     val BLACKSTONE_NETHER_ORE = create("overlay/blackstone_nether_ore")
 
-    val HUGE_GOLD_MUSHROOM = create("huge_gold_mushroom")
+    val HUGE_GOLDEN_MUSHROOM = create("huge_golden_mushroom")
+    val PATCH_GOLDEN_MUSHROOM = create("patch_golden_mushroom")
 
 
     fun create(id: String): ResourceKey<ConfiguredFeature<*, *>> =

@@ -1,9 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.Fluids
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -12,25 +9,18 @@ import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.OreFeatures
 import net.minecraft.data.worldgen.features.VegetationFeatures
 import net.minecraft.data.worldgen.placement.OrePlacements
+import net.minecraft.data.worldgen.placement.PlacementUtils
+import net.minecraft.resources.ResourceKey
 import net.minecraft.util.valueproviders.ClampedInt
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
-import net.minecraft.data.worldgen.placement.PlacementUtils
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
-import net.minecraft.world.level.levelgen.placement.BiomeFilter
-import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
-import net.minecraft.world.level.levelgen.placement.CountPlacement
-import net.minecraft.world.level.levelgen.placement.HeightRangePlacement
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement
-import net.minecraft.world.level.levelgen.placement.NoiseThresholdCountPlacement
-import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
-import net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement
-import net.minecraft.world.level.levelgen.placement.RarityFilter
-import net.minecraft.world.level.levelgen.placement.SurfaceWaterDepthFilter
+import net.minecraft.world.level.levelgen.placement.*
+import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -47,10 +37,10 @@ object PlacedFeatureCreator {
         PlacementUtils.filteredByBlockSurvival(Blocks.ACACIA_SAPLING)
 
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
-        val configuredFeatureProvider = c.lookup(Registries.CONFIGURED_FEATURE)
+        val cfgLookup = c.lookup(Registries.CONFIGURED_FEATURE)
         c.register(
             DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER),
+            cfgLookup.getOrThrow(DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER),
             RarityFilter.onAverageOnceEvery(7),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
@@ -58,14 +48,14 @@ object PlacedFeatureCreator {
         )
         c.register(
             DnDPlacedFeature.PATCH_PUMPKIN_EXTRA,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA),
+            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA),
             RarityFilter.onAverageOnceEvery(50),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()
         )
         c.register(
-            DnDPlacedFeature.DISK_PODZOL, configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.DISK_PODZOL),
+            DnDPlacedFeature.DISK_PODZOL, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_PODZOL),
             RarityFilter.onAverageOnceEvery(40),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
@@ -76,7 +66,7 @@ object PlacedFeatureCreator {
             BiomeFilter.biome()
         )
         c.register(
-            DnDPlacedFeature.DISK_MUD, configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.DISK_MUD),
+            DnDPlacedFeature.DISK_MUD, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_MUD),
             RarityFilter.onAverageOnceEvery(10),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
@@ -88,7 +78,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DnDPlacedFeature.DISK_RED_SAND,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.DISK_RED_SAND),
+            cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_RED_SAND),
             CountPlacement.of(3),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
@@ -97,14 +87,28 @@ object PlacedFeatureCreator {
             ),
             BiomeFilter.biome()
         )
-        saplingFeatures(c, configuredFeatureProvider)
-        autumnBiomeFeatures(c, configuredFeatureProvider)
-        rockyOres(c, configuredFeatureProvider)
+        saplingFeatures(c, cfgLookup)
+        autumnBiomeFeatures(c, cfgLookup)
+        rockyOres(c, cfgLookup)
+
+
+        // Golden Mushrooms
+        c.register(
+            DnDPlacedFeature.GOLDEN_MUSHROOM_NORMAL,
+            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
+            getMushroomPlacement(256)
+        )
+        c.register(
+            DnDPlacedFeature.GOLDEN_MUSHROOM_COMMON,
+            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
+            getMushroomPlacement(128)
+        )
+
     }
 
     fun saplingFeatures(
         c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>
+        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>,
     ) {
         c.register(
             DnDPlacedFeature.CASCADE_TREE,
@@ -130,7 +134,7 @@ object PlacedFeatureCreator {
 
     fun autumnBiomeFeatures(
         c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>
+        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>,
     ) {
         c.register(
             DnDPlacedFeature.ORE_LAPIS_EXTRA,
@@ -287,7 +291,7 @@ object PlacedFeatureCreator {
 
     fun rockyOres(
         c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>
+        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>,
     ) {
         c.register(
             DnDPlacedFeature.ROCKY_ORE_UPPER,
@@ -335,7 +339,7 @@ object PlacedFeatureCreator {
     }
 
     fun orePlacementModifiers(
-        firstModifier: PlacementModifier, secondModifier: PlacementModifier
+        firstModifier: PlacementModifier, secondModifier: PlacementModifier,
     ): List<PlacementModifier> {
         return listOf(
             firstModifier, InSquarePlacement.spread(),
@@ -353,14 +357,30 @@ object PlacedFeatureCreator {
             .add(BiomeFilter.biome())
     }
 
+    fun getMushroomPlacement(i: Int, placementModifier: PlacementModifier? = null): MutableList<PlacementModifier> {
+        val builder = ImmutableList.builder<PlacementModifier>()
+        if (placementModifier != null) {
+            builder.add(placementModifier)
+        }
+
+        if (i != 0) {
+            builder.add(RarityFilter.onAverageOnceEvery(i))
+        }
+
+        builder.add(InSquarePlacement.spread())
+        builder.add(PlacementUtils.HEIGHTMAP)
+        builder.add(BiomeFilter.biome())
+        return builder.build()
+    }
+
 
     fun BootstrapContext<PlacedFeature>.register(
         registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
-        vararg placementModifiers: PlacementModifier
+        vararg placementModifiers: PlacementModifier,
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers.toList()))
 
     fun BootstrapContext<PlacedFeature>.register(
         registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
-        placementModifiers: List<PlacementModifier>
+        placementModifiers: List<PlacementModifier>,
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
 }

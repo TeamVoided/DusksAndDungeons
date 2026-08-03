@@ -41,6 +41,9 @@ object DnDPlacedFeature {
     val SLATED_ORE = create("slated_ore")
     val BLACKSTONED_ORE = create("blackstoned_ore")
 
+    val GOLDEN_MUSHROOM_NORMAL = create("golden_mushroom_normal")
+    val GOLDEN_MUSHROOM_COMMON = create("golden_mushroom_common")
+
 
     fun create(id: String) = ResourceKey.create(Registries.PLACED_FEATURE, DusksAndDungeons.id(id))
 }

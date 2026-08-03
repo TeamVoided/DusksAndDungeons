@@ -10,25 +10,36 @@ import net.minecraft.world.level.levelgen.GenerationStep.Decoration
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags as Tags
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags as CTags
 
 
 object DnDBiomeModifications {
+
     fun init() {
-        addOres("shallow_stoney_ore", DnDPlacedFeature.ROCKY_ORE_UPPER, Tags.IS_OVERWORLD)
-        addOres("deep_stoney_ore", DnDPlacedFeature.ROCKY_ORE_LOWER, Tags.IS_OVERWORLD)
-        addOres("slated_ore", DnDPlacedFeature.SLATED_ORE, Tags.IS_OVERWORLD)
-        addOres("blackstoned_ore", DnDPlacedFeature.BLACKSTONED_ORE, Tags.IS_NETHER)
+        addOres("shallow_stoney_ore", DnDPlacedFeature.ROCKY_ORE_UPPER, CTags.IS_OVERWORLD)
+        addOres("deep_stoney_ore", DnDPlacedFeature.ROCKY_ORE_LOWER, CTags.IS_OVERWORLD)
+        addOres("slated_ore", DnDPlacedFeature.SLATED_ORE, CTags.IS_OVERWORLD)
+        addOres("blackstoned_ore", DnDPlacedFeature.BLACKSTONED_ORE, CTags.IS_NETHER)
+
+
+        addVegetation("golden_mushrooms_normal", DnDPlacedFeature.GOLDEN_MUSHROOM_NORMAL, CTags.IS_FOREST)
+        addVegetation("golden_mushrooms_common", DnDPlacedFeature.GOLDEN_MUSHROOM_COMMON, CTags.IS_SPOOKY)
     }
 
-    private fun addOres(id: String, placedFeature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>) =
+    internal fun addOres(id: String, placedFeature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>) {
         addFeature(id, Decoration.UNDERGROUND_ORES, placedFeature, biome)
+    }
 
-    @Suppress("SameParameterValue")
-    private fun addFeature(
-        id: String, generationStep: Decoration, placedFeature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>
-    ) = BiomeModifications.create(id("add_$id")).add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(biome)) { it ->
-        it.generationSettings.addFeature(generationStep, placedFeature)
+    internal fun addVegetation(id: String, placedFeature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>) {
+        addFeature(id, Decoration.VEGETAL_DECORATION, placedFeature, biome)
+    }
+
+    internal fun addFeature(
+        id: String, generationStep: Decoration, placedFeature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>,
+    ) {
+        BiomeModifications.create(id("add_$id")).add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(biome)) {
+            it.generationSettings.addFeature(generationStep, placedFeature)
+        }
     }
 
 }

@@ -13,11 +13,7 @@ import net.minecraft.util.random.SimpleWeightedRandomList
 import net.minecraft.util.valueproviders.BiasedToBottomInt
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.UniformInt
-import net.minecraft.world.level.block.BeetrootBlock
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.FarmBlock
-import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
@@ -48,11 +44,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ROCKY_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SLATE_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
-import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.BoulderConfig
-import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FairyRingConfig
-import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FallenTreeConfig
-import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FarmlandConfig
-import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.MushroomFeatureConfig
+import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.*
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer
@@ -66,9 +58,9 @@ object ConfiguredFeatureCreator {
 
     @Suppress("LongMethod")
     fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
-        val blockTags = c.lookup(Registries.BLOCK)
+//        val blockTags = c.lookup(Registries.BLOCK)
         val configuredFeatures = c.lookup(Registries.CONFIGURED_FEATURE)
-        val placedFeatures = c.lookup(Registries.PLACED_FEATURE)
+//        val placedFeatures = c.lookup(Registries.PLACED_FEATURE)
 
         //sort by folder structure in DnDConfiguredFeature
         c.trees()
@@ -116,7 +108,7 @@ object ConfiguredFeatureCreator {
         )
 
         c.registerConfiguredFeature(
-            DnDConfiguredFeature.HUGE_GOLD_MUSHROOM,
+            DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM,
             DnDFeatures.HUGE_GOLDEN_MUSHROOM,
             MushroomFeatureConfig(
                 BlockTags.REPLACEABLE,
@@ -125,6 +117,13 @@ object ConfiguredFeatureCreator {
                 BiasedToBottomInt.of(3, 6),
                 BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM_BLOCK),
                 BiasedToBottomInt.of(1, 7),
+            )
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM,
+            Feature.RANDOM_PATCH,
+            FeatureUtils.simplePatchConfiguration(
+                Feature.SIMPLE_BLOCK, SimpleBlockConfiguration(BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM))
             )
         )
     }
