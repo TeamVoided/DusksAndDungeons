@@ -54,6 +54,8 @@ open class CuttableHollowLogBlock(settings: Properties) : HollowLogBlock(setting
         )
     }
 
+    open fun getParticleDensity(): Double = 0.4
+
     override fun useItemOn(
         stack: ItemStack, state: BlockState, level: Level, pos: BlockPos,
         player: Player, hand: InteractionHand, hit: BlockHitResult,

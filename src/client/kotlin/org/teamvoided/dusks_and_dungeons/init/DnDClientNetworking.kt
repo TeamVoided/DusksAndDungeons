@@ -27,22 +27,19 @@ object DnDClientNetworking {
     }
 
     fun handleDnDLevelEvents(event: DnDLevelEventPayload, client: Minecraft, player: LocalPlayer) {
-        val level = client.level ?: error("Received and event with no level!")
+        val level = client.level ?: error("Received an event, but there is no level!")
         when (event.eventId) {
             DnDLevelEvents.CUT_HOLLOW_LOG -> {
-                val pos = event.pos
-                val state = level.getBlockState(pos)
+                val state = level.getBlockState(event.pos)
                 val block = state.block
-                val voxelShape: VoxelShape
-                if (block is CuttableHollowLogBlock) {
-                    voxelShape = block.shapeMap[state.getValue(AXIS)]?.get(event.data) ?: Shapes.block()
-                } else voxelShape = Shapes.block()
+                var particleDensity = 0.3
+                val voxelShape = if (block is CuttableHollowLogBlock) {
+                    particleDensity = block.getParticleDensity()
+                    block.shapeMap[state.getValue(AXIS)]?.getOrNull(event.data) ?: Shapes.block()
+                } else
+                    Shapes.block()
 
-                if (voxelShape == Shapes.block()) {
-                    println("blocked")
-                }
-
-                level.destroy(pos, state, voxelShape)
+                level.flatDestroyParticles(event.pos, state, voxelShape, particleDensity)
             }
 
             else -> {
@@ -51,35 +48,34 @@ object DnDClientNetworking {
         }
     }
 
-    fun ClientLevel.destroy(blockPos: BlockPos, blockState: BlockState, shape: VoxelShape) {
-        val scaler = 0.25
-        shape.forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
-            val j = min(1.0, maxX - minX)
-            val k = min(1.0, maxY - minY)
-            val l = min(1.0, maxZ - minZ)
-            val m = max(2, Mth.ceil(j / scaler))
-            val n = max(2, Mth.ceil(k / scaler))
-            val o = max(2, Mth.ceil(l / scaler))
-            for (p in 0..<m) {
-                for (q in 0..<n) {
-                    for (r in 0..<o) {
-                        val s = (p + 0.5) / m
-                        val t = (q + 0.5) / n
-                        val u = (r + 0.5) / o
-                        val xOffset = s * j + minX
-                        val yOffset = t * k + minY
-                        val zOffset = u * l + minZ
+    fun ClientLevel.flatDestroyParticles(pos: BlockPos, state: BlockState, shape: VoxelShape, density: Double = 0.25) {
+        if (!state.shouldSpawnTerrainParticles()) return
+
+        shape.forAllBoxes { x1, y1, z1, x2, y2, z2 ->
+            val widthX = min(1.0, x2 - x1)
+            val widthY = min(1.0, y2 - y1)
+            val widthZ = min(1.0, z2 - z1)
+            val countX = max(2, Mth.ceil(widthX / density))
+            val countY = max(2, Mth.ceil(widthY / density))
+            val countZ = max(2, Mth.ceil(widthZ / density))
+            for (xx in 0..<countX) {
+                for (yy in 0..<countY) {
+                    for (zz in 0..<countZ) {
+                        val relX = (xx + 0.5) / countX
+                        val relY = (yy + 0.5) / countY
+                        val relZ = (zz + 0.5) / countZ
+                        val x = relX * widthX + x1
+                        val y = relY * widthY + y1
+                        val z = relZ * widthZ + z1
                         Minecraft.getInstance().particleEngine.add(
                             TerrainParticle(
                                 this,
-                                blockPos.x + xOffset,
-                                blockPos.y + yOffset,
-                                blockPos.z + zOffset,
-                                s - 0.5,
-                                t - 0.5,
-                                u - 0.5,
-                                blockState,
-                                blockPos
+                                pos.x + x, pos.y + y, pos.z + z,
+                                0.0, -1.0, 0.0,
+                                // Vanilla destroy partile logic, in case you need to for something
+//                                relX - 0.5, relY - 0.5, relZ - 0.5,
+                                state,
+                                pos
                             )
                         )
                     }
