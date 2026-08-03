@@ -88,6 +88,9 @@ class ItemTagsProvider(
     }
 
     private fun woodTags() {
+        copy(DnDBlockTags.HOLLOW_LOGS, DnDItemTags.HOLLOW_LOGS)
+        copy(DnDBlockTags.HOLLOW_LOGS_THAT_BURN, DnDItemTags.HOLLOW_LOGS_THAT_BURN)
+
         getOrCreateTagBuilder(ItemTags.WOODEN_STAIRS).forceAddTag(DnDItemTags.WOOD_STAIRS)
         getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).forceAddTag(DnDItemTags.WOOD_SLABS)
         getOrCreateTagBuilder(ItemTags.WALLS).forceAddTag(DnDItemTags.WOODEN_WALLS)

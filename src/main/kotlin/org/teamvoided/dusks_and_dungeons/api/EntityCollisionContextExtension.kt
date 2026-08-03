@@ -7,4 +7,8 @@ interface EntityCollisionContextExtension {
 
     fun isHoldingItem(tag: TagKey<Item>): Boolean
 
+    fun setRecursive(state: Boolean)
+
+    fun isRecursive(): Boolean
+
 }

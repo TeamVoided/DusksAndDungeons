@@ -70,6 +70,8 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.HOLLOW_STRIPPED_MANGROVE_LOG)
             .add(DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG)
             .add(DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG)
+            .add(DnDBlocks.HOLLOW_BAMBOO_BLOCK)
+            .add(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK)
         getOrCreateTagBuilder(DnDBlockTags.CASCADE_LOGS)
             .add(DnDBlocks.CASCADE_LOG)
             .add(DnDBlocks.CASCADE_WOOD.parent)
