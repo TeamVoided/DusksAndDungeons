@@ -2,6 +2,7 @@ package org.teamvoided.dusks_and_dungeons
 
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resources.ResourceLocation
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.init.*
@@ -14,7 +15,7 @@ object DusksAndDungeons {
     const val MODID = "dusks_and_dungeons"
 
     @JvmField
-    val log = LoggerFactory.getLogger(DusksAndDungeons::class.java)
+    val log: Logger = LoggerFactory.getLogger(MODID)
 
     private var initialised = false
 
