@@ -21,6 +21,8 @@ import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AlterGroundRadiu
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AlterOnGroundTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AttachedToTrunkTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.BeehiveBigTreeDecorator
+import org.teamvoided.dusks_and_dungeons.world.gen.trunk.BentTrunkPlacer
+import org.teamvoided.dusks_and_dungeons.world.gen.trunk.WallTrunkPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.ThreeWideTrunkPlacer
 
 @Suppress("SameParameterValue")
@@ -33,6 +35,8 @@ object DnDWorldgen {
         registerTreeDecorator("beehive_big_tree_decorator", BeehiveBigTreeDecorator.CODEC)
 
     val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", ThreeWideTrunkPlacer.CODEC)
+    val WALL_TRUNK_PLACER = registerTrunkPlacer("wall_trunk_placer", WallTrunkPlacer.CODEC)
+    val BENT_TRUNK_PLACER = registerTrunkPlacer("bent_trunk_placer", BentTrunkPlacer.CODEC)
 
     val CASCADE_FOLIAGE_PLACER = registerFoliagePlacer("cascade_foliage_placer", CascadeFoliagePlacer.CODEC)
     val MANHATTAN_FOLIAGE_PLACER = registerFoliagePlacer("manhattan_foliage_placer", ManhattanFoliagePlacer.CODEC)
