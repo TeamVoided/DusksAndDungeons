@@ -64,7 +64,6 @@ object ConfiguredFeatureCreator {
 
         //sort by folder structure in DnDConfiguredFeature
         c.trees()
-        c.fallenTrees()
         c.flowers()
         c.fairyRings()
         c.vegetation()
@@ -278,15 +277,6 @@ object ConfiguredFeatureCreator {
                 AcaciaFoliagePlacer(UniformInt.of(1, 2), UniformInt.of(0, 1)),
                 TwoLayersFeatureSize(0, 0, 0)
             ).build()
-        )
-    }
-
-    fun BootstrapContext<ConfiguredFeature<*, *>>.fallenTrees() {
-        this.registerConfiguredFeature(
-            DnDConfiguredFeature.OAK_FALLEN_TREE, DnDFeatures.FALLEN_TREE, FallenTreeConfig(
-                BlockStateProvider.simple(Blocks.OAK_LOG.defaultBlockState()),
-                BlockStateProvider.simple(DnDBlocks.HOLLOW_OAK_LOG.defaultBlockState())
-            )
         )
     }
 

@@ -11,7 +11,6 @@ import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.*
 object DnDFeatures {
 
     val FARMLAND = register("farmland", FarmlandFeature(FarmlandConfig.CODEC))
-    val FALLEN_TREE = register("fallen_tree", FallenTreeFeature(FallenTreeConfig.CODEC))
     val BOULDER = register("boulder", BoulderFeature(BoulderConfig.CODEC))
     val FAIRY_RING = register("fairy_ring", FairyRingFeature(FairyRingConfig.CODEC))
     val HUGE_GOLDEN_MUSHROOM = register("huge_golden_mushroom", HugeGoldMushroomFeature(MushroomFeatureConfig.CODEC))
