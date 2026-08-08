@@ -51,7 +51,7 @@ object DnDBlockTags {
     val FARMLAND_PLACES_UNDER = create("farmland_places_under")
     val MOONBERRY_CAN_PLACE_ON = create("moonberry_can_place_on")
     val REPLACEABLE_OR_DIRT = create("replaceable_or_dirt")
-    val FALLEN_TREE_REPLACEABLE = create("fallen_tree_replaceable")
+    val VEGETATION_REPLACEABLE = create("vegetation_replaceable")
     val PUMPKIN_PATCH_PLACE_ON = create("pumpkin_patch_place_on")
 
     val CORN_STORAGE = create("storage_blocks/corn")

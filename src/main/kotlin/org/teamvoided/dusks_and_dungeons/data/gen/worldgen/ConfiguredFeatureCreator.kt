@@ -642,7 +642,7 @@ object ConfiguredFeatureCreator {
             DnDFeatures.FAIRY_RING,
             FairyRingConfig(
                 BlockStateProvider.simple(block.defaultBlockState()),
-                DnDBlockTags.FALLEN_TREE_REPLACEABLE,
+                DnDBlockTags.VEGETATION_REPLACEABLE,
                 verticalRange
             )
         )

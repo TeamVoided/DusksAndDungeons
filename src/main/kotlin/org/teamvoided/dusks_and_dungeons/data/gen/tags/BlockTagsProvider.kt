@@ -230,7 +230,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE_BY_TREES)
             .forceAddTag(BlockTags.DIRT)
-        getOrCreateTagBuilder(DnDBlockTags.FALLEN_TREE_REPLACEABLE)
+        getOrCreateTagBuilder(DnDBlockTags.VEGETATION_REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE_BY_TREES)
 
