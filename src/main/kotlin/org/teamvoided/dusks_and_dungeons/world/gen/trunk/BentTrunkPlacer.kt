@@ -20,13 +20,13 @@ import java.util.function.BiConsumer
 import java.util.function.Function
 
 class BentTrunkPlacer(
-    i: Int,
-    j: Int,
-    k: Int,
+    baseHeight: Int,
+    firstRandomHeight: Int,
+    secondRandomHeight: Int,
     private val sect: IntProvider,
     private val rootChance: Float,
     private val rootHeight: IntProvider
-) : TrunkPlacer(i, j, k) {
+) : TrunkPlacer(baseHeight, firstRandomHeight, secondRandomHeight) {
 
     override fun type(): TrunkPlacerType<*> {
         return DnDWorldgen.BENT_TRUNK_PLACER

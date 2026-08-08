@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.features.CaveFeatures
 import net.minecraft.data.worldgen.features.FeatureUtils
 import net.minecraft.data.worldgen.features.TreeFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
@@ -15,6 +16,7 @@ import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
@@ -32,6 +34,8 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStatePr
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.trunkplacers.DarkOakTrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer
+import net.minecraft.world.level.levelgen.placement.CaveSurface
+import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.material.Fluids
@@ -50,7 +54,9 @@ import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AttachedToTrunkTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.BeehiveBigTreeDecorator
+import org.teamvoided.dusks_and_dungeons.world.gen.trunk.BentTrunkPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.ThreeWideTrunkPlacer
+import org.teamvoided.dusks_and_dungeons.world.gen.trunk.WallTrunkPlacer
 import java.util.*
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
@@ -125,6 +131,38 @@ object ConfiguredFeatureCreator {
                 Feature.SIMPLE_BLOCK, SimpleBlockConfiguration(BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM))
             )
         )
+
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.OVERGROWTH_FLOOR_V,
+            Feature.SIMPLE_BLOCK,
+            SimpleBlockConfiguration(
+                WeightedStateProvider(
+                    SimpleWeightedRandomList.builder<BlockState>()
+                        .add(DnDBlocks.OVERGROWTH_BUSH.defaultBlockState(), 2)
+                        .add(DnDBlocks.OVERGROWTH_CARPET.defaultBlockState(), 5)
+                        .add(Blocks.SHORT_GRASS.defaultBlockState(), 10)
+                        .add(Blocks.TALL_GRASS.defaultBlockState(), 2)
+                )
+            )
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.OVERGROWTH_CEILING_V,
+            Feature.SIMPLE_BLOCK,
+            SimpleBlockConfiguration(
+                WeightedStateProvider(
+                    SimpleWeightedRandomList.builder<BlockState>()
+                        .add(
+                            DnDBlocks.OVERGROWTH_BUSH.defaultBlockState()
+                                .setValue(BlockStateProperties.FACING, Direction.UP), 1
+                        )
+                        .add(DnDBlocks.OVERGROWTH_BLOCK.defaultBlockState(), 10)
+                )
+            )
+        )
+        c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR, CaveSurface.FLOOR)
+        c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR_B, CaveSurface.FLOOR, true)
+        c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING, CaveSurface.CEILING)
+        c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING_B, CaveSurface.CEILING, true)
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.trees() {
@@ -278,6 +316,12 @@ object ConfiguredFeatureCreator {
                 TwoLayersFeatureSize(0, 0, 0)
             ).build()
         )
+
+        this.overgrowthTree(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN, Direction.DOWN)
+        this.overgrowthTree(DnDConfiguredFeature.OVERGROWTH_TREE_NORTH, Direction.NORTH)
+        this.overgrowthTree(DnDConfiguredFeature.OVERGROWTH_TREE_SOUTH, Direction.SOUTH)
+        this.overgrowthTree(DnDConfiguredFeature.OVERGROWTH_TREE_EAST, Direction.EAST)
+        this.overgrowthTree(DnDConfiguredFeature.OVERGROWTH_TREE_WEST, Direction.WEST)
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.flowers() {
@@ -368,32 +412,6 @@ object ConfiguredFeatureCreator {
                 ), placedFeatures.getOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
             )
         )
-//        c.registerConfiguredFeature(
-//            DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfig(
-//                listOf(
-//                    WeightedPlacedFeature(
-//                        PlacedFeatureUtil.placedInline(
-//                            configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM),
-//                            *arrayOfNulls(0)
-//                        ), 0.0025f
-//                    ),
-//                    WeightedPlacedFeature(
-//                        PlacedFeatureUtil.placedInline(
-//                            configuredFeatures.getHolderOrThrow(TreeConfiguredFeatures.HUGE_RED_MUSHROOM),
-//                            *arrayOfNulls(0)
-//                        ), 0.005f
-//                    ),
-//                    WeightedPlacedFeature(
-//                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN_WETLANDS),
-//                        0.425f
-//                    ),
-//                    WeightedPlacedFeature(
-//                        placedFeatures.getHolderOrThrow(DnDPlacedFeature.CASCADE_TREE_WETLANDS),
-//                        0.425f
-//                    )
-//                ), placedFeatures.getHolderOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_WETLANDS)
-//            )
-//        )
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.pumpkinPatches() {
@@ -616,6 +634,53 @@ object ConfiguredFeatureCreator {
                     target(BlockMatchTest(Blocks.SOUL_SOIL), BLACKSTONE_BLOCKS.soulSoil.defaultBlockState()),
                 ), 33
             )
+        )
+    }
+
+    fun BootstrapContext<ConfiguredFeature<*, *>>.overgrowthPatch(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        surface: CaveSurface,
+        bonemeal: Boolean = false
+    ) {
+        this.registerConfiguredFeature(
+            feature,
+            Feature.VEGETATION_PATCH,
+            VegetationPatchConfiguration(
+                BlockTags.MOSS_REPLACEABLE,
+                BlockStateProvider.simple(DnDBlocks.OVERGROWTH_BLOCK),
+                PlacementUtils.inlinePlaced(
+                    this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(
+                        if (surface.ordinal == 0) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
+                        else DnDConfiguredFeature.OVERGROWTH_CEILING_V
+                    ),
+                    *arrayOfNulls<PlacementModifier>(0)
+                ),
+                surface,
+                ConstantInt.of(1),
+                0f,
+                5,
+                if (bonemeal) 0.6f else 0.8f,
+                if (bonemeal) UniformInt.of(1, 2) else UniformInt.of(4, 7),
+                if (bonemeal) 0.75f else 0.3f
+            )
+        )
+    }
+
+    fun BootstrapContext<ConfiguredFeature<*, *>>.overgrowthTree(
+        cf: ResourceKey<ConfiguredFeature<*, *>>,
+        dir: Direction
+    ) {
+        val trunk =
+            if (dir.axis == Direction.Axis.Y) BentTrunkPlacer(5, 10, 0, UniformInt.of(2, 5), 0.7f, UniformInt.of(1, 3))
+            else WallTrunkPlacer(5, 10, 0, dir, UniformInt.of(2, 5), 0.7f, UniformInt.of(1, 3))
+        this.registerConfiguredFeature(
+            cf, Feature.TREE, TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(DnDBlocks.CASCADE_LOG),
+                trunk,
+                BlockStateProvider.simple(DnDBlocks.GOLDEN_BIRCH_LEAVES),
+                BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
+                TwoLayersFeatureSize(1, 0, 1)
+            ).forceDirt().ignoreVines().build()
         )
     }
 

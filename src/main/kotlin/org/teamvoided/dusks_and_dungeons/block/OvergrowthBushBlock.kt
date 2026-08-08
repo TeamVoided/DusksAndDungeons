@@ -5,7 +5,9 @@ import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.AzaleaBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SimpleWaterloggedBlock
@@ -15,41 +17,57 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.CANDLES
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.DOUBLE_SHAPE
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.HORIZONTAL_AXIS
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.QUADRUPLE_SHAPE
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.QUINTUPLE_SHAPE
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.SINGLE_SHAPE
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.TRIPLE_SHAPE
+import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.getRotations
+import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
+import org.teamvoided.dusks_and_dungeons.util.rotate
 
 class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings), SimpleWaterloggedBlock {
     init {
         this.registerDefaultState(
             stateDefinition.any()
-                //.setValue(BlockStateProperties.FACING, Direction.DOWN)
+                .setValue(BlockStateProperties.FACING, Direction.DOWN)
                 .setValue(BlockStateProperties.WATERLOGGED, false)
         )
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(BlockStateProperties.WATERLOGGED)
-        //builder.add(BlockStateProperties.FACING)
+        builder.add(BlockStateProperties.FACING)
     }
 
-    //override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
-    //    val blockPos = pos.relative(state.getValue(BlockStateProperties.FACING))
-    //    return this.mayPlaceOn(world.getBlockState(blockPos), world, blockPos)
-    //}
-    //override fun isValidBonemealTarget(world: LevelReader, pos: BlockPos, state: BlockState): Boolean {
-    //    return world.getBlockState(pos.relative(state.getValue(BlockStateProperties.FACING).opposite)).canBeReplaced()
-    //}
+    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
+        val blockPos = pos.relative(state.getValue(BlockStateProperties.FACING))
+        return this.mayPlaceOn(world.getBlockState(blockPos), world, blockPos)
+    }
+
+    override fun isValidBonemealTarget(world: LevelReader, pos: BlockPos, state: BlockState): Boolean {
+        return state.getValue(BlockStateProperties.FACING) != Direction.UP &&
+                world.getBlockState(pos.relative(state.getValue(BlockStateProperties.FACING).opposite)).canBeReplaced()
+    }
 
     override fun performBonemeal(world: ServerLevel, random: RandomSource, pos: BlockPos, state: BlockState) {
-        TreeGrower.AZALEA.growTree(world, world.chunkSource.generator, pos, state, random)
+        (SaplingGenerators.OVERGROWTH[state.getValue(BlockStateProperties.FACING)] ?: SaplingGenerators.OVERGROWTH_DOWN)
+            .growTree(world, world.chunkSource.generator, pos, state, random)
     }
 
-    //override fun getShape(
-    //    state: BlockState,
-    //    world: BlockGetter,
-    //    pos: BlockPos,
-    //    context: CollisionContext
-    //): VoxelShape {
-    //    return super.getShape(state, world, pos, context).rotateFromDown(state.getValue(BlockStateProperties.FACING))
-    //}
+    override fun getShape(
+        state: BlockState,
+        world: BlockGetter,
+        pos: BlockPos,
+        context: CollisionContext
+    ): VoxelShape {
+        return BUSH_SHAPES[state.getValue(BlockStateProperties.FACING)] ?: Shapes.block()
+    }
 
     override fun updateShape(
         state: BlockState,
@@ -68,7 +86,7 @@ class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings), SimpleW
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
         return super.getStateForPlacement(ctx)!!
             .setValue(BlockStateProperties.WATERLOGGED, ctx.level.getFluidState(ctx.clickedPos).type == Fluids.WATER)
-            //.setValue(BlockStateProperties.FACING, ctx.clickedFace.opposite)
+            .setValue(BlockStateProperties.FACING, ctx.clickedFace.opposite)
     }
 
     override fun getFluidState(state: BlockState): FluidState {
@@ -77,6 +95,24 @@ class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings), SimpleW
     }
 
     companion object {
+        val SHAPE_DOWN: VoxelShape =
+            Shapes.or(box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0), box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0))
+        val SHAPE_UP: VoxelShape =
+            Shapes.or(box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0), box(6.0, 8.0, 6.0, 10.0, 16.0, 10.0))
+        val SHAPE_NORTH: VoxelShape =
+            Shapes.or(box(0.0, 0.0, 8.0, 16.0, 16.0, 16.0), box(6.0, 6.0, 0.0, 10.0, 10.0, 8.0))
+
+        val BUSH_SHAPES = Direction.entries.associateWith { dir ->
+            when (dir.get3DDataValue()) {
+                1 -> SHAPE_DOWN
+                2 -> SHAPE_UP
+                3 -> SHAPE_NORTH
+                4 -> SHAPE_NORTH.rotate(1)
+                5 -> SHAPE_NORTH.rotate(2)
+                6 -> SHAPE_NORTH.rotate(3)
+                else -> SHAPE_DOWN
+            }
+        }
 
     }
 }
