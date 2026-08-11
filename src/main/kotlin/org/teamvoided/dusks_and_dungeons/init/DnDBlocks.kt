@@ -74,7 +74,7 @@ object DnDBlocks {
     val OVERGROWTH_LEAF_PILE = register(
         "overgrowth_leaf_pile",
         leafPile(OVERGROWTH_LEAVES.defaultMapColor(), SoundType.AZALEA_LEAVES)
-    ).cutout()
+    ).cutout().grass().tint().hoe().tellWitnessesThatIWasMurdered()
     val HANGING_OVERGROWTH = register(
         "hanging_overgrowth",
         HangingFloraBlock(
@@ -241,18 +241,18 @@ object DnDBlocks {
     val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", leafPile(MapColor.COLOR_YELLOW).cutout())
 
 
-    val VERDANT_LOG = register("cascade_log", log(MapColor.GRASS, MapColor.COLOR_BROWN)).grass()
+    val VERDANT_LOG = register("verdant_log", log(MapColor.GRASS, MapColor.COLOR_BROWN)).grass()
     val VERDANT_WOOD = register(
-        createBlockSet("cascade_wood", Set.VERDANT_WOOD).noStoneCutting().parent(::RotatedPillarBlock).build()
+        createBlockSet("verdant_wood", Set.VERDANT_WOOD).noStoneCutting().parent(::RotatedPillarBlock).build()
     ).woodSet().grass()
 
-    val VERDANT_LOG_PILE = register("cascade_log_pile", logPile(VERDANT_WOOD.parent)).grass()
-    val STRIPPED_VERDANT_LOG = register("stripped_cascade_log", log(MapColor.GRASS, MapColor.GRASS)).grass()
+    val VERDANT_LOG_PILE = register("verdant_log_pile", logPile(VERDANT_WOOD.parent)).grass()
+    val STRIPPED_VERDANT_LOG = register("stripped_verdant_log", log(MapColor.GRASS, MapColor.GRASS)).grass()
     val STRIPPED_VERDANT_WOOD = register(
-        createBlockSet("stripped_cascade_wood", Properties.of().mapColor(MapColor.GRASS)).noStoneCutting()
+        createBlockSet("stripped_verdant_wood", Properties.of().mapColor(MapColor.GRASS)).noStoneCutting()
             .parent(::RotatedPillarBlock).build()
     ).woodSet().grass()
-    val STRIPPED_VERDANT_LOG_PILE = register("stripped_cascade_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent)).grass()
+    val STRIPPED_VERDANT_LOG_PILE = register("stripped_verdant_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent)).grass()
 
     val VERDANT_PLANKS = register("verdant_planks", Block(Set.VERDANT_PLANKS)).flammablePlanks().grass()
     val VERDANT_STAIRS = register("verdant_stairs", stairsOf(VERDANT_PLANKS).wood()).grass()

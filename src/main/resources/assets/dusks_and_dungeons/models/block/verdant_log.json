@@ -1,5 +1,11 @@
 {
-	"parent": "dusks_and_dungeons:block/overgrowth_log",
+	"parent": "block/block",
+	"textures": {
+		"tinted": "dusks_and_dungeons:block/verdant_log_end_tinted",
+		"end": "dusks_and_dungeons:block/verdant_log_end",
+		"side": "dusks_and_dungeons:block/verdant_log",
+		"particle": "#side"
+	},
 	"elements": [
 		{
 			"from": [0, 0, 0],
@@ -9,7 +15,7 @@
 				"east": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "east"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "south"},
 				"west": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "west"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#end", "cullface": "up", "rotation": 180},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#end", "cullface": "up"},
 				"down": {"uv": [0, 0, 16, 16], "texture": "#end", "cullface": "down"}
 			}
 		},
@@ -17,7 +23,7 @@
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"up": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#tinted", "cullface": "up", "rotation": 180},
+				"up": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#tinted", "cullface": "up"},
 				"down": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#tinted", "cullface": "down"}
 			}
 		}
