@@ -123,8 +123,6 @@ fabricApi {
     }
 }
 
-sourceSets["main"].resources.srcDir("src/main/generated")
-
 tasks {
     val javaVersion = libs.versions.java.get()
     withType<JavaCompile> {
