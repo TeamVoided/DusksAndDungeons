@@ -13,9 +13,11 @@
     "WallBlockMixin",
     "WitherSkeletonMixin",
     "accessors.AbstractCandleBlockAccessor",
+    "accessors.UtilAccessor",
     "apis.AxeItemMixin",
     "apis.EntityCollisionContextMixin",
     "debug.ItemDisplayBuilderMixin",
+    "evil.UtilMixin",
     "taglighting.FallLocationMixin",
     "taglighting.LivingEntityMixin"
   ],
