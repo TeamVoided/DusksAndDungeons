@@ -142,7 +142,7 @@ tasks {
     sourceSets.forEach { set ->
         named<ProcessResources>(set.processResourcesTaskName) {
             var expandProps = iridium.props.toMutableMap()
-            iridium.appendLibsVersionProps(expandProps, File("libs.versions.toml"))
+            iridium.appendLibsVersionProps(expandProps, projectDir.resolve("libs.versions.toml"))
             filesMatching(
                 listOf("pack.mcmeta", "fabric.mod.json", "META-INF/mods.toml", "META-INF/neoforge.mods.toml")
             ) {
@@ -165,7 +165,7 @@ uploadScript {
     modrinthId = "id"
     curseId = "0"
 
-    changelog = File("changelog.md").readText()
+    changelog = projectDir.resolve("changelog.md").readText()
 
     version += libs.versions.minecraft.get()
     versionName = "${iridium.modName()} ${iridium.modVersion}"
