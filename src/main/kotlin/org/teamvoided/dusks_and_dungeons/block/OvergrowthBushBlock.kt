@@ -36,12 +36,12 @@ class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings), SimpleW
         this.registerDefaultState(
             stateDefinition.any()
                 .setValue(BlockStateProperties.FACING, Direction.DOWN)
-                .setValue(BlockStateProperties.WATERLOGGED, false)
+                //.setValue(BlockStateProperties.WATERLOGGED, false)
         )
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        builder.add(BlockStateProperties.WATERLOGGED)
+        //builder.add(BlockStateProperties.WATERLOGGED)
         builder.add(BlockStateProperties.FACING)
     }
 
@@ -69,30 +69,30 @@ class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings), SimpleW
         return BUSH_SHAPES[state.getValue(BlockStateProperties.FACING)] ?: Shapes.block()
     }
 
-    override fun updateShape(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: LevelAccessor,
-        pos: BlockPos,
-        neighborPos: BlockPos
-    ): BlockState {
-        if (state.getValue(BlockStateProperties.WATERLOGGED)) {
-            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
-        }
-        return super.updateShape(state, direction, neighborState, world, pos, neighborPos)
-    }
+    //override fun updateShape(
+    //    state: BlockState,
+    //    direction: Direction,
+    //    neighborState: BlockState,
+    //    world: LevelAccessor,
+    //    pos: BlockPos,
+    //    neighborPos: BlockPos
+    //): BlockState {
+    //    if (state.getValue(BlockStateProperties.WATERLOGGED)) {
+    //        world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
+    //    }
+    //    return super.updateShape(state, direction, neighborState, world, pos, neighborPos)
+    //}
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
         return super.getStateForPlacement(ctx)!!
-            .setValue(BlockStateProperties.WATERLOGGED, ctx.level.getFluidState(ctx.clickedPos).type == Fluids.WATER)
+            //.setValue(BlockStateProperties.WATERLOGGED, ctx.level.getFluidState(ctx.clickedPos).type == Fluids.WATER)
             .setValue(BlockStateProperties.FACING, ctx.clickedFace.opposite)
     }
 
-    override fun getFluidState(state: BlockState): FluidState {
-        return if (state.getValue(BlockStateProperties.WATERLOGGED)) Fluids.WATER.getSource(false)
-        else super.getFluidState(state)
-    }
+    //override fun getFluidState(state: BlockState): FluidState {
+    //    return if (state.getValue(BlockStateProperties.WATERLOGGED)) Fluids.WATER.getSource(false)
+    //    else super.getFluidState(state)
+    //}
 
     companion object {
         val SHAPE_DOWN: VoxelShape =

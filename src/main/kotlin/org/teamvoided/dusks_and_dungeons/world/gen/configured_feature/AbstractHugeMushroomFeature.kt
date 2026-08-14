@@ -21,7 +21,7 @@ open class AbstractHugeMushroomFeature<T : MushroomFeatureConfig>(codec: Codec<T
 
         if (canGenerate(level, originPos, stemHeight, mutable, config)) {
             generateCap(level, random, originPos, stemHeight, mutable, config)
-            generateStem(level, random, originPos, config, stemHeight, mutable)
+            generateStem(level, random, originPos, stemHeight, mutable, config)
             return true
         }
         return false
@@ -49,7 +49,7 @@ open class AbstractHugeMushroomFeature<T : MushroomFeatureConfig>(codec: Codec<T
         start: BlockPos,
         yStart: Int,
         mutablePos: BlockPos.MutableBlockPos,
-        config: T,
+        config: T
     ) {
         mutablePos.setWithOffset(start, 0, yStart, 0)
         if (level.getBlockState(mutablePos).`is`(config.replaceable)) {
@@ -61,9 +61,9 @@ open class AbstractHugeMushroomFeature<T : MushroomFeatureConfig>(codec: Codec<T
         level: LevelAccessor,
         random: RandomSource,
         pos: BlockPos,
-        config: T,
         height: Int,
         mutablePos: BlockPos.MutableBlockPos,
+        config: T
     ) {
         for (i in 0 until height) {
             mutablePos.set(pos).move(Direction.UP, i)

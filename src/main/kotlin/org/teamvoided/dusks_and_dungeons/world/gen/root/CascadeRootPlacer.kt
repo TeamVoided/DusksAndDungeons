@@ -62,7 +62,7 @@ class CascadeRootPlacer(
                 || world.isStateAtPosition(pos) { it.`is`(cascadeRootConfig.canGrowThrough) }
     }
 
-    override fun getTrunkOrigin(pos: BlockPos, random: RandomSource?): BlockPos = pos
+    override fun getTrunkOrigin(pos: BlockPos, random: RandomSource): BlockPos = pos
 
     companion object {
         val CODEC: MapCodec<CascadeRootPlacer> = RecordCodecBuilder.mapCodec { instance ->

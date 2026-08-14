@@ -58,6 +58,13 @@ object DnDConfiguredFeature {
     val CROPS_BEETROOTS = create("crops/beetroots")
     val CROPS_GOLDEN_BEETROOTS = create("crops/golden_beetroots")
 
+    //val SPRUCE_BIG_FALLEN_TREE = create("fallen_tree/spruce_big")
+    //val JUNGLE_BIG_FALLEN_TREE = create("fallen_tree/jungle_big")
+    //val DARK_OAK_FALLEN_TREE = create("fallen_tree/dark_oak")
+    //val CASCADE_FALLEN_TREE = create("fallen_tree/cascade")
+    //val CRIMSON_FALLEN_STEM = create("fallen_stem/crimson")
+    //val WARPED_FALLEN_STEM = create("fallen_stem/warped")
+
     val ROCKY_OVERWORLD_ORE = create("overlay/rocky_overworld_ore")
     val SLATED_OVERWORLD_ORE = create("overlay/slated_overworld_ore")
     val BLACKSTONE_NETHER_ORE = create("overlay/blackstone_nether_ore")
