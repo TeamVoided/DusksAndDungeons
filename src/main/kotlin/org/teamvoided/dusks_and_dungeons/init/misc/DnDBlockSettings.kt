@@ -76,6 +76,7 @@ object DnDBlockSettings {
         .strength(2.0f)
         .sound(SoundType.CHERRY_WOOD)
         .ignitedByLava()
+    val STRIPPED_CASCADE_WOOD: Properties = ofFullCopy(STRIPPED_CHERRY_WOOD).mapColor(MapColor.COLOR_BLUE)
     val CASCADE_PLANKS: Properties = Properties.of()
         .mapColor(MapColor.COLOR_BLUE)
         .instrument(NoteBlockInstrument.BASS)

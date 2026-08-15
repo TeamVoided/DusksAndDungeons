@@ -193,7 +193,7 @@ object DnDBlocks {
     val STRIPPED_CASCADE_LOG =
         register("stripped_cascade_log", log(MapColor.COLOR_BLUE, MapColor.COLOR_BLUE, SoundType.CHERRY_WOOD))
     val STRIPPED_CASCADE_WOOD = register(
-        createBlockSet("stripped_cascade_wood", Properties.of().mapColor(MapColor.COLOR_BLUE)).noStoneCutting()
+        createBlockSet("stripped_cascade_wood", Set.STRIPPED_CASCADE_WOOD).noStoneCutting()
             .parent(::RotatedPillarBlock).build()
     ).woodSet()
     val STRIPPED_CASCADE_LOG_PILE = register("stripped_cascade_log_pile", logPile(STRIPPED_CASCADE_WOOD.parent))
@@ -245,7 +245,7 @@ object DnDBlocks {
     val VERDANT_LOG_PILE = register("verdant_log_pile", logPile(VERDANT_WOOD.parent)).grass()
     val STRIPPED_VERDANT_LOG = register("stripped_verdant_log", log(MapColor.GRASS, MapColor.GRASS)).grass().tint()
     val STRIPPED_VERDANT_WOOD = register(
-        createBlockSet("stripped_verdant_wood", Properties.of().mapColor(MapColor.GRASS)).noStoneCutting()
+        createBlockSet("stripped_verdant_wood", Set.STRIPPED_CASCADE_WOOD).noStoneCutting()
             .parent(::RotatedPillarBlock).build()
     ).woodSet().grass().tint()
     val STRIPPED_VERDANT_LOG_PILE = register("stripped_verdant_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent)).grass()

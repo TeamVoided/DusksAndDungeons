@@ -75,15 +75,19 @@ fun BlockModelGenerators.slabTinted(
     side: Block = bottom,
     top: Block = bottom,
     full: Block = side
-) = slabTinted(
-    block, TextureMapping()
-        .put(BOTTOM, bottom.model())
-        .put(SIDE, side.model())
-        .put(TOP, top.model()),
-    full
-)
+) = slabTinted(block, bottom.model(), side.model(), top.model(), full)
 
-fun BlockModelGenerators.slabTinted(block: Block, texture: TextureMapping, full: Block) {
+fun BlockModelGenerators.slabTinted(
+    block: Block,
+    bottom: ResourceLocation,
+    side: ResourceLocation,
+    top: ResourceLocation,
+    full: Block
+) {
+    val texture: TextureMapping = TextureMapping()
+        .put(BOTTOM, bottom)
+        .put(SIDE, side)
+        .put(TOP, top)
     val id = SLAB_BOTTOM_TINTED.create(block, texture, this.modelOutput)
     val id2 = SLAB_TOP_TINTED.create(block, texture, this.modelOutput)
     val id3 = full.model()
