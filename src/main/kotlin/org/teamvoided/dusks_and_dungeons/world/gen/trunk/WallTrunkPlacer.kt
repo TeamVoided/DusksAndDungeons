@@ -40,40 +40,46 @@ class WallTrunkPlacer(
         startPos: BlockPos,
         c: TreeConfiguration
     ): List<FoliageAttachment> {
-        val mutable = startPos.mutable()
 
-        val dirtPos = mutable.move(direction)
+
+        val dirtPos = startPos.relative(direction)
         setDirtAt(w, replacer, r, dirtPos, c)
 
+
+        var trunkPos: BlockPos
+
+        //roots
+        direction.axis.plane.forEach {
+            if (r.nextFloat() <= rootChance) {
+                trunkPos = startPos.relative(it).relative(direction, 2)
+                val rootHeight = rootHeight.sample(r)
+                for (i in 0..rootHeight) {
+                    trunkPos = trunkPos.relative(direction.opposite)
+                    if (i == rootHeight)
+                        this.placeLog(w, replacer, r, trunkPos, c)
+                        { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, it.axis) }
+                    else
+                        this.placeLog(w, replacer, r, trunkPos, c)
+                }
+            }
+        }
+
+        //trunk
+        trunkPos = startPos
         for (i in 0..height) {
             if (r.nextFloat() <= (i / height)) {//going up
-                mutable.above()
-                this.placeLog(w, replacer, r, mutable, c)
+                trunkPos = trunkPos.above(i)
+                this.placeLog(w, replacer, r, trunkPos, c)
             } else {//going sideways
                 val dir = direction.opposite
-                mutable.relative(dir)
+                trunkPos = trunkPos.relative(dir)
                 val function = Function { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, dir.axis) }
-                this.placeLog(w, replacer, r, mutable, c, function)
+                this.placeLog(w, replacer, r, trunkPos, c, function)
             }
         }
         val list: MutableList<FoliageAttachment> = ArrayList()
         //list.add(FoliageAttachment(mutable.above(), 0, false))
 
-        //roots
-        direction.axis.plane.forEach {
-            if (r.nextFloat() <= rootChance) {
-                mutable.set(startPos.relative(it).relative(direction, 2))
-                val rootHeight = rootHeight.sample(r)
-                for (i in 0..rootHeight) {
-                    mutable.relative(direction.opposite)
-                    if (i == rootHeight)
-                        this.placeLog(w, replacer, r, mutable, c)
-                        { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, it.axis) }
-                    else
-                        this.placeLog(w, replacer, r, mutable, c)
-                }
-            }
-        }
 
         return list
     }

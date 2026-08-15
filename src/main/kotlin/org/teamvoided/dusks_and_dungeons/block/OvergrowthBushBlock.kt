@@ -106,10 +106,10 @@ class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings), SimpleW
             when (dir.get3DDataValue()) {
                 1 -> SHAPE_DOWN
                 2 -> SHAPE_UP
-                3 -> SHAPE_NORTH
-                4 -> SHAPE_NORTH.rotate(1)
-                5 -> SHAPE_NORTH.rotate(2)
-                6 -> SHAPE_NORTH.rotate(3)
+                3 -> SHAPE_NORTH.rotate(2)
+                4 -> SHAPE_NORTH.rotate(3)
+                5 -> SHAPE_NORTH
+                6 -> SHAPE_NORTH.rotate(1)
                 else -> SHAPE_DOWN
             }
         }

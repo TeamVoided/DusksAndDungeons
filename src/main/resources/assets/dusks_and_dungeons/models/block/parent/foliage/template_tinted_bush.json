@@ -1,11 +1,7 @@
 {
   "parent": "block/block",
   "textures": {
-    "particle": "#plant",
-    "plant": "dusks_and_dungeons:block/overgrowth_bush_plant",
-    "side": "dusks_and_dungeons:block/overgrowth_bush_side",
-    "stem": "dusks_and_dungeons:block/overgrowth_bush_plant_stem",
-    "top": "dusks_and_dungeons:block/overgrowth_bush_top"
+    "particle": "#plant"
   },
   "elements": [
     {

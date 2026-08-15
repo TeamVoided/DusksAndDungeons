@@ -44,41 +44,40 @@ class BentTrunkPlacer(
         startPos: BlockPos,
         c: TreeConfiguration
     ): List<FoliageAttachment> {
-        val mutable = startPos.mutable()
         setDirtAt(w, replacer, r, startPos.below(), c)
 
         val dir = Direction.Plane.HORIZONTAL.getRandomDirection(r)
         val function = Function { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, dir.axis) }
         val sect = sect.sample(r)
 
+        //roots
+        Direction.Plane.HORIZONTAL.forEach {
+            if (r.nextFloat() <= rootChance) {
+                val rootHeight = rootHeight.sample(r)
+                for (i in 0..rootHeight) {
+                    if (i == rootHeight)
+                        this.placeLog(w, replacer, r, startPos.relative(it).above(i - 1), c)
+                        { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, it.axis) }
+                    else
+                        this.placeLog(w, replacer, r, startPos.relative(it).above(i - 1), c)
+                }
+            }
+        }
+
+        //trunk
         for (i in 0..height) {
-            mutable.above()
-            this.placeLog(w, replacer, r, mutable, c)
+            val blockPos = startPos.above(i).relative(dir, i / sect)
+            this.placeLog(w, replacer, r, blockPos, c)
             if ((i + 1) % sect == 0) {
                 if (height - i < sect) break
-                mutable.relative(dir)
-                this.placeLog(w, replacer, r, mutable, c, function)
+                this.placeLog(w, replacer, r, blockPos.relative(dir), c, function)
             }
         }
 
         val list: MutableList<FoliageAttachment> = ArrayList()
-        //list.add(FoliageAttachment(mutable.above(), 0, false))
+        list.add(FoliageAttachment(startPos.above(height+1).relative(dir, height / sect), 0, false))
 
-        //roots
-        Direction.Plane.HORIZONTAL.forEach {
-            if (r.nextFloat() <= rootChance) {
-                mutable.set(startPos.relative(it).below(2))
-                val rootHeight = rootHeight.sample(r)
-                for (i in 0..rootHeight) {
-                    mutable.above()
-                    if (i == rootHeight)
-                        this.placeLog(w, replacer, r, mutable, c)
-                        { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, it.axis) }
-                    else
-                        this.placeLog(w, replacer, r, mutable, c)
-                }
-            }
-        }
+
 
         return list
     }

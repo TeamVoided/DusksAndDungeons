@@ -6,9 +6,12 @@ import net.minecraft.data.models.model.TexturedModel
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.planksTinted
+import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.strippedTinted
 
 object WoodModels {
     fun woodModels(gen: BlockModelGenerators) {
+        //CASCADE
         gen.createPlant(
             DnDBlocks.CASCADE_SAPLING,
             DnDBlocks.POTTED_CASCADE_SAPLING,
@@ -35,6 +38,20 @@ object WoodModels {
         )
         gen.createTrivialBlock(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
 
+        //VERDANT
+        gen.registerParentedItemModel(DnDBlocks.VERDANT_LOG)
+        gen.woodProvider(DnDBlocks.VERDANT_LOG).wood(DnDBlocks.VERDANT_WOOD.parent)
+        gen.strippedTinted(DnDBlocks.STRIPPED_VERDANT_LOG, DnDBlocks.STRIPPED_VERDANT_WOOD)
+        gen.planksTinted(
+            DnDBlocks.VERDANT_PLANKS,
+            DnDBlocks.VERDANT_STAIRS,
+            DnDBlocks.VERDANT_SLAB,
+            DnDBlocks.VERDANT_WALL,
+            DnDBlocks.VERDANT_FENCE,
+            DnDBlocks.VERDANT_FENCE_GATE
+        )
+
+        //ASSORTED ADDITIONS
         gen.createWood(DnDBlocks.OAK_WOOD, Blocks.OAK_LOG)
         gen.createWood(DnDBlocks.SPRUCE_WOOD, Blocks.SPRUCE_LOG)
         gen.createWood(DnDBlocks.BIRCH_WOOD, Blocks.BIRCH_LOG)
@@ -46,6 +63,7 @@ object WoodModels {
         gen.createWood(DnDBlocks.CRIMSON_HYPHAE, Blocks.CRIMSON_STEM)
         gen.createWood(DnDBlocks.WARPED_HYPHAE, Blocks.WARPED_STEM)
         gen.createWood(DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
+        gen.createWood(DnDBlocks.VERDANT_WOOD, DnDBlocks.VERDANT_LOG)
 
         gen.createWood(DnDBlocks.STRIPPED_OAK_WOOD, Blocks.STRIPPED_OAK_LOG)
         gen.createWood(DnDBlocks.STRIPPED_SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_LOG)

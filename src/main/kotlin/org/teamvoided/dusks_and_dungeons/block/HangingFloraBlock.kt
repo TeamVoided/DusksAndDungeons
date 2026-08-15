@@ -151,8 +151,8 @@ class HangingFloraBlock(properties: Properties) : Block(properties), Bonemealabl
 
 
     companion object {
-        val TIP_SHAPE: VoxelShape = symmetricalBox(3.0, 3.0, 16.0)
-        val SHAPE: VoxelShape = symmetricalBox(5.0, 0.0, 16.0)
+        val TIP_SHAPE: VoxelShape = symmetricalBox(2.0, 4.0, 16.0)
+        val SHAPE: VoxelShape = symmetricalBox(2.0, 0.0, 16.0)
         const val MAX_HEIGHT: Int = 16
 
         val TIP: BooleanProperty = BlockStateProperties.BOTTOM

@@ -40,12 +40,9 @@
   ],
   "accessWidener": "dusks_and_dungeons.classtweaker",
   "depends": {
-    "java": ">=${java}",
     "minecraft": "${version_range}",
     "fabricloader": "*",
-    "fabric-api": "*",
-    "fabric-language-kotlin": ">=${fabric_kotlin}",
-    "fzzy_config": ">=${fzzy_config}"
+    "fabric-api": "*"
   },
   "contact": {
     "homepage": "https://github.com/${github_repo}",

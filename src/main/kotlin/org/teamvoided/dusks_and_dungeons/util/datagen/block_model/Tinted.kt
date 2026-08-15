@@ -1,0 +1,148 @@
+package org.teamvoided.dusks_and_dungeons.util.datagen.block_model
+
+import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.model.TextureSlot.*
+import net.minecraft.data.models.model.TexturedModel
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
+import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
+
+fun BlockModelGenerators.planksTinted(
+    planks: Block,
+    stairs: Block,
+    slab: Block,
+    wall: Block,
+    fence: Block,
+    fenceGate: Block
+) {
+    this.createTrivialBlock(planks, TexturedModel.LEAVES)
+    this.stairsTinted(stairs, planks)
+    this.slabTinted(slab, planks)
+    this.wallTinted(wall, planks)
+    this.fenceTinted(fence, planks)
+    this.fenceGateTinted(fenceGate, planks)
+}
+
+fun BlockModelGenerators.strippedTinted(strippedLog: Block, strippedWoodSet: AbstractBlockSet) = this.strippedTinted(
+    strippedLog,
+    strippedWoodSet.parent,
+    strippedWoodSet.stairs,
+    strippedWoodSet.slab,
+    strippedWoodSet.wall
+)
+
+fun BlockModelGenerators.strippedTinted(
+    strippedLog: Block,
+    strippedWood: Block,
+    stairs: Block,
+    slab: Block,
+    wall: Block
+) {
+    this.columnWithHorizontalTinted(strippedLog)
+    this.columnTinted(strippedWood, strippedLog)
+    this.stairsTinted(stairs, strippedLog)
+    this.slabTinted(slab, strippedLog)
+    this.wallTinted(wall, strippedLog)
+}
+
+fun BlockModelGenerators.stairsTinted(block: Block, bottom: Block, side: Block = bottom, top: Block = bottom) =
+    stairsTinted(block, bottom.model(), side.model(), top.model())
+
+fun BlockModelGenerators.stairsTinted(
+    block: Block,
+    bottom: ResourceLocation,
+    side: ResourceLocation,
+    top: ResourceLocation,
+) {
+    val texture: TextureMapping = TextureMapping()
+        .put(BOTTOM, bottom)
+        .put(SIDE, side)
+        .put(TOP, top)
+    val id: ResourceLocation = STAIRS_INNER_TINTED.create(block, texture, this.modelOutput)
+    val id2: ResourceLocation = STAIRS_TINTED.create(block, texture, this.modelOutput)
+    val id3: ResourceLocation = STAIRS_OUTER_TINTED.create(block, texture, this.modelOutput)
+
+    this.blockStateOutput.accept(BlockModelGenerators.createStairs(block, id, id2, id3))
+    this.delegateItemModel(block, id2)
+}
+
+
+fun BlockModelGenerators.slabTinted(
+    block: Block,
+    bottom: Block,
+    side: Block = bottom,
+    top: Block = bottom,
+    full: Block = side
+) = slabTinted(
+    block, TextureMapping()
+        .put(BOTTOM, bottom.model())
+        .put(SIDE, side.model())
+        .put(TOP, top.model()),
+    full
+)
+
+fun BlockModelGenerators.slabTinted(block: Block, texture: TextureMapping, full: Block) {
+    val id = SLAB_BOTTOM_TINTED.create(block, texture, this.modelOutput)
+    val id2 = SLAB_TOP_TINTED.create(block, texture, this.modelOutput)
+    val id3 = full.model()
+    this.blockStateOutput.accept(BlockModelGenerators.createSlab(block, id, id2, id3))
+    this.delegateItemModel(block, id)
+}
+
+fun BlockModelGenerators.wallTinted(block: Block, texture: Block) = wallTinted(block, texture.model())
+
+fun BlockModelGenerators.wallTinted(wallBlock: Block, inId: ResourceLocation) {
+    val texture = TextureMapping.defaultTexture(wallBlock.model()).put(WALL, inId)
+    val id = WALL_POST_TINTED.create(wallBlock, texture, this.modelOutput)
+    val id2 = WALL_LOW_SIDE_TINTED.create(wallBlock, texture, this.modelOutput)
+    val id3 = WALL_TALL_SIDE_TINTED.create(wallBlock, texture, this.modelOutput)
+    this.blockStateOutput.accept(BlockModelGenerators.createWall(wallBlock, id, id2, id3))
+    this.delegateItemModel(wallBlock, WALL_INVENTORY_TINTED.create(wallBlock, texture, this.modelOutput))
+}
+
+fun BlockModelGenerators.fenceTinted(fenceBlock: Block, reference: Block) {
+    val texture = TextureMapping.defaultTexture(reference)
+    val id = FENCE_POST_TINTED.create(fenceBlock, texture, this.modelOutput)
+    val id2 = FENCE_SIDE_TINTED.create(fenceBlock, texture, this.modelOutput)
+    val id3 = FENCE_INVENTORY_TINTED.create(fenceBlock, texture, this.modelOutput)
+    this.blockStateOutput.accept(BlockModelGenerators.createFence(fenceBlock, id, id2))
+    this.delegateItemModel(fenceBlock, id3)
+}
+
+
+fun BlockModelGenerators.fenceGateTinted(fenceGateBlock: Block, reference: Block) {
+    val texture = TextureMapping.defaultTexture(reference)
+    val id1 = FENCE_GATE_OPEN_TINTED.create(fenceGateBlock, texture, this.modelOutput)
+    val id2 = FENCE_GATE_CLOSED_TINTED.create(fenceGateBlock, texture, this.modelOutput)
+    val id3 = FENCE_GATE_WALL_OPEN_TINTED.create(fenceGateBlock, texture, this.modelOutput)
+    val id4 = FENCE_GATE_WALL_CLOSED_TINTED.create(fenceGateBlock, texture, this.modelOutput)
+    this.blockStateOutput.accept(BlockModelGenerators.createFenceGate(fenceGateBlock, id1, id2, id3, id4, true))
+    this.delegateItemModel(fenceGateBlock, id2)
+}
+
+
+fun BlockModelGenerators.columnWithHorizontalTinted(block: Block) {
+    val texture = TextureMapping.logColumn(block)
+    val resourceLocation = CUBE_COLUMN_TINTED.create(block, texture, this.modelOutput)
+    val resourceLocation2 = CUBE_COLUMN_HORIZONTAL_TINTED.create(block, texture, this.modelOutput)
+    this.blockStateOutput.accept(
+        BlockModelGenerators.createRotatedPillarWithHorizontalVariant(
+            block,
+            resourceLocation,
+            resourceLocation2
+        )
+    )
+}
+
+fun BlockModelGenerators.columnTinted(block: Block, texture: Block) {
+    val texture = TextureMapping.cube(texture)
+    val resourceLocation = CUBE_COLUMN_TINTED.create(block, texture, this.modelOutput)
+    this.blockStateOutput.accept(
+        BlockModelGenerators.createAxisAlignedPillarBlock(
+            block,
+            resourceLocation
+        )
+    )
+}

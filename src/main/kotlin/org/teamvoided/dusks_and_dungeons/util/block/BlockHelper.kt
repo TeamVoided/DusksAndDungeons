@@ -118,6 +118,7 @@ fun RockyBlocks.rocky(): RockyBlocks {
 fun AbstractBlockSet.cutout(): AbstractBlockSet = CUTOUT_BLOCKS.addSet(this)
 fun AbstractBlockSet.translucent(): AbstractBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
 fun AbstractBlockSet.grass(): AbstractBlockSet = GRASS_TINT_BLOCKS.addSet(this)
+fun AbstractBlockSet.tint(): AbstractBlockSet = TINT_PARTICLES.addSet(this)
 fun AbstractBlockSet.foliage(): AbstractBlockSet = FOLIAGE_TINT_BLOCKS.addSet(this)
 fun AbstractBlockSet.flammablePlanks(): AbstractBlockSet = FLAMMABLE_PLANKS.addDevSet(this)
 fun AbstractBlockSet.flammableLogs(): AbstractBlockSet = FLAMMABLE_LOGS.addDevSet(this)

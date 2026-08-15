@@ -90,6 +90,7 @@ object DnDBlockSettings {
         .ignitedByLava()
         .pushReaction(PushReaction.DESTROY)
     val VERDANT_WOOD: Properties = ofFullCopy(Blocks.OAK_WOOD)
+    val STRIPPED_VERDANT_WOOD: Properties = ofFullCopy(Blocks.STRIPPED_OAK_WOOD)
     val VERDANT_PLANKS: Properties = ofFullCopy(Blocks.OAK_PLANKS)
     val GOLDEN_MUSHROOM_BLOCK: Properties = ofFullCopy(BROWN_MUSHROOM_BLOCK).mapColor(MapColor.GOLD)
     val GOLDEN_MUSHROOM: Properties = Properties.of()

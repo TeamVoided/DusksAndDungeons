@@ -77,11 +77,11 @@ fun BlockModelGenerators.tintedStairOverlay(
         .put(BOTTOM, overlayBottom)
         .put(SIDE, overlaySide)
 
-    block("parent/stairs_with_tint", TOP, BOTTOM, SIDE)
+    block("parent/tint/stairs", TOP, BOTTOM, SIDE)
         .create(overlay.suffix("_stairs"), texture, this.modelOutput)
-    block("parent/stairs_inner_with_tint", TOP, BOTTOM, SIDE)
+    block("parent/tint/stairs_inner", TOP, BOTTOM, SIDE)
         .create(overlay.suffix("_stairs_inner"), texture, this.modelOutput)
-    block("parent/stairs_outer_with_tint", TOP, BOTTOM, SIDE)
+    block("parent/tint/stairs_outer", TOP, BOTTOM, SIDE)
         .create(overlay.suffix("_stairs_outer"), texture, this.modelOutput)
 }
 
@@ -99,19 +99,19 @@ fun BlockModelGenerators.tintedSlabOverlay(
         .put(TOP, overlayTop)
         .put(BOTTOM, overlayBottom)
         .put(SIDE, overlaySide)
-    block("parent/slab_with_tint", "_post", TOP, BOTTOM, SIDE)
+    block("parent/tint/slab", "_post", TOP, BOTTOM, SIDE)
         .create(overlay.suffix("_slab"), texture, this.modelOutput)
-    block("parent/slab_top_with_tint", "_side", TOP, BOTTOM, SIDE)
+    block("parent/tint/slab_top", "_side", TOP, BOTTOM, SIDE)
         .create(overlay.suffix("_slab_top"), texture, this.modelOutput)
 }
 
 fun BlockModelGenerators.tintedWallOverlay(overlay: ResourceLocation) {
     val texture = TextureMapping().put(WALL, overlay)
-    block("parent/wall_post_with_tint", "_post", WALL)
+    block("parent/tint/wall_post", "_post", WALL)
         .create(overlay.suffix("_wall_post"), texture, this.modelOutput)
-    block("parent/wall_side_with_tint", "_side", WALL)
+    block("parent/tint/wall_side", "_side", WALL)
         .create(overlay.suffix("_wall_side"), texture, this.modelOutput)
-    block("parent/wall_side_tall_with_tint", "_side", WALL)
+    block("parent/tint/wall_side_tall", "_side", WALL)
         .create(overlay.suffix("_wall_side_tall"), texture, this.modelOutput)
 }
 
@@ -328,7 +328,7 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
         .put(UP, overlay)
     this.delegateItemModel(
         stairsBlock,
-        slabOrStairWithOverlayModel("parent/stairs_inventory_with_tinted_overlay")
+        slabOrStairWithOverlayModel("parent/tint/stairs_inventory_overlay")
             .create(stairsBlock, texture, this.modelOutput)
     )
 }
@@ -372,7 +372,7 @@ fun BlockModelGenerators.slabWithTintedOverlay(
         .put(UP, overlay)
     this.delegateItemModel(
         slab,
-        slabOrStairWithOverlayModel("parent/slab_inventory_with_tinted_overlay")
+        slabOrStairWithOverlayModel("parent/tint/slab_inventory_overlay")
             .create(slab, texture, this.modelOutput)
     )
 }
@@ -400,7 +400,7 @@ fun BlockModelGenerators.wallWithTintedOverlay(wall: Block, baseBlock: Block, ov
         .put(WALL, TextureMapping.getBlockTexture(baseBlock))
         .put(DIRT, overlay)
     this.delegateItemModel(
-        wall, block("parent/wall_inventory_with_tinted_overlay", "_inventory", WALL, DIRT)
+        wall, block("parent/tint/wall_inventory_overlay", "_inventory", WALL, DIRT)
             .create(wall, texture, this.modelOutput)
     )
 }
@@ -1158,17 +1158,15 @@ fun BlockModelGenerators.iceStairs(
 }
 
 //shamelessley stolen from voidUtils :)
-fun BlockModelGenerators.stairs(block: Block) =
-    stairs(block, block, block, block)
-
-fun BlockModelGenerators.stairs(block: Block, texture: Block) =
-    stairs(block, texture, texture, texture)
-
 fun BlockModelGenerators.stairs(block: Block, texture: Block, suffix: String) =
     stairs(block, texture.model(suffix), texture.model(suffix), texture.model(suffix))
 
-fun BlockModelGenerators.stairs(block: Block, bottom: Block, side: Block, top: Block) =
-    stairs(block, bottom.model(), side.model(), top.model())
+fun BlockModelGenerators.stairs(
+    block: Block,
+    bottom: Block = block,
+    side: Block = bottom,
+    top: Block = bottom
+) = stairs(block, bottom.model(), side.model(), top.model())
 
 fun BlockModelGenerators.stairs(block: Block, ends: ResourceLocation, side: ResourceLocation) =
     stairs(block, ends, side, ends)
@@ -1191,8 +1189,7 @@ fun BlockModelGenerators.stairs(
     this.delegateItemModel(block, id2)
 }
 
-fun BlockModelGenerators.slab(block: Block) = slab(block, block)
-fun BlockModelGenerators.slab(block: Block, texture: Block) =
+fun BlockModelGenerators.slab(block: Block, texture: Block = block) =
     slab(block, texture, texture, texture, texture)
 
 fun BlockModelGenerators.slab(block: Block, texture: Block, full: Block) =
@@ -1220,8 +1217,7 @@ fun slabTexture(texture: Block): TextureMapping = TextureMapping.defaultTexture(
     .put(SIDE, texture.model())
     .put(TOP, texture.model())
 
-fun BlockModelGenerators.wall(block: Block) = wall(block, block.model())
-fun BlockModelGenerators.wall(block: Block, texture: Block) = wall(block, texture.model())
+fun BlockModelGenerators.wall(block: Block, texture: Block=block) = wall(block, texture.model())
 
 fun BlockModelGenerators.wall(wallBlock: Block, inId: ResourceLocation) {
     val texture = TextureMapping.defaultTexture(wallBlock.model()).put(WALL, inId)
@@ -1588,7 +1584,7 @@ fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
     )
 }
 
-fun BlockModelGenerators.hangingFlora(block: Block, tinted: BlockModelGenerators.TintState){
+fun BlockModelGenerators.hangingFlora(block: Block, tinted: BlockModelGenerators.TintState) {
     this.createSimpleFlatItemModel(block)
     val model = this.createSuffixedVariant(
         block,

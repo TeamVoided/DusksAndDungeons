@@ -281,7 +281,8 @@
             10,
             10
           ],
-          "texture": "#texture"
+          "texture": "#texture",
+          "tintindex": 0
         },
         "west": {
           "uv": [

@@ -118,18 +118,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.STRIPPED_BAMBOO_PILE,
             )
         getOrCreateTagBuilder(DnDBlockTags.LEAF_PILES)
-            .add(DnDBlocks.OAK_LEAF_PILE)
-            .add(DnDBlocks.SPRUCE_LEAF_PILE)
-            .add(DnDBlocks.BIRCH_LEAF_PILE)
-            .add(DnDBlocks.JUNGLE_LEAF_PILE)
-            .add(DnDBlocks.ACACIA_LEAF_PILE)
-            .add(DnDBlocks.DARK_OAK_LEAF_PILE)
-            .add(DnDBlocks.MANGROVE_LEAF_PILE)
-            .add(DnDBlocks.CHERRY_LEAF_PILE)
-            .add(DnDBlocks.AZALEA_LEAF_PILE)
-            .add(DnDBlocks.FLOWERING_AZALEA_LEAF_PILE)
-            .add(DnDBlocks.CASCADE_LEAF_PILE)
-            .add(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE)
+            .add(DnDBlockLists.leafPiles)
         getOrCreateTagBuilder(DnDBlockTags.LEAF_PILES_PLACE_ON)
             .forceAddTag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
             .add(Blocks.COBBLESTONE)
@@ -406,6 +395,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
     }
 
     private fun vanillaBlockTypesTags() {
+        getOrCreateTagBuilder(BlockTags.DIRT)
+            .add(DnDBlocks.OVERGROWTH_BLOCK)
+        getOrCreateTagBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK)
+            .add(DnDBlocks.OVERGROWTH_BLOCK)
+
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
             .forceAddTag(DnDBlockTags.CASCADE_LOGS)
         getOrCreateTagBuilder(BlockTags.PLANKS)
