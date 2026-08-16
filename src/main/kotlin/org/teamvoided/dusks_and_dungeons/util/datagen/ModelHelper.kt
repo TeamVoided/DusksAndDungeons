@@ -1339,71 +1339,6 @@ fun BlockModelGenerators.hollowBlock(block: Block) {
     this.blockStateOutput.accept(model)
 }
 
-
-fun BlockModelGenerators.createLogPile(logPile: Block, log: Block, bamboo: Boolean = false) {
-    val layer1 = this.parentedLogPileModel(logPile, log, bamboo, "_1")
-    val layer2 = this.parentedLogPileModel(logPile, log, bamboo, "_2")
-    val layer3 = this.parentedLogPileModel(logPile, log, bamboo, "_3")
-    val hanging1 = this.parentedLogPileModel(logPile, log, bamboo, "_hanging_1")
-    val hanging2 = this.parentedLogPileModel(logPile, log, bamboo, "_hanging_2")
-    val hanging3 = this.parentedLogPileModel(logPile, log, bamboo, "_hanging_3")
-    val full = this.parentedLogPileModel(logPile, log, bamboo)
-    this.delegateItemModel(logPile, layer2)
-    this.blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(logPile)
-            .with(
-                PropertyDispatch.properties(
-                    LogPileBlock.PILE_LAYERS,
-                    BlockStateProperties.HANGING
-                ).select(
-                    1, false,
-                    Variant.variant().with(VariantProperties.MODEL, layer1)
-                ).select(
-                    2, false,
-                    Variant.variant().with(VariantProperties.MODEL, layer2)
-                ).select(
-                    3, false,
-                    Variant.variant().with(VariantProperties.MODEL, layer3)
-                ).select(
-                    1, true,
-                    Variant.variant().with(VariantProperties.MODEL, hanging1)
-                ).select(
-                    2, true,
-                    Variant.variant().with(VariantProperties.MODEL, hanging2)
-                ).select(
-                    3, true,
-                    Variant.variant().with(VariantProperties.MODEL, hanging3)
-                ).select(
-                    4, false,
-                    Variant.variant().with(VariantProperties.MODEL, full)
-                ).select(
-                    4, true,
-                    Variant.variant().with(VariantProperties.MODEL, full)
-                )
-            ).with(
-                PropertyDispatch.property(BlockStateProperties.HORIZONTAL_AXIS)
-                    .select(Direction.Axis.X, Variant.variant())
-                    .select(Direction.Axis.Z, Variant.variant().with(VariantProperties.Y_ROT, Rotation.R90))
-            )
-    )
-}
-
-fun BlockModelGenerators.parentedLogPileModel(
-    block: Block,
-    textBlock: Block,
-    bamboo: Boolean,
-    parent: String = ""
-): ResourceLocation {
-    val pileModel = if (bamboo) id("block/parent/bamboo_pile") else id("block/parent/log_pile")
-    return ModelTemplate(pileModel.suffix(parent).myb, Optional.empty(), SIDE, END)
-        .create(
-            block.model(parent), TextureMapping()
-                .put(SIDE, textBlock.model())
-                .put(END, textBlock.model("_top")),
-            this.modelOutput
-        )
-}
-
 fun BlockModelGenerators.createLeafPile(leafPile: Block, leaves: Block) {
     val pileModel = id("block/parent/leaf_pile")
     val layer1 = this.parentedModel(leafPile, leaves, pileModel)
@@ -1715,8 +1650,7 @@ fun BlockModelGenerators.registerPrefixedItemModel(block: Block, prefix: String)
     )
 }
 
-private
-val <T : Any?> T.myb get() = Optional.ofNullable(this)
+private val <T : Any?> T.myb get() = Optional.ofNullable(this)
 
 fun Block.model(): ResourceLocation = ModelLocationUtils.getModelLocation(this)
 fun Block.model(str: String) = this.model().suffix(str)

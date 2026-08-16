@@ -6,28 +6,16 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
-import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.AzaleaBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SimpleWaterloggedBlock
-import net.minecraft.world.level.block.grower.TreeGrower
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.material.FluidState
-import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.CANDLES
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.DOUBLE_SHAPE
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.HORIZONTAL_AXIS
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.QUADRUPLE_SHAPE
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.QUINTUPLE_SHAPE
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.SINGLE_SHAPE
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.TRIPLE_SHAPE
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock.Companion.getRotations
 import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
@@ -99,17 +87,17 @@ class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings), SimpleW
             Shapes.or(box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0), box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0))
         val SHAPE_UP: VoxelShape =
             Shapes.or(box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0), box(6.0, 8.0, 6.0, 10.0, 16.0, 10.0))
-        val SHAPE_NORTH: VoxelShape =
+        val SHAPE_SIDE: VoxelShape =
             Shapes.or(box(0.0, 0.0, 8.0, 16.0, 16.0, 16.0), box(6.0, 6.0, 0.0, 10.0, 10.0, 8.0))
 
         val BUSH_SHAPES = Direction.entries.associateWith { dir ->
             when (dir.get3DDataValue()) {
-                1 -> SHAPE_DOWN
-                2 -> SHAPE_UP
-                3 -> SHAPE_NORTH.rotate(2)
-                4 -> SHAPE_NORTH.rotate(3)
-                5 -> SHAPE_NORTH
-                6 -> SHAPE_NORTH.rotate(1)
+                0 -> SHAPE_DOWN
+                1 -> SHAPE_UP
+                2 -> SHAPE_SIDE.rotate(2)
+                3 -> SHAPE_SIDE.rotate(3)
+                4 -> SHAPE_SIDE.rotate(1)
+                5 -> SHAPE_SIDE.rotate(1)
                 else -> SHAPE_DOWN
             }
         }

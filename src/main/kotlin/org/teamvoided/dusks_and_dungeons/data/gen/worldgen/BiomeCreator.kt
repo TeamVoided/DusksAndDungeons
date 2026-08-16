@@ -5,6 +5,7 @@ import net.minecraft.data.worldgen.BiomeDefaultFeatures
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.biome.OverworldBiomes
 import net.minecraft.data.worldgen.placement.AquaticPlacements
+import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
 import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
@@ -32,14 +33,16 @@ object BiomeCreator {
         context.register(DnDBiomes.GOLDEN_WOODS, createAutumnForest(context, true))
         context.register(DnDBiomes.GOLDEN_PASTURES, createAutumnPlains(context, true))
 
+        context.register(DnDBiomes.OVERGROWN_GROTTO, overgrownGrotto(context))
 
-        //OVERGROWN_GROTTO grass = 91DB60, water = 4CBF61
+
+
     }
 
     //no access widener?
     private fun getSkyColor(temperature: Float): Int {
-        val f = Mth.clamp(temperature / 3.0f, -1.0f, 1.0f)
-        return Mth.hsvToRgb(0.62222224f - f * 0.05f, 0.5f + f * 0.1f, 1.0f)
+        val f = Mth.clamp(temperature / 3.0f, -1f, 1f)
+        return Mth.hsvToRgb(0.62222224f - f * 0.05f, 0.5f + f * 0.1f, 1f)
     }
 
     private fun addAutumnAnimals(spawnSettings: MobSpawnSettings.Builder) {
@@ -67,7 +70,7 @@ object BiomeCreator {
         }
     }
 
-    fun createAutumnForest(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
+    private fun createAutumnForest(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
         val spawnSettings = MobSpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
         BiomeDefaultFeatures.commonSpawns(spawnSettings)
@@ -106,7 +109,7 @@ object BiomeCreator {
     }
 //grass 16434531 15647087
 
-    fun createAutumnPlains(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
+    private fun createAutumnPlains(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
         val spawnSettings = MobSpawnSettings.Builder()
         addAutumnAnimals(spawnSettings)
         BiomeDefaultFeatures.commonSpawns(spawnSettings)
@@ -140,7 +143,7 @@ object BiomeCreator {
         ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
     }
 
-    fun createAutumnRiver(context: BootstrapContext<Biome>): Biome {
+    private fun createAutumnRiver(context: BootstrapContext<Biome>): Biome {
         val spawnSettings = MobSpawnSettings.Builder()
         spawnSettings.addSpawn(MobCategory.WATER_CREATURE, SpawnerData(EntityType.SQUID, 2, 1, 4))
             .addSpawn(MobCategory.WATER_AMBIENT, SpawnerData(EntityType.SALMON, 5, 1, 5))
@@ -148,10 +151,7 @@ object BiomeCreator {
         spawnSettings.addSpawn(MobCategory.MONSTER, SpawnerData(EntityType.DROWNED, 100, 1, 1))
 
         val generationSettings = BiomeGenerationSettings
-            .Builder(
-                context.lookup(Registries.PLACED_FEATURE),
-                context.lookup(Registries.CONFIGURED_CARVER)
-            )
+            .Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER))
         OverworldBiomes.globalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
@@ -176,6 +176,49 @@ object BiomeCreator {
                 .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST))
                 .build()
         ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+    }
+
+
+    private fun overgrownGrotto(context: BootstrapContext<Biome>): Biome {
+        val spawnSettings = MobSpawnSettings.Builder()
+        //spawnSettings.addSpawn(MobCategory.AXOLOTLS, SpawnerData(EntityType.AXOLOTL, 10, 4, 6))
+        //spawnSettings.addSpawn(MobCategory.WATER_AMBIENT, SpawnerData(EntityType.TROPICAL_FISH, 25, 8, 8))
+        BiomeDefaultFeatures.commonSpawns(spawnSettings)
+        val generationSettings = BiomeGenerationSettings
+            .Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER))
+        OverworldBiomes.globalOverworldGeneration(generationSettings)
+        BiomeDefaultFeatures.addPlainGrass(generationSettings)
+        BiomeDefaultFeatures.addDefaultOres(generationSettings)
+        //BiomeDefaultFeatures.addLushCavesSpecialOres(generationSettings)
+        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
+        addOvergrowthCavesVegetationFeatures(generationSettings)
+        val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES)
+
+        return Biome.BiomeBuilder().temperature(0.5f).downfall(0.5f).specialEffects(
+            BiomeSpecialEffects.Builder()
+                .waterColor(0x63F97A)
+                .waterFogColor(0x4AD375)
+                .fogColor(0x96FFBC)
+                .grassColorOverride(0x91DB60)
+                .skyColor(getSkyColor(0.5f))
+                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                .backgroundMusic(music)
+                .build()
+        ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+        //original grass = 91DB60, water = 4CBF61
+        //vibrant grass = A9FF70, water = 63F97A
+        //do halfway, too tired right now
+    }
+
+
+    private fun addOvergrowthCavesVegetationFeatures(builder: BiomeGenerationSettings.Builder) {
+        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_CEILING_VEGETATION)
+        //builder.addFeature(vd9, CavePlacements.CAVE_VINES)
+        //builder.addFeature(vd9, CavePlacements.LUSH_CAVES_CLAY)
+        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_FLOOR_VEGETATION)
+        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_TREE_ROOTED)
+        //builder.addFeature(vd9, CavePlacements.SPORE_BLOSSOM)
+        builder.addFeature(vd9, CavePlacements.CLASSIC_VINES)
     }
 
     /*Generation Steps Reference:

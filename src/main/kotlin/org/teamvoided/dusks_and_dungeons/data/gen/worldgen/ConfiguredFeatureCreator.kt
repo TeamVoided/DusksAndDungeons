@@ -28,6 +28,7 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.DarkOakFoliagePlacer
+import net.minecraft.world.level.levelgen.feature.foliageplacers.RandomSpreadFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
@@ -322,6 +323,30 @@ object ConfiguredFeatureCreator {
         this.overgrowthTree(DnDConfiguredFeature.OVERGROWTH_TREE_SOUTH, Direction.SOUTH)
         this.overgrowthTree(DnDConfiguredFeature.OVERGROWTH_TREE_EAST, Direction.EAST)
         this.overgrowthTree(DnDConfiguredFeature.OVERGROWTH_TREE_WEST, Direction.WEST)
+        this.registerConfiguredFeature(
+            DnDConfiguredFeature.OVERGROWTH_TREE_ROOTED,
+            Feature.ROOT_SYSTEM,
+            RootSystemConfiguration(
+                PlacementUtils.inlinePlaced(
+                    this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
+                ),
+                3,
+                3,
+                BlockTags.AZALEA_ROOT_REPLACEABLE,
+                BlockStateProvider.simple(Blocks.ROOTED_DIRT),
+                20,
+                100,
+                3,
+                2,
+                BlockStateProvider.simple(Blocks.HANGING_ROOTS),
+                20,
+                2,
+                BlockPredicate.allOf(
+                    BlockPredicate.matchesTag(DnDBlockTags.VEGETATION_REPLACEABLE),
+                    BlockPredicate.matchesTag(Direction.DOWN.normal, BlockTags.AZALEA_GROWS_ON)
+                )
+            )
+        )
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.flowers() {
@@ -650,7 +675,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(DnDBlocks.OVERGROWTH_BLOCK),
                 PlacementUtils.inlinePlaced(
                     this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(
-                        if (surface.ordinal == 0) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
+                        if (surface.ordinal == 1) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
                         else DnDConfiguredFeature.OVERGROWTH_CEILING_V
                     ),
                     *arrayOfNulls<PlacementModifier>(0)
@@ -671,14 +696,14 @@ object ConfiguredFeatureCreator {
         dir: Direction
     ) {
         val trunk =
-            if (dir.axis == Direction.Axis.Y) BentTrunkPlacer(5, 10, 0, UniformInt.of(2, 5), 0.7f, UniformInt.of(1, 3))
+            if (dir.axis == Direction.Axis.Y) BentTrunkPlacer(5, 5, 0, UniformInt.of(2, 4), 0.7f, UniformInt.of(1, 3))
             else WallTrunkPlacer(5, 10, 0, dir, UniformInt.of(2, 5), 0.7f, UniformInt.of(1, 3))
         this.registerConfiguredFeature(
             cf, Feature.TREE, TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(DnDBlocks.CASCADE_LOG),
+                BlockStateProvider.simple(DnDBlocks.VERDANT_LOG),
                 trunk,
-                BlockStateProvider.simple(DnDBlocks.GOLDEN_BIRCH_LEAVES),
-                BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
+                BlockStateProvider.simple(DnDBlocks.OVERGROWTH_LEAVES),
+                RandomSpreadFoliagePlacer(UniformInt.of(2, 4), ConstantInt.of(0), ConstantInt.of(2), 50),
                 TwoLayersFeatureSize(1, 0, 1)
             ).forceDirt().ignoreVines().build()
         )

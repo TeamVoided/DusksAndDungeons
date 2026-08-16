@@ -84,6 +84,7 @@ object DnDConfiguredFeature {
     val OVERGROWTH_TREE_SOUTH = create("tree/overgrowth/south")
     val OVERGROWTH_TREE_EAST = create("tree/overgrowth/east")
     val OVERGROWTH_TREE_WEST = create("tree/overgrowth/west")
+    val OVERGROWTH_TREE_ROOTED = create("tree/overgrowth/rooted")
 
     fun create(id: String): ResourceKey<ConfiguredFeature<*, *>> =
         ResourceKey.create(Registries.CONFIGURED_FEATURE, id(id))

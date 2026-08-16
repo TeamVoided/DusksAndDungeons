@@ -628,8 +628,11 @@ object DnDBlocks {
         // Striping
         StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
         StrippableBlockRegistry.register(CASCADE_WOOD.parent, STRIPPED_CASCADE_WOOD.parent)
+        StrippableBlockRegistry.register(VERDANT_LOG, STRIPPED_VERDANT_LOG)
+        StrippableBlockRegistry.register(VERDANT_WOOD.parent, STRIPPED_VERDANT_WOOD.parent)
 
         registerStrippedSet(CASCADE_WOOD, STRIPPED_CASCADE_WOOD)
+        registerStrippedSet(VERDANT_WOOD, STRIPPED_VERDANT_WOOD)
         registerStrippedSet(OAK_WOOD, STRIPPED_OAK_WOOD)
         registerStrippedSet(SPRUCE_WOOD, STRIPPED_SPRUCE_WOOD)
         registerStrippedSet(BIRCH_WOOD, STRIPPED_BIRCH_WOOD)
@@ -642,6 +645,7 @@ object DnDBlocks {
         registerStrippedSet(WARPED_HYPHAE, STRIPPED_WARPED_HYPHAE)
 
         BlockStrippingRegistry.register(CASCADE_LOG_PILE, STRIPPED_CASCADE_LOG_PILE)
+        BlockStrippingRegistry.register(VERDANT_LOG_PILE, STRIPPED_VERDANT_LOG_PILE)
         BlockStrippingRegistry.register(OAK_LOG_PILE, STRIPPED_OAK_LOG_PILE)
         BlockStrippingRegistry.register(SPRUCE_LOG_PILE, STRIPPED_SPRUCE_LOG_PILE)
         BlockStrippingRegistry.register(BIRCH_LOG_PILE, STRIPPED_BIRCH_LOG_PILE)

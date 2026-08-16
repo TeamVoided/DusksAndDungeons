@@ -33,6 +33,10 @@ object DnDPlacedFeature {
     val AUTUMN_FARMLANDS = create("autumn_farmlands")
     val CROPS_WILD_WHEAT = create("crops/wild_wheat")
 
+    val OVERGROWTH_TREE_ROOTED = create("cave/overgrowth_tree_rooted")
+    val OVERGROWTH_CAVES_FLOOR_VEGETATION = create("cave/overgrowth_floor_vegetation")
+    val OVERGROWTH_CAVES_CEILING_VEGETATION = create("cave/overgrowth_ceiling_vegetation")
+
 
     val FAIRY_RING_RED = create("fairy_ring_red")
 

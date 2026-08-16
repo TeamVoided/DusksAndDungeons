@@ -2,12 +2,14 @@ package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.OreFeatures
 import net.minecraft.data.worldgen.features.VegetationFeatures
+import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.OrePlacements
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
@@ -104,6 +106,54 @@ object PlacedFeatureCreator {
             getMushroomPlacement(128)
         )
 
+        c.cavePlacement(
+            DnDPlacedFeature.OVERGROWTH_TREE_ROOTED,
+            DnDConfiguredFeature.OVERGROWTH_TREE_ROOTED,
+            2,
+            Direction.UP
+        )
+        //c.cavePlacement(
+        //    CavePlacements.CAVE_VINES,
+        //    holder9,
+        //    188,
+        //    Direction.UP
+        //)
+        c.cavePlacement(
+            DnDPlacedFeature.OVERGROWTH_CAVES_FLOOR_VEGETATION,
+            DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR,
+            125,
+            Direction.DOWN
+        )
+        c.cavePlacement(
+            DnDPlacedFeature.OVERGROWTH_CAVES_CEILING_VEGETATION,
+            DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING,
+            125,
+            Direction.UP
+        )
+    }
+
+    fun BootstrapContext<PlacedFeature>.cavePlacement(
+        place: ResourceKey<PlacedFeature>,
+        conf: ResourceKey<ConfiguredFeature<*, *>>,
+        count: Int,
+        direction: Direction
+    ) {
+
+        this.register(
+            place,
+            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
+            CountPlacement.of(count),
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                direction,
+                BlockPredicate.solid(),
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                12
+            ),
+            RandomOffsetPlacement.vertical(ConstantInt.of(if (direction == Direction.UP) -1 else 1)),
+            BiomeFilter.biome()
+        )
     }
 
     fun saplingFeatures(

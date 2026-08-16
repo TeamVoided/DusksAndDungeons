@@ -1,8 +1,8 @@
 {
 	"parent": "block/block",
 	"textures": {
-		"tinted": "dusks_and_dungeons:block/verdant_log_end_tinted",
-		"end": "dusks_and_dungeons:block/verdant_log_end",
+		"tinted": "dusks_and_dungeons:block/verdant_log_top",
+		"end": "dusks_and_dungeons:block/verdant_log_edge",
 		"side": "dusks_and_dungeons:block/verdant_log",
 		"particle": "#side"
 	},

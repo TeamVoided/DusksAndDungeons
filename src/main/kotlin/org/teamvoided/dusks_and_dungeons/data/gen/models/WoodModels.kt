@@ -6,6 +6,7 @@ import net.minecraft.data.models.model.TexturedModel
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.createLogPile
 import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.planksTinted
 import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.strippedTinted
 
@@ -105,8 +106,10 @@ object WoodModels {
         DnDBlockLists.stripedLogPiles.forEachIndexed { idx, pile ->
             gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].second)
         }
-        gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, true)
-        gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, true)
+        gen.createLogPile(DnDBlocks.VERDANT_LOG_PILE, DnDBlocks.VERDANT_LOG, "tint/log")
+        gen.createLogPile(DnDBlocks.STRIPPED_VERDANT_LOG_PILE, DnDBlocks.STRIPPED_VERDANT_LOG, "tint/stripped_log")
+        gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, "bamboo")
+        gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, "bamboo")
         DnDBlockLists.leafPiles.forEachIndexed { idx, pile -> gen.createLeafPile(pile, DnDBlockLists.leaves[idx]) }
     }
 }

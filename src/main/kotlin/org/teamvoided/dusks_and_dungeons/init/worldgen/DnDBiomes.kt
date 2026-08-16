@@ -14,11 +14,13 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber")
 object DnDBiomes {
     val AUTUMN_WOODS = create("autumn_woods")
-    val AUTUMN_PASTURES = create("autumn_pastures")
-    val AUTUMN_CASCADES = create("autumn_cascades")
+    val AUTUMN_PASTURES = create("autumn_pasture")
+    val AUTUMN_CASCADES = create("autumn_cascade")
 
     val GOLDEN_WOODS = create("golden_woods")
-    val GOLDEN_PASTURES = create("golden_pastures")
+    val GOLDEN_PASTURES = create("golden_pasture")
+
+    val OVERGROWN_GROTTO = create("overgrown_grotto")
 
 
     val temperature: Criterion = CriterionBuilder.value(BiomeParameterTargets.TEMPERATURE, -1f, -0.15f)

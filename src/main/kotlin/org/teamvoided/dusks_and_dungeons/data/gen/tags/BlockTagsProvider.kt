@@ -77,10 +77,16 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.CASCADE_WOOD.parent)
             .add(DnDBlocks.STRIPPED_CASCADE_LOG)
             .add(DnDBlocks.STRIPPED_CASCADE_WOOD)
+        getOrCreateTagBuilder(DnDBlockTags.VERDANT_LOGS)
+            .add(DnDBlocks.VERDANT_LOG)
+            .add(DnDBlocks.VERDANT_WOOD.parent)
+            .add(DnDBlocks.STRIPPED_VERDANT_LOG)
+            .add(DnDBlocks.STRIPPED_VERDANT_WOOD)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_PLANKS)
             .add(FLAMMABLE_PLANKS)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_LOGS)
             .forceAddTag(DnDBlockTags.CASCADE_LOGS)
+            .forceAddTag(DnDBlockTags.VERDANT_LOGS)
             .forceAddTag(DnDBlockTags.LOG_PILES_THAT_BURN)
             .forceAddTag(DnDBlockTags.HOLLOW_LOGS_THAT_BURN)
             .add(FLAMMABLE_LOGS)
@@ -103,6 +109,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.MANGROVE_LOG_PILE,
                 DnDBlocks.CHERRY_LOG_PILE,
                 DnDBlocks.CASCADE_LOG_PILE,
+                DnDBlocks.VERDANT_LOG_PILE,
                 DnDBlocks.BAMBOO_PILE,
             )
             .add(
@@ -115,6 +122,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.STRIPPED_MANGROVE_LOG_PILE,
                 DnDBlocks.STRIPPED_CHERRY_LOG_PILE,
                 DnDBlocks.STRIPPED_CASCADE_LOG_PILE,
+                DnDBlocks.STRIPPED_VERDANT_LOG_PILE,
                 DnDBlocks.STRIPPED_BAMBOO_PILE,
             )
         getOrCreateTagBuilder(DnDBlockTags.LEAF_PILES)
