@@ -34,6 +34,7 @@ class ItemTagsProvider(
 
     fun duskTags() {
         copy(DnDBlockTags.CASCADE_LOGS, DnDItemTags.CASCADE_LOGS)
+        copy(DnDBlockTags.VERDANT_LOGS, DnDItemTags.VERDANT_LOGS)
         copy(DnDBlockTags.LEAF_PILES, DnDItemTags.LEAF_PILES)
         copy(DnDBlockTags.LOG_PILES, DnDItemTags.LOG_PILES)
         copy(DnDBlockTags.LOG_PILES_THAT_BURN, DnDItemTags.LOG_PILES_THAT_BURN)
