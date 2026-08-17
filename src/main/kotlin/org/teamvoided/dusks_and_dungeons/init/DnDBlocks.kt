@@ -248,7 +248,8 @@ object DnDBlocks {
         createBlockSet("stripped_verdant_wood", Set.STRIPPED_CASCADE_WOOD).noStoneCutting()
             .parent(::RotatedPillarBlock).build()
     ).woodSet().grass().tint()
-    val STRIPPED_VERDANT_LOG_PILE = register("stripped_verdant_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent)).grass()
+    val STRIPPED_VERDANT_LOG_PILE =
+        register("stripped_verdant_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent)).grass().tint()
 
     val VERDANT_PLANKS = register("verdant_planks", Block(Set.VERDANT_PLANKS)).flammablePlanks().grass().tint()
     val VERDANT_STAIRS = register("verdant_stairs", stairsOf(VERDANT_PLANKS).wood()).grass().tint()

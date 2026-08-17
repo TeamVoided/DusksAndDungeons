@@ -410,8 +410,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
             .forceAddTag(DnDBlockTags.CASCADE_LOGS)
+            .forceAddTag(DnDBlockTags.VERDANT_LOGS)
         getOrCreateTagBuilder(BlockTags.PLANKS)
             .add(DnDBlocks.CASCADE_PLANKS)
+            .add(DnDBlocks.VERDANT_PLANKS)
         getOrCreateTagBuilder(BlockTags.CROPS)
             .add(DnDBlocks.CORN_CROP)
             .add(DnDBlocks.GOLDEN_BEETROOTS)
@@ -425,6 +427,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.LEAVES)
             .add(DnDBlocks.CASCADE_LEAVES)
             .add(DnDBlocks.GOLDEN_BIRCH_LEAVES)
+            .add(DnDBlocks.OVERGROWTH_LEAVES)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
         getOrCreateTagBuilder(BlockTags.SAPLINGS)
             .add(DnDBlocks.CASCADE_SAPLING)

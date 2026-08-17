@@ -72,7 +72,9 @@ class HangingFloraBlock(properties: Properties) : Block(properties), Bonemealabl
     override fun canSurvive(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): Boolean {
         val abovePos = blockPos.above()
         val aboveState = levelReader.getBlockState(abovePos)
-        return aboveState.`is`(this) || aboveState.isFaceSturdy(levelReader, abovePos, Direction.DOWN, SupportType.FULL)
+        return aboveState.`is`(this) ||
+                aboveState.`is`(BlockTags.LEAVES) ||
+                aboveState.isFaceSturdy(levelReader, abovePos, Direction.DOWN, SupportType.FULL)
     }
 
     override fun tick( //onScheduledTick

@@ -1,12 +1,14 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
+import me.fzzyhmstrs.fzzy_config.validation.Shorthand.validated
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.features.CaveFeatures
 import net.minecraft.data.worldgen.features.FeatureUtils
 import net.minecraft.data.worldgen.features.TreeFeatures
+import net.minecraft.data.worldgen.features.VegetationFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
@@ -28,18 +30,20 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.DarkOakFoliagePlacer
-import net.minecraft.world.level.levelgen.feature.foliageplacers.RandomSpreadFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.trunkplacers.DarkOakTrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer
+import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacementModifier
+import net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.material.Fluids
+import org.teamvoided.dusks_and_dungeons.block.HangingFloraBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
@@ -51,10 +55,13 @@ import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.*
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.CascadeFoliagePlacer
+import org.teamvoided.dusks_and_dungeons.world.gen.foliage.OvergrowthFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AttachedToTrunkTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.BeehiveBigTreeDecorator
+import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.FeatureAtBaseTreeDecorator
+import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.FeatureAtTopTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.BentTrunkPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.ThreeWideTrunkPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.WallTrunkPlacer
@@ -164,6 +171,57 @@ object ConfiguredFeatureCreator {
         c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR_B, CaveSurface.FLOOR, true)
         c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING, CaveSurface.CEILING)
         c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING_B, CaveSurface.CEILING, true)
+
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.OVERGROWTH_CARPET_PATCH,
+            Feature.RANDOM_PATCH,
+            RandomPatchConfiguration(
+                50, 3, 7,
+                PlacementUtils.inlinePlaced(
+                    Feature.SIMPLE_BLOCK,
+                    SimpleBlockConfiguration(BlockStateProvider.simple(DnDBlocks.OVERGROWTH_CARPET)),
+                    BlockPredicateFilter.forPredicate(
+                        BlockPredicate.allOf(
+                            BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                            BlockPredicate.hasSturdyFace(Direction.DOWN.normal, Direction.UP)
+                        )
+                    )
+                )
+            )
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.OVERGROWTH_HANGING,
+            Feature.RANDOM_PATCH,
+            RandomPatchConfiguration(
+                70, 5, 7,
+                PlacementUtils.inlinePlaced(
+                    Feature.BLOCK_COLUMN,
+                    BlockColumnConfiguration(
+                        listOf(
+                            BlockColumnConfiguration.layer(
+                                BiasedToBottomInt.of(0, 3),
+                                BlockStateProvider.simple(DnDBlocks.HANGING_OVERGROWTH)
+                            ),
+                            BlockColumnConfiguration.layer(
+                                ConstantInt.of(1),
+                                BlockStateProvider.simple(
+                                    DnDBlocks.HANGING_OVERGROWTH.defaultBlockState()
+                                        .setValue(HangingFloraBlock.TIP, true)
+                                )
+                            )
+                        ),
+                        Direction.DOWN,
+                        BlockPredicate.ONLY_IN_AIR_PREDICATE, true
+                    ),
+                    BlockPredicateFilter.forPredicate(
+                        BlockPredicate.allOf(
+                            BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                            BlockPredicate.wouldSurvive(DnDBlocks.HANGING_OVERGROWTH.defaultBlockState(), BlockPos.ZERO)
+                        )
+                    )
+                )
+            )
+        )
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.trees() {
@@ -698,14 +756,30 @@ object ConfiguredFeatureCreator {
         val trunk =
             if (dir.axis == Direction.Axis.Y) BentTrunkPlacer(5, 5, 0, UniformInt.of(2, 4), 0.7f, UniformInt.of(1, 3))
             else WallTrunkPlacer(5, 10, 0, dir, UniformInt.of(2, 5), 0.7f, UniformInt.of(1, 3))
+
+        val decorators = ImmutableList.of<TreeDecorator>(
+            FeatureAtBaseTreeDecorator(
+                PlacementUtils.inlinePlaced(
+                    this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(DnDConfiguredFeature.OVERGROWTH_CARPET_PATCH),
+                    RandomOffsetPlacement.vertical(ConstantInt.of(4))
+                ),
+            ),
+            FeatureAtTopTreeDecorator(
+                PlacementUtils.inlinePlaced(
+                    this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(DnDConfiguredFeature.OVERGROWTH_HANGING),
+                    RandomOffsetPlacement.vertical(ConstantInt.of(-4))
+                )
+            )
+        )
+
         this.registerConfiguredFeature(
             cf, Feature.TREE, TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(DnDBlocks.VERDANT_LOG),
                 trunk,
                 BlockStateProvider.simple(DnDBlocks.OVERGROWTH_LEAVES),
-                RandomSpreadFoliagePlacer(UniformInt.of(2, 4), ConstantInt.of(0), ConstantInt.of(2), 50),
+                OvergrowthFoliagePlacer(BiasedToBottomInt.of(2, 3), ConstantInt.of(0)),
                 TwoLayersFeatureSize(1, 0, 1)
-            ).forceDirt().ignoreVines().build()
+            ).forceDirt().ignoreVines().decorators(decorators).build()
         )
     }
 

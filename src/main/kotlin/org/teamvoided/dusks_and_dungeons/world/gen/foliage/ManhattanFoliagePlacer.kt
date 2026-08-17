@@ -11,8 +11,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
 import kotlin.math.max
 
-class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) :
-    FoliagePlacer(radius, offset) {
+class ManhattanFoliagePlacer(radius: IntProvider, offset: IntProvider) : FoliagePlacer(radius, offset) {
     override fun type(): FoliagePlacerType<*> {
         return DnDWorldgen.MANHATTAN_FOLIAGE_PLACER
     }

@@ -16,6 +16,7 @@ import net.minecraft.world.level.biome.*
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
+import java.awt.Color
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.LOCAL_MODIFICATIONS as lm2
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES as ss4
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES as uo6
@@ -145,10 +146,10 @@ object BiomeCreator {
 
     private fun createAutumnRiver(context: BootstrapContext<Biome>): Biome {
         val spawnSettings = MobSpawnSettings.Builder()
-        spawnSettings.addSpawn(MobCategory.WATER_CREATURE, SpawnerData(EntityType.SQUID, 2, 1, 4))
+            .addSpawn(MobCategory.WATER_CREATURE, SpawnerData(EntityType.SQUID, 2, 1, 4))
             .addSpawn(MobCategory.WATER_AMBIENT, SpawnerData(EntityType.SALMON, 5, 1, 5))
+            .addSpawn(MobCategory.MONSTER, SpawnerData(EntityType.DROWNED, 100, 1, 1))
         BiomeDefaultFeatures.commonSpawns(spawnSettings)
-        spawnSettings.addSpawn(MobCategory.MONSTER, SpawnerData(EntityType.DROWNED, 100, 1, 1))
 
         val generationSettings = BiomeGenerationSettings
             .Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER))
@@ -156,7 +157,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
         generationSettings.addFeature(uo6, DnDPlacedFeature.DISK_PODZOL)
-        generationSettings.addFeature(vd9, DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION)
+        generationSettings.addFeature(vd9, DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION)
         BiomeDefaultFeatures.addPlainGrass(generationSettings)
         BiomeDefaultFeatures.addGiantTaigaVegetation(generationSettings)
         BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
@@ -181,8 +182,8 @@ object BiomeCreator {
 
     private fun overgrownGrotto(context: BootstrapContext<Biome>): Biome {
         val spawnSettings = MobSpawnSettings.Builder()
-        //spawnSettings.addSpawn(MobCategory.AXOLOTLS, SpawnerData(EntityType.AXOLOTL, 10, 4, 6))
-        //spawnSettings.addSpawn(MobCategory.WATER_AMBIENT, SpawnerData(EntityType.TROPICAL_FISH, 25, 8, 8))
+        //.addSpawn(MobCategory.AXOLOTLS, SpawnerData(EntityType.AXOLOTL, 10, 4, 6))
+        //.addSpawn(MobCategory.WATER_AMBIENT, SpawnerData(EntityType.TROPICAL_FISH, 25, 8, 8))
         BiomeDefaultFeatures.commonSpawns(spawnSettings)
         val generationSettings = BiomeGenerationSettings
             .Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER))
@@ -196,18 +197,19 @@ object BiomeCreator {
 
         return Biome.BiomeBuilder().temperature(0.5f).downfall(0.5f).specialEffects(
             BiomeSpecialEffects.Builder()
-                .waterColor(0x63F97A)
-                .waterFogColor(0x4AD375)
+                .waterColor(0x58DC6E)
+                .waterFogColor(0x17543c)
                 .fogColor(0x96FFBC)
-                .grassColorOverride(0x91DB60)
+                .grassColorOverride(0x9DED6D)
                 .skyColor(getSkyColor(0.5f))
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                 .backgroundMusic(music)
                 .build()
         ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+
         //original grass = 91DB60, water = 4CBF61
         //vibrant grass = A9FF70, water = 63F97A
-        //do halfway, too tired right now
+        //halfway grass = 9DED6D, water = 58DC6E
     }
 
 
@@ -234,5 +236,4 @@ object BiomeCreator {
       VEGETAL_DECORATION
       TOP_LAYER_MODIFICATION
      */
-
 }

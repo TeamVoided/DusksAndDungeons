@@ -49,33 +49,44 @@ class BentTrunkPlacer(
         val dir = Direction.Plane.HORIZONTAL.getRandomDirection(r)
         val function = Function { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, dir.axis) }
         val sect = sect.sample(r)
+        val heig = (height - (height % sect))
 
         //roots
         Direction.Plane.HORIZONTAL.forEach {
             if (r.nextFloat() <= rootChance) {
-                val rootHeight = rootHeight.sample(r)
-                for (i in 0..rootHeight) {
-                    if (i == rootHeight)
-                        this.placeLog(w, replacer, r, startPos.relative(it).above(i - 1), c)
-                        { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, it.axis) }
-                    else
-                        this.placeLog(w, replacer, r, startPos.relative(it).above(i - 1), c)
+                //var rootDist = rootHeight.sample(r)
+                val rootHeight = Math.min(sect - if (dir == it) 2 else 1, rootHeight.sample(r))
+                val predicate = { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, it.axis) }
+                //for (d in 1..rootDist) {
+                //    val blockPos = startPos.relative(it, d).above(rootHeight)
+                //    if (!validTreePos(w, blockPos)) {
+                //        rootDist = d
+                //        break
+                //    }
+                //    this.placeLog(w, replacer, r, blockPos, c, predicate)
+                //}
+                this.placeLog(w, replacer, r,startPos .relative(it).above(rootHeight), c, predicate)
+                for (i in rootHeight downTo -rootHeight) {
+                    val blockPos = startPos.relative(it, 1/*rootDist*/).above(i-1)
+                    if (!validTreePos(w, blockPos)) break
+                    this.placeLog(w, replacer, r, blockPos, c)
                 }
             }
         }
 
         //trunk
-        for (i in 0..height) {
-            val blockPos = startPos.above(i).relative(dir, i / sect)
+        this.placeLog(w, replacer, r, startPos, c)
+        for (i in 0..heig) {
+            val blockPos = startPos.above(i + 1).relative(dir, i / sect)
             this.placeLog(w, replacer, r, blockPos, c)
-            if ((i + 1) % sect == 0) {
-                if (height - i < sect) break
+            if ((i + 1) % sect == 0 && i != 0) {
+                if (heig - i < sect) break
                 this.placeLog(w, replacer, r, blockPos.relative(dir), c, function)
             }
         }
 
         val list: MutableList<FoliageAttachment> = ArrayList()
-        list.add(FoliageAttachment(startPos.above(height+1).relative(dir, height / sect), 0, false))
+        list.add(FoliageAttachment(startPos.above(heig + 1).relative(dir, (heig / sect) - 1), 0, false))
 
 
 
