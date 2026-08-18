@@ -30,6 +30,8 @@ object DusksAndDungeons {
         EVIL_ITEMS.addAll(EVIL_BLOCKS.map { it.asItem() })
         DnDFamilies.init()
 
+        DnDLootContext.init()
+
         DnDBlockEntities.init()
         DnDEffects.init()
         DnDEntities.init()
