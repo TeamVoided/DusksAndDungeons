@@ -81,14 +81,14 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
         state: BlockState, direction: Direction, neighborState: BlockState,
         world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
-        if (state.getValue(HorizontalWaterloggedBlock.WATERLOGGED)) {
+        if (state.getValue(WATERLOGGED)) {
             world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
         }
         return super.updateShape(state, direction, neighborState, world, pos, neighborPos)
     }
 
     override fun getFluidState(state: BlockState): FluidState {
-        return if (state.getValue(HorizontalWaterloggedBlock.WATERLOGGED)) Fluids.WATER.getSource(false)
+        return if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false)
         else super.getFluidState(state)
     }
 
@@ -122,7 +122,7 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
         val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)
             ?.setValue(CANDLES, 1)
-            ?.setValue(HorizontalWaterloggedBlock.WATERLOGGED, waterlogged)
+            ?.setValue(WATERLOGGED, waterlogged)
             ?.setValue(HORIZONTAL_AXIS, ctx.horizontalDirection.axis.invert())
     }
 
