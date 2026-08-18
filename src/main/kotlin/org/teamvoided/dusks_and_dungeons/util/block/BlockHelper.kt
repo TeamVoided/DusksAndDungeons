@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.registry.TillableBlockRegistry
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.particles.ParticleTypes.SOUL_FIRE_FLAME
 import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.HoeItem
 import net.minecraft.world.level.ItemLike
@@ -42,6 +43,8 @@ import org.teamvoided.voidmill.sign.VoidWallHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidWallSignBlock
 import java.util.function.ToIntFunction
 
+
+fun Block.id(): ResourceLocation = builtInRegistryHolder().key().location()
 
 fun symmetricalBox(xzMin: Double, yMin: Double, xzMax: Double, yMax: Double): VoxelShape =
     Block.box(xzMin, yMin, xzMin, xzMax, yMax, xzMax)
