@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.block
+package org.teamvoided.dusks_and_dungeons.block.pumpkin
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

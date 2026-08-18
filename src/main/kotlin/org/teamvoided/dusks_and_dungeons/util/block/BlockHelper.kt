@@ -31,6 +31,7 @@ import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
+import org.teamvoided.dusks_and_dungeons.block.pumpkin.*
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.BlockSetBuilder

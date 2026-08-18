@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.item.component.DyedItemColor
 import net.minecraft.world.item.component.ItemAttributeModifiers
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.block.DnDPumpkinBlock.Companion.setSeeds
+import org.teamvoided.dusks_and_dungeons.block.pumpkin.DnDPumpkinBlock.Companion.setSeeds
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.GLOOM_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.LANTERN_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.MOSSKIN_PUMPKIN

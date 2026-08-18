@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.block
+package org.teamvoided.dusks_and_dungeons.block.pumpkin
 
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.world.level.block.state.BlockState
