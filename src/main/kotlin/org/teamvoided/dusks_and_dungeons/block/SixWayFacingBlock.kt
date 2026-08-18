@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.core.Direction
 
-class SixWayFacingBlock(settings: Properties) : Block(settings) {
+open class SixWayFacingBlock(settings: Properties) : Block(settings) {
     public override fun codec(): MapCodec<out SixWayFacingBlock> = CODEC
 
     init {

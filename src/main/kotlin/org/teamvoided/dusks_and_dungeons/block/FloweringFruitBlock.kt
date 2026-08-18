@@ -25,7 +25,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBox
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.isShears
 
 class FloweringFruitBlock(properties: Properties) : Block(properties), BonemealableBlock,
@@ -112,9 +112,9 @@ class FloweringFruitBlock(properties: Properties) : Block(properties), Bonemeala
         val NO_AGING: BooleanProperty = BlockStateProperties.PERSISTENT
         const val MAX_AGE: Int = 3
 
-        val SHAPE_1 = symmetricalBox(4.0, 8.0, 16.0)
-        val SHAPE_2 = symmetricalBox(3.0, 6.0, 16.0)
-        val SHAPE_3 = symmetricalBox(2.0, 4.0, 16.0)
+        val SHAPE_1 = symmetricalBoxY(4.0, 8.0, 16.0)
+        val SHAPE_2 = symmetricalBoxY(3.0, 6.0, 16.0)
+        val SHAPE_3 = symmetricalBoxY(2.0, 4.0, 16.0)
         val SHAPE_PER_AGE = AGE.possibleValues.associateWith {
             when (it) {
                 0, 1 -> SHAPE_1

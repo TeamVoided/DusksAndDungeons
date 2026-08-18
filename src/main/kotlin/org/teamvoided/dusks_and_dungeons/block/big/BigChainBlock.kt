@@ -8,14 +8,7 @@ import net.minecraft.core.Direction
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.phys.shapes.Shapes
-import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock.Companion.CANDLES
-import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock.Companion.FACING
-import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock.Companion.FOUR_BIG_CANDLES_SHAPE
-import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock.Companion.ONE_BIG_CANDLE_SHAPE
-import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock.Companion.THREE_BIG_CANDLES_SHAPE
-import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock.Companion.TWO_BIG_CANDLES_SHAPE
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBox
-import org.teamvoided.dusks_and_dungeons.util.rotate
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 
 class BigChainBlock(settings: Properties) : ChainBlock(settings) {
 
@@ -25,7 +18,7 @@ class BigChainBlock(settings: Properties) : ChainBlock(settings) {
     companion object {
         protected const val SHAPE_MIN = 4.5
         protected const val SHAPE_MAX = 16.0 - SHAPE_MIN
-        val Y_SHAPE: VoxelShape = symmetricalBox(SHAPE_MIN, 0.0, 16.0)
+        val Y_SHAPE: VoxelShape = symmetricalBoxY(SHAPE_MIN, 0.0, 16.0)
         val Z_SHAPE: VoxelShape = box(SHAPE_MIN, SHAPE_MIN, 0.0, SHAPE_MAX, SHAPE_MAX, 16.0)
         val X_SHAPE: VoxelShape = box(0.0, SHAPE_MIN, SHAPE_MIN, 16.0, SHAPE_MAX, SHAPE_MAX)
 

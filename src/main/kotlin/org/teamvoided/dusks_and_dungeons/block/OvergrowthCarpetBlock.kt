@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.properties.WallSide
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBox
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
 class OvergrowthCarpetBlock(settings: Properties) : Block(settings), BonemealableBlock {
@@ -139,7 +139,7 @@ class OvergrowthCarpetBlock(settings: Properties) : Block(settings), Bonemealabl
         val WEST: EnumProperty<WallSide> = BlockStateProperties.WEST_WALL
         val WALL_SIDES = listOf(NORTH, EAST, SOUTH, WEST)
 
-        val CARPET_SHAPE = symmetricalBox(0.0, 0.0, 1.0)
+        val CARPET_SHAPE = symmetricalBoxY(0.0, 0.0, 1.0)
         val WALL_SMALL_SHAPE = box(0.0, 0.0, 0.0, 16.0, 8.0, 1.0)
         val WALL_TALL_SHAPE = box(0.0, 0.0, 0.0, 16.0, 10.0, 1.0)
     }

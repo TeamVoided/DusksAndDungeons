@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
-import net.minecraft.tags.TagKey
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
@@ -23,7 +22,7 @@ import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBox
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 
 class HangingFloraBlock(properties: Properties) : Block(properties), BonemealableBlock, SimpleWaterloggedBlock {
 
@@ -153,8 +152,8 @@ class HangingFloraBlock(properties: Properties) : Block(properties), Bonemealabl
 
 
     companion object {
-        val TIP_SHAPE: VoxelShape = symmetricalBox(2.0, 4.0, 16.0)
-        val SHAPE: VoxelShape = symmetricalBox(2.0, 0.0, 16.0)
+        val TIP_SHAPE: VoxelShape = symmetricalBoxY(2.0, 4.0, 16.0)
+        val SHAPE: VoxelShape = symmetricalBoxY(2.0, 0.0, 16.0)
         const val MAX_HEIGHT: Int = 16
 
         val TIP: BooleanProperty = BlockStateProperties.BOTTOM
