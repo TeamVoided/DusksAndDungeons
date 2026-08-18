@@ -19,6 +19,7 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBox
 
 open class BigLanternBlock(settings: Properties) : Block(settings), SimpleWaterloggedBlock {
     init {
@@ -69,19 +70,17 @@ open class BigLanternBlock(settings: Properties) : Block(settings), SimpleWaterl
         val CODEC: MapCodec<BigLanternBlock> = simpleCodec(::BigLanternBlock)
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
         val HANGING: BooleanProperty = BlockStateProperties.HANGING
-        val minSize = 2.5
-        val maxSize = 13.5
-        val minSizeTop = 4.5
-        val maxSizeTop = 11.5
+        const val MIN_SIZE = 2.5
+        const val MIN_SIZE_TOP = 4.5
         protected val SHAPE: VoxelShape =
             Shapes.or(
-                box(minSize, 0.0, minSize, maxSize, 13.0, maxSize),
-                box(minSizeTop, 13.0, minSizeTop, maxSizeTop, 16.0, maxSizeTop)
+                symmetricalBox(MIN_SIZE, 0.0, 13.0),
+                symmetricalBox(MIN_SIZE_TOP, 13.0, 16.0)
             )
         protected val HANGING_SHAPE: VoxelShape =
             Shapes.or(
-                box(minSize, 3.0, minSize, maxSize, 16.0, maxSize),
-                box(minSizeTop, 0.0, minSizeTop, maxSizeTop, 3.0, maxSizeTop)
+                symmetricalBox(MIN_SIZE, 3.0, 16.0),
+                symmetricalBox(MIN_SIZE_TOP, 0.0, 3.0)
             )
     }
 }

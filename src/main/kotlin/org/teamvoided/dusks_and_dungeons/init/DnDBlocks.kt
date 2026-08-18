@@ -155,12 +155,6 @@ object DnDBlocks {
     val OVERGROWTH_CARPET = register("overgrowth_carpet", MossyCarpetBlock(ofFullCopy(MOSS_CARPET).noOcclusion()))
         .cutout().grass().tint().hoe()
     val OVERGROWTH_BUSH = register("overgrowth_bush", OvergrowthBushBlock(ofFullCopy(AZALEA))).cutout().grass().tint()
-    val OVERGROWTH_LEAVES =
-        register("overgrowth_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().tint().hoe()
-    val OVERGROWTH_LEAF_PILE = register(
-        "overgrowth_leaf_pile",
-        leafPile(OVERGROWTH_LEAVES.defaultMapColor(), SoundType.AZALEA_LEAVES)
-    ).cutout().grass().tint().hoe()
     val HANGING_OVERGROWTH = register(
         "hanging_overgrowth",
         HangingFloraBlock(
@@ -237,6 +231,12 @@ object DnDBlocks {
 
 
     //VERDANT
+    val VERDANT_LEAVES =
+        register("verdant_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().tint().hoe()
+    val VERDANT_LEAF_PILE = register(
+        "verdant_leaf_pile",
+        leafPile(VERDANT_LEAVES.defaultMapColor(), SoundType.AZALEA_LEAVES)
+    ).cutout().grass().tint().hoe()
     val VERDANT_LOG = register("verdant_log", log(MapColor.GRASS, MapColor.COLOR_BROWN)).grass().cutout()
     val VERDANT_WOOD = register(
         createBlockSet("verdant_wood", Set.VERDANT_WOOD).noStoneCutting().parent(::RotatedPillarBlock).build()
@@ -245,8 +245,8 @@ object DnDBlocks {
     val VERDANT_LOG_PILE = register("verdant_log_pile", logPile(VERDANT_WOOD.parent)).grass()
     val STRIPPED_VERDANT_LOG = register("stripped_verdant_log", log(MapColor.GRASS, MapColor.GRASS)).grass().tint()
     val STRIPPED_VERDANT_WOOD = register(
-        createBlockSet("stripped_verdant_wood", Set.STRIPPED_CASCADE_WOOD).noStoneCutting()
-            .parent(::RotatedPillarBlock).build()
+        createBlockSet("stripped_verdant_wood", Set.STRIPPED_CASCADE_WOOD).noStoneCutting().parent(::RotatedPillarBlock)
+            .build()
     ).woodSet().grass().tint()
     val STRIPPED_VERDANT_LOG_PILE =
         register("stripped_verdant_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent)).grass().tint()

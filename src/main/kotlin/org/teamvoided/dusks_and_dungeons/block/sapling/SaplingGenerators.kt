@@ -27,11 +27,11 @@ object SaplingGenerators {
     val OVERGROWTH_DOWN = singleTree("overgrowth_down", DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
     val OVERGROWTH = Direction.entries.associateWith { dir ->
         when (dir.get3DDataValue()) {
-            1 -> OVERGROWTH_DOWN
-            3 -> singleTree("overgrowth_north", DnDConfiguredFeature.OVERGROWTH_TREE_NORTH)
-            4 ->  singleTree("overgrowth_south", DnDConfiguredFeature.OVERGROWTH_TREE_SOUTH)
-            5 -> singleTree("overgrowth_west", DnDConfiguredFeature.OVERGROWTH_TREE_WEST)
-            6 -> singleTree("overgrowth_east", DnDConfiguredFeature.OVERGROWTH_TREE_EAST)
+            0 -> OVERGROWTH_DOWN
+            2 -> singleTree("overgrowth_north", DnDConfiguredFeature.OVERGROWTH_TREE_NORTH)
+            3 ->  singleTree("overgrowth_south", DnDConfiguredFeature.OVERGROWTH_TREE_SOUTH)
+            4 -> singleTree("overgrowth_west", DnDConfiguredFeature.OVERGROWTH_TREE_WEST)
+            5 -> singleTree("overgrowth_east", DnDConfiguredFeature.OVERGROWTH_TREE_EAST)
             else -> OVERGROWTH_DOWN
         }
     }

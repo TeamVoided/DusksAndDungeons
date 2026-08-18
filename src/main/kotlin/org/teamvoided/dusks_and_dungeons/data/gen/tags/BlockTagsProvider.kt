@@ -427,7 +427,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.LEAVES)
             .add(DnDBlocks.CASCADE_LEAVES)
             .add(DnDBlocks.GOLDEN_BIRCH_LEAVES)
-            .add(DnDBlocks.OVERGROWTH_LEAVES)
+            .add(DnDBlocks.VERDANT_LEAVES)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
         getOrCreateTagBuilder(BlockTags.SAPLINGS)
             .add(DnDBlocks.CASCADE_SAPLING)

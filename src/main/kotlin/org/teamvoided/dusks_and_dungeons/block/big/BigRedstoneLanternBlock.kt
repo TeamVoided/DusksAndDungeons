@@ -13,6 +13,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 
 // TODO move to Variance
+// HAHA SIKE
 class BigRedstoneLanternBlock(settings: Properties) : BigLanternBlock(settings) {
     init {
         registerDefaultState(

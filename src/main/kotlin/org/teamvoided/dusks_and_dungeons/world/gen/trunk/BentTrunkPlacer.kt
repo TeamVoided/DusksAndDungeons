@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
-import net.minecraft.util.valueproviders.FloatProvider
 import net.minecraft.util.valueproviders.IntProvider
 import net.minecraft.world.level.LevelSimulatedReader
 import net.minecraft.world.level.block.RotatedPillarBlock
@@ -23,9 +22,9 @@ class BentTrunkPlacer(
     baseHeight: Int,
     firstRandomHeight: Int,
     secondRandomHeight: Int,
-    private val sect: IntProvider,
     private val rootChance: Float,
-    private val rootHeight: IntProvider
+    private val rootHeight: IntProvider,
+    private val sect: IntProvider,
 ) : TrunkPlacer(baseHeight, firstRandomHeight, secondRandomHeight) {
 
     override fun type(): TrunkPlacerType<*> {
@@ -47,9 +46,12 @@ class BentTrunkPlacer(
         setDirtAt(w, replacer, r, startPos.below(), c)
 
         val dir = Direction.Plane.HORIZONTAL.getRandomDirection(r)
-        val function = Function { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, dir.axis) }
+        val trunkPredicate = Function { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, dir.axis) }
         val sect = sect.sample(r)
         val heig = (height - (height % sect))
+
+
+        this.placeLog(w, replacer, r, startPos, c)
 
         //roots
         Direction.Plane.HORIZONTAL.forEach {
@@ -65,9 +67,9 @@ class BentTrunkPlacer(
                 //    }
                 //    this.placeLog(w, replacer, r, blockPos, c, predicate)
                 //}
-                this.placeLog(w, replacer, r,startPos .relative(it).above(rootHeight), c, predicate)
+                this.placeLog(w, replacer, r, startPos.relative(it).above(rootHeight), c, predicate)
                 for (i in rootHeight downTo -rootHeight) {
-                    val blockPos = startPos.relative(it, 1/*rootDist*/).above(i-1)
+                    val blockPos = startPos.relative(it, 1/*rootDist*/).above(i - 1)
                     if (!validTreePos(w, blockPos)) break
                     this.placeLog(w, replacer, r, blockPos, c)
                 }
@@ -75,33 +77,26 @@ class BentTrunkPlacer(
         }
 
         //trunk
-        this.placeLog(w, replacer, r, startPos, c)
         for (i in 0..heig) {
             val blockPos = startPos.above(i + 1).relative(dir, i / sect)
             this.placeLog(w, replacer, r, blockPos, c)
             if ((i + 1) % sect == 0 && i != 0) {
                 if (heig - i < sect) break
-                this.placeLog(w, replacer, r, blockPos.relative(dir), c, function)
+                this.placeLog(w, replacer, r, blockPos.relative(dir), c, trunkPredicate)
             }
         }
 
         val list: MutableList<FoliageAttachment> = ArrayList()
         list.add(FoliageAttachment(startPos.above(heig + 1).relative(dir, (heig / sect) - 1), 0, false))
-
-
-
         return list
     }
 
     companion object {
-        //val CODEC: MapCodec<AngledTrunkPlacer> =
-        //    RecordCodecBuilder.mapCodec { trunkPlacerParts(it).apply(it, ::AngledTrunkPlacer) }
-
         val CODEC: MapCodec<BentTrunkPlacer> = RecordCodecBuilder.mapCodec { instance ->
             trunkPlacerParts(instance)
-                .and(IntProvider.codec(1, 15).fieldOf("section_size").forGetter { it.sect })
                 .and(Codec.floatRange(0f, 1f).fieldOf("root_chance").forGetter { it.rootChance })
                 .and(IntProvider.codec(1, 15).fieldOf("root_height").forGetter { it.rootHeight })
+                .and(IntProvider.codec(1, 15).fieldOf("section_size").forGetter { it.sect })
                 .apply(instance, ::BentTrunkPlacer)
         }
     }

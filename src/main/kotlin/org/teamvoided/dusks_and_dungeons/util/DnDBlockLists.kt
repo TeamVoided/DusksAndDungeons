@@ -83,7 +83,7 @@ object DnDBlockLists {
         Blocks.FLOWERING_AZALEA_LEAVES,
         DnDBlocks.CASCADE_LEAVES,
         DnDBlocks.GOLDEN_BIRCH_LEAVES,
-        DnDBlocks.OVERGROWTH_LEAVES
+        DnDBlocks.VERDANT_LEAVES
     )
     val bigCandles = DnDBlocks.BIG_CANDLES.zip(DnDBlocks.BIG_CANDLE_CAKES)
     val soulCandles = DnDBlocks.SOUL_CANDLES.zip(DnDBlocks.SOUL_CANDLE_CAKES)
@@ -157,7 +157,7 @@ object DnDBlockLists {
         DnDBlocks.FLOWERING_AZALEA_LEAF_PILE,
         DnDBlocks.CASCADE_LEAF_PILE,
         DnDBlocks.GOLDEN_BIRCH_LEAF_PILE,
-        DnDBlocks.OVERGROWTH_LEAF_PILE
+        DnDBlocks.VERDANT_LEAF_PILE
     )
     val flowerbedBlocks = listOf(
         DnDBlocks.COLD_WILDFLOWER,

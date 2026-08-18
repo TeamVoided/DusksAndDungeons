@@ -23,7 +23,7 @@ object FloraModels {
         )
 
         gen.rotatedLikeNetherrack(DnDBlocks.OVERGROWTH_BLOCK, TexturedModel.LEAVES)
-        gen.createTrivialBlock(DnDBlocks.OVERGROWTH_LEAVES, TexturedModel.LEAVES)
+        gen.createTrivialBlock(DnDBlocks.VERDANT_LEAVES, TexturedModel.LEAVES)
         gen.overgrowthBush(DnDBlocks.OVERGROWTH_BUSH)
         gen.hangingOvergrowth(DnDBlocks.HANGING_OVERGROWTH)
 

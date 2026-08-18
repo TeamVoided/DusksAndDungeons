@@ -184,7 +184,7 @@ object DnDItemLists {
         DnDBlocks.FLOWERING_AZALEA_LEAF_PILE,
         DnDBlocks.CASCADE_LEAF_PILE,
         DnDBlocks.GOLDEN_BIRCH_LEAF_PILE,
-        DnDBlocks.OVERGROWTH_LEAF_PILE
+        DnDBlocks.VERDANT_LEAF_PILE
     )
     val overlayBlocks = DnDBlocks.OVERLAYS.flatMap { it.list }
 }

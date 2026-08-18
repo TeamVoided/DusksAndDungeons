@@ -23,7 +23,7 @@ import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AlterOnGroundTre
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AttachedToTrunkTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.BeehiveBigTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.FeatureAtBaseTreeDecorator
-import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.FeatureAtTopTreeDecorator
+import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.FeatureOnLeavesTreeDecorator
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.BentTrunkPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.WallTrunkPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.ThreeWideTrunkPlacer
@@ -38,8 +38,8 @@ object DnDWorldgen {
         registerTreeDecorator("beehive_big_tree_decorator", BeehiveBigTreeDecorator.CODEC)
     val FEATURE_AT_BASE =
         registerTreeDecorator("feature_at_base", FeatureAtBaseTreeDecorator.CODEC)
-    val FEATURE_AT_TOP =
-        registerTreeDecorator("feature_at_top", FeatureAtTopTreeDecorator.CODEC)
+    val FEATURE_ON_LEAVES =
+        registerTreeDecorator("feature_on_leaves", FeatureOnLeavesTreeDecorator.CODEC)
 
     val THREE_WIDE_TRUNK_PLACER = registerTrunkPlacer("three_wide_trunk_placer", ThreeWideTrunkPlacer.CODEC)
     val WALL_TRUNK_PLACER = registerTrunkPlacer("wall_trunk_placer", WallTrunkPlacer.CODEC)

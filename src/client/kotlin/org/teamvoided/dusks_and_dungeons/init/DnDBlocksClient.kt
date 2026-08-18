@@ -28,13 +28,13 @@ object DnDBlocksClient {
             DnDBlocks.DARK_OAK_LEAF_PILE,
             DnDBlocks.MANGROVE_LEAF_PILE
         )
+        registerTint(FoliageColor.getEvergreenColor(), DnDBlocks.SPRUCE_LEAF_PILE)
+        registerTint(FoliageColor.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE)
+        registerTint({ _, world, pos, _ -> grassColor(world, pos) }, *GRASS_TINT_BLOCKS.toTypedArray())
         registerTint(
             { _, world, pos, tintIndex -> if (tintIndex != 0) grassColor(world, pos) else -1 },
             *DnDBlockLists.flowerbedBlocks.toTypedArray()
         )
-        registerTint({ _, world, pos, _ -> grassColor(world, pos) }, *GRASS_TINT_BLOCKS.toTypedArray())
-        registerTint(FoliageColor.getEvergreenColor(), DnDBlocks.SPRUCE_LEAF_PILE)
-        registerTint(FoliageColor.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE)
 
         registerTint(
             { _, world, pos, _ -> waterColor(world, pos) },
