@@ -9,15 +9,6 @@ import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.item.component.DyedItemColor
 import net.minecraft.world.item.component.ItemAttributeModifiers
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.block.pumpkin.DnDPumpkinBlock.Companion.setSeeds
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.GLOOM_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.LANTERN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.MOSSKIN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.PALE_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_GLOOM_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_LANTERN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_MOSSKIN_PUMPKIN
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SMALL_PALE_PUMPKIN
 import org.teamvoided.dusks_and_dungeons.item.DnDFoodComponents
 import org.teamvoided.dusks_and_dungeons.item.ScarecrowItem
 import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
@@ -138,14 +129,6 @@ object DnDItems {
     // endregion
 
     fun init() {
-        LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
-        SMALL_LANTERN_PUMPKIN.setSeeds(LANTERN_PUMPKIN_SEEDS)
-        MOSSKIN_PUMPKIN.setSeeds(MOSSKIN_PUMPKIN_SEEDS)
-        SMALL_MOSSKIN_PUMPKIN.setSeeds(MOSSKIN_PUMPKIN_SEEDS)
-        GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
-        SMALL_GLOOM_PUMPKIN.setSeeds(GLOOM_PUMPKIN_SEEDS)
-        PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
-        SMALL_PALE_PUMPKIN.setSeeds(PALE_PUMPKIN_SEEDS)
 //        BLOCK_ITEMS.forEach(::register)
     }
 

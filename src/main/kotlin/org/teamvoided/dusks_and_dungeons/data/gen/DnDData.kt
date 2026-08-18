@@ -12,6 +12,7 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection
 import net.minecraft.network.chat.Component
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
+import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTablesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.providers.AdvancementsProvider
@@ -48,6 +49,7 @@ class DnDData : DataGeneratorEntrypoint {
         pack.addProvider(::EnLangProvider)
         pack.addProvider(::RecipesProvider)
         pack.addProvider(::BlockLootTableProvider)
+        pack.addProvider(::BlockInteractLootTablesProvider)
         val blockTags = pack.addProvider(::BlockTagsProvider)
         pack.addProvider { o, r -> ItemTagsProvider(o, r, blockTags) }
         pack.addProvider(::BiomeTagsProvider)
