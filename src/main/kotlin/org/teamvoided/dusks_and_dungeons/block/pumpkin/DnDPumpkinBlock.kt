@@ -19,6 +19,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.gameevent.GameEvent
+import org.teamvoided.dusks_and_dungeons.util.isShears
 
 open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Properties) : Block(settings) {
     private var seedsItem = Items.PUMPKIN_SEEDS
@@ -27,7 +28,7 @@ open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Properties)
         stack: ItemStack, state: BlockState, world: Level,
         pos: BlockPos, entity: Player, hand: InteractionHand, hitResult: BlockHitResult
     ): ItemInteractionResult {
-        return if (!stack.`is`(Items.SHEARS)) super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
+        return if (!stack.isShears()) super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
         else if (world.isClientSide) ItemInteractionResult.sidedSuccess(world.isClientSide)
         else {
             val direction = hitResult.direction
@@ -58,7 +59,7 @@ open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Properties)
             world.addFreshEntity(itemEntity)
             stack.hurtAndBreak(1, entity, LivingEntity.getSlotForHand(hand))
             world.gameEvent(entity, GameEvent.SHEAR, pos)
-            entity.awardStat(Stats.ITEM_USED.get(Items.SHEARS))
+            entity.awardStat(Stats.ITEM_USED.get(stack.item))
             ItemInteractionResult.sidedSuccess(world.isClientSide)
         }
     }

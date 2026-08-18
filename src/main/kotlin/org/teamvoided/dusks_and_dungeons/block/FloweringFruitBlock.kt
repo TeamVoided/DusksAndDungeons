@@ -27,6 +27,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBox
+import org.teamvoided.dusks_and_dungeons.util.isShears
 
 class FloweringFruitBlock(properties: Properties) : Block(properties), BonemealableBlock,
     SimpleWaterloggedBlock {
@@ -48,7 +49,7 @@ class FloweringFruitBlock(properties: Properties) : Block(properties), Bonemeala
         hand: InteractionHand,
         blockHitResult: BlockHitResult
     ): ItemInteractionResult {
-        if (itemStack.`is`(Items.SHEARS) && !state.getValue(NO_AGING)) {
+        if (itemStack.isShears() && !state.getValue(NO_AGING)) {
             val state2 = state.cycle(NO_AGING)
             level.setBlock(pos, state2, 2)
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state2))
