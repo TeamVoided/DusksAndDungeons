@@ -50,7 +50,6 @@ open class HorizontalWaterloggedBlock(settings: Properties) : HorizontalDirectio
 
     companion object {
         val CODEC = simpleCodec(::HorizontalWaterloggedBlock)
-        val FACING = HorizontalDirectionalBlock.FACING
         val WATERLOGGED = BlockStateProperties.WATERLOGGED
     }
 }

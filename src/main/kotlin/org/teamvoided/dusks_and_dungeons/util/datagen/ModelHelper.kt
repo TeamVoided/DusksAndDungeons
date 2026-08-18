@@ -870,51 +870,6 @@ fun BlockModelGenerators.registerCornCrop(block: Block) {
     this.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block).with(blockStateVariantMap))
 }
 
-fun BlockModelGenerators.registerBigChain(block: Block) {
-    this.createSimpleFlatItemModel(block.asItem())
-    val texture = TextureMapping()
-        .put(PARTICLE, TextureMapping.getBlockTexture(block))
-        .put(ALL, TextureMapping.getBlockTexture(block))
-    val model = block(
-        "parent/big_chain",
-        PARTICLE,
-        ALL
-    ).create(block, texture, this.modelOutput)
-    this.createAxisAlignedPillarBlockCustomModel(block, model)
-}
-
-fun BlockModelGenerators.registerBigLantern(
-    block: Block,
-    bottom: ResourceLocation = id("block/big_lantern_bottom"),
-) {
-    this.createSimpleFlatItemModel(block)
-    val texture = TextureMapping()
-        .put(PARTICLE, TextureMapping.getBlockTexture(block))
-        .put(SIDE, TextureMapping.getBlockTexture(block))
-        .put(END, bottom)
-    val model = block(
-        "parent/big_lantern",
-        PARTICLE,
-        SIDE,
-        END
-    )
-    val modelHanging = model.createWithSuffix(block, "_hanging", texture, this.modelOutput)
-    this.blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(block).with(
-            PropertyDispatch.property(BlockStateProperties.HANGING)
-                .select(
-                    false, Variant.variant()
-                        .with(VariantProperties.MODEL, model.create(block, texture, this.modelOutput))
-                )
-                .select(
-                    true, Variant.variant()
-                        .with(VariantProperties.X_ROT, Rotation.R180)
-                        .with(VariantProperties.MODEL, modelHanging)
-                )
-        )
-    )
-}
-
 fun BlockModelGenerators.registerBigCandle(pair: Pair<Block, Block?>) =
     this.registerBigCandle(pair.first, pair.second)
 

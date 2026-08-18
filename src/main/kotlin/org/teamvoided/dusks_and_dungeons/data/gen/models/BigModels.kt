@@ -4,12 +4,14 @@ import net.minecraft.data.models.BlockModelGenerators
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.*
 
 object BigModels {
     fun register(gen: BlockModelGenerators) {
         gen.registerBigChain(DnDBlocks.BIG_CHAIN)
         gen.registerBigLantern(DnDBlocks.BIG_LANTERN)
         gen.registerBigLantern(DnDBlocks.BIG_SOUL_LANTERN)
+        gen.registerBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, true)
 
         DnDBlockLists.bigCandles.forEach(gen::registerBigCandle)
         DnDBlockLists.soulCandles.forEach(gen::registerCandle2)

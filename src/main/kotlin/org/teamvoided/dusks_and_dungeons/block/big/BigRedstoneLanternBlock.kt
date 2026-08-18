@@ -1,16 +1,17 @@
 package org.teamvoided.dusks_and_dungeons.block.big
 
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RedstoneTorchBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
 
 // TODO move to Variance
 // HAHA SIKE
@@ -18,9 +19,9 @@ class BigRedstoneLanternBlock(settings: Properties) : BigLanternBlock(settings) 
     init {
         registerDefaultState(
             stateDefinition.any()
+                .setValue(FACING, Direction.UP)
                 .setValue(WATERLOGGED, false)
                 .setValue(LIT, true)
-                .setValue(HANGING, false)
         )
     }
 
@@ -37,37 +38,40 @@ class BigRedstoneLanternBlock(settings: Properties) : BigLanternBlock(settings) 
         }
     }
 
+
     override fun neighborChanged(
-        state: BlockState, world: Level, pos: BlockPos, block: Block, fromPos: BlockPos, notify: Boolean,
+        blockState: BlockState,
+        level: Level,
+        blockPos: BlockPos,
+        block: Block,
+        blockPos2: BlockPos,
+        bl: Boolean
     ) {
-        if (state.getValue(LIT) == this.shouldUnPower(world, pos, state) && !world.blockTicks.willTickThisTick(pos, this))
-            world.scheduleTick(pos, this, 2)
+        if (blockState.getValue(LIT) == hasNeighborSignal(level, blockPos, blockState) &&
+            !level.blockTicks.willTickThisTick(blockPos, this)
+        ) {
+            level.scheduleTick(blockPos, this, 2)
+        }
     }
 
-    override fun getSignal(state: BlockState, world: BlockGetter, pos: BlockPos, direction: Direction): Int {
-        if (!state.getValue(LIT)) return 0
-
-        return if ((state.getValue(HANGING) && Direction.DOWN != direction) || Direction.UP != direction) 15
+    override fun getSignal(
+        blockState: BlockState,
+        blockGetter: BlockGetter,
+        blockPos: BlockPos,
+        direction: Direction
+    ): Int {
+        return if (blockState.getValue(LIT) && blockState.getValue(FACING) != direction) 15
         else 0
     }
 
     override fun getDirectSignal(state: BlockState, world: BlockGetter, pos: BlockPos, dir: Direction): Int {
-        if (state.getValue(HANGING)) {
-            return if (dir == Direction.UP) state.getSignal(world, pos, dir) else 0
-        }
-        return if (dir == Direction.DOWN) state.getSignal(world, pos, dir) else 0
-    }
-
-    private fun shouldUnPower(world: Level, pos: BlockPos, state: BlockState): Boolean {
-        val isHanging = state.getValue(HANGING)
-        return if (isHanging) world.hasSignal(pos.above(), Direction.UP)
-        else world.hasSignal(pos.below(), Direction.DOWN)
+        return if (dir == state.getValue(FACING).opposite) state.getSignal(world, pos, dir) else 0
     }
 
     override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         world.setBlock(
             pos,
-            state.setValue(LIT, !(state.getValue(LIT) && shouldUnPower(world, pos, state))),
+            state.setValue(LIT, !(state.getValue(LIT) && hasNeighborSignal(world, pos, state))),
             3
         )
     }
@@ -81,5 +85,10 @@ class BigRedstoneLanternBlock(settings: Properties) : BigLanternBlock(settings) 
 
     companion object {
         val LIT: BooleanProperty = BlockStateProperties.LIT
+
+        fun hasNeighborSignal(level: Level, blockPos: BlockPos, blockState: BlockState): Boolean {
+            val direction = (blockState.getValue(FACING)).opposite
+            return level.hasSignal(blockPos.relative(direction), direction)
+        }
     }
 }

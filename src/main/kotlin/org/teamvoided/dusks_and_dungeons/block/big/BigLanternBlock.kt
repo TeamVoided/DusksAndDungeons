@@ -19,36 +19,34 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBox
+import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxZ
+import org.teamvoided.dusks_and_dungeons.util.rotate
 
-open class BigLanternBlock(settings: Properties) : Block(settings), SimpleWaterloggedBlock {
+open class BigLanternBlock(settings: Properties) : SixWayFacingBlock(settings), SimpleWaterloggedBlock {
     init {
         registerDefaultState(
             stateDefinition.any()
-                .setValue(HANGING, false)
+                .setValue(FACING, Direction.UP)
                 .setValue(WATERLOGGED, false)
         )
     }
 
     public override fun codec(): MapCodec<BigLanternBlock> = CODEC
-    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
         val fluidState = ctx.level.getFluidState(ctx.clickedPos)
-        val player = ctx.player?.isShiftKeyDown ?: false
-        return defaultBlockState()
-            .setValue(HANGING, player && ctx.clickedFace == Direction.DOWN)
-            .setValue(WATERLOGGED, fluidState.type === Fluids.WATER)
+
+        return super.getStateForPlacement(ctx)
+            .setValue(WATERLOGGED, fluidState.type == Fluids.WATER)
     }
 
-    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean =
-        canSupportCenter(world, pos.relative(Direction.DOWN), Direction.UP) ||
-                canSupportCenter(world, pos.relative(Direction.UP), Direction.DOWN)
-
-    override fun getShape(
-        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext
-    ): VoxelShape = if (state.getValue(HANGING)) HANGING_SHAPE else SHAPE
+    override fun getShape(state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape =
+        SHAPES[state.getValue(FACING)] ?: Shapes.block()
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        builder.add(HANGING, WATERLOGGED)
+        super.createBlockStateDefinition(builder)
+        builder.add(WATERLOGGED)
     }
 
     override fun updateShape(
@@ -69,18 +67,31 @@ open class BigLanternBlock(settings: Properties) : Block(settings), SimpleWaterl
     companion object {
         val CODEC: MapCodec<BigLanternBlock> = simpleCodec(::BigLanternBlock)
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
-        val HANGING: BooleanProperty = BlockStateProperties.HANGING
-        const val MIN_SIZE = 2.5
-        const val MIN_SIZE_TOP = 4.5
-        protected val SHAPE: VoxelShape =
-            Shapes.or(
-                symmetricalBox(MIN_SIZE, 0.0, 13.0),
-                symmetricalBox(MIN_SIZE_TOP, 13.0, 16.0)
-            )
-        protected val HANGING_SHAPE: VoxelShape =
-            Shapes.or(
-                symmetricalBox(MIN_SIZE, 3.0, 16.0),
-                symmetricalBox(MIN_SIZE_TOP, 0.0, 3.0)
-            )
+        protected const val MIN_SIZE = 2.5
+        protected const val MIN_SIZE_TOP = 4.5
+        protected val SHAPE_UP: VoxelShape = Shapes.or(
+            symmetricalBoxY(MIN_SIZE, 0.0, 13.0),
+            symmetricalBoxY(MIN_SIZE_TOP, 13.0, 16.0)
+        )
+        protected val SHAPE_DOWN: VoxelShape = Shapes.or(
+            symmetricalBoxY(MIN_SIZE, 3.0, 16.0),
+            symmetricalBoxY(MIN_SIZE_TOP, 0.0, 3.0)
+        )
+        protected val NORTH_SHAPE: VoxelShape = Shapes.or(
+            symmetricalBoxZ(MIN_SIZE, 3.0, 16.0),
+            symmetricalBoxZ(MIN_SIZE_TOP, 0.0, 3.0)
+        )
+
+        val SHAPES = Direction.entries.associateWith { dir ->
+            when (dir.get3DDataValue()) {
+                0 -> SHAPE_DOWN
+                1 -> SHAPE_UP
+                2 -> NORTH_SHAPE
+                3 -> NORTH_SHAPE.rotate(2)
+                4 -> NORTH_SHAPE.rotate(3)
+                5 -> NORTH_SHAPE.rotate(1)
+                else -> SHAPE_DOWN
+            }
+        }
     }
 }

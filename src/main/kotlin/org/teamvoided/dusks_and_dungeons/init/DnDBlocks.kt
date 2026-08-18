@@ -23,6 +23,7 @@ import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
 import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
@@ -155,6 +156,8 @@ object DnDBlocks {
     val OVERGROWTH_CARPET = register("overgrowth_carpet", MossyCarpetBlock(ofFullCopy(MOSS_CARPET).noOcclusion()))
         .cutout().grass().tint().hoe()
     val OVERGROWTH_BUSH = register("overgrowth_bush", OvergrowthBushBlock(ofFullCopy(AZALEA))).cutout().grass().tint()
+
+    //val POTTED_OVERGROWTH_BUSH
     val HANGING_OVERGROWTH = register(
         "hanging_overgrowth",
         HangingFloraBlock(
@@ -431,11 +434,13 @@ object DnDBlocks {
     val BIG_SOUL_LANTERN =
         register("big_soul_lantern", BigLanternBlock(ofFullCopy(SOUL_LANTERN).sound(bigLanternSound)).pickaxe())
 
-    //TODO Move this to Variance
-    /*   val BIG_REDSTONE_LANTERN = register(
-         "big_redstone_lantern",
-         BigRedstoneLanternBlock(copy(LANTERN).sounds(bigLanternSound).luminance(luminanceOf(8))).pickaxe()
-     )*/
+    //TO DO Move this to Variance
+    // SIKE
+    val BIG_REDSTONE_LANTERN = register(
+        "big_redstone_lantern",
+        BigRedstoneLanternBlock(ofFullCopy(BIG_LANTERN).lightLevel(litBlockEmission(8))).pickaxe()
+    )
+
     // Normal
     val BIG_CANDLES = register("big_", "candle", CANDLES, ::bigCandleOf)
     val BIG_CANDLE_CAKES =
