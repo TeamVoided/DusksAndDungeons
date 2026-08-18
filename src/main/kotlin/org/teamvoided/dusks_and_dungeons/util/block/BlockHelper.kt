@@ -44,6 +44,7 @@ import org.teamvoided.voidmill.sign.VoidWallSignBlock
 import java.util.function.ToIntFunction
 
 
+@Suppress("DEPRECATION")
 fun Block.id(): ResourceLocation = builtInRegistryHolder().key().location()
 
 fun symmetricalBox(xzMin: Double, yMin: Double, xzMax: Double, yMax: Double): VoxelShape =
@@ -211,6 +212,7 @@ fun leafPile(): Block = leafPile(MapColor.PLANT, SoundType.GRASS)
 fun leafPile(soundGroup: SoundType): Block = leafPile(MapColor.PLANT, soundGroup)
 fun leafPile(mapColor: MapColor): Block = leafPile(mapColor, SoundType.GRASS)
 
+@Suppress("DEPRECATION")
 fun leafPile(mapColor: MapColor, soundGroup: SoundType): Block {
     return LeafPileBlock(
         BlockBehaviour.Properties.of()
@@ -224,6 +226,7 @@ fun leafPile(mapColor: MapColor, soundGroup: SoundType): Block {
 fun fallingLeafPile(particle: SimpleParticleType, mapColor: MapColor): Block =
     fallingLeafPile(particle, mapColor, SoundType.GRASS)
 
+@Suppress("DEPRECATION")
 fun fallingLeafPile(particle: SimpleParticleType, mapColor: MapColor, soundGroup: SoundType): Block =
     FallingLeafPileBlock(
         particle, BlockBehaviour.Properties.of()
