@@ -3,44 +3,24 @@ package org.teamvoided.dusks_and_dungeons.util.datagen
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
-import net.minecraft.world.level.block.state.properties.Half
-import net.minecraft.world.level.block.state.properties.SlabType
-import net.minecraft.world.level.block.state.properties.StairsShape
-import net.minecraft.world.level.block.state.properties.WallSide
+import net.minecraft.core.Direction
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.BlockModelGenerators.createRotatedVariants
-import net.minecraft.data.models.model.TextureSlot.*
+import net.minecraft.data.models.blockstates.*
 import net.minecraft.data.models.blockstates.VariantProperties.Rotation
+import net.minecraft.data.models.model.*
+import net.minecraft.data.models.model.TextureSlot.*
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.Property
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.core.Direction
-import net.minecraft.data.models.BlockModelGenerators
-import net.minecraft.data.models.blockstates.BlockStateGenerator
-import net.minecraft.data.models.blockstates.Condition
-import net.minecraft.data.models.blockstates.MultiPartGenerator
-import net.minecraft.data.models.blockstates.MultiVariantGenerator
-import net.minecraft.data.models.blockstates.PropertyDispatch
-import net.minecraft.data.models.blockstates.Variant
-import net.minecraft.data.models.blockstates.VariantProperties
-import net.minecraft.data.models.blockstates.VariantProperty
-import net.minecraft.data.models.model.ModelLocationUtils
-import net.minecraft.data.models.model.ModelTemplate
-import net.minecraft.data.models.model.ModelTemplates
-import net.minecraft.data.models.model.TextureMapping
-import net.minecraft.data.models.model.TextureSlot
-import net.minecraft.data.models.model.TexturedModel
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.MultifaceBlock
-import net.minecraft.world.level.block.RotatedPillarBlock
-import net.minecraft.world.level.block.SnowyDirtBlock
+import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.state.properties.*
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.models.DnDModels
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.util.*
 
@@ -70,7 +50,7 @@ fun BlockModelGenerators.tintedStairOverlay(
     overlay: ResourceLocation,
     overlayTop: ResourceLocation,
     overlayBottom: ResourceLocation,
-    overlaySide: ResourceLocation
+    overlaySide: ResourceLocation,
 ) {
     val texture: TextureMapping = TextureMapping()
         .put(TOP, overlayTop)
@@ -93,7 +73,7 @@ fun BlockModelGenerators.tintedSlabOverlay(
     overlay: ResourceLocation,
     overlayTop: ResourceLocation,
     overlayBottom: ResourceLocation,
-    overlaySide: ResourceLocation
+    overlaySide: ResourceLocation,
 ) {
     val texture = TextureMapping()
         .put(TOP, overlayTop)
@@ -249,7 +229,7 @@ fun BlockModelGenerators.cubeSnowableColumnOverlay(block: Block, reference: Bloc
 }
 
 fun BlockModelGenerators.stairsWithTintedOverlay(
-    stairsBlock: Block, baseBlock: Block, overlay: ResourceLocation
+    stairsBlock: Block, baseBlock: Block, overlay: ResourceLocation,
 ) {
     val regularModelId = "_stairs"
     val innerModelId = "_stairs_inner"
@@ -339,7 +319,7 @@ fun stairTitle(block: Block, suffix: String): ResourceLocation {
 }
 
 fun BlockModelGenerators.slabWithTintedOverlay(
-    slab: Block, baseBlock: Block, overlay: ResourceLocation
+    slab: Block, baseBlock: Block, overlay: ResourceLocation,
 ) {
     val slabOfTexture =
         ResourceLocation.fromNamespaceAndPath(baseBlock.model().namespace, baseBlock.model().path.removeSuffix("s"))
@@ -412,7 +392,7 @@ fun createWallBlockStateWithOverlay(
     lowSideModelId: ResourceLocation,
     lowSideOverlayModelId: ResourceLocation,
     tallSideModelId: ResourceLocation,
-    tallSideOverlayModelId: ResourceLocation
+    tallSideOverlayModelId: ResourceLocation,
 ): BlockStateGenerator {
     val directions = listOf(
         (BlockStateProperties.NORTH_WALL to Rotation.R0),
@@ -513,7 +493,7 @@ fun BlockModelGenerators.registerGoldenMushroomPlant(block: Block) {
 
 fun BlockModelGenerators.registerMushroomBlockDiffInside(
     block: Block,
-    insideTexture: ResourceLocation = block.model().suffix("_inside")
+    insideTexture: ResourceLocation = block.model().suffix("_inside"),
 ) {
     val texture = ModelTemplates.SINGLE_FACE.create(
         block, TextureMapping.defaultTexture(block),
@@ -573,7 +553,7 @@ fun BlockModelGenerators.registerTreeMushroom(block: Block, parentModel: String)
 fun BlockModelGenerators.registerFlowerbed2(
     block: Block,
     useDefault: Boolean = true,
-    parent: ResourceLocation = mc("block/flowerbed")
+    parent: ResourceLocation = mc("block/flowerbed"),
 ) {
     this.createSimpleFlatItemModel(block.asItem())
     val texture = TextureMapping()
@@ -635,7 +615,7 @@ fun BlockModelGenerators.registerPumpkinSet(
     smallPumpkin: Block,
     smallCarved: Block,
     smallGlowing: Block,
-    stem: Block
+    stem: Block,
 ) {
     this.registerPumpkins(pumpkin, carved, glowing)
     this.registerSmallPumpkins(smallPumpkin, smallCarved, smallGlowing, pumpkin)
@@ -670,32 +650,36 @@ fun BlockModelGenerators.registerSmallPumpkins(pumpkin: Block, carved: Block, gl
     val texture = TextureMapping()
         .put(ALL, TextureMapping.getBlockTexture(pumpkin))
         .put(PARTICLE, TextureMapping.getBlockTexture(particle, "_side"))
-    val model = block(
-        "parent/small_pumpkin",
-        PARTICLE,
-        ALL
-    ).create(pumpkin, texture, this.modelOutput)
-    block(
-        "parent/small_carved_pumpkin",
-        PARTICLE,
-        ALL
-    ).create(carved, texture, this.modelOutput)
-    block(
-        "parent/small_glowing_pumpkin",
-        PARTICLE,
-        ALL
-    ).create(glowing, texture, this.modelOutput)
 
-    blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(pumpkin, model))
-    this.createNonTemplateHorizontalBlock(carved)
-    this.createNonTemplateHorizontalBlock(glowing)
+    val model = DnDModels.SMALL_PUMPKIN.create(pumpkin, texture, modelOutput)
+    blockStateOutput.accept(
+        MultiVariantGenerator
+            .multiVariant(pumpkin, Variant.variant().with(VariantProperties.MODEL, model))
+            .with(createPumpkinFacingDispatch())
+    )
+
+    DnDModels.SMALL_CARVED_PUMPKIN.create(carved, texture, modelOutput)
+    createNonTemplateHorizontalBlock(carved)
+
+    DnDModels.SMALL_GLOWING_PUMPKIN.create(glowing, texture, modelOutput)
+    createNonTemplateHorizontalBlock(glowing)
+}
+
+fun createPumpkinFacingDispatch(): PropertyDispatch {
+    return PropertyDispatch.property(BlockStateProperties.FACING)
+        .select(Direction.DOWN, Variant.variant().with(VariantProperties.X_ROT, Rotation.R180))
+        .select(Direction.UP, Variant.variant())
+        .select(Direction.NORTH, Variant.variant().with(VariantProperties.X_ROT, Rotation.R90))
+        .select(Direction.SOUTH, Variant.variant().with(VariantProperties.X_ROT, Rotation.R270))
+        .select(Direction.WEST, Variant.variant().with(VariantProperties.X_ROT, Rotation.R270).with(VariantProperties.Y_ROT, Rotation.R90))
+        .select(Direction.EAST, Variant.variant().with(VariantProperties.X_ROT, Rotation.R90).with(VariantProperties.Y_ROT, Rotation.R90))
 }
 
 fun BlockModelGenerators.registerSmallPumpkin(
     pumpkin: Block,
     texture: Block,
     particle: ResourceLocation,
-    modelString: String = ""
+    modelString: String = "",
 ) {
     val modelTexture = TextureMapping()
         .put(ALL, TextureMapping.getBlockTexture(texture))
@@ -751,7 +735,7 @@ fun BlockModelGenerators.registerGravestone(gravestone: Block, texture: Resource
 fun BlockModelGenerators.registerSmallGravestone(
     gravestone: Block,
     textureId: ResourceLocation = gravestone.model(),
-    hauntedGravestone: Block? = null
+    hauntedGravestone: Block? = null,
 ) {
     val texture = TextureMapping()
         .put(FRONT, textureId.suffix("_front"))
@@ -772,7 +756,7 @@ fun BlockModelGenerators.registerSmallGravestone(
 fun BlockModelGenerators.registerHauntedGravestone(
     hauntedGravestone: Block,
     gravestone: Block,
-    centerModel: ResourceLocation
+    centerModel: ResourceLocation,
 ) {
     this.delegateItemModel(hauntedGravestone, centerModel)
     this.blockStateOutput.accept(
@@ -901,7 +885,7 @@ fun BlockModelGenerators.registerBigChain(block: Block) {
 
 fun BlockModelGenerators.registerBigLantern(
     block: Block,
-    bottom: ResourceLocation = id("block/big_lantern_bottom")
+    bottom: ResourceLocation = id("block/big_lantern_bottom"),
 ) {
     this.createSimpleFlatItemModel(block)
     val texture = TextureMapping()
@@ -1138,7 +1122,7 @@ fun BlockModelGenerators.registerMixedNetherBrickPillar(block: Block, mix: Block
 
 fun BlockModelGenerators.iceStairs(
     block: Block,
-    parent: Block
+    parent: Block,
 ) {
     val texture: TextureMapping = TextureMapping.defaultTexture(parent)
         .put(BOTTOM, parent.model())
@@ -1165,7 +1149,7 @@ fun BlockModelGenerators.stairs(
     block: Block,
     bottom: Block = block,
     side: Block = bottom,
-    top: Block = bottom
+    top: Block = bottom,
 ) = stairs(block, bottom.model(), side.model(), top.model())
 
 fun BlockModelGenerators.stairs(block: Block, ends: ResourceLocation, side: ResourceLocation) =
@@ -1217,7 +1201,7 @@ fun slabTexture(texture: Block): TextureMapping = TextureMapping.defaultTexture(
     .put(SIDE, texture.model())
     .put(TOP, texture.model())
 
-fun BlockModelGenerators.wall(block: Block, texture: Block=block) = wall(block, texture.model())
+fun BlockModelGenerators.wall(block: Block, texture: Block = block) = wall(block, texture.model())
 
 fun BlockModelGenerators.wall(wallBlock: Block, inId: ResourceLocation) {
     val texture = TextureMapping.defaultTexture(wallBlock.model()).put(WALL, inId)
@@ -1382,7 +1366,7 @@ fun BlockModelGenerators.registerCropWithParent(
     crop: Block,
     model: ResourceLocation,
     ageProperty: Property<Int>,
-    vararg ageTextureIndices: Int
+    vararg ageTextureIndices: Int,
 ) {
     require(ageProperty.possibleValues.size == ageTextureIndices.size)
     val int2ObjectMap: Int2ObjectMap<ResourceLocation> = Int2ObjectOpenHashMap()
@@ -1486,7 +1470,7 @@ fun BlockModelGenerators.registerCandelabra(candelabra: Block, isDnD: Boolean = 
 }
 
 fun BlockModelGenerators.candelabraStates(
-    candelabra: CandelabraBlock, isDnD: Boolean
+    candelabra: CandelabraBlock, isDnD: Boolean,
 ): PropertyDispatch {
     val candle = candelabra.candle.prefixed(if (isDnD) "candle/" else "")
 
@@ -1629,7 +1613,7 @@ fun block(parent: String, variant: String, vararg requiredTextures: TextureSlot)
 fun BlockModelGenerators.parentedModel(
     block: Block,
     textBlock: Block,
-    parent: ResourceLocation
+    parent: ResourceLocation,
 ): ResourceLocation =
     ModelTemplate(parent.myb, Optional.empty(), ALL)
         .create(block.model(), TextureMapping().put(ALL, textBlock.model()), this.modelOutput)
@@ -1637,7 +1621,7 @@ fun BlockModelGenerators.parentedModel(
 fun BlockModelGenerators.parentedModel(
     block: ResourceLocation,
     textBlock: Block,
-    parent: ResourceLocation
+    parent: ResourceLocation,
 ): ResourceLocation =
     ModelTemplate(parent.myb, Optional.empty(), ALL)
         .create(block, TextureMapping().put(ALL, textBlock.model()), this.modelOutput)

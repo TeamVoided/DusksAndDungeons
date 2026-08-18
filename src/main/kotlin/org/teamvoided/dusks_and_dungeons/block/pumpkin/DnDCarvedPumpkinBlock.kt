@@ -26,7 +26,8 @@ class DnDCarvedPumpkinBlock(settings: Properties) : CarvedPumpkinBlock(settings)
     }
 
     companion object {
-        private fun spawnGolem(world: Level, result: BlockPattern.BlockPatternMatch, entity: Entity, pos: BlockPos) {
+
+        fun spawnGolem(world: Level, result: BlockPattern.BlockPatternMatch, entity: Entity, pos: BlockPos) {
             clearPatternBlocks(world, result)
             entity.moveTo(
                 pos.x.toDouble() + 0.5,
@@ -48,4 +49,5 @@ class DnDCarvedPumpkinBlock(settings: Properties) : CarvedPumpkinBlock(settings)
             updatePatternBlocks(world, result)
         }
     }
+
 }
