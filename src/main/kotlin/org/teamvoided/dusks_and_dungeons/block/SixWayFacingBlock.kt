@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.util.rotate
 
 open class SixWayFacingBlock(settings: Properties) : Block(settings) {
 
@@ -37,7 +39,19 @@ open class SixWayFacingBlock(settings: Properties) : Block(settings) {
     }
 
     companion object {
+
         val CODEC: MapCodec<SixWayFacingBlock> = simpleCodec(::SixWayFacingBlock)
         val FACING: DirectionProperty = BlockStateProperties.FACING
+
+        fun createShapeMap(down: VoxelShape, up: VoxelShape, side: VoxelShape): Map<Direction, VoxelShape> {
+            return Direction.entries.associateWith { dir ->
+                when (dir) {
+                    Direction.DOWN -> down
+                    Direction.UP -> up
+                    else -> side.rotate(dir.opposite.get2DDataValue())
+                }
+            }
+        }
+
     }
 }

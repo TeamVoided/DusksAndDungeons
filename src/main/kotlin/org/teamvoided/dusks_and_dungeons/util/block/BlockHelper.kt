@@ -10,6 +10,7 @@ import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.HoeItem
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.Blocks.*
@@ -61,6 +62,8 @@ fun symmetricalBoxX(yzMin: Double, xMin: Double, xMax: Double): VoxelShape =
 
 //val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
 //val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
+
+// TODO(ender) move these to gravestone block class
 val gravestoneShape: VoxelShape = Shapes.or(
     Block.box(0.0, 0.0, 0.0, 2.0, 16.0, 6.0), //left
     Block.box(14.0, 0.0, 0.0, 16.0, 16.0, 6.0), //right
@@ -80,6 +83,7 @@ val centerSmallGravestoneShape: VoxelShape = Block.box(3.0, 0.0, 7.0, 13.0, 12.0
 val headstoneShape: VoxelShape = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
 val centerHeadstoneShape: VoxelShape = Block.box(0.0, 0.0, 7.0, 16.0, 16.0, 9.0)
 
+fun BlockPlaceContext.isCrouching(): Boolean = this.player?.isCrouching == true
 
 fun light(lightLevel: Int): ToIntFunction<BlockState> = ToIntFunction { lightLevel }
 fun BlockBehaviour.Properties.luminance(lightLevel: Int): BlockBehaviour.Properties = this.lightLevel { lightLevel }

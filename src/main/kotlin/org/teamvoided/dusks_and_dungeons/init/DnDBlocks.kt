@@ -434,8 +434,6 @@ object DnDBlocks {
     val BIG_SOUL_LANTERN =
         register("big_soul_lantern", BigLanternBlock(ofFullCopy(SOUL_LANTERN).sound(bigLanternSound)).pickaxe())
 
-    //TO DO Move this to Variance
-    // SIKE
     val BIG_REDSTONE_LANTERN = register(
         "big_redstone_lantern",
         BigRedstoneLanternBlock(ofFullCopy(BIG_LANTERN).lightLevel(litBlockEmission(8))).pickaxe()
