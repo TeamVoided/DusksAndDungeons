@@ -76,11 +76,11 @@ open class BigLanternBlock(settings: Properties) : SixWayFacingBlock(settings), 
         const val MIN_SIZE = 2.5
         const val MIN_SIZE_TOP = 4.5
 
-        val SHAPE_DOWN: VoxelShape = Shapes.or(
+        val DOWN_SHAPE: VoxelShape = Shapes.or(
             symmetricalBoxY(MIN_SIZE, 3.0, 16.0),
             symmetricalBoxY(MIN_SIZE_TOP, 0.0, 3.0)
         )
-        val SHAPE_UP: VoxelShape = Shapes.or(
+        val UP_SHAPE: VoxelShape = Shapes.or(
             symmetricalBoxY(MIN_SIZE, 0.0, 13.0),
             symmetricalBoxY(MIN_SIZE_TOP, 13.0, 16.0)
         )
@@ -89,7 +89,7 @@ open class BigLanternBlock(settings: Properties) : SixWayFacingBlock(settings), 
             symmetricalBoxZ(MIN_SIZE_TOP, 0.0, 3.0)
         )
 
-        val SHAPES = createShapeMap(SHAPE_DOWN, SHAPE_UP, SIDE_SHAPE)
+        val SHAPES = createShapeMap(DOWN_SHAPE, UP_SHAPE, SIDE_SHAPE)
 
     }
 }
