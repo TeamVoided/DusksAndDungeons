@@ -159,6 +159,7 @@ object DnDTabs {
                     DnDBlocks.BIG_CHAIN,
                     DnDBlocks.BIG_LANTERN,
                     DnDBlocks.BIG_SOUL_LANTERN,
+                    DnDBlocks.BIG_REDSTONE_LANTERN,
                     DnDBlocks.BIG_SCAFFOLDING
                 )
                 entries.addItems( // This adds the candles in a nice way
@@ -230,6 +231,7 @@ object DnDTabs {
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
             addAfter(Items.LANTERN, DnDBlocks.BIG_LANTERN)
             addAfter(Items.SOUL_LANTERN, DnDBlocks.BIG_SOUL_LANTERN)
+            addAfter(DnDBlocks.BIG_SOUL_LANTERN, DnDBlocks.BIG_REDSTONE_LANTERN)
 
             addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
 
