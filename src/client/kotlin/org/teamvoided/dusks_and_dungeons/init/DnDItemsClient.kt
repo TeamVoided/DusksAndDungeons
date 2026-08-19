@@ -29,9 +29,13 @@ object DnDItemsClient {
         registerTint({ stack, _ -> DyedItemColor.getOrDefault(stack, 0xffffff) }, DnDItems.FARMERS_HAT)
 
         ItemTooltipCallback.EVENT.register { stack, _, _, lines ->
-            if (DnDItems.EVIL_ITEMS.contains(stack.item)) lines.addLast(
-                Component.literal("Experimental! May corrupt your worlds or disappear in future updates!").withStyle(ChatFormatting.RED)
-            )
+            if (DnDItems.EVIL_ITEMS.contains(stack.item)) {
+                lines.add(Component.literal("Experimental!").withStyle(ChatFormatting.RED))
+                lines.add(
+                    Component.literal("May corrupt your worlds or disappear in future updates!")
+                        .withStyle(ChatFormatting.RED)
+                )
+            }
         }
     }
 

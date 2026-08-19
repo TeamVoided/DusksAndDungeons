@@ -48,3 +48,5 @@ fun compost(item: ItemLike, chance: Double = 1.0) = CompostingChanceRegistry.INS
 // Fuel Registry
 fun fuel(item: ItemLike, time: Int) = FuelRegistry.INSTANCE.add(item, time)
 fun fuel(tag: TagKey<Item>, time: Int) = FuelRegistry.INSTANCE.add(tag, time)
+fun removeFuel(item: ItemLike) = FuelRegistry.INSTANCE.remove(item)
+fun removeFuel(tag: TagKey<Item>) = FuelRegistry.INSTANCE.remove(tag)

@@ -304,6 +304,14 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS)
             .forceAddTag(DnDBlockTags.WOOD_WALLS)
+            .forceAddTag(DnDBlockTags.PLANK_WALLS)
+
+        getOrCreateTagBuilder(DnDBlockTags.PLANK_WALLS)
+            .forceAddTag(DnDBlockTags.PLANK_WALLS_THAT_BURN)
+            .add(DnDBlocks.CRIMSON_WALL)
+            .add(DnDBlocks.WARPED_WALL)
+
+        getOrCreateTagBuilder(DnDBlockTags.PLANK_WALLS_THAT_BURN)
             .add(DnDBlocks.OAK_WALL)
             .add(DnDBlocks.SPRUCE_WALL)
             .add(DnDBlocks.BIRCH_WALL)
@@ -312,11 +320,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.DARK_OAK_WALL)
             .add(DnDBlocks.MANGROVE_WALL)
             .add(DnDBlocks.CHERRY_WALL)
-            .add(DnDBlocks.CRIMSON_WALL)
-            .add(DnDBlocks.WARPED_WALL)
             .add(DnDBlocks.BAMBOO_WALL)
             .add(DnDBlocks.BAMBOO_MOSAIC_WALL)
             .add(DnDBlocks.CASCADE_WALL)
+            .add(DnDBlocks.VERDANT_WALL)
+
         getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS).forceAddTag(DnDBlockTags.WOOD_STAIRS)
         getOrCreateTagBuilder(BlockTags.WOODEN_SLABS).forceAddTag(DnDBlockTags.WOOD_SLABS)
 

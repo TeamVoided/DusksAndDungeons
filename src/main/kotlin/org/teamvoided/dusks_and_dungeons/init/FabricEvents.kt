@@ -13,6 +13,7 @@ import net.minecraft.world.level.storage.loot.LootTable
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.BARTERING_ADD_VIVIONS
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SNIFFER_ADD_MOONBERRY
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.voidlib.helpers.mc.*
 
@@ -111,5 +112,8 @@ fun createFuels() {
     fuel(DnDItems.BIG_SCAFFOLDING, 300)
     fuel(DnDBlocks.MOLTEN_LAVASPONGE, 20000)
     fuel(DnDItems.GLOWING_LAVASPONGE, 20000)
+    fuel(DnDItemTags.HOLLOW_LOGS_THAT_BURN, 300)
+    fuel(DnDItemTags.WOOD_WALLS_THAT_BURN, 300)
+    fuel(DnDItemTags.PLANK_WALLS_THAT_BURN, 275)
 }
 

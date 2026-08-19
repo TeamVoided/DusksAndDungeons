@@ -14,6 +14,9 @@ object DnDItemTags {
     // wood
     val WOODEN_WALLS = create("wooden_walls")
 
+    val PLANK_WALLS = create("plank_walls")
+    val PLANK_WALLS_THAT_BURN = create("plank_walls_that_burn")
+
     val WOOD_STAIRS = create("wood_stairs")
     val WOOD_SLABS = create("wood_slabs")
     val WOOD_WALLS = create("wood_walls")

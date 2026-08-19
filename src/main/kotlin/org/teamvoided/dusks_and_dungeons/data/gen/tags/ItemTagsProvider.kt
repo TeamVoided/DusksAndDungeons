@@ -4,10 +4,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.world.item.Items
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
@@ -96,6 +96,8 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).forceAddTag(DnDItemTags.WOOD_SLABS)
         getOrCreateTagBuilder(ItemTags.WALLS).forceAddTag(DnDItemTags.WOODEN_WALLS)
         copy(DnDBlockTags.WOODEN_WALLS, DnDItemTags.WOODEN_WALLS)
+        copy(DnDBlockTags.PLANK_WALLS, DnDItemTags.PLANK_WALLS)
+        copy(DnDBlockTags.PLANK_WALLS_THAT_BURN, DnDItemTags.PLANK_WALLS_THAT_BURN)
 
         copy(DnDBlockTags.WOOD_STAIRS, DnDItemTags.WOOD_STAIRS)
         copy(DnDBlockTags.WOOD_SLABS, DnDItemTags.WOOD_SLABS)
@@ -104,6 +106,34 @@ class ItemTagsProvider(
         copy(DnDBlockTags.WOOD_STAIRS_THAT_BURN, DnDItemTags.WOOD_STAIRS_THAT_BURN)
         copy(DnDBlockTags.WOOD_SLABS_THAT_BURN, DnDItemTags.WOOD_SLABS_THAT_BURN)
         copy(DnDBlockTags.WOOD_WALLS_THAT_BURN, DnDItemTags.WOOD_WALLS_THAT_BURN)
+
+        getOrCreateTagBuilder(ItemTags.NON_FLAMMABLE_WOOD)
+            .add(
+                DnDBlocks.CRIMSON_HYPHAE.stairs.asItem(),
+                DnDBlocks.CRIMSON_HYPHAE.slab.asItem(),
+                DnDBlocks.CRIMSON_HYPHAE.wall.asItem(),
+                DnDBlocks.CRIMSON_STEM_PILE.asItem(),
+                DnDBlocks.STRIPPED_CRIMSON_HYPHAE.stairs.asItem(),
+                DnDBlocks.STRIPPED_CRIMSON_HYPHAE.slab.asItem(),
+                DnDBlocks.STRIPPED_CRIMSON_HYPHAE.wall.asItem(),
+                DnDBlocks.STRIPPED_CRIMSON_STEM_PILE.asItem(),
+                DnDBlocks.CRIMSON_WALL.asItem(),
+                DnDBlocks.HOLLOW_CRIMSON_STEM.asItem(),
+                DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM.asItem(),
+
+                DnDBlocks.WARPED_HYPHAE.stairs.asItem(),
+                DnDBlocks.WARPED_HYPHAE.slab.asItem(),
+                DnDBlocks.WARPED_HYPHAE.wall.asItem(),
+                DnDBlocks.WARPED_STEM_PILE.asItem(),
+                DnDBlocks.STRIPPED_WARPED_HYPHAE.stairs.asItem(),
+                DnDBlocks.STRIPPED_WARPED_HYPHAE.slab.asItem(),
+                DnDBlocks.STRIPPED_WARPED_HYPHAE.wall.asItem(),
+                DnDBlocks.STRIPPED_WARPED_STEM_PILE.asItem(),
+                DnDBlocks.WARPED_WALL.asItem(),
+                DnDBlocks.HOLLOW_WARPED_STEM.asItem(),
+                DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM.asItem(),
+            )
+
     }
 
     fun vanillaTags() {

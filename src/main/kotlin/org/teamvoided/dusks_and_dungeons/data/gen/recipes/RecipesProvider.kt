@@ -11,6 +11,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
+import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.WoodRecipes
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.CASCADE_WOOD
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
@@ -26,8 +27,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         recipesBlockFamilies.forEach { generateRecipes(e, it, FeatureFlags.DEFAULT_FLAGS) }
         SETS.filterNot { it == CASCADE_WOOD || it == STRIPPED_CASCADE_WOOD }.forEach(e::createSet)
 
-        WoodRecipes.generateWoodRecipes(e)
-        BigRecipes.generateBigRecipes(e)
+        WoodRecipes.build(e)
+        BigRecipes.build(e)
         StoneRecipes.generateStoneRecipes(e)
         NetherRecipes.generateNetherRecipes(e)
         FloraRecipes.generateFloraRecipes(e)
