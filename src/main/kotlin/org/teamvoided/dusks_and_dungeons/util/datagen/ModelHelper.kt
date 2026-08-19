@@ -20,7 +20,8 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.models.DnDModels
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.DnDModels
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createUpFacing
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.util.*
 
@@ -655,7 +656,7 @@ fun BlockModelGenerators.registerSmallPumpkins(pumpkin: Block, carved: Block, gl
     blockStateOutput.accept(
         MultiVariantGenerator
             .multiVariant(pumpkin, Variant.variant().with(VariantProperties.MODEL, model))
-            .with(createPumpkinFacingDispatch())
+            .with(createUpFacing())
     )
 
     DnDModels.SMALL_CARVED_PUMPKIN.create(carved, texture, modelOutput)
@@ -663,16 +664,6 @@ fun BlockModelGenerators.registerSmallPumpkins(pumpkin: Block, carved: Block, gl
 
     DnDModels.SMALL_GLOWING_PUMPKIN.create(glowing, texture, modelOutput)
     createNonTemplateHorizontalBlock(glowing)
-}
-
-fun createPumpkinFacingDispatch(): PropertyDispatch {
-    return PropertyDispatch.property(BlockStateProperties.FACING)
-        .select(Direction.DOWN, Variant.variant().with(VariantProperties.X_ROT, Rotation.R180))
-        .select(Direction.UP, Variant.variant())
-        .select(Direction.NORTH, Variant.variant().with(VariantProperties.X_ROT, Rotation.R90))
-        .select(Direction.SOUTH, Variant.variant().with(VariantProperties.X_ROT, Rotation.R270))
-        .select(Direction.WEST, Variant.variant().with(VariantProperties.X_ROT, Rotation.R270).with(VariantProperties.Y_ROT, Rotation.R90))
-        .select(Direction.EAST, Variant.variant().with(VariantProperties.X_ROT, Rotation.R90).with(VariantProperties.Y_ROT, Rotation.R90))
 }
 
 fun BlockModelGenerators.registerSmallPumpkin(
@@ -1445,17 +1436,6 @@ fun BlockModelGenerators.candelabraStates(
             else model.create(candelabra, texture, this.modelOutput)
         )
     }
-}
-
-fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
-    // TODO make this be parented models instead
-    val stable = ModelLocationUtils.getModelLocation(scaffolding, "_stable")
-    val unstable = ModelLocationUtils.getModelLocation(scaffolding, "_unstable")
-    delegateItemModel(scaffolding, stable)
-    blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(scaffolding)
-            .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.BOTTOM, unstable, stable))
-    )
 }
 
 fun BlockModelGenerators.hangingFlora(block: Block, tinted: BlockModelGenerators.TintState) {
