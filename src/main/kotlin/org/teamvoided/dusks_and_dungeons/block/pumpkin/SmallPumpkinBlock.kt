@@ -6,6 +6,8 @@ import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Mirror
+import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.SimpleWaterloggedBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
@@ -16,8 +18,11 @@ import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.rotate
+import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxZ
 
 open class SmallPumpkinBlock(carvedBlock: Block, settings: Properties) : DnDPumpkinBlock(carvedBlock, settings),
     SimpleWaterloggedBlock {
@@ -31,7 +36,16 @@ open class SmallPumpkinBlock(carvedBlock: Block, settings: Properties) : DnDPump
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
         builder.add(WATERLOGGED, FACING)
+    }
+
+    override fun rotate(state: BlockState, rotation: Rotation): BlockState {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)))
+    }
+
+    override fun mirror(state: BlockState, mirror: Mirror): BlockState {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)))
     }
 
     override fun updateShape(
@@ -55,26 +69,20 @@ open class SmallPumpkinBlock(carvedBlock: Block, settings: Properties) : DnDPump
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return SHAPES[state.getValue(FACING)] ?: BOTTOM_SHAPE
+        return SHAPES[state.getValue(FACING)] ?: Shapes.block()
     }
 
-    override fun isPathfindable(state: BlockState, navigationType: PathComputationType): Boolean = false
+    override fun isPathfindable(state: BlockState, type: PathComputationType): Boolean = false
 
     companion object {
 
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
         val FACING: DirectionProperty = BlockStateProperties.FACING
 
-        val BOTTOM_SHAPE: VoxelShape = box(4.0, 0.0, 4.0, 12.0, 8.0, 12.0)
-        val TOP_SHAPE: VoxelShape = box(4.0, 8.0, 4.0, 12.0, 16.0, 12.0)
-        val SIDE_SHAPE: VoxelShape = box(4.0, 4.0, 8.0, 12.0, 12.0, 16.0)
-        val SHAPES = Direction.entries.associateWith {
-            when (it) {
-                Direction.DOWN -> TOP_SHAPE
-                Direction.UP -> BOTTOM_SHAPE
-                else -> SIDE_SHAPE.rotate(it.opposite.get2DDataValue())
-            }
-        }
+        val DOWN_SHAPE = symmetricalBoxY(4.0, 8.0, 16.0)
+        val UP_SHAPE = symmetricalBoxY(4.0, 0.0, 8.0)
+        val SIDE_SHAPE = symmetricalBoxZ(4.0, 8.0, 16.0)
+        val SHAPES = SixWayFacingBlock.createShapeMap(DOWN_SHAPE, UP_SHAPE, SIDE_SHAPE)
 
     }
 }
