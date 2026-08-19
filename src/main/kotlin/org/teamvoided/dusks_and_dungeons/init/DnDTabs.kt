@@ -228,10 +228,14 @@ object DnDTabs {
         modifyTab(CreativeModeTabs.COLORED_BLOCKS) { addCandles() }
 
         modifyTab(CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            addBefore(
+                Items.CHAIN,
+                DnDBlocks.BIG_LANTERN,
+                DnDBlocks.BIG_SOUL_LANTERN,
+                DnDBlocks.BIG_REDSTONE_LANTERN
+            )
+
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
-            addAfter(Items.LANTERN, DnDBlocks.BIG_LANTERN)
-            addAfter(Items.SOUL_LANTERN, DnDBlocks.BIG_SOUL_LANTERN)
-            addAfter(DnDBlocks.BIG_SOUL_LANTERN, DnDBlocks.BIG_REDSTONE_LANTERN)
 
             addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
 
