@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -23,6 +24,11 @@ class BigRedstoneLanternBlock(settings: Properties) : BigLanternBlock(settings) 
                 .setValue(WATERLOGGED, false)
                 .setValue(LIT, true)
         )
+    }
+
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
+        val state = super.getStateForPlacement(ctx)
+        return state.setValue(LIT, !hasNeighborSignal(ctx.level, ctx.clickedPos, state))
     }
 
     override fun onPlace(state: BlockState, world: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {

@@ -34,11 +34,13 @@ open class BigLanternBlock(settings: Properties) : SixWayFacingBlock(settings), 
     }
 
     public override fun codec(): MapCodec<BigLanternBlock> = CODEC
+
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
         val fluidState = ctx.level.getFluidState(ctx.clickedPos)
 
         return super.getStateForPlacement(ctx)
             .setValue(WATERLOGGED, fluidState.type == Fluids.WATER)
+            .setValue(FACING, if (ctx.player?.isCrouching ?: false) ctx.clickedFace.opposite else ctx.clickedFace)
     }
 
     override fun getShape(state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape =
