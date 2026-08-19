@@ -29,7 +29,7 @@ interface CarvableBlock {
 
     fun getId(): ResourceLocation
 
-    fun getCarvedBlockState(stack: ItemStack, state: BlockState, clickedDir: Direction): BlockState
+    fun getCarvedBlockState(stack: ItemStack, state: BlockState, clickedDir: Direction, hit: BlockHitResult): BlockState
 
 
     fun isCarvingTool(stack: ItemStack): Boolean = stack.isShears()
@@ -73,7 +73,7 @@ interface CarvableBlock {
             getSoundEvent(player, stack)?.let { sound ->
                 level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0f, 1.0f)
             }
-            level.setBlock(pos, getCarvedBlockState(stack, state, dir), 11)
+            level.setBlock(pos, getCarvedBlockState(stack, state, dir, hit), 11)
             stack.hurtAndBreak(1, player, hand.asEquipmentSlot())
             getGameEvent(player, stack)?.let { event -> level.gameEvent(player, event, pos) }
             player.awardStat(Stats.ITEM_USED.get(stack.item))

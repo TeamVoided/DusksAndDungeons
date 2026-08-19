@@ -18,7 +18,7 @@ open class DnDPumpkinBlock(val carvedBlock: Block, settings: Properties) : Block
 
     override fun getId(): ResourceLocation = id()
 
-    override fun getCarvedBlockState(stack: ItemStack, state: BlockState, clickedDir: Direction): BlockState {
+    override fun getCarvedBlockState(stack: ItemStack, state: BlockState, clickedDir: Direction, hit: BlockHitResult): BlockState {
         return carvedBlock.defaultBlockState().setValue(CarvedPumpkinBlock.FACING, clickedDir)
     }
 

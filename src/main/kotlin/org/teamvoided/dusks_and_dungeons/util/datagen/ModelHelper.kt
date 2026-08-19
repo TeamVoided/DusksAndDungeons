@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectFunction
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import net.minecraft.core.Direction
+import net.minecraft.core.FrontAndTop
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.BlockModelGenerators.createRotatedVariants
@@ -652,19 +653,78 @@ fun BlockModelGenerators.registerSmallPumpkins(pumpkin: Block, carved: Block, gl
         .put(ALL, TextureMapping.getBlockTexture(pumpkin))
         .put(PARTICLE, TextureMapping.getBlockTexture(particle, "_side"))
 
-    val model = DnDModels.SMALL_PUMPKIN.create(pumpkin, texture, modelOutput)
+    val baseModel = DnDModels.SMALL_PUMPKIN.create(pumpkin, texture, modelOutput)
     blockStateOutput.accept(
         MultiVariantGenerator
-            .multiVariant(pumpkin, Variant.variant().with(VariantProperties.MODEL, model))
+            .multiVariant(pumpkin, Variant.variant().with(VariantProperties.MODEL, baseModel))
             .with(createUpFacing())
     )
 
-    DnDModels.SMALL_CARVED_PUMPKIN.create(carved, texture, modelOutput)
-    createNonTemplateHorizontalBlock(carved)
+    var model = DnDModels.SMALL_CARVED_PUMPKIN.create(carved, texture, modelOutput)
+    var wallModel = DnDModels.SMALL_CARVED_PUMPKIN_WALL.create(carved, texture, modelOutput)
+    createSmallPumpkinOrientable(carved, model, wallModel)
 
-    DnDModels.SMALL_GLOWING_PUMPKIN.create(glowing, texture, modelOutput)
-    createNonTemplateHorizontalBlock(glowing)
+    model = DnDModels.SMALL_GLOWING_PUMPKIN.create(glowing, texture, modelOutput)
+    wallModel = DnDModels.SMALL_GLOWING_PUMPKIN_WALL.create(glowing, texture, modelOutput)
+    createSmallPumpkinOrientable(glowing, model, wallModel)
+
 }
+
+fun BlockModelGenerators.createSmallPumpkinOrientable(
+    block: Block, model: ResourceLocation, wallModel: ResourceLocation,
+) {
+    blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(block).with(
+            PropertyDispatch.property(BlockStateProperties.ORIENTATION)
+                .generate { orientation -> createOrientationVariation(orientation, model, wallModel) }
+        )
+    )
+}
+
+fun createOrientationVariation(
+    orientation: FrontAndTop, model: ResourceLocation, wallModel: ResourceLocation,
+): Variant {
+    when (orientation) {
+        FrontAndTop.DOWN_NORTH -> return variant(model)
+            .with(VariantProperties.X_ROT, Rotation.R180)
+            .with(VariantProperties.Y_ROT, Rotation.R180)
+
+        FrontAndTop.DOWN_SOUTH -> return variant(model)
+            .with(VariantProperties.X_ROT, Rotation.R180)
+
+        FrontAndTop.DOWN_WEST -> return variant(model)
+            .with(VariantProperties.X_ROT, Rotation.R180)
+            .with(VariantProperties.Y_ROT, Rotation.R90)
+
+        FrontAndTop.DOWN_EAST -> return variant(model)
+            .with(VariantProperties.X_ROT, Rotation.R180)
+            .with(VariantProperties.Y_ROT, Rotation.R270)
+
+        FrontAndTop.UP_NORTH -> return variant(model)
+            .with(VariantProperties.Y_ROT, Rotation.R180)
+
+        FrontAndTop.UP_SOUTH -> return variant(model)
+
+        FrontAndTop.UP_WEST -> return variant(model)
+            .with(VariantProperties.Y_ROT, Rotation.R90)
+
+        FrontAndTop.UP_EAST -> return variant(model)
+            .with(VariantProperties.Y_ROT, Rotation.R270)
+
+        FrontAndTop.NORTH_UP -> return variant(wallModel)
+        FrontAndTop.SOUTH_UP -> return variant(wallModel)
+            .with(VariantProperties.Y_ROT, Rotation.R180)
+
+        FrontAndTop.WEST_UP -> return variant(wallModel)
+            .with(VariantProperties.Y_ROT, Rotation.R270)
+
+        FrontAndTop.EAST_UP -> return variant(wallModel)
+            .with(VariantProperties.Y_ROT, Rotation.R90)
+    }
+}
+
+fun variant(model: ResourceLocation): Variant = Variant.variant().with(VariantProperties.MODEL, model)
+
 
 fun BlockModelGenerators.registerSmallPumpkin(
     pumpkin: Block,

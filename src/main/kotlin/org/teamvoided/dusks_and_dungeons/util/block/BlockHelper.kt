@@ -4,6 +4,8 @@ package org.teamvoided.dusks_and_dungeons.util.block
 
 import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
 import net.fabricmc.fabric.api.registry.TillableBlockRegistry
+import net.minecraft.core.Direction
+import net.minecraft.core.FrontAndTop
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.particles.ParticleTypes.SOUL_FIRE_FLAME
 import net.minecraft.core.particles.SimpleParticleType
@@ -84,6 +86,16 @@ val headstoneShape: VoxelShape = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
 val centerHeadstoneShape: VoxelShape = Block.box(0.0, 0.0, 7.0, 16.0, 16.0, 9.0)
 
 fun BlockPlaceContext.isCrouching(): Boolean = this.player?.isCrouching == true
+
+fun BlockPlaceContext.getOrientation(): FrontAndTop {
+    val nearestLookingDirection: Direction = nearestLookingDirection.opposite
+    val verticalDirection = when (nearestLookingDirection) {
+        Direction.DOWN -> horizontalDirection.opposite
+        Direction.UP -> horizontalDirection
+        Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST -> Direction.UP
+    }
+    return FrontAndTop.fromFrontAndTop(nearestLookingDirection, verticalDirection)
+}
 
 fun light(lightLevel: Int): ToIntFunction<BlockState> = ToIntFunction { lightLevel }
 fun BlockBehaviour.Properties.luminance(lightLevel: Int): BlockBehaviour.Properties = this.lightLevel { lightLevel }
