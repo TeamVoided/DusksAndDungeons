@@ -61,6 +61,8 @@ object DnDItemTags {
 
     val PUMPKIN_SEEDS = create("pumpkin_seeds")
 
+    val BLACKSTONE_TOOL_MATERIALS = create("blackstone_tool_materials")
+
     val RACCOON_FOOD = create("raccoon_food")
 
     fun create(id: String): TagKey<Item> {

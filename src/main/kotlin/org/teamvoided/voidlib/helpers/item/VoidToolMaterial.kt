@@ -2,12 +2,12 @@
 
 package org.teamvoided.voidlib.helpers.item
 
-import net.minecraft.world.level.block.Block
+import net.minecraft.tags.BlockTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tier
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.tags.BlockTags
-import net.minecraft.tags.TagKey
+import net.minecraft.world.level.block.Block
 
 @JvmRecord
 data class VoidToolMaterial(
@@ -16,11 +16,12 @@ data class VoidToolMaterial(
     val attackDamage: Float,
     val incorrectForDropsBlocks: TagKey<Block>,
     val enchantability: Int,
-    val repairIngredient: Ingredient
+    val repairIngredient: Ingredient,
 ) : Tier {
+
     constructor(
         durability: Int, miningSpeedMultiplier: Float, attackDamage: Float,
-        incorrectForDropsBlocks: TagKey<Block>, enchantability: Int, repairTag: TagKey<Item>
+        incorrectForDropsBlocks: TagKey<Block>, enchantability: Int, repairTag: TagKey<Item>,
     ) : this(
         durability, miningSpeedMultiplier, attackDamage,
         incorrectForDropsBlocks, enchantability, Ingredient.of(repairTag)
@@ -34,10 +35,22 @@ data class VoidToolMaterial(
     override fun getRepairIngredient(): Ingredient = repairIngredient
 
     companion object {
-        fun weaponOnly(durability: Int, attackDamage: Float, enchantability: Int, repairTag: TagKey<Item>) =
-            VoidToolMaterial(
+
+        fun weaponOnly(
+            durability: Int, attackDamage: Float, enchantability: Int, repairTag: TagKey<Item>,
+        ): VoidToolMaterial {
+            return VoidToolMaterial(
                 durability, 6F, attackDamage,
                 BlockTags.INCORRECT_FOR_IRON_TOOL, enchantability, repairTag
             )
+        }
+
+        fun copyOf(material: Tier, repairTag: TagKey<Item>): VoidToolMaterial {
+            return VoidToolMaterial(
+                material.uses, material.speed, material.attackDamageBonus,
+                material.incorrectBlocksForDrops, material.enchantmentValue, repairTag,
+            )
+        }
+
     }
 }

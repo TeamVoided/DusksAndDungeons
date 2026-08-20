@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.item.component.DyedItemColor
 import net.minecraft.world.item.component.ItemAttributeModifiers
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDToolMaterials
 import org.teamvoided.dusks_and_dungeons.item.DnDFoodComponents
 import org.teamvoided.dusks_and_dungeons.item.ScarecrowItem
 import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
@@ -105,26 +106,26 @@ object DnDItems {
     @JvmField
     val BLACKSTONE_SWORD = register(
         "blackstone_sword",
-        SwordItem(Tiers.STONE, attributeSettings(SwordItem.createAttributes(Tiers.STONE, 3, -2.4f)))
+        SwordItem(DnDToolMaterials.BLACKSTONE, attributeSettings(SwordItem.createAttributes(Tiers.STONE, 3, -2.4f)))
     )
 
     val BLACKSTONE_PICKAXE = register(
         "blackstone_pickaxe",
-        PickaxeItem(Tiers.STONE, attributeSettings(PickaxeItem.createAttributes(Tiers.STONE, 1.0f, -2.8f)))
+        PickaxeItem(DnDToolMaterials.BLACKSTONE, attributeSettings(PickaxeItem.createAttributes(Tiers.STONE, 1.0f, -2.8f)))
     )
 
     @JvmField
     val BLACKSTONE_AXE = register(
         "blackstone_axe",
-        AxeItem(Tiers.STONE, attributeSettings(AxeItem.createAttributes(Tiers.STONE, 7.0f, -3.2f)))
+        AxeItem(DnDToolMaterials.BLACKSTONE, attributeSettings(AxeItem.createAttributes(Tiers.STONE, 7.0f, -3.2f)))
     )
     val BLACKSTONE_SHOVEL = register(
         "blackstone_shovel",
-        ShovelItem(Tiers.STONE, attributeSettings(ShovelItem.createAttributes(Tiers.STONE, 1.5f, -3.0f)))
+        ShovelItem(DnDToolMaterials.BLACKSTONE, attributeSettings(ShovelItem.createAttributes(Tiers.STONE, 1.5f, -3.0f)))
     )
     val BLACKSTONE_HOE = register(
         "blackstone_hoe",
-        HoeItem(Tiers.STONE, attributeSettings(HoeItem.createAttributes(Tiers.STONE, -1.0f, -2.0f)))
+        HoeItem(DnDToolMaterials.BLACKSTONE, attributeSettings(HoeItem.createAttributes(Tiers.STONE, -1.0f, -2.0f)))
     )
     // endregion
 

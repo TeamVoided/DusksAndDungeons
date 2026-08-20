@@ -30,6 +30,9 @@ class ItemTagsProvider(
         woodTags()
         vanillaTags()
         conventionTags()
+
+        getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).remove(Items.BLACKSTONE)
+        getOrCreateTagBuilder(DnDItemTags.BLACKSTONE_TOOL_MATERIALS).add(Items.BLACKSTONE)
     }
 
     fun duskTags() {
