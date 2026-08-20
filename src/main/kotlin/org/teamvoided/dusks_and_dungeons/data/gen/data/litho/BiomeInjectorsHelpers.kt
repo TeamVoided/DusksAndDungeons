@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package org.teamvoided.dusks_and_dungeons.data.gen.data.lihto
+package org.teamvoided.dusks_and_dungeons.data.gen.data.litho
 
 import com.mojang.datafixers.util.Either
 import com.mojang.datafixers.util.Pair

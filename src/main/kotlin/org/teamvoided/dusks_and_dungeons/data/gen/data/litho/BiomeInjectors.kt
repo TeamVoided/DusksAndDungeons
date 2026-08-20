@@ -1,10 +1,10 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.lihto
+package org.teamvoided.dusks_and_dungeons.data.gen.data.litho
 
 
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.ClimateParameter.*
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.world.level.biome.Biomes
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.data.litho.DnDBiomeInjectors as DBInject
 
@@ -19,11 +19,11 @@ object BiomeInjectors {
         val woodsRegion = parameterMap(temperature, humidity, climateParam(WEIRDNESS, -2.0, 0.0))
         val pasturesRegion = parameterMap(temperature, humidity, climateParam(WEIRDNESS, 0.0, 1.1))
 
-        replacePartially(DBInject.AUTUMN_WOODS, Biomes.FOREST, DnDBiomes.AUTUMN_WOODS, woodsRegion)
-        replacePartially(DBInject.AUTUMN_PASTURES, Biomes.PLAINS, DnDBiomes.AUTUMN_PASTURES, pasturesRegion)
+        replacePartially(DBInject.AUTUMN_WOODS, DnDBiomeTags.AUTUMN_LANDS, DnDBiomes.AUTUMN_WOODS, woodsRegion)
+        replacePartially(DBInject.AUTUMN_PASTURES, DnDBiomeTags.AUTUMN_LANDS, DnDBiomes.AUTUMN_PASTURES, pasturesRegion)
         replacePartially(
-            DBInject.AUTUMN_CASCADES, Biomes.RIVER, DnDBiomes.AUTUMN_CASCADES,
-            parameterMap(temperature, humidity, climateParam(WEIRDNESS, -0.25, 2.0))
+            DBInject.AUTUMN_CASCADES, DnDBiomeTags.AUTUMN_RIVERS, DnDBiomes.AUTUMN_CASCADES,
+            parameterMap(temperature, humidity)
         )
     }
 

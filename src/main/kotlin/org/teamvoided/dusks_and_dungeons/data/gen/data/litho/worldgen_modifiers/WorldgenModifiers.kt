@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.lihto.worldgen_modifiers
+package org.teamvoided.dusks_and_dungeons.data.gen.data.litho.worldgen_modifiers
 
 import dev.worldgen.lithostitched.api.util.InjectionType
 import dev.worldgen.lithostitched.api.worldgen.modifier.WorldgenModifier

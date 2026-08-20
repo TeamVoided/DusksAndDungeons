@@ -6,6 +6,8 @@ import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 object DnDBiomeTags {
+    val AUTUMN_LANDS = create("autumn_replacer/land")
+    val AUTUMN_RIVERS = create("autumn_replacer/river")
     val IS_AUTUMN = create("is_autumn")
     val HAS_STRUCTURE_AUTUMN_RUINS = create("has_structure/autumn_ruins")
 

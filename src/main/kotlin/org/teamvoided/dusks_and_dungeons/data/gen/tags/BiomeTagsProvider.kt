@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BiomeTags
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 import java.util.concurrent.CompletableFuture
@@ -20,6 +21,16 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
     }
 
     fun duskTags() {
+        getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_LANDS)
+            .add(
+                Biomes.PLAINS,
+                Biomes.FOREST,
+                Biomes.MEADOW,
+                Biomes.CHERRY_GROVE,
+                Biomes.TAIGA
+            )
+        getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_RIVERS)
+            .add(Biomes.RIVER)
         getOrCreateTagBuilder(DnDBiomeTags.IS_AUTUMN)
             .add(DnDBiomes.AUTUMN_WOODS)
             .add(DnDBiomes.GOLDEN_WOODS)
@@ -36,7 +47,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .forceAddTag(DnDBiomeTags.IS_AUTUMN) // remove the golden ones eventually
 
         getOrCreateTagBuilder(DnDBiomeTags.HAS_GLACIERS)
-            .forceAddTag(ConventionalBiomeTags.IS_SNOWY)
+        //.forceAddTag(ConventionalBiomeTags.IS_SNOWY)
     }
 
     fun vanillaTags() {

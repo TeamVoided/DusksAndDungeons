@@ -13,8 +13,8 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection
 import net.minecraft.network.chat.Component
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
-import org.teamvoided.dusks_and_dungeons.data.gen.data.lihto.BiomeInjectors
-import org.teamvoided.dusks_and_dungeons.data.gen.data.lihto.worldgen_modifiers.WorldgenModifiers
+import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.BiomeInjectors
+import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.worldgen_modifiers.WorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTablesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
