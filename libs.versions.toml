@@ -7,7 +7,7 @@
     # Dependencies
     minecraft = "1.21.1"
     fabric_loader = "0.19.3"
-    fabric_api = "0.116.12+1.21.1"
+    fabric_api = "0.116.15+1.21.1"
     fabric_kotlin = "1.13.13+kotlin.2.4.10"
     fzzy_config = "0.7.6+1.21"
     biolith = "3.0.1"
