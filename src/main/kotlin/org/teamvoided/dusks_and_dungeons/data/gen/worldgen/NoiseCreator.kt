@@ -7,6 +7,9 @@ import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoise
 
 object NoiseCreator {
     fun bootstrap(c: BootstrapContext<NormalNoise.NoiseParameters>) {
+        c.register(DnDNoise.AUTUMN, -7, 1, 1)
+        c.register(DnDNoise.OVERGROWN_GROTTO, -9, 1, 1, 0, 1)
+
         c.register(DnDNoise.GLACIER_ICE_PICKER_OLD, -7, 1)
         c.register(DnDNoise.GLACIER_ICE_PICKER, -5, 15, 5, 20)
         c.register(

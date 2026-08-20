@@ -6,6 +6,10 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 object DnDNoise {
+
+    val AUTUMN = create("biome_parameter/autumn")
+    val OVERGROWN_GROTTO = create("biome_parameter/overgrown_grotto")
+
     val GLACIER_ICE_PICKER_OLD = create("glacier_ice_picker_old")
     val GLACIER_ICE_PICKER = create("glacier_ice_picker")
     val GLACIER_JAGGEDNESS = create("glacier_jaggedness")
