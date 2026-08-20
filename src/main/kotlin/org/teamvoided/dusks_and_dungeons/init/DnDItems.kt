@@ -11,6 +11,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDToolMaterials
 import org.teamvoided.dusks_and_dungeons.item.DnDFoodComponents
+import org.teamvoided.dusks_and_dungeons.item.PlaceInFluidBlockItem
 import org.teamvoided.dusks_and_dungeons.item.ScarecrowItem
 import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
@@ -77,9 +78,9 @@ object DnDItems {
 
     val BIG_SCAFFOLDING = register("big_scaffolding", ScaffoldingBlockItem(DnDBlocks.BIG_SCAFFOLDING, Properties()))
 
-    // TODO replace `PlaceOnWaterBlockItem` with custom item
     val BRITTLE_LAVASPONGE = register(
-        "brittle_lavasponge", PlaceOnWaterBlockItem(DnDBlocks.BRITTLE_LAVASPONGE, Properties())
+        "brittle_lavasponge",
+        PlaceInFluidBlockItem(PlaceInFluidBlockItem.LAVA, DnDBlocks.BRITTLE_LAVASPONGE, Properties())
     )
         .tellWitnessesThatIWasMurdered()
 
@@ -88,8 +89,10 @@ object DnDItems {
     )
         .tellWitnessesThatIWasMurdered()
 
-    // TODO replace `PlaceOnWaterBlockItem` with custom item
-    val LAVASPONGE = register("lavasponge", PlaceOnWaterBlockItem(DnDBlocks.LAVASPONGE, Properties().fireResistant()))
+    val LAVASPONGE = register(
+        "lavasponge",
+        PlaceInFluidBlockItem(PlaceInFluidBlockItem.LAVA, DnDBlocks.LAVASPONGE, Properties().fireResistant())
+    )
         .tellWitnessesThatIWasMurdered()
 
     // LAVASPONGE has to be before GLOWING_LAVASPONGE or
@@ -122,7 +125,10 @@ object DnDItems {
 
     val BLACKSTONE_PICKAXE = register(
         "blackstone_pickaxe",
-        PickaxeItem(DnDToolMaterials.BLACKSTONE, attributeSettings(PickaxeItem.createAttributes(Tiers.STONE, 1.0f, -2.8f)))
+        PickaxeItem(
+            DnDToolMaterials.BLACKSTONE,
+            attributeSettings(PickaxeItem.createAttributes(Tiers.STONE, 1.0f, -2.8f))
+        )
     )
 
     @JvmField
@@ -132,7 +138,10 @@ object DnDItems {
     )
     val BLACKSTONE_SHOVEL = register(
         "blackstone_shovel",
-        ShovelItem(DnDToolMaterials.BLACKSTONE, attributeSettings(ShovelItem.createAttributes(Tiers.STONE, 1.5f, -3.0f)))
+        ShovelItem(
+            DnDToolMaterials.BLACKSTONE,
+            attributeSettings(ShovelItem.createAttributes(Tiers.STONE, 1.5f, -3.0f))
+        )
     )
     val BLACKSTONE_HOE = register(
         "blackstone_hoe",
