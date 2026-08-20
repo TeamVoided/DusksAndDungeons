@@ -1,5 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.data.gen
 
+import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.core.HolderLookup
@@ -25,5 +26,9 @@ class DnDWorldGenerator(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
 
         e.addAll(reg.lookupOrThrow(Registries.WOLF_VARIANT))
         e.addAll(reg.lookupOrThrow(DnDRegistryKeys.RACCOON_VARIANT))
+
+        e.addAll(reg.lookupOrThrow(LithostitchedRegistries.WORLDGEN_MODIFIER))
+        e.addAll(reg.lookupOrThrow(LithostitchedRegistries.BIOME_INJECTOR))
     }
+
 }

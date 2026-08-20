@@ -10,7 +10,7 @@
     fabric_api = "0.116.15+1.21.1"
     fabric_kotlin = "1.13.13+kotlin.2.4.10"
     fzzy_config = "0.7.6+1.21"
-    biolith = "3.0.1"
+    lithostitched = "1.8.0+beta5-fabric-21.1"
     reef = "0.2.0-beta.2"
     voidmill = "1.0.4"
     taglighting = "1.0.0+1.21.1"
@@ -28,7 +28,7 @@
     fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
     fabric_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_kotlin" }
     fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy_config" }
-    biolith = { module = "com.terraformersmc:biolith-fabric", version.ref = "biolith" }
+    lithostitched = { module = "maven.modrinth:lithostitched", version.ref = "lithostitched" }
     reef = { module = "org.teamvoided:reef", version.ref = "reef" }
     voidmill = { module = "org.teamvoided:voidmill", version.ref = "voidmill" }
     taglighting = { module = "org.teamvoided:taglighting", version.ref = "taglighting" }

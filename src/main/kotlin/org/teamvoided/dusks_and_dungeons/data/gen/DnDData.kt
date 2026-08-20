@@ -1,5 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.data.gen
 
+import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.DetectedVersion
@@ -12,6 +13,8 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection
 import net.minecraft.network.chat.Component
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
+import org.teamvoided.dusks_and_dungeons.data.gen.data.lihto.BiomeInjectors
+import org.teamvoided.dusks_and_dungeons.data.gen.data.lihto.worldgen_modifiers.WorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTablesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
@@ -38,6 +41,7 @@ import java.util.*
 
 @Suppress("unused")
 class DnDData : DataGeneratorEntrypoint {
+
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
         log.info("Hello from DataGen")
         val pack = gen.createPack()
@@ -75,6 +79,9 @@ class DnDData : DataGeneratorEntrypoint {
         gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
         gen.add(Registries.WOLF_VARIANT, WolfVariants::bootstrap)
         gen.add(DnDRegistryKeys.RACCOON_VARIANT, RaccoonVariants::bootstrap)
+
+        gen.add(LithostitchedRegistries.WORLDGEN_MODIFIER, WorldgenModifiers::init)
+        gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::init)
     }
 
     private fun createResource(o: PackOutput, description: Component): PackMetadataGenerator {
@@ -85,4 +92,5 @@ class DnDData : DataGeneratorEntrypoint {
             )
         )
     }
+
 }

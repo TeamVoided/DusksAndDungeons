@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.init
 
 import com.mojang.serialization.MapCodec
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
 import net.minecraft.world.level.levelgen.feature.rootplacers.RootPlacer
@@ -12,23 +12,16 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.ManhattanFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.OvergrowthFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer
-import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AlterGroundRadiusTreeDecorator
-import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AlterOnGroundTreeDecorator
-import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.AttachedToTrunkTreeDecorator
-import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.BeehiveBigTreeDecorator
-import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.FeatureAtBaseTreeDecorator
-import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.FeatureOnLeavesTreeDecorator
+import org.teamvoided.dusks_and_dungeons.world.gen.treedcorator.*
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.BentTrunkPlacer
-import org.teamvoided.dusks_and_dungeons.world.gen.trunk.WallTrunkPlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.trunk.ThreeWideTrunkPlacer
+import org.teamvoided.dusks_and_dungeons.world.gen.trunk.WallTrunkPlacer
 
-@Suppress("SameParameterValue")
 object DnDWorldgen {
 
     val ALTER_GROUND_RADIUS = registerTreeDecorator("alter_ground_radius", AlterGroundRadiusTreeDecorator.CODEC)
@@ -53,9 +46,7 @@ object DnDWorldgen {
 
 
     fun init() {
-        DnDBiomes.init()
         DnDFeatures.init()
-
 //        if (isDev()) DnDSurfaceBuilders.init()
     }
 
@@ -74,4 +65,5 @@ object DnDWorldgen {
     private fun <P : RootPlacer> registerRootPlacer(id: String, codec: MapCodec<P>): RootPlacerType<P> {
         return Registry.register(BuiltInRegistries.ROOT_PLACER_TYPE, id(id), RootPlacerType(codec))
     }
+
 }

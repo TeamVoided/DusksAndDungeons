@@ -42,7 +42,8 @@
   "depends": {
     "minecraft": "${version_range}",
     "fabricloader": "*",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "lithostitched": "${lithostitched}"
   },
   "contact": {
     "homepage": "https://github.com/${github_repo}",
