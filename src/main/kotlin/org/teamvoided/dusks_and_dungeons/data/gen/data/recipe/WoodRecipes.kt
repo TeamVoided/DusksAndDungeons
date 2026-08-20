@@ -15,6 +15,7 @@ object WoodRecipes {
 
     fun build(output: RecipeOutput) {
         output.cascade()
+        output.verdant()
         output.woodWalls()
         output.hollowLogs()
 
@@ -38,6 +39,14 @@ object WoodRecipes {
             .pattern("## ")
             .criterion(DnDBlocks.CASCADE_PLANKS.asItem())
             .save(this)
+    }
+
+
+    fun RecipeOutput.verdant() {
+        planksFromLogs(DnDBlocks.VERDANT_PLANKS, DnDItemTags.VERDANT_LOGS)
+        woodFromLogs(DnDBlocks.VERDANT_WOOD, DnDBlocks.VERDANT_LOG)
+        woodFromLogs(DnDBlocks.STRIPPED_VERDANT_WOOD, DnDBlocks.STRIPPED_VERDANT_LOG)
+        hangingSign(DnDItems.VERDANT_HANGING_SIGN, DnDBlocks.STRIPPED_VERDANT_LOG)
     }
 
     fun RecipeOutput.woodWalls() {
