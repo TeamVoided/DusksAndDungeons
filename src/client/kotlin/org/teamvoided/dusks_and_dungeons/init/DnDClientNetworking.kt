@@ -7,12 +7,12 @@ import net.minecraft.client.particle.TerrainParticle
 import net.minecraft.client.player.LocalPlayer
 import net.minecraft.core.BlockPos
 import net.minecraft.util.Mth
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.CuttableHollowLogBlock
-import org.teamvoided.dusks_and_dungeons.block.CuttableHollowLogBlock.Companion.AXIS
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDLevelEvents
 import org.teamvoided.dusks_and_dungeons.net.DnDLevelEventPayload
 import kotlin.math.max
@@ -35,7 +35,7 @@ object DnDClientNetworking {
                 var particleDensity = 0.3
                 val voxelShape = if (block is CuttableHollowLogBlock) {
                     particleDensity = block.getParticleDensity()
-                    block.shapeMap[state.getValue(AXIS)]?.getOrNull(event.data) ?: Shapes.block()
+                    block.shapeMap[state.getValue(RotatedPillarBlock.AXIS)]?.getOrNull(event.data) ?: Shapes.block()
                 } else
                     Shapes.block()
 

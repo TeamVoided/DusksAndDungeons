@@ -12,12 +12,13 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.PipeBlock
+import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
@@ -32,15 +33,13 @@ import org.teamvoided.dusks_and_dungeons.init.misc.DnDLevelEvents.CUT_HOLLOW_LOG
 import org.teamvoided.dusks_and_dungeons.util.dndLevelEvent
 import org.teamvoided.dusks_and_dungeons.util.getNonRecursiveHitResult
 import org.teamvoided.dusks_and_dungeons.util.rotateColumn
-import org.teamvoided.voidlib.helpers.mc.isZ
-import org.teamvoided.voidlib.helpers.mc.opposite
-import org.teamvoided.voidlib.helpers.mc.rotateFlat90
-import org.teamvoided.voidlib.helpers.mc.rotateOnAxis
+import org.teamvoided.voidlib.helpers.mc.*
+import java.util.function.UnaryOperator
 import kotlin.math.round
 
 open class CuttableHollowLogBlock(settings: Properties) : HollowLogBlock(settings) {
-    open val shapeMap: Map<Direction.Axis, Array<VoxelShape>> =
-        crateShapeMap(NORTH_SHAPE, EAST_SHAPE, SOUTH_SHAPE, WEST_SHAPE)
+
+    open val shapeMap = crateShapeMap(NORTH_SHAPE, EAST_SHAPE, SOUTH_SHAPE, WEST_SHAPE)
 
     init {
         registerDefaultState(
@@ -52,6 +51,31 @@ open class CuttableHollowLogBlock(settings: Properties) : HollowLogBlock(setting
                 .setValue(WEST, true)
                 .setValue(WATERLOGGED, false)
         )
+    }
+
+    override fun rotate(originalState: BlockState, rotation: Rotation): BlockState {
+        val state = super.rotate(originalState, rotation)
+        return when (state.getValue(AXIS)) {
+            Direction.Axis.Y -> transformHollowLog(state) { getRotated(it, rotation) }
+            else -> transformHollowLog(state) { getStepRotated(it, rotation, originalState.getValue(AXIS)) }
+        }
+    }
+
+
+    override fun mirror(originalState: BlockState, mirror: Mirror): BlockState {
+        val state = super.mirror(originalState, mirror)
+        return when (state.getValue(AXIS)) {
+            Direction.Axis.Y -> transformHollowLog(state) { getMirrored(it, mirror) }
+            Direction.Axis.X -> if (mirror == Mirror.LEFT_RIGHT) state
+                .setValue(NORTH, state.getValue(SOUTH))
+                .setValue(SOUTH, state.getValue(NORTH))
+            else state
+
+            Direction.Axis.Z -> if (mirror == Mirror.FRONT_BACK) state
+                .setValue(EAST, state.getValue(WEST))
+                .setValue(WEST, state.getValue(EAST))
+            else state
+        }
     }
 
     open fun getParticleDensity(): Double = 0.4
@@ -126,10 +150,80 @@ open class CuttableHollowLogBlock(settings: Properties) : HollowLogBlock(setting
         val WEST: BooleanProperty = BlockStateProperties.WEST
         val PROP_ARR = mapOf(NORTH to 1, EAST to 2, SOUTH to 4, WEST to 8)
 
-        val AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.AXIS
         val DIRECTION_PROPERTIES: Map<Direction, BooleanProperty> = PipeBlock.PROPERTY_BY_DIRECTION
         val DIRECTIONS = Direction.Plane.HORIZONTAL.stream().toList().toList()
-        fun getProperty(direction: Direction): BooleanProperty? = DIRECTION_PROPERTIES[direction]
+        fun getProperty(dir: Direction): BooleanProperty {
+            return DIRECTION_PROPERTIES[dir] ?: error("Invalid direction [$dir]")
+        }
+
+        fun getRotated(property: BooleanProperty, rotation: Rotation): BooleanProperty {
+            return getProperty(rotation.inverseRotate(getDir(property) ?: return NORTH))
+        }
+
+        fun getStepRotated(property: BooleanProperty, rotation: Rotation, axis: Direction.Axis): BooleanProperty {
+            return getProperty(rotation.stepRotate(getDir(property) ?: return NORTH, axis))
+        }
+
+        fun getMirrored(property: BooleanProperty, mirror: Mirror): BooleanProperty {
+            return getProperty(mirror.mirror(getDir(property) ?: return NORTH))
+        }
+
+        fun transformHollowLog(state: BlockState, transformation: UnaryOperator<BooleanProperty>): BlockState {
+            return state
+                .setValue(NORTH, state.getValue(transformation.apply(NORTH)))
+                .setValue(SOUTH, state.getValue(transformation.apply(SOUTH)))
+                .setValue(EAST, state.getValue(transformation.apply(EAST)))
+                .setValue(WEST, state.getValue(transformation.apply(WEST)))
+        }
+
+        private fun getDir(property: BooleanProperty): Direction? = when (property) {
+            NORTH -> Direction.NORTH
+            SOUTH -> Direction.SOUTH
+            EAST -> Direction.EAST
+            WEST -> Direction.WEST
+            else -> null
+        }
+
+        fun Rotation.inverseRotate(direction: Direction): Direction {
+            if (direction.axis === Direction.Axis.Y) return direction
+
+            return when (this) {
+                Rotation.CLOCKWISE_90 -> direction.counterClockWise
+                Rotation.CLOCKWISE_180 -> direction.opposite
+                Rotation.COUNTERCLOCKWISE_90 -> direction.clockWise
+                else -> direction
+            }
+        }
+
+        fun Rotation.stepRotate(direction: Direction, axis: Direction.Axis): Direction {
+            if (direction.axis.isY()) return direction
+
+            return when (this) {
+                Rotation.CLOCKWISE_90 -> (if (axis.isZ()) {
+                    when (direction) {
+                        Direction.NORTH -> Direction.WEST
+                        Direction.SOUTH -> Direction.EAST
+                        Direction.WEST -> Direction.NORTH
+                        Direction.EAST -> Direction.SOUTH
+                        else -> null
+                    }
+                } else null) ?: direction.counterClockWise
+
+                // I cant rotate around 180 in axiom, so I'm just gonna leave this
+                Rotation.CLOCKWISE_180 -> direction.opposite
+                Rotation.COUNTERCLOCKWISE_90 -> (if (axis.isX()) {
+                    when (direction) {
+                        Direction.NORTH -> Direction.WEST
+                        Direction.SOUTH -> Direction.EAST
+                        Direction.WEST -> Direction.NORTH
+                        Direction.EAST -> Direction.SOUTH
+                        else -> null
+                    }
+                } else null) ?: direction.clockWise
+
+                else -> direction
+            }
+        }
 
         val SIDE_MAP = mapOf(
             Vec3(1.0, 0.5, 0.5) to EAST,
