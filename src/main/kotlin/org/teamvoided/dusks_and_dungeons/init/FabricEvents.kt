@@ -39,7 +39,9 @@ fun modifyLootTables(
 
 fun addCommonWanderingTrades(trades: MutableList<VillagerTrades.ItemListing>) {
     trades.addSell(DnDBlocks.CASCADE_SAPLING, 5, 1, 8)
-    trades.addSell(DnDBlocks.GOLDEN_BIRCH_SAPLING, 5, 1, 8)
+    trades.addSell(DnDBlocks.SYPIA_SAPLING, 5, 1, 8)
+
+    // TODO add overgrown moss
 
     trades.add1for1(DnDItems.LANTERN_PUMPKIN_SEEDS, 12)
     trades.add1for1(DnDItems.MOSSKIN_PUMPKIN_SEEDS, 12)

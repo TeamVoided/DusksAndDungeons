@@ -52,40 +52,54 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM)
             .add(DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM)
         getOrCreateTagBuilder(DnDBlockTags.HOLLOW_LOGS_THAT_BURN)
-            .add(DnDBlocks.HOLLOW_OAK_LOG)
-            .add(DnDBlocks.HOLLOW_SPRUCE_LOG)
-            .add(DnDBlocks.HOLLOW_BIRCH_LOG)
-            .add(DnDBlocks.HOLLOW_JUNGLE_LOG)
-            .add(DnDBlocks.HOLLOW_ACACIA_LOG)
-            .add(DnDBlocks.HOLLOW_DARK_OAK_LOG)
-            .add(DnDBlocks.HOLLOW_MANGROVE_LOG)
-            .add(DnDBlocks.HOLLOW_CHERRY_LOG)
-            .add(DnDBlocks.HOLLOW_CASCADE_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_OAK_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_SPRUCE_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_BIRCH_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_JUNGLE_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_ACACIA_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_DARK_OAK_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_MANGROVE_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG)
-            .add(DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG)
-            .add(DnDBlocks.HOLLOW_BAMBOO_BLOCK)
-            .add(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK)
+            .add(
+                DnDBlocks.HOLLOW_OAK_LOG,
+                DnDBlocks.HOLLOW_SPRUCE_LOG,
+                DnDBlocks.HOLLOW_BIRCH_LOG,
+                DnDBlocks.HOLLOW_JUNGLE_LOG,
+                DnDBlocks.HOLLOW_ACACIA_LOG,
+                DnDBlocks.HOLLOW_DARK_OAK_LOG,
+                DnDBlocks.HOLLOW_MANGROVE_LOG,
+                DnDBlocks.HOLLOW_CHERRY_LOG,
+                DnDBlocks.HOLLOW_CASCADE_LOG,
+                DnDBlocks.HOLLOW_SYPIA_LOG,
+                DnDBlocks.HOLLOW_BAMBOO_BLOCK
+            )
+            .add(
+                DnDBlocks.HOLLOW_STRIPPED_OAK_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_SPRUCE_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_BIRCH_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_JUNGLE_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_ACACIA_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_DARK_OAK_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_MANGROVE_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_SYPIA_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK
+            )
+
         getOrCreateTagBuilder(DnDBlockTags.CASCADE_LOGS)
             .add(DnDBlocks.CASCADE_LOG)
             .add(DnDBlocks.CASCADE_WOOD.parent)
             .add(DnDBlocks.STRIPPED_CASCADE_LOG)
             .add(DnDBlocks.STRIPPED_CASCADE_WOOD.parent)
+        getOrCreateTagBuilder(DnDBlockTags.SYPIA_LOGS)
+            .add(DnDBlocks.SYPIA_LOG)
+            .add(DnDBlocks.SYPIA_WOOD.parent)
+            .add(DnDBlocks.STRIPPED_SYPIA_LOG)
+            .add(DnDBlocks.STRIPPED_SYPIA_WOOD.parent)
         getOrCreateTagBuilder(DnDBlockTags.VERDANT_LOGS)
             .add(DnDBlocks.VERDANT_LOG)
             .add(DnDBlocks.VERDANT_WOOD.parent)
             .add(DnDBlocks.STRIPPED_VERDANT_LOG)
             .add(DnDBlocks.STRIPPED_VERDANT_WOOD.parent)
+
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_PLANKS)
             .add(FLAMMABLE_PLANKS)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_LOGS)
             .forceAddTag(DnDBlockTags.CASCADE_LOGS)
+            .forceAddTag(DnDBlockTags.SYPIA_LOGS)
             .forceAddTag(DnDBlockTags.VERDANT_LOGS)
             .forceAddTag(DnDBlockTags.LOG_PILES_THAT_BURN)
             .forceAddTag(DnDBlockTags.HOLLOW_LOGS_THAT_BURN)
@@ -109,6 +123,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.MANGROVE_LOG_PILE,
                 DnDBlocks.CHERRY_LOG_PILE,
                 DnDBlocks.CASCADE_LOG_PILE,
+                DnDBlocks.SYPIA_LOG_PILE,
                 DnDBlocks.VERDANT_LOG_PILE,
                 DnDBlocks.BAMBOO_PILE,
             )
@@ -122,6 +137,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.STRIPPED_MANGROVE_LOG_PILE,
                 DnDBlocks.STRIPPED_CHERRY_LOG_PILE,
                 DnDBlocks.STRIPPED_CASCADE_LOG_PILE,
+                DnDBlocks.STRIPPED_SYPIA_LOG_PILE,
                 DnDBlocks.STRIPPED_VERDANT_LOG_PILE,
                 DnDBlocks.STRIPPED_BAMBOO_PILE,
             )
@@ -323,6 +339,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.BAMBOO_WALL)
             .add(DnDBlocks.BAMBOO_MOSAIC_WALL)
             .add(DnDBlocks.CASCADE_WALL)
+            .add(DnDBlocks.SYPIA_WALL)
             .add(DnDBlocks.VERDANT_WALL)
 
         getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS).forceAddTag(DnDBlockTags.WOOD_STAIRS)
@@ -418,9 +435,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
             .forceAddTag(DnDBlockTags.CASCADE_LOGS)
+            .forceAddTag(DnDBlockTags.SYPIA_LOGS)
             .forceAddTag(DnDBlockTags.VERDANT_LOGS)
         getOrCreateTagBuilder(BlockTags.PLANKS)
             .add(DnDBlocks.CASCADE_PLANKS)
+            .add(DnDBlocks.SYPIA_PLANKS)
             .add(DnDBlocks.VERDANT_PLANKS)
         getOrCreateTagBuilder(BlockTags.CROPS)
             .add(DnDBlocks.CORN_CROP)
@@ -434,15 +453,17 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.VIVIONBEDS)
         getOrCreateTagBuilder(BlockTags.LEAVES)
             .add(DnDBlocks.CASCADE_LEAVES)
-            .add(DnDBlocks.GOLDEN_BIRCH_LEAVES)
+            .add(DnDBlocks.SYPIA_LEAVES)
             .add(DnDBlocks.VERDANT_LEAVES)
             .forceAddTag(DnDBlockTags.LEAF_PILES)
         getOrCreateTagBuilder(BlockTags.SAPLINGS)
             .add(DnDBlocks.CASCADE_SAPLING)
-            .add(DnDBlocks.GOLDEN_BIRCH_SAPLING)
+            .add(DnDBlocks.SYPIA_SAPLING)
+            .add(DnDBlocks.OVERGROWTH_BUSH)
         getOrCreateTagBuilder(BlockTags.FLOWER_POTS)
             .add(DnDBlocks.POTTED_CASCADE_SAPLING)
-            .add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING)
+            .add(DnDBlocks.POTTED_SYPIA_SAPLING)
+//            .add(DnDBlocks.POTTED_OVERGROWTH_BUSH)
 
         getOrCreateTagBuilder(BlockTags.CANDLES)
             .forceAddTag(DnDBlockTags.SOUL_CANDLES)
@@ -468,29 +489,53 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE)
         getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS)
             .add(DnDBlocks.CASCADE_STAIRS)
+            .add(DnDBlocks.SYPIA_STAIRS)
+            .add(DnDBlocks.VERDANT_STAIRS)
         getOrCreateTagBuilder(BlockTags.WOODEN_SLABS)
             .add(DnDBlocks.CASCADE_SLAB)
+            .add(DnDBlocks.SYPIA_SLAB)
+            .add(DnDBlocks.VERDANT_SLAB)
         getOrCreateTagBuilder(BlockTags.WOODEN_DOORS)
             .add(DnDBlocks.CASCADE_DOOR)
+            .add(DnDBlocks.SYPIA_DOOR)
+            .add(DnDBlocks.VERDANT_DOOR)
             .add(DnDBlocks.BLUE_DOOR)
         getOrCreateTagBuilder(BlockTags.WOODEN_TRAPDOORS)
             .add(DnDBlocks.CASCADE_TRAPDOOR)
+            .add(DnDBlocks.SYPIA_TRAPDOOR)
+            .add(DnDBlocks.VERDANT_TRAPDOOR)
         getOrCreateTagBuilder(BlockTags.WOODEN_FENCES)
             .add(DnDBlocks.CASCADE_FENCE)
+            .add(DnDBlocks.SYPIA_FENCE)
+            .add(DnDBlocks.VERDANT_FENCE)
         getOrCreateTagBuilder(BlockTags.FENCE_GATES)
             .add(DnDBlocks.CASCADE_FENCE_GATE)
+            .add(DnDBlocks.SYPIA_FENCE_GATE)
+            .add(DnDBlocks.VERDANT_FENCE_GATE)
         getOrCreateTagBuilder(BlockTags.WOODEN_PRESSURE_PLATES)
             .add(DnDBlocks.CASCADE_PRESSURE_PLATE)
+            .add(DnDBlocks.SYPIA_PRESSURE_PLATE)
+            .add(DnDBlocks.VERDANT_PRESSURE_PLATE)
         getOrCreateTagBuilder(BlockTags.WOODEN_BUTTONS)
             .add(DnDBlocks.CASCADE_BUTTON)
+            .add(DnDBlocks.SYPIA_BUTTON)
+            .add(DnDBlocks.VERDANT_BUTTON)
         getOrCreateTagBuilder(BlockTags.STANDING_SIGNS)
             .add(DnDBlocks.CASCADE_SIGN)
+            .add(DnDBlocks.SYPIA_SIGN)
+            .add(DnDBlocks.VERDANT_SIGN)
         getOrCreateTagBuilder(BlockTags.WALL_SIGNS)
             .add(DnDBlocks.CASCADE_WALL_SIGN)
+            .add(DnDBlocks.SYPIA_WALL_SIGN)
+            .add(DnDBlocks.VERDANT_WALL_SIGN)
         getOrCreateTagBuilder(BlockTags.CEILING_HANGING_SIGNS)
             .add(DnDBlocks.CASCADE_HANGING_SIGN)
+            .add(DnDBlocks.SYPIA_HANGING_SIGN)
+            .add(DnDBlocks.VERDANT_HANGING_SIGN)
         getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS)
             .add(DnDBlocks.CASCADE_WALL_HANGING_SIGN)
+            .add(DnDBlocks.SYPIA_WALL_HANGING_SIGN)
+            .add(DnDBlocks.VERDANT_WALL_HANGING_SIGN)
     }
 
     private fun vanillaOverlayTags() {

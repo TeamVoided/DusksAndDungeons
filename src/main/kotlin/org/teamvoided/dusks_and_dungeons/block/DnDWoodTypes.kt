@@ -13,6 +13,9 @@ object DnDWoodTypes {
     val CASCADE_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder.copyOf(BlockSetType.CHERRY).register(id("cascade"))
     val CASCADE_WOOD_TYPE = registerWoodType("cascade", WoodType.CHERRY, CASCADE_BLOCK_SET_TYPE)
 
+    val SYPIA_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder.copyOf(BlockSetType.BIRCH).register(id("sypia"))
+    val SYPIA_WOOD_TYPE = registerWoodType("sypia", WoodType.BIRCH, SYPIA_BLOCK_SET_TYPE)
+
     val VERDANT_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder.copyOf(BlockSetType.OAK).register(id("verdant"))
     val VERDANT_WOOD_TYPE: WoodType = registerWoodType("verdant", WoodType.OAK, VERDANT_BLOCK_SET_TYPE)
 

@@ -90,9 +90,15 @@ object DnDBlockSettings {
         .noOcclusion()
         .ignitedByLava()
         .pushReaction(PushReaction.DESTROY)
-    val VERDANT_WOOD: Properties = ofFullCopy(Blocks.OAK_WOOD)
-    val STRIPPED_VERDANT_WOOD: Properties = ofFullCopy(Blocks.STRIPPED_OAK_WOOD)
-    val VERDANT_PLANKS: Properties = ofFullCopy(Blocks.OAK_PLANKS)
+
+    val SYPIA_WOOD: Properties = ofFullCopy(BIRCH_WOOD)
+    val STRIPPED_SYPIA_WOOD: Properties = ofFullCopy(STRIPPED_BIRCH_WOOD)
+    val SYPIA_PLANKS: Properties = ofFullCopy(BIRCH_PLANKS)
+
+    val VERDANT_WOOD: Properties = ofFullCopy(OAK_WOOD)
+    val STRIPPED_VERDANT_WOOD: Properties = ofFullCopy(STRIPPED_OAK_WOOD)
+    val VERDANT_PLANKS: Properties = ofFullCopy(OAK_PLANKS)
+
     val GOLDEN_MUSHROOM_BLOCK: Properties = ofFullCopy(BROWN_MUSHROOM_BLOCK).mapColor(MapColor.GOLD)
     val GOLDEN_MUSHROOM: Properties = Properties.of()
         .mapColor(MapColor.GOLD)

@@ -23,6 +23,22 @@ object DnDFamilies {
             .recipeUnlockedBy("has_planks")
             .getFamily()
 
+
+    val SYPIA_FAMILY: BlockFamily =
+        BlockFamilies.familyBuilder(DnDBlocks.SYPIA_PLANKS)
+            .stairs(DnDBlocks.SYPIA_STAIRS)
+            .slab(DnDBlocks.SYPIA_SLAB)
+            .fence(DnDBlocks.SYPIA_FENCE)
+            .fenceGate(DnDBlocks.SYPIA_FENCE_GATE)
+            .door(DnDBlocks.SYPIA_DOOR)
+            .trapdoor(DnDBlocks.SYPIA_TRAPDOOR)
+            .button(DnDBlocks.SYPIA_BUTTON)
+            .pressurePlate(DnDBlocks.SYPIA_PRESSURE_PLATE)
+            .sign(DnDBlocks.SYPIA_SIGN, DnDBlocks.SYPIA_WALL_SIGN)
+            .recipeGroupPrefix("wooden")
+            .recipeUnlockedBy("has_planks")
+            .getFamily()
+
     val VERDANT_FAMILY: BlockFamily =
         BlockFamilies.familyBuilder(DnDBlocks.VERDANT_PLANKS)
             .stairs(DnDBlocks.VERDANT_STAIRS)
@@ -38,8 +54,8 @@ object DnDFamilies {
             .recipeUnlockedBy("has_planks")
             .getFamily()
 
-    val modelsBlockFamilies = listOf(CASCADE_FAMILY)
-    val recipesBlockFamilies =  listOf(CASCADE_FAMILY, VERDANT_FAMILY)
+    val modelsBlockFamilies = listOf(CASCADE_FAMILY, SYPIA_FAMILY)
+    val recipesBlockFamilies = listOf(CASCADE_FAMILY, SYPIA_FAMILY, VERDANT_FAMILY)
 
     fun init() = Unit
 

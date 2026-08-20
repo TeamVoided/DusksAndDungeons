@@ -126,6 +126,7 @@ object DnDItemLists {
     val mangroveWoodStuff = DnDBlocks.MANGROVE_WOOD.headless()
     val cherryWoodStuff = DnDBlocks.CHERRY_WOOD.headless()
     val cascadeWoodStuff = DnDBlocks.CASCADE_WOOD.headless()
+    val sypiaWoodStuff = DnDBlocks.SYPIA_WOOD.headless()
     val crimsonHyphaeStuff = DnDBlocks.CRIMSON_HYPHAE.headless()
     val warpedHyphaeStuff = DnDBlocks.WARPED_HYPHAE.headless()
 
@@ -139,6 +140,7 @@ object DnDItemLists {
         mangroveWoodStuff,
         cherryWoodStuff,
         cascadeWoodStuff,
+        sypiaWoodStuff,
         crimsonHyphaeStuff,
         warpedHyphaeStuff
     )
@@ -153,6 +155,7 @@ object DnDItemLists {
         DnDBlocks.STRIPPED_MANGROVE_WOOD.headless(),
         DnDBlocks.STRIPPED_CHERRY_WOOD.headless(),
         DnDBlocks.STRIPPED_CASCADE_WOOD.headless(),
+        DnDBlocks.STRIPPED_SYPIA_WOOD.headless(),
         DnDBlocks.STRIPPED_CRIMSON_HYPHAE.headless(),
         DnDBlocks.STRIPPED_WARPED_HYPHAE.headless(),
     )
@@ -160,7 +163,7 @@ object DnDItemLists {
     val woodStuff = oakWoodStuff + spruceWoodStuff + birchWoodStuff +
             jungleWoodStuff + acaciaWoodStuff + darkOakWoodStuff +
             mangroveWoodStuff + cherryWoodStuff + cascadeWoodStuff +
-            crimsonHyphaeStuff + warpedHyphaeStuff
+            sypiaWoodStuff + crimsonHyphaeStuff + warpedHyphaeStuff
 
     val leafPiles = listOf(
         DnDBlocks.OAK_LEAF_PILE,
@@ -174,7 +177,7 @@ object DnDItemLists {
         DnDBlocks.AZALEA_LEAF_PILE,
         DnDBlocks.FLOWERING_AZALEA_LEAF_PILE,
         DnDBlocks.CASCADE_LEAF_PILE,
-        DnDBlocks.GOLDEN_BIRCH_LEAF_PILE,
+        DnDBlocks.SYPIA_LEAF_PILE,
         DnDBlocks.VERDANT_LEAF_PILE
     )
     val overlayBlocks = DnDBlocks.OVERLAYS.flatMap { it.list }

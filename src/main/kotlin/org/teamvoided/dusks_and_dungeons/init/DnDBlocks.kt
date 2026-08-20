@@ -169,6 +169,8 @@ object DnDBlocks {
     // endregion
 
     // region 🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳 --- Sold Oxygen --- 🌳 🌳 🌳 🌳 🌳 🌳 🌳 🌳
+
+    // region Cascade
     val CASCADE_SAPLING = register(
         "cascade_sapling", ThreeWideTreeSaplingBlock(SaplingGenerators.CASCADE, Set.CASCADE_SAPLING)
     ).cutout()
@@ -219,20 +221,60 @@ object DnDBlocks {
         "cascade_wall_hanging_sign",
         wallHangingSignOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS, CASCADE_HANGING_SIGN).wood()
     )
+    // endregion
 
-    val GOLDEN_BIRCH_SAPLING = register(
-        "golden_birch_sapling",
-        SaplingBlock(SaplingGenerators.GOLDEN_BIRCH, ofFullCopy(BIRCH_SAPLING).mapColor(MapColor.COLOR_YELLOW)).cutout()
+    // region Sypia
+    val SYPIA_SAPLING = register(
+        "sypia_sapling",
+        SaplingBlock(SaplingGenerators.GOLDEN_BIRCH, ofFullCopy(BIRCH_SAPLING).mapColor(MapColor.COLOR_YELLOW))
+    ).cutout()
+    val POTTED_SYPIA_SAPLING = registerNoItem("potted_sypia_sapling", flowerPot(SYPIA_SAPLING).cutout())
+    val SYPIA_LEAVES = register(
+        "sypia_leaves", LeavesBlock(ofFullCopy(BIRCH_LEAVES).mapColor(MapColor.COLOR_YELLOW)).leaves()
     )
-    val POTTED_GOLDEN_BIRCH_SAPLING =
-        registerNoItem("potted_golden_birch_sapling", flowerPot(GOLDEN_BIRCH_SAPLING).cutout())
-    val GOLDEN_BIRCH_LEAVES = register(
-        "golden_birch_leaves", LeavesBlock(ofFullCopy(BIRCH_LEAVES).mapColor(MapColor.COLOR_YELLOW)).leaves()
+    val SYPIA_LEAF_PILE = register("sypia_leaf_pile", leafPile(MapColor.COLOR_YELLOW).cutout())
+
+    val SYPIA_LOG = register("sypia_log", log(MapColor.COLOR_BLUE, MapColor.COLOR_BROWN, SoundType.CHERRY_WOOD))
+    val SYPIA_WOOD =
+        register(createBlockSet("sypia_wood", Set.SYPIA_WOOD).noStoneCutting().parent(::RotatedPillarBlock).build())
+            .woodSet()
+
+    val SYPIA_LOG_PILE = register("sypia_log_pile", logPile(SYPIA_WOOD.parent))
+    val STRIPPED_SYPIA_LOG =
+        register("stripped_sypia_log", log(MapColor.COLOR_BLUE, MapColor.COLOR_BLUE, SoundType.CHERRY_WOOD))
+    val STRIPPED_SYPIA_WOOD = register(
+        createBlockSet("stripped_sypia_wood", Set.STRIPPED_SYPIA_WOOD).noStoneCutting()
+            .parent(::RotatedPillarBlock).build()
+    ).woodSet()
+    val STRIPPED_SYPIA_LOG_PILE = register("stripped_sypia_log_pile", logPile(STRIPPED_SYPIA_WOOD.parent))
+
+    val SYPIA_PLANKS = register("sypia_planks", Block(Set.SYPIA_PLANKS)).flammablePlanks()
+    val SYPIA_STAIRS = register("sypia_stairs", stairsOf(SYPIA_PLANKS).wood())
+    val SYPIA_SLAB = register("sypia_slab", slabOf(SYPIA_PLANKS).wood())
+    val SYPIA_WALL = register("sypia_plank_wall", wallOf(SYPIA_PLANKS).wood())
+    val SYPIA_FENCE = register("sypia_fence", fenceOf(SYPIA_PLANKS).wood())
+    val SYPIA_FENCE_GATE =
+        register("sypia_fence_gate", fenceGateOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
+    val SYPIA_DOOR =
+        registerNoItem("sypia_door", doorOf(DnDWoodTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
+    val SYPIA_TRAPDOOR =
+        register("sypia_trapdoor", trapdoorOf(DnDWoodTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
+    val SYPIA_PRESSURE_PLATE =
+        register("sypia_pressure_plate", pressurePlateOf(DnDWoodTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
+    val SYPIA_BUTTON = register("sypia_button", woodenButton(DnDWoodTypes.SYPIA_BLOCK_SET_TYPE).wood())
+    val SYPIA_SIGN = registerNoItem("sypia_sign", signOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
+    val SYPIA_WALL_SIGN = registerNoItem(
+        "sypia_wall_sign", wallSignOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS, SYPIA_SIGN).wood()
     )
-    val GOLDEN_BIRCH_LEAF_PILE = register("golden_birch_leaf_pile", leafPile(MapColor.COLOR_YELLOW).cutout())
+    val SYPIA_HANGING_SIGN =
+        registerNoItem("sypia_hanging_sign", hangingSignOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
+    val SYPIA_WALL_HANGING_SIGN = registerNoItem(
+        "sypia_wall_hanging_sign",
+        wallHangingSignOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS, SYPIA_HANGING_SIGN).wood()
+    )
+    // endregion
 
-
-    //VERDANT
+    // region Verdant
     val VERDANT_LEAVES =
         register("verdant_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().tint().hoe()
             .tellWitnessesThatIWasMurdered()
@@ -253,7 +295,7 @@ object DnDBlocks {
     val STRIPPED_VERDANT_LOG = register("stripped_verdant_log", log(MapColor.GRASS, MapColor.GRASS)).grass().tint()
         .tellWitnessesThatIWasMurdered()
     val STRIPPED_VERDANT_WOOD = register(
-        createBlockSet("stripped_verdant_wood", Set.STRIPPED_CASCADE_WOOD).noStoneCutting().parent(::RotatedPillarBlock)
+        createBlockSet("stripped_verdant_wood", Set.STRIPPED_VERDANT_WOOD).noStoneCutting().parent(::RotatedPillarBlock)
             .build()
     ).woodSet().grass().tint()
         .tellWitnessesThatIWasMurdered()
@@ -302,7 +344,7 @@ object DnDBlocks {
         "verdant_wall_hanging_sign",
         wallHangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_HANGING_SIGN).wood()
     ).grass().tellWitnessesThatIWasMurdered()
-
+    // endregion
 
     val OAK_WOOD = registerWoodenSet("oak_wood", Blocks.OAK_WOOD)
     val SPRUCE_WOOD = registerWoodenSet("spruce_wood", Blocks.SPRUCE_WOOD)
@@ -410,6 +452,8 @@ object DnDBlocks {
 
     val HOLLOW_CASCADE_LOG = register("hollow_cascade_log", hollowLog(CASCADE_LOG))
     val HOLLOW_STRIPPED_CASCADE_LOG = register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_LOG))
+    val HOLLOW_SYPIA_LOG = register("hollow_sypia_log", hollowLog(CASCADE_LOG))
+    val HOLLOW_STRIPPED_SYPIA_LOG = register("hollow_stripped_sypia_log", hollowLog(STRIPPED_CASCADE_LOG))
     val HOLLOW_VERDANT_LOG =
         register("hollow_verdant_log", hollowLog(VERDANT_LOG)).cutout().grass().tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_VERDANT_LOG =
@@ -614,10 +658,13 @@ object DnDBlocks {
         // Striping
         StrippableBlockRegistry.register(CASCADE_LOG, STRIPPED_CASCADE_LOG)
         StrippableBlockRegistry.register(CASCADE_WOOD.parent, STRIPPED_CASCADE_WOOD.parent)
+        StrippableBlockRegistry.register(SYPIA_LOG, STRIPPED_SYPIA_LOG)
+        StrippableBlockRegistry.register(SYPIA_WOOD.parent, STRIPPED_SYPIA_WOOD.parent)
         StrippableBlockRegistry.register(VERDANT_LOG, STRIPPED_VERDANT_LOG)
         StrippableBlockRegistry.register(VERDANT_WOOD.parent, STRIPPED_VERDANT_WOOD.parent)
 
         registerStrippedSet(CASCADE_WOOD, STRIPPED_CASCADE_WOOD)
+        registerStrippedSet(SYPIA_WOOD, STRIPPED_SYPIA_WOOD)
         registerStrippedSet(VERDANT_WOOD, STRIPPED_VERDANT_WOOD)
         registerStrippedSet(OAK_WOOD, STRIPPED_OAK_WOOD)
         registerStrippedSet(SPRUCE_WOOD, STRIPPED_SPRUCE_WOOD)
@@ -631,6 +678,7 @@ object DnDBlocks {
         registerStrippedSet(WARPED_HYPHAE, STRIPPED_WARPED_HYPHAE)
 
         BlockStrippingRegistry.register(CASCADE_LOG_PILE, STRIPPED_CASCADE_LOG_PILE)
+        BlockStrippingRegistry.register(SYPIA_LOG_PILE, STRIPPED_SYPIA_LOG_PILE)
         BlockStrippingRegistry.register(VERDANT_LOG_PILE, STRIPPED_VERDANT_LOG_PILE)
         BlockStrippingRegistry.register(OAK_LOG_PILE, STRIPPED_OAK_LOG_PILE)
         BlockStrippingRegistry.register(SPRUCE_LOG_PILE, STRIPPED_SPRUCE_LOG_PILE)

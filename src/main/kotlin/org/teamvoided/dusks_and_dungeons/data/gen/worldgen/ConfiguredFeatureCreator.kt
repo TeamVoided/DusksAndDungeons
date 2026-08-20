@@ -5,7 +5,6 @@ import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
-import net.minecraft.data.worldgen.features.NetherFeatures
 import net.minecraft.data.worldgen.features.TreeFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
@@ -20,7 +19,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
-import net.minecraft.world.level.levelgen.feature.RandomBooleanSelectorFeature
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature
 import net.minecraft.world.level.levelgen.feature.configurations.*
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.target
@@ -31,7 +29,6 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlac
 import net.minecraft.world.level.levelgen.feature.foliageplacers.DarkOakFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider
-import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.trunkplacers.DarkOakTrunkPlacer
@@ -39,7 +36,6 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacementModifier
-import net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.material.Fluids
@@ -296,7 +292,7 @@ object ConfiguredFeatureCreator {
             ),
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
-        val goldenBirchTree = treeBuilder(Blocks.BIRCH_LOG, DnDBlocks.GOLDEN_BIRCH_LEAVES, 5, 2, 6, 2)
+        val goldenBirchTree = treeBuilder(Blocks.BIRCH_LOG, DnDBlocks.SYPIA_LEAVES, 5, 2, 6, 2)
         val birchDecorator1 = AttachedToTrunkTreeDecorator(
             0.14f,
             1,
@@ -338,7 +334,7 @@ object ConfiguredFeatureCreator {
                 ImmutableList.of(
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDBlocks.SYPIA_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -348,7 +344,7 @@ object ConfiguredFeatureCreator {
                     BeehiveBigTreeDecorator(0.1F),
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDBlocks.SYPIA_LEAF_PILE, blockTags)
                 )
             ).build()
         )
@@ -374,7 +370,7 @@ object ConfiguredFeatureCreator {
 //                    ),
                     birchDecorator1,
                     birchDecorator2,
-                    leafPiles(DnDBlocks.GOLDEN_BIRCH_LEAF_PILE, blockTags)
+                    leafPiles(DnDBlocks.SYPIA_LEAF_PILE, blockTags)
                 )
             ).build()
         )

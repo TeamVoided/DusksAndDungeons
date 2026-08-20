@@ -29,6 +29,7 @@ object DnDItemTags {
     val WOOD_WALLS_THAT_BURN = tag("wood_walls_that_burn")
 
     val CASCADE_LOGS = tag("cascade_logs")
+    val SYPIA_LOGS = tag("sypia_logs")
     val VERDANT_LOGS = tag("verdant_logs")
     val LEAF_PILES = tag("leaf_piles")
     val LOG_PILES = tag("log_piles")

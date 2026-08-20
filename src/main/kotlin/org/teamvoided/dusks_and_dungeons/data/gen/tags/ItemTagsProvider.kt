@@ -37,6 +37,7 @@ class ItemTagsProvider(
 
     fun duskTags() {
         copy(DnDBlockTags.CASCADE_LOGS, DnDItemTags.CASCADE_LOGS)
+        copy(DnDBlockTags.SYPIA_LOGS, DnDItemTags.SYPIA_LOGS)
         copy(DnDBlockTags.VERDANT_LOGS, DnDItemTags.VERDANT_LOGS)
         copy(DnDBlockTags.LEAF_PILES, DnDItemTags.LEAF_PILES)
         copy(DnDBlockTags.LOG_PILES, DnDItemTags.LOG_PILES)
@@ -159,7 +160,7 @@ class ItemTagsProvider(
         copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS)
         getOrCreateTagBuilder(ItemTags.LEAVES)
             .add(DnDBlocks.CASCADE_LEAVES.asItem())
-            .add(DnDBlocks.GOLDEN_BIRCH_LEAVES.asItem())
+            .add(DnDBlocks.SYPIA_LEAVES.asItem())
         copy(BlockTags.FLOWERS, ItemTags.FLOWERS)
 
         copy(BlockTags.STAIRS, ItemTags.STAIRS)

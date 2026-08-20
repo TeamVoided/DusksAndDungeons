@@ -30,8 +30,8 @@ object DnDTabs {
                     DnDItems.BLUE_DOOR,
                     DnDBlocks.CASCADE_SAPLING,
                     DnDBlocks.CASCADE_LEAVES,
-                    DnDBlocks.GOLDEN_BIRCH_SAPLING,
-                    DnDBlocks.GOLDEN_BIRCH_LEAVES,
+                    DnDBlocks.SYPIA_SAPLING,
+                    DnDBlocks.SYPIA_LEAVES,
                     DnDItems.FARMERS_HAT,
                     DnDItems.WILD_WHEAT,
                     DnDItems.GOLDEN_BEETROOT,
@@ -274,9 +274,9 @@ object DnDTabs {
             addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
             addAfter(
                 Items.FLOWERING_AZALEA_LEAVES,
-                listOf(DnDBlocks.CASCADE_LEAVES, DnDBlocks.GOLDEN_BIRCH_LEAVES)
+                listOf(DnDBlocks.CASCADE_LEAVES, DnDBlocks.SYPIA_LEAVES)
             )
-            addAfter(Items.FLOWERING_AZALEA, DnDBlocks.CASCADE_SAPLING, DnDBlocks.GOLDEN_BIRCH_SAPLING)
+            addAfter(Items.FLOWERING_AZALEA, DnDBlocks.CASCADE_SAPLING, DnDBlocks.SYPIA_SAPLING)
             addAfter(Items.VINE, DnDItems.MOONBERRY_VINELET, DnDBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
             DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
                 addAfter(DnDBlockLists.leaves[idx], leafPile)

@@ -32,6 +32,15 @@ object DnDItems {
         HangingSignItem(DnDBlocks.CASCADE_HANGING_SIGN, DnDBlocks.CASCADE_WALL_HANGING_SIGN, countSettings(16))
     )
 
+    val SYPIA_DOOR = register("sypia_door", DoubleHighBlockItem(DnDBlocks.SYPIA_DOOR, Properties()))
+    val SYPIA_SIGN = register(
+        "sypia_sign", SignItem(countSettings(16), DnDBlocks.SYPIA_SIGN, DnDBlocks.SYPIA_WALL_SIGN)
+    )
+    val SYPIA_HANGING_SIGN = register(
+        "sypia_hanging_sign",
+        HangingSignItem(DnDBlocks.SYPIA_HANGING_SIGN, DnDBlocks.SYPIA_WALL_HANGING_SIGN, countSettings(16))
+    )
+
     val VERDANT_DOOR = register("verdant_door", DoubleHighBlockItem(DnDBlocks.VERDANT_DOOR, Properties()))
         .tellWitnessesThatIWasMurdered()
     val VERDANT_SIGN = register(

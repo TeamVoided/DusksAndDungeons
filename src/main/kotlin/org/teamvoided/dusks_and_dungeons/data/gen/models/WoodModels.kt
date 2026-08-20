@@ -16,6 +16,7 @@ object WoodModels {
             DnDBlocks.POTTED_CASCADE_SAPLING,
             BlockModelGenerators.TintState.NOT_TINTED
         )
+        gen.createTrivialBlock(DnDBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
         gen.woodProvider(DnDBlocks.CASCADE_LOG)
             .logWithHorizontal(DnDBlocks.CASCADE_LOG)
             .wood(DnDBlocks.CASCADE_WOOD.parent)
@@ -28,14 +29,27 @@ object WoodModels {
             DnDBlocks.CASCADE_HANGING_SIGN,
             DnDBlocks.CASCADE_WALL_HANGING_SIGN
         )
-        gen.createTrivialBlock(DnDBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
         gen.createDoor(DnDBlocks.BLUE_DOOR)
+
+        // Sypia
         gen.createPlant(
-            DnDBlocks.GOLDEN_BIRCH_SAPLING,
-            DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING,
+            DnDBlocks.SYPIA_SAPLING,
+            DnDBlocks.POTTED_SYPIA_SAPLING,
             BlockModelGenerators.TintState.NOT_TINTED
         )
-        gen.createTrivialBlock(DnDBlocks.GOLDEN_BIRCH_LEAVES, TexturedModel.LEAVES)
+        gen.createTrivialBlock(DnDBlocks.SYPIA_LEAVES, TexturedModel.LEAVES)
+        gen.woodProvider(DnDBlocks.SYPIA_LOG)
+            .logWithHorizontal(DnDBlocks.SYPIA_LOG)
+            .wood(DnDBlocks.SYPIA_WOOD.parent)
+
+        gen.woodProvider(DnDBlocks.STRIPPED_SYPIA_LOG)
+            .logWithHorizontal(DnDBlocks.STRIPPED_SYPIA_LOG)
+            .wood(DnDBlocks.STRIPPED_SYPIA_WOOD.parent)
+        gen.createHangingSign(
+            DnDBlocks.STRIPPED_SYPIA_LOG,
+            DnDBlocks.SYPIA_HANGING_SIGN,
+            DnDBlocks.SYPIA_WALL_HANGING_SIGN
+        )
 
         //VERDANT
         gen.registerParentedItemModel(DnDBlocks.VERDANT_LOG)
@@ -62,6 +76,7 @@ object WoodModels {
         gen.createWood(DnDBlocks.CRIMSON_HYPHAE, Blocks.CRIMSON_STEM)
         gen.createWood(DnDBlocks.WARPED_HYPHAE, Blocks.WARPED_STEM)
         gen.createWood(DnDBlocks.CASCADE_WOOD, DnDBlocks.CASCADE_LOG)
+        gen.createWood(DnDBlocks.SYPIA_WOOD, DnDBlocks.SYPIA_LOG)
         gen.createWood(DnDBlocks.VERDANT_WOOD, DnDBlocks.VERDANT_LOG)
 
         gen.createWood(DnDBlocks.STRIPPED_OAK_WOOD, Blocks.STRIPPED_OAK_LOG)
@@ -75,6 +90,7 @@ object WoodModels {
         gen.createWood(DnDBlocks.STRIPPED_CRIMSON_HYPHAE, Blocks.STRIPPED_CRIMSON_STEM)
         gen.createWood(DnDBlocks.STRIPPED_WARPED_HYPHAE, Blocks.STRIPPED_WARPED_STEM)
         gen.createWood(DnDBlocks.STRIPPED_CASCADE_WOOD, DnDBlocks.STRIPPED_CASCADE_LOG)
+        gen.createWood(DnDBlocks.STRIPPED_SYPIA_WOOD, DnDBlocks.STRIPPED_SYPIA_LOG)
 
         gen.wall(DnDBlocks.OAK_WALL, Blocks.OAK_PLANKS)
         gen.wall(DnDBlocks.SPRUCE_WALL, Blocks.SPRUCE_PLANKS)
@@ -89,6 +105,7 @@ object WoodModels {
         gen.wall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS)
         gen.wall(DnDBlocks.BAMBOO_MOSAIC_WALL, Blocks.BAMBOO_MOSAIC)
         gen.wall(DnDBlocks.CASCADE_WALL, DnDBlocks.CASCADE_PLANKS)
+        gen.wall(DnDBlocks.SYPIA_WALL, DnDBlocks.SYPIA_PLANKS)
 
         DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->
             val log = DnDBlockLists.logsAndStrippedLogs[idx].first

@@ -62,12 +62,12 @@ class BlockLootTableProvider(o: FabricDataOutput, p: CompletableFuture<HolderLoo
         leafPiles.forEachIndexed { idx, pile -> add(pile) { leafPile(it, DnDBlockLists.leaves[idx]) } }
 
         add(DnDBlocks.POTTED_CASCADE_SAPLING) { createPotFlowerItemTable(DnDBlocks.CASCADE_SAPLING) }
-        add(DnDBlocks.POTTED_GOLDEN_BIRCH_SAPLING) { createPotFlowerItemTable(DnDBlocks.GOLDEN_BIRCH_SAPLING) }
+        add(DnDBlocks.POTTED_SYPIA_SAPLING) { createPotFlowerItemTable(DnDBlocks.SYPIA_SAPLING) }
         add(DnDBlocks.CASCADE_LEAVES) {
             createOakLeavesDrops(it, DnDBlocks.CASCADE_SAPLING, *NORMAL_LEAVES_SAPLING_CHANCES)
         }
-        add(DnDBlocks.GOLDEN_BIRCH_LEAVES) {
-            createLeavesDrops(it, DnDBlocks.GOLDEN_BIRCH_SAPLING, *NORMAL_LEAVES_SAPLING_CHANCES)
+        add(DnDBlocks.SYPIA_LEAVES) {
+            createLeavesDrops(it, DnDBlocks.SYPIA_SAPLING, *NORMAL_LEAVES_SAPLING_CHANCES)
         }
 
         dropWhenSilkTouch(ICE_SET.slab)

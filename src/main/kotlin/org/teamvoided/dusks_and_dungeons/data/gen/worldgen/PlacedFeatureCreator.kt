@@ -9,7 +9,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.OreFeatures
 import net.minecraft.data.worldgen.features.VegetationFeatures
-import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.OrePlacements
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
@@ -32,7 +31,7 @@ object PlacedFeatureCreator {
     val cascadeSapling: BlockPredicateFilter =
         PlacementUtils.filteredByBlockSurvival(DnDBlocks.CASCADE_SAPLING)
     val goldenBirchSapling: BlockPredicateFilter =
-        PlacementUtils.filteredByBlockSurvival(DnDBlocks.GOLDEN_BIRCH_SAPLING)
+        PlacementUtils.filteredByBlockSurvival(DnDBlocks.SYPIA_SAPLING)
     val darkOakSapling: BlockPredicateFilter =
         PlacementUtils.filteredByBlockSurvival(Blocks.DARK_OAK_SAPLING)
     val acaciaSapling: BlockPredicateFilter =

@@ -15,6 +15,7 @@ object WoodRecipes {
 
     fun build(output: RecipeOutput) {
         output.cascade()
+        output.sypia()
         output.verdant()
         output.woodWalls()
         output.hollowLogs()
@@ -41,6 +42,12 @@ object WoodRecipes {
             .save(this)
     }
 
+    fun RecipeOutput.sypia() {
+        planksFromLogs(DnDBlocks.SYPIA_PLANKS, DnDItemTags.SYPIA_LOGS)
+        woodFromLogs(DnDBlocks.SYPIA_WOOD, DnDBlocks.SYPIA_LOG)
+        woodFromLogs(DnDBlocks.STRIPPED_SYPIA_WOOD, DnDBlocks.STRIPPED_SYPIA_LOG)
+        hangingSign(DnDItems.SYPIA_HANGING_SIGN, DnDBlocks.STRIPPED_SYPIA_LOG)
+    }
 
     fun RecipeOutput.verdant() {
         planksFromLogs(DnDBlocks.VERDANT_PLANKS, DnDItemTags.VERDANT_LOGS)
