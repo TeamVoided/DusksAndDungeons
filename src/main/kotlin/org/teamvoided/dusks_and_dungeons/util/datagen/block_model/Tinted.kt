@@ -1,13 +1,17 @@
 package org.teamvoided.dusks_and_dungeons.util.datagen.block_model
 
+import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.data.models.model.TextureSlot.*
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
+
+val TINTED: TextureSlot = create("tinted")
 
 fun BlockModelGenerators.planksTinted(
     planks: Block,
@@ -148,5 +152,45 @@ fun BlockModelGenerators.columnTinted(block: Block, texture: Block) {
             block,
             resourceLocation
         )
+    )
+}
+
+fun BlockModelGenerators.hollowTintedLog(
+    hollowLog: Block,
+    log: Block,
+    stripped: Block
+) {
+    val texture: TextureMapping = TextureMapping.defaultTexture(hollowLog)
+        .put(SIDE, log.model())
+        .put(END, log.model("_top"))
+        .put(TINTED, log.model("_edge"))
+        .put(INNER, stripped.model())
+    Direction.Plane.HORIZONTAL.forEach {
+        block("parent/tint/hollow_log_$it", SIDE, END, INNER)
+            .createWithSuffix(hollowLog, "_$it", texture, this.modelOutput)
+    }
+    this.hollowBlock(hollowLog)
+    this.delegateItemModel(
+        hollowLog, block("parent/tint/hollow_log", SIDE, END, INNER)
+            .create(hollowLog, texture, this.modelOutput)
+    )
+}
+
+fun BlockModelGenerators.hollowTintedStrippedLog(
+    hollowLog: Block,
+    strippedLog: Block
+) {
+    val texture: TextureMapping = TextureMapping.defaultTexture(hollowLog)
+        .put(SIDE, strippedLog.model())
+        .put(END, strippedLog.model("_top"))
+        .put(INNER, strippedLog.model())
+    Direction.Plane.HORIZONTAL.forEach {
+        block("parent/tint/stripped_hollow_log_$it", SIDE, END, INNER)
+            .createWithSuffix(hollowLog, "_$it", texture, this.modelOutput)
+    }
+    this.hollowBlock(hollowLog)
+    this.delegateItemModel(
+        hollowLog, block("parent/tint/stripped_hollow_log", SIDE, END, INNER)
+            .create(hollowLog, texture, this.modelOutput)
     )
 }

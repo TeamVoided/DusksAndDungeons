@@ -425,6 +425,11 @@ object DnDBlocks {
     val HOLLOW_CASCADE_LOG = register("hollow_cascade_log", hollowLog(CASCADE_LOG)).tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_CASCADE_LOG =
         register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_VERDANT_LOG =
+        register("hollow_verdant_log", hollowLog(VERDANT_LOG)).cutout().grass().tellWitnessesThatIWasMurdered()
+    val HOLLOW_STRIPPED_VERDANT_LOG =
+        register("hollow_stripped_verdant_log", hollowLog(STRIPPED_VERDANT_LOG)).grass().tint()
+            .tellWitnessesThatIWasMurdered()
     // endregion
 
     // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Big Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
@@ -600,16 +605,8 @@ object DnDBlocks {
 
     val TINTED_SAND = register(
         "tinted_sand",
-        ColoredFallingBlock(
-            ColorRGBA(14406560),
-            Properties.of()
-                .mapColor(MapColor.WATER)
-                .instrument(NoteBlockInstrument.SNARE)
-                .strength(0.5F)
-                .sound(SoundType.SAND)
-        )
-    )
-        .tellWitnessesThatIWasMurdered()
+        ColoredFallingBlock(ColorRGBA(14406560), ofFullCopy(SAND).mapColor(MapColor.WATER))
+    ).tellWitnessesThatIWasMurdered()
 
     val TINTED_SANDSTONE = register("sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
         .tellWitnessesThatIWasMurdered()

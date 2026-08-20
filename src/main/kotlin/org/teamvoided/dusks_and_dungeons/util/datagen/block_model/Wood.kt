@@ -8,12 +8,16 @@ import net.minecraft.data.models.model.ModelTemplate
 import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot
+import net.minecraft.data.models.model.TextureSlot.END
+import net.minecraft.data.models.model.TextureSlot.SIDE
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.WallSide
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.block.CuttableHollowLogBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
+import org.teamvoided.dusks_and_dungeons.util.datagen.INNER
 import org.teamvoided.dusks_and_dungeons.util.datagen.block
 import org.teamvoided.dusks_and_dungeons.util.datagen.model
 import org.teamvoided.dusks_and_dungeons.util.datagen.suffix
@@ -119,51 +123,6 @@ fun BlockModelGenerators.createLogPile(logPile: Block, log: Block, prefix: Strin
     this.blockStateOutput.accept(model)
 }
 
-
-fun createWall(
-    block: Block,
-    resourceLocation: ResourceLocation,
-    resourceLocation2: ResourceLocation,
-    resourceLocation3: ResourceLocation
-): BlockStateGenerator {
-    return MultiPartGenerator.multiPart(block).with(
-        Condition.condition().term(BlockStateProperties.UP, true),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation)
-    ).with(
-        Condition.condition().term(BlockStateProperties.NORTH_WALL, WallSide.LOW),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation2)
-            .with(VariantProperties.UV_LOCK, true)
-    ).with(
-        Condition.condition().term(BlockStateProperties.EAST_WALL, WallSide.LOW),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation2)
-            .with(VariantProperties.Y_ROT, Rotation.R90).with(VariantProperties.UV_LOCK, true)
-    ).with(
-        Condition.condition().term(BlockStateProperties.SOUTH_WALL, WallSide.LOW),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation2)
-            .with(VariantProperties.Y_ROT, Rotation.R180).with(VariantProperties.UV_LOCK, true)
-    ).with(
-        Condition.condition().term(BlockStateProperties.WEST_WALL, WallSide.LOW),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation2)
-            .with(VariantProperties.Y_ROT, Rotation.R270).with(VariantProperties.UV_LOCK, true)
-    ).with(
-        Condition.condition().term(BlockStateProperties.NORTH_WALL, WallSide.TALL),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation3)
-            .with(VariantProperties.UV_LOCK, true)
-    ).with(
-        Condition.condition().term(BlockStateProperties.EAST_WALL, WallSide.TALL),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation3)
-            .with(VariantProperties.Y_ROT, Rotation.R90).with(VariantProperties.UV_LOCK, true)
-    ).with(
-        Condition.condition().term(BlockStateProperties.SOUTH_WALL, WallSide.TALL),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation3)
-            .with(VariantProperties.Y_ROT, Rotation.R180).with(VariantProperties.UV_LOCK, true)
-    ).with(
-        Condition.condition().term(BlockStateProperties.WEST_WALL, WallSide.TALL),
-        Variant.variant().with(VariantProperties.MODEL, resourceLocation3)
-            .with(VariantProperties.Y_ROT, Rotation.R270).with(VariantProperties.UV_LOCK, true)
-    )
-}
-
 fun BlockModelGenerators.parentedLogPileModel(
     block: Block,
     textBlock: Block,
@@ -171,13 +130,107 @@ fun BlockModelGenerators.parentedLogPileModel(
     parent: String = ""
 ): ResourceLocation {
     val pileModel = id("block/parent/$prefix" + "_pile")
-    return ModelTemplate(pileModel.suffix(parent).myb, Optional.empty(), TextureSlot.SIDE, TextureSlot.END)
+    return ModelTemplate(pileModel.suffix(parent).myb, Optional.empty(), SIDE, END)
         .create(
             block.model(parent), TextureMapping()
-                .put(TextureSlot.SIDE, textBlock.model())
-                .put(TextureSlot.END, textBlock.model("_top")),
+                .put(SIDE, textBlock.model())
+                .put(END, textBlock.model("_top")),
             this.modelOutput
         )
+}
+
+fun BlockModelGenerators.hollowLog(hollowLog: Block, log: Block) {
+    this.hollowLog(hollowLog, log, log.model())
+}
+
+fun BlockModelGenerators.hollowLog(hollowLog: Block, log: Block, strippedLog: Block) {
+    this.hollowLog(hollowLog, log, strippedLog.model())
+}
+
+fun BlockModelGenerators.hollowLog(hollowLog: Block, log: Block, innerTexture: ResourceLocation) {
+    val texture: TextureMapping = TextureMapping.defaultTexture(hollowLog)
+        .put(SIDE, log.model())
+        .put(END, log.model("_top"))
+        .put(INNER, innerTexture)
+    Direction.Plane.HORIZONTAL.forEach {
+        block("parent/hollow_log_$it", SIDE, END, INNER)
+            .createWithSuffix(hollowLog, "_$it", texture, this.modelOutput)
+    }
+    this.hollowBlock(hollowLog)
+    this.delegateItemModel(
+        hollowLog, block("parent/hollow_log", SIDE, END, INNER)
+            .create(hollowLog, texture, this.modelOutput)
+    )
+}
+
+fun BlockModelGenerators.hollowBambooBlock(hollowBamboo: Block, bambooBlock: Block) {
+    val texture: TextureMapping = TextureMapping.defaultTexture(hollowBamboo)
+        .put(SIDE, bambooBlock.model())
+        .put(END, bambooBlock.model("_top"))
+    Direction.Plane.HORIZONTAL.forEach {
+        block("parent/hollow_bamboo_block_$it", SIDE, END)
+            .createWithSuffix(hollowBamboo, "_$it", texture, this.modelOutput)
+    }
+    this.hollowBlock(hollowBamboo)
+    this.delegateItemModel(
+        hollowBamboo, block("parent/hollow_bamboo_block", SIDE, END)
+            .create(hollowBamboo, texture, this.modelOutput)
+    )
+}
+
+fun BlockModelGenerators.hollowBlock(block: Block) {
+    val model = MultiPartGenerator.multiPart(block)
+    var modelId: ResourceLocation
+    val allDirectionFalse = Condition.condition()
+        .term(CuttableHollowLogBlock.NORTH, false)
+        .term(CuttableHollowLogBlock.SOUTH, false)
+        .term(CuttableHollowLogBlock.EAST, false)
+        .term(CuttableHollowLogBlock.WEST, false)
+    val directionsX = listOf(
+        Direction.WEST,
+        Direction.SOUTH,
+        Direction.EAST,
+        Direction.NORTH,
+    )
+    Direction.Plane.HORIZONTAL.forEachIndexed { idx, it ->
+        modelId = block.model("_$it")
+        model.with(
+            Condition.condition()
+                .term(RotatedPillarBlock.AXIS, Direction.Axis.X)
+                .term(CuttableHollowLogBlock.getProperty(it), true),
+            Variant.variant()
+                .with(VariantProperties.MODEL, block.model("_" + directionsX[idx].toString()))
+                .with(VariantProperties.Y_ROT, Rotation.R90)
+        )
+        model.with(
+            allDirectionFalse,
+            Variant.variant().with(VariantProperties.MODEL, modelId)
+        )
+        model.with(
+            Condition.condition()
+                .term(RotatedPillarBlock.AXIS, Direction.Axis.Y)
+                .term(CuttableHollowLogBlock.getProperty(it), true),
+            Variant.variant()
+                .with(VariantProperties.MODEL, modelId)
+                .with(VariantProperties.X_ROT, Rotation.R270)
+        )
+        model.with(
+            allDirectionFalse,
+            Variant.variant().with(VariantProperties.MODEL, modelId)
+        )
+        model.with(
+            Condition.condition()
+                .term(RotatedPillarBlock.AXIS, Direction.Axis.Z)
+                .term(CuttableHollowLogBlock.getProperty(it), true),
+            Variant.variant()
+                .with(VariantProperties.MODEL, modelId)
+        )
+        model.with(
+            allDirectionFalse,
+            Variant.variant().with(VariantProperties.MODEL, modelId)
+        )
+    }
+    this.blockStateOutput.accept(model)
 }
 
 fun BlockModelGenerators.overgrowthBush(block: Block) {

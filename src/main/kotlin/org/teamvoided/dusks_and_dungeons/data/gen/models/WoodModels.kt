@@ -6,9 +6,7 @@ import net.minecraft.data.models.model.TexturedModel
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
-import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.createLogPile
-import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.planksTinted
-import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.strippedTinted
+import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.*
 
 object WoodModels {
     fun woodModels(gen: BlockModelGenerators) {
@@ -100,6 +98,8 @@ object WoodModels {
         }
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK)
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
+        gen.hollowTintedLog(DnDBlocks.HOLLOW_VERDANT_LOG, DnDBlocks.VERDANT_LOG, DnDBlocks.STRIPPED_VERDANT_LOG)
+        gen.hollowTintedStrippedLog(DnDBlocks.HOLLOW_STRIPPED_VERDANT_LOG, DnDBlocks.STRIPPED_VERDANT_LOG)
         DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
             gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
