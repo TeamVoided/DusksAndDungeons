@@ -113,6 +113,7 @@ fun createFuels() {
     fuel(DnDBlocks.MOLTEN_LAVASPONGE, 20000)
     fuel(DnDItems.GLOWING_LAVASPONGE, 20000)
     fuel(DnDItemTags.HOLLOW_LOGS_THAT_BURN, 300)
+    fuel(DnDItemTags.LOG_PILES_THAT_BURN, 300)
     fuel(DnDItemTags.WOOD_WALLS_THAT_BURN, 300)
     fuel(DnDItemTags.PLANK_WALLS_THAT_BURN, 275)
 }
