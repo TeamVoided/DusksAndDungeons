@@ -30,6 +30,17 @@ object DnDItems {
         "cascade_hanging_sign",
         HangingSignItem(DnDBlocks.CASCADE_HANGING_SIGN, DnDBlocks.CASCADE_WALL_HANGING_SIGN, countSettings(16))
     )
+
+    val VERDANT_DOOR = register("verdant_door", DoubleHighBlockItem(DnDBlocks.VERDANT_DOOR, Properties()))
+        .tellWitnessesThatIWasMurdered()
+    val VERDANT_SIGN = register(
+        "verdant_sign", SignItem(countSettings(16), DnDBlocks.VERDANT_SIGN, DnDBlocks.VERDANT_WALL_SIGN)
+    ).tellWitnessesThatIWasMurdered()
+    val VERDANT_HANGING_SIGN = register(
+        "verdant_hanging_sign",
+        HangingSignItem(DnDBlocks.VERDANT_HANGING_SIGN, DnDBlocks.VERDANT_WALL_HANGING_SIGN, countSettings(16))
+    ).tellWitnessesThatIWasMurdered()
+
     val FARMERS_HAT = register(
         "farmers_hat", EquipableItem(
             countSettings(1).component(DataComponents.DYED_COLOR, DyedItemColor(0xb26c20, true))
