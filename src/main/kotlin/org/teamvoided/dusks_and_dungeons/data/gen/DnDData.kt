@@ -34,6 +34,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.variants.RaccoonVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.variants.WolfVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.DensityFunctionCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.NoiseCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
@@ -73,10 +74,13 @@ class DnDData : DataGeneratorEntrypoint {
         gen.add(Registries.BIOME, BiomeCreator::boostrap)
         gen.add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
         gen.add(Registries.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
+        gen.add(Registries.DENSITY_FUNCTION, DensityFunctionCreator::bootstrap)
+
         gen.add(Registries.PROCESSOR_LIST, StructureProcessorCreator::bootstrap)
         gen.add(Registries.TEMPLATE_POOL, StructurePoolCreator::bootstrap)
         gen.add(Registries.STRUCTURE_SET, StructureSetCreator::bootstrap)
         gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
+
         gen.add(Registries.WOLF_VARIANT, WolfVariants::bootstrap)
         gen.add(DnDRegistryKeys.RACCOON_VARIANT, RaccoonVariants::bootstrap)
 
