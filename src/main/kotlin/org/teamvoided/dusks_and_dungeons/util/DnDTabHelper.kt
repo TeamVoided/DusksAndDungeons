@@ -8,9 +8,9 @@ import org.teamvoided.dusks_and_dungeons.util.DnDItemLists.stripedWoodLists
 import org.teamvoided.voidlib.helpers.mc.addAfter
 
 fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
-    DnDBlockLists.logsAndStrippedLogs.forEachIndexed { idx, (_, _) ->
-//        addAfter(log, DnDBlockLists.hollowLogs[idx])
-//        addAfter(stripped, DnDBlockLists.hollowStrippedLogs[idx])
+    DnDBlockLists.logsAndStrippedLogs.forEachIndexed { idx, (log, strippedLog) ->
+        addAfter(log, DnDBlockLists.hollowLogs[idx])
+        addAfter(strippedLog, DnDBlockLists.hollowStrippedLogs[idx])
         addAfter(
             DnDBlockLists.woodAndStrippedWood[idx].first,
             DnDItemLists.woodLists[idx] + DnDBlockLists.logPiles[idx]
@@ -29,8 +29,8 @@ fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
     addAfter(Blocks.STRIPPED_BAMBOO_BLOCK, DnDBlocks.STRIPPED_BAMBOO_PILE)
     addAfter(Blocks.BAMBOO_MOSAIC_SLAB, DnDBlocks.BAMBOO_WALL, DnDBlocks.BAMBOO_MOSAIC_WALL)
 
-//    addAfter(Blocks.BAMBOO_BLOCK, DnDWoodBlocks.HOLLOW_BAMBOO_BLOCK)
-//    addAfter(Blocks.STRIPPED_BAMBOO_BLOCK, DnDWoodBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK)
+    addAfter(Blocks.BAMBOO_BLOCK, DnDBlocks.HOLLOW_BAMBOO_BLOCK)
+    addAfter(Blocks.STRIPPED_BAMBOO_BLOCK, DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK)
     if (!leaves) return
     DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
         addAfter(DnDBlockLists.leaves[idx], leafPile)

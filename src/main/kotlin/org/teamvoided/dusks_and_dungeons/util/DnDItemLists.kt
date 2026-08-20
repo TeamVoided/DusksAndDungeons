@@ -1,7 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.util
 
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
@@ -157,19 +157,10 @@ object DnDItemLists {
         DnDBlocks.STRIPPED_WARPED_HYPHAE.headless(),
     )
 
-    val woodStuff =
-        /*listOf(DnDWoodBlocks.HOLLOW_OAK_LOG, DnDWoodBlocks.HOLLOW_STRIPPED_OAK_LOG) +*/ oakWoodStuff +
-            /* DnDBlocks.HOLLOW_SPRUCE_LOG + DnDBlocks.HOLLOW_STRIPPED_SPRUCE_LOG +*/ spruceWoodStuff +
-            /*   DnDBlocks.HOLLOW_BIRCH_LOG + DnDBlocks.HOLLOW_STRIPPED_BIRCH_LOG +*/ birchWoodStuff +
-            /*   DnDBlocks.HOLLOW_JUNGLE_LOG + DnDBlocks.HOLLOW_STRIPPED_JUNGLE_LOG +*/ jungleWoodStuff +
-            /*    DnDBlocks.HOLLOW_ACACIA_LOG + DnDBlocks.HOLLOW_STRIPPED_ACACIA_LOG +*/ acaciaWoodStuff +
-            /*     DnDBlocks.HOLLOW_DARK_OAK_LOG + DnDBlocks.HOLLOW_STRIPPED_DARK_OAK_LOG +*/ darkOakWoodStuff +
-            /*  DnDBlocks.HOLLOW_MANGROVE_LOG + DnDBlocks.HOLLOW_STRIPPED_MANGROVE_LOG +*/ mangroveWoodStuff +
-            /*  DnDBlocks.HOLLOW_CHERRY_LOG + DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG +*/ cherryWoodStuff +
-            /*  DnDBlocks.HOLLOW_CASCADE_LOG + DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG +*/ cascadeWoodStuff +
-            /*  DnDBlocks.HOLLOW_BAMBOO_BLOCK + DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK +*/
-            /*  DnDBlocks.HOLLOW_CRIMSON_STEM + DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM +*/ crimsonHyphaeStuff +
-            /*   DnDBlocks.HOLLOW_WARPED_STEM + DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM +*/ warpedHyphaeStuff
+    val woodStuff = oakWoodStuff + spruceWoodStuff + birchWoodStuff +
+            jungleWoodStuff + acaciaWoodStuff + darkOakWoodStuff +
+            mangroveWoodStuff + cherryWoodStuff + cascadeWoodStuff +
+            crimsonHyphaeStuff + warpedHyphaeStuff
 
     val leafPiles = listOf(
         DnDBlocks.OAK_LEAF_PILE,

@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
 import net.minecraft.world.level.block.state.properties.BlockSetType
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
@@ -371,60 +370,31 @@ object DnDBlocks {
         "flowering_azalea_leaf_pile", leafPile(SoundType.AZALEA_LEAVES).cutout()
     )
 
-    // TODO finish this before release
-    val HOLLOW_OAK_LOG = register("hollow_oak_log", hollowLog(OAK_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_OAK_LOG =
-        register("hollow_stripped_oak_log", hollowLog(STRIPPED_OAK_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_SPRUCE_LOG = register("hollow_spruce_log", hollowLog(SPRUCE_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_SPRUCE_LOG =
-        register("hollow_stripped_spruce_log", hollowLog(STRIPPED_SPRUCE_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_BIRCH_LOG =
-        register("hollow_birch_log", hollowLog(BIRCH_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_BIRCH_LOG =
-        register("hollow_stripped_birch_log", hollowLog(STRIPPED_BIRCH_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_JUNGLE_LOG =
-        register("hollow_jungle_log", hollowLog(JUNGLE_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_JUNGLE_LOG =
-        register("hollow_stripped_jungle_log", hollowLog(STRIPPED_JUNGLE_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_ACACIA_LOG =
-        register("hollow_acacia_log", hollowLog(ACACIA_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_ACACIA_LOG =
-        register("hollow_stripped_acacia_log", hollowLog(STRIPPED_ACACIA_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_DARK_OAK_LOG =
-        register("hollow_dark_oak_log", hollowLog(DARK_OAK_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_DARK_OAK_LOG =
-        register("hollow_stripped_dark_oak_log", hollowLog(STRIPPED_DARK_OAK_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_MANGROVE_LOG =
-        register("hollow_mangrove_log", hollowLog(MANGROVE_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_MANGROVE_LOG =
-        register("hollow_stripped_mangrove_log", hollowLog(STRIPPED_MANGROVE_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_CHERRY_LOG =
-        register("hollow_cherry_log", hollowLog(CHERRY_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_CHERRY_LOG =
-        register("hollow_stripped_cherry_log", hollowLog(STRIPPED_CHERRY_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_BAMBOO_BLOCK =
-        register("hollow_bamboo_block", hollowBambooBlock(BAMBOO_BLOCK)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_BAMBOO_BLOCK =
-        register("hollow_stripped_bamboo_block", hollowBambooBlock(STRIPPED_BAMBOO_BLOCK))
-            .tellWitnessesThatIWasMurdered()
-    val HOLLOW_CRIMSON_STEM =
-        register("hollow_crimson_stem", hollowLog(Blocks.CRIMSON_HYPHAE)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_CRIMSON_STEM =
-        register(
-            "hollow_stripped_crimson_stem",
-            hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE)
-        ).tellWitnessesThatIWasMurdered()
-    val HOLLOW_WARPED_STEM =
-        register("hollow_warped_stem", hollowLog(Blocks.WARPED_HYPHAE)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_WARPED_STEM =
-        register(
-            "hollow_stripped_warped_stem",
-            hollowLog(Blocks.STRIPPED_WARPED_HYPHAE)
-        ).tellWitnessesThatIWasMurdered()
+    val HOLLOW_OAK_LOG = register("hollow_oak_log", hollowLog(OAK_LOG))
+    val HOLLOW_STRIPPED_OAK_LOG = register("hollow_stripped_oak_log", hollowLog(STRIPPED_OAK_LOG))
+    val HOLLOW_SPRUCE_LOG = register("hollow_spruce_log", hollowLog(SPRUCE_LOG))
+    val HOLLOW_STRIPPED_SPRUCE_LOG = register("hollow_stripped_spruce_log", hollowLog(STRIPPED_SPRUCE_LOG))
+    val HOLLOW_BIRCH_LOG = register("hollow_birch_log", hollowLog(BIRCH_LOG))
+    val HOLLOW_STRIPPED_BIRCH_LOG = register("hollow_stripped_birch_log", hollowLog(STRIPPED_BIRCH_LOG))
+    val HOLLOW_JUNGLE_LOG = register("hollow_jungle_log", hollowLog(JUNGLE_LOG))
+    val HOLLOW_STRIPPED_JUNGLE_LOG = register("hollow_stripped_jungle_log", hollowLog(STRIPPED_JUNGLE_LOG))
+    val HOLLOW_ACACIA_LOG = register("hollow_acacia_log", hollowLog(ACACIA_LOG))
+    val HOLLOW_STRIPPED_ACACIA_LOG = register("hollow_stripped_acacia_log", hollowLog(STRIPPED_ACACIA_LOG))
+    val HOLLOW_DARK_OAK_LOG = register("hollow_dark_oak_log", hollowLog(DARK_OAK_LOG))
+    val HOLLOW_STRIPPED_DARK_OAK_LOG = register("hollow_stripped_dark_oak_log", hollowLog(STRIPPED_DARK_OAK_LOG))
+    val HOLLOW_MANGROVE_LOG = register("hollow_mangrove_log", hollowLog(MANGROVE_LOG))
+    val HOLLOW_STRIPPED_MANGROVE_LOG = register("hollow_stripped_mangrove_log", hollowLog(STRIPPED_MANGROVE_LOG))
+    val HOLLOW_CHERRY_LOG = register("hollow_cherry_log", hollowLog(CHERRY_LOG))
+    val HOLLOW_STRIPPED_CHERRY_LOG = register("hollow_stripped_cherry_log", hollowLog(STRIPPED_CHERRY_LOG))
+    val HOLLOW_BAMBOO_BLOCK = register("hollow_bamboo_block", hollowBambooBlock(BAMBOO_BLOCK))
+    val HOLLOW_STRIPPED_BAMBOO_BLOCK = register("hollow_stripped_bamboo_block", hollowBambooBlock(STRIPPED_BAMBOO_BLOCK))
+    val HOLLOW_CRIMSON_STEM = register("hollow_crimson_stem", hollowLog(Blocks.CRIMSON_HYPHAE))
+    val HOLLOW_STRIPPED_CRIMSON_STEM = register("hollow_stripped_crimson_stem", hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE))
+    val HOLLOW_WARPED_STEM = register("hollow_warped_stem", hollowLog(Blocks.WARPED_HYPHAE))
+    val HOLLOW_STRIPPED_WARPED_STEM = register("hollow_stripped_warped_stem", hollowLog(Blocks.STRIPPED_WARPED_HYPHAE))
 
-    val HOLLOW_CASCADE_LOG = register("hollow_cascade_log", hollowLog(CASCADE_LOG)).tellWitnessesThatIWasMurdered()
-    val HOLLOW_STRIPPED_CASCADE_LOG =
-        register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_LOG)).tellWitnessesThatIWasMurdered()
+    val HOLLOW_CASCADE_LOG = register("hollow_cascade_log", hollowLog(CASCADE_LOG))
+    val HOLLOW_STRIPPED_CASCADE_LOG = register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_LOG))
     val HOLLOW_VERDANT_LOG =
         register("hollow_verdant_log", hollowLog(VERDANT_LOG)).cutout().grass().tellWitnessesThatIWasMurdered()
     val HOLLOW_STRIPPED_VERDANT_LOG =
