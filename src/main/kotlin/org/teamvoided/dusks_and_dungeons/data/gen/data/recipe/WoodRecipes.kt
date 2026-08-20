@@ -17,6 +17,12 @@ object WoodRecipes {
         output.cascade()
         output.woodWalls()
         output.hollowLogs()
+
+        SimpleCookingRecipeBuilder
+            .smelting(Ingredient.of(DnDItemTags.HOLLOW_LOGS_THAT_BURN), RecipeCategory.MISC, Items.CHARCOAL, 0.15f, 200)
+            .unlockedBy("has_hollow_log", RecipeProvider.has(DnDItemTags.HOLLOW_LOGS_THAT_BURN))
+            .save(output)
+
     }
 
     fun RecipeOutput.cascade() {
@@ -31,11 +37,6 @@ object WoodRecipes {
             .pattern("##@")
             .pattern("## ")
             .criterion(DnDBlocks.CASCADE_PLANKS.asItem())
-            .save(this)
-
-        SimpleCookingRecipeBuilder
-            .smelting(Ingredient.of(DnDItemTags.HOLLOW_LOGS_THAT_BURN), RecipeCategory.MISC, Items.CHARCOAL, 0.15f, 200)
-            .unlockedBy("has_hollow_log", RecipeProvider.has(DnDItemTags.HOLLOW_LOGS_THAT_BURN))
             .save(this)
     }
 
