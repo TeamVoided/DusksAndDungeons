@@ -27,6 +27,10 @@ data object DnDModels {
 
     val PRESSURE_PLATE_UP_TINTED = tintedBlock("pressure_plate_up", TEXTURE)
     val PRESSURE_PLATE_DOWN_TINTED = tintedBlock("pressure_plate_down", "_down", TEXTURE)
+
+    val ORIENTABLE_TRAPDOOR_TOP_TINTED = tintedBlock("orientable_trapdoor_top", "_top", TEXTURE)
+    val ORIENTABLE_TRAPDOOR_BOTTOM_TINTED = tintedBlock("orientable_trapdoor_bottom", "_bottom", TEXTURE)
+    val ORIENTABLE_TRAPDOOR_OPEN_TINTED = tintedBlock("orientable_trapdoor_open", "_open", TEXTURE)
     // endregion
 
     fun tintedBlock(parent: String, vararg slots: TextureSlot) = block("parent/tint/$parent", *slots)

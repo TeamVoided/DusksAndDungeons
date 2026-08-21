@@ -15,8 +15,7 @@ import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 val TINTED: TextureSlot = create("tinted")
 
 fun BlockModelGenerators.planksTinted(
-    planks: Block,
-    stairs: Block, slab: Block, wall: Block, fence: Block, fenceGate: Block, button: Block, plate: Block,
+    planks: Block, stairs: Block, slab: Block, wall: Block, fence: Block, fenceGate: Block, button: Block, plate: Block,
 ) {
     createTrivialBlock(planks, TexturedModel.LEAVES)
     stairsTinted(stairs, planks)
@@ -37,11 +36,7 @@ fun BlockModelGenerators.strippedTinted(strippedLog: Block, strippedWoodSet: Abs
 )
 
 fun BlockModelGenerators.strippedTinted(
-    strippedLog: Block,
-    strippedWood: Block,
-    stairs: Block,
-    slab: Block,
-    wall: Block,
+    strippedLog: Block, strippedWood: Block, stairs: Block, slab: Block, wall: Block,
 ) {
     this.columnWithHorizontalTinted(strippedLog)
     this.columnTinted(strippedWood, strippedLog)
@@ -54,10 +49,7 @@ fun BlockModelGenerators.stairsTinted(block: Block, bottom: Block, side: Block =
     stairsTinted(block, bottom.model(), side.model(), top.model())
 
 fun BlockModelGenerators.stairsTinted(
-    block: Block,
-    bottom: ResourceLocation,
-    side: ResourceLocation,
-    top: ResourceLocation,
+    block: Block, bottom: ResourceLocation, side: ResourceLocation, top: ResourceLocation,
 ) {
     val texture: TextureMapping = TextureMapping()
         .put(BOTTOM, bottom)
@@ -81,11 +73,7 @@ fun BlockModelGenerators.slabTinted(
 ) = slabTinted(block, bottom.model(), side.model(), top.model(), full)
 
 fun BlockModelGenerators.slabTinted(
-    block: Block,
-    bottom: ResourceLocation,
-    side: ResourceLocation,
-    top: ResourceLocation,
-    full: Block,
+    block: Block, bottom: ResourceLocation, side: ResourceLocation, top: ResourceLocation, full: Block,
 ) {
     val texture: TextureMapping = TextureMapping()
         .put(BOTTOM, bottom)
@@ -144,6 +132,16 @@ fun BlockModelGenerators.pressurePlateTinted(plate: Block, reference: Block) {
     val down = DnDModels.PRESSURE_PLATE_DOWN_TINTED.create(plate, texture, modelOutput)
     blockStateOutput.accept(BlockModelGenerators.createPressurePlate(plate, up, down))
 }
+
+fun BlockModelGenerators.createTintedOrientableTrapdoor(block: Block) {
+    val texture = TextureMapping.defaultTexture(block)
+    val top = DnDModels.ORIENTABLE_TRAPDOOR_TOP_TINTED.create(block, texture, modelOutput)
+    val bottom = DnDModels.ORIENTABLE_TRAPDOOR_BOTTOM_TINTED.create(block, texture, modelOutput)
+    val open = DnDModels.ORIENTABLE_TRAPDOOR_OPEN_TINTED.create(block, texture, modelOutput)
+    blockStateOutput.accept(BlockModelGenerators.createOrientableTrapdoor(block, top, bottom, open))
+    delegateItemModel(block, bottom)
+}
+
 
 fun BlockModelGenerators.columnWithHorizontalTinted(block: Block) {
     val texture = TextureMapping.logColumn(block)
