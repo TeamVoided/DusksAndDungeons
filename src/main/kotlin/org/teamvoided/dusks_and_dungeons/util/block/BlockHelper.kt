@@ -48,7 +48,7 @@ import java.util.function.ToIntFunction
 
 
 @Suppress("DEPRECATION")
-fun Block.id(): ResourceLocation = builtInRegistryHolder().key().location()
+fun getId(block: Block): ResourceLocation = block.builtInRegistryHolder().key().location()
 
 fun symmetricalBox(xzMin: Double, yMin: Double, xzMax: Double, yMax: Double): VoxelShape =
     Block.box(xzMin, yMin, xzMin, xzMax, yMax, xzMax)

@@ -17,7 +17,7 @@ import org.teamvoided.dusks_and_dungeons.block.pumpkin.CarvableBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.DnDLootContext
-import org.teamvoided.dusks_and_dungeons.util.block.id
+import org.teamvoided.dusks_and_dungeons.util.block.getId
 import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
 
@@ -51,7 +51,7 @@ class BlockInteractLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<
     }
 
     fun BiConsumer<ResourceKey<LootTable>, LootTable.Builder>.carvedBlock(block: Block, table: LootTable.Builder) {
-        accept(CarvableBlock.crateKey(block.id()), table)
+        accept(CarvableBlock.crateKey(getId(block)), table)
     }
 
     fun item(item: Item): LootPoolSingletonContainer.Builder<*> = LootItem.lootTableItem(item)

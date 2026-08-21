@@ -26,7 +26,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
-import org.teamvoided.dusks_and_dungeons.util.block.id
+import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxZ
 
@@ -41,7 +41,7 @@ open class SmallPumpkinBlock(val carvedBlock: Block, settings: Properties) : Six
         )
     }
 
-    override fun getId(): ResourceLocation = id()
+    override fun getId(): ResourceLocation = getId(this)
 
     override fun getCarvedBlockState(
         stack: ItemStack, state: BlockState, clickedDir: Direction, hit: BlockHitResult,

@@ -2,7 +2,6 @@ package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
-import net.minecraft.core.Registry
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.util.ColorRGBA
@@ -29,6 +28,8 @@ import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.util.block.*
+import org.teamvoided.dusks_and_dungeons.util.getModEntries
+import org.teamvoided.dusks_and_dungeons.util.register
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
 import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections.CANDLES
@@ -38,10 +39,9 @@ import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings as Set
 
 
-@Suppress("LargeClass", "TooManyFunctions", "MemberVisibilityCanBePrivate", "unused")
 object DnDBlocks {
-    val BLOCKS = mutableSetOf<Block>()
-    val BLOCK_ITEMS = mutableMapOf<String, Item>()
+
+    val BLOCKS get() = getModEntries(BuiltInRegistries.BLOCK)
 
     // Collections
     val SETS = mutableSetOf<AbstractBlockSet>()
@@ -718,9 +718,7 @@ object DnDBlocks {
     }
 
     fun registerNoItem(id: String, block: Block): Block {
-        val regBlock = Registry.register(BuiltInRegistries.BLOCK, id(id), block)
-        BLOCKS.add(regBlock)
-        return regBlock
+        return BuiltInRegistries.BLOCK.register(id(id), block)
     }
 
 }

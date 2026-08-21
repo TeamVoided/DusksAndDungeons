@@ -12,11 +12,11 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CarvedPumpkinBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import org.teamvoided.dusks_and_dungeons.util.block.id
+import org.teamvoided.dusks_and_dungeons.util.block.getId
 
 open class DnDPumpkinBlock(val carvedBlock: Block, settings: Properties) : Block(settings), CarvableBlock {
 
-    override fun getId(): ResourceLocation = id()
+    override fun getId(): ResourceLocation = getId(this)
 
     override fun getCarvedBlockState(stack: ItemStack, state: BlockState, clickedDir: Direction, hit: BlockHitResult): BlockState {
         return carvedBlock.defaultBlockState().setValue(CarvedPumpkinBlock.FACING, clickedDir)
