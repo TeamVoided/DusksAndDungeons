@@ -155,8 +155,7 @@ object DnDBlocks {
     val OVERGROWTH_CARPET = register("overgrowth_carpet", MossyCarpetBlock(ofFullCopy(MOSS_CARPET).noOcclusion()))
         .cutout().grass().tint().hoe()
     val OVERGROWTH_BUSH = register("overgrowth_bush", OvergrowthBushBlock(ofFullCopy(AZALEA))).cutout().grass().tint()
-
-    //val POTTED_OVERGROWTH_BUSH
+    val POTTED_OVERGROWTH_BUSH= registerNoItem("potted_overgrowth_bush", flowerPot(OVERGROWTH_BUSH)).cutout().grass()
     val HANGING_OVERGROWTH = register(
         "hanging_overgrowth",
         HangingFloraBlock(

@@ -1,0 +1,9 @@
+{
+  "parent": "dusks_and_dungeons:block/parent/tint/potted_tinted_bush",
+  "textures": {
+    "top": "dusks_and_dungeons:block/potted_overgrowth_bush_top",
+    "side": "dusks_and_dungeons:block/potted_overgrowth_bush_side",
+    "plant": "dusks_and_dungeons:block/potted_overgrowth_bush_plant",
+    "stem": "dusks_and_dungeons:block/potted_overgrowth_bush_plant_stem"
+  }
+}

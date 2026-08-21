@@ -463,7 +463,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.FLOWER_POTS)
             .add(DnDBlocks.POTTED_CASCADE_SAPLING)
             .add(DnDBlocks.POTTED_SYPIA_SAPLING)
-//            .add(DnDBlocks.POTTED_OVERGROWTH_BUSH)
+            .add(DnDBlocks.POTTED_OVERGROWTH_BUSH)
 
         getOrCreateTagBuilder(BlockTags.CANDLES)
             .forceAddTag(DnDBlockTags.SOUL_CANDLES)
