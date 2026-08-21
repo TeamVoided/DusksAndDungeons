@@ -31,18 +31,20 @@ object BiomeInjectors {
         val gWoodsRegion = parameterMap(temperature, regionSypia, weirdNeg)
         val gPasturesRegion = parameterMap(temperature, regionSypia, weirdPos)
 
-        replacePartially(DBInject.AUTUMN_WOODS, DnDBiomeTags.AUTUMN_LANDS, DnDBiomes.AUTUMN_WOODS, aWoodsRegion)
+        replacePartially(DBInject.AUTUMN_WOODS, DnDBiomeTags.AUTUMN_LANDS, DnDBiomes.AUTUMN_WOODS, aWoodsRegion, 801)
         replacePartially(
             DBInject.AUTUMN_PASTURES,
             DnDBiomeTags.AUTUMN_LANDS,
             DnDBiomes.AUTUMN_PASTURES,
-            aPasturesRegion
+            aPasturesRegion,
+            801
         )
         replacePartially(
             DBInject.AUTUMN_CASCADES,
             DnDBiomeTags.AUTUMN_RIVERS,
             DnDBiomes.AUTUMN_CASCADES,
-            parameterMap(temperature, regionCascade)
+            parameterMap(temperature, regionCascade),
+            801
         )
         replacePartially(DBInject.GOLDEN_WOODS, DnDBiomeTags.AUTUMN_LANDS, DnDBiomes.GOLDEN_WOODS, gWoodsRegion)
         replacePartially(
@@ -63,7 +65,8 @@ object BiomeInjectors {
             DBInject.OVERGROWN_GROTTO,
             BiomeTags.IS_OVERWORLD,
             DnDBiomes.OVERGROWN_GROTTO,
-            parameterMap(cave, dfParam(DnDDensityFunctions.OVERGROWN_GROTTO_REGION, 0.25, 2.0))
+            parameterMap(cave, dfParam(DnDDensityFunctions.OVERGROWN_GROTTO_REGION, 0.25, 2.0)),
+            1000
         )
 
     }
