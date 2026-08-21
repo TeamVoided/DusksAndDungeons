@@ -2,10 +2,7 @@ package org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers
 
 import net.minecraft.data.models.model.ModelTemplate
 import net.minecraft.data.models.model.TextureSlot
-import net.minecraft.data.models.model.TextureSlot.ALL
-import net.minecraft.data.models.model.TextureSlot.END
-import net.minecraft.data.models.model.TextureSlot.PARTICLE
-import net.minecraft.data.models.model.TextureSlot.SIDE
+import net.minecraft.data.models.model.TextureSlot.*
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import java.util.*
 
@@ -22,6 +19,10 @@ data object DnDModels {
 
     val BIG_CHAIN = block("parent/big_chain", PARTICLE, ALL)
     val BIG_LANTERN = block("parent/big_lantern", PARTICLE, SIDE, END)
+
+    val BUTTON_TINTED = block("parent/tint/button", TEXTURE)
+    val BUTTON_PRESSED_TINTED = block("parent/tint/button_pressed", "_pressed", TEXTURE)
+    val BUTTON_INVENTORY_TINTED = block("parent/tint/button_inventory", "_inventory", TEXTURE)
 
     fun block(parent: String, vararg slots: TextureSlot): ModelTemplate {
         return ModelTemplate(Optional.of(id("block/$parent")), Optional.empty(), *slots)

@@ -8,6 +8,7 @@ import net.minecraft.data.models.model.TextureSlot.*
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.DnDModels
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 
@@ -15,18 +16,15 @@ val TINTED: TextureSlot = create("tinted")
 
 fun BlockModelGenerators.planksTinted(
     planks: Block,
-    stairs: Block,
-    slab: Block,
-    wall: Block,
-    fence: Block,
-    fenceGate: Block
+    stairs: Block, slab: Block, wall: Block, fence: Block, fenceGate: Block, button: Block,
 ) {
-    this.createTrivialBlock(planks, TexturedModel.LEAVES)
-    this.stairsTinted(stairs, planks)
-    this.slabTinted(slab, planks)
-    this.wallTinted(wall, planks)
-    this.fenceTinted(fence, planks)
-    this.fenceGateTinted(fenceGate, planks)
+    createTrivialBlock(planks, TexturedModel.LEAVES)
+    stairsTinted(stairs, planks)
+    slabTinted(slab, planks)
+    wallTinted(wall, planks)
+    fenceTinted(fence, planks)
+    fenceGateTinted(fenceGate, planks)
+    buttonTinted(button, planks)
 }
 
 fun BlockModelGenerators.strippedTinted(strippedLog: Block, strippedWoodSet: AbstractBlockSet) = this.strippedTinted(
@@ -42,7 +40,7 @@ fun BlockModelGenerators.strippedTinted(
     strippedWood: Block,
     stairs: Block,
     slab: Block,
-    wall: Block
+    wall: Block,
 ) {
     this.columnWithHorizontalTinted(strippedLog)
     this.columnTinted(strippedWood, strippedLog)
@@ -78,7 +76,7 @@ fun BlockModelGenerators.slabTinted(
     bottom: Block,
     side: Block = bottom,
     top: Block = bottom,
-    full: Block = side
+    full: Block = side,
 ) = slabTinted(block, bottom.model(), side.model(), top.model(), full)
 
 fun BlockModelGenerators.slabTinted(
@@ -86,7 +84,7 @@ fun BlockModelGenerators.slabTinted(
     bottom: ResourceLocation,
     side: ResourceLocation,
     top: ResourceLocation,
-    full: Block
+    full: Block,
 ) {
     val texture: TextureMapping = TextureMapping()
         .put(BOTTOM, bottom)
@@ -130,6 +128,15 @@ fun BlockModelGenerators.fenceGateTinted(fenceGateBlock: Block, reference: Block
     this.delegateItemModel(fenceGateBlock, id2)
 }
 
+fun BlockModelGenerators.buttonTinted(button: Block, reference: Block) {
+    val texture = TextureMapping.defaultTexture(reference)
+    val base = DnDModels.BUTTON_TINTED.create(button, texture, modelOutput)
+    val pressed = DnDModels.BUTTON_PRESSED_TINTED.create(button, texture, modelOutput)
+    blockStateOutput.accept(BlockModelGenerators.createButton(button, base, pressed))
+    val inventory = DnDModels.BUTTON_INVENTORY_TINTED.create(button, texture, modelOutput)
+    delegateItemModel(button, inventory)
+}
+
 
 fun BlockModelGenerators.columnWithHorizontalTinted(block: Block) {
     val texture = TextureMapping.logColumn(block)
@@ -158,7 +165,7 @@ fun BlockModelGenerators.columnTinted(block: Block, texture: Block) {
 fun BlockModelGenerators.hollowTintedLog(
     hollowLog: Block,
     log: Block,
-    stripped: Block
+    stripped: Block,
 ) {
     val texture: TextureMapping = TextureMapping.defaultTexture(hollowLog)
         .put(SIDE, log.model())
@@ -178,7 +185,7 @@ fun BlockModelGenerators.hollowTintedLog(
 
 fun BlockModelGenerators.hollowTintedStrippedLog(
     hollowLog: Block,
-    strippedLog: Block
+    strippedLog: Block,
 ) {
     val texture: TextureMapping = TextureMapping.defaultTexture(hollowLog)
         .put(SIDE, strippedLog.model())

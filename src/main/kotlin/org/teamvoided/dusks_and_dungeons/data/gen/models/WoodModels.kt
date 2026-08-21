@@ -1,14 +1,16 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createItemModel
 import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createSign
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.*
+import org.teamvoided.dusks_and_dungeons.util.datagen.createLeafPile
+import org.teamvoided.dusks_and_dungeons.util.datagen.createWood
+import org.teamvoided.dusks_and_dungeons.util.datagen.wall
 
 object WoodModels {
     fun woodModels(gen: BlockModelGenerators) {
@@ -63,7 +65,8 @@ object WoodModels {
             DnDBlocks.VERDANT_SLAB,
             DnDBlocks.VERDANT_WALL,
             DnDBlocks.VERDANT_FENCE,
-            DnDBlocks.VERDANT_FENCE_GATE
+            DnDBlocks.VERDANT_FENCE_GATE,
+            DnDBlocks.VERDANT_BUTTON
         )
 
         gen.createHangingSign(
