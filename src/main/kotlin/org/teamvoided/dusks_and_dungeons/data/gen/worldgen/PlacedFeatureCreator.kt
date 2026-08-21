@@ -56,6 +56,14 @@ object PlacedFeatureCreator {
             BiomeFilter.biome()
         )
         c.register(
+            DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA,
+            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_PUMPKIN_LANTERN_EXTRA),
+            RarityFilter.onAverageOnceEvery(50),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
+        )
+        c.register(
             DnDPlacedFeature.DISK_PODZOL, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_PODZOL),
             RarityFilter.onAverageOnceEvery(40),
             InSquarePlacement.spread(),
@@ -305,7 +313,7 @@ object PlacedFeatureCreator {
         c.register(
             DnDPlacedFeature.FAIRY_RING_RED,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FAIRY_RING_RED),
-            RarityFilter.onAverageOnceEvery(7),
+            RarityFilter.onAverageOnceEvery(21),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()

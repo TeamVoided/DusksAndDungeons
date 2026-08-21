@@ -20,6 +20,7 @@ object DnDPlacedFeature {
     val PATCH_GRASS_AUTUMN_PLAIN = create("patch_grass_autumn_plain")
     val PATCH_TALL_GRASS_AUTUMN_PLAIN = create("patch_tall_grass_autumn_plain")
     val PATCH_PUMPKIN_EXTRA = create("patch_pumpkin_extra")
+    val PATCH_LANTERN_PUMPKIN_EXTRA = create("patch_lantern_pumpkin_extra")
     val DISK_PODZOL = create("disk_podzol")
     val DISK_MUD = create("disk_mud")
     val DISK_RED_SAND = create("disk_red_sand")
