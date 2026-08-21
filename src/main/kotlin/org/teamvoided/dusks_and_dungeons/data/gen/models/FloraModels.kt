@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
 import net.minecraft.data.models.BlockModelGenerators
-import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.data.models.model.TexturedModel
@@ -77,7 +76,7 @@ object FloraModels {
             DnDBlocks.CORN_BLOCK,
             TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
         )
-        gen.registerParentedItemModel(DnDBlocks.CORN_SYRUP_BLOCK)
+        gen.createItemModel(DnDBlocks.CORN_SYRUP_BLOCK)
 
         gen.createTrivialBlock(
             DnDBlocks.ROOT_BLOCK,

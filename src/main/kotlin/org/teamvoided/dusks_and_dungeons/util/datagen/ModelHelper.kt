@@ -1476,8 +1476,6 @@ fun BlockModelGenerators.createTrivialState(block: Block) {
 }
 
 fun parentedItemModel(id: ResourceLocation) = ModelTemplate(Optional.of(id.withPrefix("item/")), Optional.empty())
-fun BlockModelGenerators.registerParentedItemModel(block: Block) =
-    this.delegateItemModel(block, block.model())
 
 fun block(model: ResourceLocation, vararg requiredTextures: TextureSlot): ModelTemplate {
     return ModelTemplate(
