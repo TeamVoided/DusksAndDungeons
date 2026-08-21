@@ -60,7 +60,7 @@ class BoulderFeature(codec: Codec<BoulderConfig>) :
                 if (config.moveDownIfReplaceable)
                     for (i in 0..size) {
                         if (structureWorldAccess.getBlockState(blockPos).`is`(BlockTags.REPLACEABLE)) {
-                            blockPos.below()
+                            blockPos = blockPos.below()
                         }
                     }
             }
