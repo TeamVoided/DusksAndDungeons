@@ -16,11 +16,11 @@ object SaplingGenerators {
         Optional.empty(),
         Optional.of(DnDConfiguredFeature.CASCADE_TREE_BEES)
     )
-    val GOLDEN_BIRCH = TreeGrower(
-        id("golden_birch").toString(),
+    val SYPIA = TreeGrower(
+        id("sypia").toString(),
         Optional.empty(),
-        Optional.of(DnDConfiguredFeature.GOLDEN_BIRCH_TALL),
-        Optional.of(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES)
+        Optional.of(DnDConfiguredFeature.SYPIA_TALL),
+        Optional.of(DnDConfiguredFeature.SYPIA_TALL_BEES)
     )
 
 

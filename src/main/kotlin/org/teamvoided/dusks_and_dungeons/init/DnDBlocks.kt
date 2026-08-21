@@ -228,7 +228,7 @@ object DnDBlocks {
     // region Sypia
     val SYPIA_SAPLING = register(
         "sypia_sapling",
-        SaplingBlock(SaplingGenerators.GOLDEN_BIRCH, ofFullCopy(BIRCH_SAPLING).mapColor(MapColor.COLOR_YELLOW))
+        SaplingBlock(SaplingGenerators.SYPIA, ofFullCopy(BIRCH_SAPLING).mapColor(MapColor.COLOR_YELLOW))
     ).cutout()
     val POTTED_SYPIA_SAPLING = registerNoItem("potted_sypia_sapling", flowerPot(SYPIA_SAPLING).cutout())
     val SYPIA_LEAVES = register(

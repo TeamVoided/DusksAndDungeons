@@ -318,13 +318,13 @@ object ConfiguredFeatureCreator {
             ),
             ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())
         )
-        val goldenBirchTree = treeBuilder(Blocks.BIRCH_LOG, DnDBlocks.SYPIA_LEAVES, 5, 2, 6, 2)
-        val birchDecorator1 = AttachedToTrunkTreeDecorator(
+        val sypiaTree = treeBuilder(DnDBlocks.SYPIA_LOG, DnDBlocks.SYPIA_LEAVES, 5, 2, 6, 2)
+        val sypiaDecorator1 = AttachedToTrunkTreeDecorator(
             0.14f,
             1,
             1,
             BlockStateProvider.simple(
-                Blocks.BIRCH_LOG.defaultBlockState().setValue(
+                DnDBlocks.SYPIA_LOG.defaultBlockState().setValue(
                     RotatedPillarBlock.AXIS,
                     Direction.Axis.X
                 )
@@ -332,12 +332,12 @@ object ConfiguredFeatureCreator {
             2,
             listOf(Direction.EAST, Direction.WEST)
         )
-        val birchDecorator2 = AttachedToTrunkTreeDecorator(
+        val sypiaDecorator2 = AttachedToTrunkTreeDecorator(
             0.14f,
             1,
             1,
             BlockStateProvider.simple(
-                Blocks.BIRCH_LOG.defaultBlockState().setValue(
+                DnDBlocks.SYPIA_LOG.defaultBlockState().setValue(
                     RotatedPillarBlock.AXIS,
                     Direction.Axis.Z
                 )
@@ -356,20 +356,20 @@ object ConfiguredFeatureCreator {
             ).build()
         )
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.GOLDEN_BIRCH_TALL, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
+            DnDConfiguredFeature.SYPIA_TALL, Feature.TREE, sypiaTree.ignoreVines().decorators(
                 ImmutableList.of(
-                    birchDecorator1,
-                    birchDecorator2,
+                    sypiaDecorator1,
+                    sypiaDecorator2,
                     leafPiles(DnDBlocks.SYPIA_LEAF_PILE, blockTags)
                 )
             ).build()
         )
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
+            DnDConfiguredFeature.SYPIA_TALL_BEES, Feature.TREE, sypiaTree.ignoreVines().decorators(
                 ImmutableList.of(
                     BeehiveBigTreeDecorator(0.1F),
-                    birchDecorator1,
-                    birchDecorator2,
+                    sypiaDecorator1,
+                    sypiaDecorator2,
                     leafPiles(DnDBlocks.SYPIA_LEAF_PILE, blockTags)
                 )
             ).build()
@@ -387,15 +387,15 @@ object ConfiguredFeatureCreator {
             ).build()
         )
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN, Feature.TREE, goldenBirchTree.ignoreVines().decorators(
+            DnDConfiguredFeature.SYPIA_TALL_AUTUMN, Feature.TREE, sypiaTree.ignoreVines().decorators(
                 ImmutableList.of(
                     BeehiveBigTreeDecorator(0.02F),
 //                    AlterGroundRadiusTreeDecorator(
 //                        BlockStateProvider.of(Blocks.PODZOL), 2, 20,
 //                        blockTags.getTagOrThrow(BlockTags.DIRT)
 //                    ),
-                    birchDecorator1,
-                    birchDecorator2,
+                    sypiaDecorator1,
+                    sypiaDecorator2,
                     leafPiles(DnDBlocks.SYPIA_LEAF_PILE, blockTags)
                 )
             ).build()
@@ -538,7 +538,7 @@ object ConfiguredFeatureCreator {
                     ),
                     WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN), 0.425f),
                     WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.CASCADE_TREE_AUTUMN), 0.425f)
-                ), placedFeatures.getOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_AUTUMN)
+                ), placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL_AUTUMN)
             )
         )
         this.registerConfiguredFeature(
@@ -546,7 +546,7 @@ object ConfiguredFeatureCreator {
                 listOf(
                     WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
                     WeightedPlacedFeature(
-                        placedFeatures.getOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_AUTUMN),
+                        placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL_AUTUMN),
                         0.05f
                     ),
                     WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.CASCADE_TREE_AUTUMN), 0.01f)
@@ -557,8 +557,8 @@ object ConfiguredFeatureCreator {
         this.registerConfiguredFeature(
             DnDConfiguredFeature.GOLDEN_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
                 listOf(
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL), 0.5f)
-                ), placedFeatures.getOrThrow(DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES)
+                    WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL), 0.5f)
+                ), placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL_BEES)
             )
         )
     }

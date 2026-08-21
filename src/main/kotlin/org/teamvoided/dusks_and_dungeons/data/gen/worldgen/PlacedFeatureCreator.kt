@@ -30,7 +30,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 object PlacedFeatureCreator {
     val cascadeSapling: BlockPredicateFilter =
         PlacementUtils.filteredByBlockSurvival(DnDBlocks.CASCADE_SAPLING)
-    val goldenBirchSapling: BlockPredicateFilter =
+    val sypiaSapling: BlockPredicateFilter =
         PlacementUtils.filteredByBlockSurvival(DnDBlocks.SYPIA_SAPLING)
     val darkOakSapling: BlockPredicateFilter =
         PlacementUtils.filteredByBlockSurvival(Blocks.DARK_OAK_SAPLING)
@@ -178,14 +178,14 @@ object PlacedFeatureCreator {
             cascadeSapling
         )
         c.register(
-            DnDPlacedFeature.GOLDEN_BIRCH_TALL,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL),
-            goldenBirchSapling
+            DnDPlacedFeature.SYPIA_TALL,
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SYPIA_TALL),
+            sypiaSapling
         )
         c.register(
-            DnDPlacedFeature.GOLDEN_BIRCH_TALL_BEES,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_BEES),
-            goldenBirchSapling
+            DnDPlacedFeature.SYPIA_TALL_BEES,
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SYPIA_TALL_BEES),
+            sypiaSapling
         )
     }
 
@@ -207,9 +207,9 @@ object PlacedFeatureCreator {
             cascadeSapling
         )
         c.register(
-            DnDPlacedFeature.GOLDEN_BIRCH_TALL_AUTUMN,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_BIRCH_TALL_AUTUMN),
-            goldenBirchSapling
+            DnDPlacedFeature.SYPIA_TALL_AUTUMN,
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SYPIA_TALL_AUTUMN),
+            sypiaSapling
         )
         c.register(
             DnDPlacedFeature.DARK_OAK_AUTUMN,
