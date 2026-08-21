@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
-class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings), SimpleWaterloggedBlock {
+class OvergrowthBushBlock(settings: Properties) : AzaleaBlock(settings) {//, SimpleWaterloggedBlock {
     init {
         this.registerDefaultState(
             stateDefinition.any()
