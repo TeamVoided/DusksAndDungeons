@@ -6,6 +6,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 
 object DnDEmiPlugin : EmiPlugin {
+
     override fun register(reg: EmiRegistry) {
         handleExperimentalItems(reg)
     }
@@ -14,4 +15,5 @@ object DnDEmiPlugin : EmiPlugin {
         if (isDev()) return
         reg.removeEmiStacks { it.itemStack.item in EVIL_ITEMS }
     }
+
 }
