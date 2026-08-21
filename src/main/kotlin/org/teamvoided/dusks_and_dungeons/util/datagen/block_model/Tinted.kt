@@ -16,7 +16,7 @@ val TINTED: TextureSlot = create("tinted")
 
 fun BlockModelGenerators.planksTinted(
     planks: Block,
-    stairs: Block, slab: Block, wall: Block, fence: Block, fenceGate: Block, button: Block,
+    stairs: Block, slab: Block, wall: Block, fence: Block, fenceGate: Block, button: Block, plate: Block,
 ) {
     createTrivialBlock(planks, TexturedModel.LEAVES)
     stairsTinted(stairs, planks)
@@ -25,6 +25,7 @@ fun BlockModelGenerators.planksTinted(
     fenceTinted(fence, planks)
     fenceGateTinted(fenceGate, planks)
     buttonTinted(button, planks)
+    pressurePlateTinted(plate, planks)
 }
 
 fun BlockModelGenerators.strippedTinted(strippedLog: Block, strippedWoodSet: AbstractBlockSet) = this.strippedTinted(
@@ -137,6 +138,12 @@ fun BlockModelGenerators.buttonTinted(button: Block, reference: Block) {
     delegateItemModel(button, inventory)
 }
 
+fun BlockModelGenerators.pressurePlateTinted(plate: Block, reference: Block) {
+    val texture = TextureMapping.defaultTexture(reference)
+    val up = DnDModels.PRESSURE_PLATE_UP_TINTED.create(plate, texture, modelOutput)
+    val down = DnDModels.PRESSURE_PLATE_DOWN_TINTED.create(plate, texture, modelOutput)
+    blockStateOutput.accept(BlockModelGenerators.createPressurePlate(plate, up, down))
+}
 
 fun BlockModelGenerators.columnWithHorizontalTinted(block: Block) {
     val texture = TextureMapping.logColumn(block)

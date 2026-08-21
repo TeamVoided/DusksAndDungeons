@@ -66,7 +66,9 @@ object WoodModels {
             DnDBlocks.VERDANT_WALL,
             DnDBlocks.VERDANT_FENCE,
             DnDBlocks.VERDANT_FENCE_GATE,
-            DnDBlocks.VERDANT_BUTTON
+            DnDBlocks.VERDANT_BUTTON,
+            DnDBlocks.VERDANT_PRESSURE_PLATE,
+//            DnDBlocks.VERDANT_,
         )
 
         gen.createHangingSign(
