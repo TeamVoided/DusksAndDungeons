@@ -3,6 +3,7 @@ package org.teamvoided.dusks_and_dungeons.data.gen.models
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createSign
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
@@ -63,6 +64,12 @@ object WoodModels {
             DnDBlocks.VERDANT_FENCE,
             DnDBlocks.VERDANT_FENCE_GATE
         )
+
+        gen.createHangingSign(
+            DnDBlocks.STRIPPED_VERDANT_LOG,
+            DnDBlocks.VERDANT_HANGING_SIGN, DnDBlocks.VERDANT_WALL_HANGING_SIGN
+        )
+        gen.createSign(DnDBlocks.VERDANT_PLANKS, DnDBlocks.VERDANT_SIGN, DnDBlocks.VERDANT_WALL_SIGN)
 
         //ASSORTED ADDITIONS
         gen.createWood(DnDBlocks.OAK_WOOD, Blocks.OAK_LOG)

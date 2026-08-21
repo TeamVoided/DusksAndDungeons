@@ -17,6 +17,7 @@ object DnDWoodTypes {
     val SYPIA_WOOD_TYPE = registerWoodType("sypia", WoodType.BIRCH, SYPIA_BLOCK_SET_TYPE)
 
     val VERDANT_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeBuilder.copyOf(BlockSetType.OAK).register(id("verdant"))
+    @JvmField
     val VERDANT_WOOD_TYPE: WoodType = registerWoodType("verdant", WoodType.OAK, VERDANT_BLOCK_SET_TYPE)
 
     @Suppress("SameParameterValue")

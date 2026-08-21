@@ -7,7 +7,11 @@
   "client": [
     "FoxRendererMixin",
     "LookAtItemAnimationMixin",
-    "ShadowAttributeMixin"
+    "ShadowAttributeMixin",
+    "signs.AbstractSignEditScreenMixin",
+    "signs.HangingSignEditScreenMixin",
+    "signs.SignEditScreenMixin",
+    "signs.SignRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

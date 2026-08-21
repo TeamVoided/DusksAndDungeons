@@ -329,23 +329,23 @@ object DnDBlocks {
         pressurePlateOf(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()
     ).grass().tint().tellWitnessesThatIWasMurdered()
     val VERDANT_BUTTON =
-        register("verdant_button", woodenButton(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE).wood()).grass().tint()
+        register("verdant_button", woodenButton(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE)).wood().grass().tint()
             .tellWitnessesThatIWasMurdered()
     val VERDANT_SIGN =
-        registerNoItem("verdant_sign", signOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS).wood()).grass()
-            .tellWitnessesThatIWasMurdered()
+        registerNoItem("verdant_sign", signOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS))
+            .wood().tint().grass().tellWitnessesThatIWasMurdered()
     val VERDANT_WALL_SIGN = registerNoItem(
         "verdant_wall_sign",
-        wallSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_SIGN).wood()
-    ).grass().tellWitnessesThatIWasMurdered()
+        wallSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_SIGN)
+    ).wood().tint().grass().tellWitnessesThatIWasMurdered()
     val VERDANT_HANGING_SIGN = registerNoItem(
         "verdant_hanging_sign",
-        hangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS).wood()
-    ).grass().tellWitnessesThatIWasMurdered()
+        hangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS)
+    ).wood().tint().grass().tellWitnessesThatIWasMurdered()
     val VERDANT_WALL_HANGING_SIGN = registerNoItem(
         "verdant_wall_hanging_sign",
-        wallHangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_HANGING_SIGN).wood()
-    ).grass().tellWitnessesThatIWasMurdered()
+        wallHangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_HANGING_SIGN)
+    ).wood().tint().grass().tellWitnessesThatIWasMurdered()
     // endregion
 
     val OAK_WOOD = registerWoodenSet("oak_wood", Blocks.OAK_WOOD)
@@ -446,9 +446,11 @@ object DnDBlocks {
     val HOLLOW_CHERRY_LOG = register("hollow_cherry_log", hollowLog(CHERRY_LOG))
     val HOLLOW_STRIPPED_CHERRY_LOG = register("hollow_stripped_cherry_log", hollowLog(STRIPPED_CHERRY_LOG))
     val HOLLOW_BAMBOO_BLOCK = register("hollow_bamboo_block", hollowBambooBlock(BAMBOO_BLOCK))
-    val HOLLOW_STRIPPED_BAMBOO_BLOCK = register("hollow_stripped_bamboo_block", hollowBambooBlock(STRIPPED_BAMBOO_BLOCK))
+    val HOLLOW_STRIPPED_BAMBOO_BLOCK =
+        register("hollow_stripped_bamboo_block", hollowBambooBlock(STRIPPED_BAMBOO_BLOCK))
     val HOLLOW_CRIMSON_STEM = register("hollow_crimson_stem", hollowLog(Blocks.CRIMSON_HYPHAE))
-    val HOLLOW_STRIPPED_CRIMSON_STEM = register("hollow_stripped_crimson_stem", hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE))
+    val HOLLOW_STRIPPED_CRIMSON_STEM =
+        register("hollow_stripped_crimson_stem", hollowLog(Blocks.STRIPPED_CRIMSON_HYPHAE))
     val HOLLOW_WARPED_STEM = register("hollow_warped_stem", hollowLog(Blocks.WARPED_HYPHAE))
     val HOLLOW_STRIPPED_WARPED_STEM = register("hollow_stripped_warped_stem", hollowLog(Blocks.STRIPPED_WARPED_HYPHAE))
 
