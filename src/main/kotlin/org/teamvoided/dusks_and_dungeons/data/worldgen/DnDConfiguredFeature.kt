@@ -73,8 +73,9 @@ object DnDConfiguredFeature {
     val SLATED_OVERWORLD_ORE = create("overlay/slated_overworld_ore")
     val BLACKSTONE_NETHER_ORE = create("overlay/blackstone_nether_ore")
 
-    val HUGE_GOLDEN_MUSHROOM = create("huge_golden_mushroom")
-    val PATCH_GOLDEN_MUSHROOM = create("patch_golden_mushroom")
+    val HUGE_GOLDEN_MUSHROOM = create("golden_mushroom/huge")
+    val PATCH_GOLDEN_MUSHROOM = create("golden_mushroom/patch")
+    val PATCH_GOLDEN_MUSHROOM_WITH_HUGE = create("golden_mushroom/patch_with_huge")
 
     //once i get rule tests make these convert blocks to their overgrown variants
     val OVERGROWTH_FLOOR_V = create("overgrowth/floor_vegetation")

@@ -21,14 +21,13 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
     }
 
     fun duskTags() {
-        getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_LANDS)
-            .add(
-                Biomes.PLAINS,
-                Biomes.FOREST,
-                Biomes.MEADOW,
-                Biomes.CHERRY_GROVE,
-                Biomes.TAIGA
-            )
+        getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_WOODS)
+            .add(Biomes.FOREST)
+            .add(Biomes.TAIGA)
+        getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_PASTURES)
+            .add(Biomes.PLAINS)
+            .add(Biomes.MEADOW)
+            .add(Biomes.CHERRY_GROVE)
         getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_RIVERS)
             .add(Biomes.RIVER)
         getOrCreateTagBuilder(DnDBiomeTags.IS_AUTUMN)
@@ -45,6 +44,13 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .forceAddTag(DnDBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)
             .forceAddTag(DnDBiomeTags.IS_AUTUMN) // remove the golden ones eventually
+
+        getOrCreateTagBuilder(DnDBiomeTags.HAS_GOLD_MUSHROOMS)
+            .forceAddTag(ConventionalBiomeTags.IS_OVERWORLD)
+            .forceAddTag(ConventionalBiomeTags.IS_NETHER)
+        getOrCreateTagBuilder(DnDBiomeTags.HAS_LOTS_OF_GOLD_MUSHROOMS)
+            .forceAddTag(ConventionalBiomeTags.IS_MUSHROOM)
+            .add(Biomes.DARK_FOREST)
 
         getOrCreateTagBuilder(DnDBiomeTags.HAS_GLACIERS)
         //.forceAddTag(ConventionalBiomeTags.IS_SNOWY)

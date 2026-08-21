@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
@@ -69,8 +70,8 @@ object ConfiguredFeatureCreator {
     @Suppress("LongMethod")
     fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
 //        val blockTags = c.lookup(Registries.BLOCK)
-        val configuredFeatures = c.lookup(Registries.CONFIGURED_FEATURE)
-//        val placedFeatures = c.lookup(Registries.PLACED_FEATURE)
+        val cF = c.lookup(Registries.CONFIGURED_FEATURE)
+        val pF = c.lookup(Registries.PLACED_FEATURE)
 
         //sort by folder structure in DnDConfiguredFeature
         c.trees()
@@ -107,9 +108,8 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(Blocks.WATER),
                 0.9f,
                 PlacementUtils.inlinePlaced(
-                    configuredFeatures.getOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS),
-
-                    ),
+                    cF.getOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS),
+                ),
                 0.1f,
                 true,
                 listOf()
@@ -128,7 +128,7 @@ object ConfiguredFeatureCreator {
                         WeightedStateProvider(
                             SimpleWeightedRandomList.builder<BlockState>()
                                 .add(Blocks.NETHER_WART.defaultBlockState(), 3)
-                                .add(Blocks.NETHER_WART.defaultBlockState().setValue(NetherWartBlock.AGE, 1),2)
+                                .add(Blocks.NETHER_WART.defaultBlockState().setValue(NetherWartBlock.AGE, 1), 2)
                                 .add(Blocks.NETHER_WART.defaultBlockState().setValue(NetherWartBlock.AGE, 2))
                                 .add(Blocks.NETHER_WART.defaultBlockState().setValue(NetherWartBlock.AGE, 3))
                                 .add(Blocks.SOUL_FIRE.defaultBlockState(), 4)
@@ -156,7 +156,7 @@ object ConfiguredFeatureCreator {
                         WeightedStateProvider(
                             SimpleWeightedRandomList.builder<BlockState>()
                                 .add(DnDBlocks.WARPED_WART.defaultBlockState(), 3)
-                                .add(DnDBlocks.WARPED_WART.defaultBlockState().setValue(NetherWartBlock.AGE, 1),2)
+                                .add(DnDBlocks.WARPED_WART.defaultBlockState().setValue(NetherWartBlock.AGE, 1), 2)
                                 .add(DnDBlocks.WARPED_WART.defaultBlockState().setValue(NetherWartBlock.AGE, 2))
                                 .add(DnDBlocks.WARPED_WART.defaultBlockState().setValue(NetherWartBlock.AGE, 3))
                         )
@@ -189,6 +189,32 @@ object ConfiguredFeatureCreator {
             Feature.RANDOM_PATCH,
             FeatureUtils.simplePatchConfiguration(
                 Feature.SIMPLE_BLOCK, SimpleBlockConfiguration(BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM))
+            )
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM_WITH_HUGE,
+            Feature.RANDOM_PATCH,
+            RandomPatchConfiguration(
+                96, 7, 3,
+                PlacementUtils.filtered(
+                    Feature.RANDOM_SELECTOR,
+                    RandomFeatureConfiguration(
+                        listOf(
+                            WeightedPlacedFeature(
+                                PlacementUtils.inlinePlaced(cF.getOrThrow(DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM)),
+                                0.1f
+                            )
+                        ),
+                        PlacementUtils.inlinePlaced(
+                            Feature.SIMPLE_BLOCK,
+                            SimpleBlockConfiguration(BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM))
+                        )
+                    ),
+                    BlockPredicate.allOf(
+                        BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                        BlockPredicate.wouldSurvive(DnDBlocks.GOLDEN_MUSHROOM.defaultBlockState(), BlockPos.ZERO)
+                    )
+                )
             )
         )
 

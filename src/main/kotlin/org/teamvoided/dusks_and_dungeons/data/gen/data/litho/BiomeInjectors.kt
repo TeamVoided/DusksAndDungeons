@@ -19,22 +19,22 @@ object BiomeInjectors {
 
     fun BootstrapContext<BiomeInjector>.boostrap() {
 
-        val temperature = climateParam(TEMPERATURE, -1.0, -0.15)
-        val regionCascade = dfParam(DnDDensityFunctions.CASCADE_REGION, 0.5, 2.0)
-        val regionSypia = dfParam(DnDDensityFunctions.SYPIA_REGION, 0.5, 2.0)
-        val weirdPos = climateParam(WEIRDNESS, 0.0, 2.0)
-        val weirdNeg = climateParam(WEIRDNESS, -2.0, 0.0)
-        val cave = climateParam(DEPTH, -0.9, -0.2)
+        val temperature = climateParam(TEMPERATURE, -2.0, -0.15)
+        val regionCascade = dfParam(DnDDensityFunctions.CASCADE_REGION, 0.4, 2.0)
+        val regionSypia = dfParam(DnDDensityFunctions.SYPIA_REGION, 0.4, 2.0)
+        //val weirdPos = climateParam(WEIRDNESS, 0.0, 2.0)
+        //val weirdNeg = climateParam(WEIRDNESS, -2.0, 0.0)
+        val cave = climateParam(DEPTH, 0.2, 0.9)
 
-        val aWoodsRegion = parameterMap(temperature, regionCascade, weirdNeg)
-        val aPasturesRegion = parameterMap(temperature, regionCascade, weirdPos)
-        val gWoodsRegion = parameterMap(temperature, regionSypia, weirdNeg)
-        val gPasturesRegion = parameterMap(temperature, regionSypia, weirdPos)
+        val aWoodsRegion = parameterMap(temperature, regionCascade) //weirdNeg
+        val aPasturesRegion = parameterMap(temperature, regionCascade) //weirdPos
+        val gWoodsRegion = parameterMap(temperature, regionSypia)
+        val gPasturesRegion = parameterMap(temperature, regionSypia)
 
-        replacePartially(DBInject.AUTUMN_WOODS, DnDBiomeTags.AUTUMN_LANDS, DnDBiomes.AUTUMN_WOODS, aWoodsRegion, 801)
+        replacePartially(DBInject.AUTUMN_WOODS, DnDBiomeTags.AUTUMN_WOODS, DnDBiomes.AUTUMN_WOODS, aWoodsRegion, 801)
         replacePartially(
             DBInject.AUTUMN_PASTURES,
-            DnDBiomeTags.AUTUMN_LANDS,
+            DnDBiomeTags.AUTUMN_PASTURES,
             DnDBiomes.AUTUMN_PASTURES,
             aPasturesRegion,
             801
@@ -46,10 +46,10 @@ object BiomeInjectors {
             parameterMap(temperature, regionCascade),
             801
         )
-        replacePartially(DBInject.GOLDEN_WOODS, DnDBiomeTags.AUTUMN_LANDS, DnDBiomes.GOLDEN_WOODS, gWoodsRegion)
+        replacePartially(DBInject.GOLDEN_WOODS, DnDBiomeTags.AUTUMN_WOODS, DnDBiomes.GOLDEN_WOODS, gWoodsRegion)
         replacePartially(
             DBInject.GOLDEN_PASTURES,
-            DnDBiomeTags.AUTUMN_LANDS,
+            DnDBiomeTags.AUTUMN_PASTURES,
             DnDBiomes.GOLDEN_PASTURES,
             gPasturesRegion
         )

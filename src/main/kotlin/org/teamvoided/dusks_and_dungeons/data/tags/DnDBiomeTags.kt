@@ -6,7 +6,8 @@ import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 object DnDBiomeTags {
-    val AUTUMN_LANDS = create("autumn_replacer/land")
+    val AUTUMN_WOODS = create("autumn_replacer/woods")
+    val AUTUMN_PASTURES = create("autumn_replacer/pastures")
     val AUTUMN_RIVERS = create("autumn_replacer/river")
     val IS_AUTUMN = create("is_autumn")
     val HAS_STRUCTURE_AUTUMN_RUINS = create("has_structure/autumn_ruins")
@@ -14,6 +15,10 @@ object DnDBiomeTags {
     @JvmField
     val SPAWNS_SILVER_FOXES = create("spawns_silver_foxes")
     val SPAWNS_AUTUMN_WOLVES = create("spawns_autumn_wolves")
+
+    val HAS_GOLD_MUSHROOMS = create("features/golden_mushroom_normal")
+    val HAS_LOTS_OF_GOLD_MUSHROOMS = create("features/golden_mushroom_common")
+
 
     val HAS_GLACIERS = create("has_glaciers")
 

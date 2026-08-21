@@ -37,7 +37,6 @@ object BiomeCreator {
         context.register(DnDBiomes.OVERGROWN_GROTTO, overgrownGrotto(context))
 
 
-
     }
 
     //no access widener?
@@ -59,7 +58,10 @@ object BiomeCreator {
         generationSettings.addFeature(ss4, DnDPlacedFeature.AUTUMN_FARMLANDS)
         generationSettings.addFeature(uo6, DnDPlacedFeature.ORE_LAPIS_EXTRA)
         generationSettings.addFeature(lm2, DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER)
-        generationSettings.addFeature(vd9, if (golden) DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA else DnDPlacedFeature.PATCH_PUMPKIN_EXTRA)
+        generationSettings.addFeature(
+            vd9,
+            if (golden) DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA else DnDPlacedFeature.PATCH_PUMPKIN_EXTRA
+        )
         generationSettings.addFeature(vd9, DnDPlacedFeature.FLOWER_AUTUMN)
         generationSettings.addFeature(
             vd9,

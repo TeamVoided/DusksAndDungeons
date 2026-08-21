@@ -105,12 +105,12 @@ object PlacedFeatureCreator {
         c.register(
             DnDPlacedFeature.GOLDEN_MUSHROOM_NORMAL,
             cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
-            getMushroomPlacement(256)
+            getMushroomPlacement(16)
         )
         c.register(
             DnDPlacedFeature.GOLDEN_MUSHROOM_COMMON,
-            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
-            getMushroomPlacement(128)
+            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM_WITH_HUGE),
+            getMushroomPlacement(8)
         )
 
         c.cavePlacement(
@@ -425,7 +425,7 @@ object PlacedFeatureCreator {
         }
 
         builder.add(InSquarePlacement.spread())
-        builder.add(PlacementUtils.HEIGHTMAP)
+        builder.add(PlacementUtils.FULL_RANGE) //these do belong in caves after all
         builder.add(BiomeFilter.biome())
         return builder.build()
     }
