@@ -3,6 +3,7 @@ package org.teamvoided.dusks_and_dungeons.data.gen.models
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createItemModel
 import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createSign
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
@@ -52,8 +53,8 @@ object WoodModels {
             DnDBlocks.SYPIA_WALL_HANGING_SIGN
         )
 
-        //VERDANT
-        gen.registerParentedItemModel(DnDBlocks.VERDANT_LOG)
+        // Verdant
+        gen.createItemModel(DnDBlocks.VERDANT_LOG)
         gen.woodProvider(DnDBlocks.VERDANT_LOG).wood(DnDBlocks.VERDANT_WOOD.parent)
         gen.strippedTinted(DnDBlocks.STRIPPED_VERDANT_LOG, DnDBlocks.STRIPPED_VERDANT_WOOD)
         gen.planksTinted(

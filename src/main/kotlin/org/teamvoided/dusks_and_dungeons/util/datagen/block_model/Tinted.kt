@@ -162,8 +162,8 @@ fun BlockModelGenerators.hollowTintedLog(
 ) {
     val texture: TextureMapping = TextureMapping.defaultTexture(hollowLog)
         .put(SIDE, log.model())
-        .put(END, log.model("_top"))
-        .put(TINTED, log.model("_edge"))
+        .put(END, log.model("_edge"))
+        .put(TINTED, log.model("_top"))
         .put(INNER, stripped.model())
     Direction.Plane.HORIZONTAL.forEach {
         block("parent/tint/hollow_log_$it", SIDE, END, INNER)

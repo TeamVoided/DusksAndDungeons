@@ -8,6 +8,7 @@ import net.minecraft.data.models.blockstates.Variant
 import net.minecraft.data.models.blockstates.VariantProperties
 import net.minecraft.data.models.blockstates.VariantProperties.Rotation
 import net.minecraft.data.models.model.ModelLocationUtils
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 
@@ -55,5 +56,8 @@ fun BlockModelGenerators.createOrientable(block: Block) {
  * Create an item model that references a block model with the provided block's id.
  */
 fun BlockModelGenerators.createItemModel(block: Block) {
-    delegateItemModel(block, ModelLocationUtils.getModelLocation(block))
+    delegateItemModel(block, model(block))
 }
+
+fun model(block: Block): ResourceLocation = ModelLocationUtils.getModelLocation(block)
+
