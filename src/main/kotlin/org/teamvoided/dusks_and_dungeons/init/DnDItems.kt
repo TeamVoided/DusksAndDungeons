@@ -14,12 +14,15 @@ import org.teamvoided.dusks_and_dungeons.item.DnDFoodComponents
 import org.teamvoided.dusks_and_dungeons.item.PlaceInFluidBlockItem
 import org.teamvoided.dusks_and_dungeons.item.ScarecrowItem
 import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
+import org.teamvoided.dusks_and_dungeons.util.getModEntries
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem
 
 
 object DnDItems {
-    val ITEMS = mutableListOf<Item>()
+
+    val ITEMS get() = getModEntries(BuiltInRegistries.ITEM)
+
     val EVIL_ITEMS = mutableSetOf<Item>()
 
     val CASCADE_DOOR = register("cascade_door", DoubleHighBlockItem(DnDBlocks.CASCADE_DOOR, Properties()))
@@ -163,9 +166,7 @@ object DnDItems {
     }
 
     fun register(id: String, item: Item): Item {
-        val regItem = Registry.register(BuiltInRegistries.ITEM, id(id), item)
-        ITEMS.add(regItem)
-        return regItem
+        return Registry.register(BuiltInRegistries.ITEM, id(id), item)
     }
 
     fun attributeSettings(comp: ItemAttributeModifiers): Properties = Properties().attributes(comp)
