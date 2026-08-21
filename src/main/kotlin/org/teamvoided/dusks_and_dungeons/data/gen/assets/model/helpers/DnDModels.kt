@@ -25,6 +25,15 @@ data object DnDModels {
     val BUTTON_PRESSED_TINTED = tintedBlock("button_pressed", "_pressed", TEXTURE)
     val BUTTON_INVENTORY_TINTED = tintedBlock("button_inventory", "_inventory", TEXTURE)
 
+    val DOOR_BOTTOM_LEFT_TINTED = tintedBlock("door_bottom_left", "_bottom_left", TOP, BOTTOM)
+    val DOOR_BOTTOM_LEFT_OPEN_TINTED = tintedBlock("door_bottom_left_open", "_bottom_left_open", TOP, BOTTOM)
+    val DOOR_BOTTOM_RIGHT_TINTED = tintedBlock("door_bottom_right", "_bottom_right", TOP, BOTTOM)
+    val DOOR_BOTTOM_RIGHT_OPEN_TINTED = tintedBlock("door_bottom_right_open", "_bottom_right_open", TOP, BOTTOM)
+    val DOOR_TOP_LEFT_TINTED = tintedBlock("door_top_left", "_top_left", TOP, BOTTOM)
+    val DOOR_TOP_LEFT_OPEN_TINTED = tintedBlock("door_top_left_open", "_top_left_open", TOP, BOTTOM)
+    val DOOR_TOP_RIGHT_TINTED = tintedBlock("door_top_right", "_top_right", TOP, BOTTOM)
+    val DOOR_TOP_RIGHT_OPEN_TINTED = tintedBlock("door_top_right_open", "_top_right_open", TOP, BOTTOM)
+
     val PRESSURE_PLATE_UP_TINTED = tintedBlock("pressure_plate_up", TEXTURE)
     val PRESSURE_PLATE_DOWN_TINTED = tintedBlock("pressure_plate_down", "_down", TEXTURE)
 

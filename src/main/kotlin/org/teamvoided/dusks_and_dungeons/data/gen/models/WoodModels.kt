@@ -70,7 +70,7 @@ object WoodModels {
             DnDBlocks.VERDANT_PRESSURE_PLATE,
         )
         gen.createTintedOrientableTrapdoor(DnDBlocks.VERDANT_TRAPDOOR)
-        gen.createTintedDoor(DnDBlocks.VERDANT_TRAPDOOR)
+        gen.createTintedDoor(DnDBlocks.VERDANT_DOOR)
 
         gen.createHangingSign(
             DnDBlocks.STRIPPED_VERDANT_LOG,

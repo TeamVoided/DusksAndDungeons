@@ -142,6 +142,25 @@ fun BlockModelGenerators.createTintedOrientableTrapdoor(block: Block) {
     delegateItemModel(block, bottom)
 }
 
+fun BlockModelGenerators.createTintedDoor(block: Block) {
+    val texture = TextureMapping.door(block)
+    val bottomLeft = DnDModels.DOOR_BOTTOM_LEFT_TINTED.create(block, texture, modelOutput)
+    val bottomLeftOpen = DnDModels.DOOR_BOTTOM_LEFT_OPEN_TINTED.create(block, texture, modelOutput)
+    val bottomRight = DnDModels.DOOR_BOTTOM_RIGHT_TINTED.create(block, texture, modelOutput)
+    val bottomRightOpen = DnDModels.DOOR_BOTTOM_RIGHT_OPEN_TINTED.create(block, texture, modelOutput)
+    val topLeft = DnDModels.DOOR_TOP_LEFT_TINTED.create(block, texture, modelOutput)
+    val topLeftOpen = DnDModels.DOOR_TOP_LEFT_OPEN_TINTED.create(block, texture, modelOutput)
+    val topRight = DnDModels.DOOR_TOP_RIGHT_TINTED.create(block, texture, modelOutput)
+    val topRightOpen = DnDModels.DOOR_TOP_RIGHT_OPEN_TINTED.create(block, texture, modelOutput)
+    createSimpleFlatItemModel(block.asItem())
+    blockStateOutput.accept(
+        BlockModelGenerators.createDoor(
+            block,
+            bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen,
+            topLeft, topLeftOpen, topRight, topRightOpen
+        )
+    )
+}
 
 fun BlockModelGenerators.columnWithHorizontalTinted(block: Block) {
     val texture = TextureMapping.logColumn(block)
