@@ -46,7 +46,10 @@ object DnDTabs {
 
     fun init() {
         modifyTab(CreativeModeTabs.BUILDING_BLOCKS) {
-            addAfter(Items.CHERRY_BUTTON, DnDItemLists.cascadeWood)
+            addAfter(
+                Items.CHERRY_BUTTON,
+                DnDItemLists.cascadeWood + DnDItemLists.sypiaWood
+            )
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
             addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)
             addAfter(Items.CHISELED_NETHER_BRICKS, DnDItemLists.netherBrickStuff)
@@ -151,7 +154,9 @@ object DnDTabs {
     fun mainTab(params: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) {
         output.addLists(
             DnDItemLists.cascadeWood,
-            DnDItemLists.cascadeSigns
+            DnDItemLists.cascadeSigns,
+            DnDItemLists.sypiaWood,
+            DnDItemLists.sypiaSigns
         )
         output.addItems(
             DnDItems.BLUE_DOOR,

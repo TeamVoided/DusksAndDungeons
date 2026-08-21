@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
@@ -24,7 +23,8 @@ object DnDItemLists {
         Items.RED_DYE,
         Items.BLACK_DYE,
     )
-    val cascadeWood = listOf<ItemLike>(
+
+    val cascadeWood = listOf(
         DnDBlocks.CASCADE_LOG,
         DnDBlocks.CASCADE_WOOD,
         DnDBlocks.STRIPPED_CASCADE_LOG,
@@ -39,11 +39,31 @@ object DnDItemLists {
         DnDBlocks.CASCADE_PRESSURE_PLATE,
         DnDBlocks.CASCADE_BUTTON
     )
-
     val cascadeSigns = listOf(
         DnDItems.CASCADE_SIGN,
         DnDItems.CASCADE_HANGING_SIGN
     )
+
+    val sypiaWood = listOf(
+        DnDBlocks.SYPIA_LOG,
+        DnDBlocks.SYPIA_WOOD,
+        DnDBlocks.STRIPPED_SYPIA_LOG,
+        DnDBlocks.STRIPPED_SYPIA_WOOD,
+        DnDBlocks.SYPIA_PLANKS,
+        DnDBlocks.SYPIA_STAIRS,
+        DnDBlocks.SYPIA_SLAB,
+        DnDBlocks.SYPIA_FENCE,
+        DnDBlocks.SYPIA_FENCE_GATE,
+        DnDItems.SYPIA_DOOR,
+        DnDBlocks.SYPIA_TRAPDOOR,
+        DnDBlocks.SYPIA_PRESSURE_PLATE,
+        DnDBlocks.SYPIA_BUTTON
+    )
+    val sypiaSigns = listOf(
+        DnDItems.SYPIA_SIGN,
+        DnDItems.SYPIA_HANGING_SIGN
+    )
+
     val overgrownCobblestone = DnDBlocks.OVERGROWN_COBBLESTONE.list
     val overgrownStoneBricks = DnDBlocks.OVERGROWN_STONE_BRICKS.list
     val ice = DnDBlocks.ICE_SET.list + DnDBlocks.PACKED_ICE_SET.list + DnDBlocks.BLUE_ICE_SET.list
