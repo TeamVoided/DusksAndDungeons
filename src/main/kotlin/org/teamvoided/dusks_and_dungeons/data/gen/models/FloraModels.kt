@@ -1,12 +1,14 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
 import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createItemModel
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
@@ -23,6 +25,7 @@ object FloraModels {
         )
 
         gen.rotatedLikeNetherrack(DnDBlocks.OVERGROWTH_BLOCK, TexturedModel.LEAVES)
+        gen.createItemModel(DnDBlocks.OVERGROWTH_CARPET)
         gen.createTrivialBlock(DnDBlocks.VERDANT_LEAVES, TexturedModel.LEAVES)
         gen.overgrowthBush(DnDBlocks.OVERGROWTH_BUSH)
         gen.hangingOvergrowth(DnDBlocks.HANGING_OVERGROWTH)
