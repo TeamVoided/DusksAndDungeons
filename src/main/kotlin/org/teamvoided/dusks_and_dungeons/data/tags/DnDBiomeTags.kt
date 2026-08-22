@@ -18,9 +18,9 @@ object DnDBiomeTags {
     val SPAWNS_SILVER_FOXES = create("spawns_silver_foxes")
     val SPAWNS_AUTUMN_WOLVES = create("spawns_autumn_wolves")
 
-    val GOLD_MUSHROOMS_C = create("features/golden_mushroom_cave")
-    val GOLD_MUSHROOMS_S = create("features/golden_mushroom_surface")
-    val GOLD_MUSHROOMS_H = create("features/golden_mushroom_huge")
+    val GOLD_MUSHROOMS_CAVE = create("features/golden_mushroom_cave")
+    val GOLD_MUSHROOMS_SURFACE = create("features/golden_mushroom_surface")
+    val GOLD_MUSHROOMS_HUGE = create("features/golden_mushroom_huge")
 
 
     val HAS_GLACIERS = create("has_glaciers")

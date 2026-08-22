@@ -23,9 +23,9 @@ object DnDBiomeModifications {
         addOres("blackstoned_ore", DnDPlacedFeature.BLACKSTONED_ORE, CTags.IS_NETHER)
 
 
-        addVegetation("golden_mushrooms_cave", DnDPlacedFeature.GOLDEN_MUSHROOM_CAVE, DnDBiomeTags.GOLD_MUSHROOMS_C)
-        addVegetation("golden_mushrooms_surface", DnDPlacedFeature.GOLDEN_MUSHROOM_SURFACE, DnDBiomeTags.GOLD_MUSHROOMS_S)
-        addVegetation("golden_mushrooms_common", DnDPlacedFeature.GOLDEN_MUSHROOM_HUGE_PATCH, DnDBiomeTags.GOLD_MUSHROOMS_H)
+        addVegetation("golden_mushrooms_cave", DnDPlacedFeature.GOLDEN_MUSHROOM_CAVE, DnDBiomeTags.GOLD_MUSHROOMS_CAVE)
+        addVegetation("golden_mushrooms_surface", DnDPlacedFeature.GOLDEN_MUSHROOM_SURFACE, DnDBiomeTags.GOLD_MUSHROOMS_SURFACE)
+        addVegetation("golden_mushrooms_common", DnDPlacedFeature.GOLDEN_MUSHROOM_HUGE_PATCH, DnDBiomeTags.GOLD_MUSHROOMS_HUGE)
     }
 
     internal fun addOres(id: String, placedFeature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>) {

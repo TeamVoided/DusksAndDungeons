@@ -48,12 +48,12 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)
             .forceAddTag(DnDBiomeTags.IS_AUTUMN) // remove the golden ones eventually
 
-        getOrCreateTagBuilder(DnDBiomeTags.GOLD_MUSHROOMS_C)
+        getOrCreateTagBuilder(DnDBiomeTags.GOLD_MUSHROOMS_CAVE)
             .forceAddTag(ConventionalBiomeTags.IS_OVERWORLD)
-        getOrCreateTagBuilder(DnDBiomeTags.GOLD_MUSHROOMS_S)
+        getOrCreateTagBuilder(DnDBiomeTags.GOLD_MUSHROOMS_SURFACE)
             .forceAddTag(ConventionalBiomeTags.IS_FOREST)
             .forceAddTag(ConventionalBiomeTags.IS_TAIGA)
-        getOrCreateTagBuilder(DnDBiomeTags.GOLD_MUSHROOMS_H)
+        getOrCreateTagBuilder(DnDBiomeTags.GOLD_MUSHROOMS_HUGE)
             .forceAddTag(ConventionalBiomeTags.IS_MUSHROOM)
             .add(Biomes.DARK_FOREST)
 
