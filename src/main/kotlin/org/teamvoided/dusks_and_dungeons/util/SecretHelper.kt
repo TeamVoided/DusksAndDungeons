@@ -22,7 +22,7 @@ internal val dataFixerBlackList = listOf(
     "scarecrow",
 )
 
-
+// TODO make this be a lot smaller for 1.0
 fun doEvil() {
     UtilAccessor.dnd_logger().info(
         "                                                                                                                                                                          \n" +
