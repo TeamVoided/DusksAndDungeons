@@ -13,7 +13,7 @@ import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SNIFFER_ADD_MOONBERR
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.item.ThrownItemDefinition
+import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.voidlib.helpers.mc.addNewPool
 import org.teamvoided.voidlib.helpers.mc.addToExistingPools

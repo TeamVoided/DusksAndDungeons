@@ -5,7 +5,7 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.RaccoonVariant
-import org.teamvoided.dusks_and_dungeons.item.ThrownItemDefinition
+import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 
 // TODO rename to DnDRegistries
 object DnDRegistryKeys {

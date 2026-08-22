@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.item
+package org.teamvoided.dusks_and_dungeons.item.throwable
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder

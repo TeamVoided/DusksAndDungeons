@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import org.teamvoided.dusks_and_dungeons.entity.ThrownItemStack
-import org.teamvoided.dusks_and_dungeons.item.ThrownItemDefinition
+import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 
 fun initItemEvents() {
     UseItemCallback.EVENT.register(::useItemEvent)
@@ -43,12 +43,12 @@ fun doThrowableStackLogic(player: Player, level: Level, stack: ItemStack): Inter
     )
     if (!level.isClientSide) {
         val thrownDef = thrownId.value()
-        val thrownItemStack = ThrownItemStack(level, player)
-        thrownItemStack.item = stack
-        thrownItemStack.setDefinition(thrownId)
-        thrownItemStack.shootFromRotation(player, player.xRot, player.yRot, 0.0f, thrownDef.power, thrownDef.uncertainty)
+        val projectile = ThrownItemStack(level, player)
+        projectile.item = stack
+        projectile.setDefinition(thrownId)
+        projectile.shootFromRotation(player, player.xRot, player.yRot, 0.0f, thrownDef.power, thrownDef.uncertainty)
         player.cooldowns.addCooldown(stack.item, thrownDef.cooldown)
-        level.addFreshEntity(thrownItemStack)
+        level.addFreshEntity(projectile)
     }
 
     player.awardStat(Stats.ITEM_USED.get(stack.item))

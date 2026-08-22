@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
-import org.teamvoided.dusks_and_dungeons.item.ThrownItemDefinition
+import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 import java.util.*
 
 object ThrownItems {
