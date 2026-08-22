@@ -433,21 +433,3 @@ fun RecipeOutput.createPiles(output: ItemLike, input: ItemLike) {
         .criterion(input)
         .save(this)
 }
-
-fun RecipeOutput.cobbled() {
-    DnDBlocks.OVERLAYS.forEach {
-        val overlay = it.block
-        this.createDiagonalRecipe(it.dirt, Blocks.DIRT, overlay)
-        this.createDiagonalRecipe(it.grass, Blocks.GRASS_BLOCK, overlay)
-        this.createDiagonalRecipe(it.podzol, Blocks.PODZOL, overlay)
-        this.createDiagonalRecipe(it.mycelium, Blocks.MYCELIUM, overlay)
-        this.createDiagonalRecipe(it.coarseDirt, Blocks.COARSE_DIRT, overlay)
-        this.createDiagonalRecipe(it.mud, Blocks.MUD, overlay)
-        this.createDiagonalRecipe(it.snow, Blocks.SNOW_BLOCK, overlay)
-        this.createDiagonalRecipe(it.gravel, Blocks.GRAVEL, overlay)
-        this.createDiagonalRecipe(it.sand, Blocks.SAND, overlay)
-        this.createDiagonalRecipe(it.redSand, Blocks.RED_SAND, overlay)
-        this.createDiagonalRecipe(it.soulSand, Blocks.SOUL_SAND, overlay)
-        this.createDiagonalRecipe(it.soulSoil, Blocks.SOUL_SOIL, overlay)
-    }
-}

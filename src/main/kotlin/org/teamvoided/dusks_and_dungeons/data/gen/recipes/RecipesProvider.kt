@@ -18,7 +18,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.CASCADE_WOOD
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.STRIPPED_CASCADE_WOOD
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.util.datagen.cobbled
 import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
 import org.teamvoided.voidlib.devin.extensions.recipe.createSet
 import java.util.concurrent.CompletableFuture
@@ -33,7 +32,6 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         StoneRecipes.generateStoneRecipes(e)
         NetherRecipes.generateNetherRecipes(e)
         FloraRecipes.generateFloraRecipes(e)
-        e.cobbled()
 
         MinecraftRecipeOverrides.generate(e)
 

@@ -4,9 +4,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.item.Item
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
-import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.OVERLAYS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.register
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.registerNoItem
@@ -30,14 +28,6 @@ fun registerHeadEquipable(id: String, block: Block): Block {
     DnDItems.register(id, BlockItem(regBlock, Item.Settings().food(foodComponent)))
     return regBlock
 }*/
-
-// region Rocky Blocks
-fun register(overlays: RockyBlocks): RockyBlocks {
-    OVERLAYS.add(overlays)
-    overlays.register(::register)
-    return overlays
-}
-// endregion
 
 // region Color Consortiums
 typealias BlockMaker<T> = (coloredBlock: Block) -> T

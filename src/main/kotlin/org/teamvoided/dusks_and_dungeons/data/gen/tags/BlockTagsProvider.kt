@@ -54,7 +54,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .addOptionalTag(id("sable", "fragile"))
 
         getOrCreateTagBuilder(DnDBlockTags.EMPTY)
-        overlayTags()
     }
 
     private fun duskTags() {
@@ -562,29 +561,5 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(ConventionalBlockTags.CHAINS).add(DnDBlocks.BIG_CHAIN)
 
         getOrCreateTagBuilder(CBlockTags.SCAFFOLDING).add(Blocks.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
-    }
-
-    private fun overlayTags() {
-        DnDBlocks.OVERLAYS.forEach {
-            getOrCreateTagBuilder(BlockTags.MUSHROOM_GROW_BLOCK).add(it.podzol, it.mycelium)
-            getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(it.gravel)
-            getOrCreateTagBuilder(BlockTags.NETHER_CARVER_REPLACEABLES).add(it.soulSand, it.soulSoil)
-            getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
-                .add(it.gravel, it.sand, it.redSand, it.soulSand, it.soulSoil)
-            getOrCreateTagBuilder(BlockTags.DIRT).add(it.dirt, it.grass, it.podzol, it.mycelium, it.coarseDirt, it.mud)
-            getOrCreateTagBuilder(BlockTags.SAND).add(it.sand, it.redSand)
-            getOrCreateTagBuilder(BlockTags.SNOW).add(it.snow)
-            getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).add(it.mud, it.soulSand)
-            getOrCreateTagBuilder(BlockTags.WITHER_SUMMON_BASE_BLOCKS).add(it.soulSand, it.soulSoil)
-            getOrCreateTagBuilder(BlockTags.SOUL_SPEED_BLOCKS).add(it.soulSand, it.soulSoil)
-            getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(it.soulSand, it.soulSoil)
-            getOrCreateTagBuilder(BlockTags.BAMBOO_PLANTABLE_ON).add(it.gravel)
-            getOrCreateTagBuilder(BlockTags.VALID_SPAWN).add(it.grass, it.podzol)
-            getOrCreateTagBuilder(BlockTags.ANIMALS_SPAWNABLE_ON).add(it.grass)
-            getOrCreateTagBuilder(BlockTags.FOXES_SPAWNABLE_ON).add(it.grass, it.podzol, it.coarseDirt, it.snow)
-            getOrCreateTagBuilder(BlockTags.MOOSHROOMS_SPAWNABLE_ON).add(it.mycelium)
-            getOrCreateTagBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(it.dirt, it.grass, it.podzol, it.coarseDirt)
-            getOrCreateTagBuilder(BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH).add(it.mud)
-        }
     }
 }

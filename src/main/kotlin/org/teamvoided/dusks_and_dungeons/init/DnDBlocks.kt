@@ -22,7 +22,6 @@ import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moon
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
-import org.teamvoided.dusks_and_dungeons.block.collections.RockyBlocks
 import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
 import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
@@ -46,7 +45,6 @@ object DnDBlocks {
     // Collections
     val SETS = mutableSetOf<AbstractBlockSet>()
     val COLOR_CONSORTIUM = mutableSetOf<ColorConsortium<*>>()
-    val OVERLAYS = mutableSetOf<RockyBlocks>()
 
 
     val EVIL_BLOCKS = mutableSetOf<Block>()
@@ -697,11 +695,6 @@ object DnDBlocks {
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
-        // Misc
-        OVERLAYS.forEach {
-            it.grass.grass()
-            it.init()
-        }
     }
 
     fun registerStrippedSet(set: AbstractBlockSet, strippedSet: AbstractBlockSet) {
