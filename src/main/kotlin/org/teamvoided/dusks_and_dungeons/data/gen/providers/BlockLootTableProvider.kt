@@ -118,6 +118,8 @@ class BlockLootTableProvider(o: FabricDataOutput, p: CompletableFuture<HolderLoo
             )
         }
 
+        add(DnDBlocks.SUSPICIOUS_RED_SAND, noDrop())
+
     }
 
 }

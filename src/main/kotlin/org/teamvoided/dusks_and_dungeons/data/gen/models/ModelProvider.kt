@@ -77,6 +77,8 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.createTrivialState(DnDBlocks.CHISELED_TINTED_SANDSTONE)
         gen.createTrivialState(DnDBlocks.CUT_TINTED_SANDSTONE)
 
+        gen.createBrushableBlock(DnDBlocks.SUSPICIOUS_RED_SAND);
+
         gen.delegateItemModel(DnDItems.RACCOON_SPAWN_EGG, ModelLocationUtils.decorateItemModelLocation("template_spawn_egg"))
 
     }

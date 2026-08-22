@@ -642,6 +642,18 @@ object DnDBlocks {
     val CUT_TINTED_SANDSTONE = register("cut_sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
         .tellWitnessesThatIWasMurdered()
 
+    val SUSPICIOUS_RED_SAND = register(
+        "suspicious_red_sand",
+        BrushableBlock(
+            RED_SAND, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED,
+            ofFullCopy(RED_SAND)
+                .instrument(NoteBlockInstrument.SNARE)
+                .strength(0.25f)
+                .sound(SoundType.SUSPICIOUS_SAND)
+                .pushReaction(PushReaction.DESTROY)
+        )
+    ).shovel()
+
     /* Future Content
         val SNOWY_STONE_BRICKS = registerSet("snowy_stone_brick", copy(STONE_BRICKS), "s").pickaxe()
         val ICE_BRICKS = register(createBlockSet("ice_brick", Set.ICE).s().noStoneCutting().parent(::IceBlock).meltable().build()).translucent().pickaxe()

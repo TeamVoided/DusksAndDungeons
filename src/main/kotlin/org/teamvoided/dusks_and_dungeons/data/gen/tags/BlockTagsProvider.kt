@@ -53,6 +53,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             )
             .addOptionalTag(id("sable", "fragile"))
 
+        getOrCreateTagBuilder(BlockTags.SAND)
+            .add(DnDBlocks.SUSPICIOUS_RED_SAND)
+
         getOrCreateTagBuilder(DnDBlockTags.EMPTY)
     }
 
