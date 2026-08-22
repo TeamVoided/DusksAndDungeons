@@ -1,11 +1,9 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
-import dev.worldgen.lithostitched.api.util.Weighted
 import dev.worldgen.lithostitched.api.util.WeightedList
 import dev.worldgen.lithostitched.api.worldgen.feature.LithostitchedFeatures
 import dev.worldgen.lithostitched.worldgen.feature.config.WeightedSelectorConfig
-import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
@@ -533,11 +531,11 @@ object ConfiguredFeatureCreator {
             LithostitchedFeatures.WEIGHTED_SELECTOR,
             WeightedSelectorConfig(
                 WeightedList.builder<Holder<PlacedFeature>>()
-                    .add(this, TreeFeatures.HUGE_BROWN_MUSHROOM)
-                    .add(this, TreeFeatures.HUGE_RED_MUSHROOM)
-                    .add(this, DnDPlacedFeature.DARK_OAK_AUTUMN, 5)
-                    .add(this, DnDPlacedFeature.CASCADE_TREE_AUTUMN, 5)
-                    .add(this, DnDPlacedFeature.SYPIA_TALL_AUTUMN, 15)
+                    .addCfg(this, TreeFeatures.HUGE_BROWN_MUSHROOM)
+                    .addCfg(this, TreeFeatures.HUGE_RED_MUSHROOM)
+                    .addPlaced(this, DnDPlacedFeature.DARK_OAK_AUTUMN, 5)
+                    .addPlaced(this, DnDPlacedFeature.CASCADE_TREE_AUTUMN, 5)
+                    .addPlaced(this, DnDPlacedFeature.SYPIA_TALL_AUTUMN, 15)
                     .build()
             )
         )
@@ -873,7 +871,7 @@ object ConfiguredFeatureCreator {
         )
     }
 
-    fun WeightedList.Builder<Holder<PlacedFeature>>.add(
+    fun WeightedList.Builder<Holder<PlacedFeature>>.addCfg(
         c: BootstrapContext<ConfiguredFeature<*, *>>,
         entry: ResourceKey<ConfiguredFeature<*, *>>,
         int: Int = 1
@@ -882,7 +880,7 @@ object ConfiguredFeatureCreator {
         return this
     }
 
-    fun WeightedList.Builder<Holder<PlacedFeature>>.add(
+    fun WeightedList.Builder<Holder<PlacedFeature>>.addPlaced(
         c: BootstrapContext<ConfiguredFeature<*, *>>,
         entry: ResourceKey<PlacedFeature>,
         int: Int = 1
