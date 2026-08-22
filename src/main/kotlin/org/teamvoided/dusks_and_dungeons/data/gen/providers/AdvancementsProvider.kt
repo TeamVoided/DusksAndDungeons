@@ -30,7 +30,8 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
         DnDBiomes.AUTUMN_WOODS,
         DnDBiomes.AUTUMN_PASTURES,
         DnDBiomes.AUTUMN_CASCADES,
-//        DnDBiomes.AUTUMN_WETLANDS,
+        DnDBiomes.GOLDEN_WOODS,
+        DnDBiomes.GOLDEN_PASTURES,
     )
     private val theWholePack = AdvancementHolder(mc("husbandry/whole_pack"), null)
     override fun generateAdvancement(provider: HolderLookup.Provider, c: Consumer<AdvancementHolder>?) {
@@ -74,14 +75,15 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
         ).display(
             DnDBlocks.CASCADE_SAPLING,
             Component.nullToEmpty("Fall!"),
-            Component.nullToEmpty("Visit the autumn biomes!"),
+            Component.nullToEmpty("Visit the golden and autumn biomes!"),
             null,
-            AdvancementType.CHALLENGE,
+            AdvancementType.GOAL,
             true,
             true,
             false
         ).rewards(AdvancementRewards.Builder.experience(50)).parent(adventuringTime)
             .save(c, id("adventure/fall").toString())
+
         Advancement.Builder.advancement()
             .addCriterion(
                 DnDWolfVariants.AUTUMN.toString(), TameAnimalTrigger.TriggerInstance.tamedAnimal(
@@ -97,9 +99,9 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
             ).display(
                 DnDBlocks.CASCADE_LOG,
                 Component.nullToEmpty("Woof"),
-                Component.nullToEmpty("Find the Autumn Wolf"),
+                Component.nullToEmpty("Find and tame the Autumn Wolf"),
                 null,
-                AdvancementType.CHALLENGE,
+                AdvancementType.GOAL,
                 true,
                 true,
                 false

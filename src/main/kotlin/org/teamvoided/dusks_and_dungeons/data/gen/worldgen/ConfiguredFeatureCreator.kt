@@ -1,8 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
+import dev.worldgen.lithostitched.api.util.WeightedList
+import dev.worldgen.lithostitched.api.worldgen.feature.LithostitchedFeatures
+import dev.worldgen.lithostitched.worldgen.feature.config.SelectConfig
+import dev.worldgen.lithostitched.worldgen.feature.config.WeightedSelectorConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
@@ -36,6 +41,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.DarkOakTrunkPlace
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
@@ -50,7 +56,10 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ROCKY_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SLATE_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
-import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.*
+import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.BoulderConfig
+import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FairyRingConfig
+import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FarmlandConfig
+import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.MushroomFeatureConfig
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.OvergrowthFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootConfig
@@ -176,8 +185,8 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM,
             DnDFeatures.HUGE_GOLDEN_MUSHROOM,
             MushroomFeatureConfig(
-                BlockTags.REPLACEABLE,
-                BlockTags.REPLACEABLE,
+                DnDBlockTags.VEGETATION_REPLACEABLE,
+                DnDBlockTags.VEGETATION_REPLACEABLE,
                 BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK),
                 BiasedToBottomInt.of(3, 6),
                 BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM_BLOCK),
@@ -188,14 +197,15 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM,
             Feature.RANDOM_PATCH,
             FeatureUtils.simplePatchConfiguration(
-                Feature.SIMPLE_BLOCK, SimpleBlockConfiguration(BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM))
+                Feature.SIMPLE_BLOCK,
+                SimpleBlockConfiguration(BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM)), listOf(), 32
             )
         )
         c.registerConfiguredFeature(
             DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM_WITH_HUGE,
             Feature.RANDOM_PATCH,
             RandomPatchConfiguration(
-                96, 7, 3,
+                64, 7, 3,
                 PlacementUtils.filtered(
                     Feature.RANDOM_SELECTOR,
                     RandomFeatureConfiguration(
@@ -525,16 +535,12 @@ object ConfiguredFeatureCreator {
             DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
                 listOf(
                     WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(
-                            configuredFeatures.getOrThrow(TreeFeatures.HUGE_BROWN_MUSHROOM),
-                            *arrayOfNulls(0)
-                        ), 0.0025f
+                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(TreeFeatures.HUGE_BROWN_MUSHROOM)),
+                        0.0025f
                     ),
                     WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(
-                            configuredFeatures.getOrThrow(TreeFeatures.HUGE_RED_MUSHROOM),
-                            *arrayOfNulls(0)
-                        ), 0.005f
+                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(TreeFeatures.HUGE_RED_MUSHROOM)),
+                        0.005f
                     ),
                     WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN), 0.425f),
                     WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.CASCADE_TREE_AUTUMN), 0.425f)
@@ -560,6 +566,20 @@ object ConfiguredFeatureCreator {
                     WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL), 0.5f)
                 ), placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL_BEES)
             )
+        )
+    }
+
+    fun BootstrapContext<ConfiguredFeature<*, *>>.weightedFeature(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        vararg places: Pair<ResourceKey<PlacedFeature>, Int>
+    ) {
+        val placedFeatures = this.lookup(Registries.PLACED_FEATURE)
+        val weightedList = WeightedList.builder<Holder<PlacedFeature>>()
+        places.forEach { weightedList.add(placedFeatures.getOrThrow(it.first), it.second) }
+        this.registerConfiguredFeature(
+            feature,
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            WeightedSelectorConfig(weightedList.build())
         )
     }
 

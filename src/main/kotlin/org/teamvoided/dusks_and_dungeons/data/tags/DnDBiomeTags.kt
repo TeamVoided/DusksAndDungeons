@@ -12,12 +12,15 @@ object DnDBiomeTags {
     val IS_AUTUMN = create("is_autumn")
     val HAS_STRUCTURE_AUTUMN_RUINS = create("has_structure/autumn_ruins")
 
+    val IS_DUSK_CAVE = create("is_cave")
+
     @JvmField
     val SPAWNS_SILVER_FOXES = create("spawns_silver_foxes")
     val SPAWNS_AUTUMN_WOLVES = create("spawns_autumn_wolves")
 
-    val HAS_GOLD_MUSHROOMS = create("features/golden_mushroom_normal")
-    val HAS_LOTS_OF_GOLD_MUSHROOMS = create("features/golden_mushroom_common")
+    val GOLD_MUSHROOMS_C = create("features/golden_mushroom_cave")
+    val GOLD_MUSHROOMS_S = create("features/golden_mushroom_surface")
+    val GOLD_MUSHROOMS_H = create("features/golden_mushroom_huge")
 
 
     val HAS_GLACIERS = create("has_glaciers")

@@ -9,6 +9,7 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags as CTags
 
@@ -22,8 +23,9 @@ object DnDBiomeModifications {
         addOres("blackstoned_ore", DnDPlacedFeature.BLACKSTONED_ORE, CTags.IS_NETHER)
 
 
-        addVegetation("golden_mushrooms_normal", DnDPlacedFeature.GOLDEN_MUSHROOM_NORMAL, CTags.IS_FOREST)
-        addVegetation("golden_mushrooms_common", DnDPlacedFeature.GOLDEN_MUSHROOM_COMMON, CTags.IS_SPOOKY)
+        addVegetation("golden_mushrooms_cave", DnDPlacedFeature.GOLDEN_MUSHROOM_CAVE, DnDBiomeTags.GOLD_MUSHROOMS_C)
+        addVegetation("golden_mushrooms_surface", DnDPlacedFeature.GOLDEN_MUSHROOM_SURFACE, DnDBiomeTags.GOLD_MUSHROOMS_S)
+        addVegetation("golden_mushrooms_common", DnDPlacedFeature.GOLDEN_MUSHROOM_HUGE_PATCH, DnDBiomeTags.GOLD_MUSHROOMS_H)
     }
 
     internal fun addOres(id: String, placedFeature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>) {
@@ -41,5 +43,4 @@ object DnDBiomeModifications {
             it.generationSettings.addFeature(generationStep, placedFeature)
         }
     }
-
 }

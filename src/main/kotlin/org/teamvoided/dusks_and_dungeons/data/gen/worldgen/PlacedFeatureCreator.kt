@@ -16,10 +16,12 @@ import net.minecraft.util.valueproviders.ClampedInt
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
+import net.minecraft.world.level.levelgen.placement.RarityFilter
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
@@ -47,22 +49,8 @@ object PlacedFeatureCreator {
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
             BiomeFilter.biome()
         )
-        c.register(
-            DnDPlacedFeature.PATCH_PUMPKIN_EXTRA,
-            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA),
-            RarityFilter.onAverageOnceEvery(50),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP,
-            BiomeFilter.biome()
-        )
-        c.register(
-            DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA,
-            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_PUMPKIN_LANTERN_EXTRA),
-            RarityFilter.onAverageOnceEvery(50),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP,
-            BiomeFilter.biome()
-        )
+        c.pumpkin(DnDPlacedFeature.PATCH_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA)
+        c.pumpkin(DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_LANTERN_EXTRA)
         c.register(
             DnDPlacedFeature.DISK_PODZOL, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_PODZOL),
             RarityFilter.onAverageOnceEvery(40),
@@ -102,15 +90,27 @@ object PlacedFeatureCreator {
 
 
         // Golden Mushrooms
-        c.register(
-            DnDPlacedFeature.GOLDEN_MUSHROOM_NORMAL,
+        c.register(//places in caves in biomes
+            DnDPlacedFeature.GOLDEN_MUSHROOM_CAVE,
             cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
-            getMushroomPlacement(16)
+            RarityFilter.onAverageOnceEvery(4),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            InSquarePlacement.spread(),
+            SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, Int.MIN_VALUE, -13),
+            BiomeFilter.biome()
         )
-        c.register(
-            DnDPlacedFeature.GOLDEN_MUSHROOM_COMMON,
+        c.register(//places on surface in biomes
+            DnDPlacedFeature.GOLDEN_MUSHROOM_SURFACE,
+            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
+            RarityFilter.onAverageOnceEvery(4),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
+        )
+        c.register(//places in caves and surfaces with huge mushrooms
+            DnDPlacedFeature.GOLDEN_MUSHROOM_HUGE_PATCH,
             cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM_WITH_HUGE),
-            getMushroomPlacement(8)
+            getMushroomPlacement(4)
         )
 
         c.cavePlacement(
@@ -136,6 +136,21 @@ object PlacedFeatureCreator {
             DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING,
             125,
             Direction.UP
+        )
+    }
+
+    fun BootstrapContext<PlacedFeature>.pumpkin(
+        place: ResourceKey<PlacedFeature>,
+        conf: ResourceKey<ConfiguredFeature<*, *>>,
+        rarity: Int = 50
+    ) {
+        this.register(
+            place,
+            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
+            RarityFilter.onAverageOnceEvery(rarity),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
         )
     }
 
