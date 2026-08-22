@@ -632,13 +632,6 @@ object DnDBlocks {
             .tellWitnessesThatIWasMurdered()
     // endregion
 
-    // region  🌿 🌿 🌿 🌿 🌿 🌿  --- Grass Is Greener Here ---  🌿 🌿 🌿 🌿 🌿
-
-    val ROCKY_BLOCKS = register(RockyBlocks("rocks", "rocky", COBBLESTONE)).rocky()
-    val SLATE_BLOCKS = register(RockyBlocks("slate", "slated", COBBLED_DEEPSLATE)).rocky()
-    val BLACKSTONE_BLOCKS = register(RockyBlocks("blackstone", "blackstoned", BLACKSTONE)).rocky()
-    // endregion
-
     val TINTED_SAND = register(
         "tinted_sand",
         ColoredFallingBlock(ColorRGBA(14406560), ofFullCopy(SAND).mapColor(MapColor.WATER))

@@ -69,10 +69,6 @@ object DnDConfiguredFeature {
     //val CRIMSON_FALLEN_STEM = create("fallen_stem/crimson")
     //val WARPED_FALLEN_STEM = create("fallen_stem/warped")
 
-    val ROCKY_OVERWORLD_ORE = create("overlay/rocky_overworld_ore")
-    val SLATED_OVERWORLD_ORE = create("overlay/slated_overworld_ore")
-    val BLACKSTONE_NETHER_ORE = create("overlay/blackstone_nether_ore")
-
     val HUGE_GOLDEN_MUSHROOM = create("golden_mushroom/huge")
     val PATCH_GOLDEN_MUSHROOM = create("golden_mushroom/patch")
     val PATCH_GOLDEN_MUSHROOM_WITH_HUGE = create("golden_mushroom/patch_with_huge")

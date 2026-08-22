@@ -23,12 +23,6 @@ object DnDTabs {
             .icon(DnDBlocks.CASCADE_SAPLING)
             .displayItems(::mainTab)
     )
-    val OVERLAY_BLOCKS = register(
-        "rocky_blocks", FabricItemGroup.builder()
-            .dndName("rocky_blocks")
-            .icon(DnDBlocks.ROCKY_BLOCKS.grass)
-            .displayItems { _, entries -> entries.addLists(DnDItemLists.overlayBlocks) }
-    )
 
     // Dev Tabs
     val DND_EVERYTHING = register(

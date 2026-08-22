@@ -88,7 +88,6 @@ object PlacedFeatureCreator {
         )
         saplingFeatures(c, cfgLookup)
         autumnBiomeFeatures(c, cfgLookup)
-        rockyOres(c, cfgLookup)
 
 
         // Golden Mushrooms
@@ -351,44 +350,6 @@ object PlacedFeatureCreator {
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()
-        )
-    }
-
-    fun rockyOres(
-        c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>,
-    ) {
-        c.register(
-            DnDPlacedFeature.ROCKY_ORE_UPPER,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.ROCKY_OVERWORLD_ORE),
-            OrePlacements.rareOrePlacement(
-                16,
-                HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128))
-            )
-        )
-        c.register(
-            DnDPlacedFeature.ROCKY_ORE_LOWER,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.ROCKY_OVERWORLD_ORE),
-            OrePlacements.rareOrePlacement(
-                8,
-                HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60))
-            )
-        )
-        c.register(
-            DnDPlacedFeature.SLATED_ORE,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SLATED_OVERWORLD_ORE),
-            OrePlacements.rareOrePlacement(
-                8,
-                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0))
-            )
-        )
-        c.register(
-            DnDPlacedFeature.BLACKSTONED_ORE,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.BLACKSTONE_NETHER_ORE),
-            OrePlacements.rareOrePlacement(
-                16,
-                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.belowTop(128))
-            )
         )
     }
 

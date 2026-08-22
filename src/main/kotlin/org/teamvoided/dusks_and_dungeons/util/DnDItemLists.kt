@@ -200,5 +200,4 @@ object DnDItemLists {
         DnDBlocks.SYPIA_LEAF_PILE,
         DnDBlocks.VERDANT_LEAF_PILE
     )
-    val overlayBlocks = DnDBlocks.OVERLAYS.flatMap { it.list }
 }

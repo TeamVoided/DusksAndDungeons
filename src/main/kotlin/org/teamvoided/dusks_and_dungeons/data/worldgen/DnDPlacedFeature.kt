@@ -44,11 +44,6 @@ object DnDPlacedFeature {
 
     val FAIRY_RING_RED = create("fairy_ring_red")
 
-    val ROCKY_ORE_UPPER = create("rocky_ore_upper")
-    val ROCKY_ORE_LOWER = create("rocky_ore_lower")
-    val SLATED_ORE = create("slated_ore")
-    val BLACKSTONED_ORE = create("blackstoned_ore")
-
     val GOLDEN_MUSHROOM_CAVE = create("golden_mushroom/cave") //overworld not surface
     val GOLDEN_MUSHROOM_SURFACE = create("golden_mushroom/surface") //other forests
     val GOLDEN_MUSHROOM_HUGE_PATCH = create("golden_mushroom/common") //dark forest and mushroom biomes

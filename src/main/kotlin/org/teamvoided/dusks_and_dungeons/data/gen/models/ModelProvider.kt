@@ -44,7 +44,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         BigModels.register(gen)
         FloraModels.register(gen)
         NetherModels.netherModels(gen)
-        OverlayModels.overlayModels(gen)
         StoneModels.stoneModels(gen)
         WoodModels.woodModels(gen)
 

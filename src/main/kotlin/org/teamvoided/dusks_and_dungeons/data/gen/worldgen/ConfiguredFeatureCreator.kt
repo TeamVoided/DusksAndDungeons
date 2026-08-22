@@ -3,9 +3,11 @@ package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 import com.google.common.collect.ImmutableList
 import dev.worldgen.lithostitched.api.util.WeightedList
 import dev.worldgen.lithostitched.api.worldgen.feature.LithostitchedFeatures
+import dev.worldgen.lithostitched.worldgen.feature.config.CompositeConfig
 import dev.worldgen.lithostitched.worldgen.feature.config.WeightedSelectorConfig
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
@@ -44,14 +46,12 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.material.Fluids
+import org.apache.logging.log4j.core.config.composite.CompositeConfiguration
 import org.teamvoided.dusks_and_dungeons.block.HangingFloraBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.BLACKSTONE_BLOCKS
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ROCKY_BLOCKS
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SLATE_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.BoulderConfig
@@ -88,7 +88,6 @@ object ConfiguredFeatureCreator {
         c.pumpkinPatches()
         c.crops()
         c.disks()
-        c.overlayOres()
 
         c.registerConfiguredFeature(
             DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
@@ -733,45 +732,6 @@ object ConfiguredFeatureCreator {
                         Blocks.PODZOL, Blocks.GRAVEL, Blocks.SAND, Blocks.MUD
                     )
                 ), UniformInt.of(2, 6), 2
-            )
-        )
-    }
-
-    fun BootstrapContext<ConfiguredFeature<*, *>>.overlayOres() {
-        this.registerConfiguredFeature(
-            DnDConfiguredFeature.ROCKY_OVERWORLD_ORE, Feature.ORE,
-            OreConfiguration(
-                listOf(
-                    target(TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), ROCKY_BLOCKS.dirt.defaultBlockState()),
-                    target(BlockMatchTest(Blocks.DIRT), ROCKY_BLOCKS.dirt.defaultBlockState()),
-                    target(BlockMatchTest(Blocks.GRASS_BLOCK), ROCKY_BLOCKS.grass.defaultBlockState()),
-                    target(BlockMatchTest(Blocks.PODZOL), ROCKY_BLOCKS.podzol.defaultBlockState()),
-                    target(BlockMatchTest(Blocks.GRAVEL), ROCKY_BLOCKS.gravel.defaultBlockState()),
-                    target(BlockMatchTest(Blocks.DIRT_PATH), ROCKY_BLOCKS.path.defaultBlockState())
-                ), 33
-            )
-        )
-        this.registerConfiguredFeature(
-            DnDConfiguredFeature.SLATED_OVERWORLD_ORE,
-            Feature.ORE,
-            OreConfiguration(
-                listOf<OreConfiguration.TargetBlockState>(
-                    target(
-                        TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), SLATE_BLOCKS.dirt.defaultBlockState()
-                    ),
-                    target(BlockMatchTest(Blocks.GRAVEL), SLATE_BLOCKS.gravel.defaultBlockState()),
-                ), 33
-            )
-        )
-        this.registerConfiguredFeature(
-            DnDConfiguredFeature.BLACKSTONE_NETHER_ORE,
-            Feature.ORE,
-            OreConfiguration(
-                listOf<OreConfiguration.TargetBlockState>(
-                    target(BlockMatchTest(Blocks.NETHERRACK), BLACKSTONE_BLOCKS.soulSand.defaultBlockState()),
-                    target(BlockMatchTest(Blocks.SOUL_SAND), BLACKSTONE_BLOCKS.soulSand.defaultBlockState()),
-                    target(BlockMatchTest(Blocks.SOUL_SOIL), BLACKSTONE_BLOCKS.soulSoil.defaultBlockState()),
-                ), 33
             )
         )
     }
