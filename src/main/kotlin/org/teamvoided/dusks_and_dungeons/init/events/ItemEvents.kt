@@ -9,7 +9,7 @@ import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import org.teamvoided.dusks_and_dungeons.entity.ThrownItem
+import org.teamvoided.dusks_and_dungeons.entity.ThrownItemStack
 import org.teamvoided.dusks_and_dungeons.item.ThrownItemDefinition
 
 fun initItemEvents() {
@@ -19,10 +19,15 @@ fun initItemEvents() {
 
 fun useItemEvent(player: Player, level: Level, hand: InteractionHand): InteractionResultHolder<ItemStack> {
     val stack = player.getItemInHand(hand)
+    if (player.cooldowns.isOnCooldown(stack.item)) {
+        return InteractionResultHolder.pass(stack)
+    }
+
     val result = doThrowableStackLogic(player, level, stack)
     if (result.result.consumesAction()) {
         return result
     }
+
     return InteractionResultHolder.pass(stack)
 }
 
@@ -37,11 +42,13 @@ fun doThrowableStackLogic(player: Player, level: Level, stack: ItemStack): Inter
         0.5f, 0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f)
     )
     if (!level.isClientSide) {
-        val thrownItem = ThrownItem(level, player)
-        thrownItem.item = stack
-        thrownItem.shootFromRotation(player, player.xRot, player.yRot, 0.0f, 1.5f, 1.0f)
-        player.cooldowns.addCooldown(stack.item, 0)
-        level.addFreshEntity(thrownItem)
+        val thrownDef = thrownId.value()
+        val thrownItemStack = ThrownItemStack(level, player)
+        thrownItemStack.item = stack
+        thrownItemStack.setDefinition(thrownId)
+        thrownItemStack.shootFromRotation(player, player.xRot, player.yRot, 0.0f, thrownDef.power, thrownDef.uncertainty)
+        player.cooldowns.addCooldown(stack.item, thrownDef.cooldown)
+        level.addFreshEntity(thrownItemStack)
     }
 
     player.awardStat(Stats.ITEM_USED.get(stack.item))

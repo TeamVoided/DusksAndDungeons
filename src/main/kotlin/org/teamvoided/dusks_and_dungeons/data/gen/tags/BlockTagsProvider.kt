@@ -53,6 +53,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             )
             .addOptionalTag(id("sable", "fragile"))
 
+        getOrCreateTagBuilder(DnDBlockTags.EMPTY)
         overlayTags()
     }
 

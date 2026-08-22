@@ -69,6 +69,8 @@ object DnDItemTags {
 
     val RACCOON_FOOD = tag("raccoon_food")
 
+    val EMPTY = tag("empty")
+
     init {
         // here to init all item tags
         CItemTags.SCAFFOLDING

@@ -10,7 +10,7 @@ import net.minecraft.world.entity.animal.Fox
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.RaccoonEntity
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
-import org.teamvoided.dusks_and_dungeons.entity.ThrownItem
+import org.teamvoided.dusks_and_dungeons.entity.ThrownItemStack
 import org.teamvoided.dusks_and_dungeons.util.doEvil
 import org.teamvoided.dusks_and_dungeons.util.register
 
@@ -30,7 +30,7 @@ object DnDEntities {
             .clientTrackingRange(8)
     )
     val THROWN_ITEM = register(
-        "thrown_item", EntityType.Builder.of(EntityFactory(::ThrownItem), MobCategory.MISC)
+        "thrown_item", EntityType.Builder.of(EntityFactory(::ThrownItemStack), MobCategory.MISC)
             .sized(0.25f, 0.25f)
             .clientTrackingRange(4)
             .updateInterval(10)

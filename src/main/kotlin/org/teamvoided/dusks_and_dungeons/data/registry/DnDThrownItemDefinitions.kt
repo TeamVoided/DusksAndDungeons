@@ -6,6 +6,7 @@ import org.teamvoided.dusks_and_dungeons.util.key
 
 object DnDThrownItemDefinitions {
 
+    val EMPTY = key("empty")
     val BRICKS = key("bricks")
 
     fun key(id: String) = DnDRegistryKeys.THROWN_ITEM_DEFINITION.key(id(id))

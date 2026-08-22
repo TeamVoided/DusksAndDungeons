@@ -11,40 +11,47 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.item.ThrownItemDefinition
 import java.util.*
 
 object ThrownItems {
 
-    typealias ThrownID = ThrownItemDefinition
+    fun init(c: BootstrapContext<ThrownItemDefinition>) = c.boostrap()
 
-    fun init(c: BootstrapContext<ThrownID>) = c.boostrap()
+    fun BootstrapContext<ThrownItemDefinition>.boostrap() {
+        register(
+            DnDThrownItemDefinitions.EMPTY,
+            DnDItemTags.EMPTY, 0f, DamageTypes.GENERIC, 0f, 0f, 0, DnDBlockTags.EMPTY
+        )
 
-    fun BootstrapContext<ThrownID>.boostrap() {
         register(
             DnDThrownItemDefinitions.BRICKS,
             ConventionalItemTags.BRICKS,
-            damage = 2,
+            damage = 2f,
             DamageTypes.THROWN,
+            power = 1.5f,
+            uncertainty = 1f,
             cooldown = 10,
             DnDBlockTags.THROWN_BRICK_BREAK
         )
     }
 
 
-    fun BootstrapContext<ThrownID>.register(
-        key: ResourceKey<ThrownID>,
+    fun BootstrapContext<ThrownItemDefinition>.register(
+        key: ResourceKey<ThrownItemDefinition>,
         items: TagKey<Item>,
-        damage: Int,
-        damageType: ResourceKey<DamageType>,
-        cooldown: Int,
+        damage: Float, damageType: ResourceKey<DamageType>,
+        power: Float, uncertainty: Float, cooldown: Int,
         blockBreakTag: TagKey<Block>,
     ) {
         register(
-            key, ThrownID(
+            key, ThrownItemDefinition(
                 items,
                 damage,
                 EitherHolder(Optional.empty(), damageType),
+                power,
+                uncertainty,
                 cooldown,
                 blockBreakTag
             )

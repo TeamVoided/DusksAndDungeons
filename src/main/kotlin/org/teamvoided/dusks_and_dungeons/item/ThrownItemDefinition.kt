@@ -19,13 +19,15 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
-import org.teamvoided.dusks_and_dungeons.util.tagKeyStreamCodec
+import org.teamvoided.dusks_and_dungeons.util.DnDCodecs
 import kotlin.jvm.optionals.getOrNull
 
 data class ThrownItemDefinition(
     val items: TagKey<Item>,
-    val damage: Int,
+    val damage: Float,
     val damageType: EitherHolder<DamageType>,
+    val power: Float,
+    val uncertainty: Float,
     val cooldown: Int,
     val blockBreakTag: TagKey<Block>,
 ) {
@@ -35,28 +37,42 @@ data class ThrownItemDefinition(
         val DIRECT_CODEC: Codec<ThrownItemDefinition> = RecordCodecBuilder.create { inst ->
             inst
                 .group(
-                    TagKey.hashedCodec(Registries.ITEM).fieldOf("items")
-                        .forGetter(ThrownItemDefinition::items),
-                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("damage")
-                        .forGetter(ThrownItemDefinition::damage),
-                    EitherHolder.codec(Registries.DAMAGE_TYPE, DamageType.CODEC).fieldOf("damage_type")
-                        .forGetter(ThrownItemDefinition::damageType),
-                    ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("cooldown", 0)
-                        .forGetter(ThrownItemDefinition::cooldown),
-                    TagKey.hashedCodec(Registries.BLOCK).fieldOf("block_break_tag")
-                        .forGetter(ThrownItemDefinition::blockBreakTag)
+                    TagKey.hashedCodec(Registries.ITEM).fieldOf("items").forGetter { it.items },
+                    ExtraCodecs.POSITIVE_FLOAT.fieldOf("damage").forGetter { it.damage },
+                    EitherHolder.codec(Registries.DAMAGE_TYPE, DamageType.CODEC)
+                        .fieldOf("damage_type").forGetter { it.damageType },
+                    ExtraCodecs.POSITIVE_FLOAT.fieldOf("power").forGetter { it.power },
+                    ExtraCodecs.POSITIVE_FLOAT.fieldOf("uncertainty").forGetter { it.uncertainty },
+                    ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("cooldown", 0).forGetter { it.cooldown },
+                    TagKey.hashedCodec(Registries.BLOCK).fieldOf("block_break_tag").forGetter { it.blockBreakTag }
                 )
                 .apply(inst, ::ThrownItemDefinition)
         }
-        val DIRECT_STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, ThrownItemDefinition> = StreamCodec.composite(
-            tagKeyStreamCodec(Registries.ITEM), ThrownItemDefinition::items,
-            ByteBufCodecs.INT, ThrownItemDefinition::damage,
-            EitherHolder.streamCodec(Registries.DAMAGE_TYPE, DamageType.STREAM_CODEC),
-            ThrownItemDefinition::damageType,
-            ByteBufCodecs.INT, ThrownItemDefinition::cooldown,
-            tagKeyStreamCodec(Registries.BLOCK), ThrownItemDefinition::blockBreakTag,
-            ::ThrownItemDefinition
-        )
+
+        val DIRECT_STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, ThrownItemDefinition> =
+            StreamCodec.of(::write, ::read)
+
+        fun write(buf: RegistryFriendlyByteBuf, def: ThrownItemDefinition) {
+            DnDCodecs.ITEM_TAG_STREAM_CODEC.encode(buf, def.items)
+            buf.writeFloat(def.damage)
+            DnDCodecs.DAMAGE_TYPE_CODEC.encode(buf, def.damageType)
+            buf.writeFloat(def.power)
+            buf.writeFloat(def.uncertainty)
+            buf.writeInt(def.cooldown)
+            DnDCodecs.BLOCK_TAG_STREAM_CODEC.encode(buf, def.blockBreakTag)
+        }
+
+        fun read(buf: RegistryFriendlyByteBuf): ThrownItemDefinition {
+            return ThrownItemDefinition(
+                DnDCodecs.ITEM_TAG_STREAM_CODEC.decode(buf),
+                buf.readFloat(),
+                DnDCodecs.DAMAGE_TYPE_CODEC.decode(buf),
+                buf.readFloat(),
+                buf.readFloat(),
+                buf.readInt(),
+                DnDCodecs.BLOCK_TAG_STREAM_CODEC.decode(buf),
+            )
+        }
 
         val CODEC: RegistryFixedCodec<ThrownItemDefinition> =
             RegistryFixedCodec.create(DnDRegistryKeys.THROWN_ITEM_DEFINITION)
@@ -64,11 +80,11 @@ data class ThrownItemDefinition(
             ByteBufCodecs.holder(DnDRegistryKeys.THROWN_ITEM_DEFINITION, DIRECT_STREAM_CODEC)
 
 
-        fun getItemDefinition(stack: ItemStack): ThrownItemDefinition? {
+        fun getItemDefinition(stack: ItemStack): Holder<ThrownItemDefinition>? {
             return CACHE_MAP[stack.item]
         }
 
-        private var CACHE_MAP = mapOf<Item, ThrownItemDefinition>()
+        private var CACHE_MAP = mapOf<Item, Holder<ThrownItemDefinition>>()
 
         internal fun refreshCache(lookup: HolderLookup.Provider) {
             val newMap = mutableMapOf<Item, Holder<ThrownItemDefinition>>()
@@ -77,12 +93,16 @@ data class ThrownItemDefinition(
                 for (holder in BuiltInRegistries.ITEM.getTagOrEmpty(thrownId.items)) {
                     val oldValue = newMap.put(holder.value(), thrownHolder)
                     if (oldValue != null) {
-                        log.warn("Replaced items [${holder.value()}] from: ${oldValue.unwrapKey().getOrNull()}, to ${thrownHolder.unwrapKey().getOrNull()}")
+                        log.warn(
+                            "Replaced items [${holder.value()}] from: ${
+                                oldValue.unwrapKey().getOrNull()
+                            }, to ${thrownHolder.unwrapKey().getOrNull()}"
+                        )
                     }
                 }
             }
 
-            CACHE_MAP = newMap.mapValues { it.value.value() }
+            CACHE_MAP = newMap
         }
 
     }

@@ -76,6 +76,8 @@ object DnDBlockTags {
 
     val THROWN_BRICK_BREAK = key("thrown_brick_break")
 
+    val EMPTY = key("empty")
+
     fun key(id: String) = Registries.BLOCK.tag(id(id))
 
 }
