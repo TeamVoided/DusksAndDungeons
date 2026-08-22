@@ -58,6 +58,12 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DnDBiomes.OVERGROWN_GROTTO)
             .add(Biomes.DARK_FOREST)
 
+        getOrCreateTagBuilder(DnDBiomeTags.MOSSKIN_PUMPKINS_CAVE)
+            .add(DnDBiomes.OVERGROWN_GROTTO)
+            .add(Biomes.LUSH_CAVES)
+        getOrCreateTagBuilder(DnDBiomeTags.GLOOM_PUMPKINS_EXTRA)
+            .add(Biomes.DARK_FOREST)
+
         getOrCreateTagBuilder(DnDBiomeTags.HAS_GLACIERS)
         //.forceAddTag(ConventionalBiomeTags.IS_SNOWY)
     }

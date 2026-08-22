@@ -1,9 +1,9 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
 
 import com.google.common.collect.ImmutableList
+import dev.worldgen.lithostitched.api.util.Weighted
 import dev.worldgen.lithostitched.api.util.WeightedList
 import dev.worldgen.lithostitched.api.worldgen.feature.LithostitchedFeatures
-import dev.worldgen.lithostitched.worldgen.feature.config.SelectConfig
 import dev.worldgen.lithostitched.worldgen.feature.config.WeightedSelectorConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -528,58 +528,30 @@ object ConfiguredFeatureCreator {
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.vegetation() {
-        val configuredFeatures = this.lookup(Registries.CONFIGURED_FEATURE)
-        val placedFeatures = this.lookup(Registries.PLACED_FEATURE)
-
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
-                listOf(
-                    WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(TreeFeatures.HUGE_BROWN_MUSHROOM)),
-                        0.0025f
-                    ),
-                    WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(TreeFeatures.HUGE_RED_MUSHROOM)),
-                        0.005f
-                    ),
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.DARK_OAK_AUTUMN), 0.425f),
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.CASCADE_TREE_AUTUMN), 0.425f)
-                ), placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL_AUTUMN)
-            )
-        )
-        this.registerConfiguredFeature(
-            DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
-                listOf(
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.ACACIA_BUSH_AUTUMN), 0.3f),
-                    WeightedPlacedFeature(
-                        placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL_AUTUMN),
-                        0.05f
-                    ),
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.CASCADE_TREE_AUTUMN), 0.01f)
-                ), placedFeatures.getOrThrow(DnDPlacedFeature.ACACIA_AUTUMN)
-            )
-        )
-
-        this.registerConfiguredFeature(
-            DnDConfiguredFeature.GOLDEN_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
-                listOf(
-                    WeightedPlacedFeature(placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL), 0.5f)
-                ), placedFeatures.getOrThrow(DnDPlacedFeature.SYPIA_TALL_BEES)
-            )
-        )
-    }
-
-    fun BootstrapContext<ConfiguredFeature<*, *>>.weightedFeature(
-        feature: ResourceKey<ConfiguredFeature<*, *>>,
-        vararg places: Pair<ResourceKey<PlacedFeature>, Int>
-    ) {
-        val placedFeatures = this.lookup(Registries.PLACED_FEATURE)
-        val weightedList = WeightedList.builder<Holder<PlacedFeature>>()
-        places.forEach { weightedList.add(placedFeatures.getOrThrow(it.first), it.second) }
-        this.registerConfiguredFeature(
-            feature,
+            DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION,
             LithostitchedFeatures.WEIGHTED_SELECTOR,
-            WeightedSelectorConfig(weightedList.build())
+            WeightedSelectorConfig(
+                WeightedList.builder<Holder<PlacedFeature>>()
+                    .add(this, TreeFeatures.HUGE_BROWN_MUSHROOM)
+                    .add(this, TreeFeatures.HUGE_RED_MUSHROOM)
+                    .add(this, DnDPlacedFeature.DARK_OAK_AUTUMN, 5)
+                    .add(this, DnDPlacedFeature.CASCADE_TREE_AUTUMN, 5)
+                    .add(this, DnDPlacedFeature.SYPIA_TALL_AUTUMN, 15)
+                    .build()
+            )
+        )
+        this.weightedFeature(
+            DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION,
+            (DnDPlacedFeature.ACACIA_AUTUMN to 50),
+            (DnDPlacedFeature.ACACIA_BUSH_AUTUMN to 30),
+            (DnDPlacedFeature.SYPIA_TALL_AUTUMN to 7),
+            (DnDPlacedFeature.CASCADE_TREE_AUTUMN to 1)
+        )
+        this.weightedFeature(
+            DnDConfiguredFeature.GOLDEN_VEGETATION,
+            (DnDPlacedFeature.SYPIA_TALL to 2),
+            (DnDPlacedFeature.SYPIA_TALL_BEES to 1)
         )
     }
 
@@ -884,6 +856,39 @@ object ConfiguredFeatureCreator {
             BlobFoliagePlacer(ConstantInt.of(foliageRadius), ConstantInt.of(0), 3),
             TwoLayersFeatureSize(1, 0, 1)
         )
+    }
+
+
+    fun BootstrapContext<ConfiguredFeature<*, *>>.weightedFeature(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        vararg places: Pair<ResourceKey<PlacedFeature>, Int>
+    ) {
+        val placedFeatures = this.lookup(Registries.PLACED_FEATURE)
+        val weightedList = WeightedList.builder<Holder<PlacedFeature>>()
+        places.forEach { weightedList.add(placedFeatures.getOrThrow(it.first), it.second) }
+        this.registerConfiguredFeature(
+            feature,
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            WeightedSelectorConfig(weightedList.build())
+        )
+    }
+
+    fun WeightedList.Builder<Holder<PlacedFeature>>.add(
+        c: BootstrapContext<ConfiguredFeature<*, *>>,
+        entry: ResourceKey<ConfiguredFeature<*, *>>,
+        int: Int = 1
+    ): WeightedList.Builder<Holder<PlacedFeature>> {
+        this.add(PlacementUtils.inlinePlaced(c.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(entry)), int)
+        return this
+    }
+
+    fun WeightedList.Builder<Holder<PlacedFeature>>.add(
+        c: BootstrapContext<ConfiguredFeature<*, *>>,
+        entry: ResourceKey<PlacedFeature>,
+        int: Int = 1
+    ): WeightedList.Builder<Holder<PlacedFeature>> {
+        this.add(c.lookup(Registries.PLACED_FEATURE).getOrThrow(entry), int)
+        return this
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.fairyRing(
