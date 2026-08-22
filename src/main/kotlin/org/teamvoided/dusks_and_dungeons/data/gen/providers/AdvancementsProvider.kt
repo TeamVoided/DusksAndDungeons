@@ -114,4 +114,5 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
     fun Advancement.Builder.save(gen: Consumer<AdvancementHolder>, key: ResourceKey<Advancement>) {
         this.save(gen, key.location().toString())
     }
+
 }
