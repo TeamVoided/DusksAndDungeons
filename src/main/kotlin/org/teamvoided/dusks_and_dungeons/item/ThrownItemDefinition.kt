@@ -71,13 +71,10 @@ data class ThrownItemDefinition(
         private var CACHE_MAP = mapOf<Item, ThrownItemDefinition>()
 
         internal fun refreshCache(lookup: HolderLookup.Provider) {
-            println("Started Reload Cache")
             val newMap = mutableMapOf<Item, Holder<ThrownItemDefinition>>()
             for (thrownHolder in lookup.lookupOrThrow(DnDRegistryKeys.THROWN_ITEM_DEFINITION).listElements()) {
-                println(thrownHolder.unwrapKey().getOrNull())
                 val thrownId = thrownHolder.value()
                 for (holder in BuiltInRegistries.ITEM.getTagOrEmpty(thrownId.items)) {
-                    println(holder.unwrapKey())
                     val oldValue = newMap.put(holder.value(), thrownHolder)
                     if (oldValue != null) {
                         log.warn("Replaced items [${holder.value()}] from: ${oldValue.unwrapKey().getOrNull()}, to ${thrownHolder.unwrapKey().getOrNull()}")
@@ -86,8 +83,6 @@ data class ThrownItemDefinition(
             }
 
             CACHE_MAP = newMap.mapValues { it.value.value() }
-
-            println(CACHE_MAP.keys)
         }
 
     }
