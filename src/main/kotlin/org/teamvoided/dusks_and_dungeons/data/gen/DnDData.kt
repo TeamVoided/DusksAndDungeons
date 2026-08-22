@@ -20,7 +20,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTrans
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.providers.AdvancementsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.providers.BlockLootTableProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.providers.EnLangProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructurePoolCreator
