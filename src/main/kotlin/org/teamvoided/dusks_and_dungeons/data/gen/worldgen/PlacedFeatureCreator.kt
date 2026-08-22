@@ -102,15 +102,16 @@ object PlacedFeatureCreator {
         c.register(//places on surface in biomes
             DnDPlacedFeature.GOLDEN_MUSHROOM_SURFACE,
             cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
-            RarityFilter.onAverageOnceEvery(4),
+            RarityFilter.onAverageOnceEvery(16),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()
         )
-        c.register(//places in caves and surfaces with huge mushrooms
+        c.cavePlacement(//places in caves and surfaces with huge mushrooms
             DnDPlacedFeature.GOLDEN_MUSHROOM_HUGE_PATCH,
-            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM_WITH_HUGE),
-            getMushroomPlacement(4)
+            DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM_WITH_HUGE,
+            1,
+            Direction.DOWN
         )
 
         c.cavePlacement(
@@ -306,16 +307,6 @@ object PlacedFeatureCreator {
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
             BiomeFilter.biome()
         )
-//        c.register(
-//            AUTUMN_WETLANDS_VEGETATION,
-//            holderProvider.getHolderOrThrow(DnDConfiguredFeature.AUTUMN_WETLANDS_VEGETATION),
-//            PlacedFeatureUtil.createCountExtraModifier(3, 0.25f, 1),
-//            InSquarePlacementModifier.getInstance(),
-//            SurfaceWaterDepthFilterPlacementModifier.create(3),
-//            PlacedFeatureUtil.OCEAN_FLOOR_HEIGHTMAP,
-//            BiomePlacementModifier.getInstance()
-//        )
-
         c.register(
             DnDPlacedFeature.FLOWER_AUTUMN,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FLOWER_AUTUMN),
@@ -427,22 +418,6 @@ object PlacedFeatureCreator {
         return ImmutableList.builder<PlacementModifier>().add(modifier).add(InSquarePlacement.spread())
             .add(SurfaceWaterDepthFilter.forMaxDepth(0)).add(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR)
             .add(BiomeFilter.biome())
-    }
-
-    fun getMushroomPlacement(i: Int, placementModifier: PlacementModifier? = null): MutableList<PlacementModifier> {
-        val builder = ImmutableList.builder<PlacementModifier>()
-        if (placementModifier != null) {
-            builder.add(placementModifier)
-        }
-
-        if (i != 0) {
-            builder.add(RarityFilter.onAverageOnceEvery(i))
-        }
-
-        builder.add(InSquarePlacement.spread())
-        builder.add(PlacementUtils.FULL_RANGE) //these do belong in caves after all
-        builder.add(BiomeFilter.biome())
-        return builder.build()
     }
 
 

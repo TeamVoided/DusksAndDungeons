@@ -55,6 +55,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .forceAddTag(ConventionalBiomeTags.IS_TAIGA)
         getOrCreateTagBuilder(DnDBiomeTags.GOLD_MUSHROOMS_HUGE)
             .forceAddTag(ConventionalBiomeTags.IS_MUSHROOM)
+            .add(DnDBiomes.OVERGROWN_GROTTO)
             .add(Biomes.DARK_FOREST)
 
         getOrCreateTagBuilder(DnDBiomeTags.HAS_GLACIERS)
