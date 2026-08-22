@@ -1,21 +1,16 @@
 package org.teamvoided.dusks_and_dungeons.util.datagen
 
-import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.recipes.*
 import net.minecraft.data.recipes.RecipeProvider.*
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.data.recipes.RecipeCategory
-import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.data.recipes.ShapelessRecipeBuilder
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -97,7 +92,7 @@ fun RecipeOutput.createDyed(
         .save(this, if (sufixed) id("${dyedBlock.id.path}_dyed") else dyedBlock.id)
 }
 
-fun RecipeOutput.createGragestones(
+fun RecipeOutput.createGravestones(
     gravestone: ItemLike, smallGravestone: ItemLike, block: ItemLike
 ) {
     this.createGravestone(gravestone, block)

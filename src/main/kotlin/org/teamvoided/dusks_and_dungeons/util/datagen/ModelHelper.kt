@@ -15,7 +15,10 @@ import net.minecraft.data.models.model.TextureSlot.*
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.MultifaceBlock
+import net.minecraft.world.level.block.SnowyDirtBlock
 import net.minecraft.world.level.block.state.properties.*
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
@@ -755,100 +758,6 @@ fun BlockModelGenerators.pumpkinStem(block: Block) {
     println("you best do the " + block.model().path + " blockstate file because waaaaaaa")
 }
 
-fun BlockModelGenerators.registerGravestones(gravestone: Block, smallGravestone: Block) {
-    this.registerGravestone(gravestone, gravestone.model())
-    this.registerSmallGravestone(smallGravestone, gravestone.model())
-}
-
-fun BlockModelGenerators.registerGravestone(gravestone: Block, texture: ResourceLocation = gravestone.model()) {
-    val texture = TextureMapping()
-        .put(FRONT, texture.suffix("_front"))
-        .put(SIDE, texture.suffix("_side"))
-    block(
-        "parent/gravestone",
-        FRONT,
-        SIDE
-    ).create(gravestone, texture, this.modelOutput)
-    val centerModel = block(
-        "parent/gravestone_centered",
-        FRONT,
-        SIDE
-    ).createWithSuffix(gravestone, "_centered", texture, this.modelOutput)
-
-    this.delegateItemModel(gravestone, centerModel)
-    this.blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(gravestone).with(
-            gravestoneBlockstates(gravestone)
-        )
-    )
-}
-
-fun BlockModelGenerators.registerSmallGravestone(
-    gravestone: Block,
-    textureId: ResourceLocation = gravestone.model(),
-    hauntedGravestone: Block? = null,
-) {
-    val texture = TextureMapping()
-        .put(FRONT, textureId.suffix("_front"))
-    block("parent/small_gravestone", FRONT)
-        .create(gravestone, texture, this.modelOutput)
-    val centerModel = block("parent/small_gravestone_centered", FRONT)
-        .createWithSuffix(gravestone, "_centered", texture, this.modelOutput)
-    this.delegateItemModel(gravestone, centerModel)
-    this.blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(gravestone).with(
-            gravestoneBlockstates(gravestone)
-        )
-    )
-    if (hauntedGravestone != null)
-        this.registerHauntedGravestone(hauntedGravestone, gravestone, centerModel)
-}
-
-fun BlockModelGenerators.registerHauntedGravestone(
-    hauntedGravestone: Block,
-    gravestone: Block,
-    centerModel: ResourceLocation,
-) {
-    this.delegateItemModel(hauntedGravestone, centerModel)
-    this.blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(hauntedGravestone).with(
-            gravestoneBlockstates(gravestone)
-        )
-    )
-}
-
-fun BlockModelGenerators.registerHeadstone(headstone: Block) {
-    val texture = TextureMapping().put(ALL, TextureMapping.getBlockTexture(headstone))
-    block("parent/headstone", ALL)
-        .create(headstone, texture, this.modelOutput)
-    block("parent/headstone_centered", ALL)
-        .createWithSuffix(headstone, "_centered", texture, this.modelOutput)
-    this.createSimpleFlatItemModel(headstone)
-    this.blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(headstone).with(
-            gravestoneBlockstates(headstone)
-        )
-    )
-}
-
-fun gravestoneBlockstates(gravestone: Block): PropertyDispatch.C2<Direction, Boolean> {
-    val variants = PropertyDispatch.properties(BlockStateProperties.HORIZONTAL_FACING, GravestoneBlock.CENTERED)
-    GravestoneBlock.CENTERED.possibleValues.forEach {
-        BlockStateProperties.HORIZONTAL_FACING.possibleValues.forEach { direction ->
-            val string = if (it) "_centered" else ""
-            val variant = Variant.variant()
-                .with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(gravestone, string))
-            val variant2 = when (direction) {
-                Direction.NORTH -> variant.with(VariantProperties.Y_ROT, Rotation.R180)
-                Direction.EAST -> variant.with(VariantProperties.Y_ROT, Rotation.R270)
-                Direction.WEST -> variant.with(VariantProperties.Y_ROT, Rotation.R90)
-                else -> variant
-            }
-            variants.select(direction, it, variant2)
-        }
-    }
-    return variants
-}
 
 fun BlockModelGenerators.registerCorn(block: Block, item: Item) {
 //    this.registerItemModel(block, "_top") //this one is for if the names are the same, they are not

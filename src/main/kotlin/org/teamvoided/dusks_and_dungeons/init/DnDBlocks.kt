@@ -508,7 +508,12 @@ object DnDBlocks {
     val OVERGROWN_COBBLESTONE = registerSet("overgrown_cobblestone", ofFullCopy(MOSSY_COBBLESTONE)).overgrown()
     val OVERGROWN_STONE_BRICKS = registerSet("overgrown_stone_brick", ofFullCopy(MOSSY_STONE_BRICKS), "s").overgrown()
 
+    // Bricks
+    val CHISELED_BRICKS = register("chiseled_bricks", Block(ofFullCopy(BRICKS))).pickaxe()
+    val CRACKED_BRICKS = registerSet("cracked_bricks", ofFullCopy(BRICKS)).pickaxe()
+
     // Graves
+    // TODO rename all of these to be their brick variants
     val STONE_GRAVESTONE = registerGravestone("stone_gravestone", CHISELED_STONE_BRICKS)
     val SMALL_STONE_GRAVESTONE = registerSmallGravestone("small_stone_gravestone", STONE_GRAVESTONE)
     val DEEPSLATE_GRAVESTONE = registerGravestone("deepslate_gravestone", CHISELED_DEEPSLATE)
@@ -517,11 +522,9 @@ object DnDBlocks {
     val SMALL_TUFF_GRAVESTONE = registerSmallGravestone("small_tuff_gravestone", TUFF_GRAVESTONE)
     val BLACKSTONE_GRAVESTONE = registerGravestone("blackstone_gravestone", CHISELED_POLISHED_BLACKSTONE)
     val SMALL_BLACKSTONE_GRAVESTONE = registerSmallGravestone("small_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
-    val HEADSTONE =
-        register(
-            "headstone",
-            GravestoneBlock(headstoneShape, centerHeadstoneShape, ofFullCopy(BIG_CHAIN)).cutout().pickaxe()
-        )
+    val HEADSTONE = register(
+        "headstone", GravestoneBlock(headstoneShape, centerHeadstoneShape, ofFullCopy(BIG_CHAIN))
+    ).cutout().pickaxe()
     // endregion
 
     // region  ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE age --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
@@ -656,6 +659,7 @@ object DnDBlocks {
     */
 
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
+    @Suppress("unused")
     val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))
 
     fun init() {

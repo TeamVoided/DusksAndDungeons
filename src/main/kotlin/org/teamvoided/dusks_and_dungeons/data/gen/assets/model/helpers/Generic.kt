@@ -56,8 +56,9 @@ fun BlockModelGenerators.createOrientable(block: Block) {
  * Create an item model that references a block model with the provided block's id.
  */
 fun BlockModelGenerators.createItemModel(block: Block) {
-    delegateItemModel(block, model(block))
+    delegateItemModel(block, modelId(block))
 }
 
-fun model(block: Block): ResourceLocation = ModelLocationUtils.getModelLocation(block)
+fun modelId(block: Block): ResourceLocation = ModelLocationUtils.getModelLocation(block)
+fun modelId(block: Block, suffix: String): ResourceLocation = ModelLocationUtils.getModelLocation(block, suffix)
 

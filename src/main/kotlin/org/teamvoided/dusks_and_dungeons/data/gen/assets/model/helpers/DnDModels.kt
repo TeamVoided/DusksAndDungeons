@@ -20,6 +20,15 @@ data object DnDModels {
     val BIG_CHAIN = block("parent/big_chain", PARTICLE, ALL)
     val BIG_LANTERN = block("parent/big_lantern", PARTICLE, SIDE, END)
 
+    // region Graves
+    val GRAVESTONE = block("parent/gravestone", FRONT, SIDE)
+    val GRAVESTONE_CENTERED = block("parent/gravestone_centered", FRONT, SIDE)
+    val SMALL_GRAVESTONE = block("parent/small_gravestone", FRONT)
+    val SMALL_GRAVESTONE_CENTERED = block("parent/small_gravestone_centered", FRONT)
+    val HEADSTONE = block("parent/headstone", ALL)
+    val HEADSTONE_CENTERED = block("parent/headstone_centered", ALL)
+    // endregion
+
     // region Tinted
     val BUTTON_TINTED = tintedBlock("button", TEXTURE)
     val BUTTON_PRESSED_TINTED = tintedBlock("button_pressed", "_pressed", TEXTURE)

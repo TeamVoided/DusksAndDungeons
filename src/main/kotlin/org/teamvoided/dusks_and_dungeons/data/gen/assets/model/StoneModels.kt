@@ -1,21 +1,18 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.models
+package org.teamvoided.dusks_and_dungeons.data.gen.assets.model
 
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.registerGravestones
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.registerHeadstone
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object StoneModels {
+
     fun stoneModels(gen: BlockModelGenerators) {
-        gen.registerGravestones(DnDBlocks.STONE_GRAVESTONE, DnDBlocks.SMALL_STONE_GRAVESTONE)
-        gen.registerGravestones(DnDBlocks.DEEPSLATE_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE)
-        gen.registerGravestones(DnDBlocks.TUFF_GRAVESTONE, DnDBlocks.SMALL_TUFF_GRAVESTONE)
-        gen.registerGravestones(DnDBlocks.BLACKSTONE_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE)
-
-        gen.registerHeadstone(DnDBlocks.HEADSTONE)
-
+        // Pillars
         gen.createRotatedPillarWithHorizontalVariant(
             DnDBlocks.STONE_PILLAR,
             TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
@@ -24,12 +21,15 @@ object StoneModels {
             DnDBlocks.DEEPSLATE_PILLAR,
             TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
         )
+
+        // Overlays?
         val mossyPolish = DusksAndDungeons.id("block/overgrown/polished_overlay")
         val mossyCobble = DusksAndDungeons.id("block/overgrown/cobblestone_overlay")
         val mossyBrick = DusksAndDungeons.id("block/overgrown/bricks_overlay")
         gen.registerTintedOverlay(mossyPolish)
         gen.registerTintedOverlay(mossyCobble)
         gen.registerTintedOverlay(mossyBrick)
+
         //Polished Stone
         gen.cubeAllWithTintedOverlay(
             DnDBlocks.OVERGROWN_POLISHED_STONE.parent, DnDBlocks.MOSSY_POLISHED_STONE.parent, mossyPolish
@@ -43,18 +43,27 @@ object StoneModels {
         gen.wallWithTintedOverlay(
             DnDBlocks.OVERGROWN_POLISHED_STONE.wall, DnDBlocks.MOSSY_POLISHED_STONE.parent, mossyPolish
         )
-        //Cobblestone
+
+        // Overgrown
         gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE.parent, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.stairsWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE.stairs, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.slabWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE.slab, Blocks.MOSSY_COBBLESTONE, mossyCobble)
         gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_COBBLESTONE.wall, Blocks.MOSSY_COBBLESTONE, mossyCobble)
-        //Stone Bricks
-        gen.cubeAllWithTintedOverlay(
-            DnDBlocks.OVERGROWN_STONE_BRICKS.parent, Blocks.MOSSY_STONE_BRICKS, mossyBrick
-        )
+
+        gen.cubeAllWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICKS.parent, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.stairsWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICKS.stairs, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.slabWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICKS.slab, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
         gen.wallWithTintedOverlay(DnDBlocks.OVERGROWN_STONE_BRICKS.wall, Blocks.MOSSY_STONE_BRICKS, mossyBrick)
 
+        // Bricks
+        gen.createTrivialCube(DnDBlocks.CHISELED_BRICKS)
+
+        // Gravestones
+        gen.registerGravestones(DnDBlocks.STONE_GRAVESTONE, DnDBlocks.SMALL_STONE_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.DEEPSLATE_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.TUFF_GRAVESTONE, DnDBlocks.SMALL_TUFF_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.BLACKSTONE_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE)
+        gen.registerHeadstone(DnDBlocks.HEADSTONE)
     }
+
 }

@@ -11,6 +11,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
+import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.StoneRecipes
 import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.WoodRecipes
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.CASCADE_WOOD
