@@ -4,23 +4,24 @@ import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.DetectedVersion
+import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.metadata.PackMetadataGenerator
-import net.minecraft.core.registries.Registries
-import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.network.chat.Component
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection
-import net.minecraft.network.chat.Component
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.BiomeInjectors
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.worldgen_modifiers.WorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTablesProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ThrownItems
 import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.providers.AdvancementsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.providers.BlockLootTableProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructurePoolCreator
@@ -32,11 +33,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.tags.EntityTypeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.variants.RaccoonVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.variants.WolfVariants
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.BiomeCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.DensityFunctionCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.NoiseCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.PlacedFeatureCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.*
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import java.util.*
 
@@ -83,6 +80,7 @@ class DnDData : DataGeneratorEntrypoint {
 
         gen.add(Registries.WOLF_VARIANT, WolfVariants::bootstrap)
         gen.add(DnDRegistryKeys.RACCOON_VARIANT, RaccoonVariants::bootstrap)
+        gen.add(DnDRegistryKeys.THROWN_ITEM_DEFINITION, ThrownItems::init)
 
         gen.add(LithostitchedRegistries.WORLDGEN_MODIFIER, WorldgenModifiers::init)
         gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::init)

@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Blocks
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -25,6 +26,7 @@ import java.util.concurrent.CompletableFuture
 @Suppress("LongMethod")
 class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
+
     val excludeWood: List<AbstractBlockSet> = listOf(
         DnDBlocks.CRIMSON_HYPHAE, DnDBlocks.WARPED_HYPHAE,
         DnDBlocks.STRIPPED_CRIMSON_HYPHAE, DnDBlocks.STRIPPED_WARPED_HYPHAE
@@ -40,6 +42,16 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(TaglightingBlockTags.MOB_MOVING_STICKY_BLOCK)
             .add(DnDBlocks.CORN_SYRUP_BLOCK)
+
+        getOrCreateTagBuilder(DnDBlockTags.THROWN_BRICK_BREAK)
+            .forceAddTag(ConventionalBlockTags.GLASS_BLOCKS)
+            .forceAddTag(ConventionalBlockTags.GLASS_PANES)
+            .forceAddTag(BlockTags.FLOWER_POTS)
+            .add(
+                Blocks.DECORATED_POT,
+                Blocks.DIAMOND_BLOCK
+            )
+            .addOptionalTag(id("sable", "fragile"))
 
         overlayTags()
     }

@@ -1,9 +1,14 @@
 package org.teamvoided.dusks_and_dungeons.util
 
+import io.netty.buffer.ByteBuf
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Registry
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntitySelector
@@ -49,6 +54,10 @@ fun getApproximateNearest(dx: Float, dy: Float, dz: Float): Direction {
 
 fun InteractionHand.asEquipmentSlot(): EquipmentSlot {
     return if (this == InteractionHand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
+}
+
+fun <T> tagKeyStreamCodec(resourceKey: ResourceKey<out Registry<T>>): StreamCodec<ByteBuf, TagKey<T>> {
+    return ResourceLocation.STREAM_CODEC.map({ TagKey.create(resourceKey, it) }, { it.location() })
 }
 
 // region LootTable

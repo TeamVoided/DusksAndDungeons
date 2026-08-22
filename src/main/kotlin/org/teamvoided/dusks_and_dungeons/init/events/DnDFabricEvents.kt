@@ -1,17 +1,26 @@
 package org.teamvoided.dusks_and_dungeons.init.events
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.fabricmc.fabric.api.loot.v3.LootTableSource
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.resources.ResourceManager
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener
 import net.minecraft.world.level.storage.loot.BuiltInLootTables.*
 import net.minecraft.world.level.storage.loot.LootTable
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.BARTERING_ADD_VIVIONS
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SNIFFER_ADD_MOONBERRY
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.dusks_and_dungeons.item.ThrownItemDefinition
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.voidlib.helpers.mc.addNewPool
 import org.teamvoided.voidlib.helpers.mc.addToExistingPools
@@ -26,6 +35,30 @@ object DnDFabricEvents {
         initItemEvents()
         compostItems()
         createFuels()
+        ResourceManagerHelper.get(PackType.SERVER_DATA)
+            .registerReloadListener(DataPackReloadEvent.ID, ::DataPackReloadEvent)
+
+        ServerLifecycleEvents.SERVER_STARTED.register { server ->
+            ThrownItemDefinition.refreshCache(server.registryAccess())
+        }
+        ServerLifecycleEvents.END_DATA_PACK_RELOAD.register { server, manager, bool ->
+            ThrownItemDefinition.refreshCache(server.registryAccess())
+        }
+    }
+
+    class DataPackReloadEvent(val lookup: HolderLookup.Provider) : ResourceManagerReloadListener,
+        IdentifiableResourceReloadListener {
+
+        override fun getFabricId(): ResourceLocation = ID
+
+        override fun onResourceManagerReload(manager: ResourceManager) {
+//            ThrownItemDefinition.refreshCache(lookup)
+//            println("init map")
+        }
+
+        companion object {
+            val ID = id("data_pack_reload_event")
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")

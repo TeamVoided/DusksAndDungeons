@@ -1,16 +1,16 @@
 package org.teamvoided.dusks_and_dungeons.init.events
 
 import net.fabricmc.fabric.api.event.player.UseItemCallback
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.entity.projectile.Snowball
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import org.teamvoided.dusks_and_dungeons.entity.ThrownItem
+import org.teamvoided.dusks_and_dungeons.item.ThrownItemDefinition
 
 fun initItemEvents() {
     UseItemCallback.EVENT.register(::useItemEvent)
@@ -28,9 +28,8 @@ fun useItemEvent(player: Player, level: Level, hand: InteractionHand): Interacti
 
 
 fun doThrowableStackLogic(player: Player, level: Level, stack: ItemStack): InteractionResultHolder<ItemStack> {
-    if (!stack.`is`(ConventionalItemTags.BRICKS)) {
-        return InteractionResultHolder.pass(stack)
-    }
+
+    val thrownId = ThrownItemDefinition.getItemDefinition(stack) ?: return InteractionResultHolder.pass(stack)
 
     level.playSound(
         null, player.x, player.y, player.z,
@@ -38,7 +37,7 @@ fun doThrowableStackLogic(player: Player, level: Level, stack: ItemStack): Inter
         0.5f, 0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f)
     )
     if (!level.isClientSide) {
-        val thrownItem = Snowball(level, player)
+        val thrownItem = ThrownItem(level, player)
         thrownItem.item = stack
         thrownItem.shootFromRotation(player, player.xRot, player.yRot, 0.0f, 1.5f, 1.0f)
         player.cooldowns.addCooldown(stack.item, 0)
