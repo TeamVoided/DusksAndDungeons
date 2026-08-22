@@ -8,6 +8,7 @@ import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.EVIL_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
+import org.teamvoided.dusks_and_dungeons.init.events.DnDFabricEvents
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomeModifications
 
 @Suppress("unused")
@@ -37,7 +38,7 @@ object DusksAndDungeons {
         DnDRegistryKeys.init()
         DnDAttachmentTypes.init()
         DnDNetworking.init()
-        InitializeFabricEvents()
+        DnDFabricEvents.init()
 
         if (isDev()) {
             DnDDebug.init()
