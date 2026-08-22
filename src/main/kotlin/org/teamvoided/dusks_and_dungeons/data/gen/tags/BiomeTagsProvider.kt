@@ -46,7 +46,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_SILVER_FOXES)
             .forceAddTag(DnDBiomeTags.IS_AUTUMN)
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)
-            .forceAddTag(DnDBiomeTags.IS_AUTUMN) // remove the golden ones eventually
+            .forceAddTag(DnDBiomeTags.IS_AUTUMN)// remove the golden ones eventually
 
         getOrCreateTagBuilder(DnDBiomeTags.GOLD_MUSHROOMS_CAVE)
             .forceAddTag(ConventionalBiomeTags.IS_OVERWORLD)

@@ -17,10 +17,11 @@ open class AbstractHugeMushroomFeature<T : MushroomFeatureConfig>(codec: Codec<T
         val random = ctx.random()
         val config = ctx.config()
         val stemHeight = config.stemHeight.sample(random)
+        val capHeight = config.capHeight.sample(random)
         val mutable = BlockPos.MutableBlockPos()
 
-        if (canGenerate(level, originPos, stemHeight, mutable, config)) {
-            generateCap(level, random, originPos, stemHeight, mutable, config)
+        if (canGenerate(level, originPos, stemHeight, capHeight, mutable, config)) {
+            generateCap(level, random, originPos, stemHeight, capHeight, mutable, config)
             generateStem(level, random, originPos, stemHeight, mutable, config)
             return true
         }
@@ -28,7 +29,12 @@ open class AbstractHugeMushroomFeature<T : MushroomFeatureConfig>(codec: Codec<T
     }
 
     open fun canGenerate(
-        world: LevelAccessor, pos: BlockPos, stemHeight: Int, mutablePos: BlockPos.MutableBlockPos, config: T,
+        world: LevelAccessor,
+        pos: BlockPos,
+        stemHeight: Int,
+        capHeight: Int,
+        mutablePos: BlockPos.MutableBlockPos,
+        config: T,
     ): Boolean {
         val y = pos.y
         if (y >= world.minBuildHeight + 1 && y + stemHeight + 1 < world.maxBuildHeight) {
@@ -47,11 +53,12 @@ open class AbstractHugeMushroomFeature<T : MushroomFeatureConfig>(codec: Codec<T
         level: LevelAccessor,
         random: RandomSource,
         start: BlockPos,
-        yStart: Int,
+        stemHeight: Int,
+        capHeight: Int,
         mutablePos: BlockPos.MutableBlockPos,
         config: T
     ) {
-        mutablePos.setWithOffset(start, 0, yStart, 0)
+        mutablePos.setWithOffset(start, 0, capHeight, 0)
         if (level.getBlockState(mutablePos).`is`(config.replaceable)) {
             setBlock(level, mutablePos, config.capBlock.getState(random, start))
         }
@@ -61,11 +68,11 @@ open class AbstractHugeMushroomFeature<T : MushroomFeatureConfig>(codec: Codec<T
         level: LevelAccessor,
         random: RandomSource,
         pos: BlockPos,
-        height: Int,
+        capHeight: Int,
         mutablePos: BlockPos.MutableBlockPos,
         config: T
     ) {
-        for (i in 0 until height) {
+        for (i in 0 until capHeight) {
             mutablePos.set(pos).move(Direction.UP, i)
             if (level.getBlockState(mutablePos).`is`(config.replaceable)) {
                 setBlock(level, mutablePos, config.stemBlock.getState(random, pos))
