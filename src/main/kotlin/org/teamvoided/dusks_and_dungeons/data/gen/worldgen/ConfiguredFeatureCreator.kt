@@ -222,7 +222,7 @@ object ConfiguredFeatureCreator {
                     ),
                     BlockPredicate.allOf(
                         BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                        BlockPredicate.wouldSurvive(DnDBlocks.GOLDEN_MUSHROOM.defaultBlockState(), BlockPos.ZERO)
+                        BlockPredicate.matchesTag(Direction.DOWN.normal, DnDBlockTags.PUMPKIN_PATCH_PLACE_ON)
                     )
                 )
             )
