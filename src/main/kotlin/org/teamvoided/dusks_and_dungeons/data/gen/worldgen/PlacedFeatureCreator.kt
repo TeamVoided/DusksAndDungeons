@@ -147,6 +147,13 @@ object PlacedFeatureCreator {
             125,
             Direction.UP
         )
+        c.cavePlacement(
+            DnDPlacedFeature.OVERGROWTH_CAVES_TREES,
+            DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
+            125,
+            Direction.DOWN,
+            BlockPredicate.matchesTag(BlockTags.DIRT)
+        )
     }
 
     fun BootstrapContext<PlacedFeature>.pumpkin(
@@ -169,7 +176,7 @@ object PlacedFeatureCreator {
         conf: ResourceKey<ConfiguredFeature<*, *>>,
         count: Int,
         direction: Direction,
-        search: BlockPredicate =  BlockPredicate.solid()
+        search: BlockPredicate = BlockPredicate.solid()
     ) {
 
         this.register(
@@ -329,7 +336,7 @@ object PlacedFeatureCreator {
         c.register(
             DnDPlacedFeature.FAIRY_RING_RED,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FAIRY_RING_RED),
-            RarityFilter.onAverageOnceEvery(21),
+            RarityFilter.onAverageOnceEvery(32),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()

@@ -42,6 +42,7 @@ object DnDPlacedFeature {
     val OVERGROWTH_HANGING = create("cave/overgrowth_hanging")
     val OVERGROWTH_CAVES_FLOOR_VEGETATION = create("cave/overgrowth_floor_vegetation")
     val OVERGROWTH_CAVES_CEILING_VEGETATION = create("cave/overgrowth_ceiling_vegetation")
+    val OVERGROWTH_CAVES_TREES = create("cave/overgrowth_tree")
 
 
     val FAIRY_RING_RED = create("fairy_ring_red")

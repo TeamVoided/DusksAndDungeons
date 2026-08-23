@@ -41,6 +41,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
+import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.block.HangingFloraBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
@@ -199,7 +200,15 @@ object ConfiguredFeatureCreator {
             CompositeConfig(
                 HolderSet.direct(
                     PlacementUtils.inlinePlaced(cF.getOrThrow(DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM)),
-                    PlacementUtils.inlinePlaced(cF.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM))
+                    PlacementUtils.inlinePlaced(
+                        cF.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
+                        BlockPredicateFilter.forPredicate(
+                            BlockPredicate.matchesTag(
+                                Direction.DOWN.normal,
+                                BlockTags.MOSS_REPLACEABLE
+                            )
+                        )
+                    )
                 ),
                 CompositeConfig.Type.CANCEL_ON_FAILURE
             )
@@ -790,6 +799,16 @@ object ConfiguredFeatureCreator {
             else
                 WallTrunkPlacer(5, 5, 0, 0.7f, UniformInt.of(1, 3), dir)
 
+
+        //val hanging = PlacementUtils.inlinePlaced(
+        //    LithostitchedFeatures.WEIGHTED_SELECTOR,
+        //    WeightedSelectorConfig(
+        //        WeightedList.builder<Holder<PlacedFeature>>()
+        //            .addC(this, DnDConfiguredFeature.OVERGROWTH_HANGING, 10)
+        //            .addC(this, DnDConfiguredFeature.GLOW_FRUIT)
+        //            .build()
+        //    )
+        //)
         val decorators = ImmutableList.of<TreeDecorator>(
             FeatureAtBaseTreeDecorator(
                 PlacementUtils.inlinePlaced(

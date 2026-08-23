@@ -7,6 +7,7 @@ import net.minecraft.data.worldgen.biome.OverworldBiomes
 import net.minecraft.data.worldgen.placement.AquaticPlacements
 import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
+import net.minecraft.sounds.Music
 import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.Mth
@@ -94,18 +95,18 @@ object BiomeCreator {
         addAutumnFeatures(generationSettings, golden)
         generationSettings.addFeature(vd9, DnDPlacedFeature.PATCH_ROSEBUSH)
 
-        return Biome.BiomeBuilder().temperature(0.25f).downfall(0.8f).specialEffects(
-            BiomeSpecialEffects.Builder()
-                .waterColor(1392275)
-                .waterFogColor(329011)
-                .fogColor(11587327)
-                .grassColorOverride(if (golden) 0xFFD859 else 16224051)
-                .foliageColorOverride(if (golden) 0xFFD859 else 15097636)
-                .skyColor(getSkyColor(0.25f))
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST))
-                .build()
-        ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+        val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
+        return biomeBuild(
+            spawnSettings,
+            generationSettings,
+            music,
+            0.25f,
+            0.8f,
+            1392275,
+            329011,
+            if (golden) 0xFFD859 else 16224051,
+            if (golden) 0xFFD859 else 15097636
+        )
     }
 //grass 16434531 15647087
 
@@ -128,20 +129,20 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
         BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
         addAutumnFeatures(generationSettings, golden)
-        if (golden)  generationSettings.addFeature(vd9, DnDPlacedFeature.WILD_WHEAT_FIELD)
+        if (golden) generationSettings.addFeature(vd9, DnDPlacedFeature.WILD_WHEAT_FIELD)
 
-        return Biome.BiomeBuilder().temperature(0.25f).downfall(0.8f).specialEffects(
-            BiomeSpecialEffects.Builder()
-                .waterColor(1392275)
-                .waterFogColor(329011)
-                .fogColor(11587327)
-                .grassColorOverride(if (golden) 15647087 else 15768399)
-                .foliageColorOverride(15097636)
-                .skyColor(getSkyColor(0.25f))
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST))
-                .build()
-        ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+        val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
+        return biomeBuild(
+            spawnSettings,
+            generationSettings,
+            music,
+            0.25f,
+            0.8f,
+            1392275,
+            329011,
+            if (golden) 15647087 else 15768399,
+            if (golden) 0xFFD859 else 15097636
+        )
     }
 
     private fun createAutumnRiver(context: BootstrapContext<Biome>): Biome {
@@ -165,18 +166,8 @@ object BiomeCreator {
         addAutumnFeatures(generationSettings)
         generationSettings.addFeature(vd9, AquaticPlacements.SEAGRASS_RIVER)
 
-        return Biome.BiomeBuilder().temperature(0.25f).downfall(0.8f).specialEffects(
-            BiomeSpecialEffects.Builder()
-                .waterColor(1392275)
-                .waterFogColor(329011)
-                .fogColor(11587327)
-                .grassColorOverride(15768399)
-                .foliageColorOverride(16081176)
-                .skyColor(getSkyColor(0.25f))
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST))
-                .build()
-        ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+        val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
+        return biomeBuild(spawnSettings, generationSettings, music, 0.25f, 0.8f, 1392275, 329011, 15768399, 16081176)
     }
 
 
@@ -195,23 +186,36 @@ object BiomeCreator {
         addOvergrowthCavesVegetationFeatures(generationSettings)
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES)
 
-        return Biome.BiomeBuilder().temperature(0.5f).downfall(0.5f).specialEffects(
-            BiomeSpecialEffects.Builder()
-                .waterColor(0x58DC6E)
-                .waterFogColor(0x17543c)
-                .fogColor(11587327)
-                .grassColorOverride(0x9DED6D)
-                .skyColor(getSkyColor(0.5f))
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                .backgroundMusic(music)
-                .build()
-        ).mobSpawnSettings(spawnSettings.build()).generationSettings(generationSettings.build()).build()
+        return biomeBuild(spawnSettings, generationSettings, music, 0.5f, 0.5f, 0x58DC6E, 0x17543c, 0x9abe4b)
 
         //original grass = 91DB60, water = 4CBF61
         //vibrant grass = A9FF70, water = 63F97A
         //halfway grass = 9DED6D, water = 58DC6E
     }
 
+    private fun biomeBuild(
+        ss: MobSpawnSettings.Builder,
+        gs: BiomeGenerationSettings.Builder,
+        music: Music,
+        temperature: Float,
+        downfall: Float,
+        waterColor: Int,
+        waterFogColor: Int,
+        grassOveride: Int = -1,
+        foliageOveride: Int = -1,
+    ): Biome {
+        val special = BiomeSpecialEffects.Builder()
+            .waterColor(waterColor)
+            .waterFogColor(waterFogColor)
+            .fogColor(11587327)
+            .skyColor(getSkyColor(temperature))
+            .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+            .backgroundMusic(music)
+        if (grassOveride >= 0) special.grassColorOverride(grassOveride)
+        if (foliageOveride >= 0) special.foliageColorOverride(grassOveride)
+        return Biome.BiomeBuilder().temperature(temperature).downfall(downfall).specialEffects(special.build())
+            .mobSpawnSettings(ss.build()).generationSettings(gs.build()).build()
+    }
 
     private fun addOvergrowthCavesVegetationFeatures(builder: BiomeGenerationSettings.Builder) {
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_CEILING_VEGETATION)
@@ -219,6 +223,7 @@ object BiomeCreator {
         //builder.addFeature(vd9, CavePlacements.LUSH_CAVES_CLAY)
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_FLOOR_VEGETATION)
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_TREE_ROOTED)
+        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_TREES)
         //builder.addFeature(vd9, CavePlacements.SPORE_BLOSSOM)
         builder.addFeature(vd9, CavePlacements.CLASSIC_VINES)
     }
