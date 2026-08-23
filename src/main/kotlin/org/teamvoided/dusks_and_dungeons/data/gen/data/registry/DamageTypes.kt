@@ -6,6 +6,7 @@ import net.minecraft.world.damagesource.DamageEffects
 import net.minecraft.world.damagesource.DamageScaling
 import net.minecraft.world.damagesource.DamageType
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
+import org.teamvoided.dusks_and_dungeons.util.toLangKey
 
 object DamageTypes : RegistryBootstrapper<DamageType> {
 
@@ -18,6 +19,6 @@ object DamageTypes : RegistryBootstrapper<DamageType> {
         exhaustion: Float = 0.1f, //if consistant like fire or poison, 0f
         effect: DamageEffects = DamageEffects.HURT,
     ) {
-        register(key, DamageType(key.location().path, DamageScaling.NEVER, exhaustion, effect))
+        register(key, DamageType(key.toLangKey(), DamageScaling.NEVER, exhaustion, effect))
     }
 }

@@ -31,4 +31,5 @@ fun <V : Any, T : V> Registry<T>.registerHolder(id: ResourceLocation, entry: T):
 fun <T : Any, R : Registry<T>> ResourceKey<R>.tag(id: ResourceLocation): TagKey<T> = TagKey.create(this, id)
 fun <T : Any, R : Registry<T>> ResourceKey<R>.key(id: ResourceLocation): ResourceKey<T> = ResourceKey.create(this, id)
 
-fun ResourceKey<*>.toLangKey(): String = this.location().toLanguageKey().replace("/", ".")
+fun ResourceKey<*>.toLangKey(): String = location().toLangKey()
+fun ResourceLocation.toLangKey(): String = toLanguageKey().replace("/", ".")
