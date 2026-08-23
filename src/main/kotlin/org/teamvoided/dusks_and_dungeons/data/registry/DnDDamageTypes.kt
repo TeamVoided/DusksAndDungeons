@@ -6,7 +6,7 @@ import org.teamvoided.dusks_and_dungeons.util.key
 
 object DnDDamageTypes {
 
-    val FISSURE = create("fissure")
+    val THROWN_BRICK = create("thrown_brick")
 
     fun create(id: String) = Registries.DAMAGE_TYPE.key(id(id))
 

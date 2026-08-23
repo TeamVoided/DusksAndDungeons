@@ -10,15 +10,14 @@ import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 object DamageTypes : RegistryBootstrapper<DamageType> {
 
     override fun BootstrapContext<DamageType>.init() {
-        damage(DnDDamageTypes.FISSURE, 0.0f)
+        damage(DnDDamageTypes.THROWN_BRICK, 0.1f)
     }
 
     fun BootstrapContext<DamageType>.damage(
         key: ResourceKey<DamageType>,
-        exhaustion: Float,
+        exhaustion: Float = 0.1f, //if consistant like fire or poison, 0f
         effect: DamageEffects = DamageEffects.HURT,
     ) {
         register(key, DamageType(key.location().path, DamageScaling.NEVER, exhaustion, effect))
     }
-
 }

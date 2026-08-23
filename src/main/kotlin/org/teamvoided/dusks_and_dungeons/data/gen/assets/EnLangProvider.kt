@@ -7,9 +7,12 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.damagesource.DamageType
+import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.DamageTypes
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.description
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.title
+import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.util.getModHolders
 import org.teamvoided.voidlib.devin.FDOutput
@@ -26,6 +29,14 @@ class EnLangProvider(val output: FDOutput, r: FutureLookup) : FabricLanguageProv
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, genLang(it.location)) }
         gen.advancement(DnDAdvancements.FALL, "Fall!", "Visit the golden and autumn biomes!")
         gen.advancement(DnDAdvancements.WOOF, "Woof", "Find and tame the Autumn Wolf")
+
+
+        gen.damageTranslaion(
+            DnDDamageTypes.THROWN_BRICK,
+            "was bricked down",
+            ("was brought down by" to "with the certainty of"),
+            "was brought down with a cast brick from"
+        )
     }
 
 
@@ -58,4 +69,68 @@ class EnLangProvider(val output: FDOutput, r: FutureLookup) : FabricLanguageProv
         }
     }
 
+    private fun TranslationBuilder.defaultDamageTranslaion(
+        key: ResourceKey<DamageType>,
+        message: String,
+        transition: String = "by",
+        tryingToEscape: String = "whilst trying to escape",
+        using: String = "using"
+    ) {
+        val key0 = key.location().path
+        this.add("death.attack.$key0", "%s $message")
+        this.add("death.attack.$key0.item", "%s $message $transition %s $using %s")
+        this.add("death.attack.$key0.player", "%s $message $tryingToEscape %s")
+    }
+
+    private fun TranslationBuilder.damageTranslaion(
+        key: ResourceKey<DamageType>,
+        message: String,
+        messageItem: String,
+        messageAttacker: String = messageItem
+    ) = this.damageTranslaion(key, message, (messageItem to "using"), messageAttacker)
+
+    private fun TranslationBuilder.damageTranslaion(
+        key: ResourceKey<DamageType>,
+        message: String,
+        messageItem: Pair<String, String>,
+        messageAttacker: String = messageItem.first
+    ) {
+        val key0 = key.location().path
+        this.add("death.attack.$key0", "%s $message")
+        this.add("death.attack.$key0.item", "%s ${messageItem.first} %s ${messageItem.second} %s")
+        this.add("death.attack.$key0.player", "%s $messageAttacker %s")
+    }
+
+
+    private fun TranslationBuilder.damageTranslaion(
+        direct: ResourceKey<DamageType>,
+        indirect: ResourceKey<DamageType>,
+        message: String,
+        messageItem: String,
+        messageAttacker: String = messageItem
+    ) {
+        this.directDamageTranslaion(direct, message, messageAttacker)
+        this.indirectDamageTranslaion(indirect, message, messageItem)
+    }
+
+
+    private fun TranslationBuilder.directDamageTranslaion(
+        key: ResourceKey<DamageType>,
+        message: String,
+        messageAttacker: String
+    ) {
+        val key0 = key.location().path
+        this.add("death.attack.$key0", "%s $message")
+        this.add("death.attack.$key0.player", "%s $messageAttacker %s")
+    }
+
+    private fun TranslationBuilder.indirectDamageTranslaion(
+        key: ResourceKey<DamageType>,
+        message: String,
+        messageItem: String
+    ) {
+        val key0 = key.location().path
+        this.add("death.attack.$key0", "%s $message")
+        this.add("death.attack.$key0.item", "%s $messageItem %s using %s")
+    }
 }
