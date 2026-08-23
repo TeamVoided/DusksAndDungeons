@@ -9,6 +9,7 @@ import net.minecraft.world.damagesource.DamageTypes
 import net.minecraft.world.item.EitherHolder
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
@@ -29,7 +30,7 @@ object ThrownItems {
             DnDThrownItemDefinitions.BRICKS,
             ConventionalItemTags.BRICKS,
             damage = 2f,
-            DamageTypes.THROWN,
+            DnDDamageTypes.THROWN_BRICK,
             power = 1.5f,
             uncertainty = 1f,
             cooldown = 10,
