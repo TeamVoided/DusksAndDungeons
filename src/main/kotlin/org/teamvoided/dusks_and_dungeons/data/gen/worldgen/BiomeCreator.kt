@@ -218,6 +218,7 @@ object BiomeCreator {
     }
 
     private fun addOvergrowthCavesVegetationFeatures(builder: BiomeGenerationSettings.Builder) {
+        builder.addFeature(lm2, DnDPlacedFeature.OVERGROWN_CAVE_BOULDER)
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_CEILING_VEGETATION)
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_HANGING)
         //builder.addFeature(vd9, CavePlacements.LUSH_CAVES_CLAY)
