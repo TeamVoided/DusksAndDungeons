@@ -23,6 +23,7 @@ object DnDTabs {
             .icon(DnDBlocks.CASCADE_SAPLING)
             .displayItems(::mainTab)
     )
+
     // Dev Tabs
     val DND_EVERYTHING = register(
         "dnd_everything", FabricItemGroup.builder()
@@ -49,9 +50,7 @@ object DnDTabs {
             addAfter(Items.RED_NETHER_BRICKS, DnDBlocks.CRACKED_RED_NETHER_BRICKS)
             addAfter(
                 Items.RED_NETHER_BRICK_WALL,
-                DnDItemLists.redNetherBrickStuff + DnDItemLists.mixedRedNetherBrickStuff +
-                        DnDItemLists.blueNetherBrickStuff + DnDItemLists.mixedBlueNetherBrickStuff +
-                        DnDItemLists.grayNetherBrickStuff + DnDItemLists.mixedGrayNetherBrickStuff
+                DnDItemLists.redNetherBrickStuff + DnDItemLists.blueNetherBrickStuff + DnDItemLists.grayNetherBrickStuff
             )
             addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
             addAfter(Items.MOSSY_STONE_BRICK_WALL, DnDItemLists.overgrownStoneBricks)
@@ -331,11 +330,8 @@ object DnDTabs {
         output.accept(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
         output.addLists(
             DnDItemLists.redNetherBrickStuff,
-            DnDItemLists.mixedRedNetherBrickStuff,
             DnDItemLists.blueNetherBrickStuff,
-            DnDItemLists.mixedBlueNetherBrickStuff,
             DnDItemLists.grayNetherBrickStuff,
-            DnDItemLists.mixedGrayNetherBrickStuff,
             DnDItemLists.blackstoneTools,
         )
     }

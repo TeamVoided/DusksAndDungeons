@@ -55,16 +55,8 @@ object NetherRecipes {
             DnDBlocks.CHISELED_RED_NETHER_BRICKS, null,
             DnDBlocks.RED_NETHER_BRICK_FENCE
         )
-        e.createDiagonalRecipe(DnDBlocks.MIXED_RED_NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
-        e.createFence(DnDBlocks.MIXED_RED_NETHER_BRICK_FENCE, DnDBlocks.MIXED_RED_NETHER_BRICKS, Items.NETHER_BRICK)
-        e.createStackedCraft(
-            DnDBlocks.MIXED_RED_NETHER_BRICK_PILLAR, DnDBlocks.MIXED_RED_NETHER_BRICKS, DnDItemTags.NETHER_BRICKS
-        )
 
         e.createStonecuttingSet(DnDBlocks.POLISHED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
-
-        e.createStonecutting(DnDBlocks.MIXED_RED_NETHER_BRICK_FENCE, DnDBlocks.MIXED_RED_NETHER_BRICKS)
-        e.createStonecutting(DnDBlocks.MIXED_RED_NETHER_BRICK_PILLAR, DnDBlocks.MIXED_RED_NETHER_BRICKS)
 
         e.createDiagonalRecipe(
             DnDBlocks.BLUE_NETHER_BRICKS, DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS, Blocks.NETHER_BRICKS
@@ -78,14 +70,6 @@ object NetherRecipes {
 
         e.createStonecuttingSet(DnDBlocks.POLISHED_BLUE_NETHER_BRICKS, DnDBlocks.BLUE_NETHER_BRICKS.parent)
 
-        e.createDiagonalRecipe(DnDBlocks.MIXED_BLUE_NETHER_BRICKS, DnDBlocks.BLUE_NETHER_BRICKS, Blocks.NETHER_BRICKS)
-        e.createFence(DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DnDBlocks.MIXED_BLUE_NETHER_BRICKS, Items.NETHER_BRICK)
-        e.createStackedCraft(
-            DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR, DnDBlocks.MIXED_BLUE_NETHER_BRICKS, DnDItemTags.NETHER_BRICKS
-        )
-        e.createStonecutting(DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DnDBlocks.MIXED_BLUE_NETHER_BRICKS)
-        e.createStonecutting(DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR, DnDBlocks.MIXED_BLUE_NETHER_BRICKS)
-
         e.createDiagonalRecipe(
             DnDBlocks.GRAY_NETHER_BRICKS, DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS, Blocks.NETHER_BRICKS
         )
@@ -98,14 +82,6 @@ object NetherRecipes {
         e.createStonecutting(DnDBlocks.GRAY_NETHER_BRICK_PILLAR, DnDBlocks.GRAY_NETHER_BRICKS)
 
         e.createStonecuttingSet(DnDBlocks.POLISHED_GRAY_NETHER_BRICKS, DnDBlocks.GRAY_NETHER_BRICKS.parent)
-
-        e.createDiagonalRecipe(DnDBlocks.MIXED_GRAY_NETHER_BRICKS, Blocks.NETHER_BRICKS, DnDBlocks.GRAY_NETHER_BRICKS)
-        e.createFence(DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DnDBlocks.MIXED_GRAY_NETHER_BRICKS, Items.NETHER_BRICK)
-        e.createStackedCraft(
-            DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR, DnDBlocks.MIXED_GRAY_NETHER_BRICKS, DnDItemTags.NETHER_BRICKS
-        )
-        e.createStonecutting(DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DnDBlocks.MIXED_GRAY_NETHER_BRICKS)
-        e.createStonecutting(DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR, DnDBlocks.MIXED_GRAY_NETHER_BRICKS)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, DnDItems.BLACKSTONE_SWORD)
             .define('#', Items.STICK)

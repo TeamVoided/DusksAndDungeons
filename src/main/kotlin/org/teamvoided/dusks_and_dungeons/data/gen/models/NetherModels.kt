@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.models
 
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -10,7 +10,6 @@ import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.fence
 import org.teamvoided.dusks_and_dungeons.util.datagen.registerCropWithParent
 import org.teamvoided.dusks_and_dungeons.util.datagen.registerHandheldItem
-import org.teamvoided.dusks_and_dungeons.util.datagen.registerMixedNetherBrickPillar
 
 object NetherModels {
     fun netherModels(gen: BlockModelGenerators) {
@@ -26,22 +25,14 @@ object NetherModels {
         )
 
         gen.createTrivialCube(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
-        gen.createTrivialCube(DnDBlocks.CRACKED_MIXED_RED_NETHER_BRICKS)
         gen.createTrivialCube(DnDBlocks.CRACKED_BLUE_NETHER_BRICKS)
-        gen.createTrivialCube(DnDBlocks.CRACKED_MIXED_BLUE_NETHER_BRICKS)
         gen.createTrivialCube(DnDBlocks.CRACKED_GRAY_NETHER_BRICKS)
-        gen.createTrivialCube(DnDBlocks.CRACKED_MIXED_GRAY_NETHER_BRICKS)
 
         gen.createTrivialCube(DnDBlocks.CHISELED_RED_NETHER_BRICKS)
-        gen.createTrivialCube(DnDBlocks.CHISELED_MIXED_RED_NETHER_BRICKS)
         gen.createTrivialCube(DnDBlocks.CHISELED_BLUE_NETHER_BRICKS)
-        gen.createTrivialCube(DnDBlocks.CHISELED_MIXED_BLUE_NETHER_BRICKS)
         gen.createTrivialCube(DnDBlocks.CHISELED_GRAY_NETHER_BRICKS)
-        gen.createTrivialCube(DnDBlocks.CHISELED_MIXED_GRAY_NETHER_BRICKS)
 
         gen.fence(DnDBlocks.RED_NETHER_BRICK_FENCE, Blocks.RED_NETHER_BRICKS)
-        gen.fence(DnDBlocks.MIXED_RED_NETHER_BRICK_FENCE, DnDBlocks.MIXED_RED_NETHER_BRICKS.parent)
-        gen.registerMixedNetherBrickPillar(DnDBlocks.MIXED_RED_NETHER_BRICK_PILLAR, DnDBlocks.RED_NETHER_BRICK_PILLAR)
         gen.createRotatedPillarWithHorizontalVariant(
             DnDBlocks.RED_NETHER_BRICK_PILLAR,
             TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
@@ -51,15 +42,11 @@ object NetherModels {
             DnDBlocks.BLUE_NETHER_BRICK_PILLAR,
             TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
         )
-        gen.fence(DnDBlocks.MIXED_BLUE_NETHER_BRICK_FENCE, DnDBlocks.MIXED_BLUE_NETHER_BRICKS.parent)
-        gen.registerMixedNetherBrickPillar(DnDBlocks.MIXED_BLUE_NETHER_BRICK_PILLAR, DnDBlocks.BLUE_NETHER_BRICK_PILLAR)
         gen.fence(DnDBlocks.GRAY_NETHER_BRICK_FENCE, DnDBlocks.GRAY_NETHER_BRICKS.parent)
         gen.createRotatedPillarWithHorizontalVariant(
             DnDBlocks.GRAY_NETHER_BRICK_PILLAR,
             TexturedModel.COLUMN_ALT, TexturedModel.COLUMN_HORIZONTAL_ALT
         )
-        gen.fence(DnDBlocks.MIXED_GRAY_NETHER_BRICK_FENCE, DnDBlocks.MIXED_GRAY_NETHER_BRICKS.parent)
-        gen.registerMixedNetherBrickPillar(DnDBlocks.MIXED_GRAY_NETHER_BRICK_PILLAR, DnDBlocks.GRAY_NETHER_BRICK_PILLAR)
 
         gen.createTrivialCube(DnDBlocks.MOLTEN_LAVASPONGE)
         gen.createTrivialCube(DnDBlocks.BRITTLE_LAVASPONGE)

@@ -556,16 +556,6 @@ object DnDBlocks {
     val RED_NETHER_BRICK_PILLAR =
         register("red_nether_brick_pillar", RotatedPillarBlock(ofFullCopy(RED_NETHER_BRICKS)).pickaxe())
 
-    val MIXED_RED_NETHER_BRICKS = registerSet("mixed_red_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
-    val CRACKED_MIXED_RED_NETHER_BRICKS =
-        register("cracked_mixed_red_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
-    val MIXED_RED_NETHER_BRICK_FENCE =
-        register("mixed_red_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
-    val CHISELED_MIXED_RED_NETHER_BRICKS =
-        register("chiseled_mixed_red_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
-    val MIXED_RED_NETHER_BRICK_PILLAR =
-        register("mixed_red_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_RED_NETHER_BRICKS)).pickaxe())
-
     // Blue Nether Bricks
     val BLUE_NETHER_BRICKS = registerSet("blue_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
     val CRACKED_BLUE_NETHER_BRICKS =
@@ -579,17 +569,6 @@ object DnDBlocks {
 
     val POLISHED_BLUE_NETHER_BRICKS = registerSet("polished_blue_nether_brick", copy(BLUE_NETHER_BRICKS), "s").pickaxe()
 
-    val MIXED_BLUE_NETHER_BRICKS = registerSet("mixed_blue_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
-    val CRACKED_MIXED_BLUE_NETHER_BRICKS =
-        register("cracked_mixed_blue_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
-    val MIXED_BLUE_NETHER_BRICK_FENCE =
-        register("mixed_blue_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
-    val CHISELED_MIXED_BLUE_NETHER_BRICKS =
-        register("chiseled_mixed_blue_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
-    val MIXED_BLUE_NETHER_BRICK_PILLAR = register(
-        "mixed_blue_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_BLUE_NETHER_BRICKS)).pickaxe()
-    )
-
     // Gray Nether Bricks
     val GRAY_NETHER_BRICKS = registerSet("gray_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
     val CRACKED_GRAY_NETHER_BRICKS =
@@ -602,17 +581,6 @@ object DnDBlocks {
         register("gray_nether_brick_pillar", RotatedPillarBlock(copy(GRAY_NETHER_BRICKS)).pickaxe())
 
     val POLISHED_GRAY_NETHER_BRICKS = registerSet("polished_gray_nether_brick", copy(GRAY_NETHER_BRICKS), "s").pickaxe()
-
-    val MIXED_GRAY_NETHER_BRICKS = registerSet("mixed_gray_nether_brick", ofFullCopy(NETHER_BRICKS), "s").pickaxe()
-    val CRACKED_MIXED_GRAY_NETHER_BRICKS =
-        register("cracked_mixed_gray_nether_bricks", Block(ofFullCopy(CRACKED_NETHER_BRICKS)).pickaxe())
-    val MIXED_GRAY_NETHER_BRICK_FENCE =
-        register("mixed_gray_nether_brick_fence", FenceBlock(ofFullCopy(NETHER_BRICK_FENCE)).pickaxe())
-    val CHISELED_MIXED_GRAY_NETHER_BRICKS =
-        register("chiseled_mixed_gray_nether_bricks", Block(ofFullCopy(CHISELED_NETHER_BRICKS)).pickaxe())
-    val MIXED_GRAY_NETHER_BRICK_PILLAR = register(
-        "mixed_gray_nether_brick_pillar", SixWayFacingBlock(copy(MIXED_GRAY_NETHER_BRICKS)).pickaxe()
-    )
 
     val MOLTEN_LAVASPONGE =
         register("molten_lavasponge", FilledLavaspongeBlock(ofFullCopy(BASALT), OBSIDIAN, WATER, LAVA)).pickaxe()
