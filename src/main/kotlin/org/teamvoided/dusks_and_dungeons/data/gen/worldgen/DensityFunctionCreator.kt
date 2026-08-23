@@ -17,11 +17,11 @@ object DensityFunctionCreator {
     fun bootstrap(c: BootstrapContext<DensityFunction>) {
         c.register(
             DnDDensityFunctions.CASCADE_REGION,
-            noise(c.noiseHold(DnDNoise.AUTUMN), 0.5, 0.0)
+            noise(c.noiseHold(DnDNoise.AUTUMN), 0.12, 0.0)
         )
         c.register(
             DnDDensityFunctions.SYPIA_REGION,
-            noise(c.noiseHold(DnDNoise.AUTUMN), -1.0, 0.0).abs(),
+            noise(c.noiseHold(DnDNoise.AUTUMN), -0.09, 0.0).abs(),
         )
         c.register(
             DnDDensityFunctions.OVERGROWN_GROTTO_REGION,
