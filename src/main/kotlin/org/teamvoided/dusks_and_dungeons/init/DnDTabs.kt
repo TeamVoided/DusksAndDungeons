@@ -23,7 +23,6 @@ object DnDTabs {
             .icon(DnDBlocks.CASCADE_SAPLING)
             .displayItems(::mainTab)
     )
-
     // Dev Tabs
     val DND_EVERYTHING = register(
         "dnd_everything", FabricItemGroup.builder()
@@ -72,6 +71,8 @@ object DnDTabs {
             addAfter(Items.CHAIN, DnDBlocks.BIG_CHAIN)
 
             addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
+
+            addAfter(Items.SUSPICIOUS_SAND, DnDBlocks.SUSPICIOUS_RED_SAND)
 
             addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
 
