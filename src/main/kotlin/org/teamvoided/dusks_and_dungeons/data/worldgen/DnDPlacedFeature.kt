@@ -6,7 +6,8 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
 object DnDPlacedFeature {
-    val OVERGROWN_COBBLESTONE_BOULDER = create("overgrown_cobblestone_boulder")
+    val OVERGROWN_BOULDER = create("boulder/overgrown_cobblestone")
+    val OVERGROWN_CAVE_BOULDER = create("boulder/overgrown_cave")
     val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
     val CASCADE_TREE = create("tree/cascade_tree")
     val CASCADE_TREE_BEES = create("tree/cascade_tree_bees")
@@ -38,6 +39,7 @@ object DnDPlacedFeature {
     val WILD_WHEAT_FIELD = create("wild_wheat_field")
 
     val OVERGROWTH_TREE_ROOTED = create("cave/overgrowth_tree_rooted")
+    val OVERGROWTH_HANGING = create("cave/overgrowth_hanging")
     val OVERGROWTH_CAVES_FLOOR_VEGETATION = create("cave/overgrowth_floor_vegetation")
     val OVERGROWTH_CAVES_CEILING_VEGETATION = create("cave/overgrowth_ceiling_vegetation")
 

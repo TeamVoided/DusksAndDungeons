@@ -27,7 +27,6 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature
 import net.minecraft.world.level.levelgen.feature.configurations.*
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.target
 import net.minecraft.world.level.levelgen.feature.featuresize.ThreeLayersFeatureSize
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize
 import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePlacer
@@ -42,11 +41,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
-import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
-import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.material.Fluids
-import org.apache.logging.log4j.core.config.composite.CompositeConfiguration
 import org.teamvoided.dusks_and_dungeons.block.HangingFloraBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
@@ -200,28 +195,13 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM_WITH_HUGE,
-            Feature.RANDOM_PATCH,
-            RandomPatchConfiguration(
-                64, 7, 3,
-                PlacementUtils.filtered(
-                    Feature.RANDOM_SELECTOR,
-                    RandomFeatureConfiguration(
-                        listOf(
-                            WeightedPlacedFeature(
-                                PlacementUtils.inlinePlaced(cF.getOrThrow(DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM)),
-                                0.1f
-                            )
-                        ),
-                        PlacementUtils.inlinePlaced(
-                            Feature.SIMPLE_BLOCK,
-                            SimpleBlockConfiguration(BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM))
-                        )
-                    ),
-                    BlockPredicate.allOf(
-                        BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                        BlockPredicate.matchesTag(Direction.DOWN.normal, DnDBlockTags.PUMPKIN_PATCH_PLACE_ON)
-                    )
-                )
+            LithostitchedFeatures.COMPOSITE,
+            CompositeConfig(
+                HolderSet.direct(
+                    PlacementUtils.inlinePlaced(cF.getOrThrow(DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM)),
+                    PlacementUtils.inlinePlaced(cF.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM))
+                ),
+                CompositeConfig.Type.CANCEL_ON_FAILURE
             )
         )
 
@@ -240,18 +220,27 @@ object ConfiguredFeatureCreator {
         )
         c.registerConfiguredFeature(
             DnDConfiguredFeature.OVERGROWTH_CEILING_V,
-            Feature.SIMPLE_BLOCK,
-            SimpleBlockConfiguration(
-                WeightedStateProvider(
-                    SimpleWeightedRandomList.builder<BlockState>()
-                        .add(
-                            DnDBlocks.OVERGROWTH_BUSH.defaultBlockState()
-                                .setValue(BlockStateProperties.FACING, Direction.UP), 1
-                        )
-                        .add(DnDBlocks.OVERGROWTH_BLOCK.defaultBlockState(), 10)
-                )
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            WeightedSelectorConfig(
+                WeightedList.builder<Holder<PlacedFeature>>()
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING, 5)
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_BLOCKS, 3)
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_LEAVES)
+                    .build()
             )
         )
+        //SimpleBlockConfiguration(
+        //    WeightedStateProvider(
+        //        SimpleWeightedRandomList.builder<BlockState>()
+        //            .add(
+        //                DnDBlocks.OVERGROWTH_BUSH.defaultBlockState()
+        //                    .setValue(BlockStateProperties.FACING, Direction.UP), 1
+        //            )
+        //            .add(DnDBlocks.OVERGROWTH_BLOCK.defaultBlockState(), 10)
+        //    )
+        //)
+        //)
+
         c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR, CaveSurface.FLOOR)
         c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR_B, CaveSurface.FLOOR, true)
         c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING, CaveSurface.CEILING)
@@ -274,25 +263,69 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-        c.registerConfiguredFeature(
+        c.hangingCaveColumn(
             DnDConfiguredFeature.OVERGROWTH_HANGING,
-            Feature.BLOCK_COLUMN,
-            BlockColumnConfiguration(
-                listOf(
-                    BlockColumnConfiguration.layer(
-                        BiasedToBottomInt.of(0, 5),
-                        BlockStateProvider.simple(DnDBlocks.HANGING_OVERGROWTH)
-                    ),
-                    BlockColumnConfiguration.layer(
-                        ConstantInt.of(1),
-                        BlockStateProvider.simple(
-                            DnDBlocks.HANGING_OVERGROWTH.defaultBlockState().setValue(HangingFloraBlock.TIP, true)
-                        )
+            listOf(
+                BlockColumnConfiguration.layer(
+                    BiasedToBottomInt.of(0, 5),
+                    BlockStateProvider.simple(
+                        DnDBlocks.HANGING_OVERGROWTH.defaultBlockState().setValue(HangingFloraBlock.TIP, false)
                     )
                 ),
+                BlockColumnConfiguration.layer(
+                    ConstantInt.of(1),
+                    BlockStateProvider.simple(DnDBlocks.HANGING_OVERGROWTH.defaultBlockState())
+                )
+            ),
+            true
+        )
+        c.hangingCaveColumn(
+            DnDConfiguredFeature.OVERGROWTH_HANGING_LEAVES,
+            listOf(
+                BlockColumnConfiguration.layer(
+                    BiasedToBottomInt.of(0, 5),
+                    BlockStateProvider.simple(DnDBlocks.OVERGROWTH_BLOCK.defaultBlockState())
+                ),
+                BlockColumnConfiguration.layer(
+                    UniformInt.of(1, 6),
+                    BlockStateProvider.simple(
+                        DnDBlocks.VERDANT_LEAVES.defaultBlockState().setValue(BlockStateProperties.PERSISTENT, true)
+                    )
+                )
+            )
+        )
+        c.hangingCaveColumn(
+            DnDConfiguredFeature.OVERGROWTH_HANGING_BLOCKS,
+            listOf(
+                BlockColumnConfiguration.layer(
+                    BiasedToBottomInt.of(0, 5),
+                    BlockStateProvider.simple(DnDBlocks.OVERGROWTH_BLOCK.defaultBlockState())
+                ),
+                BlockColumnConfiguration.layer(
+                    BiasedToBottomInt.of(0, 1),
+                    BlockStateProvider.simple(
+                        DnDBlocks.OVERGROWTH_BUSH.defaultBlockState()
+                            .setValue(BlockStateProperties.FACING, Direction.UP)
+                    )
+                )
+            )
+        )
+    }
+
+    fun BootstrapContext<ConfiguredFeature<*, *>>.hangingCaveColumn(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        list: List<BlockColumnConfiguration.Layer>,
+        tip: Boolean = false
+    ) {
+
+        this.registerConfiguredFeature(
+            feature,
+            Feature.BLOCK_COLUMN,
+            BlockColumnConfiguration(
+                list,
                 Direction.DOWN,
                 BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                true
+                !tip
             )
         )
     }
@@ -530,25 +563,31 @@ object ConfiguredFeatureCreator {
             LithostitchedFeatures.WEIGHTED_SELECTOR,
             WeightedSelectorConfig(
                 WeightedList.builder<Holder<PlacedFeature>>()
-                    .addCfg(this, TreeFeatures.HUGE_BROWN_MUSHROOM)
-                    .addCfg(this, TreeFeatures.HUGE_RED_MUSHROOM)
-                    .addPlaced(this, DnDPlacedFeature.DARK_OAK_AUTUMN, 5)
-                    .addPlaced(this, DnDPlacedFeature.CASCADE_TREE_AUTUMN, 5)
-                    .addPlaced(this, DnDPlacedFeature.SYPIA_TALL_AUTUMN, 15)
+                    .addC(this, TreeFeatures.HUGE_BROWN_MUSHROOM)
+                    .addC(this, TreeFeatures.HUGE_RED_MUSHROOM)
+                    .addP(this, DnDPlacedFeature.DARK_OAK_AUTUMN, 10)
+                    .addP(this, DnDPlacedFeature.CASCADE_TREE_AUTUMN, 10)
+                    .addP(this, DnDPlacedFeature.SYPIA_TALL_AUTUMN, 10)
                     .build()
             )
         )
-        this.weightedFeature(
+        this.registerConfiguredFeature(
             DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION,
-            (DnDPlacedFeature.ACACIA_AUTUMN to 50),
-            (DnDPlacedFeature.ACACIA_BUSH_AUTUMN to 30),
-            (DnDPlacedFeature.SYPIA_TALL_AUTUMN to 7),
-            (DnDPlacedFeature.CASCADE_TREE_AUTUMN to 1)
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            this.weightedSelector(
+                (DnDPlacedFeature.ACACIA_AUTUMN to 50),
+                (DnDPlacedFeature.ACACIA_BUSH_AUTUMN to 30),
+                (DnDPlacedFeature.SYPIA_TALL_AUTUMN to 7),
+                (DnDPlacedFeature.CASCADE_TREE_AUTUMN to 1)
+            )
         )
-        this.weightedFeature(
+        this.registerConfiguredFeature(
             DnDConfiguredFeature.GOLDEN_VEGETATION,
-            (DnDPlacedFeature.SYPIA_TALL to 2),
-            (DnDPlacedFeature.SYPIA_TALL_BEES to 1)
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            this.weightedSelector(
+                (DnDPlacedFeature.SYPIA_TALL to 5),
+                (DnDPlacedFeature.SYPIA_TALL_BEES to 1)
+            )
         )
     }
 
@@ -580,43 +619,19 @@ object ConfiguredFeatureCreator {
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.crops() {
-        val configuredFeatures = this.lookup(Registries.CONFIGURED_FEATURE)
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
-                listOf(
-                    WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(
-                            configuredFeatures.getOrThrow(DnDConfiguredFeature.CROPS_WHEAT),
-                        ), 0.25f
-                    ),
-                    WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(
-                            configuredFeatures.getOrThrow(DnDConfiguredFeature.CROPS_CARROTS),
-                        ), 0.175f
-                    ),
-                    WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(
-                            configuredFeatures.getOrThrow(DnDConfiguredFeature.CROPS_POTATOES)
-                        ), 0.175f
-                    ),
-                    WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(
-                            configuredFeatures.getOrThrow(DnDConfiguredFeature.CROPS_PUMPKIN),
-                        ), 0.175f
-                    ),
-                    WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(
-                            configuredFeatures.getOrThrow(DnDConfiguredFeature.CROPS_BEETROOTS),
-                        ), 0.175f
-                    ),
-                    WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(
-                            configuredFeatures.getOrThrow(DnDConfiguredFeature.CROPS_GOLDEN_BEETROOTS),
-                        ), 0.05f
-                    )
-                ), PlacementUtils.inlinePlaced(
-                    configuredFeatures.getOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
-                )
+            DnDConfiguredFeature.AUTUMN_FARMLAND_CROPS,
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            WeightedSelectorConfig(
+                WeightedList.builder<Holder<PlacedFeature>>()
+                    .addC(this, DnDConfiguredFeature.CROPS_WILD_WHEAT, 10)
+                    .addC(this, DnDConfiguredFeature.CROPS_CARROTS, 15)
+                    .addC(this, DnDConfiguredFeature.CROPS_POTATOES, 15)
+                    .addC(this, DnDConfiguredFeature.CROPS_PUMPKIN, 15)
+                    .addC(this, DnDConfiguredFeature.CROPS_BEETROOTS, 15)
+                    .addC(this, DnDConfiguredFeature.CROPS_GOLDEN_BEETROOTS)
+                    .addC(this, DnDConfiguredFeature.CROPS_WHEAT, 50)
+                    .build()
             )
         )
         this.registerConfiguredFeature(
@@ -626,7 +641,7 @@ object ConfiguredFeatureCreator {
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockConfiguration(
                     BlockStateProvider.simple(DnDBlocks.WILD_WHEAT.defaultBlockState())
-                ), ImmutableList.of(Blocks.PODZOL, Blocks.GRASS_BLOCK, Blocks.FARMLAND), 32
+                ), ImmutableList.of(Blocks.PODZOL, Blocks.GRASS_BLOCK, Blocks.FARMLAND), 64
             )
         )
         this.registerConfiguredFeature(
@@ -741,6 +756,7 @@ object ConfiguredFeatureCreator {
         surface: CaveSurface,
         bonemeal: Boolean = false
     ) {
+        val isCeil = surface.ordinal == 1
         this.registerConfiguredFeature(
             feature,
             Feature.VEGETATION_PATCH,
@@ -749,16 +765,15 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(DnDBlocks.OVERGROWTH_BLOCK),
                 PlacementUtils.inlinePlaced(
                     this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(
-                        if (surface.ordinal == 1) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
+                        if (isCeil) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
                         else DnDConfiguredFeature.OVERGROWTH_CEILING_V
-                    ),
-                    *arrayOfNulls<PlacementModifier>(0)
+                    )
                 ),
                 surface,
                 ConstantInt.of(1),
-                0f,
+                if (bonemeal) 0f else 0.3f,
                 5,
-                if (bonemeal) 0.6f else 0.8f,
+                if (bonemeal || isCeil) 0.6f else 0.8f,
                 if (bonemeal) UniformInt.of(1, 2) else UniformInt.of(4, 7),
                 if (bonemeal) 0.75f else 0.3f
             )
@@ -816,22 +831,14 @@ object ConfiguredFeatureCreator {
         )
     }
 
-
-    fun BootstrapContext<ConfiguredFeature<*, *>>.weightedFeature(
-        feature: ResourceKey<ConfiguredFeature<*, *>>,
-        vararg places: Pair<ResourceKey<PlacedFeature>, Int>
-    ) {
+    fun BootstrapContext<ConfiguredFeature<*, *>>.weightedSelector(vararg places: Pair<ResourceKey<PlacedFeature>, Int>): WeightedSelectorConfig {
         val placedFeatures = this.lookup(Registries.PLACED_FEATURE)
         val weightedList = WeightedList.builder<Holder<PlacedFeature>>()
         places.forEach { weightedList.add(placedFeatures.getOrThrow(it.first), it.second) }
-        this.registerConfiguredFeature(
-            feature,
-            LithostitchedFeatures.WEIGHTED_SELECTOR,
-            WeightedSelectorConfig(weightedList.build())
-        )
+        return WeightedSelectorConfig(weightedList.build())
     }
 
-    fun WeightedList.Builder<Holder<PlacedFeature>>.addCfg(
+    fun WeightedList.Builder<Holder<PlacedFeature>>.addC(
         c: BootstrapContext<ConfiguredFeature<*, *>>,
         entry: ResourceKey<ConfiguredFeature<*, *>>,
         int: Int = 1
@@ -840,7 +847,7 @@ object ConfiguredFeatureCreator {
         return this
     }
 
-    fun WeightedList.Builder<Holder<PlacedFeature>>.addPlaced(
+    fun WeightedList.Builder<Holder<PlacedFeature>>.addP(
         c: BootstrapContext<ConfiguredFeature<*, *>>,
         entry: ResourceKey<PlacedFeature>,
         int: Int = 1

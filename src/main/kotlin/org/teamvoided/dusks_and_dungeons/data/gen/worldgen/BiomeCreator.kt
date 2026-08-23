@@ -16,7 +16,6 @@ import net.minecraft.world.level.biome.*
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
-import java.awt.Color
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.LOCAL_MODIFICATIONS as lm2
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES as ss4
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES as uo6
@@ -35,8 +34,6 @@ object BiomeCreator {
         context.register(DnDBiomes.GOLDEN_PASTURES, createAutumnPlains(context, true))
 
         context.register(DnDBiomes.OVERGROWN_GROTTO, overgrownGrotto(context))
-
-
     }
 
     //no access widener?
@@ -57,7 +54,7 @@ object BiomeCreator {
     private fun addAutumnFeatures(generationSettings: BiomeGenerationSettings.Builder, golden: Boolean = false) {
         generationSettings.addFeature(ss4, DnDPlacedFeature.AUTUMN_FARMLANDS)
         generationSettings.addFeature(uo6, DnDPlacedFeature.ORE_LAPIS_EXTRA)
-        generationSettings.addFeature(lm2, DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER)
+        generationSettings.addFeature(lm2, DnDPlacedFeature.OVERGROWN_BOULDER)
         generationSettings.addFeature(
             vd9,
             if (golden) DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA else DnDPlacedFeature.PATCH_PUMPKIN_EXTRA
@@ -131,6 +128,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
         BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
         addAutumnFeatures(generationSettings, golden)
+        if (golden)  generationSettings.addFeature(vd9, DnDPlacedFeature.WILD_WHEAT_FIELD)
 
         return Biome.BiomeBuilder().temperature(0.25f).downfall(0.8f).specialEffects(
             BiomeSpecialEffects.Builder()
@@ -201,7 +199,7 @@ object BiomeCreator {
             BiomeSpecialEffects.Builder()
                 .waterColor(0x58DC6E)
                 .waterFogColor(0x17543c)
-                .fogColor(0x96FFBC)
+                .fogColor(11587327)
                 .grassColorOverride(0x9DED6D)
                 .skyColor(getSkyColor(0.5f))
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
@@ -217,7 +215,7 @@ object BiomeCreator {
 
     private fun addOvergrowthCavesVegetationFeatures(builder: BiomeGenerationSettings.Builder) {
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_CEILING_VEGETATION)
-        //builder.addFeature(vd9, CavePlacements.CAVE_VINES)
+        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_HANGING)
         //builder.addFeature(vd9, CavePlacements.LUSH_CAVES_CLAY)
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_FLOOR_VEGETATION)
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_TREE_ROOTED)

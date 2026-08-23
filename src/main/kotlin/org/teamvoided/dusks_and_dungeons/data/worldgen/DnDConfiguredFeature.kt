@@ -88,6 +88,8 @@ object DnDConfiguredFeature {
     val OVERGROWTH_TREE_ROOTED = create("tree/verdant/rooted")
     val OVERGROWTH_CARPET_PATCH = create("overgrowth/carpet_patch")
     val OVERGROWTH_HANGING = create("overgrowth/hanging")
+    val OVERGROWTH_HANGING_LEAVES = create("overgrowth/hanging_leaves")
+    val OVERGROWTH_HANGING_BLOCKS = create("overgrowth/hanging_blocks")
 
     fun create(id: String): ResourceKey<ConfiguredFeature<*, *>> =
         ResourceKey.create(Registries.CONFIGURED_FEATURE, id(id))

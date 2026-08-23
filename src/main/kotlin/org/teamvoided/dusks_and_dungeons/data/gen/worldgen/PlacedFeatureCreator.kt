@@ -12,6 +12,7 @@ import net.minecraft.data.worldgen.features.VegetationFeatures
 import net.minecraft.data.worldgen.placement.OrePlacements
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.BlockTags
 import net.minecraft.util.valueproviders.ClampedInt
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.UniformInt
@@ -42,12 +43,19 @@ object PlacedFeatureCreator {
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
         val cfgLookup = c.lookup(Registries.CONFIGURED_FEATURE)
         c.register(
-            DnDPlacedFeature.OVERGROWN_COBBLESTONE_BOULDER,
+            DnDPlacedFeature.OVERGROWN_BOULDER,
             cfgLookup.getOrThrow(DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER),
             RarityFilter.onAverageOnceEvery(7),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
             BiomeFilter.biome()
+        )
+        c.cavePlacement(
+            DnDPlacedFeature.OVERGROWN_CAVE_BOULDER,
+            DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
+            10,
+            Direction.DOWN,
+            BlockPredicate.matchesTag(BlockTags.MOSS_REPLACEABLE)
         )
         c.pumpkin(DnDPlacedFeature.PATCH_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA)
         c.pumpkin(DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_LANTERN_EXTRA)
@@ -103,7 +111,7 @@ object PlacedFeatureCreator {
         c.register(//places on surface in biomes
             DnDPlacedFeature.GOLDEN_MUSHROOM_SURFACE,
             cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
-            RarityFilter.onAverageOnceEvery(16),
+            RarityFilter.onAverageOnceEvery(64),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()
@@ -121,12 +129,12 @@ object PlacedFeatureCreator {
             1,
             Direction.UP
         )
-        //c.cavePlacement(
-        //    CavePlacements.CAVE_VINES,
-        //    holder9,
-        //    188,
-        //    Direction.UP
-        //)
+        c.cavePlacement(
+            DnDPlacedFeature.OVERGROWTH_HANGING,
+            DnDConfiguredFeature.OVERGROWTH_HANGING,
+            188,
+            Direction.UP
+        )
         c.cavePlacement(
             DnDPlacedFeature.OVERGROWTH_CAVES_FLOOR_VEGETATION,
             DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR,
@@ -160,7 +168,8 @@ object PlacedFeatureCreator {
         place: ResourceKey<PlacedFeature>,
         conf: ResourceKey<ConfiguredFeature<*, *>>,
         count: Int,
-        direction: Direction
+        direction: Direction,
+        search: BlockPredicate =  BlockPredicate.solid()
     ) {
 
         this.register(
@@ -171,7 +180,7 @@ object PlacedFeatureCreator {
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(
                 direction,
-                BlockPredicate.solid(),
+                search,
                 BlockPredicate.ONLY_IN_AIR_PREDICATE,
                 12
             ),
@@ -302,7 +311,7 @@ object PlacedFeatureCreator {
         c.register(
             DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
-            RarityFilter.onAverageOnceEvery(2),
+            RarityFilter.onAverageOnceEvery(5),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
@@ -321,6 +330,14 @@ object PlacedFeatureCreator {
             DnDPlacedFeature.FAIRY_RING_RED,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FAIRY_RING_RED),
             RarityFilter.onAverageOnceEvery(21),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
+        )
+        c.register(
+            DnDPlacedFeature.WILD_WHEAT_FIELD,
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
+            CountPlacement.of(21),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()
