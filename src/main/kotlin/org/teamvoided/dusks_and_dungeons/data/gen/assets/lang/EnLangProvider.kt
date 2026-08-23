@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
@@ -19,6 +20,7 @@ class EnLangProvider(val output: FDOutput, r: FutureLookup) : FabricLanguageProv
         getModHolders(BuiltInRegistries.BLOCK).forEach { trySafe(it) { gen.add(it.value(), it.lang()) } }
         getModHolders(BuiltInRegistries.CREATIVE_MODE_TAB).forEach { gen.add(it.key(), it.lang()) }
         getModHolders(BuiltInRegistries.MOB_EFFECT).forEach { gen.add(it.value(), it.lang()) }
+        lookup.getModHolders(Registries.BIOME).forEach { gen.add(it.key().location().toLanguageKey("biome"), it.lang()) }
 
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, genLang(it.location)) }
         gen.advancement(DnDAdvancements.FALL, "Fall!", "Visit the golden and autumn biomes!")
@@ -31,7 +33,6 @@ class EnLangProvider(val output: FDOutput, r: FutureLookup) : FabricLanguageProv
             "was brought down with a cast brick from"
         )
     }
-
 
     fun <T : Any> Holder.Reference<T>.lang(): String = genLang(key().location())
     fun genLang(id: ResourceLocation): String = genLang(id.path)

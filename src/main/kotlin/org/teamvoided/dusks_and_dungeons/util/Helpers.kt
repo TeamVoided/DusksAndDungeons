@@ -4,16 +4,25 @@ package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
+import kotlin.jvm.optionals.getOrNull
 
 
 fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
 
 fun <T : Any> isModHolder(holder: Holder<T>) = holder.`is` { it.location().namespace == MODID }
+
+fun <T : Any> HolderLookup.Provider.getModHolders(registry: ResourceKey<Registry<T>>): List<Holder.Reference<T>> {
+    return lookup(registry).getOrNull()
+        ?.listElements()
+        ?.filter(::isModHolder)
+        ?.toList() ?: listOf()
+}
 
 fun <T : Any> getModHolders(registry: Registry<T>): List<Holder.Reference<T>> = registry.holders()
     .filter(::isModHolder)
