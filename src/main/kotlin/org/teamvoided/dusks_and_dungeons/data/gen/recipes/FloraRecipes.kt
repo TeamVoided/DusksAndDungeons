@@ -13,27 +13,33 @@ import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object FloraRecipes {
-    fun generateFloraRecipes(e: RecipeOutput) {
-        e.createPiles(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK)
-        e.createPiles(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK)
+
+    fun generateFloraRecipes(output: RecipeOutput) {
+
+        RecipeProvider.threeByThreePacker(
+            output, RecipeCategory.BUILDING_BLOCKS, Blocks.WARPED_WART_BLOCK, DnDBlocks.WARPED_WART
+        )
+
+        output.createPiles(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK)
+        output.createPiles(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK)
         DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
-            e.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
+            output.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
         }
         DnDBlockLists.stripedLogPiles.forEachIndexed { idx, pile ->
-            e.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].second)
+            output.createPiles(pile, DnDBlockLists.logsAndStrippedLogs[idx].second)
         }
         DnDBlockLists.leafPiles.forEachIndexed { idx, pile ->
-            e.createPiles(pile, DnDBlockLists.leaves[idx])
+            output.createPiles(pile, DnDBlockLists.leaves[idx])
         }
-        FabricRecipeProvider.oneToOneConversionRecipe(e, Items.PURPLE_DYE, DnDItems.MOONBERRIES, "purple_dye")
+        FabricRecipeProvider.oneToOneConversionRecipe(output, Items.PURPLE_DYE, DnDItems.MOONBERRIES, "purple_dye")
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.ROOT_BLOCK)
             .define('#', Blocks.HANGING_ROOTS)
             .pattern("##")
             .pattern("##")
             .criterion(Blocks.HANGING_ROOTS)
-            .save(e)
-        e.createCount(Blocks.HANGING_ROOTS, DnDBlocks.ROOT_BLOCK, 4)
+            .save(output)
+        output.createCount(Blocks.HANGING_ROOTS, DnDBlocks.ROOT_BLOCK, 4)
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.RABBIT_STEW)
             .requires(Items.BAKED_POTATO)
@@ -43,12 +49,12 @@ object FloraRecipes {
             .requires(DnDBlocks.GOLDEN_MUSHROOM)
             .group("rabbit_stew")
             .criterion(Items.COOKED_RABBIT)
-            .save(e, getConversionRecipeName(Items.RABBIT_STEW, DnDBlocks.GOLDEN_MUSHROOM))
+            .save(output, getConversionRecipeName(Items.RABBIT_STEW, DnDBlocks.GOLDEN_MUSHROOM))
 
-        pumpkins(e)
-        corn(e)
+        pumpkins(output)
+        corn(output)
 
-        flowerbeds(e)
+        flowerbeds(output)
     }
 
     fun pumpkins(e: RecipeOutput) {
@@ -122,4 +128,5 @@ object FloraRecipes {
             .criterion(item)
             .save(this)
     }
+
 }
