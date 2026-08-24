@@ -86,6 +86,7 @@ object DnDConfiguredFeature {
     val OVERGROWTH_TREE_EAST = create("tree/verdant/east")
     val OVERGROWTH_TREE_WEST = create("tree/verdant/west")
     val OVERGROWTH_TREE_ROOTED = create("tree/verdant/rooted")
+    val OVERGROWTH_LEAF_DECORATORS = create("tree/verdant/leaf_decorator")
     val OVERGROWTH_CARPET_PATCH = create("overgrowth/carpet_patch")
     val OVERGROWTH_HANGING = create("overgrowth/hanging")
     val OVERGROWTH_HANGING_LEAVES = create("overgrowth/hanging_leaves")

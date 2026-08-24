@@ -59,7 +59,12 @@ object PlacedFeatureCreator {
         )
         c.pumpkin(DnDPlacedFeature.PATCH_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA)
         c.pumpkin(DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_LANTERN_EXTRA)
-        c.cavePlacement(DnDPlacedFeature.PATCH_MOSSKIN_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_MOSSKIN_EXTRA,            64,            Direction.DOWN,)
+        c.cavePlacement(
+            DnDPlacedFeature.PATCH_MOSSKIN_PUMPKIN_EXTRA,
+            DnDConfiguredFeature.PATCH_PUMPKIN_MOSSKIN_EXTRA,
+            4,
+            Direction.DOWN,
+        )
         c.pumpkin(DnDPlacedFeature.PATCH_GLOOM_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_GLOOM_EXTRA)
         c.register(
             DnDPlacedFeature.DISK_PODZOL, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_PODZOL),
@@ -150,7 +155,7 @@ object PlacedFeatureCreator {
         c.cavePlacement(
             DnDPlacedFeature.OVERGROWTH_CAVES_TREES,
             DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
-            375,
+            125,
             Direction.DOWN,
             BlockPredicate.matchesTag(BlockTags.DIRT)
         )

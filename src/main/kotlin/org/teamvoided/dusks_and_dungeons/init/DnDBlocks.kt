@@ -633,7 +633,7 @@ object DnDBlocks {
 
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
     @Suppress("unused")
-    val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))
+    val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))//otherwise known as the Glock
 
     fun init() {
         // Striping

@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
-import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature
 import net.minecraft.world.level.levelgen.feature.configurations.*
 import net.minecraft.world.level.levelgen.feature.featuresize.ThreeLayersFeatureSize
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize
@@ -34,6 +33,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlac
 import net.minecraft.world.level.levelgen.feature.foliageplacers.DarkOakFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.trunkplacers.DarkOakTrunkPlacer
@@ -41,7 +41,6 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.block.HangingFloraBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
@@ -207,6 +206,21 @@ object ConfiguredFeatureCreator {
             )
         )
 
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.OVERGROWTH_LEAF_DECORATORS,
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            WeightedSelectorConfig(
+                WeightedList.builder<Holder<PlacedFeature>>()
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING, 9)
+                    .add(
+                        PlacementUtils.inlinePlaced(
+                            Feature.SIMPLE_BLOCK,
+                            SimpleBlockConfiguration(SimpleStateProvider.simple(Blocks.VERDANT_FROGLIGHT)),
+                            BlockPredicateFilter.forPredicate(BlockPredicate.ONLY_IN_AIR_PREDICATE)
+                        )
+                    ).build()
+            )
+        )
         c.registerConfiguredFeature(
             DnDConfiguredFeature.OVERGROWTH_FLOOR_V,
             Feature.SIMPLE_BLOCK,
@@ -470,7 +484,7 @@ object ConfiguredFeatureCreator {
                 TwoLayersFeatureSize(1, 0, 1)
             )
                 .forceDirt().ignoreVines().decorators(
-                    ImmutableList.of<TreeDecorator>(leafPiles(DnDBlocks.ACACIA_LEAF_PILE, blockTags))
+                    ImmutableList.of(leafPiles(DnDBlocks.ACACIA_LEAF_PILE, blockTags))
                 ).build()
         )
         this.registerConfiguredFeature(
@@ -759,18 +773,29 @@ object ConfiguredFeatureCreator {
         bonemeal: Boolean = false
     ) {
         val isCeil = surface.ordinal == 1
+        val vegFeat = if (bonemeal || isCeil) PlacementUtils.inlinePlaced(
+            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(
+                if (isCeil) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
+                else DnDConfiguredFeature.OVERGROWTH_CEILING_V
+            )
+        ) else PlacementUtils.inlinePlaced(
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            WeightedSelectorConfig(
+                WeightedList.builder<Holder<PlacedFeature>>()
+                    .addC(this, DnDConfiguredFeature.OVERGROWTH_FLOOR_V, 6)
+                    .addC(this, DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
+                    .build()
+            )
+        )
+
+
         this.registerConfiguredFeature(
             feature,
             Feature.VEGETATION_PATCH,
             VegetationPatchConfiguration(
                 BlockTags.MOSS_REPLACEABLE,
                 BlockStateProvider.simple(DnDBlocks.OVERGROWTH_BLOCK),
-                PlacementUtils.inlinePlaced(
-                    this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(
-                        if (isCeil) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
-                        else DnDConfiguredFeature.OVERGROWTH_CEILING_V
-                    )
-                ),
+                vegFeat,
                 surface,
                 ConstantInt.of(1),
                 if (bonemeal) 0f else 0.3f,
@@ -810,7 +835,8 @@ object ConfiguredFeatureCreator {
             ),
             FeatureOnLeavesTreeDecorator(
                 PlacementUtils.inlinePlaced(
-                    this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(DnDConfiguredFeature.OVERGROWTH_HANGING)
+                    this.lookup(Registries.CONFIGURED_FEATURE)
+                        .getOrThrow(DnDConfiguredFeature.OVERGROWTH_LEAF_DECORATORS)
                 ),
                 0.3f,
                 2,
