@@ -27,6 +27,7 @@ import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
 import java.util.concurrent.CompletableFuture
 
 class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
+
     override fun buildRecipes(e: RecipeOutput) {
         recipesBlockFamilies.forEach { generateRecipes(e, it, FeatureFlags.DEFAULT_FLAGS) }
         SETS.forEach(e::createSet)
@@ -131,18 +132,23 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.carpetPlate(DnDBlocks.MOSS_CARPET_PLATE, Blocks.MOSS_CARPET)
     }
 
-    private fun temporaryRecipes(e: RecipeOutput) {
+    private fun temporaryRecipes(output: RecipeOutput) {
         /* ShapelessRecipeJsonFactory(RecipeCategory.MISC, DnDBlocks.CHEST_O_SOULS, 1)
              .ingredient(Items.CHEST)
              .ingredient(Items.SOUL_LANTERN)
              .criterion(DnDBlocks.CHEST_O_SOULS).offerTo(e)*/
 
         stonecutterResultFromBase(
-            e, RecipeCategory.BUILDING_BLOCKS,
+            output, RecipeCategory.BUILDING_BLOCKS,
             DnDBlocks.SMALL_PUMPKIN,
             Blocks.PUMPKIN,
             4
         )
+
+       /* HurtItemRecipeBuilder.hurtItem(Ingredient.of(Items.APPLE), DamageTypeTags.IS_FIRE, Items.DIAMOND)
+            .invulnerableTime(25)
+            .criterion(Items.APPLE)
+            .save(output, id("crushing_ur_balls"))*/
     }
 
 

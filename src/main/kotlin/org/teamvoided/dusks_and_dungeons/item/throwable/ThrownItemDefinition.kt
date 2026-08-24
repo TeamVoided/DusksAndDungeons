@@ -39,8 +39,7 @@ data class ThrownItemDefinition(
                 .group(
                     TagKey.hashedCodec(Registries.ITEM).fieldOf("items").forGetter { it.items },
                     ExtraCodecs.POSITIVE_FLOAT.fieldOf("damage").forGetter { it.damage },
-                    EitherHolder.codec(Registries.DAMAGE_TYPE, DamageType.CODEC)
-                        .fieldOf("damage_type").forGetter { it.damageType },
+                    DnDCodecs.DAMAGE_TYPE_CODEC.fieldOf("damage_type").forGetter { it.damageType },
                     ExtraCodecs.POSITIVE_FLOAT.fieldOf("power").forGetter { it.power },
                     ExtraCodecs.POSITIVE_FLOAT.fieldOf("uncertainty").forGetter { it.uncertainty },
                     ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("cooldown", 0).forGetter { it.cooldown },
@@ -55,7 +54,7 @@ data class ThrownItemDefinition(
         fun write(buf: RegistryFriendlyByteBuf, def: ThrownItemDefinition) {
             DnDCodecs.ITEM_TAG_STREAM_CODEC.encode(buf, def.items)
             buf.writeFloat(def.damage)
-            DnDCodecs.DAMAGE_TYPE_CODEC.encode(buf, def.damageType)
+            DnDCodecs.DAMAGE_TYPE_STREAM_CODEC.encode(buf, def.damageType)
             buf.writeFloat(def.power)
             buf.writeFloat(def.uncertainty)
             buf.writeInt(def.cooldown)
@@ -66,7 +65,7 @@ data class ThrownItemDefinition(
             return ThrownItemDefinition(
                 DnDCodecs.ITEM_TAG_STREAM_CODEC.decode(buf),
                 buf.readFloat(),
-                DnDCodecs.DAMAGE_TYPE_CODEC.decode(buf),
+                DnDCodecs.DAMAGE_TYPE_STREAM_CODEC.decode(buf),
                 buf.readFloat(),
                 buf.readFloat(),
                 buf.readInt(),

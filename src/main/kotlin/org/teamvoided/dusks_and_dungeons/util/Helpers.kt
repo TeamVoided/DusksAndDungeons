@@ -3,13 +3,11 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.core.DefaultedRegistry
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
-import net.minecraft.core.Registry
+import net.minecraft.core.*
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
+import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import kotlin.jvm.optionals.getOrNull
@@ -41,6 +39,10 @@ fun <V : Any, T : V> Registry<T>.registerHolder(id: ResourceLocation, entry: T):
 
 fun <T : Any, R : Registry<T>> ResourceKey<R>.tag(id: ResourceLocation): TagKey<T> = TagKey.create(this, id)
 fun <T : Any, R : Registry<T>> ResourceKey<R>.key(id: ResourceLocation): ResourceKey<T> = ResourceKey.create(this, id)
+
+fun <T : Any> Level.getTag(tag: TagKey<T>): HolderSet.Named<T>? {
+    return registryAccess().lookup(tag.registry).getOrNull()?.get(tag)?.getOrNull()
+}
 
 fun ResourceKey<*>.toLangKey(): String = location().toLangKey()
 fun ResourceLocation.toLangKey(): String = toLanguageKey().replace("/", ".")

@@ -27,6 +27,7 @@ object DusksAndDungeons {
         DnDFamilies.init()
 
         DnDLootContext.init()
+        DnDRecipes.init()
 
         DnDBlockEntities.init()
         DnDEffects.init()

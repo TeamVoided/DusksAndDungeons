@@ -10,7 +10,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
-import org.teamvoided.dusks_and_dungeons.init.DnDRecipeTypes
+import org.teamvoided.dusks_and_dungeons.init.DnDRecipes
 import java.util.*
 
 // TODO clean up and optimize
@@ -26,7 +26,7 @@ class StrictShapedRecipe(
     strictResult, showNotification
 ) {
 
-    override fun getSerializer() = DnDRecipeTypes.STRICT_CRAFTING_SHAPED
+    override fun getSerializer() = DnDRecipes.STRICT_CRAFTING_SHAPED_SERIALIZER
 
     override fun getResultItem(lookup: HolderLookup.Provider): ItemStack = strictResult
 
