@@ -35,7 +35,7 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(DnDItemTags.BLACKSTONE_TOOL_MATERIALS).add(Items.BLACKSTONE)
         getOrCreateTagBuilder(DnDItemTags.EMPTY)
 
-        // TODO VV tags
+        // TODO(1.0) VV tags
         copy(ConventionalBlockTags.BOOKSHELVES, ConventionalItemTags.BOOKSHELVES)
         copy(ConventionalBlockTags.INFESTED_COBBLESTONES, ConventionalItemTags.INFESTED_COBBLESTONES)
         copy(ConventionalBlockTags.DEEPSLATE_COBBLESTONES, ConventionalItemTags.DEEPSLATE_COBBLESTONES)

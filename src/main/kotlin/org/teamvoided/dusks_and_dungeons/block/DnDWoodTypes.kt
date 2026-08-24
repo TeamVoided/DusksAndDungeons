@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.properties.WoodType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
 
-// TODO split DnDBlockSetTypes to new file
+// TODO(1.0) split DnDBlockSetTypes to new file
 object DnDWoodTypes {
     fun init() = Unit
 

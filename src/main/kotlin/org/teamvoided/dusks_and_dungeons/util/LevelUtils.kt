@@ -56,7 +56,7 @@ fun PlayerList.broadcast(
     }
 }
 
-// TODO remove
+// TODO(1.0) remove
 fun Level.playBlockSound(pos: BlockPos, sound: SoundEvent, volume: Float, pitch: Float) {
     playLocalSound(pos, sound, SoundSource.BLOCKS, volume, pitch, false)
 }

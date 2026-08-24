@@ -15,14 +15,14 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 
-// TODO fix name to be inline with mojmaps
+// TODO(1.0) fix name to be inline with mojmaps
 fun RecipeBuilder.criterion(item: ItemLike): RecipeBuilder =
     this.unlockedBy(getHasName(item), has(item))
 
 fun RecipeBuilder.criterion(tag: TagKey<Item>): RecipeBuilder =
     this.unlockedBy("has_${tag.location.path}", has(tag))
 
-// TODO move to big blocks
+// TODO(1.0) move to big blocks
 fun RecipeOutput.createBigLantern(
     block: ItemLike,
     torch: ItemLike,
@@ -435,7 +435,7 @@ fun RecipeOutput.createPiles(output: ItemLike, input: ItemLike) {
         .save(this)
 }
 
-// TODO stuff for VV
+// TODO(1.0) stuff for VV
 
 fun RecipeOutput.createStoneWall(wall: Block, source: Block) {
     createWall(wall, source)

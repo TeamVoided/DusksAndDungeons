@@ -51,5 +51,5 @@ fun ensureUnique(id: ResourceLocation, registry: DefaultedRegistry<*>) {
     require(!registry.containsKey(id)) { "Duplicate block: $id" }
 }
 
-// TODO remove this
+// TODO(1.0) remove this
 fun Vec3.map(func: (Double) -> Double): Vec3 = Vec3(func(this.x), func(this.y), func(this.z))

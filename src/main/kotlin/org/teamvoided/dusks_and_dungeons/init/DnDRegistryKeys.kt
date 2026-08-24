@@ -7,7 +7,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.RaccoonVariant
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 
-// TODO rename to DnDRegistries
+// TODO(1.0) rename to DnDRegistries
 object DnDRegistryKeys {
 
     val RACCOON_VARIANT = key<RaccoonVariant>("raccoon_variant")

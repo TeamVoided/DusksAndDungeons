@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level
 import org.teamvoided.dusks_and_dungeons.init.DnDRecipes
 import java.util.*
 
-// TODO clean up and optimize
+// TODO(1.0) clean up and optimize
 class StrictShapedRecipe(
     group: String,
     category: CraftingBookCategory,

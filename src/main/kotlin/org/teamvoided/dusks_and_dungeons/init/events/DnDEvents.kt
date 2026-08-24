@@ -26,7 +26,7 @@ object DnDEvents {
 
     fun init() {
 
-        // TODO move?
+        // TODO(1.0) move?
         FabricBrewingRecipeRegistryBuilder.BUILD.register { builder ->
             builder.addContainer(DnDItems.TINTED_POTION)
             builder.addContainer(DnDItems.TINTED_SPLASH_POTION)

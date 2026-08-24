@@ -59,7 +59,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .criterion(Blocks.TINTED_GLASS)
             .save(e)
 
-        // TODO sort VV recipes
+        // TODO(1.0) sort VV recipes
 
         // Missing Sets
         e.createStonecuttingSet(DnDBlocks.QUARTZ_BRICK_SET, Blocks.QUARTZ_BLOCK)
@@ -114,7 +114,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .save(e)
 
         // Bookshelf
-        e.bookshelf(BOOKSHELF, Blocks.OAK_PLANKS, mc("oak_bookshelf")) // TODO(maybe) make this gen under mc for real
+        e.bookshelf(BOOKSHELF, Blocks.OAK_PLANKS, mc("oak_bookshelf")) // TODO(1.0) maybe make this gen under mc for real
         e.bookshelf(DnDBlocks.SPRUCE_BOOKSHELF, Blocks.SPRUCE_PLANKS)
         e.bookshelf(DnDBlocks.BIRCH_BOOKSHELF, Blocks.BIRCH_PLANKS)
         e.bookshelf(DnDBlocks.JUNGLE_BOOKSHELF, Blocks.JUNGLE_PLANKS)

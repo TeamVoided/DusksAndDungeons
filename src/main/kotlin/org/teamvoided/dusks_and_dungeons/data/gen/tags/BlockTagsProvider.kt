@@ -58,9 +58,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.EMPTY)
 
-        // TODO deal with VV stuff
+        // TODO(1.0) deal with VV stuff
 
-        // TODO add a mixin for this tag to only apply if the top has a full side
+        // TODO(1.0) add a mixin for this tag to only apply if the top has a full side
         getOrCreateTagBuilder(BlockTags.SNOW)
             .add(
                 DnDBlocks.SNOW_SET.stairs,
@@ -508,7 +508,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
     private fun woodTags() {
         WOOD_SETS.filterNot(excludeWood::contains).forEach { it.createWoodTags(::getOrCreateTagBuilder) }
-        // TODO make wood walls work as part of walls tags
+        // TODO(1.0) make wood walls work as part of walls tags
         // getOrCreateTagBuilder(BlockTags.WALLS).forceAddTag(DnDBlockTags.WOODEN_WALLS)
         getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE).forceAddTag(DnDBlockTags.WOODEN_WALLS)
 

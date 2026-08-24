@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-// TODO move to voidlib
+// TODO(lib) move to voidlib
 @Mixin(EntityRenderDispatcher.class)
 public class ShadowAttributeMixin {
 

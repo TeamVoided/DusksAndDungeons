@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags;
 
-// TODO move to taglighting
+// TODO(lib) move to taglighting
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 

@@ -191,7 +191,7 @@ object DnDItems {
     fun attributeSettings(comp: ItemAttributeModifiers): Properties = Properties().attributes(comp)
     fun countSettings(count: Int): Properties = Properties().stacksTo(count)
 
-    // TODO move to voidlib
+    // TODO(lib) clean up & move to voidlib
     @JvmField
     val CUSTOM_STATS = listOf(id("base_block_range"), id("base_entity_range"))
 }

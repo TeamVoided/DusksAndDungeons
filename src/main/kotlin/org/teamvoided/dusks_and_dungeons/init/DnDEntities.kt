@@ -14,7 +14,7 @@ import org.teamvoided.dusks_and_dungeons.entity.ThrownItemStack
 import org.teamvoided.dusks_and_dungeons.util.doEvil
 import org.teamvoided.dusks_and_dungeons.util.register
 
-// TODO rename to DnDEntityTypes
+// TODO(1.0) rename to DnDEntityTypes
 object DnDEntities {
 
     val SCARECROW = register(

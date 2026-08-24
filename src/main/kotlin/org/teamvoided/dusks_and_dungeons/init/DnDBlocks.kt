@@ -503,7 +503,7 @@ object DnDBlocks {
     // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
 
 
-    // TODO remove
+    // TODO(1.0) remove
     private fun deepslate(): Properties = Properties.of().mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE)
 
     // Infested blocks
@@ -548,7 +548,7 @@ object DnDBlocks {
     val CRACKED_BRICKS = registerSet("cracked_brick", ofFullCopy(BRICKS), "s").pickaxe()
 
     // Graves
-    // TODO rename all of these to be their brick variants
+    // TODO(1.0) rename all of these to be their brick variants
     val STONE_GRAVESTONE = registerGravestone("stone_gravestone", CHISELED_STONE_BRICKS)
     val SMALL_STONE_GRAVESTONE = registerSmallGravestone("small_stone_gravestone", STONE_GRAVESTONE)
     val DEEPSLATE_GRAVESTONE = registerGravestone("deepslate_gravestone", CHISELED_DEEPSLATE)
@@ -691,7 +691,7 @@ object DnDBlocks {
     val BAMBOO_BOOKSHELF = register("bamboo_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
     val CRIMSON_BOOKSHELF = register("crimson_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
     val WARPED_BOOKSHELF = register("warped_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    // TODO add DnD bookshelf
+    // TODO(1.0) add DnD bookshelf
 
     // Carpet Plates
     val WOOL_CARPET_PLATE = register(
@@ -701,7 +701,7 @@ object DnDBlocks {
     )
     val MOSS_CARPET_PLATE = register("moss_carpet_plate", CarpetPlateBlock(MOSS, ofFullCopy(MOSS_CARPET)))
         .hoe().sword()
-    //TODO overgrowth carpet
+    //TODO(1.0) overgrowth carpet
 
 
     // Polished Sandstone
@@ -833,7 +833,7 @@ object DnDBlocks {
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
 
-        // TODO fix
+        // TODO(1.0) fix
 //        BOOKSHELFS.onEach {
 //            FlammableBlockRegistry.getDefaultInstance().add(it, 30, 20)
 //            FuelRegistry.INSTANCE.add(it, 300)
@@ -846,7 +846,7 @@ object DnDBlocks {
         BlockStrippingRegistry.register(set.wall, strippedSet.wall)
     }
 
-    // TODO make this return actualy block type
+    // TODO(1.0) make this return actually block type
     fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
         DnDItems.register(id, BlockItem(regBlock, Item.Properties()))

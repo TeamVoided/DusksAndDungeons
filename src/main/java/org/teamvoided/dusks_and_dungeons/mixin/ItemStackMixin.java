@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 
 import static org.teamvoided.dusks_and_dungeons.init.DnDItems.CUSTOM_STATS;
 
-// TODO move to voidlib
+// TODO(lib) move to voidlib
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
     @Inject(method = "addModifierTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;is(Lnet/minecraft/resources/ResourceLocation;)Z", ordinal = 0))

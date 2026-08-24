@@ -59,7 +59,7 @@ fun symmetricalBoxX(yzMin: Double, xMin: Double, xMax: Double): VoxelShape =
 //val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
 //val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
 
-// TODO(ender) move these to gravestone block class
+// TODO(1.0) move these to gravestone block class
 val gravestoneShape: VoxelShape = Shapes.or(
     Block.box(0.0, 0.0, 0.0, 2.0, 16.0, 6.0), //left
     Block.box(14.0, 0.0, 0.0, 16.0, 16.0, 6.0), //right

@@ -64,7 +64,7 @@ fun BlockModelGenerators.createBigLantern(block: Block, bottom: ResourceLocation
 }
 
 fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
-    // TODO make this be parented models instead
+    // TODO(1.0) make this be parented models instead
     val stable = ModelLocationUtils.getModelLocation(scaffolding, "_stable")
     val unstable = ModelLocationUtils.getModelLocation(scaffolding, "_unstable")
     delegateItemModel(scaffolding, stable)

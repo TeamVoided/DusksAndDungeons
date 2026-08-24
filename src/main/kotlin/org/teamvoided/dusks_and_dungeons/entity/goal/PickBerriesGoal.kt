@@ -1,12 +1,12 @@
 package org.teamvoided.dusks_and_dungeons.entity.goal
 
+import net.minecraft.core.BlockPos
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.EquipmentSlot
-import net.minecraft.world.entity.ai.goal.MoveToBlockGoal
 import net.minecraft.world.entity.PathfinderMob
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.core.BlockPos
 import net.minecraft.world.level.GameRules
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block

@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 
-// TODO re order the file to have simple functions upto
+// TODO(1.0) re order the file to have simple functions upto
 /**
  * Creates a property map for blocks with `BlockStateProperties.FACING` propery with the default state being `Direction.UP`
  */

@@ -82,7 +82,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
 
         gen.createBrushableBlock(DnDBlocks.SUSPICIOUS_RED_SAND)
 
-        // region TODO move all vv to appropriate files and categories
+        // region TODO(1.0) move all vv to appropriate files and categories
         val infestedBlocks = listOf(
             DnDBlocks.INFESTED_MOSSY_COBBLESTONE,
             DnDBlocks.INFESTED_COBBLED_DEEPSLATE,
@@ -151,7 +151,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.addAxis(Blocks.MANGROVE_ROOTS)
         // endregion
 
-        // TODO put it item model gen
+        // TODO(1.0) put it item model gen
         gen.delegateItemModel(
             DnDItems.RACCOON_SPAWN_EGG,
             ModelLocationUtils.decorateItemModelLocation("template_spawn_egg")

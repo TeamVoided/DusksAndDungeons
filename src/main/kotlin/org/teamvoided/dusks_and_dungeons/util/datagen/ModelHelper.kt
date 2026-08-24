@@ -1519,7 +1519,7 @@ fun BlockModelGenerators.denseCube(block: Block) {
     )
 }
 
-// TODO make item only model?
+// TODO generate everything
 fun BlockModelGenerators.tintedPane(glass: Block, glassPane: Block) {
     ModelTemplates.FLAT_ITEM
         .create(ModelLocationUtils.getModelLocation(glassPane.asItem()), TextureMapping.layer0(glass), modelOutput)
