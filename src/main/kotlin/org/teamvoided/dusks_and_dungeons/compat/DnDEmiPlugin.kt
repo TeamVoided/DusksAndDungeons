@@ -32,7 +32,6 @@ import kotlin.jvm.optionals.getOrNull
 
 object DnDEmiPlugin : EmiPlugin {
 
-
     override fun register(registry: EmiRegistry) {
         val hiddenItems = hiddenFromRecipeViewers() + EVIL_ITEMS.toSet()
 
@@ -51,9 +50,13 @@ object DnDEmiPlugin : EmiPlugin {
 
         val axes: EmiIngredient = getAxes()
         for ((from, to) in BlockStrippingRegistryIml.BLOCK_STATE_MAP) {
-            // TODO add hidden item checks
+            val input = EmiStack.of(from)
+            val output = EmiStack.of(to)
+            if (hiddenItems.contains(input.itemStack.item) || hiddenItems.contains(output.itemStack.item)) {
+                continue
+            }
             registry.addRecipeSafe(synthetic("world/stripping", subId(from))) { id ->
-                basicWorld(EmiStack.of(from), axes, EmiStack.of(to), id)
+                basicWorld(input, axes, output, id)
             }
         }
 
