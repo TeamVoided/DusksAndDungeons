@@ -2,8 +2,10 @@ package org.teamvoided.dusks_and_dungeons.init.events
 
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.fabricmc.fabric.api.loot.v3.LootTableSource
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.storage.loot.BuiltInLootTables.*
 import net.minecraft.world.level.storage.loot.LootTable
 import org.teamvoided.dusks_and_dungeons.api.PostDataLoadEvent
@@ -23,6 +25,17 @@ import org.teamvoided.voidlib.helpers.mc.fuel
 object DnDEvents {
 
     fun init() {
+
+        // TODO move?
+        FabricBrewingRecipeRegistryBuilder.BUILD.register { builder ->
+            builder.addContainer(DnDItems.TINTED_POTION)
+            builder.addContainer(DnDItems.TINTED_SPLASH_POTION)
+            builder.addContainer(DnDItems.TINTED_LINGERING_POTION)
+
+            builder.addContainerRecipe(DnDItems.TINTED_POTION, Items.GUNPOWDER, DnDItems.TINTED_SPLASH_POTION)
+            builder.addContainerRecipe(DnDItems.TINTED_SPLASH_POTION, Items.DRAGON_BREATH, DnDItems.TINTED_LINGERING_POTION)
+        }
+
         LootTableEvents.MODIFY.register(::modifyLootTables)
         initTrades()
         initItemEvents()

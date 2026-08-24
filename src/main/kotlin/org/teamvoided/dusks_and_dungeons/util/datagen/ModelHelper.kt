@@ -8,8 +8,10 @@ import net.minecraft.core.FrontAndTop
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.BlockModelGenerators.createRotatedVariants
+import net.minecraft.data.models.BlockModelGenerators.createSimpleBlock
 import net.minecraft.data.models.blockstates.*
-import net.minecraft.data.models.blockstates.VariantProperties.Rotation
+import net.minecraft.data.models.blockstates.Condition.condition
+import net.minecraft.data.models.blockstates.VariantProperties.*
 import net.minecraft.data.models.model.*
 import net.minecraft.data.models.model.TextureSlot.*
 import net.minecraft.resources.ResourceLocation
@@ -24,8 +26,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.DnDModels
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createUpFacing
+import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.util.*
 
@@ -212,11 +213,11 @@ fun BlockModelGenerators.rotatableCubeWithOverlay(block: Block, reference: Block
 fun BlockModelGenerators.cubeSnowableColumnOverlay(block: Block, reference: Block, overlay: ResourceLocation) {
     val model = MultiPartGenerator.multiPart(block)
     model.with(
-        Condition.condition().term(SnowyDirtBlock.SNOWY, false),
+        condition().term(SnowyDirtBlock.SNOWY, false),
         listOf(*createRotatedVariants(reference.model()))
     )
     model.with(
-        Condition.condition().term(SnowyDirtBlock.SNOWY, true),
+        condition().term(SnowyDirtBlock.SNOWY, true),
         Variant.variant()
             .with(
                 VariantProperties.MODEL,
@@ -274,7 +275,7 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
                     rotationY
                 }
                 model.with(
-                    Condition.condition()
+                    condition()
                         .term(BlockStateProperties.HORIZONTAL_FACING, direction)
                         .term(BlockStateProperties.HALF, half)
                         .term(BlockStateProperties.STAIRS_SHAPE, shape),
@@ -284,10 +285,10 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
                             stairTitle(baseBlock, models)
                         )
                         .with(VariantProperties.X_ROT, rotationX)
-                        .with(VariantProperties.Y_ROT, rotatY)
-                        .with(VariantProperties.UV_LOCK, true)
+                        .with(Y_ROT, rotatY)
+                        .with(UV_LOCK, true)
                 ).with(
-                    Condition.condition()
+                    condition()
                         .term(BlockStateProperties.HORIZONTAL_FACING, direction)
                         .term(BlockStateProperties.HALF, half)
                         .term(BlockStateProperties.STAIRS_SHAPE, shape),
@@ -297,8 +298,8 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
                             overlay.suffix(models)
                         )
                         .with(VariantProperties.X_ROT, rotationX)
-                        .with(VariantProperties.Y_ROT, rotatY)
-                        .with(VariantProperties.UV_LOCK, true)
+                        .with(Y_ROT, rotatY)
+                        .with(UV_LOCK, true)
                 )
             }
         }
@@ -336,11 +337,11 @@ fun BlockModelGenerators.slabWithTintedOverlay(
     )
     slabType.forEach { (type, suffix) ->
         model.with(
-            Condition.condition().term(BlockStateProperties.SLAB_TYPE, type),
+            condition().term(BlockStateProperties.SLAB_TYPE, type),
             Variant.variant()
                 .with(VariantProperties.MODEL, if (suffix == "") baseBlock.model() else slabOfTexture.suffix(suffix))
         ).with(
-            Condition.condition().term(BlockStateProperties.SLAB_TYPE, type),
+            condition().term(BlockStateProperties.SLAB_TYPE, type),
             Variant.variant()
                 .with(VariantProperties.MODEL, overlay.suffix(suffix))
         )
@@ -407,38 +408,38 @@ fun createWallBlockStateWithOverlay(
     )
     val model = MultiPartGenerator.multiPart(wallBlock)
     model.with(
-        Condition.condition().term(BlockStateProperties.UP, true),
+        condition().term(BlockStateProperties.UP, true),
         Variant.variant().with(VariantProperties.MODEL, postModelId)
     ).with(
-        Condition.condition().term(BlockStateProperties.UP, true),
+        condition().term(BlockStateProperties.UP, true),
         Variant.variant().with(VariantProperties.MODEL, postOverlayModelId)
     )
     directions.forEach { (shape, rotation) ->
         model.with(
-            Condition.condition().term(shape, WallSide.LOW),
+            condition().term(shape, WallSide.LOW),
             Variant.variant()
                 .with(VariantProperties.MODEL, lowSideModelId)
-                .with(VariantProperties.UV_LOCK, true)
-                .with(VariantProperties.Y_ROT, rotation)
+                .with(UV_LOCK, true)
+                .with(Y_ROT, rotation)
         ).with(
-            Condition.condition().term(shape, WallSide.LOW),
+            condition().term(shape, WallSide.LOW),
             Variant.variant()
                 .with(VariantProperties.MODEL, lowSideOverlayModelId)
-                .with(VariantProperties.UV_LOCK, true)
-                .with(VariantProperties.Y_ROT, rotation)
+                .with(UV_LOCK, true)
+                .with(Y_ROT, rotation)
         )
         model.with(
-            Condition.condition().term(shape, WallSide.TALL),
+            condition().term(shape, WallSide.TALL),
             Variant.variant()
                 .with(VariantProperties.MODEL, tallSideModelId)
-                .with(VariantProperties.UV_LOCK, true)
-                .with(VariantProperties.Y_ROT, rotation)
+                .with(UV_LOCK, true)
+                .with(Y_ROT, rotation)
         ).with(
-            Condition.condition().term(shape, WallSide.TALL),
+            condition().term(shape, WallSide.TALL),
             Variant.variant()
                 .with(VariantProperties.MODEL, tallSideOverlayModelId)
-                .with(VariantProperties.UV_LOCK, true)
-                .with(VariantProperties.Y_ROT, rotation)
+                .with(UV_LOCK, true)
+                .with(Y_ROT, rotation)
         )
     }
     return model
@@ -448,7 +449,7 @@ fun getRandomYRotations(model: ResourceLocation): Array<Variant> {
     var array = arrayOf<Variant>()
     Rotation.entries.forEach {
         val variant = Variant.variant().with(VariantProperties.MODEL, model)
-        if (it != Rotation.R0) variant.with(VariantProperties.Y_ROT, it)
+        if (it != Rotation.R0) variant.with(Y_ROT, it)
         array += variant
     }
     return array
@@ -459,7 +460,7 @@ fun getRandomYXRotations(model: ResourceLocation): Array<Variant> {
     Rotation.entries.forEach { itY ->
         Rotation.entries.forEach { itX ->
             val variant = Variant.variant().with(VariantProperties.MODEL, model)
-            if (itY != Rotation.R0) variant.with(VariantProperties.Y_ROT, itY)
+            if (itY != Rotation.R0) variant.with(Y_ROT, itY)
             if (itX != Rotation.R0) variant.with(VariantProperties.X_ROT, itX)
             array += variant
         }
@@ -516,16 +517,16 @@ fun BlockModelGenerators.registerMushroomBlockDiffInside(
         ).forEach { direction ->
             val variant = Variant.variant().with(VariantProperties.MODEL, if (loop) texture else insideTexture)
             val variant2 = when (direction) {
-                BlockStateProperties.EAST -> variant.with(VariantProperties.Y_ROT, Rotation.R90)
-                BlockStateProperties.SOUTH -> variant.with(VariantProperties.Y_ROT, Rotation.R180)
-                BlockStateProperties.WEST -> variant.with(VariantProperties.Y_ROT, Rotation.R270)
+                BlockStateProperties.EAST -> variant.with(Y_ROT, Rotation.R90)
+                BlockStateProperties.SOUTH -> variant.with(Y_ROT, Rotation.R180)
+                BlockStateProperties.WEST -> variant.with(Y_ROT, Rotation.R270)
                 BlockStateProperties.DOWN -> variant.with(VariantProperties.X_ROT, Rotation.R90)
                 BlockStateProperties.UP -> variant.with(VariantProperties.X_ROT, Rotation.R270)
                 else -> variant
             }
             blockstate.with(
-                Condition.condition().term(direction, loop),
-                variant2.with(VariantProperties.UV_LOCK, loop)
+                condition().term(direction, loop),
+                variant2.with(UV_LOCK, loop)
             )
         }
     }
@@ -581,33 +582,33 @@ fun BlockModelGenerators.registerFlowerbed2(
     )
     directionAndRotation.forEach { (direction, rotation) ->
         flowerbed.with(
-            Condition.condition()
+            condition()
                 .term(BlockStateProperties.FLOWER_AMOUNT, 1, 2, 3, 4)
                 .term(BlockStateProperties.HORIZONTAL_FACING, direction),
             Variant.variant()
                 .with(VariantProperties.MODEL, identifier)
-                .with(VariantProperties.Y_ROT, rotation)
+                .with(Y_ROT, rotation)
         ).with(
-            Condition.condition()
+            condition()
                 .term(BlockStateProperties.FLOWER_AMOUNT, 2, 3, 4)
                 .term(BlockStateProperties.HORIZONTAL_FACING, direction),
             Variant.variant()
                 .with(VariantProperties.MODEL, identifier2)
-                .with(VariantProperties.Y_ROT, rotation)
+                .with(Y_ROT, rotation)
         ).with(
-            Condition.condition()
+            condition()
                 .term(BlockStateProperties.FLOWER_AMOUNT, 3, 4)
                 .term(BlockStateProperties.HORIZONTAL_FACING, direction),
             Variant.variant()
                 .with(VariantProperties.MODEL, identifier3)
-                .with(VariantProperties.Y_ROT, rotation)
+                .with(Y_ROT, rotation)
         ).with(
-            Condition.condition()
+            condition()
                 .term(BlockStateProperties.FLOWER_AMOUNT, 4)
                 .term(BlockStateProperties.HORIZONTAL_FACING, direction),
             Variant.variant()
                 .with(VariantProperties.MODEL, identifier4)
-                .with(VariantProperties.Y_ROT, rotation)
+                .with(Y_ROT, rotation)
         )
     }
     this.blockStateOutput.accept(flowerbed)
@@ -690,44 +691,41 @@ fun createOrientationVariation(
     when (orientation) {
         FrontAndTop.DOWN_NORTH -> return variant(model)
             .with(VariantProperties.X_ROT, Rotation.R180)
-            .with(VariantProperties.Y_ROT, Rotation.R180)
+            .with(Y_ROT, Rotation.R180)
 
         FrontAndTop.DOWN_SOUTH -> return variant(model)
             .with(VariantProperties.X_ROT, Rotation.R180)
 
         FrontAndTop.DOWN_WEST -> return variant(model)
             .with(VariantProperties.X_ROT, Rotation.R180)
-            .with(VariantProperties.Y_ROT, Rotation.R90)
+            .with(Y_ROT, Rotation.R90)
 
         FrontAndTop.DOWN_EAST -> return variant(model)
             .with(VariantProperties.X_ROT, Rotation.R180)
-            .with(VariantProperties.Y_ROT, Rotation.R270)
+            .with(Y_ROT, Rotation.R270)
 
         FrontAndTop.UP_NORTH -> return variant(model)
-            .with(VariantProperties.Y_ROT, Rotation.R180)
+            .with(Y_ROT, Rotation.R180)
 
         FrontAndTop.UP_SOUTH -> return variant(model)
 
         FrontAndTop.UP_WEST -> return variant(model)
-            .with(VariantProperties.Y_ROT, Rotation.R90)
+            .with(Y_ROT, Rotation.R90)
 
         FrontAndTop.UP_EAST -> return variant(model)
-            .with(VariantProperties.Y_ROT, Rotation.R270)
+            .with(Y_ROT, Rotation.R270)
 
         FrontAndTop.NORTH_UP -> return variant(wallModel)
         FrontAndTop.SOUTH_UP -> return variant(wallModel)
-            .with(VariantProperties.Y_ROT, Rotation.R180)
+            .with(Y_ROT, Rotation.R180)
 
         FrontAndTop.WEST_UP -> return variant(wallModel)
-            .with(VariantProperties.Y_ROT, Rotation.R270)
+            .with(Y_ROT, Rotation.R270)
 
         FrontAndTop.EAST_UP -> return variant(wallModel)
-            .with(VariantProperties.Y_ROT, Rotation.R90)
+            .with(Y_ROT, Rotation.R90)
     }
 }
-
-fun variant(model: ResourceLocation): Variant = Variant.variant().with(VariantProperties.MODEL, model)
-
 
 fun BlockModelGenerators.registerSmallPumpkin(
     pumpkin: Block,
@@ -1021,14 +1019,14 @@ fun BlockModelGenerators.registerMixedNetherBrickPillar(block: Block, mix: Block
                     Direction.EAST,
                     Variant.variant()
                         .with(VariantProperties.X_ROT, Rotation.R90)
-                        .with(VariantProperties.Y_ROT, Rotation.R90)
+                        .with(Y_ROT, Rotation.R90)
                         .with(VariantProperties.MODEL, model1)
                 )
                 .select(
                     Direction.WEST,
                     Variant.variant()
                         .with(VariantProperties.X_ROT, Rotation.R90)
-                        .with(VariantProperties.Y_ROT, Rotation.R90)
+                        .with(Y_ROT, Rotation.R90)
                         .with(VariantProperties.MODEL, model2)
                 )
         )
@@ -1127,15 +1125,6 @@ fun BlockModelGenerators.wall(wallBlock: Block, inId: ResourceLocation) {
     this.delegateItemModel(wallBlock, ModelTemplates.WALL_INVENTORY.create(wallBlock, texture, this.modelOutput))
 }
 
-fun BlockModelGenerators.fence(fenceBlock: Block, reference: Block) {
-    val texture = TextureMapping.defaultTexture(reference)
-    val id = ModelTemplates.FENCE_POST.create(fenceBlock, texture, this.modelOutput)
-    val id2 = ModelTemplates.FENCE_SIDE.create(fenceBlock, texture, this.modelOutput)
-    val id3 = ModelTemplates.FENCE_INVENTORY.create(fenceBlock, texture, this.modelOutput)
-    this.blockStateOutput.accept(BlockModelGenerators.createFence(fenceBlock, id, id2))
-    this.delegateItemModel(fenceBlock, id3)
-}
-
 fun BlockModelGenerators.registerHandheldItem(item: Item) {
     ModelTemplates.FLAT_HANDHELD_ITEM.create(
         ModelLocationUtils.getModelLocation(item),
@@ -1156,25 +1145,25 @@ fun BlockModelGenerators.createLeafPile(leafPile: Block, leaves: Block) {
     this.blockStateOutput.accept(
         MultiPartGenerator.multiPart(leafPile)
             .with(
-                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 1).term(BlockStateProperties.HANGING, false),
+                condition().term(LeafPileBlock.PILE_LAYERS, 1).term(BlockStateProperties.HANGING, false),
                 Variant.variant().with(VariantProperties.MODEL, layer1)
             ).with(
-                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 2).term(BlockStateProperties.HANGING, false),
+                condition().term(LeafPileBlock.PILE_LAYERS, 2).term(BlockStateProperties.HANGING, false),
                 Variant.variant().with(VariantProperties.MODEL, layer2)
             ).with(
-                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 3).term(BlockStateProperties.HANGING, false),
+                condition().term(LeafPileBlock.PILE_LAYERS, 3).term(BlockStateProperties.HANGING, false),
                 Variant.variant().with(VariantProperties.MODEL, layer3)
             ).with(
-                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 1).term(BlockStateProperties.HANGING, true),
+                condition().term(LeafPileBlock.PILE_LAYERS, 1).term(BlockStateProperties.HANGING, true),
                 Variant.variant().with(VariantProperties.MODEL, hanging1)
             ).with(
-                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 2).term(BlockStateProperties.HANGING, true),
+                condition().term(LeafPileBlock.PILE_LAYERS, 2).term(BlockStateProperties.HANGING, true),
                 Variant.variant().with(VariantProperties.MODEL, hanging2)
             ).with(
-                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 3).term(BlockStateProperties.HANGING, true),
+                condition().term(LeafPileBlock.PILE_LAYERS, 3).term(BlockStateProperties.HANGING, true),
                 Variant.variant().with(VariantProperties.MODEL, hanging3)
             ).with(
-                Condition.condition().term(LeafPileBlock.PILE_LAYERS, 4),
+                condition().term(LeafPileBlock.PILE_LAYERS, 4),
                 Variant.variant().with(VariantProperties.MODEL, full)
             )
     )
@@ -1214,7 +1203,7 @@ fun BlockModelGenerators.registerCropWithParent(
 
 fun BlockModelGenerators.createMoonberryVine(block: Block) {
     skipAutoItemBlock(block)
-    val allDirectionFalse = Condition.condition()
+    val allDirectionFalse = condition()
         .term(MultifaceBlock.getFaceProperty(Direction.NORTH), false)
         .term(MultifaceBlock.getFaceProperty(Direction.SOUTH), false)
         .term(MultifaceBlock.getFaceProperty(Direction.EAST), false)
@@ -1235,7 +1224,7 @@ fun BlockModelGenerators.createMoonberryVine(block: Block) {
     var variantRotation: Rotation
 
     directions.forEach { (direction, rotation) ->
-        axis = VariantProperties.Y_ROT
+        axis = Y_ROT
         for (berries in 0..2) {
             modelId = id("block/parent/moonberry_vine_$berries")
             variantRotation = rotation
@@ -1252,7 +1241,7 @@ fun BlockModelGenerators.createMoonberryVine(block: Block) {
                 axis = VariantProperties.X_ROT
             }
             model.with(
-                Condition.condition().term(MultifaceBlock.getFaceProperty(direction), true)
+                condition().term(MultifaceBlock.getFaceProperty(direction), true)
                     .term(MoonberryVineBlock.BERRIES, berries),
                 Variant.variant()
                     .with(
@@ -1283,7 +1272,7 @@ fun BlockModelGenerators.registerCandelabra(candelabra: Block, isDnD: Boolean = 
             .with(
                 PropertyDispatch.property(BlockStateProperties.HORIZONTAL_AXIS)
                     .select(Direction.Axis.X, Variant.variant())
-                    .select(Direction.Axis.Z, Variant.variant().with(VariantProperties.Y_ROT, Rotation.R90))
+                    .select(Direction.Axis.Z, Variant.variant().with(Y_ROT, Rotation.R90))
             )
             .with(this.candelabraStates(candelabra, isDnD))
     )
@@ -1343,37 +1332,37 @@ fun BlockModelGenerators.rotatedLikeNetherrack(block: Block, modelProvider: Text
                 Variant.variant().with(VariantProperties.MODEL, model)
                     .with(VariantProperties.X_ROT, Rotation.R270),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R90),
+                    .with(Y_ROT, Rotation.R90),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R90)
+                    .with(Y_ROT, Rotation.R90)
                     .with(VariantProperties.X_ROT, Rotation.R90),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R90)
+                    .with(Y_ROT, Rotation.R90)
                     .with(VariantProperties.X_ROT, Rotation.R180),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R90)
+                    .with(Y_ROT, Rotation.R90)
                     .with(VariantProperties.X_ROT, Rotation.R270),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R180),
+                    .with(Y_ROT, Rotation.R180),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R180)
+                    .with(Y_ROT, Rotation.R180)
                     .with(VariantProperties.X_ROT, Rotation.R90),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R180)
+                    .with(Y_ROT, Rotation.R180)
                     .with(VariantProperties.X_ROT, Rotation.R180),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R180)
+                    .with(Y_ROT, Rotation.R180)
                     .with(VariantProperties.X_ROT, Rotation.R270),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R270),
+                    .with(Y_ROT, Rotation.R270),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R270)
+                    .with(Y_ROT, Rotation.R270)
                     .with(VariantProperties.X_ROT, Rotation.R90),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R270)
+                    .with(Y_ROT, Rotation.R270)
                     .with(VariantProperties.X_ROT, Rotation.R180),
                 Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.Y_ROT, Rotation.R270)
+                    .with(Y_ROT, Rotation.R270)
                     .with(VariantProperties.X_ROT, Rotation.R270)
             )
         )
@@ -1462,3 +1451,107 @@ fun ResourceLocation.suffix(str: String) = ResourceLocation.fromNamespaceAndPath
 val Item.id get() = BuiltInRegistries.ITEM.getKey(this)
 val ItemLike.id get() = this.asItem().id
 val Block.id get() = BuiltInRegistries.BLOCK.getKey(this)
+
+
+// everything past this is from VV
+
+fun BlockModelGenerators.redstoneLantern(block: Block) {
+    createSimpleFlatItemModel(block.asItem())
+
+    val lantern = TexturedModel.LANTERN.create(block, modelOutput)
+    val lanternHanging = TexturedModel.HANGING_LANTERN.create(block, modelOutput)
+
+    val litTex = TextureMapping().put(LANTERN, block.model("_lit"))
+
+    val litLantern = ModelTemplates.LANTERN.create(block.model("_lit"), litTex, modelOutput)
+    val litLanternHanging = ModelTemplates.HANGING_LANTERN.create(block.model("_lit_hanging"), litTex, modelOutput)
+
+    blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(block).with(
+            PropertyDispatch.properties(BlockStateProperties.HANGING, BlockStateProperties.LIT)
+                .select(false, false, variant(lantern))
+                .select(true, false, variant(lanternHanging))
+                .select(false, true, variant(litLantern))
+                .select(true, true, variant(litLanternHanging))
+        )
+    )
+}
+
+fun BlockModelGenerators.denseCube(block: Block) {
+    val topModel = ModelLocationUtils.getModelLocation(block, "_top")
+    val bottomModel = ModelLocationUtils.getModelLocation(block, "_bottom")
+    val itemModel = TexturedModel.CUBE_TOP_BOTTOM.create(block, modelOutput)
+    delegateItemModel(block.asItem(), itemModel)
+    blockStateOutput.accept(
+        MultiPartGenerator.multiPart(block)
+            .with(
+                condition().term(CompositeBlock.UPPER_NORTH_EAST, true),
+                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R90)
+            )
+            .with(
+                condition().term(CompositeBlock.UPPER_NORTH_WEST, true),
+                variant(topModel)
+            )
+            .with(
+                condition().term(CompositeBlock.UPPER_SOUTH_EAST, true),
+                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R180)
+            )
+            .with(
+                condition().term(CompositeBlock.UPPER_SOUTH_WEST, true),
+                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R270)
+            )
+            .with(
+                condition().term(CompositeBlock.LOWER_NORTH_EAST, true),
+                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R90)
+            )
+            .with(
+                condition().term(CompositeBlock.LOWER_NORTH_WEST, true),
+                variant(bottomModel)
+            )
+            .with(
+                condition().term(CompositeBlock.LOWER_SOUTH_EAST, true),
+                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R180)
+            )
+            .with(
+                condition().term(CompositeBlock.LOWER_SOUTH_WEST, true),
+                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R270)
+            )
+    )
+}
+
+// TODO make item only model?
+fun BlockModelGenerators.tintedPane(glass: Block, glassPane: Block) {
+    ModelTemplates.FLAT_ITEM
+        .create(ModelLocationUtils.getModelLocation(glassPane.asItem()), TextureMapping.layer0(glass), modelOutput)
+}
+
+fun BlockModelGenerators.bookshelf(bookshelf: Block, top: Block) {
+    val texture =
+        TextureMapping.column(TextureMapping.getBlockTexture(bookshelf), TextureMapping.getBlockTexture(top))
+    val model = ModelTemplates.CUBE_COLUMN.create(bookshelf, texture, modelOutput)
+    blockStateOutput.accept(createSimpleBlock(bookshelf, model))
+}
+
+fun BlockModelGenerators.carpetPlate(plate: Block, wool: Block) {
+    val up = TexturedModel.CARPET.get(wool).createWithSuffix(plate, "_up", modelOutput)
+    val down = DnDTexturedModels.CARPET_DOWN.get(wool).createWithSuffix(plate, "_down", modelOutput)
+    delegateItemModel(plate, up)
+    blockStateOutput.accept(BlockModelGenerators.createPressurePlate(plate, up, down))
+}
+
+fun BlockModelGenerators.addAxis(block: Block) = blockStateOutput.accept(
+    BlockModelGenerators.createAxisAlignedPillarBlock(block, ModelLocationUtils.getModelLocation(block))
+)
+
+fun BlockModelGenerators.wallOffset(block: Block, texture: Block = block) = wallOffset(block, modelId(texture))
+fun BlockModelGenerators.wallOffset(wallBlock: Block, inId: ResourceLocation) {
+    val texture = TextureMapping.defaultTexture(wallBlock.model())
+        .put(WALL, inId)
+    val post = DnDModels.OFFSET_WALL_POST.create(wallBlock, texture, modelOutput)
+    val side = DnDModels.OFFSET_WALL_SIDE.create(wallBlock, texture, modelOutput)
+    val sideTall = DnDModels.OFFSET_WALL_SIDE_TALL.create(wallBlock, texture, modelOutput)
+    val inventory = DnDModels.OFFSET_WALL_INVENTORY.create(wallBlock, texture, modelOutput)
+
+    blockStateOutput.accept(BlockModelGenerators.createWall(wallBlock, post, side, sideTall))
+    delegateItemModel(wallBlock, inventory)
+}

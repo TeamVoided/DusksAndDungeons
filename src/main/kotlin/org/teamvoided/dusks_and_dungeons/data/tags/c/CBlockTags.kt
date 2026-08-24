@@ -10,6 +10,12 @@ object CBlockTags {
     @JvmField
     val SCAFFOLDING = c("scaffolding")
 
+    val SANDSTONE_WALLS = c("sandstone/walls")
+    val UNCOLORED_SANDSTONE_WALLS = c("sandstone/uncolored_walls")
+    val RED_SANDSTONE_WALLS = c("sandstone/red_walls")
+
+    val GLASS_PANES_TINTED = c("glass_panes/tinted")
+
     fun c(id: String): TagKey<Block> = TagKey.create(Registries.BLOCK, id("c", id))
 
 }

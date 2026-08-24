@@ -57,6 +57,186 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.SUSPICIOUS_RED_SAND)
 
         getOrCreateTagBuilder(DnDBlockTags.EMPTY)
+
+        // TODO deal with VV stuff
+
+        // TODO add a mixin for this tag to only apply if the top has a full side
+        getOrCreateTagBuilder(BlockTags.SNOW)
+            .add(
+                DnDBlocks.SNOW_SET.stairs,
+                DnDBlocks.SNOW_SET.slab,
+                DnDBlocks.SNOW_SET.wall,
+            )
+        getOrCreateTagBuilder(BlockTags.DRAGON_IMMUNE)
+            .add(
+                DnDBlocks.END_STONE_SET.stairs,
+                DnDBlocks.END_STONE_SET.slab,
+                DnDBlocks.END_STONE_SET.wall,
+            )
+
+        getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL)
+            .add(
+                DnDBlocks.OBSIDIAN_SET.stairs,
+                DnDBlocks.OBSIDIAN_SET.slab,
+                DnDBlocks.OBSIDIAN_SET.wall,
+                DnDBlocks.CRYING_OBSIDIAN_SET.stairs,
+                DnDBlocks.CRYING_OBSIDIAN_SET.slab,
+                DnDBlocks.CRYING_OBSIDIAN_SET.wall,
+            )
+
+        getOrCreateTagBuilder(BlockTags.STAIRS)
+            .add(
+                DnDBlocks.SMOOTH_STONE_STAIR,
+                DnDBlocks.CUT_SANDSTONE_STAIR,
+                DnDBlocks.CUT_RED_SANDSTONE_STAIR,
+            )
+        getOrCreateTagBuilder(BlockTags.WALLS)
+            .add(
+                DnDBlocks.STONE_WALL,
+                DnDBlocks.SMOOTH_STONE_WALL,
+                DnDBlocks.CUT_SANDSTONE_WALL,
+                DnDBlocks.CUT_RED_SANDSTONE_WALL,
+                DnDBlocks.STONE_WALL,
+                DnDBlocks.POLISHED_GRANITE_WALL,
+                DnDBlocks.POLISHED_DIORITE_WALL,
+                DnDBlocks.POLISHED_ANDESITE_WALL,
+                DnDBlocks.SMOOTH_SANDSTONE_WALL,
+                DnDBlocks.SMOOTH_RED_SANDSTONE_WALL,
+                DnDBlocks.PRISMARINE_BRICKS_WALL,
+                DnDBlocks.DARK_PRISMARINE_WALL,
+                DnDBlocks.PURPUR_WALL,
+                DnDBlocks.QUARTZ_WALL,
+                DnDBlocks.SMOOTH_QUARTZ_WALL,
+            )
+
+        getOrCreateTagBuilder(BlockTags.FENCES)
+            .add(DnDBlocks.BRICK_FENCE)
+
+        getOrCreateTagBuilder(ConventionalBlockTags.INFESTED_COBBLESTONES)
+            .add(
+                DnDBlocks.INFESTED_MOSSY_COBBLESTONE,
+                DnDBlocks.INFESTED_COBBLED_DEEPSLATE
+            )
+
+        getOrCreateTagBuilder(ConventionalBlockTags.DEEPSLATE_COBBLESTONES)
+            .add(DnDBlocks.INFESTED_COBBLED_DEEPSLATE)
+        getOrCreateTagBuilder(ConventionalBlockTags.MOSSY_COBBLESTONES)
+            .add(DnDBlocks.INFESTED_MOSSY_COBBLESTONE)
+
+        getOrCreateTagBuilder(BlockTags.ENCHANTMENT_POWER_PROVIDER)
+            .add(
+                DnDBlocks.SPRUCE_BOOKSHELF,
+                DnDBlocks.BIRCH_BOOKSHELF,
+                DnDBlocks.JUNGLE_BOOKSHELF,
+                DnDBlocks.ACACIA_BOOKSHELF,
+                DnDBlocks.DARK_OAK_BOOKSHELF,
+                DnDBlocks.MANGROVE_BOOKSHELF,
+                DnDBlocks.CHERRY_BOOKSHELF,
+                DnDBlocks.BAMBOO_BOOKSHELF,
+                DnDBlocks.CRIMSON_BOOKSHELF,
+                DnDBlocks.WARPED_BOOKSHELF,
+            )
+        getOrCreateTagBuilder(ConventionalBlockTags.BOOKSHELVES)
+            .add(
+                DnDBlocks.SPRUCE_BOOKSHELF,
+                DnDBlocks.BIRCH_BOOKSHELF,
+                DnDBlocks.JUNGLE_BOOKSHELF,
+                DnDBlocks.ACACIA_BOOKSHELF,
+                DnDBlocks.DARK_OAK_BOOKSHELF,
+                DnDBlocks.MANGROVE_BOOKSHELF,
+                DnDBlocks.CHERRY_BOOKSHELF,
+                DnDBlocks.BAMBOO_BOOKSHELF,
+                DnDBlocks.CRIMSON_BOOKSHELF,
+                DnDBlocks.WARPED_BOOKSHELF,
+            )
+
+        getOrCreateTagBuilder(ConventionalBlockTags.GLASS_PANES)
+            .forceAddTag(CBlockTags.GLASS_PANES_TINTED)
+        getOrCreateTagBuilder(CBlockTags.GLASS_PANES_TINTED)
+            .add(DnDBlocks.TINTED_GLASS_PANE)
+
+
+        getOrCreateTagBuilder(DnDBlockTags.CARPET_PLATES)
+            .forceAddTag(DnDBlockTags.CARPET_PLATES_WOOL)
+            .add(DnDBlocks.MOSS_CARPET_PLATE)
+
+        getOrCreateTagBuilder(DnDBlockTags.CARPET_PLATES_WOOL)
+            .add(DnDBlocks.WOOL_CARPET_PLATE)
+
+        getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS)
+            .forceAddTag(DnDBlockTags.CARPET_PLATES)
+
+        getOrCreateTagBuilder(BlockTags.DAMPENS_VIBRATIONS)
+            .forceAddTag(DnDBlockTags.CARPET_PLATES_WOOL)
+
+        // Sandstone
+        getOrCreateTagBuilder(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS)
+            .add(
+                DnDBlocks.ROUGH_SANDSTONE.parent,
+                DnDBlocks.POLISHED_SANDSTONE.parent,
+            )
+        getOrCreateTagBuilder(ConventionalBlockTags.RED_SANDSTONE_BLOCKS)
+            .add(
+                DnDBlocks.ROUGH_RED_SANDSTONE.parent,
+                DnDBlocks.POLISHED_RED_SANDSTONE.parent,
+            )
+
+        getOrCreateTagBuilder(ConventionalBlockTags.UNCOLORED_SANDSTONE_SLABS)
+            .add(
+                DnDBlocks.ROUGH_SANDSTONE.slab,
+                DnDBlocks.POLISHED_SANDSTONE.slab,
+            )
+        getOrCreateTagBuilder(ConventionalBlockTags.RED_SANDSTONE_SLABS)
+            .add(
+                DnDBlocks.ROUGH_RED_SANDSTONE.slab,
+                DnDBlocks.POLISHED_RED_SANDSTONE.slab,
+            )
+
+        getOrCreateTagBuilder(ConventionalBlockTags.UNCOLORED_SANDSTONE_STAIRS)
+            .add(
+                DnDBlocks.CUT_SANDSTONE_STAIR,
+                DnDBlocks.ROUGH_SANDSTONE.stairs,
+                DnDBlocks.POLISHED_SANDSTONE.stairs,
+            )
+        getOrCreateTagBuilder(ConventionalBlockTags.RED_SANDSTONE_STAIRS)
+            .add(
+                DnDBlocks.CUT_RED_SANDSTONE_STAIR,
+                DnDBlocks.ROUGH_RED_SANDSTONE.stairs,
+                DnDBlocks.POLISHED_RED_SANDSTONE.stairs,
+            )
+
+        getOrCreateTagBuilder(CBlockTags.SANDSTONE_WALLS)
+            .forceAddTag(CBlockTags.UNCOLORED_SANDSTONE_WALLS)
+            .forceAddTag(CBlockTags.RED_SANDSTONE_WALLS)
+
+        getOrCreateTagBuilder(CBlockTags.UNCOLORED_SANDSTONE_WALLS)
+            .add(
+                Blocks.SANDSTONE_WALL,
+                DnDBlocks.SMOOTH_SANDSTONE_WALL,
+                DnDBlocks.CUT_SANDSTONE_WALL,
+                DnDBlocks.ROUGH_SANDSTONE.wall,
+                DnDBlocks.POLISHED_SANDSTONE.wall,
+            )
+        getOrCreateTagBuilder(CBlockTags.RED_SANDSTONE_WALLS)
+            .add(
+                Blocks.RED_SANDSTONE_WALL,
+                DnDBlocks.SMOOTH_RED_SANDSTONE_WALL,
+                DnDBlocks.CUT_RED_SANDSTONE_WALL,
+                DnDBlocks.ROUGH_RED_SANDSTONE.wall,
+                DnDBlocks.POLISHED_RED_SANDSTONE.wall,
+            )
+
+        // These are for latter
+        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+            .add(
+                DnDBlocks.ROUGH_SANDSTONE.parent,
+                DnDBlocks.ROUGH_RED_SANDSTONE.parent,
+            )
+        getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
+            .add(
+                DnDBlocks.ROUGH_SANDSTONE.parent,
+                DnDBlocks.ROUGH_RED_SANDSTONE.parent,
+            )
     }
 
     private fun duskTags() {

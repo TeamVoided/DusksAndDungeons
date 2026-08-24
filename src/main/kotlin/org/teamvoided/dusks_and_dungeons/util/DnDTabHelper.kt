@@ -1,10 +1,12 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists.stripedWoodLists
+import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
 import org.teamvoided.voidlib.helpers.mc.addAfter
 
 fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
@@ -35,6 +37,28 @@ fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
     DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
         addAfter(DnDBlockLists.leaves[idx], leafPile)
     }
+}
+
+fun FabricItemGroupEntries.addColors(item: ItemLike, color: ColorConsortium<*>) {
+    addAfter(
+        item,
+        color.white,
+        color.lightGray,
+        color.gray,
+        color.black,
+        color.brown,
+        color.red,
+        color.orange,
+        color.yellow,
+        color.lime,
+        color.green,
+        color.cyan,
+        color.lightBlue,
+        color.blue,
+        color.purple,
+        color.magenta,
+        color.pink
+    )
 }
 
 

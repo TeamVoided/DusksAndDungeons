@@ -34,6 +34,39 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).remove(Items.BLACKSTONE)
         getOrCreateTagBuilder(DnDItemTags.BLACKSTONE_TOOL_MATERIALS).add(Items.BLACKSTONE)
         getOrCreateTagBuilder(DnDItemTags.EMPTY)
+
+        // TODO VV tags
+        copy(ConventionalBlockTags.BOOKSHELVES, ConventionalItemTags.BOOKSHELVES)
+        copy(ConventionalBlockTags.INFESTED_COBBLESTONES, ConventionalItemTags.INFESTED_COBBLESTONES)
+        copy(ConventionalBlockTags.DEEPSLATE_COBBLESTONES, ConventionalItemTags.DEEPSLATE_COBBLESTONES)
+        copy(ConventionalBlockTags.MOSSY_COBBLESTONES, ConventionalItemTags.MOSSY_COBBLESTONES)
+
+        copy(CBlockTags.GLASS_PANES_TINTED, CItemTags.GLASS_PANES_TINTED)
+        getOrCreateTagBuilder(ConventionalItemTags.GLASS_PANES).forceAddTag(CItemTags.GLASS_PANES_TINTED)
+
+
+        getOrCreateTagBuilder(DnDItemTags.CARPET_PLATES)
+            .forceAddTag(DnDItemTags.CARPET_PLATES_WOOL)
+            .add(DnDBlocks.MOSS_CARPET_PLATE.asItem())
+
+        copy(DnDBlockTags.CARPET_PLATES_WOOL, DnDItemTags.CARPET_PLATES_WOOL)
+
+        getOrCreateTagBuilder(ItemTags.DAMPENS_VIBRATIONS).forceAddTag(DnDItemTags.CARPET_PLATES_WOOL)
+
+
+        // sandstone
+
+        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS)
+        copy(ConventionalBlockTags.RED_SANDSTONE_BLOCKS, ConventionalItemTags.RED_SANDSTONE_BLOCKS)
+        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_SLABS, ConventionalItemTags.UNCOLORED_SANDSTONE_SLABS)
+        copy(ConventionalBlockTags.RED_SANDSTONE_SLABS, ConventionalItemTags.RED_SANDSTONE_SLABS)
+        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_STAIRS, ConventionalItemTags.UNCOLORED_SANDSTONE_STAIRS)
+        copy(ConventionalBlockTags.RED_SANDSTONE_STAIRS, ConventionalItemTags.RED_SANDSTONE_STAIRS)
+        getOrCreateTagBuilder(CItemTags.SANDSTONE_WALLS)
+            .forceAddTag(CItemTags.UNCOLORED_SANDSTONE_WALLS)
+            .forceAddTag(CItemTags.RED_SANDSTONE_WALLS)
+        copy(CBlockTags.UNCOLORED_SANDSTONE_WALLS, CItemTags.UNCOLORED_SANDSTONE_WALLS)
+        copy(CBlockTags.RED_SANDSTONE_WALLS, CItemTags.RED_SANDSTONE_WALLS)
     }
 
     fun duskTags() {

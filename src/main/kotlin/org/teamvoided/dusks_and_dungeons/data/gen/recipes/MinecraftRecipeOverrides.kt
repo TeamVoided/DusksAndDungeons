@@ -24,6 +24,13 @@ object MinecraftRecipeOverrides {
             .criterion(DnDBlocks.POLISHED_STONE)
             .save(o)
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.SNOW, 8)
+            .define('#', Blocks.SNOW_BLOCK)
+            .pattern("##")
+            .criterion(Blocks.SNOW_BLOCK)
+            .criterion(Blocks.SNOW)
+            .save(o)
+
     }
 
 }

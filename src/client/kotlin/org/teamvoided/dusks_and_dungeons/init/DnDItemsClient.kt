@@ -4,7 +4,10 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.ChatFormatting
 import net.minecraft.client.color.item.ItemColor
+import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.util.FastColor
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.component.DyedItemColor
 import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.GrassColor
@@ -26,6 +29,20 @@ object DnDItemsClient {
         registerTint(FoliageColor.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE)
         registerTint(FoliageColor.getMangroveColor(), DnDBlocks.MANGROVE_LEAF_PILE)
         registerTint({ stack, _ -> DyedItemColor.getOrDefault(stack, 0xffffff) }, DnDItems.FARMERS_HAT)
+        registerTint(
+            { stack, tintIdx ->
+                if (tintIdx > 0)
+                    -1
+                else
+                    FastColor.ARGB32.opaque(
+                        FastColor.ARGB32.multiply(
+                            stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).color,
+                            0xFF_7F_7F_7F.toInt()
+                        )
+                    )
+            },
+            DnDItems.TINTED_POTION, DnDItems.TINTED_SPLASH_POTION, DnDItems.TINTED_LINGERING_POTION
+        )
 
         ItemTooltipCallback.EVENT.register { stack, _, _, lines ->
             if (DnDItems.EVIL_ITEMS.contains(stack.item)) {

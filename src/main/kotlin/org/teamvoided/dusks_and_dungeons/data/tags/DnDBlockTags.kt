@@ -77,6 +77,9 @@ object DnDBlockTags {
 
     val THROWN_BRICK_BREAK = key("thrown_brick_break")
 
+    val CARPET_PLATES = key("carpet_plates")
+    val CARPET_PLATES_WOOL = key("carpet_plates/wool")
+
     val EMPTY = key("empty")
 
     fun po(id: String) = key("placeable_on/$id")

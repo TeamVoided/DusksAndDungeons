@@ -20,19 +20,25 @@ import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.api.BlockStrippingRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
+import org.teamvoided.dusks_and_dungeons.block.DnDWoodTypes.MOSS
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
+import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
+import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
 import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.util.block.*
+import org.teamvoided.dusks_and_dungeons.util.ensureUnique
 import org.teamvoided.dusks_and_dungeons.util.getModEntries
 import org.teamvoided.dusks_and_dungeons.util.register
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
+import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections
 import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections.CANDLES
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createBlockSet
@@ -496,6 +502,34 @@ object DnDBlocks {
 
     // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
 
+
+    // TODO remove
+    private fun deepslate(): Properties = Properties.of().mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE)
+
+    // Infested blocks
+    val INFESTED_MOSSY_COBBLESTONE = register(
+        "infested_mossy_cobblestone", InfestedBlock(MOSSY_COBBLESTONE, Properties.of().mapColor(MapColor.CLAY))
+    ).pickaxe()
+    val INFESTED_COBBLED_DEEPSLATE = register(
+        "infested_cobbled_deepslate", InfestedBlock(COBBLED_DEEPSLATE, deepslate())
+    ).pickaxe()
+    val INFESTED_DEEPSLATE_BRICKS = register(
+        "infested_deepslate_bricks", InfestedBlock(DEEPSLATE_BRICKS, deepslate())
+    ).pickaxe()
+    val INFESTED_CRACKED_DEEPSLATE_BRICKS = register(
+        "infested_cracked_deepslate_bricks", InfestedBlock(CRACKED_DEEPSLATE_BRICKS, deepslate())
+    ).pickaxe()
+    val INFESTED_DEEPSLATE_TILES = register(
+        "infested_deepslate_tiles", InfestedBlock(DEEPSLATE_TILES, deepslate())
+    ).pickaxe()
+    val INFESTED_CRACKED_DEEPSLATE_TILES = register(
+        "infested_cracked_deepslate_tiles", InfestedBlock(CRACKED_DEEPSLATE_TILES, deepslate())
+    ).pickaxe()
+    val INFESTED_POLISHED_DEEPSLATE = register(
+        "infested_polished_deepslate", InfestedBlock(POLISHED_DEEPSLATE, deepslate())
+    ).pickaxe()
+
+
     val STONE_PILLAR = register("stone_pillar", RotatedPillarBlock(ofFullCopy(CHISELED_STONE_BRICKS))).pickaxe()
     val DEEPSLATE_PILLAR = register("deepslate_pillar", RotatedPillarBlock(ofFullCopy(POLISHED_DEEPSLATE))).pickaxe()
 
@@ -509,8 +543,9 @@ object DnDBlocks {
     val OVERGROWN_STONE_BRICKS = registerSet("overgrown_stone_brick", ofFullCopy(MOSSY_STONE_BRICKS), "s").overgrown()
 
     // Bricks
+    val BRICK_FENCE = register("brick_fence", FenceBlock(ofFullCopy(BRICKS))).pickaxe()
     val CHISELED_BRICKS = register("chiseled_bricks", Block(ofFullCopy(BRICKS))).pickaxe()
-    val CRACKED_BRICKS = registerSet("cracked_bricks", ofFullCopy(BRICKS)).pickaxe()
+    val CRACKED_BRICKS = registerSet("cracked_brick", ofFullCopy(BRICKS), "s").pickaxe()
 
     // Graves
     // TODO rename all of these to be their brick variants
@@ -530,7 +565,12 @@ object DnDBlocks {
     // region  ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ --- ICE age --- ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄
 
     val ICE_SET = register(
-        createHeadlessSet("ice", ICE).noStoneCutting().meltable().buildHeadless()
+        createHeadlessSet("ice", ICE)
+            .noStoneCutting()
+            .stairs(::MeltableStairsBlock)
+            .slab(::MeltableSlabBlock)
+            .wall(::MeltableWallBlock)
+            .buildHeadless()
     ).translucent().pickaxe()
     val PACKED_ICE_SET = registerHeadlessSet("packed_ice", PACKED_ICE).pickaxe()
     val BLUE_ICE_SET = registerHeadlessSet("blue_ice", BLUE_ICE).pickaxe()
@@ -624,11 +664,126 @@ object DnDBlocks {
         )
     ).shovel()
 
+    val REDSTONE_LANTERN = register(
+        "redstone_lantern", RedstoneLanternBlock(
+            Properties.of()
+                .mapColor(MapColor.METAL)
+                .forceSolidOn()
+                .strength(3.5F)
+                .sound(SoundType.LANTERN)
+                .lightLevel(litBlockEmission(8))
+                .noOcclusion()
+                .pushReaction(PushReaction.DESTROY)
+        )
+    ).pickaxe().cutout()
+
+    val HEAVY_CUBE = register("heavy_cube", CompositeBlock(ofFullCopy(HEAVY_CORE).noOcclusion())).pickaxe().cutout()
+
+    val TINTED_GLASS_PANE = register("tinted_glass_pane", TintedPaneBlock(ofFullCopy(TINTED_GLASS))).translucent()
+
+    val SPRUCE_BOOKSHELF = register("spruce_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val BIRCH_BOOKSHELF = register("birch_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val JUNGLE_BOOKSHELF = register("jungle_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val ACACIA_BOOKSHELF = register("acacia_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val DARK_OAK_BOOKSHELF = register("dark_oak_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val MANGROVE_BOOKSHELF = register("mangrove_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val CHERRY_BOOKSHELF = register("cherry_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val BAMBOO_BOOKSHELF = register("bamboo_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val CRIMSON_BOOKSHELF = register("crimson_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val WARPED_BOOKSHELF = register("warped_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    // TODO add DnD bookshelf
+
+    // Carpet Plates
+    val WOOL_CARPET_PLATE = register(
+        ColorConsortium("carpet_plate", VanillaColorCollections.WOOL) { wool ->
+            CarpetPlateBlock(DnDWoodTypes.WOOL, ofFullCopy(wool))
+        }
+    )
+    val MOSS_CARPET_PLATE = register("moss_carpet_plate", CarpetPlateBlock(MOSS, ofFullCopy(MOSS_CARPET)))
+        .hoe().sword()
+    //TODO overgrowth carpet
+
+
+    // Polished Sandstone
+    val POLISHED_SANDSTONE = registerSet("polished_sandstone", ofFullCopy(CUT_SANDSTONE)).pickaxe()
+    val POLISHED_RED_SANDSTONE = registerSet("polished_red_sandstone", ofFullCopy(CUT_RED_SANDSTONE)).pickaxe()
+
+    // Rough Sandstone
+    val ROUGH_SANDSTONE = registerSet("rough_sandstone", ofFullCopy(SANDSTONE)).pickaxe()
+    val ROUGH_RED_SANDSTONE = registerSet("rough_red_sandstone", ofFullCopy(RED_SANDSTONE)).pickaxe()
+
+    // Smooth Lapis
+    val SMOOTH_LAPIS = registerSet("smooth_lapis", ofFullCopy(LAPIS_BLOCK)).pickaxe()
+
+    // Mising Sets
+    val SNOW_SET = register(createHeadlessSet("snow", SNOW_BLOCK).noStoneCutting().buildHeadless()).shovel()
+    val CALCITE_SET = registerHeadlessSet("calcite", CALCITE).pickaxe()
+    val DRIPSTONE_SET = registerHeadlessSet("dripstone", DRIPSTONE_BLOCK).pickaxe()
+    val END_STONE_SET = registerHeadlessSet("end_stone", END_STONE).pickaxe()
+    val SMOOTH_BASALT_SET = registerHeadlessSet("smooth_basalt", SMOOTH_BASALT).pickaxe()
+    val OBSIDIAN_SET = registerHeadlessSet("obsidian", OBSIDIAN, ofFullCopy(OBSIDIAN).pushReaction(PushReaction.BLOCK))
+        .pickaxe()
+    val CRYING_OBSIDIAN_SET = register(
+        createHeadlessSet("crying_obsidian", CRYING_OBSIDIAN)
+            .settings(ofFullCopy(CRYING_OBSIDIAN).pushReaction(PushReaction.BLOCK))
+            .stairs(::CryingStairsBlock)
+            .slab(::CryingSlabBlock)
+            .wall(::CryingWallBlock)
+            .buildHeadless()
+    ).pickaxe()
+
+    val PACKED_MUD_SET = registerHeadlessSet("packed_mud", PACKED_MUD).pickaxe()
+    val QUARTZ_BRICK_SET = registerHeadlessSet("quartz_brick", QUARTZ_BRICKS).pickaxe()
+
+    // Cracked Sets
+    val CRACKED_STONE_BRICK_SET = registerHeadlessSet("cracked_stone_brick", CRACKED_STONE_BRICKS).pickaxe()
+    val CRACKED_DEEPSLATE_BRICK_SET = registerHeadlessSet("cracked_deepslate_brick", CRACKED_DEEPSLATE_BRICKS).pickaxe()
+    val CRACKED_DEEPSLATE_TILE_SET = registerHeadlessSet("cracked_deepslate_tile", CRACKED_DEEPSLATE_TILES).pickaxe()
+    val CRACKED_NETHER_BRICK_SET = registerHeadlessSet("cracked_nether_brick", CRACKED_NETHER_BRICKS).pickaxe()
+    val CRACKED_POLISHED_BLACKSTONE_BRICK_SET =
+        registerHeadlessSet("cracked_polished_blackstone_brick", CRACKED_POLISHED_BLACKSTONE_BRICKS).pickaxe()
+
+    // Pairs
+    val SMOOTH_STONE_STAIR = register("smooth_stone_stairs", stairsOf(SMOOTH_STONE)).pickaxe()
+    val SMOOTH_STONE_WALL = register("smooth_stone_wall", wallOf(SMOOTH_STONE))
+
+    val CUT_SANDSTONE_STAIR = register("cut_sandstone_stairs", stairsOf(CUT_SANDSTONE)).pickaxe()
+    val CUT_SANDSTONE_WALL = register("cut_sandstone_wall", wallOf(CUT_SANDSTONE))
+    val CUT_RED_SANDSTONE_STAIR = register("cut_red_sandstone_stairs", stairsOf(CUT_RED_SANDSTONE)).pickaxe()
+    val CUT_RED_SANDSTONE_WALL = register("cut_red_sandstone_wall", wallOf(CUT_RED_SANDSTONE))
+
+    // Walls
+    val STONE_WALL = register("stone_wall", wallOf(STONE))
+
+    val POLISHED_GRANITE_WALL = register("polished_granite_wall", wallOf(POLISHED_GRANITE))
+    val POLISHED_DIORITE_WALL = register("polished_diorite_wall", wallOf(POLISHED_DIORITE))
+    val POLISHED_ANDESITE_WALL = register("polished_andesite_wall", wallOf(POLISHED_ANDESITE))
+
+    val SMOOTH_SANDSTONE_WALL = register("smooth_sandstone_wall", wallOf(SMOOTH_SANDSTONE))
+    val SMOOTH_RED_SANDSTONE_WALL = register("smooth_red_sandstone_wall", wallOf(SMOOTH_RED_SANDSTONE))
+
+    val PRISMARINE_BRICKS_WALL = register("prismarine_bricks_wall", wallOf(PRISMARINE_BRICKS))
+    val DARK_PRISMARINE_WALL = register("dark_prismarine_wall", wallOf(DARK_PRISMARINE))
+    val PURPUR_WALL = register("purpur_wall", wallOf(PURPUR_BLOCK))
+
+    val QUARTZ_WALL = register("quartz_wall", wallOf(QUARTZ_BLOCK))
+    val SMOOTH_QUARTZ_WALL = register("smooth_quartz_wall", wallOf(SMOOTH_QUARTZ))
+
     /* Future Content
         val SNOWY_STONE_BRICKS = registerSet("snowy_stone_brick", copy(STONE_BRICKS), "s").pickaxe()
         val ICE_BRICKS = register(createBlockSet("ice_brick", Set.ICE).s().noStoneCutting().parent(::IceBlock).meltable().build()).translucent().pickaxe()
         val PACKED_ICE_BRICKS = registerSet("packed_ice_brick", copy(PACKED_ICE), "s").pickaxe()
         val BLUE_ICE_BRICKS = registerSet("blue_ice_brick", copy(BLUE_ICE), "s").pickaxe()
+        // Buttons
+        val SMOOTH_STONE_BUTTON = createStoneBtn(Blocks.SMOOTH_STONE)
+        val DEEPSLATE_BUTTON = createStoneBtn(Blocks.DEEPSLATE)
+        val POLISHED_DEEPSLATE_BUTTON = createStoneBtn(Blocks.POLISHED_DEEPSLATE)
+        val BLACKSTONE_BUTTON = createStoneBtn(Blocks.BLACKSTONE)
+        // Pressure plates
+        val SMOOTH_STONE_PRESSURE_PLATE = createStonePlate(Blocks.SMOOTH_STONE)
+        val DEEPSLATE_PRESSURE_PLATE = createStonePlate(Blocks.DEEPSLATE)
+        val POLISHED_DEEPSLATE_PRESSURE_PLATE = createStonePlate(Blocks.POLISHED_DEEPSLATE)
+        val BLACKSTONE_PRESSURE_PLATE = createStonePlate(Blocks.BLACKSTONE)
     */
 
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
@@ -677,6 +832,12 @@ object DnDBlocks {
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
         FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
+
+        // TODO fix
+//        BOOKSHELFS.onEach {
+//            FlammableBlockRegistry.getDefaultInstance().add(it, 30, 20)
+//            FuelRegistry.INSTANCE.add(it, 300)
+//        }
     }
 
     fun registerStrippedSet(set: AbstractBlockSet, strippedSet: AbstractBlockSet) {
@@ -685,14 +846,17 @@ object DnDBlocks {
         BlockStrippingRegistry.register(set.wall, strippedSet.wall)
     }
 
+    // TODO make this return actualy block type
     fun register(id: String, block: Block): Block {
         val regBlock = registerNoItem(id, block)
         DnDItems.register(id, BlockItem(regBlock, Item.Properties()))
         return regBlock
     }
 
-    fun registerNoItem(id: String, block: Block): Block {
-        return BuiltInRegistries.BLOCK.register(id(id), block)
+    fun registerNoItem(name: String, block: Block): Block {
+        val id = id(name)
+        ensureUnique(id, BuiltInRegistries.BLOCK)
+        return BuiltInRegistries.BLOCK.register(id, block)
     }
 
 }

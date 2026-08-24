@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 
+// TODO re order the file to have simple functions upto
 /**
  * Creates a property map for blocks with `BlockStateProperties.FACING` propery with the default state being `Direction.UP`
  */
@@ -47,7 +48,7 @@ fun BlockModelGenerators.createOrientable(block: Block) {
     blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(block).with(
             PropertyDispatch.property(BlockStateProperties.ORIENTATION)
-                .generate { orientation -> applyRotation(orientation, Variant.variant().with(VariantProperties.MODEL, model)) }
+                .generate { orientation -> applyRotation(orientation, variant(model)) }
         )
     )
 }
@@ -59,6 +60,7 @@ fun BlockModelGenerators.createItemModel(block: Block) {
     delegateItemModel(block, modelId(block))
 }
 
+fun variant(model: ResourceLocation): Variant = Variant.variant().with(VariantProperties.MODEL, model)
+
 fun modelId(block: Block): ResourceLocation = ModelLocationUtils.getModelLocation(block)
 fun modelId(block: Block, suffix: String): ResourceLocation = ModelLocationUtils.getModelLocation(block, suffix)
-

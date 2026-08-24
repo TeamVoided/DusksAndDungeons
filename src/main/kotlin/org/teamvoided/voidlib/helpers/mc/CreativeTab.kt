@@ -4,11 +4,16 @@ package org.teamvoided.voidlib.helpers.mc
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.world.level.ItemLike
-import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.ItemStack
-import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters
+import net.minecraft.world.item.CreativeModeTab.Output
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.level.ItemLike
 
 fun modifyTab(itemGroup: ResourceKey<CreativeModeTab>, modifyEntries: FabricItemGroupEntries.() -> Unit) =
     ItemGroupEvents.modifyEntriesEvent(itemGroup).register(modifyEntries)
@@ -29,3 +34,11 @@ fun FabricItemGroupEntries.addBefore(item: ItemLike, list: Collection<ItemLike>)
 fun CreativeModeTab.Builder.icon(item: ItemLike): CreativeModeTab.Builder = this.icon { ItemStack(item) }
 fun CreativeModeTab.Builder.translation(translation: String): CreativeModeTab.Builder = this.title(Component.translatable(translation))
 fun CreativeModeTab.Builder.name(name: String): CreativeModeTab.Builder = this.title(Component.literal(name))
+
+fun Output.addPotionEntries(params: ItemDisplayParameters, potionItem: Item) {
+    params.holders().lookup(Registries.POTION).ifPresent { potion ->
+        potion.listElements()
+            .map { reference -> PotionContents.createItemStack(potionItem, reference) }
+            .forEach(this::accept)
+    }
+}

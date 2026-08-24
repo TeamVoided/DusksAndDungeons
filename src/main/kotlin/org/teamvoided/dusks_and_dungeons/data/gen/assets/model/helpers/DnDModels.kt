@@ -11,22 +11,22 @@ import java.util.*
  */
 data object DnDModels {
 
-    val SMALL_PUMPKIN = block("parent/small_pumpkin", PARTICLE, ALL)
-    val SMALL_CARVED_PUMPKIN = block("parent/small_carved_pumpkin", PARTICLE, ALL)
-    val SMALL_CARVED_PUMPKIN_WALL = block("parent/small_carved_pumpkin_wall", "_wall", PARTICLE, ALL)
-    val SMALL_GLOWING_PUMPKIN = block("parent/small_glowing_pumpkin", PARTICLE, ALL)
-    val SMALL_GLOWING_PUMPKIN_WALL = block("parent/small_glowing_pumpkin_wall", "_wall", PARTICLE, ALL)
+    val SMALL_PUMPKIN = parent("small_pumpkin", PARTICLE, ALL)
+    val SMALL_CARVED_PUMPKIN = parent("small_carved_pumpkin", PARTICLE, ALL)
+    val SMALL_CARVED_PUMPKIN_WALL = parent("small_carved_pumpkin_wall", "_wall", PARTICLE, ALL)
+    val SMALL_GLOWING_PUMPKIN = parent("small_glowing_pumpkin", PARTICLE, ALL)
+    val SMALL_GLOWING_PUMPKIN_WALL = parent("small_glowing_pumpkin_wall", "_wall", PARTICLE, ALL)
 
-    val BIG_CHAIN = block("parent/big_chain", PARTICLE, ALL)
-    val BIG_LANTERN = block("parent/big_lantern", PARTICLE, SIDE, END)
+    val BIG_CHAIN = parent("big_chain", PARTICLE, ALL)
+    val BIG_LANTERN = parent("big_lantern", PARTICLE, SIDE, END)
 
     // region Graves
-    val GRAVESTONE = block("parent/gravestone", FRONT, SIDE)
-    val GRAVESTONE_CENTERED = block("parent/gravestone_centered", FRONT, SIDE)
-    val SMALL_GRAVESTONE = block("parent/small_gravestone", FRONT)
-    val SMALL_GRAVESTONE_CENTERED = block("parent/small_gravestone_centered", FRONT)
-    val HEADSTONE = block("parent/headstone", ALL)
-    val HEADSTONE_CENTERED = block("parent/headstone_centered", ALL)
+    val GRAVESTONE = parent("gravestone", FRONT, SIDE)
+    val GRAVESTONE_CENTERED = parent("gravestone_centered", FRONT, SIDE)
+    val SMALL_GRAVESTONE = parent("small_gravestone", FRONT)
+    val SMALL_GRAVESTONE_CENTERED = parent("small_gravestone_centered", FRONT)
+    val HEADSTONE = parent("headstone", ALL)
+    val HEADSTONE_CENTERED = parent("headstone_centered", ALL)
     // endregion
 
     // region Tinted
@@ -51,17 +51,40 @@ data object DnDModels {
     val ORIENTABLE_TRAPDOOR_OPEN_TINTED = tintedBlock("orientable_trapdoor_open", "_open", TEXTURE)
     // endregion
 
-    fun tintedBlock(parent: String, vararg slots: TextureSlot) = block("parent/tint/$parent", *slots)
-    fun tintedBlock(parent: String, suffix: String, vararg slots: TextureSlot): ModelTemplate {
-        return block("parent/tint/$parent", suffix, *slots)
+    val CARPET_DOWN = parent("carpet_down", "_down", WOOL)
+
+    // region Offset Models
+    val OFFSET_WALL_POST = parent("offset/wall_post", "_post", WALL)
+    val OFFSET_WALL_SIDE = parent("offset/wall_side", "_side", WALL)
+    val OFFSET_WALL_SIDE_TALL = parent("offset/wall_side_tall", "_side_tall", WALL)
+    val OFFSET_WALL_INVENTORY = parent("offset/wall_inventory", "_inventory", WALL)
+    // endregion
+
+
+    // region Func's
+    fun tintedBlock(name: String, vararg slots: TextureSlot): ModelTemplate {
+        return parent("tint/$name", *slots)
     }
 
-    fun block(parent: String, vararg slots: TextureSlot): ModelTemplate {
-        return ModelTemplate(Optional.of(id("block/$parent")), Optional.empty(), *slots)
+    fun tintedBlock(name: String, suffix: String, vararg slots: TextureSlot): ModelTemplate {
+        return parent("tint/$name", suffix, *slots)
     }
 
-    fun block(parent: String, suffix: String, vararg slots: TextureSlot): ModelTemplate {
-        return ModelTemplate(Optional.of(id("block/$parent")), Optional.of(suffix), *slots)
+    fun parent(name: String, vararg slots: TextureSlot): ModelTemplate {
+        return block("parent/$name", *slots)
     }
+
+    fun parent(name: String, suffix: String, vararg slots: TextureSlot): ModelTemplate {
+        return block("parent/$name", suffix, *slots)
+    }
+
+    fun block(name: String, vararg slots: TextureSlot): ModelTemplate {
+        return ModelTemplate(Optional.of(id("block/$name")), Optional.empty(), *slots)
+    }
+
+    fun block(name: String, suffix: String, vararg slots: TextureSlot): ModelTemplate {
+        return ModelTemplate(Optional.of(id("block/$name")), Optional.of(suffix), *slots)
+    }
+    // endregion
 
 }

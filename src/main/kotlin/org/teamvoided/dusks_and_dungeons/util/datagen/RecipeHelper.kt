@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.util.datagen
 
 import net.minecraft.data.recipes.*
+import net.minecraft.data.recipes.RecipeBuilder.getDefaultRecipeId
 import net.minecraft.data.recipes.RecipeProvider.*
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
@@ -10,18 +11,18 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 
+// TODO fix name to be inline with mojmaps
 fun RecipeBuilder.criterion(item: ItemLike): RecipeBuilder =
     this.unlockedBy(getHasName(item), has(item))
 
 fun RecipeBuilder.criterion(tag: TagKey<Item>): RecipeBuilder =
     this.unlockedBy("has_${tag.location.path}", has(tag))
 
+// TODO move to big blocks
 fun RecipeOutput.createBigLantern(
     block: ItemLike,
     torch: ItemLike,
@@ -431,5 +432,74 @@ fun RecipeOutput.createPiles(output: ItemLike, input: ItemLike) {
         .define('#', Ingredient.of(input))
         .pattern("##")
         .criterion(input)
+        .save(this)
+}
+
+// TODO stuff for VV
+
+fun RecipeOutput.createStoneWall(wall: Block, source: Block) {
+    createWall(wall, source)
+    createStonecutting(wall, source)
+}
+
+
+fun RecipeOutput.createStoneStairs(stairs: Block, source: Block) {
+    createStair(stairs, source)
+    createStonecutting(stairs, source)
+}
+
+fun RecipeOutput.create2x2(output: ItemLike, input: ItemLike, count: Int = 4) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
+        .pattern("##")
+        .pattern("##")
+        .define('#', input)
+        .criterion(input)
+        .save(this)
+}
+
+fun RecipeOutput.compositeBlock(full: ItemLike, part: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, full, 1)
+        .pattern("###")
+        .pattern("# #")
+        .pattern("###")
+        .define('#', part)
+        .criterion(part)
+        .save(this)
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, part, 8)
+        .requires(full)
+        .criterion(full)
+        .save(this)
+}
+
+fun RecipeOutput.lantern(lantern: ItemLike, torch: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, lantern)
+        .pattern("XXX")
+        .pattern("X#X")
+        .pattern("XXX")
+        .define('#', torch)
+        .define('X', Items.IRON_NUGGET)
+        .criterion(Items.IRON_NUGGET)
+        .criterion(Items.IRON_INGOT)
+        .save(this)
+}
+
+fun RecipeOutput.bookshelf(
+    bookshelf: ItemLike, planks: ItemLike, id: ResourceLocation = getDefaultRecipeId(bookshelf),
+) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, bookshelf)
+        .pattern("###")
+        .pattern("XXX")
+        .pattern("###")
+        .define('#', planks)
+        .define('X', Items.BOOK)
+        .criterion(Items.BOOK)
+        .save(this, id)
+}
+
+fun RecipeOutput.carpetPlate(plate: ItemLike, carpet: ItemLike) {
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, plate)
+        .requires(ItemTags.WOODEN_PRESSURE_PLATES)
+        .requires(carpet)
+        .criterion(ItemTags.WOODEN_PRESSURE_PLATES)
         .save(this)
 }

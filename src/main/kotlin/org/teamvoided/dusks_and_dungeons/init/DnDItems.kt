@@ -6,14 +6,21 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.*
 import net.minecraft.world.item.Item.Properties
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.component.DyedItemColor
 import net.minecraft.world.item.component.ItemAttributeModifiers
+import net.minecraft.world.level.block.DispenserBlock
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDToolMaterials
 import org.teamvoided.dusks_and_dungeons.item.DnDFoodComponents
 import org.teamvoided.dusks_and_dungeons.item.PlaceInFluidBlockItem
 import org.teamvoided.dusks_and_dungeons.item.ScarecrowItem
 import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
+import org.teamvoided.dusks_and_dungeons.item.potion.CustomGlassBottleItem
+import org.teamvoided.dusks_and_dungeons.item.potion.TintedLingeringPotionItem
+import org.teamvoided.dusks_and_dungeons.item.potion.TintedPotionItem
+import org.teamvoided.dusks_and_dungeons.item.potion.TintedSplashPotionItem
+import org.teamvoided.dusks_and_dungeons.util.ensureUnique
 import org.teamvoided.dusks_and_dungeons.util.getModEntries
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
 import org.teamvoided.voidlib.helpers.item.EquipableItem
@@ -161,12 +168,24 @@ object DnDItems {
     )
     // endregion
 
+    val TINTED_POTION = register("tinted_potion", TintedPotionItem(potionProps()))
+    val TINTED_GLASS_BOTTLE = register("tinted_glass_bottle", CustomGlassBottleItem(TINTED_POTION, Properties()))
+    val TINTED_SPLASH_POTION = register("tinted_splash_potion", TintedSplashPotionItem(potionProps()))
+    val TINTED_LINGERING_POTION = register("tinted_lingering_potion", TintedLingeringPotionItem(potionProps()))
+
     fun init() {
-//        BLOCK_ITEMS.forEach(::register)
+        DispenserBlock.registerProjectileBehavior(TINTED_SPLASH_POTION)
+        DispenserBlock.registerProjectileBehavior(TINTED_LINGERING_POTION)
     }
 
-    fun register(id: String, item: Item): Item {
-        return Registry.register(BuiltInRegistries.ITEM, id(id), item)
+    fun register(name: String, item: Item): Item {
+        val id = id(name)
+        ensureUnique(id, BuiltInRegistries.ITEM)
+        return Registry.register(BuiltInRegistries.ITEM, id, item)
+    }
+
+    fun potionProps(): Properties {
+        return Properties().stacksTo(1).component(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
     }
 
     fun attributeSettings(comp: ItemAttributeModifiers): Properties = Properties().attributes(comp)

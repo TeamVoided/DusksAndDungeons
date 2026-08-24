@@ -1,8 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.util.block
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
@@ -81,6 +81,10 @@ fun registerSet(name: String, settings: Properties, sfx: String) =
 
 fun registerHeadlessSet(name: String, parent: Block) =
     register(createHeadlessSet(name, parent).buildHeadless())
+
+fun registerHeadlessSet(name: String, parent: Block, properties: Properties) =
+    register(createHeadlessSet(name, parent).settings(properties).buildHeadless())
+
 
 fun registerWoodenSet(name: String, parent: Block) =
     register(createHeadlessSet(name, parent).noStoneCutting().buildHeadless()).woodSet()

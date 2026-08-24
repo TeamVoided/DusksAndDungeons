@@ -69,6 +69,9 @@ object DnDItemTags {
 
     val RACCOON_FOOD = tag("raccoon_food")
 
+    val CARPET_PLATES = tag("carpet_plates")
+    val CARPET_PLATES_WOOL = tag("carpet_plates/wool")
+
     val EMPTY = tag("empty")
 
     init {

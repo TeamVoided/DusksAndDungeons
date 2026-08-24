@@ -9,6 +9,8 @@ import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.util.HEAVY_CUBE_TOOLTIP
+import org.teamvoided.dusks_and_dungeons.util.TINTED_TOOLTIP
 import org.teamvoided.dusks_and_dungeons.util.getModHolders
 import org.teamvoided.voidlib.devin.FDOutput
 import org.teamvoided.voidlib.devin.FutureLookup
@@ -32,6 +34,9 @@ class EnLangProvider(val output: FDOutput, r: FutureLookup) : FabricLanguageProv
             "was brought down by" to "with the certainty of",
             "was brought down with a cast brick from"
         )
+
+        gen.add(HEAVY_CUBE_TOOLTIP, "This block contains custom state!")
+        gen.add(TINTED_TOOLTIP, "This bottle is too dark to make out its contents.")
     }
 
     fun <T : Any> Holder.Reference<T>.lang(): String = genLang(key().location())

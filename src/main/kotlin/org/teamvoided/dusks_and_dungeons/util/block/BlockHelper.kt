@@ -31,20 +31,15 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleCakeBlock
-import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
-import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
-import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.*
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
-import org.teamvoided.voidlib.consortium.block.set.BlockSetBuilder
 import org.teamvoided.voidlib.helpers.addAndReturn
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidSignBlock
 import org.teamvoided.voidmill.sign.VoidWallHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidWallSignBlock
 import java.util.function.ToIntFunction
-
 
 @Suppress("DEPRECATION")
 fun getId(block: Block): ResourceLocation = block.builtInRegistryHolder().key().location()
@@ -289,6 +284,3 @@ fun MutableCollection<AbstractBlockSet>.addDevSets(set: AbstractBlockSet): Abstr
 }
 
 fun copy(set: AbstractBlockSet): BlockBehaviour.Properties = ofFullCopy(set.parent)
-
-fun BlockSetBuilder.meltable(): BlockSetBuilder =
-    this.stairs(::MeltableStairsBlock).slab(::MeltableSlabBlock).wall(::MeltableWallBlock)

@@ -3,12 +3,14 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
+import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import kotlin.jvm.optionals.getOrNull
 
@@ -42,3 +44,10 @@ fun <T : Any, R : Registry<T>> ResourceKey<R>.key(id: ResourceLocation): Resourc
 
 fun ResourceKey<*>.toLangKey(): String = location().toLangKey()
 fun ResourceLocation.toLangKey(): String = toLanguageKey().replace("/", ".")
+
+fun ensureUnique(id: ResourceLocation, registry: DefaultedRegistry<*>) {
+    require(!registry.containsKey(id)) { "Duplicate block: $id" }
+}
+
+// TODO remove this
+fun Vec3.map(func: (Double) -> Double): Vec3 = Vec3(func(this.x), func(this.y), func(this.z))
