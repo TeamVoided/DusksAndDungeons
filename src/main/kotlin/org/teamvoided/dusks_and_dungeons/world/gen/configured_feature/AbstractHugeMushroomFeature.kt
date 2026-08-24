@@ -38,11 +38,10 @@ open class AbstractHugeMushroomFeature<T : MushroomFeatureConfig>(codec: Codec<T
     ): Boolean {
         val y = pos.y
         if (y >= world.minBuildHeight + 1 && y + stemHeight + 1 < world.maxBuildHeight) {
+            if (!world.getBlockState(pos.below()).`is`(config.canPlaceOn)) return false
             for (j in 0..stemHeight) {
-                val blockState2 = world.getBlockState(mutablePos.setWithOffset(pos, 0, j, 0))
-                if (!blockState2.`is`(config.ignores)) {
-                    return false
-                }
+                val worldState = world.getBlockState(mutablePos.setWithOffset(pos, 0, j, 0))
+                if (!worldState.`is`(config.ignores)) return false
             }
             return true
         }

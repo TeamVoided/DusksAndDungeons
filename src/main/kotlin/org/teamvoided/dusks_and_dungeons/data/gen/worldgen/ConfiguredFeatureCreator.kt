@@ -180,6 +180,7 @@ object ConfiguredFeatureCreator {
             MushroomFeatureConfig(
                 DnDBlockTags.VEGETATION_REPLACEABLE,
                 DnDBlockTags.VEGETATION_REPLACEABLE,
+                DnDBlockTags.GOLD_MUSH_GROW_ON,
                 BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK),
                 BiasedToBottomInt.of(3, 6),
                 BlockStateProvider.simple(DnDBlocks.GOLDEN_MUSHROOM_BLOCK),
@@ -200,15 +201,7 @@ object ConfiguredFeatureCreator {
             CompositeConfig(
                 HolderSet.direct(
                     PlacementUtils.inlinePlaced(cF.getOrThrow(DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM)),
-                    PlacementUtils.inlinePlaced(
-                        cF.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
-                        BlockPredicateFilter.forPredicate(
-                            BlockPredicate.matchesTag(
-                                Direction.DOWN.normal,
-                                BlockTags.MOSS_REPLACEABLE
-                            )
-                        )
-                    )
+                    PlacementUtils.inlinePlaced(cF.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM))
                 ),
                 CompositeConfig.Type.CANCEL_ON_FAILURE
             )

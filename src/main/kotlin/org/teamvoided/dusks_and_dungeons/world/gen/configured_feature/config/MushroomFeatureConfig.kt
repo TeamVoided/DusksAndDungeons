@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 open class MushroomFeatureConfig(
     val replaceable: TagKey<Block>,
     val ignores: TagKey<Block>,
+    val canPlaceOn: TagKey<Block>,
     val stemBlock: BlockStateProvider,
     val stemHeight: IntProvider,
     val capBlock: BlockStateProvider,
@@ -24,6 +25,7 @@ open class MushroomFeatureConfig(
                 instance.group(
                     TagKey.hashedCodec(Registries.BLOCK).fieldOf("replaceable").forGetter { it.replaceable },
                     TagKey.hashedCodec(Registries.BLOCK).fieldOf("ignores").forGetter { it.ignores },
+                    TagKey.hashedCodec(Registries.BLOCK).fieldOf("can_place_on").forGetter { it.canPlaceOn },
                     BlockStateProvider.CODEC.fieldOf("stem_block").forGetter { it.stemBlock },
                     IntProvider.codec(1, 32).fieldOf("stem_height").forGetter { it.stemHeight },
                     BlockStateProvider.CODEC.fieldOf("cap_block").forGetter { it.capBlock },

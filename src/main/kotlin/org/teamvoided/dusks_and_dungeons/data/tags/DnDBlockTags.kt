@@ -39,7 +39,7 @@ object DnDBlockTags {
     val LEAF_PILES_PLACE_ON = key("leaf_piles_place_on")
     val FLOWERBEDS = key("flowerbeds")
     val VIVIONBEDS = key("vivionbeds")
-    val VIVIONBED_PLACEABLE = key("vivionbed_placeable")
+    val VIVIONBED_PLACEABLE = po("vivionbed")
     val ICE_BLOCK_TRANSLUCENT = key("ice_block_translucent")
     val BIG_CANDLES = key("big_candles")
     val SOUL_CANDLES = key("soul_candles")
@@ -52,15 +52,16 @@ object DnDBlockTags {
     val CRACKED_NETHER_BRICKS = key("cracked_nether_bricks")
 
 
-    val WARPED_NETHER_WART_PLACEABLE = key("warped_nether_wart_placeable")
+    val WARPED_NETHER_WART_PLACEABLE = po("warped_nether_wart")
     val CHILL_CHARGE_AFFECTS = key("chill_charge_affects")
     val FARMLAND_PLACES_UNDER = key("farmland_places_under")
-    val MOONBERRY_CAN_PLACE_ON = key("moonberry_can_place_on")
+    val MOONBERRY_CAN_PLACE_ON = bf("moonberry_can_place_on")
     val REPLACEABLE_OR_DIRT = key("replaceable_or_dirt")
     val VEGETATION_REPLACEABLE = key("vegetation_replaceable")
     val PUMPKIN_PATCH_PLACE_ON = key("pumpkin_patch_place_on")
+    val GOLD_MUSH_GROW_ON = bf("golden_mushroom_grows_on")
 
-    val CORN_STORAGE = key("storage_blocks/corn")
+    val CORN_STORAGE = bs("corn")
     val PUMPKIN_STEMS = key("pumpkins/stems")
     val PUMPKIN_BLOCKS = key("pumpkins/blocks")
     val PUMPKIN_EIGHTHS = key("pumpkins/small")
@@ -78,6 +79,9 @@ object DnDBlockTags {
 
     val EMPTY = key("empty")
 
+    fun po(id: String) = key("placeable_on/$id")
+    fun bf(id: String) = key("block_feature/$id")
+    fun bs(id: String) = key("storage_blocks/$id")
+    //fun bg(id: String) = key("block_group/$id")
     fun key(id: String) = Registries.BLOCK.tag(id(id))
-
 }

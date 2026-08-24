@@ -1,18 +1,20 @@
 package org.teamvoided.dusks_and_dungeons.block
 
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.MushroomBlock
-import net.minecraft.world.phys.shapes.CollisionContext
-import net.minecraft.resources.ResourceKey
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.resources.ResourceKey
 import net.minecraft.util.RandomSource
-import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.MushroomBlock
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 
 class MushroomWithSporesPlantBlock(
     registryKey: ResourceKey<ConfiguredFeature<*, *>>,
@@ -21,12 +23,7 @@ class MushroomWithSporesPlantBlock(
     settings: Properties
 ) : MushroomBlock(registryKey, settings) {
 
-    override fun getShape(
-        state: BlockState,
-        world: BlockGetter,
-        pos: BlockPos,
-        context: CollisionContext
-    ): VoxelShape {
+    override fun getShape(state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         val offset = state.getOffset(world, pos)
         return LARGER_SHAPE.move(offset.x, 0.0, offset.z)
     }
@@ -34,6 +31,9 @@ class MushroomWithSporesPlantBlock(
     override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
         return canSupportCenter(world, pos.below(), Direction.UP)
     }
+
+    override fun isValidBonemealTarget(world: LevelReader, pos: BlockPos, state: BlockState): Boolean =
+        world.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_GROW_ON)
 
     override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
         super.animateTick(state, world, pos, random)
@@ -52,6 +52,6 @@ class MushroomWithSporesPlantBlock(
     }
 
     companion object {
-        val LARGER_SHAPE: VoxelShape = box(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
+        val LARGER_SHAPE: VoxelShape = symmetricalBoxY(5.0, 0.0, 9.0)
     }
 }
