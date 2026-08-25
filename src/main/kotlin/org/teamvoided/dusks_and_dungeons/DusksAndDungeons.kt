@@ -14,6 +14,7 @@ import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomeModifications
 
 @Suppress("unused")
 object DusksAndDungeons {
+
     const val MODID = "dusks_and_dungeons"
 
     @JvmField
@@ -51,8 +52,8 @@ object DusksAndDungeons {
     fun id(modId: String, path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
     fun mc(path: String): ResourceLocation = ResourceLocation.withDefaultNamespace(path)
     fun id(path: String) = id(MODID, path)
-
     @JvmStatic
     fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
     fun isModLoaded(modId: String) = FabricLoader.getInstance().isModLoaded(modId)
+
 }
