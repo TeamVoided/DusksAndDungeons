@@ -9,6 +9,7 @@ import net.minecraft.world.damagesource.DamageTypes
 import net.minecraft.world.item.EitherHolder
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
@@ -16,7 +17,7 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 import java.util.*
 
-object ThrownItems : RegistryBootstrapper<ThrownItemDefinition>{
+object ThrownItems : RegistryBootstrapper<ThrownItemDefinition> {
 
     override fun BootstrapContext<ThrownItemDefinition>.init() {
         register(

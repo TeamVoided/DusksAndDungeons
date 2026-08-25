@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.damagesource.DamageEffects
 import net.minecraft.world.damagesource.DamageScaling
 import net.minecraft.world.damagesource.DamageType
+import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.util.toLangKey
 

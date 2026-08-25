@@ -21,6 +21,7 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Climate
 import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.levelgen.DensityFunction
+import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.DensityFunctionCreator.dense
 import java.util.*
 
 fun BootstrapContext<BiomeInjector>.replacePartially(
@@ -28,7 +29,7 @@ fun BootstrapContext<BiomeInjector>.replacePartially(
     target: ResourceKey<Biome>,
     replacement: ResourceKey<Biome>,
     parameters: ParameterMap,
-    priority: Int = 800
+    priority: Int = 800,
 ) {
     val biomes = lookup(Registries.BIOME)
     register(
@@ -49,7 +50,7 @@ fun BootstrapContext<BiomeInjector>.replacePartially(
     target: TagKey<Biome>,
     replacement: ResourceKey<Biome>,
     parameters: ParameterMap,
-    priority: Int = 800
+    priority: Int = 800,
 ) {
     val biomes = lookup(Registries.BIOME)
     register(
@@ -69,7 +70,7 @@ fun BootstrapContext<BiomeInjector>.forcePlacement(
     key: ResourceKey<BiomeInjector>,
     biome: ResourceKey<Biome>,
     parameters: ParameterMap,
-    priority: Int = 800
+    priority: Int = 800,
 ) {
     val biomes = lookup(Registries.BIOME)
     register(
@@ -91,7 +92,7 @@ fun BootstrapContext<BiomeInjector>.addPoints(key: ResourceKey<BiomeInjector>, v
 fun BootstrapContext<BiomeInjector>.addPoints(
     key: ResourceKey<BiomeInjector>,
     points: List<BiomePoint>,
-    priority: Int = 800
+    priority: Int = 800,
 ) {
     register(
         key,
@@ -130,9 +131,11 @@ fun BootstrapContext<BiomeInjector>.point(
     )
 }
 
-fun param(min: Number, max: Number) = Climate.Parameter(Climate.quantizeCoord(min.toFloat()), Climate.quantizeCoord(max.toFloat()))
 fun param(value: Number) = param(value, value)
 
+fun param(min: Number, max: Number): Climate.Parameter {
+    return Climate.Parameter(Climate.quantizeCoord(min.toFloat()), Climate.quantizeCoord(max.toFloat()))
+}
 
 typealias WorldPlacement = kotlin.Pair<Either<ClimateParameter, DensityFunction>, InclusiveRange<Double>>
 
@@ -141,9 +144,13 @@ fun parameterMap(vararg param: WorldPlacement): ParameterMap = ParameterMap(para
 fun climateParam(param: ClimateParameter, min: Double, max: Double): WorldPlacement {
     return Either.left<ClimateParameter, DensityFunction>(param) to InclusiveRange(min, max)
 }
-fun dfParam(param: DensityFunction, min: Double, max: Double): WorldPlacement {
-    return Either.right<ClimateParameter, DensityFunction>(param) to InclusiveRange(min, max)
+
+fun BootstrapContext<BiomeInjector>.dfParam(
+    key: ResourceKey<DensityFunction>, low: Double, high: Double,
+): WorldPlacement {
+    return dfParam(dense(key), low, high)
 }
 
-fun parameter(param: ClimateParameter, min: Double, max: Double) = parameterMap(climateParam(param, min, max))
-fun parameter(param: DensityFunction, min: Double, max: Double) = parameterMap(dfParam(param, min, max))
+fun dfParam(df: DensityFunction, min: Double, max: Double): WorldPlacement {
+    return Either.right<ClimateParameter, DensityFunction>(df) to InclusiveRange(min, max)
+}

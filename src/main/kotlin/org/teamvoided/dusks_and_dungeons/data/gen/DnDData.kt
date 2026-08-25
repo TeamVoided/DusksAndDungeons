@@ -19,7 +19,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.data.gen.assets.lang.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.AdvancementsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.BiomeInjectors
-import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.worldgen_modifiers.WorldgenModifiers
+import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.WorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTablesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockLootTableProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.DamageTypes
@@ -92,8 +92,8 @@ class DnDData : DataGeneratorEntrypoint {
         gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
         gen.add(Registries.STRUCTURE_SET, StructureSetCreator::bootstrap)
         // Lithostitched
-        gen.add(LithostitchedRegistries.WORLDGEN_MODIFIER, WorldgenModifiers::init)
-        gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::init)
+        gen.add(LithostitchedRegistries.WORLDGEN_MODIFIER, WorldgenModifiers::bootstrap)
+        gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::bootstrap)
         // Entity Variants
         gen.add(Registries.WOLF_VARIANT, WolfVariants::bootstrap)
         // Misc
