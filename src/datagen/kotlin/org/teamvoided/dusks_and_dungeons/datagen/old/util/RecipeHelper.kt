@@ -357,10 +357,6 @@ fun RecipeOutput.createWall(output: ItemLike, block: ItemLike) {
     createWall(output, block, block)
 }
 
-fun RecipeOutput.createFence(output: ItemLike, block: ItemLike) {
-    createFence(output, block, block)
-}
-
 fun RecipeOutput.createStair(output: ItemLike, block: ItemLike, item: ItemLike) {
     ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 4)
         .define('#', block)
@@ -388,8 +384,8 @@ fun RecipeOutput.createWall(output: ItemLike, block: ItemLike, item: ItemLike) {
         .save(this)
 }
 
-fun RecipeOutput.createFence(output: ItemLike, block: ItemLike, item: ItemLike) {
-    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
+fun RecipeOutput.createFence(output: ItemLike, block: ItemLike, item: ItemLike, amount: Int = 6) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, amount)
         .define('#', block)
         .define('+', item)
         .pattern("#+#")
