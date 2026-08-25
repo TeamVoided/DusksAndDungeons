@@ -18,7 +18,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.util.createSmallSquare
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStackedCraft
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStonecuttedFromList
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createTwoPiece
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
@@ -88,8 +88,8 @@ object StoneRecipes {
             .pattern("%#%")
             .pattern("###")
             .pattern("%#%")
-            .criterion(Items.IRON_BARS)
-            .criterion(DnDItemTags.GRAVESTONES)
+            .unlockedBy(Items.IRON_BARS)
+            .unlockedBy(DnDItemTags.GRAVESTONES)
             .save(output)
     }
 

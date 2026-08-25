@@ -11,7 +11,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCount
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDoubleCraft
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createPiles
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createPumpkinStuffs
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.smeltDefault
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.suffix
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -43,7 +43,7 @@ object FloraRecipes {
             .define('#', Blocks.HANGING_ROOTS)
             .pattern("##")
             .pattern("##")
-            .criterion(Blocks.HANGING_ROOTS)
+            .unlockedBy(Blocks.HANGING_ROOTS)
             .save(output)
         output.createCount(Blocks.HANGING_ROOTS, DnDBlocks.ROOT_BLOCK, 4)
 
@@ -54,7 +54,7 @@ object FloraRecipes {
             .requires(Items.CARROT)
             .requires(DnDBlocks.GOLDEN_MUSHROOM)
             .group("rabbit_stew")
-            .criterion(Items.COOKED_RABBIT)
+            .unlockedBy(Items.COOKED_RABBIT)
             .save(output, getConversionRecipeName(Items.RABBIT_STEW, DnDBlocks.GOLDEN_MUSHROOM))
 
         pumpkins(output)
@@ -67,7 +67,7 @@ object FloraRecipes {
         e.createDoubleCraft(DnDBlocks.SMALL_GLOWING_PUMPKIN, DnDBlocks.SMALL_CARVED_PUMPKIN, Items.TORCH)
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.PUMPKIN_SEEDS, 2)
             .requires(DnDBlocks.SMALL_PUMPKIN)
-            .criterion(DnDBlocks.SMALL_PUMPKIN)
+            .unlockedBy(DnDBlocks.SMALL_PUMPKIN)
             .save(e)
 
         e.createPumpkinStuffs(
@@ -99,7 +99,7 @@ object FloraRecipes {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DnDItems.CORN_SYRUP_BOTTLE, 4)
             .requires(DnDBlocks.CORN_SYRUP_BLOCK)
             .requires(Items.GLASS_BOTTLE, 4)
-            .criterion(DnDBlocks.CORN_SYRUP_BLOCK)
+            .unlockedBy(DnDBlocks.CORN_SYRUP_BLOCK)
             .save(e)
         RecipeProvider.twoByTwoPacker(
             e,
@@ -110,7 +110,7 @@ object FloraRecipes {
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, DnDItems.CORN, 6)
             .requires(DnDBlocks.CORN)
-            .criterion(DnDBlocks.CORN)
+            .unlockedBy(DnDBlocks.CORN)
             .save(e, getDefaultRecipeId(DnDItems.CORN).suffix("_from_plant"))
 
         RecipeProvider.nineBlockStorageRecipes(
@@ -131,7 +131,7 @@ object FloraRecipes {
     fun RecipeOutput.toDye(item: ItemLike, dye: ItemLike, count: Int = 1) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, dye, count)
             .requires(item)
-            .criterion(item)
+            .unlockedBy(item)
             .save(this)
     }
 

@@ -9,13 +9,13 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 
 // region Chiseled
 fun RecipeOutput.createChiseled(chiseled: Block, slab: Block, source: Block) {
     chiseledBuilder(RecipeCategory.BUILDING_BLOCKS, chiseled, Ingredient.of(slab))
-        .criterion(chiseled)
-        .criterion(source)
+        .unlockedBy(chiseled)
+        .unlockedBy(source)
         .save(this)
 }
 

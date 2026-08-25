@@ -9,7 +9,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 
 object WoodRecipes {
 
@@ -38,7 +38,7 @@ object WoodRecipes {
             .pattern("## ")
             .pattern("##@")
             .pattern("## ")
-            .criterion(DnDBlocks.CASCADE_PLANKS.asItem())
+            .unlockedBy(DnDBlocks.CASCADE_PLANKS.asItem())
             .save(this)
     }
 

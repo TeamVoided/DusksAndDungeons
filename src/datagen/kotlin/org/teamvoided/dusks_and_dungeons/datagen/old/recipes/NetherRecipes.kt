@@ -15,7 +15,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDiagonalRecipe
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createFence
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStackedCraft
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStonecuttedSet
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
@@ -51,7 +51,7 @@ object NetherRecipes {
             RecipeCategory.BUILDING_BLOCKS,
             DnDBlocks.CHISELED_RED_NETHER_BRICKS,
             Ingredient.of(Blocks.RED_NETHER_BRICK_SLAB)
-        ).criterion(Blocks.RED_NETHER_BRICKS).save(e)
+        ).unlockedBy(Blocks.RED_NETHER_BRICKS).save(e)
         e.createStackedCraft(DnDBlocks.RED_NETHER_BRICK_PILLAR, Blocks.RED_NETHER_BRICKS, DnDItemTags.NETHER_BRICKS)
         e.createStonecuttedSet(
             listOf(Blocks.RED_NETHER_BRICKS),
@@ -93,34 +93,34 @@ object NetherRecipes {
             .pattern("X")
             .pattern("X")
             .pattern("#")
-            .criterion(Items.BLACKSTONE).save(e)
+            .unlockedBy(Items.BLACKSTONE).save(e)
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_PICKAXE)
             .define('#', Items.STICK)
             .define('X', Items.BLACKSTONE)
             .pattern("XXX")
             .pattern(" # ")
             .pattern(" # ")
-            .criterion(Items.BLACKSTONE).save(e)
+            .unlockedBy(Items.BLACKSTONE).save(e)
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_AXE)
             .define('#', Items.STICK)
             .define('X', Items.BLACKSTONE)
             .pattern("XX")
             .pattern("X#")
             .pattern(" #")
-            .criterion(Items.BLACKSTONE).save(e)
+            .unlockedBy(Items.BLACKSTONE).save(e)
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_SHOVEL)
             .define('#', Items.STICK)
             .define('X', Items.BLACKSTONE)
             .pattern("X")
             .pattern("#").pattern("#")
-            .criterion(Items.BLACKSTONE).save(e)
+            .unlockedBy(Items.BLACKSTONE).save(e)
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DnDItems.BLACKSTONE_HOE)
             .define('#', Items.STICK)
             .define('X', Items.BLACKSTONE)
             .pattern("XX")
             .pattern(" #")
             .pattern(" #")
-            .criterion(Items.BLACKSTONE).save(e)
+            .unlockedBy(Items.BLACKSTONE).save(e)
     }
 
 }

@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 
 object MinecraftRecipeOverrides {
 
@@ -21,14 +21,14 @@ object MinecraftRecipeOverrides {
             .define('#', DnDBlocks.POLISHED_STONE)
             .pattern("##")
             .pattern("##")
-            .criterion(DnDBlocks.POLISHED_STONE)
+            .unlockedBy(DnDBlocks.POLISHED_STONE)
             .save(o)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Blocks.SNOW, 8)
             .define('#', Blocks.SNOW_BLOCK)
             .pattern("##")
-            .criterion(Blocks.SNOW_BLOCK)
-            .criterion(Blocks.SNOW)
+            .unlockedBy(Blocks.SNOW_BLOCK)
+            .unlockedBy(Blocks.SNOW)
             .save(o)
 
     }

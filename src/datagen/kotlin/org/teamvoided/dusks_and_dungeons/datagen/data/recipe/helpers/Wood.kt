@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 
 
@@ -23,7 +23,7 @@ fun RecipeOutput.woodWall(wall: ItemLike, plank: ItemLike, slab: ItemLike) {
         .define('=', slab)
         .pattern("#=#")
         .pattern("###")
-        .criterion(plank)
+        .unlockedBy(plank)
         .save(this)
 }
 
@@ -33,6 +33,6 @@ fun RecipeOutput.hollowLog(hollowLog: Block, log: Block) {
         .pattern(" # ")
         .pattern("# #")
         .pattern(" # ")
-        .criterion(log)
+        .unlockedBy(log)
         .save(this)
 }

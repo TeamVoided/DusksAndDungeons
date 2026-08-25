@@ -11,7 +11,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.util.createBigLantern
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandelabra
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandle
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDyed
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
@@ -26,8 +26,8 @@ object BigRecipes {
             .pattern("I")
             .define('I', Ingredient.of(Items.IRON_INGOT))
             .define('N', Ingredient.of(Items.IRON_NUGGET))
-            .criterion(Items.IRON_NUGGET)
-            .criterion(Items.IRON_INGOT)
+            .unlockedBy(Items.IRON_NUGGET)
+            .unlockedBy(Items.IRON_INGOT)
             .save(output)
         output.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         output.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
@@ -52,7 +52,7 @@ object BigRecipes {
             .pattern("|~|")
             .pattern("| |")
             .pattern("| |")
-            .criterion(Items.BAMBOO_PLANKS)
+            .unlockedBy(Items.BAMBOO_PLANKS)
             .save(output)
     }
 }

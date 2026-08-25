@@ -15,11 +15,10 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 
-// TODO(1.0) fix name to be inline with mojmaps
-fun RecipeBuilder.criterion(item: ItemLike): RecipeBuilder =
+fun RecipeBuilder.unlockedBy(item: ItemLike): RecipeBuilder =
     this.unlockedBy(getHasName(item), has(item))
 
-fun RecipeBuilder.criterion(tag: TagKey<Item>): RecipeBuilder =
+fun RecipeBuilder.unlockedBy(tag: TagKey<Item>): RecipeBuilder =
     this.unlockedBy("has_${tag.location.path}", has(tag))
 
 // TODO(1.0) move to big blocks
@@ -36,7 +35,7 @@ fun RecipeOutput.createBigLantern(
         .pattern("XOX")
         .pattern("O#O")
         .pattern("XOX")
-        .criterion(criteriaItem)
+        .unlockedBy(criteriaItem)
         .save(this)
 }
 
@@ -51,8 +50,8 @@ fun RecipeOutput.createCandle(
             .define('H', Ingredient.of(honeycomb))
             .pattern("S")
             .pattern("H")
-            .criterion(Items.STRING)
-            .criterion(honeycomb)
+            .unlockedBy(Items.STRING)
+            .unlockedBy(honeycomb)
             .save(this)
     } else {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candle, 1)
@@ -62,7 +61,7 @@ fun RecipeOutput.createCandle(
             .pattern("S")
             .pattern("H")
             .pattern("#")
-            .criterion(soul)
+            .unlockedBy(soul)
             .save(this)
     }
 }
@@ -75,7 +74,7 @@ fun RecipeOutput.createCandelabra(candelabra: Block) {
         .pattern(" N ")
         .define('C', Ingredient.of(candelabra.candle))
         .define('N', Ingredient.of(Items.IRON_NUGGET))
-        .criterion(candelabra.candle)
+        .unlockedBy(candelabra.candle)
         .save(this)
 
 }
@@ -89,7 +88,7 @@ fun RecipeOutput.createDyed(
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, dyedBlock)
         .requires(Ingredient.of(input))
         .requires(Ingredient.of(dye))
-        .criterion(dye)
+        .unlockedBy(dye)
         .save(this, if (sufixed) id("${dyedBlock.id.path}_dyed") else dyedBlock.id)
 }
 
@@ -107,8 +106,8 @@ fun RecipeOutput.createGravestone(output: ItemLike, input: ItemLike) {
         .define('0', ItemTags.SOUL_FIRE_BASE_BLOCKS)
         .pattern("###")
         .pattern("#0#")
-        .criterion(input)
-        .criterion(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+        .unlockedBy(input)
+        .unlockedBy(ItemTags.SOUL_FIRE_BASE_BLOCKS)
         .save(this)
 }
 
@@ -132,7 +131,7 @@ fun RecipeOutput.createPumpkinStuffs(
     this.create1to4(seeds, pumpkin)
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, seeds, 2)
         .requires(smallPumpkin)
-        .criterion(smallPumpkin)
+        .unlockedBy(smallPumpkin)
         .save(this, seeds.id.suffix("_from_small"))
 }
 
@@ -144,7 +143,7 @@ fun RecipeOutput.smeltDefault(
         Ingredient.of(input),
         RecipeCategory.BUILDING_BLOCKS, output.asItem(), 0.1f, 200
     )
-        .criterion(input)
+        .unlockedBy(input)
         .save(this, ResourceLocation.parse(getSimpleRecipeName(output)).toString() + "_smelt")
 }
 
@@ -165,8 +164,8 @@ fun RecipeOutput.createTwoPiece(
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
         .requires(Ingredient.of(input1))
         .requires(Ingredient.of(input2))
-        .criterion(input1)
-        .criterion(input2)
+        .unlockedBy(input1)
+        .unlockedBy(input2)
         .save(this, id)
 }
 
@@ -180,8 +179,8 @@ fun RecipeOutput.createTwoPiece(
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
         .requires(Ingredient.of(input1))
         .requires(Ingredient.of(input2))
-        .criterion(input1)
-        .criterion(input2)
+        .unlockedBy(input1)
+        .unlockedBy(input2)
         .save(this, id)
 }
 
@@ -190,7 +189,7 @@ fun RecipeOutput.createSmallSquare(output: ItemLike, input: ItemLike, count: Int
         .define('#', input)
         .pattern("##")
         .pattern("##")
-        .criterion(input)
+        .unlockedBy(input)
         .save(this)
 }
 
@@ -199,14 +198,14 @@ fun RecipeOutput.createFullSquare(output: ItemLike, input: ItemLike) {
         .define('#', input)
         .pattern("##")
         .pattern("##")
-        .criterion(input)
+        .unlockedBy(input)
         .save(this)
 }
 
 fun RecipeOutput.createCount(output: ItemLike, input: ItemLike, countOutput: Int) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, countOutput)
         .requires(input)
-        .criterion(input)
+        .unlockedBy(input)
         .save(this)
 }
 
@@ -308,7 +307,7 @@ fun RecipeOutput.createStackedCraft(output: ItemLike, block: ItemLike, itemTag: 
         .define('#', block)
         .pattern("#")
         .pattern("#")
-        .criterion(itemTag)
+        .unlockedBy(itemTag)
         .save(this)
 }
 
@@ -318,7 +317,7 @@ fun RecipeOutput.createStackedCraft(output: ItemLike, block1: ItemLike, block2: 
         .define('%', block2)
         .pattern("#")
         .pattern("%")
-        .criterion(block1)
+        .unlockedBy(block1)
         .save(this)
 }
 
@@ -327,7 +326,7 @@ fun RecipeOutput.createStackedCraft(output: ItemLike, block: ItemLike) {
         .define('#', block)
         .pattern("#")
         .pattern("#")
-        .criterion(block)
+        .unlockedBy(block)
         .save(this)
 }
 
@@ -335,14 +334,14 @@ fun RecipeOutput.createDoubleCraft(output: ItemLike, input1: ItemLike, input2: I
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 2)
         .requires(input1)
         .requires(input2)
-        .criterion(input1)
+        .unlockedBy(input1)
         .save(this)
 }
 
 fun RecipeOutput.create1to4(output: ItemLike, input1: ItemLike) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, 4)
         .requires(input1)
-        .criterion(input1)
+        .unlockedBy(input1)
         .save(this)
 }
 
@@ -368,7 +367,7 @@ fun RecipeOutput.createStair(output: ItemLike, block: ItemLike, item: ItemLike) 
         .pattern("#  ")
         .pattern("## ")
         .pattern("###")
-        .criterion(item)
+        .unlockedBy(item)
         .save(this)
 }
 
@@ -376,7 +375,7 @@ fun RecipeOutput.createSlab(output: ItemLike, block: ItemLike, item: ItemLike) {
     ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
         .define('#', block)
         .pattern("###")
-        .criterion(item)
+        .unlockedBy(item)
         .save(this)
 }
 
@@ -385,7 +384,7 @@ fun RecipeOutput.createWall(output: ItemLike, block: ItemLike, item: ItemLike) {
         .define('#', block)
         .pattern("###")
         .pattern("###")
-        .criterion(item)
+        .unlockedBy(item)
         .save(this)
 }
 
@@ -395,7 +394,7 @@ fun RecipeOutput.createFence(output: ItemLike, block: ItemLike, item: ItemLike) 
         .define('+', item)
         .pattern("#+#")
         .pattern("#+#")
-        .criterion(item)
+        .unlockedBy(item)
         .save(this)
 }
 
@@ -409,7 +408,7 @@ fun RecipeOutput.createDiagonalRecipe(
         .define('%', secondary)
         .pattern("#%")
         .pattern("%#")
-        .criterion(primary)
+        .unlockedBy(primary)
         .save(this)
 }
 
@@ -423,7 +422,7 @@ fun RecipeOutput.createDiagonalRecipe(
         .define('%', secondary)
         .pattern("#%")
         .pattern("%#")
-        .criterion(primary)
+        .unlockedBy(primary)
         .save(this)
 }
 
@@ -431,7 +430,7 @@ fun RecipeOutput.createPiles(output: ItemLike, input: ItemLike) {
     ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, output, 8)
         .define('#', Ingredient.of(input))
         .pattern("##")
-        .criterion(input)
+        .unlockedBy(input)
         .save(this)
 }
 
@@ -453,7 +452,7 @@ fun RecipeOutput.create2x2(output: ItemLike, input: ItemLike, count: Int = 4) {
         .pattern("##")
         .pattern("##")
         .define('#', input)
-        .criterion(input)
+        .unlockedBy(input)
         .save(this)
 }
 
@@ -463,11 +462,11 @@ fun RecipeOutput.compositeBlock(full: ItemLike, part: ItemLike) {
         .pattern("# #")
         .pattern("###")
         .define('#', part)
-        .criterion(part)
+        .unlockedBy(part)
         .save(this)
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, part, 8)
         .requires(full)
-        .criterion(full)
+        .unlockedBy(full)
         .save(this)
 }
 
@@ -478,8 +477,8 @@ fun RecipeOutput.lantern(lantern: ItemLike, torch: ItemLike) {
         .pattern("XXX")
         .define('#', torch)
         .define('X', Items.IRON_NUGGET)
-        .criterion(Items.IRON_NUGGET)
-        .criterion(Items.IRON_INGOT)
+        .unlockedBy(Items.IRON_NUGGET)
+        .unlockedBy(Items.IRON_INGOT)
         .save(this)
 }
 
@@ -492,7 +491,7 @@ fun RecipeOutput.bookshelf(
         .pattern("###")
         .define('#', planks)
         .define('X', Items.BOOK)
-        .criterion(Items.BOOK)
+        .unlockedBy(Items.BOOK)
         .save(this, id)
 }
 
@@ -500,6 +499,6 @@ fun RecipeOutput.carpetPlate(plate: ItemLike, carpet: ItemLike) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, plate)
         .requires(ItemTags.WOODEN_PRESSURE_PLATES)
         .requires(carpet)
-        .criterion(ItemTags.WOODEN_PRESSURE_PLATES)
+        .unlockedBy(ItemTags.WOODEN_PRESSURE_PLATES)
         .save(this)
 }

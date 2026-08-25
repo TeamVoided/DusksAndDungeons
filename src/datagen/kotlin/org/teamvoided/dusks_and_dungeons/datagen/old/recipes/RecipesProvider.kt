@@ -23,7 +23,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.util.create2x2
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createFence
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStoneStairs
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStoneWall
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.lantern
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
@@ -57,14 +57,14 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("###")
             .pattern("@%@")
             .pattern("# #")
-            .criterion(DnDItems.FARMERS_HAT)
+            .unlockedBy(DnDItems.FARMERS_HAT)
             .save(e)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BREWING, DnDItems.TINTED_GLASS_BOTTLE, 3)
             .pattern("# #")
             .pattern(" # ")
             .define('#', Blocks.TINTED_GLASS)
-            .criterion(Blocks.TINTED_GLASS)
+            .unlockedBy(Blocks.TINTED_GLASS)
             .save(e)
 
         // TODO(1.0) sort VV recipes
@@ -118,7 +118,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         SimpleCookingRecipeBuilder.smelting(
             Ingredient.of(Blocks.LAPIS_BLOCK), RecipeCategory.BUILDING_BLOCKS, DnDBlocks.SMOOTH_LAPIS, 0.1f, 200
         )
-            .criterion(Blocks.LAPIS_BLOCK)
+            .unlockedBy(Blocks.LAPIS_BLOCK)
             .save(e)
 
         // Bookshelf
