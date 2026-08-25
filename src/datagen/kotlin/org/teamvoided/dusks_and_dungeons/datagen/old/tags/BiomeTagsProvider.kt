@@ -70,9 +70,6 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(Biomes.NETHER_WASTES)
         getOrCreateTagBuilder(DnDBiomeTags.WARPED_WART)
             .add(Biomes.WARPED_FOREST)
-
-        getOrCreateTagBuilder(DnDBiomeTags.HAS_GLACIERS)
-        //.forceAddTag(ConventionalBiomeTags.IS_SNOWY)
     }
 
     fun vanillaTags() {

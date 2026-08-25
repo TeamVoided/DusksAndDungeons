@@ -35,9 +35,6 @@ object DnDBiomeTags {
     val CRIMSON_WART = features("nether/crimson_wart")
     val WARPED_WART = features("nether/warped_wart")
 
-    // TODO(1.0) remove
-    val HAS_GLACIERS = key("has_glaciers")
-
     fun features(id: String): TagKey<Biome> = key("features/$id")
 
     fun key(id: String): TagKey<Biome> = Registries.BIOME.tag(id(id))
