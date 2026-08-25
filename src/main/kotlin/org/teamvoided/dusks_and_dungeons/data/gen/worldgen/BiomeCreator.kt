@@ -15,6 +15,7 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.level.biome.*
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
+import net.minecraft.world.level.levelgen.GenerationStep
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.LOCAL_MODIFICATIONS as lm2
@@ -91,7 +92,8 @@ object BiomeCreator {
         generationSettings.addFeature(vd9, VegetationPlacements.BROWN_MUSHROOM_OLD_GROWTH)
         generationSettings.addFeature(vd9, VegetationPlacements.RED_MUSHROOM_OLD_GROWTH)
         BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
-        BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
+        if (golden) generationSettings.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
+        else BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
         addAutumnFeatures(generationSettings, golden)
         generationSettings.addFeature(vd9, DnDPlacedFeature.PATCH_ROSEBUSH)
 
@@ -127,7 +129,8 @@ object BiomeCreator {
         generationSettings.addFeature(vd9, DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN)
         generationSettings.addFeature(vd9, DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN)
         BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
-        BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
+        if (golden) generationSettings.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
+        else BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
         addAutumnFeatures(generationSettings, golden)
         if (golden) generationSettings.addFeature(vd9, DnDPlacedFeature.WILD_WHEAT_FIELD)
 
@@ -162,7 +165,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.addPlainGrass(generationSettings)
         BiomeDefaultFeatures.addGiantTaigaVegetation(generationSettings)
         BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
-        BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
+        generationSettings.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
         addAutumnFeatures(generationSettings)
         generationSettings.addFeature(vd9, AquaticPlacements.SEAGRASS_RIVER)
 
