@@ -19,13 +19,13 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockLootTableProvid
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.DamageTypes
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ThrownItems
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.WolfVariants
+import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureFeatureCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructurePoolCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureProcessorCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureSetCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructureFeatureCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructurePoolCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructureProcessorCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructureSetCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.EntityTypeTagsProvider
