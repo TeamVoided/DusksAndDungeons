@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.registry
+package org.teamvoided.dusks_and_dungeons.datagen.data.registry
 
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.data.worldgen.BootstrapContext
