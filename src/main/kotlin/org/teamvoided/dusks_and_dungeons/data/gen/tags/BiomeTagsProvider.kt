@@ -40,7 +40,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(DnDBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS)
 //            .addOptionalTag(DuskBiomeTags.IS_AUTUMN)
 
-        getOrCreateTagBuilder(DnDBiomeTags.IS_DUSK_CAVE)
+        getOrCreateTagBuilder(DnDBiomeTags.IS_CAVE)
             .add(DnDBiomes.OVERGROWN_GROTTO)
 
         getOrCreateTagBuilder(DnDBiomeTags.SPAWNS_SILVER_FOXES)
@@ -78,7 +78,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
     fun vanillaTags() {
         getOrCreateTagBuilder(BiomeTags.IS_OVERWORLD)
             .forceAddTag(DnDBiomeTags.IS_AUTUMN)
-            .forceAddTag(DnDBiomeTags.IS_DUSK_CAVE)
+            .forceAddTag(DnDBiomeTags.IS_CAVE)
         getOrCreateTagBuilder(BiomeTags.IS_FOREST)
             .add(DnDBiomes.AUTUMN_WOODS)
             .add(DnDBiomes.GOLDEN_WOODS)
@@ -86,13 +86,13 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DnDBiomes.AUTUMN_CASCADES)
         getOrCreateTagBuilder(BiomeTags.HAS_TRIAL_CHAMBERS)
             .forceAddTag(DnDBiomeTags.IS_AUTUMN)
-            .forceAddTag(DnDBiomeTags.IS_DUSK_CAVE)
+            .forceAddTag(DnDBiomeTags.IS_CAVE)
         getOrCreateTagBuilder(BiomeTags.HAS_TRAIL_RUINS)
             .add(DnDBiomes.AUTUMN_WOODS)
             .add(DnDBiomes.GOLDEN_WOODS)
         getOrCreateTagBuilder(BiomeTags.HAS_MINESHAFT)
             .forceAddTag(DnDBiomeTags.IS_AUTUMN)
-            .forceAddTag(DnDBiomeTags.IS_DUSK_CAVE)
+            .forceAddTag(DnDBiomeTags.IS_CAVE)
         getOrCreateTagBuilder(BiomeTags.HAS_VILLAGE_TAIGA)
             .add(DnDBiomes.AUTUMN_PASTURES)
             .add(DnDBiomes.GOLDEN_PASTURES)
@@ -100,7 +100,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(DnDBiomes.AUTUMN_PASTURES)
             .add(DnDBiomes.GOLDEN_PASTURES)
         getOrCreateTagBuilder(BiomeTags.HAS_RUINED_PORTAL_STANDARD)
-            .forceAddTag(DnDBiomeTags.IS_DUSK_CAVE)
+            .forceAddTag(DnDBiomeTags.IS_CAVE)
             .add(DnDBiomes.AUTUMN_PASTURES)
             .add(DnDBiomes.GOLDEN_PASTURES)
         getOrCreateTagBuilder(BiomeTags.STRONGHOLD_BIASED_TO)
@@ -135,6 +135,6 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_RIVER)
             .add(DnDBiomes.AUTUMN_CASCADES)
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_CAVE)
-            .forceAddTag(DnDBiomeTags.IS_DUSK_CAVE)
+            .forceAddTag(DnDBiomeTags.IS_CAVE)
     }
 }

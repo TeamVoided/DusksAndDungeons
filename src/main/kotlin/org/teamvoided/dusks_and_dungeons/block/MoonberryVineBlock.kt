@@ -106,7 +106,7 @@ class MoonberryVineBlock(settings: Properties) : MultifaceBlock(settings), Simpl
     private fun canGrowOnOrOveride(world: BlockGetter, direction: Direction, pos: BlockPos, state: BlockState): Boolean {
         return (isFaceFull(state.getBlockSupportShape(world, pos), direction.opposite)
                 || isFaceFull(state.getCollisionShape(world, pos), direction.opposite)
-                || world.getBlockState(pos).`is`(DnDBlockTags.MOONBERRY_CAN_PLACE_ON))
+                || world.getBlockState(pos).`is`(DnDBlockTags.SUPPORTS_MOONBERRY))
     }
 
     override fun getFluidState(state: BlockState): FluidState =

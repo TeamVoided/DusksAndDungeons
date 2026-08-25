@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.util.tag
 
 object CBlockTags {
 
@@ -14,8 +15,10 @@ object CBlockTags {
     val UNCOLORED_SANDSTONE_WALLS = c("sandstone/uncolored_walls")
     val RED_SANDSTONE_WALLS = c("sandstone/red_walls")
 
+    val CORN_STORAGE = c("storage_blocks/corn")
+
     val GLASS_PANES_TINTED = c("glass_panes/tinted")
 
-    fun c(id: String): TagKey<Block> = TagKey.create(Registries.BLOCK, id("c", id))
+    fun c(id: String): TagKey<Block> = Registries.BLOCK.tag(id("c", id))
 
 }

@@ -8,5 +8,5 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 
 class VivionbedBlock(settings: Properties) : PinkPetalsBlock(settings) {
     override fun mayPlaceOn(floor: BlockState, world: BlockGetter, pos: BlockPos): Boolean =
-        floor.`is`(DnDBlockTags.VIVIONBED_PLACEABLE)
+        floor.`is`(DnDBlockTags.SUPPORTS_VIVIONBED)
 }

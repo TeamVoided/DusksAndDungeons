@@ -13,7 +13,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 class WarpedNetherWartBlock(settings: Properties) : NetherWartBlock(settings) {
     override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean =
-        world.getBlockState(pos.above()).`is`(DnDBlockTags.WARPED_NETHER_WART_PLACEABLE)
+        world.getBlockState(pos.above()).`is`(DnDBlockTags.SUPPORTS_WARPED_NETHER_WART)
 
     override fun getShape(state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext)
             : VoxelShape = AGE_TO_SHAPE[(state.getValue(AGE))]

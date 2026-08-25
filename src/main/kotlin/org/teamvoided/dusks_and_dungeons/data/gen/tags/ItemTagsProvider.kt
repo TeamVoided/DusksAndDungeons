@@ -90,17 +90,17 @@ class ItemTagsProvider(
         copy(DnDBlockTags.CRACKED_NETHER_BRICKS, DnDItemTags.CRACKED_NETHER_BRICKS)
         copy(DnDBlockTags.POLISHED_NETHER_BRICKS, DnDItemTags.POLISHED_NETHER_BRICKS)
 
-        copy(DnDBlockTags.CORN_STORAGE, DnDItemTags.CORN_STORAGE)
+        copy(CBlockTags.CORN_STORAGE, CItemTags.CORN_STORAGE)
         copy(DnDBlockTags.PUMPKINS, DnDItemTags.PUMPKINS)
-        copy(DnDBlockTags.CARVED_PUMPKINS, DnDItemTags.CARVED_PUMPKINS)
-        copy(DnDBlockTags.GLOWING_PUMPKINS, DnDItemTags.GLOWING_PUMPKINS)
-        copy(DnDBlockTags.SMALL_PUMPKINS, DnDItemTags.SMALL_PUMPKINS)
-        copy(DnDBlockTags.SMALL_CARVED_PUMPKINS, DnDItemTags.SMALL_CARVED_PUMPKINS)
-        copy(DnDBlockTags.SMALL_GLOWING_PUMPKINS, DnDItemTags.SMALL_GLOWING_PUMPKINS)
+        copy(DnDBlockTags.PUMPKINS_CARVED, DnDItemTags.CARVED_PUMPKINS)
+        copy(DnDBlockTags.PUMPKINS_GLOWING, DnDItemTags.GLOWING_PUMPKINS)
+        copy(DnDBlockTags.PUMPKINS_SMALL, DnDItemTags.SMALL_PUMPKINS)
+        copy(DnDBlockTags.PUMPKINS_SMALL_CARVED, DnDItemTags.SMALL_CARVED_PUMPKINS)
+        copy(DnDBlockTags.PUMPKINS_SMALL_GLOWING, DnDItemTags.SMALL_GLOWING_PUMPKINS)
 
-        getOrCreateTagBuilder(DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS)
+        getOrCreateTagBuilder(DnDItemTags.WARPED_NETHER_BRICK_MATERIALS)
             .add(DnDBlocks.WARPED_WART.asItem())
-        getOrCreateTagBuilder(DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS)
+        getOrCreateTagBuilder(DnDItemTags.ASHEN_NETHER_BRICK_MATERIALS)
             .addOptional(id("supplementaries", "ash_pile"))
             .add(Items.BASALT)
 
@@ -250,7 +250,7 @@ class ItemTagsProvider(
         copy(CBlockTags.SCAFFOLDING, CItemTags.SCAFFOLDING)
 
         getOrCreateTagBuilder(ConventionalItemTags.STORAGE_BLOCKS)
-            .forceAddTag(DnDItemTags.CORN_STORAGE)
+            .forceAddTag(CItemTags.CORN_STORAGE)
 
         getOrCreateTagBuilder(ConventionalItemTags.PUMPKIN_CROPS)
             .forceAddTag(DnDItemTags.PUMPKINS)

@@ -59,7 +59,7 @@ object NetherRecipes {
         e.createStonecuttingSet(DnDBlocks.POLISHED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
 
         e.createDiagonalRecipe(
-            DnDBlocks.BLUE_NETHER_BRICKS, DnDItemTags.CRAFTS_WARPED_NETHER_BRICKS, Blocks.NETHER_BRICKS
+            DnDBlocks.BLUE_NETHER_BRICKS, DnDItemTags.WARPED_NETHER_BRICK_MATERIALS, Blocks.NETHER_BRICKS
         )
         e.createFence(DnDBlocks.BLUE_NETHER_BRICK_FENCE, DnDBlocks.BLUE_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
@@ -71,7 +71,7 @@ object NetherRecipes {
         e.createStonecuttingSet(DnDBlocks.POLISHED_BLUE_NETHER_BRICKS, DnDBlocks.BLUE_NETHER_BRICKS.parent)
 
         e.createDiagonalRecipe(
-            DnDBlocks.GRAY_NETHER_BRICKS, DnDItemTags.CRAFTS_ASHEN_NETHER_BRICKS, Blocks.NETHER_BRICKS
+            DnDBlocks.GRAY_NETHER_BRICKS, DnDItemTags.ASHEN_NETHER_BRICK_MATERIALS, Blocks.NETHER_BRICKS
         )
         e.createFence(DnDBlocks.GRAY_NETHER_BRICK_FENCE, DnDBlocks.GRAY_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
