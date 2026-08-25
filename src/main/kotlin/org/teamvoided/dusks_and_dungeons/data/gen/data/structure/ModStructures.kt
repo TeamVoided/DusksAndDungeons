@@ -13,10 +13,10 @@ import net.minecraft.world.level.levelgen.structure.TerrainAdjustment
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure
 import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureFeatures
-import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructurePools
+import org.teamvoided.dusks_and_dungeons.data.structure.DnDTemplatePool
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 
-object StructureFeatureCreator : RegistryBootstrapper<Structure> {
+object ModStructures : RegistryBootstrapper<Structure> {
 
     override fun BootstrapContext<Structure>.init() {
 //        val biomes = lookup(Registries.BIOME)
@@ -30,7 +30,7 @@ object StructureFeatureCreator : RegistryBootstrapper<Structure> {
                     Decoration.SURFACE_STRUCTURES,
                     TerrainAdjustment.BEARD_THIN
                 ),
-                templatePool.getOrThrow(DnDStructurePools.AUTUMN_RUINS_SINGLE),
+                templatePool.getOrThrow(DnDTemplatePool.AUTUMN_RUINS_SINGLE),
                 7,
                 ConstantHeight.of(VerticalAnchor.absolute(0)),
                 false,

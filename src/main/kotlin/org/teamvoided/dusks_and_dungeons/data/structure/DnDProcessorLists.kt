@@ -6,7 +6,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.key
 
-object DnDStructureProcessorLists {
+object DnDProcessorLists {
 
     val AUTUMN_RUINS_DEFAULT = create("autumn_ruins/default")
 

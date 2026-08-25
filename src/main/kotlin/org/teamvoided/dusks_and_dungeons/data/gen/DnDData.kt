@@ -16,13 +16,13 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.BiomeInjectors
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.WorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTablesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockLootTableProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.DamageTypes
-import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ThrownItems
-import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.WolfVariants
-import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureFeatureCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructurePoolCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureProcessorCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureSetCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ModDamageTypes
+import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ModThrownItemDefinitions
+import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ModWolfVariants
+import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModProcessorLists
+import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModStructureSets
+import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModStructures
+import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModTemplatePools
 import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModDensityFunctions
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.packs.FancyNamesPack
@@ -79,18 +79,18 @@ object DnDData : DataGeneratorEntrypoint {
         gen.add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
         gen.add(Registries.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
         // Structures
-        gen.add(Registries.PROCESSOR_LIST, StructureProcessorCreator::bootstrap)
-        gen.add(Registries.TEMPLATE_POOL, StructurePoolCreator::bootstrap)
-        gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
-        gen.add(Registries.STRUCTURE_SET, StructureSetCreator::bootstrap)
+        gen.add(Registries.PROCESSOR_LIST, ModProcessorLists::bootstrap)
+        gen.add(Registries.TEMPLATE_POOL, ModTemplatePools::bootstrap)
+        gen.add(Registries.STRUCTURE, ModStructures::bootstrap)
+        gen.add(Registries.STRUCTURE_SET, ModStructureSets::bootstrap)
         // Lithostitched
         gen.add(LithostitchedRegistries.WORLDGEN_MODIFIER, WorldgenModifiers::bootstrap)
         gen.add(LithostitchedRegistries.BIOME_INJECTOR, BiomeInjectors::bootstrap)
         // Entity Variants
-        gen.add(Registries.WOLF_VARIANT, WolfVariants::bootstrap)
+        gen.add(Registries.WOLF_VARIANT, ModWolfVariants::bootstrap)
         // Misc
-        gen.add(DnDRegistryKeys.THROWN_ITEM_DEFINITION, ThrownItems::bootstrap)
-        gen.add(Registries.DAMAGE_TYPE, DamageTypes::bootstrap)
+        gen.add(DnDRegistryKeys.THROWN_ITEM_DEFINITION, ModThrownItemDefinitions::bootstrap)
+        gen.add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap)
     }
 
     class DnDDynProvider(o: FabricOutput, p: FutureProvider) : FabricDynamicRegistryProvider(o, p) {

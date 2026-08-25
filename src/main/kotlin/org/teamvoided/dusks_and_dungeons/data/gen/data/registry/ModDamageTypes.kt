@@ -9,7 +9,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.util.toLangKey
 
-object DamageTypes : RegistryBootstrapper<DamageType> {
+object ModDamageTypes : RegistryBootstrapper<DamageType> {
 
     override fun BootstrapContext<DamageType>.init() {
         damage(DnDDamageTypes.THROWN_BRICK, 0.1f)

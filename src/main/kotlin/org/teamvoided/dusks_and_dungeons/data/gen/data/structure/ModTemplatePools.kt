@@ -12,11 +12,11 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
-import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructurePools
-import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureProcessorLists
+import org.teamvoided.dusks_and_dungeons.data.structure.DnDProcessorLists
+import org.teamvoided.dusks_and_dungeons.data.structure.DnDTemplatePool
 import java.util.function.Function
 
-object StructurePoolCreator : RegistryBootstrapper<StructureTemplatePool> {
+object ModTemplatePools : RegistryBootstrapper<StructureTemplatePool> {
 
     override fun BootstrapContext<StructureTemplatePool>.init() {
 //        val placedFeatures = lookup(Registries.PLACED_FEATURE)
@@ -26,11 +26,11 @@ object StructurePoolCreator : RegistryBootstrapper<StructureTemplatePool> {
         val poolEmpty = templatePools.getOrThrow(Pools.EMPTY)
 //        val procEmpty = processorLists.getOrThrow(ProcessorLists.EMPTY)
 
-        val autumnRuins = processorLists.getOrThrow(DnDStructureProcessorLists.AUTUMN_RUINS_DEFAULT)
+        val autumnRuins = processorLists.getOrThrow(DnDProcessorLists.AUTUMN_RUINS_DEFAULT)
         val ruin = "autumn_ruins/"
         val stoneRuin = "${ruin}stone/stone_"
         register(
-            DnDStructurePools.AUTUMN_RUINS_SINGLE,
+            DnDTemplatePool.AUTUMN_RUINS_SINGLE,
             StructureTemplatePool(
                 poolEmpty,
                 listOf(

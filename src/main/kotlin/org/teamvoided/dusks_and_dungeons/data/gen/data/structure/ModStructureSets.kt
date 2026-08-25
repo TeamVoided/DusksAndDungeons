@@ -9,7 +9,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureFeatures
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureSets
 
-object StructureSetCreator : RegistryBootstrapper<StructureSet> {
+object ModStructureSets : RegistryBootstrapper<StructureSet> {
 
     override fun BootstrapContext<StructureSet>.init() {
         val structures = lookup(Registries.STRUCTURE)

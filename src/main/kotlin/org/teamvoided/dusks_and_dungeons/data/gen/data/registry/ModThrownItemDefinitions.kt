@@ -17,7 +17,7 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 import java.util.*
 
-object ThrownItems : RegistryBootstrapper<ThrownItemDefinition> {
+object ModThrownItemDefinitions : RegistryBootstrapper<ThrownItemDefinition> {
 
     override fun BootstrapContext<ThrownItemDefinition>.init() {
         register(

@@ -11,7 +11,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
 
-object WolfVariants : RegistryBootstrapper<WolfVariant> {
+object ModWolfVariants : RegistryBootstrapper<WolfVariant> {
 
     override fun BootstrapContext<WolfVariant>.init() {
         register(DnDWolfVariants.AUTUMN, "wolf_autumn", DnDBiomeTags.SPAWNS_AUTUMN_WOLVES)

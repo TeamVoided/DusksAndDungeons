@@ -6,7 +6,7 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.key
 
-object DnDStructurePools {
+object DnDTemplatePool {
 
     val AUTUMN_RUINS_SINGLE = create("autumn_ruins/single")
 

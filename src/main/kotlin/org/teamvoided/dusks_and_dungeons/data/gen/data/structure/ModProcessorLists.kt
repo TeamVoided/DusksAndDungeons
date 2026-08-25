@@ -8,11 +8,11 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.structure.templatesystem.*
 import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
-import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureProcessorLists
+import org.teamvoided.dusks_and_dungeons.data.structure.DnDProcessorLists
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 
-object StructureProcessorCreator : RegistryBootstrapper<StructureProcessorList> {
+object ModProcessorLists : RegistryBootstrapper<StructureProcessorList> {
 
     override fun BootstrapContext<StructureProcessorList>.init() {
         autumnRuinsProcessorLists()
@@ -20,7 +20,7 @@ object StructureProcessorCreator : RegistryBootstrapper<StructureProcessorList> 
 
     fun BootstrapContext<StructureProcessorList>.autumnRuinsProcessorLists() {
         register(
-            DnDStructureProcessorLists.AUTUMN_RUINS_DEFAULT,
+            DnDProcessorLists.AUTUMN_RUINS_DEFAULT,
             BlockRotProcessor(0.95f),
             ruleProcessor(
                 chanceReplaceRule(Blocks.VINE, 0.5f, Blocks.AIR),
