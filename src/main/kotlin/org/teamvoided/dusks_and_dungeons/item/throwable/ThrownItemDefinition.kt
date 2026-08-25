@@ -38,10 +38,10 @@ data class ThrownItemDefinition(
             inst
                 .group(
                     TagKey.hashedCodec(Registries.ITEM).fieldOf("items").forGetter { it.items },
-                    ExtraCodecs.POSITIVE_FLOAT.fieldOf("damage").forGetter { it.damage },
+                    DnDCodecs.NON_NEGATIVE_FLOAT.fieldOf("damage").forGetter { it.damage },
                     DnDCodecs.DAMAGE_TYPE_CODEC.fieldOf("damage_type").forGetter { it.damageType },
-                    ExtraCodecs.POSITIVE_FLOAT.fieldOf("power").forGetter { it.power },
-                    ExtraCodecs.POSITIVE_FLOAT.fieldOf("uncertainty").forGetter { it.uncertainty },
+                    DnDCodecs.NON_NEGATIVE_FLOAT.fieldOf("power").forGetter { it.power },
+                    DnDCodecs.NON_NEGATIVE_FLOAT.fieldOf("uncertainty").forGetter { it.uncertainty },
                     ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("cooldown", 0).forGetter { it.cooldown },
                     TagKey.hashedCodec(Registries.BLOCK).fieldOf("block_break_tag").forGetter { it.blockBreakTag }
                 )
