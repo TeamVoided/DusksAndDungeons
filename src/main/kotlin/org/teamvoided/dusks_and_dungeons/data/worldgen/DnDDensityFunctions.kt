@@ -10,7 +10,7 @@ object DnDDensityFunctions {
 
     val CASCADE_REGION = region("cascade")
     val SYPIA_REGION = region("sypia")
-    val OVERGROWN_GROTTO_REGION = region("/overgrown_grotto")
+    val OVERGROWN_GROTTO_REGION = region("overgrown_grotto")
 
     fun region(id: String) = create("region/$id")
 
