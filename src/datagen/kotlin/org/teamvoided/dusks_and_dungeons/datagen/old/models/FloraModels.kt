@@ -7,12 +7,24 @@ import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createItemModel
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createItemModel
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.util.datagen.*
-import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.hangingOvergrowth
-import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.overgrowthBush
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hangingOvergrowth
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.overgrowthBush
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createMoonberryVine
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.model
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCorn
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCornCrop
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCropWithParent
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerFlowerbed2
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerGoldenMushroomPlant
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerMushroomBlockDiffInside
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerPumpkinSet
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerSmallPumpkins
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.rotatedLikeNetherrack
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.suffix
 
 object FloraModels {
 

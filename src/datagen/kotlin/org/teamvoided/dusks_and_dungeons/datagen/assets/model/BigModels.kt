@@ -1,15 +1,15 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.assets.model
+package org.teamvoided.dusks_and_dungeons.datagen.assets.model
 
 import net.minecraft.data.models.BlockModelGenerators
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createBigChain
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createBigLantern
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createBigScaffolding
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigChain
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigLantern
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigScaffolding
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.dusks_and_dungeons.util.datagen.registerBigCandle
-import org.teamvoided.dusks_and_dungeons.util.datagen.registerCandelabra
-import org.teamvoided.dusks_and_dungeons.util.datagen.registerCandle2
-import org.teamvoided.dusks_and_dungeons.util.datagen.registerDnDCandelabra
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerBigCandle
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCandelabra
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCandle2
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerDnDCandelabra
 
 object BigModels {
     fun register(gen: BlockModelGenerators) {

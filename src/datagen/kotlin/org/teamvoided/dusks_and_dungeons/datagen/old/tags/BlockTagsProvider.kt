@@ -15,7 +15,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
-import org.teamvoided.dusks_and_dungeons.util.datagen.createWoodTags
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWoodTags
 import org.teamvoided.taglighting.data.tags.TaglightingBlockTags
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.devin.extensions.tag.add

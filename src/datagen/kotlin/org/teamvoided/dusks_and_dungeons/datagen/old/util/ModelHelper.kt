@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.util.datagen
+package org.teamvoided.dusks_and_dungeons.datagen.old.util
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap
@@ -26,7 +26,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.*
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.util.*
 
@@ -181,14 +181,14 @@ fun BlockModelGenerators.cubeWithOverlay(block: Block, reference: Block, overlay
     model.with(
         Variant.variant()
             .with(
-                VariantProperties.MODEL,
+                MODEL,
                 reference.model()
             )
     )
     model.with(
         Variant.variant()
             .with(
-                VariantProperties.MODEL,
+                MODEL,
                 overlay
             )
     )
@@ -203,7 +203,7 @@ fun BlockModelGenerators.rotatableCubeWithOverlay(block: Block, reference: Block
     model.with(
         Variant.variant()
             .with(
-                VariantProperties.MODEL,
+                MODEL,
                 overlay
             )
     )
@@ -220,14 +220,14 @@ fun BlockModelGenerators.cubeSnowableColumnOverlay(block: Block, reference: Bloc
         condition().term(SnowyDirtBlock.SNOWY, true),
         Variant.variant()
             .with(
-                VariantProperties.MODEL,
+                MODEL,
                 Blocks.GRASS_BLOCK.model("_snow")
             )
     )
     model.with(
         Variant.variant()
             .with(
-                VariantProperties.MODEL,
+                MODEL,
                 overlay
             )
     )
@@ -281,10 +281,10 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
                         .term(BlockStateProperties.STAIRS_SHAPE, shape),
                     Variant.variant()
                         .with(
-                            VariantProperties.MODEL,
+                            MODEL,
                             stairTitle(baseBlock, models)
                         )
-                        .with(VariantProperties.X_ROT, rotationX)
+                        .with(X_ROT, rotationX)
                         .with(Y_ROT, rotatY)
                         .with(UV_LOCK, true)
                 ).with(
@@ -294,10 +294,10 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
                         .term(BlockStateProperties.STAIRS_SHAPE, shape),
                     Variant.variant()
                         .with(
-                            VariantProperties.MODEL,
+                            MODEL,
                             overlay.suffix(models)
                         )
-                        .with(VariantProperties.X_ROT, rotationX)
+                        .with(X_ROT, rotationX)
                         .with(Y_ROT, rotatY)
                         .with(UV_LOCK, true)
                 )
@@ -339,11 +339,11 @@ fun BlockModelGenerators.slabWithTintedOverlay(
         model.with(
             condition().term(BlockStateProperties.SLAB_TYPE, type),
             Variant.variant()
-                .with(VariantProperties.MODEL, if (suffix == "") baseBlock.model() else slabOfTexture.suffix(suffix))
+                .with(MODEL, if (suffix == "") baseBlock.model() else slabOfTexture.suffix(suffix))
         ).with(
             condition().term(BlockStateProperties.SLAB_TYPE, type),
             Variant.variant()
-                .with(VariantProperties.MODEL, overlay.suffix(suffix))
+                .with(MODEL, overlay.suffix(suffix))
         )
     }
     this.blockStateOutput.accept(model)
@@ -409,35 +409,35 @@ fun createWallBlockStateWithOverlay(
     val model = MultiPartGenerator.multiPart(wallBlock)
     model.with(
         condition().term(BlockStateProperties.UP, true),
-        Variant.variant().with(VariantProperties.MODEL, postModelId)
+        Variant.variant().with(MODEL, postModelId)
     ).with(
         condition().term(BlockStateProperties.UP, true),
-        Variant.variant().with(VariantProperties.MODEL, postOverlayModelId)
+        Variant.variant().with(MODEL, postOverlayModelId)
     )
     directions.forEach { (shape, rotation) ->
         model.with(
             condition().term(shape, WallSide.LOW),
             Variant.variant()
-                .with(VariantProperties.MODEL, lowSideModelId)
+                .with(MODEL, lowSideModelId)
                 .with(UV_LOCK, true)
                 .with(Y_ROT, rotation)
         ).with(
             condition().term(shape, WallSide.LOW),
             Variant.variant()
-                .with(VariantProperties.MODEL, lowSideOverlayModelId)
+                .with(MODEL, lowSideOverlayModelId)
                 .with(UV_LOCK, true)
                 .with(Y_ROT, rotation)
         )
         model.with(
             condition().term(shape, WallSide.TALL),
             Variant.variant()
-                .with(VariantProperties.MODEL, tallSideModelId)
+                .with(MODEL, tallSideModelId)
                 .with(UV_LOCK, true)
                 .with(Y_ROT, rotation)
         ).with(
             condition().term(shape, WallSide.TALL),
             Variant.variant()
-                .with(VariantProperties.MODEL, tallSideOverlayModelId)
+                .with(MODEL, tallSideOverlayModelId)
                 .with(UV_LOCK, true)
                 .with(Y_ROT, rotation)
         )
@@ -448,7 +448,7 @@ fun createWallBlockStateWithOverlay(
 fun getRandomYRotations(model: ResourceLocation): Array<Variant> {
     var array = arrayOf<Variant>()
     Rotation.entries.forEach {
-        val variant = Variant.variant().with(VariantProperties.MODEL, model)
+        val variant = Variant.variant().with(MODEL, model)
         if (it != Rotation.R0) variant.with(Y_ROT, it)
         array += variant
     }
@@ -459,9 +459,9 @@ fun getRandomYXRotations(model: ResourceLocation): Array<Variant> {
     var array = arrayOf<Variant>()
     Rotation.entries.forEach { itY ->
         Rotation.entries.forEach { itX ->
-            val variant = Variant.variant().with(VariantProperties.MODEL, model)
+            val variant = Variant.variant().with(MODEL, model)
             if (itY != Rotation.R0) variant.with(Y_ROT, itY)
-            if (itX != Rotation.R0) variant.with(VariantProperties.X_ROT, itX)
+            if (itX != Rotation.R0) variant.with(X_ROT, itX)
             array += variant
         }
     }
@@ -487,7 +487,7 @@ fun BlockModelGenerators.registerGoldenMushroomPlant(block: Block) {
     repeat(3) {
         val texture = TextureMapping.defaultTexture(block).put(CROSS, TextureMapping.getBlockTexture(block, "_$loop"))
         val model = ModelTemplates.CROSS.createWithSuffix(block, "_$loop", texture, this.modelOutput)
-        array += Variant.variant().with(VariantProperties.MODEL, model)
+        array += Variant.variant().with(MODEL, model)
         loop += 1
     }
     this.blockStateOutput.accept(
@@ -515,13 +515,13 @@ fun BlockModelGenerators.registerMushroomBlockDiffInside(
             BlockStateProperties.DOWN,
             BlockStateProperties.UP
         ).forEach { direction ->
-            val variant = Variant.variant().with(VariantProperties.MODEL, if (loop) texture else insideTexture)
+            val variant = Variant.variant().with(MODEL, if (loop) texture else insideTexture)
             val variant2 = when (direction) {
                 BlockStateProperties.EAST -> variant.with(Y_ROT, Rotation.R90)
                 BlockStateProperties.SOUTH -> variant.with(Y_ROT, Rotation.R180)
                 BlockStateProperties.WEST -> variant.with(Y_ROT, Rotation.R270)
-                BlockStateProperties.DOWN -> variant.with(VariantProperties.X_ROT, Rotation.R90)
-                BlockStateProperties.UP -> variant.with(VariantProperties.X_ROT, Rotation.R270)
+                BlockStateProperties.DOWN -> variant.with(X_ROT, Rotation.R90)
+                BlockStateProperties.UP -> variant.with(X_ROT, Rotation.R270)
                 else -> variant
             }
             blockstate.with(
@@ -586,28 +586,28 @@ fun BlockModelGenerators.registerFlowerbed2(
                 .term(BlockStateProperties.FLOWER_AMOUNT, 1, 2, 3, 4)
                 .term(BlockStateProperties.HORIZONTAL_FACING, direction),
             Variant.variant()
-                .with(VariantProperties.MODEL, identifier)
+                .with(MODEL, identifier)
                 .with(Y_ROT, rotation)
         ).with(
             condition()
                 .term(BlockStateProperties.FLOWER_AMOUNT, 2, 3, 4)
                 .term(BlockStateProperties.HORIZONTAL_FACING, direction),
             Variant.variant()
-                .with(VariantProperties.MODEL, identifier2)
+                .with(MODEL, identifier2)
                 .with(Y_ROT, rotation)
         ).with(
             condition()
                 .term(BlockStateProperties.FLOWER_AMOUNT, 3, 4)
                 .term(BlockStateProperties.HORIZONTAL_FACING, direction),
             Variant.variant()
-                .with(VariantProperties.MODEL, identifier3)
+                .with(MODEL, identifier3)
                 .with(Y_ROT, rotation)
         ).with(
             condition()
                 .term(BlockStateProperties.FLOWER_AMOUNT, 4)
                 .term(BlockStateProperties.HORIZONTAL_FACING, direction),
             Variant.variant()
-                .with(VariantProperties.MODEL, identifier4)
+                .with(MODEL, identifier4)
                 .with(Y_ROT, rotation)
         )
     }
@@ -647,7 +647,7 @@ fun BlockModelGenerators.registerPumpkins(pumpkin: Block, carved: Block, glowing
         this.modelOutput
     )
 
-    blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(pumpkin, model))
+    blockStateOutput.accept(createSimpleBlock(pumpkin, model))
     this.createNonTemplateHorizontalBlock(carved)
     this.createNonTemplateHorizontalBlock(glowing)
 }
@@ -660,7 +660,7 @@ fun BlockModelGenerators.registerSmallPumpkins(pumpkin: Block, carved: Block, gl
     val baseModel = DnDModels.SMALL_PUMPKIN.create(pumpkin, texture, modelOutput)
     blockStateOutput.accept(
         MultiVariantGenerator
-            .multiVariant(pumpkin, Variant.variant().with(VariantProperties.MODEL, baseModel))
+            .multiVariant(pumpkin, Variant.variant().with(MODEL, baseModel))
             .with(createUpFacing())
     )
 
@@ -690,18 +690,18 @@ fun createOrientationVariation(
 ): Variant {
     when (orientation) {
         FrontAndTop.DOWN_NORTH -> return variant(model)
-            .with(VariantProperties.X_ROT, Rotation.R180)
+            .with(X_ROT, Rotation.R180)
             .with(Y_ROT, Rotation.R180)
 
         FrontAndTop.DOWN_SOUTH -> return variant(model)
-            .with(VariantProperties.X_ROT, Rotation.R180)
+            .with(X_ROT, Rotation.R180)
 
         FrontAndTop.DOWN_WEST -> return variant(model)
-            .with(VariantProperties.X_ROT, Rotation.R180)
+            .with(X_ROT, Rotation.R180)
             .with(Y_ROT, Rotation.R90)
 
         FrontAndTop.DOWN_EAST -> return variant(model)
-            .with(VariantProperties.X_ROT, Rotation.R180)
+            .with(X_ROT, Rotation.R180)
             .with(Y_ROT, Rotation.R270)
 
         FrontAndTop.UP_NORTH -> return variant(model)
@@ -741,7 +741,7 @@ fun BlockModelGenerators.registerSmallPumpkin(
         PARTICLE,
         ALL
     ).create(pumpkin, modelTexture, this.modelOutput)
-    blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(pumpkin, model))
+    blockStateOutput.accept(createSimpleBlock(pumpkin, model))
 }
 
 fun BlockModelGenerators.pumpkinStem(block: Block) {
@@ -779,13 +779,13 @@ fun BlockModelGenerators.registerCorn(block: Block, item: Item) {
                 TripleTallPlantBlock.SECTION
             ).select(
                 TripleBlockSection.TOP,
-                Variant.variant().with(VariantProperties.MODEL, top)
+                Variant.variant().with(MODEL, top)
             ).select(
                 TripleBlockSection.MIDDLE,
-                Variant.variant().with(VariantProperties.MODEL, middle)
+                Variant.variant().with(MODEL, middle)
             ).select(
                 TripleBlockSection.BOTTOM,
-                Variant.variant().with(VariantProperties.MODEL, bottom)
+                Variant.variant().with(MODEL, bottom)
             )
         )
     )
@@ -803,24 +803,24 @@ fun BlockModelGenerators.registerCornCrop(block: Block) {
             if (section == TripleBlockSection.BOTTOM) {
                 val modelBottom = model.createWithSuffix(block, suffix, texture, this.modelOutput)
                 Variant.variant().with(
-                    VariantProperties.MODEL,
+                    MODEL,
                     modelBottom
                 )
             } else if (age > 1 && section == TripleBlockSection.MIDDLE) {
                 val modelMiddle = model.createWithSuffix(block, suffix, texture, this.modelOutput)
                 Variant.variant().with(
-                    VariantProperties.MODEL,
+                    MODEL,
                     modelMiddle
                 )
             } else if (age > 3 && section == TripleBlockSection.TOP) {
                 val modelTop = model.createWithSuffix(block, suffix, texture, this.modelOutput)
                 Variant.variant().with(
-                    VariantProperties.MODEL,
+                    MODEL,
                     modelTop
                 )
             } else {
                 Variant.variant().with(
-                    VariantProperties.MODEL,
+                    MODEL,
                     ModelLocationUtils.getModelLocation(Blocks.AIR)
                 )
             }
@@ -849,14 +849,14 @@ fun BlockModelGenerators.registerBigCandle(candle: Block, cake: Block?) {
             .with(BlockModelGenerators.createHorizontalFacingDispatchAlt())
             .with(
                 PropertyDispatch.properties(BlockStateProperties.CANDLES, BlockStateProperties.LIT)
-                    .select(1, false, Variant.variant().with(VariantProperties.MODEL, oneCandle))
-                    .select(2, false, Variant.variant().with(VariantProperties.MODEL, twoCandle))
-                    .select(3, false, Variant.variant().with(VariantProperties.MODEL, threeCandle))
-                    .select(4, false, Variant.variant().with(VariantProperties.MODEL, fourCandle))
-                    .select(1, true, Variant.variant().with(VariantProperties.MODEL, oneCandleLit))
-                    .select(2, true, Variant.variant().with(VariantProperties.MODEL, twoCandleLit))
-                    .select(3, true, Variant.variant().with(VariantProperties.MODEL, threeCandleLit))
-                    .select(4, true, Variant.variant().with(VariantProperties.MODEL, fourCandleLit))
+                    .select(1, false, Variant.variant().with(MODEL, oneCandle))
+                    .select(2, false, Variant.variant().with(MODEL, twoCandle))
+                    .select(3, false, Variant.variant().with(MODEL, threeCandle))
+                    .select(4, false, Variant.variant().with(MODEL, fourCandle))
+                    .select(1, true, Variant.variant().with(MODEL, oneCandleLit))
+                    .select(2, true, Variant.variant().with(MODEL, twoCandleLit))
+                    .select(3, true, Variant.variant().with(MODEL, threeCandleLit))
+                    .select(4, true, Variant.variant().with(MODEL, fourCandleLit))
             )
     )
     if (cake != null) {
@@ -899,14 +899,14 @@ fun BlockModelGenerators.registerCandle2(candle: Block, cake: Block?) {
             PropertyDispatch.properties(
                 BlockStateProperties.CANDLES, BlockStateProperties.LIT
             )
-                .select(1, false, Variant.variant().with(VariantProperties.MODEL, oneCandle))
-                .select(2, false, Variant.variant().with(VariantProperties.MODEL, twoCandle))
-                .select(3, false, Variant.variant().with(VariantProperties.MODEL, threeCandle))
-                .select(4, false, Variant.variant().with(VariantProperties.MODEL, fourCandle))
-                .select(1, true, Variant.variant().with(VariantProperties.MODEL, oneCandleLit))
-                .select(2, true, Variant.variant().with(VariantProperties.MODEL, twoCandleLit))
-                .select(3, true, Variant.variant().with(VariantProperties.MODEL, threeCandleLit))
-                .select(4, true, Variant.variant().with(VariantProperties.MODEL, fourCandleLit))
+                .select(1, false, Variant.variant().with(MODEL, oneCandle))
+                .select(2, false, Variant.variant().with(MODEL, twoCandle))
+                .select(3, false, Variant.variant().with(MODEL, threeCandle))
+                .select(4, false, Variant.variant().with(MODEL, fourCandle))
+                .select(1, true, Variant.variant().with(MODEL, oneCandleLit))
+                .select(2, true, Variant.variant().with(MODEL, twoCandleLit))
+                .select(3, true, Variant.variant().with(MODEL, threeCandleLit))
+                .select(4, true, Variant.variant().with(MODEL, fourCandleLit))
         )
     )
     if (cake != null) {
@@ -956,14 +956,14 @@ fun BlockModelGenerators.registerBigTallCandle(candle: Block) {
         MultiVariantGenerator.multiVariant(candle)
             .with(
                 PropertyDispatch.properties(BlockStateProperties.CANDLES, BlockStateProperties.LIT)
-                    .select(1, false, Variant.variant().with(VariantProperties.MODEL, oneCandle))
-                    .select(2, false, Variant.variant().with(VariantProperties.MODEL, twoCandle))
-                    .select(3, false, Variant.variant().with(VariantProperties.MODEL, threeCandle))
-                    .select(4, false, Variant.variant().with(VariantProperties.MODEL, fourCandle))
-                    .select(1, true, Variant.variant().with(VariantProperties.MODEL, oneCandleLit))
-                    .select(2, true, Variant.variant().with(VariantProperties.MODEL, twoCandleLit))
-                    .select(3, true, Variant.variant().with(VariantProperties.MODEL, threeCandleLit))
-                    .select(4, true, Variant.variant().with(VariantProperties.MODEL, fourCandleLit))
+                    .select(1, false, Variant.variant().with(MODEL, oneCandle))
+                    .select(2, false, Variant.variant().with(MODEL, twoCandle))
+                    .select(3, false, Variant.variant().with(MODEL, threeCandle))
+                    .select(4, false, Variant.variant().with(MODEL, fourCandle))
+                    .select(1, true, Variant.variant().with(MODEL, oneCandleLit))
+                    .select(2, true, Variant.variant().with(MODEL, twoCandleLit))
+                    .select(3, true, Variant.variant().with(MODEL, threeCandleLit))
+                    .select(4, true, Variant.variant().with(MODEL, fourCandleLit))
             )
     )
 }
@@ -998,36 +998,36 @@ fun BlockModelGenerators.registerMixedNetherBrickPillar(block: Block, mix: Block
             PropertyDispatch.property(BlockStateProperties.FACING)
                 .select(
                     Direction.UP, Variant.variant()
-                        .with(VariantProperties.MODEL, model1)
+                        .with(MODEL, model1)
                 )
                 .select(
                     Direction.DOWN, Variant.variant()
-                        .with(VariantProperties.MODEL, model2)
+                        .with(MODEL, model2)
                 )
                 .select(
                     Direction.NORTH,
                     Variant.variant()
-                        .with(VariantProperties.X_ROT, Rotation.R90)
-                        .with(VariantProperties.MODEL, model1)
+                        .with(X_ROT, Rotation.R90)
+                        .with(MODEL, model1)
                 )
                 .select(
                     Direction.SOUTH, Variant.variant()
-                        .with(VariantProperties.X_ROT, Rotation.R90)
-                        .with(VariantProperties.MODEL, model2)
+                        .with(X_ROT, Rotation.R90)
+                        .with(MODEL, model2)
                 )
                 .select(
                     Direction.EAST,
                     Variant.variant()
-                        .with(VariantProperties.X_ROT, Rotation.R90)
+                        .with(X_ROT, Rotation.R90)
                         .with(Y_ROT, Rotation.R90)
-                        .with(VariantProperties.MODEL, model1)
+                        .with(MODEL, model1)
                 )
                 .select(
                     Direction.WEST,
                     Variant.variant()
-                        .with(VariantProperties.X_ROT, Rotation.R90)
+                        .with(X_ROT, Rotation.R90)
                         .with(Y_ROT, Rotation.R90)
-                        .with(VariantProperties.MODEL, model2)
+                        .with(MODEL, model2)
                 )
         )
     )
@@ -1146,25 +1146,25 @@ fun BlockModelGenerators.createLeafPile(leafPile: Block, leaves: Block) {
         MultiPartGenerator.multiPart(leafPile)
             .with(
                 condition().term(LeafPileBlock.PILE_LAYERS, 1).term(BlockStateProperties.HANGING, false),
-                Variant.variant().with(VariantProperties.MODEL, layer1)
+                Variant.variant().with(MODEL, layer1)
             ).with(
                 condition().term(LeafPileBlock.PILE_LAYERS, 2).term(BlockStateProperties.HANGING, false),
-                Variant.variant().with(VariantProperties.MODEL, layer2)
+                Variant.variant().with(MODEL, layer2)
             ).with(
                 condition().term(LeafPileBlock.PILE_LAYERS, 3).term(BlockStateProperties.HANGING, false),
-                Variant.variant().with(VariantProperties.MODEL, layer3)
+                Variant.variant().with(MODEL, layer3)
             ).with(
                 condition().term(LeafPileBlock.PILE_LAYERS, 1).term(BlockStateProperties.HANGING, true),
-                Variant.variant().with(VariantProperties.MODEL, hanging1)
+                Variant.variant().with(MODEL, hanging1)
             ).with(
                 condition().term(LeafPileBlock.PILE_LAYERS, 2).term(BlockStateProperties.HANGING, true),
-                Variant.variant().with(VariantProperties.MODEL, hanging2)
+                Variant.variant().with(MODEL, hanging2)
             ).with(
                 condition().term(LeafPileBlock.PILE_LAYERS, 3).term(BlockStateProperties.HANGING, true),
-                Variant.variant().with(VariantProperties.MODEL, hanging3)
+                Variant.variant().with(MODEL, hanging3)
             ).with(
                 condition().term(LeafPileBlock.PILE_LAYERS, 4),
-                Variant.variant().with(VariantProperties.MODEL, full)
+                Variant.variant().with(MODEL, full)
             )
     )
 }
@@ -1195,7 +1195,7 @@ fun BlockModelGenerators.registerCropWithParent(
                     )
                 }
             })
-        Variant.variant().with(VariantProperties.MODEL, identifier)
+        Variant.variant().with(MODEL, identifier)
     }
     this.createSimpleFlatItemModel(crop.asItem())
     this.blockStateOutput.accept(MultiVariantGenerator.multiVariant(crop).with(blockStateVariantMap))
@@ -1238,14 +1238,14 @@ fun BlockModelGenerators.createMoonberryVine(block: Block) {
                             Rotation.R180
                         }
                 }
-                axis = VariantProperties.X_ROT
+                axis = X_ROT
             }
             model.with(
                 condition().term(MultifaceBlock.getFaceProperty(direction), true)
                     .term(MoonberryVineBlock.BERRIES, berries),
                 Variant.variant()
                     .with(
-                        VariantProperties.MODEL,
+                        MODEL,
                         modelId
                     ).with(axis, variantRotation)
             )
@@ -1254,7 +1254,7 @@ fun BlockModelGenerators.createMoonberryVine(block: Block) {
             allDirectionFalse,
             Variant.variant()
                 .with(
-                    VariantProperties.MODEL,
+                    MODEL,
                     id("block/parent/moonberry_vine_0")
                 ).with(axis, rotation)
         )
@@ -1295,7 +1295,7 @@ fun BlockModelGenerators.candelabraStates(
     return PropertyDispatch.properties(BlockStateProperties.LIT, CandelabraBlock.CANDLES).generate { isLit, candles ->
         val model = models[candles - 1]
         Variant.variant().with(
-            VariantProperties.MODEL,
+            MODEL,
             if (isLit) model.createWithSuffix(candelabra, "_lit", textureLit, this.modelOutput)
             else model.create(candelabra, texture, this.modelOutput)
         )
@@ -1324,53 +1324,53 @@ fun BlockModelGenerators.rotatedLikeNetherrack(block: Block, modelProvider: Text
     this.blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(
             block, *arrayOf<Variant>(
-                Variant.variant().with(VariantProperties.MODEL, model),
-                Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.X_ROT, Rotation.R90),
-                Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.X_ROT, Rotation.R180),
-                Variant.variant().with(VariantProperties.MODEL, model)
-                    .with(VariantProperties.X_ROT, Rotation.R270),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                Variant.variant().with(MODEL, model),
+                Variant.variant().with(MODEL, model)
+                    .with(X_ROT, Rotation.R90),
+                Variant.variant().with(MODEL, model)
+                    .with(X_ROT, Rotation.R180),
+                Variant.variant().with(MODEL, model)
+                    .with(X_ROT, Rotation.R270),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R90),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R90)
-                    .with(VariantProperties.X_ROT, Rotation.R90),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(X_ROT, Rotation.R90),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R90)
-                    .with(VariantProperties.X_ROT, Rotation.R180),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(X_ROT, Rotation.R180),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R90)
-                    .with(VariantProperties.X_ROT, Rotation.R270),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(X_ROT, Rotation.R270),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R180),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R180)
-                    .with(VariantProperties.X_ROT, Rotation.R90),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(X_ROT, Rotation.R90),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R180)
-                    .with(VariantProperties.X_ROT, Rotation.R180),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(X_ROT, Rotation.R180),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R180)
-                    .with(VariantProperties.X_ROT, Rotation.R270),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(X_ROT, Rotation.R270),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R270),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R270)
-                    .with(VariantProperties.X_ROT, Rotation.R90),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(X_ROT, Rotation.R90),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R270)
-                    .with(VariantProperties.X_ROT, Rotation.R180),
-                Variant.variant().with(VariantProperties.MODEL, model)
+                    .with(X_ROT, Rotation.R180),
+                Variant.variant().with(MODEL, model)
                     .with(Y_ROT, Rotation.R270)
-                    .with(VariantProperties.X_ROT, Rotation.R270)
+                    .with(X_ROT, Rotation.R270)
             )
         )
     )
 }
 
 fun BlockModelGenerators.createTrivialState(block: Block) {
-    blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, block.model()))
+    blockStateOutput.accept(createSimpleBlock(block, block.model()))
 }
 
 fun parentedItemModel(id: ResourceLocation) = ModelTemplate(Optional.of(id.withPrefix("item/")), Optional.empty())
@@ -1443,7 +1443,7 @@ fun Item.model(): ResourceLocation = ModelLocationUtils.getModelLocation(this)
 fun Item.model(str: String) = this.model().suffix(str)
 fun Item.prefixed(str: String): ResourceLocation = this.id.withPrefix("item/$str")
 
-fun ResourceLocation.toVariant(): Variant = Variant.variant().with(VariantProperties.MODEL, this)
+fun ResourceLocation.toVariant(): Variant = Variant.variant().with(MODEL, this)
 
 fun ResourceLocation.suffix(str: String) = ResourceLocation.fromNamespaceAndPath(this.namespace, "${this.path}$str")
 

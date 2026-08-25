@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.util.datagen.block_model
+package org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model
 
 import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
@@ -8,8 +8,28 @@ import net.minecraft.data.models.model.TextureSlot.*
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.DnDModels
-import org.teamvoided.dusks_and_dungeons.util.datagen.*
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.CUBE_COLUMN_HORIZONTAL_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.CUBE_COLUMN_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_GATE_CLOSED_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_GATE_OPEN_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_GATE_WALL_CLOSED_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_GATE_WALL_OPEN_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_INVENTORY_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_POST_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_SIDE_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.INNER
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.SLAB_BOTTOM_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.SLAB_TOP_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.STAIRS_INNER_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.STAIRS_OUTER_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.STAIRS_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.WALL_INVENTORY_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.WALL_LOW_SIDE_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.WALL_POST_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.WALL_TALL_SIDE_TINTED
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.model
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.DnDModels
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 
 val TINTED: TextureSlot = create("tinted")

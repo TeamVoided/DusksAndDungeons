@@ -1,13 +1,17 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.assets.model
+package org.teamvoided.dusks_and_dungeons.datagen.assets.model
 
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.registerGravestones
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.registerHeadstone
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.cubeAllWithTintedOverlay
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerTintedOverlay
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.slabWithTintedOverlay
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.stairsWithTintedOverlay
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.wallWithTintedOverlay
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.registerGravestones
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.registerHeadstone
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object StoneModels {
 

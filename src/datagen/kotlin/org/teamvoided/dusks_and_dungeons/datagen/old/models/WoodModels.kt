@@ -3,14 +3,22 @@ package org.teamvoided.dusks_and_dungeons.datagen.old.models
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createItemModel
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.createSign
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.createLogPile
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.createTintedDoor
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.createTintedOrientableTrapdoor
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hollowBambooBlock
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hollowLog
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hollowTintedLog
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hollowTintedStrippedLog
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.planksTinted
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.strippedTinted
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createItemModel
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createSign
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.dusks_and_dungeons.util.datagen.block_model.*
-import org.teamvoided.dusks_and_dungeons.util.datagen.createLeafPile
-import org.teamvoided.dusks_and_dungeons.util.datagen.createWood
-import org.teamvoided.dusks_and_dungeons.util.datagen.wall
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createLeafPile
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWood
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.wall
 
 object WoodModels {
     fun woodModels(gen: BlockModelGenerators) {

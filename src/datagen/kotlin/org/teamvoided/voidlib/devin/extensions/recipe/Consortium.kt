@@ -2,9 +2,9 @@ package org.teamvoided.voidlib.devin.extensions.recipe
 
 import net.minecraft.world.level.block.Block
 import net.minecraft.data.recipes.RecipeOutput
-import org.teamvoided.dusks_and_dungeons.util.datagen.createSlab
-import org.teamvoided.dusks_and_dungeons.util.datagen.createStair
-import org.teamvoided.dusks_and_dungeons.util.datagen.createWall
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createSlab
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStair
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWall
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.BlockSet
 

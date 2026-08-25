@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.util.datagen
+package org.teamvoided.dusks_and_dungeons.datagen.old.util
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.minecraft.world.level.block.Block

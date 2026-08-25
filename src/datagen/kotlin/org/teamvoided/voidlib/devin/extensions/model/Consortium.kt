@@ -1,9 +1,9 @@
 package org.teamvoided.voidlib.devin.extensions.model
 
 import net.minecraft.data.models.BlockModelGenerators
-import org.teamvoided.dusks_and_dungeons.util.datagen.slab
-import org.teamvoided.dusks_and_dungeons.util.datagen.stairs
-import org.teamvoided.dusks_and_dungeons.util.datagen.wall
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.slab
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.stairs
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.wall
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.BlockSet
 

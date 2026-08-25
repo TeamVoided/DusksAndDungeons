@@ -7,10 +7,14 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createBigLantern
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandelabra
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandle
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDyed
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
-import org.teamvoided.dusks_and_dungeons.util.datagen.*
 
 object BigRecipes {
 

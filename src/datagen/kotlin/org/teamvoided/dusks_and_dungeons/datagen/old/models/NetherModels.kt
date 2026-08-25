@@ -5,11 +5,11 @@ import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.fence
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.fence
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
-import org.teamvoided.dusks_and_dungeons.util.datagen.registerCropWithParent
-import org.teamvoided.dusks_and_dungeons.util.datagen.registerHandheldItem
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCropWithParent
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerHandheldItem
 
 object NetherModels {
     fun netherModels(gen: BlockModelGenerators) {

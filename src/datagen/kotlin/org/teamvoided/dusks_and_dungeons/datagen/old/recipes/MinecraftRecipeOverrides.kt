@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
 
 object MinecraftRecipeOverrides {
 

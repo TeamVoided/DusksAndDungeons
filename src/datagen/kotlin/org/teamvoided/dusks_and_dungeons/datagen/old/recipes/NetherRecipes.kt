@@ -11,9 +11,13 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDiagonalRecipe
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createFence
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStackedCraft
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStonecuttedSet
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
 

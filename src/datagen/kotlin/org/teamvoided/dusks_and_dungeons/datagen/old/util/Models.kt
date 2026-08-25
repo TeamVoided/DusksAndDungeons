@@ -1,7 +1,7 @@
-package org.teamvoided.dusks_and_dungeons.util.datagen
+package org.teamvoided.dusks_and_dungeons.datagen.old.util
 
 import net.minecraft.data.models.model.TextureSlot.*
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers.DnDModels.block
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.DnDModels.block
 
 val CANDELABRA_1 = block("parent/candelabra_1", "_1", TEXTURE, CANDLE)
 val CANDELABRA_2 = block("parent/candelabra_2", "_2", TEXTURE, CANDLE)

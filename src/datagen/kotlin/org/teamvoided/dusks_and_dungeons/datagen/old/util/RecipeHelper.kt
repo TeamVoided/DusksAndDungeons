@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.util.datagen
+package org.teamvoided.dusks_and_dungeons.datagen.old.util
 
 import net.minecraft.data.recipes.*
 import net.minecraft.data.recipes.RecipeBuilder.getDefaultRecipeId

@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.assets.model.helpers
+package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
 import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.HorizontalDirectionalBlock
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
-import org.teamvoided.dusks_and_dungeons.util.datagen.suffix
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.suffix
 
 // region Gravestones
 private const val CENTER = "_centered"

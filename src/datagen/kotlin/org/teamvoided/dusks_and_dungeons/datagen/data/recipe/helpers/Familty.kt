@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.util.datagen.criterion
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.criterion
 
 // region Chiseled
 fun RecipeOutput.createChiseled(chiseled: Block, slab: Block, source: Block) {

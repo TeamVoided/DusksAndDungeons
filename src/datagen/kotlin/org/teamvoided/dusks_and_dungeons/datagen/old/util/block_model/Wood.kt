@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.util.datagen.block_model
+package org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model
 
 import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
@@ -17,10 +17,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CuttableHollowLogBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
-import org.teamvoided.dusks_and_dungeons.util.datagen.INNER
-import org.teamvoided.dusks_and_dungeons.util.datagen.block
-import org.teamvoided.dusks_and_dungeons.util.datagen.model
-import org.teamvoided.dusks_and_dungeons.util.datagen.suffix
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.INNER
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.model
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.suffix
 import java.util.*
 
 
@@ -236,14 +236,14 @@ fun BlockModelGenerators.hollowBlock(block: Block) {
 fun BlockModelGenerators.overgrowthBush(block: Block) {
     val texture = TextureMapping()
         .put(TextureSlot.TOP, TextureMapping.getBlockTexture(block, "_top"))
-        .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block, "_side"))
+        .put(SIDE, TextureMapping.getBlockTexture(block, "_side"))
         .put(TextureSlot.PLANT, TextureMapping.getBlockTexture(block, "_plant"))
         .put(TextureSlot.STEM, TextureMapping.getBlockTexture(block, "_plant_stem"))
     val identifier =
         block(
             "parent/foliage/template_tinted_bush",
             TextureSlot.TOP,
-            TextureSlot.SIDE,
+            SIDE,
             TextureSlot.PLANT,
             TextureSlot.STEM
         )
@@ -270,22 +270,22 @@ fun BlockModelGenerators.hangingOvergrowth(block: Block) {
 fun createDownDefaultRotationStates(): PropertyDispatch {
     return PropertyDispatch.property(BlockStateProperties.FACING)
         .select(Direction.DOWN, Variant.variant())
-        .select(Direction.UP, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R180))
+        .select(Direction.UP, Variant.variant().with(VariantProperties.X_ROT, Rotation.R180))
         .select(
             Direction.NORTH, Variant.variant()
-                .with(VariantProperties.X_ROT, VariantProperties.Rotation.R90)
-                .with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)
+                .with(VariantProperties.X_ROT, Rotation.R90)
+                .with(VariantProperties.Y_ROT, Rotation.R180)
         )
-        .select(Direction.SOUTH, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R90))
+        .select(Direction.SOUTH, Variant.variant().with(VariantProperties.X_ROT, Rotation.R90))
         .select(
             Direction.WEST, Variant.variant()
-                .with(VariantProperties.X_ROT, VariantProperties.Rotation.R90)
-                .with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)
+                .with(VariantProperties.X_ROT, Rotation.R90)
+                .with(VariantProperties.Y_ROT, Rotation.R90)
         )
         .select(
             Direction.EAST, Variant.variant()
-                .with(VariantProperties.X_ROT, VariantProperties.Rotation.R90)
-                .with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270)
+                .with(VariantProperties.X_ROT, Rotation.R90)
+                .with(VariantProperties.Y_ROT, Rotation.R270)
         )
 }
 
