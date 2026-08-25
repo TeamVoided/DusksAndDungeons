@@ -168,6 +168,7 @@ object DnDItems {
         DispenserBlock.registerProjectileBehavior(TINTED_LINGERING_POTION)
     }
 
+    // TODO(1.0) make this use 21.11 rules
     fun register(name: String, item: Item): Item {
         val id = id(name)
         ensureUnique(id, BuiltInRegistries.ITEM)

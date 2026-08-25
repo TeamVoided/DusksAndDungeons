@@ -846,7 +846,7 @@ object DnDBlocks {
         BlockStrippingRegistry.register(set.wall, strippedSet.wall)
     }
 
-    // TODO(1.0) make this return actually block type
+    // TODO(1.0) make this use 21.11 rules
     fun <T : Block> register(id: String, block: T): T {
         val regBlock = registerNoItem(id, block)
         DnDItems.register(id, BlockItem(regBlock, Item.Properties()))
