@@ -24,6 +24,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTab
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockLootTableProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.DamageTypes
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ThrownItems
+import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.WolfVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
@@ -35,7 +36,6 @@ import org.teamvoided.dusks_and_dungeons.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.EntityTypeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.variants.WolfVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.*
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import org.teamvoided.voidlib.devin.FabricOutput
@@ -97,7 +97,7 @@ class DnDData : DataGeneratorEntrypoint {
         // Entity Variants
         gen.add(Registries.WOLF_VARIANT, WolfVariants::bootstrap)
         // Misc
-        gen.add(DnDRegistryKeys.THROWN_ITEM_DEFINITION, ThrownItems::init)
+        gen.add(DnDRegistryKeys.THROWN_ITEM_DEFINITION, ThrownItems::bootstrap)
         gen.add(Registries.DAMAGE_TYPE, DamageTypes::bootstrap)
     }
 

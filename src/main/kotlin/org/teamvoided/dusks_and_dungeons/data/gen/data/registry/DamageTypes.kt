@@ -21,4 +21,5 @@ object DamageTypes : RegistryBootstrapper<DamageType> {
     ) {
         register(key, DamageType(key.toLangKey(), DamageScaling.NEVER, exhaustion, effect))
     }
+
 }
