@@ -23,13 +23,13 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModProcessorLis
 import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModStructureSets
 import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModStructures
 import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModTemplatePools
+import org.teamvoided.dusks_and_dungeons.data.gen.data.tag.EntityTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModDensityFunctions
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BlockTagsProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.tags.EntityTypeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator
@@ -64,7 +64,7 @@ object DnDData : DataGeneratorEntrypoint {
             val blockTags = addProvider(::BlockTagsProvider)
             addProvider { o, p -> ItemTagsProvider(o, p, blockTags) }
             addProvider(::BiomeTagsProvider)
-            addProvider(::EntityTypeTagsProvider)
+            addProvider(::EntityTypeTagProvider)
         }
 
         FancyNamesPack.create(gen)
