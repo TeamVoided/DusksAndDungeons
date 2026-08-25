@@ -12,17 +12,17 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.util.HEAVY_CUBE_TOOLTIP
 import org.teamvoided.dusks_and_dungeons.util.TINTED_TOOLTIP
 import org.teamvoided.dusks_and_dungeons.util.getModHolders
-import org.teamvoided.voidlib.devin.FDOutput
-import org.teamvoided.voidlib.devin.FutureLookup
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
 
-class EnLangProvider(val output: FDOutput, r: FutureLookup) : FabricLanguageProvider(output, r) {
+class EnLangProvider(val output: FabricOutput, p: FutureProvider) : FabricLanguageProvider(output, p) {
 
-    override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
+    override fun generateTranslations(provider: HolderLookup.Provider, gen: TranslationBuilder) {
         getModHolders(BuiltInRegistries.ITEM).forEach { gen.add(it.value(), it.lang()) }
         getModHolders(BuiltInRegistries.BLOCK).forEach { trySafe(it) { gen.add(it.value(), it.lang()) } }
         getModHolders(BuiltInRegistries.CREATIVE_MODE_TAB).forEach { gen.add(it.key(), it.lang()) }
         getModHolders(BuiltInRegistries.MOB_EFFECT).forEach { gen.add(it.value(), it.lang()) }
-        lookup.getModHolders(Registries.BIOME).forEach { gen.add(it.key().location().toLanguageKey("biome"), it.lang()) }
+        provider.getModHolders(Registries.BIOME).forEach { gen.add(it.key().location().toLanguageKey("biome"), it.lang()) }
 
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, genLang(it.location)) }
         gen.advancement(DnDAdvancements.FALL, "Fall!", "Visit the golden and autumn biomes!")

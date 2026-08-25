@@ -5,6 +5,6 @@ import net.minecraft.core.HolderLookup
 import java.util.concurrent.CompletableFuture
 
 // TODO rename to be less messy and use everywhere
-typealias FDOutput = FabricDataOutput
-typealias FutureLookup = CompletableFuture<HolderLookup.Provider>
+typealias FabricOutput = FabricDataOutput
+typealias FutureProvider = CompletableFuture<HolderLookup.Provider>
 

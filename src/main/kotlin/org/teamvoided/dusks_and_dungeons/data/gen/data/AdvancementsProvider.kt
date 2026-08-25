@@ -1,6 +1,5 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.providers
+package org.teamvoided.dusks_and_dungeons.data.gen.data
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -21,11 +20,11 @@ import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.title
 import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
-import java.util.concurrent.CompletableFuture
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
 import java.util.function.Consumer
 
-class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    FabricAdvancementProvider(o, r) {
+class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvancementProvider(o, p) {
 
     val adventuringTime = vanillaAdv("adventure/adventuring_time")
 //    val adventure = vanillaAdv("adventure/root")
@@ -106,6 +105,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
             .save(gen, DnDAdvancements.WOOF)
     }
 
+    // Once there are more than 5 functions here. Move them to a helper file to keep this file clean.
     fun expReward(amount: Int): AdvancementRewards.Builder = AdvancementRewards.Builder.experience(amount)
 
     @Suppress("TYPE_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
