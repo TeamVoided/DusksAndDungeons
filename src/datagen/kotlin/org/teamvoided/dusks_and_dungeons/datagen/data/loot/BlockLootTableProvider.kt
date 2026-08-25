@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.loot
+package org.teamvoided.dusks_and_dungeons.datagen.data.loot
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.enchantment.Enchantments

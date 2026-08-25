@@ -15,8 +15,8 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.data.gen.data.AdvancementsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.BiomeInjectors
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.WorldgenModifiers
-import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTablesProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockLootTableProvider
+import org.teamvoided.dusks_and_dungeons.datagen.data.loot.BlockInteractLootTablesProvider
+import org.teamvoided.dusks_and_dungeons.datagen.data.loot.BlockLootTableProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ModDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ModThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ModWolfVariants
