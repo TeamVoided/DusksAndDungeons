@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.tags
+package org.teamvoided.dusks_and_dungeons.datagen.old.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
