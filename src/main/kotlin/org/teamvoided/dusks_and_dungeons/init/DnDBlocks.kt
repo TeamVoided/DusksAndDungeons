@@ -502,31 +502,27 @@ object DnDBlocks {
 
     // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
 
-
-    // TODO(1.0) remove
-    private fun deepslate(): Properties = Properties.of().mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE)
-
     // Infested blocks
     val INFESTED_MOSSY_COBBLESTONE = register(
         "infested_mossy_cobblestone", InfestedBlock(MOSSY_COBBLESTONE, Properties.of().mapColor(MapColor.CLAY))
     ).pickaxe()
     val INFESTED_COBBLED_DEEPSLATE = register(
-        "infested_cobbled_deepslate", InfestedBlock(COBBLED_DEEPSLATE, deepslate())
+        "infested_cobbled_deepslate", InfestedBlock(COBBLED_DEEPSLATE, Set.INFESTED_DEEPSLATE)
     ).pickaxe()
     val INFESTED_DEEPSLATE_BRICKS = register(
-        "infested_deepslate_bricks", InfestedBlock(DEEPSLATE_BRICKS, deepslate())
+        "infested_deepslate_bricks", InfestedBlock(DEEPSLATE_BRICKS, Set.INFESTED_DEEPSLATE)
     ).pickaxe()
     val INFESTED_CRACKED_DEEPSLATE_BRICKS = register(
-        "infested_cracked_deepslate_bricks", InfestedBlock(CRACKED_DEEPSLATE_BRICKS, deepslate())
+        "infested_cracked_deepslate_bricks", InfestedBlock(CRACKED_DEEPSLATE_BRICKS, Set.INFESTED_DEEPSLATE)
     ).pickaxe()
     val INFESTED_DEEPSLATE_TILES = register(
-        "infested_deepslate_tiles", InfestedBlock(DEEPSLATE_TILES, deepslate())
+        "infested_deepslate_tiles", InfestedBlock(DEEPSLATE_TILES, Set.INFESTED_DEEPSLATE)
     ).pickaxe()
     val INFESTED_CRACKED_DEEPSLATE_TILES = register(
-        "infested_cracked_deepslate_tiles", InfestedBlock(CRACKED_DEEPSLATE_TILES, deepslate())
+        "infested_cracked_deepslate_tiles", InfestedBlock(CRACKED_DEEPSLATE_TILES, Set.INFESTED_DEEPSLATE)
     ).pickaxe()
     val INFESTED_POLISHED_DEEPSLATE = register(
-        "infested_polished_deepslate", InfestedBlock(POLISHED_DEEPSLATE, deepslate())
+        "infested_polished_deepslate", InfestedBlock(POLISHED_DEEPSLATE, Set.INFESTED_DEEPSLATE)
     ).pickaxe()
 
 

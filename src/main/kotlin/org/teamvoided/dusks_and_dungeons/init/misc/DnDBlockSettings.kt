@@ -15,6 +15,7 @@ import org.teamvoided.dusks_and_dungeons.util.block.rootBlockSound
 
 //(ender) This file should not reference DnDBlocks
 object DnDBlockSettings {
+
     val ICE: Properties = ofFullCopy(Blocks.ICE)
 
     val WARPED_WART: Properties = Properties.of()
@@ -111,6 +112,8 @@ object DnDBlockSettings {
         .hasPostProcess(Blocks::always)
         .pushReaction(PushReaction.DESTROY)
 
+    val INFESTED_DEEPSLATE: Properties =  Properties.of().mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE)
+
     val TINTED_SANDSTONE: Properties = Properties.of()
         .mapColor(MapColor.WATER)
         .instrument(NoteBlockInstrument.BASEDRUM)
@@ -140,4 +143,5 @@ object DnDBlockSettings {
         .strength(1.0f)
         .sound(SoundType.WOOD)
         .pushReaction(PushReaction.DESTROY)
+
 }
