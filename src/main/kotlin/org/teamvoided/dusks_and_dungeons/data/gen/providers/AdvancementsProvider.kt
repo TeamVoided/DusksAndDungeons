@@ -31,7 +31,7 @@ class AdvancementsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLooku
 //    val adventure = vanillaAdv("adventure/root")
     val theWholePack = vanillaAdv("husbandry/whole_pack")
 
-    val autumnBiomes = listOf(
+    val autumnBiomes = listOf( //move this to a list file and use for the IS_AUTUMN tag?
         DnDBiomes.AUTUMN_WOODS,
         DnDBiomes.AUTUMN_PASTURES,
         DnDBiomes.AUTUMN_CASCADES,

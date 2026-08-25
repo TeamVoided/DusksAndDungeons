@@ -27,7 +27,7 @@ object BigRecipes {
             .save(output)
         output.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         output.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
-        output.createBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, Blocks.REDSTONE_TORCH, null /*DnDBlocks.REDSTONE_LANTERN*/)
+        output.createBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, Blocks.REDSTONE_TORCH,DnDBlocks.REDSTONE_LANTERN)
         // Candles
         output.createCandle(DnDBlocks.BIG_CANDLES.uncolored, Items.HONEYCOMB_BLOCK)
         output.createCandle(DnDBlocks.SOUL_CANDLES.uncolored, Items.HONEYCOMB, ItemTags.SOUL_FIRE_BASE_BLOCKS)
@@ -50,7 +50,5 @@ object BigRecipes {
             .pattern("| |")
             .criterion(Items.BAMBOO_PLANKS)
             .save(output)
-
     }
-
 }

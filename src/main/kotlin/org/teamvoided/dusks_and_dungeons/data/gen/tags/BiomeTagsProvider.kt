@@ -30,7 +30,7 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .add(Biomes.CHERRY_GROVE)
         getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_RIVERS)
             .add(Biomes.RIVER)
-        getOrCreateTagBuilder(DnDBiomeTags.IS_AUTUMN)
+        getOrCreateTagBuilder(DnDBiomeTags.IS_AUTUMN) // use the list in the AdvancementsProvider class?
             .add(DnDBiomes.AUTUMN_WOODS)
             .add(DnDBiomes.GOLDEN_WOODS)
             .add(DnDBiomes.AUTUMN_PASTURES)

@@ -14,7 +14,7 @@ object StructureSetCreator {
     fun bootstrap(c: BootstrapContext<StructureSet>) {
         val structures = c.lookup(Registries.STRUCTURE)
 
-        c.register(
+        c.register(// convert to abandoned farmstead?
             DnDStructureSets.AUTUMN_RUINS,
             StructureSet(
                 listOf(
