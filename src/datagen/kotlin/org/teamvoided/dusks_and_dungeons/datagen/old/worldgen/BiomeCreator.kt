@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
+package org.teamvoided.dusks_and_dungeons.datagen.old.worldgen
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BiomeDefaultFeatures

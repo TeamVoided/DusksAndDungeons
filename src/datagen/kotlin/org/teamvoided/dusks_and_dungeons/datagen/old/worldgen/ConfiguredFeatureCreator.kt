@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
+package org.teamvoided.dusks_and_dungeons.datagen.old.worldgen
 
 import com.google.common.collect.ImmutableList
 import dev.worldgen.lithostitched.api.util.WeightedList

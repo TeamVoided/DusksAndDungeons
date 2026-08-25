@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.worldgen
+package org.teamvoided.dusks_and_dungeons.datagen.old.worldgen
 
 import com.google.common.collect.ImmutableList
 import net.minecraft.core.BlockPos
@@ -9,7 +9,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.OreFeatures
 import net.minecraft.data.worldgen.features.VegetationFeatures
-import net.minecraft.data.worldgen.placement.OrePlacements
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
@@ -22,7 +21,6 @@ import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
-import net.minecraft.world.level.levelgen.placement.RarityFilter
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
