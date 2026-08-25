@@ -1,10 +1,11 @@
 package org.teamvoided.dusks_and_dungeons.entity
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer
-import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.LayerDefinition
+import net.minecraft.client.model.geom.ModelLayerLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.entity.raccoon.RaccoonEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.model.ScarecrowWoodModel
@@ -15,6 +16,7 @@ object DnDEntityModelLayers {
     val SCARECROW_INNER_ARMOR: ModelLayerLocation = createInnerArmor("scarecrow")
     val SCARECROW_OUTER_ARMOR: ModelLayerLocation = createOuterArmor("scarecrow")
     val SCARECROW_WOOD: ModelLayerLocation = register("scarecrow", "wood")
+    val RACCOON: ModelLayerLocation = registerMain("raccoon")
 
     // experimental
 
@@ -23,6 +25,7 @@ object DnDEntityModelLayers {
         registerModelLayer(SCARECROW_WOOD, ScarecrowWoodModel::texturedModelData)
         registerModelLayer(SCARECROW_INNER_ARMOR, ::createScarecrowInnerArmor)
         registerModelLayer(SCARECROW_OUTER_ARMOR, ::createScarecrowOuterArmor)
+        registerModelLayer(RACCOON, RaccoonEntityModel::texturedModelData)
     }
 
     private fun createScarecrowInnerArmor(): LayerDefinition =

@@ -151,6 +151,12 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.addAxis(Blocks.MANGROVE_ROOTS)
         // endregion
 
+        // TODO(1.0) put it item model gen
+        gen.delegateItemModel(
+            DnDItems.RACCOON_SPAWN_EGG,
+            ModelLocationUtils.decorateItemModelLocation("template_spawn_egg")
+        )
+
     }
 
     private val single = listOf(

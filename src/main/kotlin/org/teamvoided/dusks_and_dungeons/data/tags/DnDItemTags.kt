@@ -67,6 +67,8 @@ object DnDItemTags {
 
     val BLACKSTONE_TOOL_MATERIALS = tag("blackstone_tool_materials")
 
+    val RACCOON_FOOD = tag("raccoon_food")
+
     val CARPET_PLATES = tag("carpet_plates")
     val CARPET_PLATES_WOOL = tag("carpet_plates/wool")
 

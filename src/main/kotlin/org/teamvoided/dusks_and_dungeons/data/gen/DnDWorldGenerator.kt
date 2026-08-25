@@ -26,6 +26,7 @@ class DnDWorldGenerator(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         e.addAll(reg.lookupOrThrow(Registries.STRUCTURE))
 
         e.addAll(reg.lookupOrThrow(Registries.WOLF_VARIANT))
+        e.addAll(reg.lookupOrThrow(DnDRegistryKeys.RACCOON_VARIANT))
         e.addAll(reg.lookupOrThrow(DnDRegistryKeys.THROWN_ITEM_DEFINITION))
 
         e.addAll(reg.lookupOrThrow(Registries.DAMAGE_TYPE))

@@ -32,6 +32,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.EntityTypeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.variants.RaccoonVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.variants.WolfVariants
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.*
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
@@ -79,6 +80,7 @@ class DnDData : DataGeneratorEntrypoint {
         gen.add(Registries.STRUCTURE, StructureFeatureCreator::bootstrap)
 
         gen.add(Registries.WOLF_VARIANT, WolfVariants::bootstrap)
+        gen.add(DnDRegistryKeys.RACCOON_VARIANT, RaccoonVariants::bootstrap)
         gen.add(DnDRegistryKeys.THROWN_ITEM_DEFINITION, ThrownItems::init)
 
         gen.add(Registries.DAMAGE_TYPE, DamageTypes::bootstrap)

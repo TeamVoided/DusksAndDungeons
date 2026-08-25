@@ -18,6 +18,7 @@ internal fun AbstractBlockSet.tellWitnessesThatIWasMurdered(): AbstractBlockSet 
 
 @JvmField
 internal val dataFixerBlackList = listOf(
+    "raccoon",
     "scarecrow",
 )
 
