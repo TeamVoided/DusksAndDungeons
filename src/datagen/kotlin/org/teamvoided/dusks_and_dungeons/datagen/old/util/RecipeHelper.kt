@@ -25,7 +25,7 @@ fun RecipeBuilder.unlockedBy(tag: TagKey<Item>): RecipeBuilder =
 fun RecipeOutput.createBigLantern(
     block: ItemLike,
     torch: ItemLike,
-    smallLantern: ItemLike? = null
+    smallLantern: ItemLike? = null,
 ) {
     val criteriaItem = smallLantern ?: torch
     ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block)
@@ -42,7 +42,7 @@ fun RecipeOutput.createBigLantern(
 fun RecipeOutput.createCandle(
     candle: ItemLike,
     honeycomb: ItemLike,
-    soul: TagKey<Item>? = null
+    soul: TagKey<Item>? = null,
 ) {
     if (soul == null) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candle, 1)
@@ -83,7 +83,7 @@ fun RecipeOutput.createDyed(
     dyedBlock: ItemLike,
     input: ItemLike,
     dye: ItemLike,
-    sufixed: Boolean = false
+    sufixed: Boolean = false,
 ) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, dyedBlock)
         .requires(Ingredient.of(input))
@@ -93,7 +93,7 @@ fun RecipeOutput.createDyed(
 }
 
 fun RecipeOutput.createGravestones(
-    gravestone: ItemLike, smallGravestone: ItemLike, block: ItemLike
+    gravestone: ItemLike, smallGravestone: ItemLike, block: ItemLike,
 ) {
     this.createGravestone(gravestone, block)
     this.createStonecutting(smallGravestone, gravestone)
@@ -118,7 +118,7 @@ fun RecipeOutput.createPumpkinStuffs(
     smallPumpkin: ItemLike,
     smallCarvedPumpkin: ItemLike,
     smallGlowingPumpkin: ItemLike,
-    seeds: ItemLike
+    seeds: ItemLike,
 ) {
     this.createStackedCraft(glowingPumpkin, carvedPumpkin, Items.TORCH)
     this.createStackedCraft(smallGlowingPumpkin, smallCarvedPumpkin, Items.TORCH)
@@ -137,7 +137,7 @@ fun RecipeOutput.createPumpkinStuffs(
 
 fun RecipeOutput.smeltDefault(
     output: ItemLike,
-    input: ItemLike
+    input: ItemLike,
 ) {
     SimpleCookingRecipeBuilder.smelting(
         Ingredient.of(input),
@@ -149,7 +149,7 @@ fun RecipeOutput.smeltDefault(
 
 fun RecipeOutput.createOvergrown(
     output: ItemLike,
-    input: ItemLike
+    input: ItemLike,
 ) {
     createTwoPiece(output, input, ItemTags.LEAVES, "_leaves")
 }
@@ -159,7 +159,7 @@ fun RecipeOutput.createTwoPiece(
     input1: ItemLike,
     input2: ItemLike,
     suffix: String = "",
-    id: ResourceLocation = output.id.withSuffix(suffix)
+    id: ResourceLocation = output.id.withSuffix(suffix),
 ) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
         .requires(Ingredient.of(input1))
@@ -174,7 +174,7 @@ fun RecipeOutput.createTwoPiece(
     input1: ItemLike,
     input2: TagKey<Item>,
     suffix: String = "",
-    id: ResourceLocation = output.id.withSuffix(suffix)
+    id: ResourceLocation = output.id.withSuffix(suffix),
 ) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output)
         .requires(Ingredient.of(input1))
@@ -214,7 +214,7 @@ fun RecipeOutput.offerReversibleCompactingRecipes4(
     reverseCategory: RecipeCategory,
     baseItem: ItemLike,
     compactingCategory: RecipeCategory,
-    compactedItem: ItemLike
+    compactedItem: ItemLike,
 ) {
     offerReversibleCompactingRecipes4(
         reverseCategory,
@@ -236,7 +236,7 @@ fun RecipeOutput.offerReversibleCompactingRecipes4(
     compactingId: String,
     compactingGroup: String?,
     reverseId: String,
-    reverseGroup: String?
+    reverseGroup: String?,
 ) {
     ShapelessRecipeBuilder.shapeless(reverseCategory, baseItem, 4)
         .requires(compactedItem)
@@ -258,7 +258,7 @@ fun RecipeOutput.createStonecuttedSet(
     stair: ItemLike?,
     slab: ItemLike?,
     wall: ItemLike?,
-    extra: List<ItemLike>? = null
+    extra: List<ItemLike>? = null,
 ) {
     input.forEach {
         if (polish != null && polish.asItem().description.string != it.asItem().description.string)
@@ -295,7 +295,7 @@ fun RecipeOutput.createStonecuttedFromList(output: ItemLike, vararg input: Block
 
 fun RecipeOutput.createStonecuttedFromList(
     input: List<Block>,
-    output: ItemLike
+    output: ItemLike,
 ) {
     input.forEach {
         stonecutterResultFromBase(this, RecipeCategory.BUILDING_BLOCKS, output, it)
@@ -411,11 +411,12 @@ fun RecipeOutput.createDiagonalRecipe(
 fun RecipeOutput.createDiagonalRecipe(
     output: ItemLike,
     primary: TagKey<Item>,
-    secondary: ItemLike
+    secondary: ItemLike,
+    amount: Int = 1,
 ) {
-    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
-        .define('#', primary)
-        .define('%', secondary)
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, amount)
+        .define('%', primary)
+        .define('#', secondary)
         .pattern("#%")
         .pattern("%#")
         .unlockedBy(primary)

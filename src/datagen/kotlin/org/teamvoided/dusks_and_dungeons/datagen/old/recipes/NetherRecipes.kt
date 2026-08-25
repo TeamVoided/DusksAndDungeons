@@ -11,11 +11,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDiagonalRecipe
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createFence
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStackedCraft
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStonecuttedSet
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
@@ -63,7 +59,7 @@ object NetherRecipes {
         e.createStonecuttingSet(DnDBlocks.POLISHED_RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICKS)
 
         e.createDiagonalRecipe(
-            DnDBlocks.BLUE_NETHER_BRICKS, DnDItemTags.WARPED_NETHER_BRICK_MATERIALS, Blocks.NETHER_BRICKS
+            DnDBlocks.BLUE_NETHER_BRICKS, DnDItemTags.WARPED_NETHER_BRICK_MATERIALS, Items.NETHER_BRICK
         )
         e.createFence(DnDBlocks.BLUE_NETHER_BRICK_FENCE, DnDBlocks.BLUE_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
@@ -75,7 +71,7 @@ object NetherRecipes {
         e.createStonecuttingSet(DnDBlocks.POLISHED_BLUE_NETHER_BRICKS, DnDBlocks.BLUE_NETHER_BRICKS.parent)
 
         e.createDiagonalRecipe(
-            DnDBlocks.GRAY_NETHER_BRICKS, DnDItemTags.ASHEN_NETHER_BRICK_MATERIALS, Blocks.NETHER_BRICKS
+            DnDBlocks.GRAY_NETHER_BRICKS, DnDItemTags.ASHEN_NETHER_BRICK_MATERIALS, Items.NETHER_BRICK
         )
         e.createFence(DnDBlocks.GRAY_NETHER_BRICK_FENCE, DnDBlocks.GRAY_NETHER_BRICKS, Items.NETHER_BRICK)
         e.createStackedCraft(
