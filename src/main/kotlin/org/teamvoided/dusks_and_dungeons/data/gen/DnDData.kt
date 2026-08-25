@@ -25,6 +25,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModStructures
 import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.ModTemplatePools
 import org.teamvoided.dusks_and_dungeons.data.gen.data.tag.EntityTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModDensityFunctions
+import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModNoises
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
@@ -33,7 +34,6 @@ import org.teamvoided.dusks_and_dungeons.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.NoiseCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import org.teamvoided.voidlib.devin.FabricOutput
@@ -73,7 +73,7 @@ object DnDData : DataGeneratorEntrypoint {
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
         // Word Gen
-        gen.add(Registries.NOISE, NoiseCreator::bootstrap)
+        gen.add(Registries.NOISE, ModNoises::bootstrap)
         gen.add(Registries.DENSITY_FUNCTION, ModDensityFunctions::bootstrap)
         gen.add(Registries.BIOME, BiomeCreator::boostrap)
         gen.add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)

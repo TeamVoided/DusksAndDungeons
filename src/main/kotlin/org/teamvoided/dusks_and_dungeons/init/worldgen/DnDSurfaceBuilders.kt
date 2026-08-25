@@ -12,12 +12,13 @@ import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.level.levelgen.RandomState
 import net.minecraft.world.level.chunk.BlockColumn
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
-import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoise
+import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoises
 import org.teamvoided.reef.api.events.CustomSurfaceBuilder
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 import kotlin.math.ceil
 
+// TODO(1.0) remove
 object DnDSurfaceBuilders {
 
 
@@ -87,15 +88,15 @@ object DnDSurfaceBuilders {
         z: Int
     ) {
         if (glacierIce == null) glacierIce =
-            random.getOrCreateNoise(DnDNoise.GLACIER_ICE_PICKER)
+            random.getOrCreateNoise(DnDNoises.GLACIER_ICE_PICKER)
         if (glacierJaggedness == null) glacierJaggedness =
-            random.getOrCreateNoise(DnDNoise.GLACIER_JAGGEDNESS)
+            random.getOrCreateNoise(DnDNoises.GLACIER_JAGGEDNESS)
         if (glacierSnow == null) glacierSnow =
-            random.getOrCreateNoise(DnDNoise.GLACIER_SNOW_SURFACE)
+            random.getOrCreateNoise(DnDNoises.GLACIER_SNOW_SURFACE)
         if (glacierWaterRoof == null) glacierWaterRoof =
-            random.getOrCreateNoise(DnDNoise.GLACIER_WATER_ROOF)
+            random.getOrCreateNoise(DnDNoises.GLACIER_WATER_ROOF)
         if (glacierBorders == null) glacierBorders =
-            random.getOrCreateNoise(DnDNoise.GLACIER_BORDERS)
+            random.getOrCreateNoise(DnDNoises.GLACIER_BORDERS)
 
         val y = chunk.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z) + 1
 

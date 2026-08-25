@@ -11,22 +11,22 @@ import net.minecraft.world.level.levelgen.DensityFunctions.noise
 import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters
 import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDDensityFunctions
-import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoise
+import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoises
 
 object ModDensityFunctions : RegistryBootstrapper<DensityFunction> {
 
     override fun BootstrapContext<DensityFunction>.init() {
         register(
             DnDDensityFunctions.CASCADE_REGION,
-            noise(noiseHolder(DnDNoise.AUTUMN), 0.12, 0.0)
+            noise(noiseHolder(DnDNoises.AUTUMN), 0.12, 0.0)
         )
         register(
             DnDDensityFunctions.SYPIA_REGION,
-            noise(noiseHolder(DnDNoise.AUTUMN), -0.09, 0.0).abs(),
+            noise(noiseHolder(DnDNoises.AUTUMN), -0.09, 0.0).abs(),
         )
         register(
             DnDDensityFunctions.OVERGROWN_GROTTO_REGION,
-            noise(noiseHolder(DnDNoise.OVERGROWN_GROTTO), 0.25, 0.0),
+            noise(noiseHolder(DnDNoises.OVERGROWN_GROTTO), 0.25, 0.0),
         )
     }
 //    NoiseRouterData.class
