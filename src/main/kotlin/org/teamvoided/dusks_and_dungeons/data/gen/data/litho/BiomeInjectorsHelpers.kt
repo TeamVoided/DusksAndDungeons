@@ -21,7 +21,7 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Climate
 import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.levelgen.DensityFunction
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.DensityFunctionCreator.dense
+import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModDensityFunctions.df
 import java.util.*
 
 fun BootstrapContext<BiomeInjector>.replacePartially(
@@ -148,7 +148,7 @@ fun climateParam(param: ClimateParameter, min: Double, max: Double): WorldPlacem
 fun BootstrapContext<BiomeInjector>.dfParam(
     key: ResourceKey<DensityFunction>, low: Double, high: Double,
 ): WorldPlacement {
-    return dfParam(dense(key), low, high)
+    return dfParam(df(key), low, high)
 }
 
 fun dfParam(df: DensityFunction, min: Double, max: Double): WorldPlacement {

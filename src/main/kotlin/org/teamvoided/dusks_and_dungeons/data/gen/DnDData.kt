@@ -23,6 +23,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureFeatur
 import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructurePoolCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureProcessorCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.data.structure.StructureSetCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModDensityFunctions
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
@@ -30,7 +31,10 @@ import org.teamvoided.dusks_and_dungeons.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.EntityTypeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.*
+import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.BiomeCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.NoiseCreator
+import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
@@ -70,7 +74,7 @@ object DnDData : DataGeneratorEntrypoint {
     override fun buildRegistry(gen: RegistrySetBuilder) {
         // Word Gen
         gen.add(Registries.NOISE, NoiseCreator::bootstrap)
-        gen.add(Registries.DENSITY_FUNCTION, DensityFunctionCreator::bootstrap)
+        gen.add(Registries.DENSITY_FUNCTION, ModDensityFunctions::bootstrap)
         gen.add(Registries.BIOME, BiomeCreator::boostrap)
         gen.add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
         gen.add(Registries.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
