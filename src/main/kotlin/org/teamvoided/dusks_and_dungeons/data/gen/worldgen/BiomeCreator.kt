@@ -15,9 +15,8 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.level.biome.*
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
-import net.minecraft.world.level.levelgen.GenerationStep
+import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.LOCAL_MODIFICATIONS as lm2
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES as ss4
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES as uo6

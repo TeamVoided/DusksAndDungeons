@@ -9,7 +9,7 @@ import net.minecraft.tags.BiomeTags
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomes
+import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import java.util.concurrent.CompletableFuture
 
 class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :

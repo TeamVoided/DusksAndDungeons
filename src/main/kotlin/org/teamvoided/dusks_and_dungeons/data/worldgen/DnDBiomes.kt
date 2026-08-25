@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.init.worldgen
+package org.teamvoided.dusks_and_dungeons.data.worldgen
 
 import net.minecraft.core.registries.Registries
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
