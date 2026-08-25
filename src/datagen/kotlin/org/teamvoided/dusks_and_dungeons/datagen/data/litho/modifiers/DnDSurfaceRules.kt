@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.litho.modifiers
+package org.teamvoided.dusks_and_dungeons.datagen.data.litho.modifiers
 
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks

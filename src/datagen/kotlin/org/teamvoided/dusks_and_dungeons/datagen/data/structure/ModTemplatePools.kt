@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.structure
+package org.teamvoided.dusks_and_dungeons.datagen.data.structure
 
 import com.mojang.datafixers.util.Pair
 import net.minecraft.core.Holder
@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
+import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDProcessorLists
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDTemplatePool
 import java.util.function.Function

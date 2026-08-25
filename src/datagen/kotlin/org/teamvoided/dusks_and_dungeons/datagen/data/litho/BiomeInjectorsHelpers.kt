@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package org.teamvoided.dusks_and_dungeons.data.gen.data.litho
+package org.teamvoided.dusks_and_dungeons.datagen.data.litho
 
 import com.mojang.datafixers.util.Either
 import com.mojang.datafixers.util.Pair
@@ -21,7 +21,7 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Climate
 import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.levelgen.DensityFunction
-import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModDensityFunctions.df
+import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModDensityFunctions.df
 import java.util.*
 
 fun BootstrapContext<BiomeInjector>.replacePartially(

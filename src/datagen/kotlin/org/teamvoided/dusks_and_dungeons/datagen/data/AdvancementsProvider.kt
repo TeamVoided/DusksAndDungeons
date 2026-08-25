@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data
+package org.teamvoided.dusks_and_dungeons.datagen.data
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancements.Advancement
@@ -18,8 +18,8 @@ import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.description
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.title
 import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
 import java.util.function.Consumer

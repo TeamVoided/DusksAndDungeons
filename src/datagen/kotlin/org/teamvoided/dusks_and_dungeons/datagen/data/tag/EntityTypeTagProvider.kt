@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.tag
+package org.teamvoided.dusks_and_dungeons.datagen.data.tag
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.EntityTypeTagProvider
 import net.minecraft.core.HolderLookup

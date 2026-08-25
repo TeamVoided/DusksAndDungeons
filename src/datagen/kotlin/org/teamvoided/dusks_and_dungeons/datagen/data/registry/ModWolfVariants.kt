@@ -7,7 +7,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.animal.WolfVariant
 import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
+import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
 

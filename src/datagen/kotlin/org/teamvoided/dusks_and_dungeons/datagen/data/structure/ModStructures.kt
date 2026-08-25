@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.structure
+package org.teamvoided.dusks_and_dungeons.datagen.data.structure
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight
 import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure
-import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
+import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureFeatures
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDTemplatePool
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags

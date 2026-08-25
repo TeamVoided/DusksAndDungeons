@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.structure
+package org.teamvoided.dusks_and_dungeons.datagen.data.structure
 
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.structure.templatesystem.*
-import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
+import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDProcessorLists
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 

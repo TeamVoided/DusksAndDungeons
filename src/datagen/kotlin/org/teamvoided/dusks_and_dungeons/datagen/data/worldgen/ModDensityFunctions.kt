@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen
+package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen
 
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.DensityFunction.NoiseHolder
 import net.minecraft.world.level.levelgen.DensityFunctions.HolderHolder
 import net.minecraft.world.level.levelgen.DensityFunctions.noise
 import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters
-import org.teamvoided.dusks_and_dungeons.data.gen.data.RegistryBootstrapper
+import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDDensityFunctions
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoises
 

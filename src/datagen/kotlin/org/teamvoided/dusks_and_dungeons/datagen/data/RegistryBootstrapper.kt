@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data
+package org.teamvoided.dusks_and_dungeons.datagen.data
 
 import net.minecraft.data.worldgen.BootstrapContext
 
