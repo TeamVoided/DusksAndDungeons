@@ -32,7 +32,7 @@ object DusksAndDungeons {
 
         DnDBlockEntities.init()
         DnDEffects.init()
-        DnDEntities.init()
+        DnDEntityTypes.init()
         DnDWorldgen.init()
         DnDBiomeModifications.init()
         DnDParticles.init()

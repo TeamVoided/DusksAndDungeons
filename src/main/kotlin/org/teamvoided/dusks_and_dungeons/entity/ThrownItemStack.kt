@@ -22,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
-import org.teamvoided.dusks_and_dungeons.init.DnDEntities
+import org.teamvoided.dusks_and_dungeons.init.DnDEntityTypes
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 import org.teamvoided.dusks_and_dungeons.util.key
@@ -32,9 +32,9 @@ class ThrownItemStack : ThrowableItemProjectile {
 
     constructor(type: EntityType<out ThrownItemStack>, level: Level) : super(type, level)
 
-    constructor(level: Level, owner: LivingEntity) : super(DnDEntities.THROWN_ITEM, owner, level)
+    constructor(level: Level, owner: LivingEntity) : super(DnDEntityTypes.THROWN_ITEM, owner, level)
 
-    constructor(level: Level, x: Double, y: Double, z: Double) : super(DnDEntities.THROWN_ITEM, x, y, z, level)
+    constructor(level: Level, x: Double, y: Double, z: Double) : super(DnDEntityTypes.THROWN_ITEM, x, y, z, level)
 
     override fun getDefaultItem(): Item = Items.BRICK
 

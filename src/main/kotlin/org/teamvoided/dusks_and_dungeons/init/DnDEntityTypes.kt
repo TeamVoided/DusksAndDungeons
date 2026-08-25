@@ -12,8 +12,7 @@ import org.teamvoided.dusks_and_dungeons.entity.ThrownItemStack
 import org.teamvoided.dusks_and_dungeons.util.doEvil
 import org.teamvoided.dusks_and_dungeons.util.register
 
-// TODO(1.0) rename to DnDEntityTypes
-object DnDEntities {
+object DnDEntityTypes {
 
     val SCARECROW = register(
         "scarecrow", EntityType.Builder.of(EntityFactory(::ScarecrowEntity), MobCategory.MISC)

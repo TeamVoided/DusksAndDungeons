@@ -35,7 +35,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.level.Explosion
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
-import org.teamvoided.dusks_and_dungeons.init.DnDEntities
+import org.teamvoided.dusks_and_dungeons.init.DnDEntityTypes
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import java.util.function.Predicate
 
@@ -52,7 +52,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: Level)
     private var leftLegRotation: Rotations
     private var rightLegRotation: Rotations
 
-    constructor(world: Level, x: Double, y: Double, z: Double) : this(DnDEntities.SCARECROW, world) {
+    constructor(world: Level, x: Double, y: Double, z: Double) : this(DnDEntityTypes.SCARECROW, world) {
         this.setPos(x, y, z)
     }
 
@@ -639,7 +639,7 @@ class ScarecrowEntity(entityType: EntityType<out ScarecrowEntity>, world: Level)
         private val DEFAULT_LEFT_LEG_ROTATION = Rotations(0f, 0f, 0f)
         private val DEFAULT_RIGHT_LEG_ROTATION = Rotations(0f, 0f, 0f)
         private val SMALL_DIMENSIONS: EntityDimensions =
-            DnDEntities.SCARECROW.dimensions.scale(0.5f).withEyeHeight(0.9875f)
+            DnDEntityTypes.SCARECROW.dimensions.scale(0.5f).withEyeHeight(0.9875f)
         val TRACKER_IS_SMALL: EntityDataAccessor<Boolean> =
             SynchedEntityData.defineId(ScarecrowEntity::class.java, EntityDataSerializers.BOOLEAN)
         val TRACKER_HAS_LEGS: EntityDataAccessor<Boolean> =

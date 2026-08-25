@@ -16,7 +16,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.level.gameevent.GameEvent
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
-import org.teamvoided.dusks_and_dungeons.init.DnDEntities
+import org.teamvoided.dusks_and_dungeons.init.DnDEntityTypes
 
 class ScarecrowItem(settings: Properties) : Item(settings) {
     override fun useOn(context: UseOnContext): InteractionResult {
@@ -29,13 +29,13 @@ class ScarecrowItem(settings: Properties) : Item(settings) {
             val blockPos = itemPlacementContext.clickedPos
             val itemStack = context.itemInHand
             val vec3d = Vec3.atBottomCenterOf(blockPos)
-            val box = DnDEntities.SCARECROW.dimensions.makeBoundingBox(vec3d.x(), vec3d.y(), vec3d.z())
+            val box = DnDEntityTypes.SCARECROW.dimensions.makeBoundingBox(vec3d.x(), vec3d.y(), vec3d.z())
             if (world.noCollision(null as Entity?, box) && world.getEntities(null as Entity?, box).isEmpty()) {
                 if (world is ServerLevel) {
                     val consumer =
                         EntityType.createDefaultStackConfig<ScarecrowEntity>(world, itemStack, context.player)
                     val scarecrowEntity =
-                        DnDEntities.SCARECROW.create(world, consumer, blockPos, MobSpawnType.SPAWN_EGG, true, true)
+                        DnDEntityTypes.SCARECROW.create(world, consumer, blockPos, MobSpawnType.SPAWN_EGG, true, true)
                             ?: return InteractionResult.FAIL
 
                     val yaw =

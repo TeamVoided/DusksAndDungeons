@@ -7,8 +7,8 @@ import org.teamvoided.dusks_and_dungeons.entity.scarecrow.ScarecrowEntityRendere
 object DnDEntitiesClient {
 
     fun init() {
-        EntityRendererRegistry.register(DnDEntities.SCARECROW, ::ScarecrowEntityRenderer)
-        EntityRendererRegistry.register(DnDEntities.THROWN_ITEM, ::ThrownItemRenderer)
+        EntityRendererRegistry.register(DnDEntityTypes.SCARECROW, ::ScarecrowEntityRenderer)
+        EntityRendererRegistry.register(DnDEntityTypes.THROWN_ITEM, ::ThrownItemRenderer)
     }
 
 }
