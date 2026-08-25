@@ -12,11 +12,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
-import org.teamvoided.dusks_and_dungeons.datagen.old.models.ModelProvider
-import org.teamvoided.dusks_and_dungeons.datagen.old.recipes.RecipesProvider
-import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.BiomeCreator
-import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.ConfiguredFeatureCreator
-import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_and_dungeons.datagen.assets.lang.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.AdvancementsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.litho.BiomeInjectors
@@ -33,9 +28,14 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModTemplatePools
 import org.teamvoided.dusks_and_dungeons.datagen.data.tag.EntityTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModDensityFunctions
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModNoises
+import org.teamvoided.dusks_and_dungeons.datagen.old.models.ModelProvider
+import org.teamvoided.dusks_and_dungeons.datagen.old.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.ItemTagsProvider
+import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.BiomeCreator
+import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.ConfiguredFeatureCreator
+import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_and_dungeons.datagen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import org.teamvoided.voidlib.devin.FabricOutput
@@ -49,6 +49,7 @@ object DnDData : DataGeneratorEntrypoint {
         log.info("Running \"${gen.modContainer.metadata.name}\" Datagen!")
         gen.createPack {
             //   -=- Assets -=-
+            addProvider(::EnLangProvider)
 
             //   -=-  Data -=-
             addProvider(::DnDDynProvider)
@@ -61,7 +62,6 @@ object DnDData : DataGeneratorEntrypoint {
 
             // Not Updated
             addProvider(::ModelProvider)
-            addProvider(::EnLangProvider)
             addProvider(::RecipesProvider)
             val blockTags = addProvider(::BlockTagsProvider)
             addProvider { o, p -> ItemTagsProvider(o, p, blockTags) }
