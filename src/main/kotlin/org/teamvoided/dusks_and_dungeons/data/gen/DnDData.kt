@@ -4,17 +4,11 @@ import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
-import net.minecraft.DetectedVersion
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.PackOutput
-import net.minecraft.data.metadata.PackMetadataGenerator
-import net.minecraft.network.chat.Component
-import net.minecraft.server.packs.PackType
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection
+import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.data.gen.assets.lang.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.AdvancementsProvider
@@ -25,8 +19,8 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockLootTableProvid
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.DamageTypes
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ThrownItems
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.WolfVariants
-import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructurePoolCreator
@@ -40,44 +34,38 @@ import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.*
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
-import java.util.*
 
-class DnDData : DataGeneratorEntrypoint {
+object DnDData : DataGeneratorEntrypoint {
 
     override fun getEffectiveModId(): String = DusksAndDungeons.MODID
 
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
         log.info("Running \"${gen.modContainer.metadata.name}\" Datagen!")
-        val pack = gen.createPack()
+        gen.createPack {
+            //   -=- Assets -=-
 
-        //   -=- Assets -=-
-
-        //   -=-  Data -=-
-        pack.addProvider(::DnDDynProvider)
-        // Loot Tables
-        pack.addProvider(::BlockLootTableProvider)
-        pack.addProvider(::BlockInteractLootTablesProvider)
-        // Misc
-        pack.addProvider(::AdvancementsProvider)
+            //   -=-  Data -=-
+            addProvider(::DnDDynProvider)
+            // Loot Tables
+            addProvider(::BlockLootTableProvider)
+            addProvider(::BlockInteractLootTablesProvider)
+            // Misc
+            addProvider(::AdvancementsProvider)
 
 
-        // Not Updated
-        pack.addProvider(::ModelProvider)
-        pack.addProvider(::EnLangProvider)
-        pack.addProvider(::RecipesProvider)
-        val blockTags = pack.addProvider(::BlockTagsProvider)
-        pack.addProvider { o, p -> ItemTagsProvider(o, p, blockTags) }
-        pack.addProvider(::BiomeTagsProvider)
-        pack.addProvider(::EntityTypeTagsProvider)
+            // Not Updated
+            addProvider(::ModelProvider)
+            addProvider(::EnLangProvider)
+            addProvider(::RecipesProvider)
+            val blockTags = addProvider(::BlockTagsProvider)
+            addProvider { o, p -> ItemTagsProvider(o, p, blockTags) }
+            addProvider(::BiomeTagsProvider)
+            addProvider(::EntityTypeTagsProvider)
+        }
 
-        //TODO move to pack folder
-        val fancyNamePack = gen.createBuiltinResourcePack(id("fancy_names"))
-        fancyNamePack.addProvider(::FancyNameTranslationProvider)
-        fancyNamePack.addProvider { o -> createResource(o, Component.literal("Better Nether Brick Names")) }
-//        val fancyNamePackVanilla = gen.createBuiltinResourcePack(mc("fancy_names"))
-//        fancyNamePackVanilla.addProvider(::FancyNameVanillaTranslationProvider)
-
+        FancyNamesPack.create(gen)
     }
+
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
         // Word Gen
@@ -129,14 +117,18 @@ class DnDData : DataGeneratorEntrypoint {
 
     }
 
-    //TODO move to pack folder
-    fun createResource(o: PackOutput, description: Component): PackMetadataGenerator {
-        return PackMetadataGenerator(o).add(
-            PackMetadataSection.TYPE, PackMetadataSection(
-                description,
-                DetectedVersion.BUILT_IN.getPackVersion(PackType.CLIENT_RESOURCES), Optional.empty()
-            )
-        )
+    fun FabricDataGenerator.createPack(block: FabricDataGenerator.Pack.() -> Unit): FabricDataGenerator.Pack {
+        val pack = createPack()
+        with(pack, block)
+        return pack
+    }
+
+    fun FabricDataGenerator.createBuiltInPack(
+        id: ResourceLocation, block: FabricDataGenerator.Pack.() -> Unit,
+    ): FabricDataGenerator.Pack {
+        val pack = createBuiltinResourcePack(id)
+        with(pack, block)
+        return pack
     }
 
 }

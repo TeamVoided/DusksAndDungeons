@@ -1,11 +1,8 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.assets.lang
 
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
@@ -14,8 +11,9 @@ import org.teamvoided.dusks_and_dungeons.util.TINTED_TOOLTIP
 import org.teamvoided.dusks_and_dungeons.util.getModHolders
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
+import org.teamvoided.voidlib.devin.provider.DevinLangProvider
 
-class EnLangProvider(val output: FabricOutput, p: FutureProvider) : FabricLanguageProvider(output, p) {
+class EnLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, p) {
 
     override fun generateTranslations(provider: HolderLookup.Provider, gen: TranslationBuilder) {
         getModHolders(BuiltInRegistries.ITEM).forEach { gen.add(it.value(), it.lang()) }
@@ -24,7 +22,7 @@ class EnLangProvider(val output: FabricOutput, p: FutureProvider) : FabricLangua
         getModHolders(BuiltInRegistries.MOB_EFFECT).forEach { gen.add(it.value(), it.lang()) }
         provider.getModHolders(Registries.BIOME).forEach { gen.add(it.key().location().toLanguageKey("biome"), it.lang()) }
 
-        DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, genLang(it.location)) }
+        DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, getLang(it.location)) }
         gen.advancement(DnDAdvancements.FALL, "Fall!", "Visit the golden and autumn biomes!")
         gen.advancement(DnDAdvancements.WOOF, "Woof", "Find and tame the Autumn Wolf")
 
@@ -39,28 +37,11 @@ class EnLangProvider(val output: FabricOutput, p: FutureProvider) : FabricLangua
         gen.add(TINTED_TOOLTIP, "This bottle is too dark to make out its contents.")
     }
 
-    fun <T : Any> Holder.Reference<T>.lang(): String = genLang(key().location())
-    fun genLang(id: ResourceLocation): String = genLang(id.path)
-    fun genLang(id: String): String {
-        val lang = id.split("_").joinToString(" ") { it.replaceFirstChar(Char::uppercaseChar) }
-        return doOverrides(lang)
-    }
-
-    fun doOverrides(lang: String): String {
+    override fun doOverrides(lang: String): String {
         if (lang.startsWith("Dnd ")) {
             return lang.replace("Dnd ", "DnD ")
         }
         return lang
-    }
-
-    fun trySafe(reference: Holder.Reference<*>, fn: () -> Unit) {
-        try {
-            fn()
-        } catch (e: Exception) {
-            if (e.message?.startsWith("Existing translation key found") != true || output.isStrictValidationEnabled) {
-                LOGGER.warn("Exception found when gen lang entry for [${reference}]: ", e)
-            }
-        }
     }
 
 }

@@ -20,10 +20,7 @@ fun TranslationBuilder.defaultDamageType(key: ResourceKey<DamageType>, message: 
 }
 
 fun TranslationBuilder.damageType(
-    key: ResourceKey<DamageType>,
-    message: String,
-    messageItem: String,
-    messageAttacker: String,
+    key: ResourceKey<DamageType>, message: String, messageItem: String, messageAttacker: String,
 ) {
     damageType(key, message, (messageItem to "using"), messageAttacker)
 }

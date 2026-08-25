@@ -1,18 +1,15 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack
+package org.teamvoided.dusks_and_dungeons.data.gen.packs
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import java.util.concurrent.CompletableFuture
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
+import org.teamvoided.voidlib.devin.provider.DevinLangProvider
 
-@Suppress("MemberVisibilityCanBePrivate")
-class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    FabricLanguageProvider(o, r) {
+class FancyNameLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, p) {
 
     val crimsonBricks = listOf(
         DnDBlocks.CRACKED_RED_NETHER_BRICKS,
@@ -35,13 +32,17 @@ class FancyNameTranslationProvider(o: FabricDataOutput, r: CompletableFuture<Hol
 
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
-        crimsonBricks.forEach { gen.add(it.descriptionId, genLang(it.id).replace("Red", "Crimson")) }
-        warpedBricks.forEach { gen.add(it.descriptionId, genLang(it.id).replace("Blue", "Warped")) }
-        ashenBricks.forEach { gen.add(it.descriptionId, genLang(it.id).replace("Gray", "Ashen")) }
+        crimsonBricks.forEach { gen.add(it.descriptionId, getLang(it.id)) }
+        warpedBricks.forEach { gen.add(it.descriptionId, getLang(it.id)) }
+        ashenBricks.forEach { gen.add(it.descriptionId, getLang(it.id)) }
     }
 
-    private fun genLang(identifier: ResourceLocation): String =
-        identifier.path.split("_").joinToString(" ") { it.replaceFirstChar(Char::uppercaseChar) }
+    override fun doOverrides(lang: String): String {
+        return lang
+            .replace("Red", "Crimson")
+            .replace("Blue", "Warped")
+            .replace("Gray", "Ashen")
+    }
 
     val Item.id get() = BuiltInRegistries.ITEM.getKey(this)
     val Block.id get() = BuiltInRegistries.BLOCK.getKey(this)
