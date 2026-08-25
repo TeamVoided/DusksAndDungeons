@@ -1,28 +1,23 @@
 package org.teamvoided.dusks_and_dungeons.data.gen.data.loot
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider
-import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
-import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.CarvableBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
-import org.teamvoided.dusks_and_dungeons.init.DnDLootContext
+import org.teamvoided.dusks_and_dungeons.init.DnDLootContext.BLOCK_INTERACT
 import org.teamvoided.dusks_and_dungeons.util.block.getId
-import java.util.concurrent.CompletableFuture
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
 import java.util.function.BiConsumer
 
-class BlockInteractLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    SimpleFabricLootTableProvider(o, r, DnDLootContext.BLOCK_INTERACT) {
+class BlockInteractLootTablesProvider(o: FabricOutput, p: FutureProvider) :
+    SimpleFabricLootTableProvider(o, p, BLOCK_INTERACT) {
 
     override fun generate(gen: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>) {
 
@@ -43,16 +38,15 @@ class BlockInteractLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<
     }
 
     fun BiConsumer<ResourceKey<LootTable>, LootTable.Builder>.pumpkin(block: Block, seed: Item, amount: Int = 4) {
-        carvedBlock(block, LootTable.lootTable().pool(LootPool.lootPool().add(item(seed).setAmount(amount)).build()))
-    }
-
-    fun LootPoolSingletonContainer.Builder<*>.setAmount(amount: Int): LootPoolSingletonContainer.Builder<*> {
-        return apply(SetItemCountFunction.setCount(ConstantValue.exactly(amount.toFloat())))
+        carvedBlock(
+            block, LootTable.lootTable().pool(
+                LootPool.lootPool().add(item(seed).setAmount(amount)).build()
+            )
+        )
     }
 
     fun BiConsumer<ResourceKey<LootTable>, LootTable.Builder>.carvedBlock(block: Block, table: LootTable.Builder) {
         accept(CarvableBlock.crateKey(getId(block)), table)
     }
 
-    fun item(item: Item): LootPoolSingletonContainer.Builder<*> = LootItem.lootTableItem(item)
 }

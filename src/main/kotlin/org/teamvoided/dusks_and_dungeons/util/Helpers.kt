@@ -8,6 +8,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.storage.loot.BuiltInLootTables
+import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import kotlin.jvm.optionals.getOrNull
@@ -50,6 +52,8 @@ fun ResourceLocation.toLangKey(): String = toLanguageKey().replace("/", ".")
 fun ensureUnique(id: ResourceLocation, registry: DefaultedRegistry<*>) {
     require(!registry.containsKey(id)) { "Duplicate block: $id" }
 }
+
+fun ResourceKey<LootTable>.isEmpty(): Boolean = this == BuiltInLootTables.EMPTY
 
 // TODO(1.0) remove this
 fun Vec3.map(func: (Double) -> Double): Vec3 = Vec3(func(this.x), func(this.y), func(this.z))

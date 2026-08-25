@@ -1,22 +1,18 @@
-package org.teamvoided.dusks_and_dungeons.data.gen
+package org.teamvoided.dusks_and_dungeons.data.gen.data.loot
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.storage.loot.LootTable
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
-import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
-import java.util.concurrent.CompletableFuture
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
 import java.util.function.BiConsumer
 
-class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    SimpleFabricLootTableProvider(o, r, LootContextParamSets.CHEST) {
+class ChestLootTablesProvider(o: FabricOutput, p: FutureProvider) : SimpleFabricLootTableProvider(o, p, CHEST) {
+
     override fun generate(gen: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>) {
 
         // eStrongholdLibraryLootTable
-
 //        gen.accept(
 //            RegistryKey.of(RegistryKeys.LOOT_TABLE, DuskLootTables.COOL_CHEST),
 //            LootTable.builder().pool(
@@ -43,10 +39,6 @@ class ChestLootTablesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLo
 //                    .with(ItemEntry.builder(Items.EYE_ARMOR_TRIM_SMITHING_TEMPLATE).weight(1))
 //            )
 //        )
-
     }
 
-    companion object {
-        private fun item(item: Item) = LootItem.lootTableItem(item)
-    }
 }

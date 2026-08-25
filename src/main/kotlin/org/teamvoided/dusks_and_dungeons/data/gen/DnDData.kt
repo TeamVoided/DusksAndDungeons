@@ -14,15 +14,15 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.data.gen.assets.lang.EnLangProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.data.AdvancementsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.BiomeInjectors
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.worldgen_modifiers.WorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockInteractLootTablesProvider
+import org.teamvoided.dusks_and_dungeons.data.gen.data.loot.BlockLootTableProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.DamageTypes
 import org.teamvoided.dusks_and_dungeons.data.gen.data.registry.ThrownItems
 import org.teamvoided.dusks_and_dungeons.data.gen.fancy_name_pack.FancyNameTranslationProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.data.AdvancementsProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.providers.BlockLootTableProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructureFeatureCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.structure.StructurePoolCreator
@@ -44,19 +44,26 @@ class DnDData : DataGeneratorEntrypoint {
         log.info("Hello from DataGen")
         val pack = gen.createPack()
 
+        // Assets
+
+        // Data
+
+        // Loot Tables
+        pack.addProvider(::BlockLootTableProvider)
+        pack.addProvider(::BlockInteractLootTablesProvider)
+
         pack.addProvider(::AdvancementsProvider)
 
+
+        // Not Updated
         pack.addProvider(::DnDWorldGenerator)
         pack.addProvider(::ModelProvider)
         pack.addProvider(::EnLangProvider)
         pack.addProvider(::RecipesProvider)
-        pack.addProvider(::BlockLootTableProvider)
-        pack.addProvider(::BlockInteractLootTablesProvider)
         val blockTags = pack.addProvider(::BlockTagsProvider)
-        pack.addProvider { o, r -> ItemTagsProvider(o, r, blockTags) }
+        pack.addProvider { o, p -> ItemTagsProvider(o, p, blockTags) }
         pack.addProvider(::BiomeTagsProvider)
         pack.addProvider(::EntityTypeTagsProvider)
-
 
         val fancyNamePack = gen.createBuiltinResourcePack(id("fancy_names"))
         fancyNamePack.addProvider(::FancyNameTranslationProvider)
