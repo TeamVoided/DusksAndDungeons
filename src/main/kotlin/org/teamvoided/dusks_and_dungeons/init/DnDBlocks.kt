@@ -847,13 +847,13 @@ object DnDBlocks {
     }
 
     // TODO(1.0) make this return actually block type
-    fun register(id: String, block: Block): Block {
+    fun <T : Block> register(id: String, block: T): T {
         val regBlock = registerNoItem(id, block)
         DnDItems.register(id, BlockItem(regBlock, Item.Properties()))
         return regBlock
     }
 
-    fun registerNoItem(name: String, block: Block): Block {
+    fun <T : Block> registerNoItem(name: String, block: T): T {
         val id = id(name)
         ensureUnique(id, BuiltInRegistries.BLOCK)
         return BuiltInRegistries.BLOCK.register(id, block)
