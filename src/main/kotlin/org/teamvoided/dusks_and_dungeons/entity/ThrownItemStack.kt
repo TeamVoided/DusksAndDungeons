@@ -23,7 +23,7 @@ import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.init.DnDEntityTypes
-import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
+import org.teamvoided.dusks_and_dungeons.init.DnDRegistries
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 import org.teamvoided.dusks_and_dungeons.util.key
 import kotlin.jvm.optionals.getOrNull
@@ -44,14 +44,14 @@ class ThrownItemStack : ThrowableItemProjectile {
     }
 
     private var throwId: ResourceKey<ThrownItemDefinition>
-        get() = DnDRegistryKeys.THROWN_ITEM_DEFINITION.key(ResourceLocation.parse(entityData.get(THROW_ID)))
+        get() = DnDRegistries.THROWN_ITEM_DEFINITION.key(ResourceLocation.parse(entityData.get(THROW_ID)))
         set(value) = entityData.set(THROW_ID, value.location().toString())
 
     private var definitionHolder: Holder<ThrownItemDefinition>? = null
 
     fun getDefinition(): Holder<ThrownItemDefinition> {
         if (definitionHolder == null || definitionHolder!!.unwrapKey().get() != throwId) {
-            definitionHolder = level().holderLookup(DnDRegistryKeys.THROWN_ITEM_DEFINITION)
+            definitionHolder = level().holderLookup(DnDRegistries.THROWN_ITEM_DEFINITION)
                 .get(throwId).getOrNull() ?: getEmpty(level())
         }
         return definitionHolder!!
@@ -125,7 +125,7 @@ class ThrownItemStack : ThrowableItemProjectile {
             SynchedEntityData.defineId(ThrownItemStack::class.java, EntityDataSerializers.STRING)
 
         fun getEmpty(level: Level): Holder.Reference<ThrownItemDefinition> {
-            return level.holderLookup(DnDRegistryKeys.THROWN_ITEM_DEFINITION).getOrThrow(
+            return level.holderLookup(DnDRegistries.THROWN_ITEM_DEFINITION).getOrThrow(
                 DnDThrownItemDefinitions.EMPTY
             )
         }

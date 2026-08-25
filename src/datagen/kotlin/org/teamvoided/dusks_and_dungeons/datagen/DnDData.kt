@@ -37,7 +37,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_and_dungeons.datagen.packs.FancyNamesPack
-import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
+import org.teamvoided.dusks_and_dungeons.init.DnDRegistries
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
 
@@ -91,7 +91,7 @@ object DnDData : DataGeneratorEntrypoint {
         // Entity Variants
         gen.add(Registries.WOLF_VARIANT, ModWolfVariants::bootstrap)
         // Misc
-        gen.add(DnDRegistryKeys.THROWN_ITEM_DEFINITION, ModThrownItemDefinitions::bootstrap)
+        gen.add(DnDRegistries.THROWN_ITEM_DEFINITION, ModThrownItemDefinitions::bootstrap)
         gen.add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap)
     }
 
@@ -117,7 +117,7 @@ object DnDData : DataGeneratorEntrypoint {
             // Entity Variants
             entires.addAll(provider.lookupOrThrow(Registries.WOLF_VARIANT))
             // Misc
-            entires.addAll(provider.lookupOrThrow(DnDRegistryKeys.THROWN_ITEM_DEFINITION))
+            entires.addAll(provider.lookupOrThrow(DnDRegistries.THROWN_ITEM_DEFINITION))
             entires.addAll(provider.lookupOrThrow(Registries.DAMAGE_TYPE))
         }
 

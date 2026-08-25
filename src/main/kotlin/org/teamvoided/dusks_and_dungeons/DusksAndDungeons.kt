@@ -38,7 +38,7 @@ object DusksAndDungeons {
         DnDParticles.init()
         DnDSoundEvents.init()
         DnDTabs.init()
-        DnDRegistryKeys.init()
+        DnDRegistries.init()
         DnDAttachmentTypes.init()
         DnDNetworking.init()
         DnDEvents.init()

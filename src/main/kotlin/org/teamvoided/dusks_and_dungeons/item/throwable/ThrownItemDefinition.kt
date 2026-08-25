@@ -18,7 +18,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
-import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
+import org.teamvoided.dusks_and_dungeons.init.DnDRegistries
 import org.teamvoided.dusks_and_dungeons.util.DnDCodecs
 import kotlin.jvm.optionals.getOrNull
 
@@ -74,9 +74,9 @@ data class ThrownItemDefinition(
         }
 
         val CODEC: RegistryFixedCodec<ThrownItemDefinition> =
-            RegistryFixedCodec.create(DnDRegistryKeys.THROWN_ITEM_DEFINITION)
+            RegistryFixedCodec.create(DnDRegistries.THROWN_ITEM_DEFINITION)
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Holder<ThrownItemDefinition>> =
-            ByteBufCodecs.holder(DnDRegistryKeys.THROWN_ITEM_DEFINITION, DIRECT_STREAM_CODEC)
+            ByteBufCodecs.holder(DnDRegistries.THROWN_ITEM_DEFINITION, DIRECT_STREAM_CODEC)
 
 
         fun getItemDefinition(stack: ItemStack): Holder<ThrownItemDefinition>? {
@@ -87,7 +87,7 @@ data class ThrownItemDefinition(
 
         internal fun refreshCache(lookup: HolderLookup.Provider) {
             val newMap = mutableMapOf<Item, Holder<ThrownItemDefinition>>()
-            for (thrownHolder in lookup.lookupOrThrow(DnDRegistryKeys.THROWN_ITEM_DEFINITION).listElements()) {
+            for (thrownHolder in lookup.lookupOrThrow(DnDRegistries.THROWN_ITEM_DEFINITION).listElements()) {
                 val thrownId = thrownHolder.value()
                 for (holder in BuiltInRegistries.ITEM.getTagOrEmpty(thrownId.items)) {
                     val oldValue = newMap.put(holder.value(), thrownHolder)

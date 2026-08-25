@@ -6,8 +6,7 @@ import net.minecraft.resources.ResourceKey
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 
-// TODO(1.0) rename to DnDRegistries
-object DnDRegistryKeys {
+object DnDRegistries {
 
     val THROWN_ITEM_DEFINITION = key<ThrownItemDefinition>("thrown_item_definition")
 
