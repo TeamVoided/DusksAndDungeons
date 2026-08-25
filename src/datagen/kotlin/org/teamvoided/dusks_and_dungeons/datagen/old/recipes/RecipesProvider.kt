@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Blocks.BOOKSHELF
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
-import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.StoneRecipes
-import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.WoodRecipes
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.StoneRecipes
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.WoodRecipes
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems

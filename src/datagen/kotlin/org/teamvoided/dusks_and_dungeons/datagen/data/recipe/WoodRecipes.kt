@@ -1,11 +1,11 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.recipe
+package org.teamvoided.dusks_and_dungeons.datagen.data.recipe
 
 import net.minecraft.data.recipes.*
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
-import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.helpers.*
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists

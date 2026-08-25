@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.helpers
+package org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers
 
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput

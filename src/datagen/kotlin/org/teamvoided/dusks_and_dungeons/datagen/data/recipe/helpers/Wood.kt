@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.helpers
+package org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.recipes.RecipeCategory

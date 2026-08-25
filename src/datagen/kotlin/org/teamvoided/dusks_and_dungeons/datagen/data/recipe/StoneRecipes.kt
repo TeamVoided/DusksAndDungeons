@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.data.recipe
+package org.teamvoided.dusks_and_dungeons.datagen.data.recipe
 
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
@@ -8,10 +8,10 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.helpers.createChiseled
-import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.helpers.cutChiseled
-import org.teamvoided.dusks_and_dungeons.data.gen.data.recipe.helpers.smeltCracked
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.createChiseled
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.cutChiseled
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.smeltCracked
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.datagen.*
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
