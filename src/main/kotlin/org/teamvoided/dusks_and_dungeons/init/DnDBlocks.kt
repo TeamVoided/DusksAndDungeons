@@ -548,17 +548,19 @@ object DnDBlocks {
     val CRACKED_BRICKS = registerSet("cracked_brick", ofFullCopy(BRICKS), "s").pickaxe()
 
     // Graves
-    // TODO(1.0) rename all of these to be their brick variants
-    val STONE_GRAVESTONE = registerGravestone("stone_gravestone", CHISELED_STONE_BRICKS)
-    val SMALL_STONE_GRAVESTONE = registerSmallGravestone("small_stone_gravestone", STONE_GRAVESTONE)
-    val DEEPSLATE_GRAVESTONE = registerGravestone("deepslate_gravestone", CHISELED_DEEPSLATE)
-    val SMALL_DEEPSLATE_GRAVESTONE = registerSmallGravestone("small_deepslate_gravestone", DEEPSLATE_GRAVESTONE)
-    val TUFF_GRAVESTONE = registerGravestone("tuff_gravestone", CHISELED_TUFF_BRICKS)
-    val SMALL_TUFF_GRAVESTONE = registerSmallGravestone("small_tuff_gravestone", TUFF_GRAVESTONE)
-    val BLACKSTONE_GRAVESTONE = registerGravestone("blackstone_gravestone", CHISELED_POLISHED_BLACKSTONE)
-    val SMALL_BLACKSTONE_GRAVESTONE = registerSmallGravestone("small_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
-    val HEADSTONE = register(
-        "headstone", GravestoneBlock(GravestoneBlock.HEADSTONE_SHAPE, GravestoneBlock.CENTER_HEADSTONE_SHAPE, ofFullCopy(BIG_CHAIN))
+    val STONE_BRICK_GRAVESTONE = registerGravestone("stone_brick_gravestone", CHISELED_STONE_BRICKS)
+    val SMALL_STONE_BRICK_GRAVESTONE = registerSmallGravestone("small_stone_brick_gravestone", STONE_BRICK_GRAVESTONE)
+    val DEEPSLATE_BRICK_GRAVESTONE = registerGravestone("deepslate_brick_gravestone", CHISELED_DEEPSLATE)
+    val SMALL_DEEPSLATE_BRICK_GRAVESTONE =
+        registerSmallGravestone("small_deepslate_brick_gravestone", DEEPSLATE_BRICK_GRAVESTONE)
+    val TUFF_BRICK_GRAVESTONE = registerGravestone("tuff_brick_gravestone", CHISELED_TUFF_BRICKS)
+    val SMALL_TUFF_BRICK_GRAVESTONE = registerSmallGravestone("small_tuff_brick_gravestone", TUFF_BRICK_GRAVESTONE)
+    val BLACKSTONE_BRICK_GRAVESTONE = registerGravestone("blackstone_brick_gravestone", CHISELED_POLISHED_BLACKSTONE)
+    val SMALL_BLACKSTONE_BRICK_GRAVESTONE =
+        registerSmallGravestone("small_blackstone_brick_gravestone", BLACKSTONE_BRICK_GRAVESTONE)
+    val IRON_HEADSTONE = register(
+        "iron_headstone",
+        GravestoneBlock(GravestoneBlock.HEADSTONE_SHAPE, GravestoneBlock.CENTER_HEADSTONE_SHAPE, ofFullCopy(BIG_CHAIN))
     ).cutout().pickaxe()
     // endregion
 

@@ -63,11 +63,11 @@ object StoneModels {
         gen.createTrivialCube(DnDBlocks.CHISELED_BRICKS)
 
         // Gravestones
-        gen.registerGravestones(DnDBlocks.STONE_GRAVESTONE, DnDBlocks.SMALL_STONE_GRAVESTONE)
-        gen.registerGravestones(DnDBlocks.DEEPSLATE_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE)
-        gen.registerGravestones(DnDBlocks.TUFF_GRAVESTONE, DnDBlocks.SMALL_TUFF_GRAVESTONE)
-        gen.registerGravestones(DnDBlocks.BLACKSTONE_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE)
-        gen.registerHeadstone(DnDBlocks.HEADSTONE)
+        gen.registerGravestones(DnDBlocks.STONE_BRICK_GRAVESTONE, DnDBlocks.SMALL_STONE_BRICK_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.DEEPSLATE_BRICK_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_BRICK_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.TUFF_BRICK_GRAVESTONE, DnDBlocks.SMALL_TUFF_BRICK_GRAVESTONE)
+        gen.registerGravestones(DnDBlocks.BLACKSTONE_BRICK_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_BRICK_GRAVESTONE)
+        gen.registerHeadstone(DnDBlocks.IRON_HEADSTONE)
     }
 
 }

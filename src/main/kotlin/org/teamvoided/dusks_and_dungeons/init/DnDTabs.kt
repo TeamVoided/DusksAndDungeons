@@ -428,16 +428,16 @@ object DnDTabs {
             DnDBlocks.SMOOTH_LAPIS
         )
         addItems(
-            DnDBlocks.STONE_GRAVESTONE,
-            DnDBlocks.SMALL_STONE_GRAVESTONE,
-            DnDBlocks.DEEPSLATE_GRAVESTONE,
-            DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE,
-            DnDBlocks.TUFF_GRAVESTONE,
-            DnDBlocks.SMALL_TUFF_GRAVESTONE,
-            DnDBlocks.BLACKSTONE_GRAVESTONE,
-            DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE,
+            DnDBlocks.STONE_BRICK_GRAVESTONE,
+            DnDBlocks.SMALL_STONE_BRICK_GRAVESTONE,
+            DnDBlocks.DEEPSLATE_BRICK_GRAVESTONE,
+            DnDBlocks.SMALL_DEEPSLATE_BRICK_GRAVESTONE,
+            DnDBlocks.TUFF_BRICK_GRAVESTONE,
+            DnDBlocks.SMALL_TUFF_BRICK_GRAVESTONE,
+            DnDBlocks.BLACKSTONE_BRICK_GRAVESTONE,
+            DnDBlocks.SMALL_BLACKSTONE_BRICK_GRAVESTONE,
 
-            DnDBlocks.HEADSTONE,
+            DnDBlocks.IRON_HEADSTONE,
 
             DnDBlocks.BIG_CHAIN,
             DnDBlocks.BIG_LANTERN,

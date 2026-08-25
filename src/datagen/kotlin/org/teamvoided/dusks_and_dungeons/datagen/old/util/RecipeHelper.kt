@@ -96,7 +96,7 @@ fun RecipeOutput.createGravestones(
     gravestone: ItemLike, smallGravestone: ItemLike, block: ItemLike,
 ) {
     this.createGravestone(gravestone, block)
-    this.createStonecutting(smallGravestone, gravestone)
+    this.createStonecutting(smallGravestone, gravestone, 2)
 //    this.createStonecutting(hauntedSmallGravestone, hauntedGravestone)
 }
 

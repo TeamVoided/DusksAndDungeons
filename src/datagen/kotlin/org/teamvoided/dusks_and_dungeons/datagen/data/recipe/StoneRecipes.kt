@@ -12,13 +12,7 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.createChiseled
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.cutChiseled
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.smeltCracked
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createGravestones
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createOvergrown
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createSmallSquare
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStackedCraft
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStonecuttedFromList
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createTwoPiece
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
@@ -74,15 +68,15 @@ object StoneRecipes {
         output.smeltCracked(DnDBlocks.CRACKED_BRICKS.parent, Blocks.BRICKS)
 
         // Gravestones
-        output.createGravestones(DnDBlocks.STONE_GRAVESTONE, DnDBlocks.SMALL_STONE_GRAVESTONE, Blocks.STONE_BRICKS)
+        output.createGravestones(DnDBlocks.STONE_BRICK_GRAVESTONE, DnDBlocks.SMALL_STONE_BRICK_GRAVESTONE, Blocks.STONE_BRICKS)
         output.createGravestones(
-            DnDBlocks.DEEPSLATE_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE, Blocks.DEEPSLATE_BRICKS
+            DnDBlocks.DEEPSLATE_BRICK_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_BRICK_GRAVESTONE, Blocks.DEEPSLATE_BRICKS
         )
-        output.createGravestones(DnDBlocks.TUFF_GRAVESTONE, DnDBlocks.SMALL_TUFF_GRAVESTONE, Blocks.TUFF_BRICKS)
+        output.createGravestones(DnDBlocks.TUFF_BRICK_GRAVESTONE, DnDBlocks.SMALL_TUFF_BRICK_GRAVESTONE, Blocks.TUFF_BRICKS)
         output.createGravestones(
-            DnDBlocks.BLACKSTONE_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE, Blocks.POLISHED_BLACKSTONE_BRICKS
+            DnDBlocks.BLACKSTONE_BRICK_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_BRICK_GRAVESTONE, Blocks.POLISHED_BLACKSTONE_BRICKS
         )
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.HEADSTONE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.IRON_HEADSTONE)
             .define('#', Items.IRON_BARS)
             .define('%', Items.IRON_NUGGET)
             .pattern("%#%")

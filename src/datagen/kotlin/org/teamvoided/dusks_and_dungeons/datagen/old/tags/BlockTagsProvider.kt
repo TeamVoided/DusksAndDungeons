@@ -9,13 +9,13 @@ import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWoodTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWoodTags
 import org.teamvoided.taglighting.data.tags.TaglightingBlockTags
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.devin.extensions.tag.add
@@ -379,17 +379,17 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.GRAVESTONES)
             .forceAddTag(DnDBlockTags.SMALL_GRAVESTONES)
-            .add(DnDBlocks.STONE_GRAVESTONE)
-            .add(DnDBlocks.DEEPSLATE_GRAVESTONE)
-            .add(DnDBlocks.TUFF_GRAVESTONE)
-            .add(DnDBlocks.BLACKSTONE_GRAVESTONE)
+            .add(DnDBlocks.STONE_BRICK_GRAVESTONE)
+            .add(DnDBlocks.DEEPSLATE_BRICK_GRAVESTONE)
+            .add(DnDBlocks.TUFF_BRICK_GRAVESTONE)
+            .add(DnDBlocks.BLACKSTONE_BRICK_GRAVESTONE)
         getOrCreateTagBuilder(DnDBlockTags.SMALL_GRAVESTONES)
-            .add(DnDBlocks.SMALL_STONE_GRAVESTONE)
-            .add(DnDBlocks.SMALL_DEEPSLATE_GRAVESTONE)
-            .add(DnDBlocks.SMALL_TUFF_GRAVESTONE)
-            .add(DnDBlocks.SMALL_BLACKSTONE_GRAVESTONE)
+            .add(DnDBlocks.SMALL_STONE_BRICK_GRAVESTONE)
+            .add(DnDBlocks.SMALL_DEEPSLATE_BRICK_GRAVESTONE)
+            .add(DnDBlocks.SMALL_TUFF_BRICK_GRAVESTONE)
+            .add(DnDBlocks.SMALL_BLACKSTONE_BRICK_GRAVESTONE)
         getOrCreateTagBuilder(DnDBlockTags.HEADSTONES)
-            .add(DnDBlocks.HEADSTONE)
+            .add(DnDBlocks.IRON_HEADSTONE)
 
         getOrCreateTagBuilder(DnDBlockTags.NETHER_BRICKS)
             .forceAddTag(DnDBlockTags.CRACKED_NETHER_BRICKS)
