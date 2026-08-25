@@ -42,6 +42,18 @@ object DnDBiomeModifications {
             DnDPlacedFeature.PATCH_GLOOM_PUMPKIN_EXTRA,
             DnDBiomeTags.GLOOM_PUMPKINS_EXTRA
         )
+
+
+        addVegetation(
+            "crimson_warts",
+            DnDPlacedFeature.CRIMSON_WART,
+            DnDBiomeTags.CRIMSON_WART
+        )
+        addVegetation(
+            "warped_warts",
+            DnDPlacedFeature.WARPED_WART,
+            DnDBiomeTags.WARPED_WART
+        )
     }
 
     internal fun addOres(id: String, placedFeature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>) {

@@ -64,6 +64,13 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(DnDBiomeTags.GLOOM_PUMPKINS_EXTRA)
             .add(Biomes.DARK_FOREST)
 
+        getOrCreateTagBuilder(DnDBiomeTags.CRIMSON_WART)
+            .add(Biomes.CRIMSON_FOREST)
+            .add(Biomes.SOUL_SAND_VALLEY)
+            .add(Biomes.NETHER_WASTES)
+        getOrCreateTagBuilder(DnDBiomeTags.WARPED_WART)
+            .add(Biomes.WARPED_FOREST)
+
         getOrCreateTagBuilder(DnDBiomeTags.HAS_GLACIERS)
         //.forceAddTag(ConventionalBiomeTags.IS_SNOWY)
     }

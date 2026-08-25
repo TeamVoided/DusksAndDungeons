@@ -782,7 +782,7 @@ object ConfiguredFeatureCreator {
             LithostitchedFeatures.WEIGHTED_SELECTOR,
             WeightedSelectorConfig(
                 WeightedList.builder<Holder<PlacedFeature>>()
-                    .addC(this, DnDConfiguredFeature.OVERGROWTH_FLOOR_V, 6)
+                    .addC(this, DnDConfiguredFeature.OVERGROWTH_FLOOR_V,2)
                     .addC(this, DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
                     .build()
             )
@@ -800,7 +800,7 @@ object ConfiguredFeatureCreator {
                 ConstantInt.of(1),
                 if (bonemeal) 0f else 0.3f,
                 5,
-                if (bonemeal || isCeil) 0.6f else 0.8f,
+                if (bonemeal || isCeil) 0.6f else 1f,
                 if (bonemeal) UniformInt.of(1, 2) else UniformInt.of(4, 7),
                 if (bonemeal) 0.75f else 0.3f
             )

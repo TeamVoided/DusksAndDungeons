@@ -53,7 +53,7 @@ object PlacedFeatureCreator {
         c.cavePlacement(
             DnDPlacedFeature.OVERGROWN_CAVE_BOULDER,
             DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
-            64,
+            8,
             Direction.DOWN,
             BlockPredicate.matchesTag(BlockTags.MOSS_REPLACEABLE)
         )
@@ -159,45 +159,18 @@ object PlacedFeatureCreator {
             Direction.DOWN,
             BlockPredicate.matchesTag(BlockTags.DIRT)
         )
-    }
 
-    fun BootstrapContext<PlacedFeature>.pumpkin(
-        place: ResourceKey<PlacedFeature>,
-        conf: ResourceKey<ConfiguredFeature<*, *>>,
-        rarity: Int = 50
-    ) {
-        this.register(
-            place,
-            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
-            RarityFilter.onAverageOnceEvery(rarity),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP,
-            BiomeFilter.biome()
+        c.cavePlacementRare(
+            DnDPlacedFeature.CRIMSON_WART,
+            DnDConfiguredFeature.CRIMSON_WART_VEGETATION,
+            7,
+            Direction.DOWN
         )
-    }
-
-    fun BootstrapContext<PlacedFeature>.cavePlacement(
-        place: ResourceKey<PlacedFeature>,
-        conf: ResourceKey<ConfiguredFeature<*, *>>,
-        count: Int,
-        direction: Direction,
-        search: BlockPredicate = BlockPredicate.solid()
-    ) {
-
-        this.register(
-            place,
-            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
-            CountPlacement.of(count),
-            InSquarePlacement.spread(),
-            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
-            EnvironmentScanPlacement.scanningFor(
-                direction,
-                search,
-                BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                12
-            ),
-            RandomOffsetPlacement.vertical(ConstantInt.of(if (direction == Direction.UP) -1 else 1)),
-            BiomeFilter.biome()
+        c.cavePlacementRare(
+            DnDPlacedFeature.WARPED_WART,
+            DnDConfiguredFeature.WARPED_WART_VEGETATION,
+            7,
+            Direction.UP
         )
     }
 
@@ -390,7 +363,61 @@ object PlacedFeatureCreator {
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()
         )
+    }
 
+    fun BootstrapContext<PlacedFeature>.pumpkin(
+        place: ResourceKey<PlacedFeature>,
+        conf: ResourceKey<ConfiguredFeature<*, *>>,
+        rarity: Int = 50
+    ) {
+        this.register(
+            place,
+            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
+            RarityFilter.onAverageOnceEvery(rarity),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
+        )
+    }
+
+    fun BootstrapContext<PlacedFeature>.cavePlacementRare(
+        place: ResourceKey<PlacedFeature>,
+        conf: ResourceKey<ConfiguredFeature<*, *>>,
+        count: Int,
+        direction: Direction,
+        search: BlockPredicate = BlockPredicate.solid()
+    ) = this.cavePlacement(place, conf, RarityFilter.onAverageOnceEvery(count), direction, search)
+
+    fun BootstrapContext<PlacedFeature>.cavePlacement(
+        place: ResourceKey<PlacedFeature>,
+        conf: ResourceKey<ConfiguredFeature<*, *>>,
+        count: Int,
+        direction: Direction,
+        search: BlockPredicate = BlockPredicate.solid()
+    ) = this.cavePlacement(place, conf, CountPlacement.of(count), direction, search)
+
+    fun BootstrapContext<PlacedFeature>.cavePlacement(
+        place: ResourceKey<PlacedFeature>,
+        conf: ResourceKey<ConfiguredFeature<*, *>>,
+        count: PlacementModifier,
+        direction: Direction,
+        search: BlockPredicate = BlockPredicate.solid()
+    ) {
+        this.register(
+            place,
+            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
+            count,
+            InSquarePlacement.spread(),
+            PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+            EnvironmentScanPlacement.scanningFor(
+                direction,
+                search,
+                BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                12
+            ),
+            RandomOffsetPlacement.vertical(ConstantInt.of(if (direction == Direction.UP) -1 else 1)),
+            BiomeFilter.biome()
+        )
     }
 
     fun orePlacementModifiers(

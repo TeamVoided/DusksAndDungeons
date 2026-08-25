@@ -23,7 +23,10 @@ object DnDBiomeTags {
     val GOLD_MUSHROOMS_HUGE = create("features/golden_mushroom_huge")
 
     val MOSSKIN_PUMPKINS_CAVE= create("features/pumpkins/mosskin_cave")
-    val GLOOM_PUMPKINS_EXTRA = create("features//pumpkins/gloom_extra")
+    val GLOOM_PUMPKINS_EXTRA = create("features/pumpkins/gloom_extra")
+
+    val CRIMSON_WART = create("features/nether/crimson_wart")
+    val WARPED_WART = create("features/nether/warped_wart")
 
 
     val HAS_GLACIERS = create("has_glaciers")

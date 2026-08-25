@@ -51,6 +51,9 @@ object DnDPlacedFeature {
     val GOLDEN_MUSHROOM_SURFACE = create("golden_mushroom/surface") //other forests
     val GOLDEN_MUSHROOM_HUGE_PATCH = create("golden_mushroom/common") //dark forest and mushroom biomes
 
+    val CRIMSON_WART = create("crimson_warts")
+    val WARPED_WART = create("warped_warts")
+
 
     fun create(id: String) = ResourceKey.create(Registries.PLACED_FEATURE, DusksAndDungeons.id(id))
 }
