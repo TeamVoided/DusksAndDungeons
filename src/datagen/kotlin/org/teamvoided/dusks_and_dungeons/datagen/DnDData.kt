@@ -12,7 +12,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
-import org.teamvoided.dusks_and_dungeons.data.gen.assets.lang.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.AdvancementsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.BiomeInjectors
 import org.teamvoided.dusks_and_dungeons.data.gen.data.litho.WorldgenModifiers
@@ -36,6 +35,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.PlacedFeatureCreator
+import org.teamvoided.dusks_and_dungeons.datagen.assets.lang.EnLangProvider
 import org.teamvoided.dusks_and_dungeons.datagen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import org.teamvoided.voidlib.devin.FabricOutput

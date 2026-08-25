@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.assets.lang
+package org.teamvoided.dusks_and_dungeons.datagen.assets.lang
 
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
