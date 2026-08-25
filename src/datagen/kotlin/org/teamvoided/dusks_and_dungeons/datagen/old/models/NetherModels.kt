@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.models
+package org.teamvoided.dusks_and_dungeons.datagen.old.models
 
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel

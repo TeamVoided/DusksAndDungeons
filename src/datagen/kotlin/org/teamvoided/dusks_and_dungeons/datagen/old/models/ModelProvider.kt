@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.models
+package org.teamvoided.dusks_and_dungeons.datagen.old.models
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
