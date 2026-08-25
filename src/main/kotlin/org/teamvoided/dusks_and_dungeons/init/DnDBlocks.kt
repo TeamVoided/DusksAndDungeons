@@ -20,7 +20,6 @@ import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.api.BlockStrippingRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
-import org.teamvoided.dusks_and_dungeons.block.DnDWoodTypes.MOSS
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
@@ -32,6 +31,7 @@ import org.teamvoided.dusks_and_dungeons.block.sapling.SaplingGenerators
 import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSetTypes
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.ensureUnique
 import org.teamvoided.dusks_and_dungeons.util.getModEntries
@@ -58,6 +58,7 @@ object DnDBlocks {
     val EVIL_BLOCKS = mutableSetOf<Block>()
 
     init { //  Pre Block Init
+        DnDBlockSetTypes.init()
         DnDWoodTypes.init()
     }
 
@@ -212,13 +213,13 @@ object DnDBlocks {
     val CASCADE_FENCE_GATE =
         register("cascade_fence_gate", fenceGateOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
     val CASCADE_DOOR =
-        registerNoItem("cascade_door", doorOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
+        registerNoItem("cascade_door", doorOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
     val BLUE_DOOR = registerNoItem("blue_door", DoorBlock(BlockSetType.DARK_OAK, Set.BLUE_DOOR).wood())
     val CASCADE_TRAPDOOR =
-        register("cascade_trapdoor", trapdoorOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
+        register("cascade_trapdoor", trapdoorOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
     val CASCADE_PRESSURE_PLATE =
-        register("cascade_pressure_plate", pressurePlateOf(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
-    val CASCADE_BUTTON = register("cascade_button", woodenButton(DnDWoodTypes.CASCADE_BLOCK_SET_TYPE).wood())
+        register("cascade_pressure_plate", pressurePlateOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
+    val CASCADE_BUTTON = register("cascade_button", woodenButton(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE).wood())
     val CASCADE_SIGN = registerNoItem("cascade_sign", signOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", wallSignOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS, CASCADE_SIGN).wood()
@@ -264,12 +265,12 @@ object DnDBlocks {
     val SYPIA_FENCE_GATE =
         register("sypia_fence_gate", fenceGateOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
     val SYPIA_DOOR =
-        registerNoItem("sypia_door", doorOf(DnDWoodTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
+        registerNoItem("sypia_door", doorOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
     val SYPIA_TRAPDOOR =
-        register("sypia_trapdoor", trapdoorOf(DnDWoodTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
+        register("sypia_trapdoor", trapdoorOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
     val SYPIA_PRESSURE_PLATE =
-        register("sypia_pressure_plate", pressurePlateOf(DnDWoodTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
-    val SYPIA_BUTTON = register("sypia_button", woodenButton(DnDWoodTypes.SYPIA_BLOCK_SET_TYPE).wood())
+        register("sypia_pressure_plate", pressurePlateOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
+    val SYPIA_BUTTON = register("sypia_button", woodenButton(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE).wood())
     val SYPIA_SIGN = registerNoItem("sypia_sign", signOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
     val SYPIA_WALL_SIGN = registerNoItem(
         "sypia_wall_sign", wallSignOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS, SYPIA_SIGN).wood()
@@ -325,17 +326,17 @@ object DnDBlocks {
         register("verdant_fence_gate", fenceGateOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS).wood()).grass()
             .tint().tellWitnessesThatIWasMurdered()
     val VERDANT_DOOR =
-        registerNoItem("verdant_door", doorOf(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()).grass()
+        registerNoItem("verdant_door", doorOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()).grass()
             .tint().tellWitnessesThatIWasMurdered()
     val VERDANT_TRAPDOOR =
-        register("verdant_trapdoor", trapdoorOf(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()).grass()
+        register("verdant_trapdoor", trapdoorOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()).grass()
             .tint().tellWitnessesThatIWasMurdered()
     val VERDANT_PRESSURE_PLATE = register(
         "verdant_pressure_plate",
-        pressurePlateOf(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()
+        pressurePlateOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()
     ).grass().tint().tellWitnessesThatIWasMurdered()
     val VERDANT_BUTTON =
-        register("verdant_button", woodenButton(DnDWoodTypes.VERDANT_BLOCK_SET_TYPE)).wood().grass().tint()
+        register("verdant_button", woodenButton(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE)).wood().grass().tint()
             .tellWitnessesThatIWasMurdered()
     val VERDANT_SIGN =
         registerNoItem("verdant_sign", signOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS))
@@ -694,11 +695,13 @@ object DnDBlocks {
     // Carpet Plates
     val WOOL_CARPET_PLATE = register(
         ColorConsortium("carpet_plate", VanillaColorCollections.WOOL) { wool ->
-            CarpetPlateBlock(DnDWoodTypes.WOOL, ofFullCopy(wool))
+            CarpetPlateBlock(DnDBlockSetTypes.WOOL, ofFullCopy(wool))
         }
     )
-    val MOSS_CARPET_PLATE = register("moss_carpet_plate", CarpetPlateBlock(MOSS, ofFullCopy(MOSS_CARPET)))
-        .hoe().sword()
+    val MOSS_CARPET_PLATE = register(
+        "moss_carpet_plate",
+        CarpetPlateBlock(DnDBlockSetTypes.MOSS, ofFullCopy(MOSS_CARPET))
+    ).hoe().sword()
     //TODO(1.0) overgrowth carpet
 
 
