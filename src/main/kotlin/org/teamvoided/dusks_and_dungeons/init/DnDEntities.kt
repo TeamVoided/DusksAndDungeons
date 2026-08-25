@@ -6,9 +6,7 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.EntityType.EntityFactory
 import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.entity.animal.Fox
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.entity.RaccoonEntity
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 import org.teamvoided.dusks_and_dungeons.entity.ThrownItemStack
 import org.teamvoided.dusks_and_dungeons.util.doEvil
@@ -23,12 +21,6 @@ object DnDEntities {
             .eyeHeight(2.2375F)
             .clientTrackingRange(10)
     )
-    val RACCOON = register(
-        "raccoon", EntityType.Builder.of(EntityFactory(::RaccoonEntity), MobCategory.CREATURE)
-            .sized(0.6F, 0.7F)
-            .eyeHeight(0.4F)
-            .clientTrackingRange(8)
-    )
     val THROWN_ITEM = register(
         "thrown_item", EntityType.Builder.of(EntityFactory(::ThrownItemStack), MobCategory.MISC)
             .sized(0.25f, 0.25f)
@@ -38,7 +30,6 @@ object DnDEntities {
 
     fun init() {
         FabricDefaultAttributeRegistry.register(SCARECROW, ScarecrowEntity.createAttributes().build())
-        FabricDefaultAttributeRegistry.register(RACCOON, Fox.createAttributes().build())
         doEvil()
     }
 

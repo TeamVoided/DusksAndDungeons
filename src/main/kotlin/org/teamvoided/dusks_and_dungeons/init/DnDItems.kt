@@ -125,16 +125,6 @@ object DnDItems {
     )
         .tellWitnessesThatIWasMurdered()
 
-    val RACCOON_SPAWN_EGG = register(
-        "raccoon_spawn_egg",
-        SpawnEggItem(
-            DnDEntities.RACCOON,
-            0x536174,
-            0x191d22,
-            Properties()
-        )
-    ).tellWitnessesThatIWasMurdered()
-
     // region Blackstone Tools
     @JvmField
     val BLACKSTONE_SWORD = register(
