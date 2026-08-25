@@ -1,14 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.WorldGenLevel
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
-import org.teamvoided.dusks_and_dungeons.util.nextHorizontalDirection
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.FairyRingConfig
 
 open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
@@ -34,7 +33,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
         flowerbedCount: Int,
         config: FairyRingConfig,
         world: WorldGenLevel,
-        random: RandomSource
+        random: RandomSource,
     ) {
         var placePos = pos
         if (!world.getFluidState(pos).isEmpty) return
@@ -67,7 +66,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
         config: FairyRingConfig,
         origin: BlockPos,
         world: WorldGenLevel,
-        random: RandomSource
+        random: RandomSource,
     ) {
         when (config.size.sample(random)) {
             1 -> ::placeRing1
@@ -81,7 +80,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
         config: FairyRingConfig,
         origin: BlockPos,
         world: WorldGenLevel,
-        random: RandomSource
+        random: RandomSource,
     ) {
         Direction.Plane.HORIZONTAL.forEach { direction: Direction ->
             placeBlock(origin.relative(direction), nextHorizontalDirection(direction, 3), 2, config, world, random)
@@ -92,7 +91,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
         config: FairyRingConfig,
         origin: BlockPos,
         world: WorldGenLevel,
-        random: RandomSource
+        random: RandomSource,
     ) {
         Direction.Plane.HORIZONTAL.forEach { direction: Direction ->
             var pos: BlockPos =
@@ -118,7 +117,7 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
         config: FairyRingConfig,
         origin: BlockPos,
         world: WorldGenLevel,
-        random: RandomSource
+        random: RandomSource,
     ) {
         Direction.Plane.HORIZONTAL.forEach { direction: Direction ->
             var pos: BlockPos =
@@ -147,5 +146,27 @@ open class FairyRingFeature(codec: Codec<FairyRingConfig>) :
             flowerFacing = nextHorizontalDirection(direction, 3)
             placeBlock(pos, flowerFacing, 1, config, world, random)
         }
+    }
+
+    companion object {
+
+        // TODO fix this since this is just `.clockWise`
+        fun nextHorizontalDirection(direction: Direction, rotations: Int): Direction {
+            var directionReturn = direction
+            for (i in 0 until rotations)
+                directionReturn = nextHorizontalDirection(directionReturn)
+            return directionReturn
+        }
+
+        fun nextHorizontalDirection(direction: Direction): Direction {
+            return when (direction) {
+                Direction.NORTH -> Direction.EAST
+                Direction.EAST -> Direction.SOUTH
+                Direction.SOUTH -> Direction.WEST
+                Direction.WEST -> Direction.NORTH
+                else -> Direction.NORTH
+            }
+        }
+
     }
 }

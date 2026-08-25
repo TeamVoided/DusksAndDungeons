@@ -7,8 +7,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Map;
 
-import static org.teamvoided.dusks_and_dungeons.util.UtilsKt.rotate;
-import static org.teamvoided.dusks_and_dungeons.util.UtilsKt.rotateColumn;
+import static org.teamvoided.dusks_and_dungeons.util.HelpersKt.rotate;
+import static org.teamvoided.dusks_and_dungeons.util.HelpersKt.rotateColumn;
 
 public interface BackCompatPatches {
 

@@ -2,14 +2,14 @@ package org.teamvoided.dusks_and_dungeons.particle
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.client.particle.*
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.level.material.Fluids
+import net.minecraft.client.particle.*
+import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.util.Mth.lerp
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.Vec3
-import org.teamvoided.dusks_and_dungeons.util.blockPos
 import org.teamvoided.dusks_and_dungeons.util.rotate360
 import kotlin.math.abs
 import kotlin.math.cos
@@ -68,7 +68,7 @@ open class AutumnLeafParticle(
         this.yo = this.y
         this.zo = this.z
         this.oRoll = roll
-        val isWater = level.getFluidState(Vec3(x, y, z).blockPos()).`is`(Fluids.WATER)
+        val isWater = level.getFluidState(BlockPos(x.toInt(), y.toInt(), z.toInt())).`is`(Fluids.WATER)
         if (age++ >= lifetime && ((this.onGround || isWater || this.y < level.minBuildHeight || this.y > level.maxBuildHeight) && timeOnGround-- <= 0)) {
             this.remove()
         } else {
