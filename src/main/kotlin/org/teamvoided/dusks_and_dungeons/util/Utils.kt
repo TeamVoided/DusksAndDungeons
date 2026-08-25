@@ -16,6 +16,8 @@ import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
+// TODO(1.0) delete file
+
 const val pi = 3.1415927f
 const val degToRad = 0.017453292f
 const val radToDeg = 57.29578f
