@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
-import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.*
@@ -58,26 +57,6 @@ fun symmetricalBoxX(yzMin: Double, xMin: Double, xMax: Double): VoxelShape =
 
 //val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
 //val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
-
-// TODO(1.0) move these to gravestone block class
-val gravestoneShape: VoxelShape = Shapes.or(
-    Block.box(0.0, 0.0, 0.0, 2.0, 16.0, 6.0), //left
-    Block.box(14.0, 0.0, 0.0, 16.0, 16.0, 6.0), //right
-    Block.box(0.0, 13.0, 0.0, 16.0, 16.0, 6.0), //top
-    Block.box(2.0, 0.0, 1.0, 14.0, 13.0, 5.0) //center
-)
-val centerGravestoneShape: VoxelShape = Shapes.or(
-    Block.box(0.0, 0.0, 5.0, 2.0, 16.0, 11.0), //left
-    Block.box(14.0, 0.0, 5.0, 16.0, 16.0, 11.0), //right
-    Block.box(0.0, 13.0, 5.0, 16.0, 16.0, 11.0), //top
-    Block.box(2.0, 0.0, 6.0, 14.0, 13.0, 10.0) //center
-)
-
-val smallGravestoneShape: VoxelShape = Block.box(3.0, 0.0, 0.0, 13.0, 12.0, 2.0)
-val centerSmallGravestoneShape: VoxelShape = Block.box(3.0, 0.0, 7.0, 13.0, 12.0, 9.0)
-
-val headstoneShape: VoxelShape = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
-val centerHeadstoneShape: VoxelShape = Block.box(0.0, 0.0, 7.0, 16.0, 16.0, 9.0)
 
 fun BlockPlaceContext.isCrouching(): Boolean = this.player?.isCrouching == true
 

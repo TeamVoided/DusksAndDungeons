@@ -558,7 +558,7 @@ object DnDBlocks {
     val BLACKSTONE_GRAVESTONE = registerGravestone("blackstone_gravestone", CHISELED_POLISHED_BLACKSTONE)
     val SMALL_BLACKSTONE_GRAVESTONE = registerSmallGravestone("small_blackstone_gravestone", BLACKSTONE_GRAVESTONE)
     val HEADSTONE = register(
-        "headstone", GravestoneBlock(headstoneShape, centerHeadstoneShape, ofFullCopy(BIG_CHAIN))
+        "headstone", GravestoneBlock(GravestoneBlock.HEADSTONE_SHAPE, GravestoneBlock.CENTER_HEADSTONE_SHAPE, ofFullCopy(BIG_CHAIN))
     ).cutout().pickaxe()
     // endregion
 

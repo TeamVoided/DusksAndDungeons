@@ -17,9 +17,8 @@ import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.block.centerGravestoneShape
-import org.teamvoided.dusks_and_dungeons.util.block.gravestoneShape
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
 open class GravestoneBlock(val shape: VoxelShape, val centerShape: VoxelShape, settings: Properties) :
@@ -90,8 +89,26 @@ open class GravestoneBlock(val shape: VoxelShape, val centerShape: VoxelShape, s
     companion object {
 
         val CENTERED: BooleanProperty = BooleanProperty.create("centered")
-        val CODEC: MapCodec<GravestoneBlock> =
-            simpleCodec { GravestoneBlock(gravestoneShape, centerGravestoneShape, it) }
+        val CODEC: MapCodec<GravestoneBlock> = simpleCodec { GravestoneBlock(WALL_SHAPE, CENTER_SHAPE, it) }
+
+        val WALL_SHAPE: VoxelShape = Shapes.or(
+            box(0.0, 0.0, 0.0, 2.0, 16.0, 6.0), //left
+            box(14.0, 0.0, 0.0, 16.0, 16.0, 6.0), //right
+            box(0.0, 13.0, 0.0, 16.0, 16.0, 6.0), //top
+            box(2.0, 0.0, 1.0, 14.0, 13.0, 5.0) //center
+        )
+        val CENTER_SHAPE: VoxelShape = Shapes.or(
+            box(0.0, 0.0, 5.0, 2.0, 16.0, 11.0), //left
+            box(14.0, 0.0, 5.0, 16.0, 16.0, 11.0), //right
+            box(0.0, 13.0, 5.0, 16.0, 16.0, 11.0), //top
+            box(2.0, 0.0, 6.0, 14.0, 13.0, 10.0) //center
+        )
+
+        val SMALL_WALL_SHAPE: VoxelShape = box(3.0, 0.0, 0.0, 13.0, 12.0, 2.0)
+        val CENTER_CENTER_SHAPE: VoxelShape = box(3.0, 0.0, 7.0, 13.0, 12.0, 9.0)
+
+        val HEADSTONE_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
+        val CENTER_HEADSTONE_SHAPE: VoxelShape = box(0.0, 0.0, 7.0, 16.0, 16.0, 9.0)
 
     }
 }

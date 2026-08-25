@@ -91,10 +91,16 @@ fun registerWoodenSet(name: String, parent: Block) =
 // endregion
 
 // Gravestones
-internal fun registerGravestone(name: String, block: Block) =
-    register(name, GravestoneBlock(gravestoneShape, centerGravestoneShape, Properties.ofFullCopy(block).forceSolidOn()))
-        .pickaxe()
+internal fun registerGravestone(name: String, block: Block) = register(
+    name,
+    GravestoneBlock(
+        GravestoneBlock.WALL_SHAPE, GravestoneBlock.CENTER_SHAPE, Properties.ofFullCopy(block).forceSolidOn()
+    )
+).pickaxe()
 
-internal fun registerSmallGravestone(name: String, block: Block) =
-    register(name, GravestoneBlock(smallGravestoneShape, centerSmallGravestoneShape, Properties.ofFullCopy(block)))
-        .pickaxe()
+internal fun registerSmallGravestone(name: String, block: Block) = register(
+    name,
+    GravestoneBlock(
+        GravestoneBlock.SMALL_WALL_SHAPE, GravestoneBlock.CENTER_CENTER_SHAPE, Properties.ofFullCopy(block)
+    )
+).pickaxe()
