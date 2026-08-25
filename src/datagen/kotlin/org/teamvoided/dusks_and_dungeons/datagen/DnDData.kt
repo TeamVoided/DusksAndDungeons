@@ -1,10 +1,12 @@
-package org.teamvoided.dusks_and_dungeons.data.gen
+package org.teamvoided.dusks_and_dungeons.datagen
 
 import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderLookup.RegistryLookup
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -27,7 +29,6 @@ import org.teamvoided.dusks_and_dungeons.data.gen.data.tag.EntityTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModDensityFunctions
 import org.teamvoided.dusks_and_dungeons.data.gen.data.worldgen.ModNoises
 import org.teamvoided.dusks_and_dungeons.data.gen.models.ModelProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.tags.BlockTagsProvider
@@ -35,6 +36,7 @@ import org.teamvoided.dusks_and_dungeons.data.gen.tags.ItemTagsProvider
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_and_dungeons.data.gen.worldgen.PlacedFeatureCreator
+import org.teamvoided.dusks_and_dungeons.datagen.packs.FancyNamesPack
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistryKeys
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
@@ -117,6 +119,11 @@ object DnDData : DataGeneratorEntrypoint {
             // Misc
             entires.addAll(provider.lookupOrThrow(DnDRegistryKeys.THROWN_ITEM_DEFINITION))
             entires.addAll(provider.lookupOrThrow(Registries.DAMAGE_TYPE))
+        }
+
+        @Suppress("unused")
+        fun <T : Any> Entries.addEverything(registry: RegistryLookup<T>): MutableList<Holder<T>> {
+            return registry.listElementIds().map { add(registry, it) }.toList().toMutableList()
         }
 
     }

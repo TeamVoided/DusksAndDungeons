@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.packs
+package org.teamvoided.dusks_and_dungeons.datagen.packs
 
 import com.google.gson.JsonObject
 import net.minecraft.core.HolderLookup
@@ -7,7 +7,6 @@ import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -39,7 +38,6 @@ class FancyNameMcLangProvider(o: FabricOutput, val provider: FutureProvider) : D
         crimsonBricks.forEach { gen.add(it.descriptionId, getLang(it.id).replace("Red", "Crimson")) }
     }
 
-    val Item.id get() = BuiltInRegistries.ITEM.getKey(this)
     val Block.id get() = BuiltInRegistries.BLOCK.getKey(this)
 
     override fun run(writer: CachedOutput): CompletableFuture<*> {

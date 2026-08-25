@@ -116,9 +116,9 @@ fabricApi {
     configureDataGeneration {
         client = true
         createRunConfiguration = true
-//        createSourceSet = true
+        createSourceSet = true
         addToResources = true
-        modId = iridium.modId //+ "_vdatagen"
+        modId = iridium.modId + "_vdatagen"
 
         strictValidation = false
     }

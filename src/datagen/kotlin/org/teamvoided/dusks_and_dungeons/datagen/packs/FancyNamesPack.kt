@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.packs
+package org.teamvoided.dusks_and_dungeons.datagen.packs
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.DetectedVersion
@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.data.gen.DnDData.createBuiltInPack
+import org.teamvoided.dusks_and_dungeons.datagen.DnDData.createBuiltInPack
 import java.util.*
 
 object FancyNamesPack {

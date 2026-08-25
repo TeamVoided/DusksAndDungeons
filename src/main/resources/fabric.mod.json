@@ -18,12 +18,6 @@
         "value": "org.teamvoided.dusks_and_dungeons.DusksAndDungeonsClient::init"
       }
     ],
-    "fabric-datagen": [
-      {
-        "adapter": "kotlin",
-        "value": "org.teamvoided.dusks_and_dungeons.data.gen.DnDData"
-      }
-    ],
     "emi": [
       {
         "adapter": "kotlin",

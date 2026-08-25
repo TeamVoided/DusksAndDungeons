@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}_vdatagen",
+  "version": "${mod_version}",
+  "name": "${mod_name} Datagen",
+  "entrypoints": {
+    "fabric-datagen": [
+      {
+        "adapter": "kotlin",
+        "value": "org.teamvoided.dusks_and_dungeons.datagen.DnDData"
+      }
+    ]
+  },
+  "mixins": [ "dusks_and_dungeons.datagen.mixins.json" ]
+}

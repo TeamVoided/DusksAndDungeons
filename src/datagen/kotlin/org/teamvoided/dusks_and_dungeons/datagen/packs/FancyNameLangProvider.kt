@@ -1,8 +1,7 @@
-package org.teamvoided.dusks_and_dungeons.data.gen.packs
+package org.teamvoided.dusks_and_dungeons.datagen.packs
 
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.FabricOutput
@@ -44,7 +43,6 @@ class FancyNameLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvi
             .replace("Gray", "Ashen")
     }
 
-    val Item.id get() = BuiltInRegistries.ITEM.getKey(this)
     val Block.id get() = BuiltInRegistries.BLOCK.getKey(this)
 
 }
