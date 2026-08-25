@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.datagen.old.models.ModelProvider
-import org.teamvoided.dusks_and_dungeons.data.gen.recipes.RecipesProvider
+import org.teamvoided.dusks_and_dungeons.datagen.old.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.PlacedFeatureCreator
