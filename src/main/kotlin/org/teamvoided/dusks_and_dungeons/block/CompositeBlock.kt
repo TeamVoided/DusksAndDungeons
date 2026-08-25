@@ -7,6 +7,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -76,7 +77,7 @@ class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), Block
                     else
                         level.removeBlock(pos, false)
                 }
-                level.playBlockSound(pos, SoundEvents.HEAVY_CORE_BREAK, 0.8f, 1.0f)
+                level.playSound(null, pos, SoundEvents.HEAVY_CORE_BREAK, SoundSource.BLOCKS, 0.8f, 1.0f)
                 return InteractionResult.SUCCESS
             }
         }
@@ -178,7 +179,7 @@ class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), Block
             pushEntitiesUp(state, newState, level, pos)
             level.setBlockAndUpdateFluid(pos, newState)
             stack.consume(1, player)
-            level.playBlockSound(pos, SoundEvents.HEAVY_CORE_PLACE, 0.8f, 1.0f)
+            level.playSound(null, pos, SoundEvents.HEAVY_CORE_BREAK, SoundSource.BLOCKS, 0.8f, 1.0f)
         }
 
         fun BlockState.hasAnyCorners(): Boolean {

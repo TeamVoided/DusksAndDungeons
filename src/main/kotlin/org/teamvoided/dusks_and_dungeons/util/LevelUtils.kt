@@ -7,8 +7,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.players.PlayerList
-import net.minecraft.sounds.SoundEvent
-import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.UPDATE_ALL
@@ -54,11 +52,6 @@ fun PlayerList.broadcast(
             }
         }
     }
-}
-
-// TODO(1.0) remove
-fun Level.playBlockSound(pos: BlockPos, sound: SoundEvent, volume: Float, pitch: Float) {
-    playLocalSound(pos, sound, SoundSource.BLOCKS, volume, pitch, false)
 }
 
 fun Level.scheduleFluidTick(pos: BlockPos, state: BlockState) {
