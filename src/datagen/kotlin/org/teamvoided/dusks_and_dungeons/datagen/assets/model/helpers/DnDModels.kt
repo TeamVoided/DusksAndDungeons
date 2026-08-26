@@ -49,6 +49,8 @@ data object DnDModels {
     val ORIENTABLE_TRAPDOOR_TOP_TINTED = tintedBlock("orientable_trapdoor_top", "_top", TEXTURE)
     val ORIENTABLE_TRAPDOOR_BOTTOM_TINTED = tintedBlock("orientable_trapdoor_bottom", "_bottom", TEXTURE)
     val ORIENTABLE_TRAPDOOR_OPEN_TINTED = tintedBlock("orientable_trapdoor_open", "_open", TEXTURE)
+
+    val BOOKSHELF_TINTED = tintedBlock("bookshelf", SIDE, END, DnDTextureSlots.OVERLAY)
     // endregion
 
     val CARPET_DOWN = parent("carpet_down", "_down", WOOL)

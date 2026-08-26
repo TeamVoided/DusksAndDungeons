@@ -6,6 +6,9 @@ import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Block
 import java.util.function.Function
 
+/**
+ * Object for all DnD `TexturedModel.Provider`'s
+ */
 object DnDTexturedModels {
 
     val CARPET_DOWN = createDefault(TextureMapping::wool, DnDModels.CARPET_DOWN)

@@ -26,6 +26,9 @@ object DnDBlockTags {
     val PLANK_WALLS = key("plank_walls")
     val PLANK_WALLS_THAT_BURN = key("plank_walls_that_burn")
 
+    val BOOKSHELVES = key("bookshelves")
+    val BOOKSHELVES_THAT_BURN = key("bookshelves_that_burn")
+
     val FLAMMABLE_PLANKS = key("flammable/planks")
     val FLAMMABLE_LOGS = key("flammable/logs")
     val FLAMMABLE_LEAVES = key("flammable/leaves")

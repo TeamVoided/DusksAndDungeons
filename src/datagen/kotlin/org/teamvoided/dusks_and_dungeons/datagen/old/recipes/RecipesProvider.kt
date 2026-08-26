@@ -16,15 +16,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.StoneRecipes
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.WoodRecipes
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.bookshelf
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.carpetPlate
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.compositeBlock
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.create2x2
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createFence
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStoneStairs
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStoneWall
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.lantern
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -133,6 +125,9 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.bookshelf(DnDBlocks.BAMBOO_BOOKSHELF, Blocks.BAMBOO_PLANKS)
         e.bookshelf(DnDBlocks.CRIMSON_BOOKSHELF, Blocks.CRIMSON_PLANKS)
         e.bookshelf(DnDBlocks.WARPED_BOOKSHELF, Blocks.WARPED_PLANKS)
+        e.bookshelf(DnDBlocks.CASCADE_BOOKSHELF, DnDBlocks.CASCADE_PLANKS)
+        e.bookshelf(DnDBlocks.SYPIA_BOOKSHELF, DnDBlocks.SYPIA_PLANKS)
+        e.bookshelf(DnDBlocks.VERDANT_BOOKSHELF, DnDBlocks.VERDANT_PLANKS)
         // Carpet Plate
         for ((idx, block) in DnDBlocks.WOOL_CARPET_PLATE.withIndex()) {
             e.carpetPlate(block, VanillaColorCollections.WOOL.list[idx])

@@ -3,24 +3,19 @@ package org.teamvoided.dusks_and_dungeons.datagen.old.models
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.createLogPile
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.createTintedDoor
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.createTintedOrientableTrapdoor
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hollowBambooBlock
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hollowLog
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hollowTintedLog
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hollowTintedStrippedLog
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.planksTinted
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.strippedTinted
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.bookshelf
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createItemModel
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createSign
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.tintedBookshelf
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.*
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createLeafPile
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWood
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.wall
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 
 object WoodModels {
+
     fun woodModels(gen: BlockModelGenerators) {
         //CASCADE
         gen.createPlant(
@@ -114,21 +109,6 @@ object WoodModels {
         gen.createWood(DnDBlocks.STRIPPED_CASCADE_WOOD, DnDBlocks.STRIPPED_CASCADE_LOG)
         gen.createWood(DnDBlocks.STRIPPED_SYPIA_WOOD, DnDBlocks.STRIPPED_SYPIA_LOG)
 
-        gen.wall(DnDBlocks.OAK_WALL, Blocks.OAK_PLANKS)
-        gen.wall(DnDBlocks.SPRUCE_WALL, Blocks.SPRUCE_PLANKS)
-        gen.wall(DnDBlocks.BIRCH_WALL, Blocks.BIRCH_PLANKS)
-        gen.wall(DnDBlocks.JUNGLE_WALL, Blocks.JUNGLE_PLANKS)
-        gen.wall(DnDBlocks.ACACIA_WALL, Blocks.ACACIA_PLANKS)
-        gen.wall(DnDBlocks.DARK_OAK_WALL, Blocks.DARK_OAK_PLANKS)
-        gen.wall(DnDBlocks.MANGROVE_WALL, Blocks.MANGROVE_PLANKS)
-        gen.wall(DnDBlocks.CHERRY_WALL, Blocks.CHERRY_PLANKS)
-        gen.wall(DnDBlocks.CRIMSON_WALL, Blocks.CRIMSON_PLANKS)
-        gen.wall(DnDBlocks.WARPED_WALL, Blocks.WARPED_PLANKS)
-        gen.wall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS)
-        gen.wall(DnDBlocks.BAMBOO_MOSAIC_WALL, Blocks.BAMBOO_MOSAIC)
-        gen.wall(DnDBlocks.CASCADE_WALL, DnDBlocks.CASCADE_PLANKS)
-        gen.wall(DnDBlocks.SYPIA_WALL, DnDBlocks.SYPIA_PLANKS)
-
         DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->
             val log = DnDBlockLists.logsAndStrippedLogs[idx].first
             val strippedLog = DnDBlockLists.logsAndStrippedLogs[idx].second
@@ -150,5 +130,38 @@ object WoodModels {
         gen.createLogPile(DnDBlocks.BAMBOO_PILE, Blocks.BAMBOO_BLOCK, "bamboo")
         gen.createLogPile(DnDBlocks.STRIPPED_BAMBOO_PILE, Blocks.STRIPPED_BAMBOO_BLOCK, "bamboo")
         DnDBlockLists.leafPiles.forEachIndexed { idx, pile -> gen.createLeafPile(pile, DnDBlockLists.leaves[idx]) }
+
+        // Refined wood blocks
+        gen.wall(DnDBlocks.OAK_WALL, Blocks.OAK_PLANKS)
+        gen.wall(DnDBlocks.SPRUCE_WALL, Blocks.SPRUCE_PLANKS)
+        gen.wall(DnDBlocks.BIRCH_WALL, Blocks.BIRCH_PLANKS)
+        gen.wall(DnDBlocks.JUNGLE_WALL, Blocks.JUNGLE_PLANKS)
+        gen.wall(DnDBlocks.ACACIA_WALL, Blocks.ACACIA_PLANKS)
+        gen.wall(DnDBlocks.DARK_OAK_WALL, Blocks.DARK_OAK_PLANKS)
+        gen.wall(DnDBlocks.MANGROVE_WALL, Blocks.MANGROVE_PLANKS)
+        gen.wall(DnDBlocks.CHERRY_WALL, Blocks.CHERRY_PLANKS)
+        gen.wall(DnDBlocks.CRIMSON_WALL, Blocks.CRIMSON_PLANKS)
+        gen.wall(DnDBlocks.WARPED_WALL, Blocks.WARPED_PLANKS)
+        gen.wall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS)
+        gen.wall(DnDBlocks.BAMBOO_MOSAIC_WALL, Blocks.BAMBOO_MOSAIC)
+        gen.wall(DnDBlocks.CASCADE_WALL, DnDBlocks.CASCADE_PLANKS)
+        gen.wall(DnDBlocks.SYPIA_WALL, DnDBlocks.SYPIA_PLANKS)
+
+        gen.bookshelf(DnDBlocks.SPRUCE_BOOKSHELF, Blocks.SPRUCE_PLANKS)
+        gen.bookshelf(DnDBlocks.BIRCH_BOOKSHELF, Blocks.BIRCH_PLANKS)
+        gen.bookshelf(DnDBlocks.JUNGLE_BOOKSHELF, Blocks.JUNGLE_PLANKS)
+        gen.bookshelf(DnDBlocks.ACACIA_BOOKSHELF, Blocks.ACACIA_PLANKS)
+        gen.bookshelf(DnDBlocks.DARK_OAK_BOOKSHELF, Blocks.DARK_OAK_PLANKS)
+        gen.bookshelf(DnDBlocks.MANGROVE_BOOKSHELF, Blocks.MANGROVE_PLANKS)
+        gen.bookshelf(DnDBlocks.CHERRY_BOOKSHELF, Blocks.CHERRY_PLANKS)
+        gen.bookshelf(DnDBlocks.BAMBOO_BOOKSHELF, Blocks.BAMBOO_PLANKS)
+        gen.bookshelf(DnDBlocks.CRIMSON_BOOKSHELF, Blocks.CRIMSON_PLANKS)
+        gen.bookshelf(DnDBlocks.WARPED_BOOKSHELF, Blocks.WARPED_PLANKS)
+
+        gen.bookshelf(DnDBlocks.CASCADE_BOOKSHELF, DnDBlocks.CASCADE_PLANKS)
+        gen.bookshelf(DnDBlocks.SYPIA_BOOKSHELF, DnDBlocks.SYPIA_PLANKS)
+        gen.tintedBookshelf(DnDBlocks.VERDANT_BOOKSHELF, DnDBlocks.VERDANT_PLANKS)
+
     }
+
 }

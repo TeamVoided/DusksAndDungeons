@@ -401,6 +401,9 @@ object DnDTabs {
             DnDBlocks.MANGROVE_BOOKSHELF,
             DnDBlocks.CHERRY_BOOKSHELF,
             DnDBlocks.BAMBOO_BOOKSHELF,
+            DnDBlocks.CASCADE_BOOKSHELF,
+            DnDBlocks.SYPIA_BOOKSHELF,
+            DnDBlocks.VERDANT_BOOKSHELF,
             DnDBlocks.CRIMSON_BOOKSHELF,
             DnDBlocks.WARPED_BOOKSHELF,
         )

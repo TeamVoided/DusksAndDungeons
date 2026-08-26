@@ -1525,12 +1525,6 @@ fun BlockModelGenerators.tintedPane(glass: Block, glassPane: Block) {
         .create(ModelLocationUtils.getModelLocation(glassPane.asItem()), TextureMapping.layer0(glass), modelOutput)
 }
 
-fun BlockModelGenerators.bookshelf(bookshelf: Block, top: Block) {
-    val texture =
-        TextureMapping.column(TextureMapping.getBlockTexture(bookshelf), TextureMapping.getBlockTexture(top))
-    val model = ModelTemplates.CUBE_COLUMN.create(bookshelf, texture, modelOutput)
-    blockStateOutput.accept(createSimpleBlock(bookshelf, model))
-}
 
 fun BlockModelGenerators.carpetPlate(plate: Block, wool: Block) {
     val up = TexturedModel.CARPET.get(wool).createWithSuffix(plate, "_up", modelOutput)

@@ -134,6 +134,9 @@ class ItemTagsProvider(
         copy(DnDBlockTags.PLANK_WALLS, DnDItemTags.PLANK_WALLS)
         copy(DnDBlockTags.PLANK_WALLS_THAT_BURN, DnDItemTags.PLANK_WALLS_THAT_BURN)
 
+        copy(DnDBlockTags.BOOKSHELVES, DnDItemTags.BOOKSHELVES)
+        copy(DnDBlockTags.BOOKSHELVES_THAT_BURN, DnDItemTags.BOOKSHELVES_THAT_BURN)
+
         copy(DnDBlockTags.WOOD_STAIRS, DnDItemTags.WOOD_STAIRS)
         copy(DnDBlockTags.WOOD_SLABS, DnDItemTags.WOOD_SLABS)
         copy(DnDBlockTags.WOOD_WALLS, DnDItemTags.WOOD_WALLS)

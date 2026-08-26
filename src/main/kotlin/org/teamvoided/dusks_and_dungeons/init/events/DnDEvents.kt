@@ -100,6 +100,7 @@ object DnDEvents {
         fuel(DnDItemTags.LOG_PILES_THAT_BURN, 300)
         fuel(DnDItemTags.WOOD_WALLS_THAT_BURN, 300)
         fuel(DnDItemTags.PLANK_WALLS_THAT_BURN, 275)
+        fuel(DnDItemTags.BOOKSHELVES_THAT_BURN, 300)
     }
 
 }

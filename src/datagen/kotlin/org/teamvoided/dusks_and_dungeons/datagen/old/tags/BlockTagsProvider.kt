@@ -124,19 +124,16 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.INFESTED_MOSSY_COBBLESTONE)
 
         getOrCreateTagBuilder(BlockTags.ENCHANTMENT_POWER_PROVIDER)
+            .forceAddTag(DnDBlockTags.BOOKSHELVES)
+        getOrCreateTagBuilder(ConventionalBlockTags.BOOKSHELVES)
+            .forceAddTag(DnDBlockTags.BOOKSHELVES)
+        getOrCreateTagBuilder(DnDBlockTags.BOOKSHELVES)
+            .forceAddTag(DnDBlockTags.BOOKSHELVES_THAT_BURN)
             .add(
-                DnDBlocks.SPRUCE_BOOKSHELF,
-                DnDBlocks.BIRCH_BOOKSHELF,
-                DnDBlocks.JUNGLE_BOOKSHELF,
-                DnDBlocks.ACACIA_BOOKSHELF,
-                DnDBlocks.DARK_OAK_BOOKSHELF,
-                DnDBlocks.MANGROVE_BOOKSHELF,
-                DnDBlocks.CHERRY_BOOKSHELF,
-                DnDBlocks.BAMBOO_BOOKSHELF,
                 DnDBlocks.CRIMSON_BOOKSHELF,
                 DnDBlocks.WARPED_BOOKSHELF,
             )
-        getOrCreateTagBuilder(ConventionalBlockTags.BOOKSHELVES)
+        getOrCreateTagBuilder(DnDBlockTags.BOOKSHELVES_THAT_BURN)
             .add(
                 DnDBlocks.SPRUCE_BOOKSHELF,
                 DnDBlocks.BIRCH_BOOKSHELF,
@@ -146,8 +143,9 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.MANGROVE_BOOKSHELF,
                 DnDBlocks.CHERRY_BOOKSHELF,
                 DnDBlocks.BAMBOO_BOOKSHELF,
-                DnDBlocks.CRIMSON_BOOKSHELF,
-                DnDBlocks.WARPED_BOOKSHELF,
+                DnDBlocks.CASCADE_BOOKSHELF,
+                DnDBlocks.SYPIA_BOOKSHELF,
+                DnDBlocks.VERDANT_BOOKSHELF,
             )
 
         getOrCreateTagBuilder(ConventionalBlockTags.GLASS_PANES)

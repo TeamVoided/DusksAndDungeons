@@ -12,22 +12,11 @@ import net.minecraft.world.level.block.InfestedBlock
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.addAxis
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.bookshelf
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.carpetPlate
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createTrivialState
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.denseCube
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.iceStairs
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.redstoneLantern
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.slab
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.stairs
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.tintedPane
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.wall
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.wallOffset
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.BigModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.StoneModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.fence
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.modelId
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -113,17 +102,6 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.denseCube(DnDBlocks.HEAVY_CUBE)
 
         gen.tintedPane(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
-
-        gen.bookshelf(DnDBlocks.SPRUCE_BOOKSHELF, Blocks.SPRUCE_PLANKS)
-        gen.bookshelf(DnDBlocks.BIRCH_BOOKSHELF, Blocks.BIRCH_PLANKS)
-        gen.bookshelf(DnDBlocks.JUNGLE_BOOKSHELF, Blocks.JUNGLE_PLANKS)
-        gen.bookshelf(DnDBlocks.ACACIA_BOOKSHELF, Blocks.ACACIA_PLANKS)
-        gen.bookshelf(DnDBlocks.DARK_OAK_BOOKSHELF, Blocks.DARK_OAK_PLANKS)
-        gen.bookshelf(DnDBlocks.MANGROVE_BOOKSHELF, Blocks.MANGROVE_PLANKS)
-        gen.bookshelf(DnDBlocks.CHERRY_BOOKSHELF, Blocks.CHERRY_PLANKS)
-        gen.bookshelf(DnDBlocks.BAMBOO_BOOKSHELF, Blocks.BAMBOO_PLANKS)
-        gen.bookshelf(DnDBlocks.CRIMSON_BOOKSHELF, Blocks.CRIMSON_PLANKS)
-        gen.bookshelf(DnDBlocks.WARPED_BOOKSHELF, Blocks.WARPED_PLANKS)
 
         for ((idx, block) in DnDBlocks.WOOL_CARPET_PLATE.withIndex()) {
             gen.carpetPlate(block, VanillaColorCollections.WOOL.list[idx])

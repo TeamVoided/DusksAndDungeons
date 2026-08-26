@@ -381,19 +381,6 @@ object DnDBlocks {
     val STRIPPED_CRIMSON_HYPHAE = registerWoodenSet("stripped_crimson_hyphae", Blocks.STRIPPED_CRIMSON_HYPHAE)
     val STRIPPED_WARPED_HYPHAE = registerWoodenSet("stripped_warped_hyphae", Blocks.STRIPPED_WARPED_HYPHAE)
 
-    val OAK_WALL = register("oak_wall", wallOf(OAK_PLANKS).wood())
-    val SPRUCE_WALL = register("spruce_wall", wallOf(SPRUCE_PLANKS).wood())
-    val BIRCH_WALL = register("birch_wall", wallOf(BIRCH_PLANKS).wood())
-    val JUNGLE_WALL = register("jungle_wall", wallOf(JUNGLE_PLANKS).wood())
-    val ACACIA_WALL = register("acacia_wall", wallOf(ACACIA_PLANKS).wood())
-    val DARK_OAK_WALL = register("dark_oak_wall", wallOf(DARK_OAK_PLANKS).wood())
-    val MANGROVE_WALL = register("mangrove_wall", wallOf(MANGROVE_PLANKS).wood())
-    val CHERRY_WALL = register("cherry_wall", wallOf(CHERRY_PLANKS).wood())
-    val CRIMSON_WALL = register("crimson_wall", wallOf(CRIMSON_PLANKS).wood())
-    val WARPED_WALL = register("warped_wall", wallOf(WARPED_PLANKS).wood())
-    val BAMBOO_WALL = register("bamboo_wall", wallOf(BAMBOO_PLANKS).wood())
-    val BAMBOO_MOSAIC_WALL = register("bamboo_mosaic_wall", wallOf(BAMBOO_MOSAIC).wood())
-
     //(ender) Uses wood because logs have diff map colors based on if top is showing
     val OAK_LOG_PILE = register("oak_log_pile", logPile(Blocks.OAK_WOOD))
     val SPRUCE_LOG_PILE = register("spruce_log_pile", logPile(Blocks.SPRUCE_WOOD))
@@ -470,6 +457,37 @@ object DnDBlocks {
     val HOLLOW_STRIPPED_VERDANT_LOG =
         register("hollow_stripped_verdant_log", hollowLog(STRIPPED_VERDANT_LOG)).grass().tint()
             .tellWitnessesThatIWasMurdered()
+
+    // Refined wood blocks
+    val OAK_WALL = register("oak_wall", wallOf(OAK_PLANKS).wood())
+    val SPRUCE_WALL = register("spruce_wall", wallOf(SPRUCE_PLANKS).wood())
+    val BIRCH_WALL = register("birch_wall", wallOf(BIRCH_PLANKS).wood())
+    val JUNGLE_WALL = register("jungle_wall", wallOf(JUNGLE_PLANKS).wood())
+    val ACACIA_WALL = register("acacia_wall", wallOf(ACACIA_PLANKS).wood())
+    val DARK_OAK_WALL = register("dark_oak_wall", wallOf(DARK_OAK_PLANKS).wood())
+    val MANGROVE_WALL = register("mangrove_wall", wallOf(MANGROVE_PLANKS).wood())
+    val CHERRY_WALL = register("cherry_wall", wallOf(CHERRY_PLANKS).wood())
+    val CRIMSON_WALL = register("crimson_wall", wallOf(CRIMSON_PLANKS).wood())
+    val WARPED_WALL = register("warped_wall", wallOf(WARPED_PLANKS).wood())
+    val BAMBOO_WALL = register("bamboo_wall", wallOf(BAMBOO_PLANKS).wood())
+    val BAMBOO_MOSAIC_WALL = register("bamboo_mosaic_wall", wallOf(BAMBOO_MOSAIC).wood())
+
+    val SPRUCE_BOOKSHELF = register("spruce_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val BIRCH_BOOKSHELF = register("birch_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val JUNGLE_BOOKSHELF = register("jungle_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val ACACIA_BOOKSHELF = register("acacia_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val DARK_OAK_BOOKSHELF = register("dark_oak_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val MANGROVE_BOOKSHELF = register("mangrove_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val CHERRY_BOOKSHELF = register("cherry_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val BAMBOO_BOOKSHELF = register("bamboo_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val CRIMSON_BOOKSHELF = register("crimson_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val WARPED_BOOKSHELF = register("warped_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+
+    val CASCADE_BOOKSHELF = register("cascade_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val SYPIA_BOOKSHELF = register("sypia_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
+    val VERDANT_BOOKSHELF = register("verdant_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe().grass().tint().cutout()
+        .tellWitnessesThatIWasMurdered()
+
     // endregion
 
     // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Big Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
@@ -680,18 +698,6 @@ object DnDBlocks {
 
     val TINTED_GLASS_PANE = register("tinted_glass_pane", TintedPaneBlock(ofFullCopy(TINTED_GLASS))).translucent()
 
-    val SPRUCE_BOOKSHELF = register("spruce_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val BIRCH_BOOKSHELF = register("birch_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val JUNGLE_BOOKSHELF = register("jungle_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val ACACIA_BOOKSHELF = register("acacia_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val DARK_OAK_BOOKSHELF = register("dark_oak_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val MANGROVE_BOOKSHELF = register("mangrove_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val CHERRY_BOOKSHELF = register("cherry_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val BAMBOO_BOOKSHELF = register("bamboo_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val CRIMSON_BOOKSHELF = register("crimson_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    val WARPED_BOOKSHELF = register("warped_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
-    // TODO(1.0) add DnD bookshelf
-
     // Carpet Plates
     val WOOL_CARPET_PLATE = register(
         ColorConsortium("carpet_plate", VanillaColorCollections.WOOL) { wool ->
@@ -830,15 +836,11 @@ object DnDBlocks {
         BlockStrippingRegistry.register(BAMBOO_PILE, STRIPPED_BAMBOO_PILE)
 
         // Flammability
-        FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
-        FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
-        FlammableBlockRegistry.getInstance(FIRE).add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
+        FlammableBlockRegistry.getDefaultInstance().add(DnDBlockTags.FLAMMABLE_PLANKS, 5, 20)
+        FlammableBlockRegistry.getDefaultInstance().add(DnDBlockTags.FLAMMABLE_LOGS, 5, 5)
+        FlammableBlockRegistry.getDefaultInstance().add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
+        FlammableBlockRegistry.getDefaultInstance().add(DnDBlockTags.BOOKSHELVES_THAT_BURN, 30, 20)
 
-        // TODO(1.0) fix
-//        BOOKSHELFS.onEach {
-//            FlammableBlockRegistry.getDefaultInstance().add(it, 30, 20)
-//            FuelRegistry.INSTANCE.add(it, 300)
-//        }
     }
 
     fun registerStrippedSet(set: AbstractBlockSet, strippedSet: AbstractBlockSet) {
