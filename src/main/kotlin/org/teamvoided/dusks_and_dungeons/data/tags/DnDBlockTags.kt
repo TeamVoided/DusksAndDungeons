@@ -90,6 +90,7 @@ object DnDBlockTags {
     val EMPTY = key("empty")
     val ICE_BLOCK_TRANSLUCENT = key("ice_block_translucent")
     val THROWN_BRICK_BREAK = key("thrown_brick_break")
+    val SCULK_SPREAD_SEARCH = key("sculk_spread_search")
 
 
     fun supports(id: String) = key("supports/$id")

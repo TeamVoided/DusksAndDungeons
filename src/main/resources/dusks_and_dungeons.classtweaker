@@ -21,3 +21,7 @@ accessible method net/minecraft/world/level/block/CropBlock hasSufficientLight (
 accessible method net/minecraft/world/level/block/CropBlock getGrowthSpeed (Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F
 
 accessible field net/minecraft/client/renderer/blockentity/BellRenderer bellBody Lnet/minecraft/client/model/geom/ModelPart;
+
+# TODO rework to not use this
+accessible method net/minecraft/client/particle/ShriekParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDI)V
+accessible field net/minecraft/client/particle/ShriekParticle delay I

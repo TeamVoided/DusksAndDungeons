@@ -8,6 +8,7 @@
     "FoxRendererMixin",
     "LookAtItemAnimationMixin",
     "ShadowAttributeMixin",
+    "directional_sculk.LevelRendererMixin",
     "signs.AbstractSignEditScreenMixin",
     "signs.HangingSignEditScreenMixin",
     "signs.SignEditScreenMixin",

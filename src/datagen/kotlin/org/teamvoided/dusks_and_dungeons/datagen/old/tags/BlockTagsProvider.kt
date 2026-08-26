@@ -58,6 +58,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.EMPTY)
 
+        getOrCreateTagBuilder(DnDBlockTags.SCULK_SPREAD_SEARCH)
+            .add(Blocks.SCULK_SENSOR)
+            .add(Blocks.SCULK_SHRIEKER)
+
         // TODO(1.0) deal with VV stuff
 
         // TODO(1.0) add a mixin for this tag to only apply if the top has a full side
