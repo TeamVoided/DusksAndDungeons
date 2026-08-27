@@ -2,11 +2,11 @@ package org.teamvoided.dusks_and_dungeons.init.events
 
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
 import net.minecraft.world.entity.npc.VillagerProfession
-import net.minecraft.world.entity.npc.VillagerTrades
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
+import org.teamvoided.voidlib.helpers.mc.TradeList
 import org.teamvoided.voidlib.helpers.mc.add1for1
 import org.teamvoided.voidlib.helpers.mc.addSell
 import org.teamvoided.voidlib.helpers.mc.buyFor1
@@ -16,7 +16,7 @@ fun initTrades() {
     TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 2, ::addLevel2FarmerTrades)
 }
 
-fun addCommonWanderingTrades(trades: MutableList<VillagerTrades.ItemListing>) {
+fun addCommonWanderingTrades(trades: TradeList) {
     trades.addSell(DnDBlocks.CASCADE_SAPLING, 5, 1, 8)
     trades.addSell(DnDBlocks.SYPIA_SAPLING, 5, 1, 8)
 
@@ -44,7 +44,7 @@ fun addCommonWanderingTrades(trades: MutableList<VillagerTrades.ItemListing>) {
     trades.addSell(Blocks.PINK_PETALS, 3, 1, 8)
 }
 
-fun addLevel2FarmerTrades(trades: MutableList<VillagerTrades.ItemListing>) {
+fun addLevel2FarmerTrades(trades: TradeList) {
     trades.buyFor1(DnDBlocks.LANTERN_PUMPKIN, 6, 12, 10)
     trades.buyFor1(DnDBlocks.MOSSKIN_PUMPKIN, 6, 12, 10)
     trades.buyFor1(DnDBlocks.GLOOM_PUMPKIN, 6, 12, 10)

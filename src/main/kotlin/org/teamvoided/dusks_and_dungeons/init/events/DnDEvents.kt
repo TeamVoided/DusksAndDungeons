@@ -6,12 +6,11 @@ import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.level.storage.loot.BuiltInLootTables.*
 import net.minecraft.world.level.storage.loot.LootTable
 import org.teamvoided.dusks_and_dungeons.api.PostDataLoadEvent
-import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.BARTERING_ADD_VIVIONS
-import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY
-import org.teamvoided.dusks_and_dungeons.data.DnDLootTables.SNIFFER_ADD_MOONBERRY
+import org.teamvoided.dusks_and_dungeons.data.DnDLootTables
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -25,17 +24,7 @@ import org.teamvoided.voidlib.helpers.mc.fuel
 object DnDEvents {
 
     fun init() {
-
-        // TODO(1.0) move?
-        FabricBrewingRecipeRegistryBuilder.BUILD.register { builder ->
-            builder.addContainer(DnDItems.TINTED_POTION)
-            builder.addContainer(DnDItems.TINTED_SPLASH_POTION)
-            builder.addContainer(DnDItems.TINTED_LINGERING_POTION)
-
-            builder.addContainerRecipe(DnDItems.TINTED_POTION, Items.GUNPOWDER, DnDItems.TINTED_SPLASH_POTION)
-            builder.addContainerRecipe(DnDItems.TINTED_SPLASH_POTION, Items.DRAGON_BREATH, DnDItems.TINTED_LINGERING_POTION)
-        }
-
+        FabricBrewingRecipeRegistryBuilder.BUILD.register(::addBrewingRecipes)
         LootTableEvents.MODIFY.register(::modifyLootTables)
         initTrades()
         initItemEvents()
@@ -45,16 +34,26 @@ object DnDEvents {
         PostDataLoadEvent.DATA_LOADED.register { ThrownItemDefinition.refreshCache(it.registryAccess()) }
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    fun modifyLootTables(
-        key: ResourceKey<LootTable>, builder: LootTable.Builder, src: LootTableSource, lookup: HolderLookup.Provider,
-    ): Any = when (key) {
-        PIGLIN_BARTERING -> addToExistingPools(builder, BARTERING_ADD_VIVIONS)
-        SNIFFER_DIGGING -> addToExistingPools(builder, SNIFFER_ADD_MOONBERRY)
-        SIMPLE_DUNGEON -> addNewPool(builder, SIMPLE_DUNGEON_ADD_SPOOKY)
-        else -> Unit
+    fun addBrewingRecipes(builder: PotionBrewing.Builder) {
+        builder.addContainer(DnDItems.TINTED_POTION)
+        builder.addContainer(DnDItems.TINTED_SPLASH_POTION)
+        builder.addContainer(DnDItems.TINTED_LINGERING_POTION)
+
+        builder.addContainerRecipe(DnDItems.TINTED_POTION, Items.GUNPOWDER, DnDItems.TINTED_SPLASH_POTION)
+        builder.addContainerRecipe(DnDItems.TINTED_SPLASH_POTION, Items.DRAGON_BREATH, DnDItems.TINTED_LINGERING_POTION)
     }
 
+    @Suppress("UNUSED_PARAMETER")
+    fun modifyLootTables(
+        table: ResourceKey<LootTable>, builder: LootTable.Builder, src: LootTableSource, lookup: HolderLookup.Provider,
+    ) {
+        when (table) {
+            PIGLIN_BARTERING -> addToExistingPools(builder, DnDLootTables.BARTERING_ADD_VIVIONS)
+            SNIFFER_DIGGING -> addToExistingPools(builder, DnDLootTables.SNIFFER_ADD_MOONBERRY)
+            SIMPLE_DUNGEON -> addNewPool(builder, DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY)
+            ABANDONED_MINESHAFT -> addNewPool(builder, DnDLootTables.ADD_DND_SEEDS)
+        }
+    }
 
     fun compostItems() {
         compost(DnDBlocks.ROOT_BLOCK, 0.65)
@@ -94,8 +93,8 @@ object DnDEvents {
 
     fun createFuels() {
         fuel(DnDItems.BIG_SCAFFOLDING, 300)
-        fuel(DnDBlocks.MOLTEN_LAVASPONGE, 20000)
-        fuel(DnDItems.GLOWING_LAVASPONGE, 20000)
+        fuel(DnDBlocks.MOLTEN_LAVASPONGE, 20_000)
+        fuel(DnDItems.GLOWING_LAVASPONGE, 20_000)
         fuel(DnDItemTags.HOLLOW_LOGS_THAT_BURN, 300)
         fuel(DnDItemTags.LOG_PILES_THAT_BURN, 300)
         fuel(DnDItemTags.WOOD_WALLS_THAT_BURN, 300)

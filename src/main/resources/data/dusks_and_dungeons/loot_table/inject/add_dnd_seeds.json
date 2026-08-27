@@ -82,22 +82,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dusks_and_dungeons:stone_brick_gravestone"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dusks_and_dungeons:deepslate_brick_gravestone"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dusks_and_dungeons:small_stone_brick_gravestone"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dusks_and_dungeons:small_deepslate_brick_gravestone"
         }
       ]
     }

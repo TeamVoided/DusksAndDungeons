@@ -1,20 +1,33 @@
 package org.teamvoided.dusks_and_dungeons.data
 
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.storage.loot.LootTable
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.util.key
 
 object DnDLootTables {
-    private val LOOT_TABLES: MutableSet<ResourceLocation> = mutableSetOf()
 
-    val SNIFFER_ADD_MOONBERRY: ResourceLocation = register("inject/add_moonberries")
-    val BARTERING_ADD_VIVIONS: ResourceLocation = register("inject/add_vivions")
-    val SIMPLE_DUNGEON_ADD_SPOOKY: ResourceLocation = register("inject/add_spooky")
-    val COOL_CHEST: ResourceLocation = register("chests/cool_chest")
-    val COOL_ARCHAEOLOGY: ResourceLocation = register("archaeology/cool_archaeology")
+    val LOOT_TABLES = mutableSetOf<ResourceKey<LootTable>>()
 
-    private fun register(id: String) = register(id(id))
-    private fun register(id: ResourceLocation): ResourceLocation {
-        if (LOOT_TABLES.add(id)) return id
+    val SNIFFER_ADD_MOONBERRY = key("inject/add_moonberries")
+    val BARTERING_ADD_VIVIONS = key("inject/add_vivions")
+    val SIMPLE_DUNGEON_ADD_SPOOKY = key("inject/add_spooky")
+    val ADD_DND_SEEDS = key("inject/add_dnd_seeds")
+
+    val COOL_CHEST = key("chests/cool_chest")
+    val COOL_ARCHAEOLOGY = key("archaeology/cool_archaeology")
+
+    fun key(id: String) = key(id(id))
+    fun key(id: ResourceLocation): ResourceKey<LootTable> {
+
+        val key = Registries.LOOT_TABLE.key(id)
+
+        if (LOOT_TABLES.add(key)) {
+            return key
+        }
         throw IllegalArgumentException("$id is already a registered built-in loot table")
     }
+
 }
