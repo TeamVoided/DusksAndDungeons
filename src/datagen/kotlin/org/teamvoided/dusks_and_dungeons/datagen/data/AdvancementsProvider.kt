@@ -5,14 +5,12 @@ import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.AdvancementType
-import net.minecraft.advancements.critereon.EntityPredicate
-import net.minecraft.advancements.critereon.EntitySubPredicates
-import net.minecraft.advancements.critereon.TameAnimalTrigger
+import net.minecraft.advancements.critereon.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.advancements.packs.VanillaAdventureAdvancements
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.description
@@ -71,8 +69,8 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
               )
           ).build(c, "story/mine_stone")*/
 
-        VanillaAdventureAdvancements
-            .addBiomes(Advancement.Builder.advancement(), provider, autumnBiomes)
+        Advancement.Builder.advancement()
+            .addBiomes(provider, autumnBiomes)
             .display(
                 DnDBlocks.CASCADE_SAPLING,
                 title(DnDAdvancements.FALL), description(DnDAdvancements.FALL),
@@ -113,6 +111,19 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
 
     fun Advancement.Builder.save(gen: Consumer<AdvancementHolder>, key: ResourceKey<Advancement>) {
         this.save(gen, key.location().toString())
+    }
+
+    fun Advancement.Builder.addBiomes(
+        provider: HolderLookup.Provider, list: List<ResourceKey<Biome>>,
+    ): Advancement.Builder {
+        val lookup = provider.lookupOrThrow(Registries.BIOME)
+        for (resourceKey in list) {
+            addCriterion(
+                resourceKey.location().toString(),
+                PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inBiome(lookup.getOrThrow(resourceKey)))
+            )
+        }
+        return this
     }
 
 }

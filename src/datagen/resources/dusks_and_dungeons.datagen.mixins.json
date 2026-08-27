@@ -3,7 +3,9 @@
   "minVersion": "0.8",
   "package": "org.teamvoided.dusks_and_dungeons.mixin.datagen",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [ ],
+  "mixins": [
+    "OverworldBiomesAccessor"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

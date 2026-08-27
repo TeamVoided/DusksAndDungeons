@@ -18,12 +18,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.BonemealableBlock
-import net.minecraft.world.level.block.MultifaceBlock
-import net.minecraft.world.level.block.MultifaceSpreader
-import net.minecraft.world.level.block.SimpleWaterloggedBlock
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -35,6 +30,7 @@ import net.minecraft.world.phys.BlockHitResult
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.dusks_and_dungeons.util.multifaceRemoveFace
 
 class MoonberryVineBlock(settings: Properties) : MultifaceBlock(settings), SimpleWaterloggedBlock, BonemealableBlock {
     public override fun codec(): MapCodec<MoonberryVineBlock> = CODEC
@@ -71,7 +67,7 @@ class MoonberryVineBlock(settings: Properties) : MultifaceBlock(settings), Simpl
         } else {
             if (hasFace(state, direction) &&
                 !canGrowOnOrOveride(world, direction, neighborPos, neighborState)
-            ) removeFace(state, getFaceProperty(direction)) else state
+            ) multifaceRemoveFace(state, getFaceProperty(direction)) else state
         }
     }
 

@@ -3,7 +3,6 @@ package org.teamvoided.dusks_and_dungeons.datagen.old.worldgen
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.biome.OverworldBiomes
 import net.minecraft.data.worldgen.placement.AquaticPlacements
 import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.VegetationPlacements
@@ -17,6 +16,7 @@ import net.minecraft.world.level.biome.*
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
+import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.addGlobalOverworldGeneration
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.LOCAL_MODIFICATIONS as lm2
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES as ss4
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES as uo6
@@ -78,7 +78,7 @@ object BiomeCreator {
 
         val generationSettings = BiomeGenerationSettings
             .Builder(c.lookup(Registries.PLACED_FEATURE), c.lookup(Registries.CONFIGURED_CARVER))
-        OverworldBiomes.globalOverworldGeneration(generationSettings)
+        addGlobalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
         generationSettings.addFeature(uo6, DnDPlacedFeature.DISK_PODZOL)
@@ -118,7 +118,7 @@ object BiomeCreator {
 
         val generationSettings = BiomeGenerationSettings
             .Builder(c.lookup(Registries.PLACED_FEATURE), c.lookup(Registries.CONFIGURED_CARVER))
-        OverworldBiomes.globalOverworldGeneration(generationSettings)
+        addGlobalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
         generationSettings.addFeature(
@@ -156,7 +156,7 @@ object BiomeCreator {
 
         val generationSettings = BiomeGenerationSettings
             .Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER))
-        OverworldBiomes.globalOverworldGeneration(generationSettings)
+        addGlobalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
         generationSettings.addFeature(uo6, DnDPlacedFeature.DISK_PODZOL)
@@ -180,7 +180,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.commonSpawns(spawnSettings)
         val generationSettings = BiomeGenerationSettings
             .Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER))
-        OverworldBiomes.globalOverworldGeneration(generationSettings)
+        addGlobalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addPlainGrass(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         //BiomeDefaultFeatures.addLushCavesSpecialOres(generationSettings)

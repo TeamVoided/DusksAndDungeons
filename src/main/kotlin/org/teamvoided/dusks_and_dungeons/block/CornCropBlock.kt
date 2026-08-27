@@ -1,33 +1,29 @@
 package org.teamvoided.dusks_and_dungeons.block
 
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.monster.Ravager
-import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.item.ItemStack
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.IntegerProperty
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
-import net.minecraft.util.RandomSource
-import net.minecraft.world.phys.shapes.VoxelShape
-import net.minecraft.world.phys.shapes.Shapes
-import net.minecraft.world.*
-import net.minecraft.world.level.BlockGetter
-import net.minecraft.world.level.GameRules
-import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelAccessor
-import net.minecraft.world.level.LevelReader
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.BonemealableBlock
-import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.util.cropGetGrowthSpeed
+import org.teamvoided.dusks_and_dungeons.util.cropHasSufficientLight
 import java.lang.Integer.min
 
 class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), BonemealableBlock {
@@ -116,7 +112,7 @@ class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), Bone
         state.getValue(SECTION) == TripleBlockSection.BOTTOM && !this.isMaxAge(state)
 
     public override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
-        val moisture = CropBlock.getGrowthSpeed(this, world, pos)
+        val moisture = cropGetGrowthSpeed(this, world, pos)
         val chance = random.nextInt((25f / moisture).toInt() + 1) == 0
         if (chance) {
             this.grow(world, state, pos, 1)
@@ -196,7 +192,7 @@ class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), Bone
             return blockState.isAir || blockState.`is`(defaultCornCrop())
         }
 
-        private fun hasEnoughLight(world: LevelReader, pos: BlockPos): Boolean = CropBlock.hasSufficientLight(world, pos)
+        private fun hasEnoughLight(world: LevelReader, pos: BlockPos): Boolean = cropHasSufficientLight(world, pos)
         private fun isLowestSection(state: BlockState): Boolean =
             state.`is`(defaultCornCrop()) && state.getValue(SECTION) == TripleBlockSection.BOTTOM
 
