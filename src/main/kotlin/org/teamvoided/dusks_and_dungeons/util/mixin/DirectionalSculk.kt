@@ -85,7 +85,7 @@ object DirectionalSculk {
 
     // region Spreader Code
 
-    @JvmStatic
+    @JvmStatic // TODO look in to reworking this later
     fun tryUseChargeSpreadRewrite(
         level: LevelAccessor, pos: BlockPos, charge: Int, cost: Int, random: RandomSource, canSummon: Boolean,
     ): Boolean {
@@ -134,7 +134,7 @@ object DirectionalSculk {
         }.iterator()
     }
 
-    @JvmStatic
+    @JvmStatic // TODO look in to reworking this later
     fun featureCatalystAndShrieker(ctx: FeaturePlaceContext<SculkPatchConfiguration>) {
         val cfg = ctx.config()
         val random = ctx.random()
