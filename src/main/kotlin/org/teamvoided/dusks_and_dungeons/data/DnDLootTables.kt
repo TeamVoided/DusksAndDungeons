@@ -19,11 +19,10 @@ object DnDLootTables {
     val COOL_CHEST = key("chests/cool_chest")
     val COOL_ARCHAEOLOGY = key("archaeology/cool_archaeology")
 
-    fun key(id: String) = key(id(id))
+    fun key(name: String) = key(id(name))
+
     fun key(id: ResourceLocation): ResourceKey<LootTable> {
-
         val key = Registries.LOOT_TABLE.key(id)
-
         if (LOOT_TABLES.add(key)) {
             return key
         }

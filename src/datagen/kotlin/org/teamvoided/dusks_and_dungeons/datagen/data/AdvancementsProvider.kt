@@ -15,7 +15,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.description
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.title
-import org.teamvoided.dusks_and_dungeons.data.variants.DnDWolfVariants
+import org.teamvoided.dusks_and_dungeons.data.registry.DnDWolfVariants
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.FabricOutput
