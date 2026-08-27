@@ -5,7 +5,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
+import org.teamvoided.dusks_and_dungeons.DnDConst.MODID
 
 const val HEAVY_CUBE_TOOLTIP = "block.$MODID.heavy_cube.tooltip"
 const val TINTED_TOOLTIP = "$MODID.tinted_potion.tooltip"

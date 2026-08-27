@@ -13,6 +13,8 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDStructurePiceTypes
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDStructureTypes
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.CascadeFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.ManhattanFoliagePlacer
 import org.teamvoided.dusks_and_dungeons.world.gen.foliage.OvergrowthFoliagePlacer
@@ -47,6 +49,9 @@ object DnDWorldgen {
 
     fun init() {
         DnDFeatures.init()
+
+        DnDStructureTypes.init()
+        DnDStructurePiceTypes.init()
 //        if (isDev()) DnDSurfaceBuilders.init()
     }
 

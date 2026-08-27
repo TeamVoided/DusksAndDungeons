@@ -9,21 +9,23 @@ import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight
 import net.minecraft.world.level.levelgen.structure.Structure
+import net.minecraft.world.level.levelgen.structure.Structure.StructureSettings
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure
-import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
-import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureFeatures
+import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructures
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDTemplatePool
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
+import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
+import org.teamvoided.dusks_and_dungeons.world.gen.structures.DnDMineshaftStructure
 
 object ModStructures : RegistryBootstrapper<Structure> {
 
     override fun BootstrapContext<Structure>.init() {
-//        val biomes = lookup(Registries.BIOME)
+        val biomes = lookup(Registries.BIOME)
         val templatePool = lookup(Registries.TEMPLATE_POOL)
 
         register(
-            DnDStructureFeatures.AUTUMN_RUINS,
+            DnDStructures.AUTUMN_RUINS,
             JigsawStructure(
                 settings(
                     DnDBiomeTags.HAS_STRUCTURE_AUTUMN_RUINS,
@@ -37,12 +39,22 @@ object ModStructures : RegistryBootstrapper<Structure> {
                 Heightmap.Types.OCEAN_FLOOR_WG
             )
         )
+
+        register(
+            DnDStructures.VERDANT_MINESHAFT,
+            DnDMineshaftStructure(
+                StructureSettings.Builder(biomes.getOrThrow(DnDBiomeTags.HAS_STRUCTURE_VERDANT_MINESHAFT))
+                    .generationStep(Decoration.UNDERGROUND_STRUCTURES)
+                    .build(),
+                DnDMineshaftStructure.Type.VERDANT
+            )
+        )
     }
 
     fun BootstrapContext<Structure>.settings(
         biomes: TagKey<Biome>, step: Decoration, adaptation: TerrainAdjustment,
-    ): Structure.StructureSettings {
-        return Structure.StructureSettings(lookup(Registries.BIOME).getOrThrow(biomes), mapOf(), step, adaptation)
+    ): StructureSettings {
+        return StructureSettings(lookup(Registries.BIOME).getOrThrow(biomes), mapOf(), step, adaptation)
     }
 
 }

@@ -6,7 +6,7 @@ import net.minecraft.world.level.levelgen.structure.StructureSet
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType
 import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
-import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureFeatures
+import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructures
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructureSets
 
 object ModStructureSets : RegistryBootstrapper<StructureSet> {
@@ -18,7 +18,7 @@ object ModStructureSets : RegistryBootstrapper<StructureSet> {
             DnDStructureSets.AUTUMN_RUINS,
             StructureSet(
                 listOf(
-                    StructureSet.entry(structures.getOrThrow(DnDStructureFeatures.AUTUMN_RUINS))
+                    StructureSet.entry(structures.getOrThrow(DnDStructures.AUTUMN_RUINS))
                 ),
                 RandomSpreadStructurePlacement(16, 4, RandomSpreadType.LINEAR, 1875259856)
             )

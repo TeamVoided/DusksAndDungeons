@@ -18,6 +18,7 @@ object DnDBiomeTags {
 
     // Has Structure
     val HAS_STRUCTURE_AUTUMN_RUINS = key("has_structure/autumn_ruins")
+    val HAS_STRUCTURE_VERDANT_MINESHAFT = key("has_structure/verdant_mineshaft")
 
     // Spawns Mobs
     @JvmField
