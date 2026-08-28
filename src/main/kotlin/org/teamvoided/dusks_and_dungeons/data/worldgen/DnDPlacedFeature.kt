@@ -1,59 +1,61 @@
 package org.teamvoided.dusks_and_dungeons.data.worldgen
 
-import net.minecraft.resources.ResourceKey
 import net.minecraft.core.registries.Registries
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.util.key
 
-@Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
 object DnDPlacedFeature {
-    val OVERGROWN_BOULDER = create("boulder/overgrown_cobblestone")
-    val OVERGROWN_CAVE_BOULDER = create("boulder/overgrown_cave")
-    val ORE_LAPIS_EXTRA = create("ore_lapis_extra")
-    val CASCADE_TREE = create("tree/cascade_tree")
-    val CASCADE_TREE_BEES = create("tree/cascade_tree_bees")
-    val CASCADE_TREE_AUTUMN = create("tree/cascade_tree_autumn")
-    val SYPIA_TALL = create("tree/sypia_tall")
-    val SYPIA_TALL_BEES = create("tree/sypia_tall_bees")
-    val SYPIA_TALL_AUTUMN = create("tree/sypia_tall_autumn")
-    val DARK_OAK_AUTUMN = create("tree/dark_oak_autumn")
-    val ACACIA_AUTUMN = create("tree/acacia_autumn")
-    val ACACIA_BUSH_AUTUMN = create("tree/acacia_bush_autumn")
-    val PATCH_GRASS_AUTUMN_PLAIN = create("patch_grass_autumn_plain")
-    val PATCH_TALL_GRASS_AUTUMN_PLAIN = create("patch_tall_grass_autumn_plain")
-    val PATCH_PUMPKIN_EXTRA = create("pumpkin/pumpkin_extra")
-    val PATCH_LANTERN_PUMPKIN_EXTRA = create("pumpkin/lantern_extra")
-    val PATCH_MOSSKIN_PUMPKIN_EXTRA = create("pumpkin/mosskin_extra")
-    val PATCH_GLOOM_PUMPKIN_EXTRA = create("pumpkin/gloom_extra")
-    val DISK_PODZOL = create("disk_podzol")
-    val DISK_MUD = create("disk_mud")
-    val DISK_RED_SAND = create("disk_red_sand")
-    val AUTUMN_WOODS_VEGETATION = create("autumn_woods_vegetation")
-    val AUTUMN_PASTURES_VEGETATION = create("autumn_pastures_vegetation")
-    val GOLDEN_WOODS_VEGETATION = create("golden_woods_vegetation")
-    val GOLDEN_PASTURES_VEGETATION = create("golden_pastures_vegetation")
-    val FLOWER_AUTUMN = create("flower_autumn")
-    val PATCH_ROSEBUSH = create("patch_rosebush")
-    val ORANGE_PETALS = create("orange_petals")
-    val AUTUMN_FARMLANDS = create("autumn_farmlands")
-    val CROPS_WILD_WHEAT = create("crops/wild_wheat")
-    val WILD_WHEAT_FIELD = create("wild_wheat_field")
 
-    val OVERGROWTH_TREE_ROOTED = create("cave/overgrowth_tree_rooted")
-    val OVERGROWTH_HANGING = create("cave/overgrowth_hanging")
-    val OVERGROWTH_CAVES_FLOOR_VEGETATION = create("cave/overgrowth_floor_vegetation")
-    val OVERGROWTH_CAVES_CEILING_VEGETATION = create("cave/overgrowth_ceiling_vegetation")
-    val OVERGROWTH_CAVES_TREES = create("cave/overgrowth_tree")
+    val OVERGROWN_BOULDER = key("boulder/overgrown_cobblestone")
+    val OVERGROWN_CAVE_BOULDER = key("boulder/overgrown_cave")
+    val ORE_LAPIS_EXTRA = key("ore_lapis_extra")
+    val CASCADE_TREE = key("tree/cascade_tree")
+    val CASCADE_TREE_BEES = key("tree/cascade_tree_bees")
+    val CASCADE_TREE_AUTUMN = key("tree/cascade_tree_autumn")
+    val SYPIA_TALL = key("tree/sypia_tall")
+    val SYPIA_TALL_BEES = key("tree/sypia_tall_bees")
+    val SYPIA_TALL_AUTUMN = key("tree/sypia_tall_autumn")
+    val DARK_OAK_AUTUMN = key("tree/dark_oak_autumn")
+    val ACACIA_AUTUMN = key("tree/acacia_autumn")
+    val ACACIA_BUSH_AUTUMN = key("tree/acacia_bush_autumn")
+    val PATCH_GRASS_AUTUMN_PLAIN = key("patch_grass_autumn_plain")
+    val PATCH_TALL_GRASS_AUTUMN_PLAIN = key("patch_tall_grass_autumn_plain")
+    val PATCH_PUMPKIN_EXTRA = key("pumpkin/pumpkin_extra")
+    val PATCH_LANTERN_PUMPKIN_EXTRA = key("pumpkin/lantern_extra")
+    val PATCH_MOSSKIN_PUMPKIN_EXTRA = key("pumpkin/mosskin_extra")
+    val PATCH_GLOOM_PUMPKIN_EXTRA = key("pumpkin/gloom_extra")
+    val DISK_PODZOL = key("disk_podzol")
+    val DISK_MUD = key("disk_mud")
+    val DISK_RED_SAND = key("disk_red_sand")
+    val AUTUMN_WOODS_VEGETATION = key("autumn_woods_vegetation")
+    val AUTUMN_PASTURES_VEGETATION = key("autumn_pastures_vegetation")
+    val GOLDEN_WOODS_VEGETATION = key("golden_woods_vegetation")
+    val GOLDEN_PASTURES_VEGETATION = key("golden_pastures_vegetation")
+    val FLOWER_AUTUMN = key("flower_autumn")
+    val PATCH_ROSEBUSH = key("patch_rosebush")
+    val ORANGE_PETALS = key("orange_petals")
+    val AUTUMN_FARMLANDS = key("autumn_farmlands")
+    val CROPS_WILD_WHEAT = key("crops/wild_wheat")
+    val WILD_WHEAT_FIELD = key("wild_wheat_field")
 
-
-    val FAIRY_RING_RED = create("fairy_ring_red")
-
-    val GOLDEN_MUSHROOM_CAVE = create("golden_mushroom/cave") //overworld not surface
-    val GOLDEN_MUSHROOM_SURFACE = create("golden_mushroom/surface") //other forests
-    val GOLDEN_MUSHROOM_HUGE_PATCH = create("golden_mushroom/common") //dark forest and mushroom biomes
-
-    val CRIMSON_WART = create("crimson_warts")
-    val WARPED_WART = create("warped_warts")
+    val OVERGROWTH_TREE_ROOTED = key("cave/overgrowth_tree_rooted")
+    val OVERGROWTH_HANGING = key("cave/overgrowth_hanging")
+    val OVERGROWTH_CAVES_FLOOR_VEGETATION = key("cave/overgrowth_floor_vegetation")
+    val OVERGROWTH_CAVES_CEILING_VEGETATION = key("cave/overgrowth_ceiling_vegetation")
+    val OVERGROWTH_CAVES_TREES = key("cave/overgrowth_tree")
 
 
-    fun create(id: String) = ResourceKey.create(Registries.PLACED_FEATURE, DusksAndDungeons.id(id))
+    val FAIRY_RING_RED = key("fairy_ring_red")
+
+    val GOLDEN_MUSHROOM_CAVE = key("golden_mushroom/cave") //overworld not surface
+    val GOLDEN_MUSHROOM_SURFACE = key("golden_mushroom/surface") //other forests
+    val GOLDEN_MUSHROOM_HUGE_PATCH = key("golden_mushroom/common") //dark forest and mushroom biomes
+
+    val CRIMSON_WART = key("crimson_warts")
+    val WARPED_WART = key("warped_warts")
+
+    val PILE_CORN = key("pile_corn")
+
+    fun key(id: String) = Registries.PLACED_FEATURE.key(id(id))
+
 }

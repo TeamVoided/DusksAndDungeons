@@ -31,10 +31,7 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.DarkOakFoliagePlacer
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
-import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider
-import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider
-import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
+import net.minecraft.world.level.levelgen.feature.stateproviders.*
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.trunkplacers.DarkOakTrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer
@@ -326,12 +323,17 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.PILE_CORN,
+            Feature.BLOCK_PILE, BlockPileConfiguration(RotatedBlockProvider(DnDBlocks.CORN_BLOCK))
+        )
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.hangingCaveColumn(
         feature: ResourceKey<ConfiguredFeature<*, *>>,
         list: List<BlockColumnConfiguration.Layer>,
-        tip: Boolean = false
+        tip: Boolean = false,
     ) {
 
         this.registerConfiguredFeature(
@@ -540,7 +542,8 @@ object ConfiguredFeatureCreator {
                         Feature.RANDOM_PATCH,
                         FeatureUtils.simpleRandomPatchConfiguration(
                             96, PlacementUtils.inlinePlaced(
-                                this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
+                                this.lookup(Registries.CONFIGURED_FEATURE)
+                                    .getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
                             )
                         )
                     )
@@ -791,7 +794,7 @@ object ConfiguredFeatureCreator {
     fun BootstrapContext<ConfiguredFeature<*, *>>.overgrowthPatch(
         feature: ResourceKey<ConfiguredFeature<*, *>>,
         surface: CaveSurface,
-        bonemeal: Boolean = false
+        bonemeal: Boolean = false,
     ) {
         val isCeil = surface.ordinal == 1
         val vegFeat = PlacementUtils.inlinePlaced(
@@ -821,7 +824,7 @@ object ConfiguredFeatureCreator {
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.overgrowthTree(
         cf: ResourceKey<ConfiguredFeature<*, *>>,
-        dir: Direction
+        dir: Direction,
     ) {
         val trunk =
             if (dir.axis == Direction.Axis.Y)
@@ -891,7 +894,7 @@ object ConfiguredFeatureCreator {
     fun WeightedList.Builder<Holder<PlacedFeature>>.addC(
         c: BootstrapContext<ConfiguredFeature<*, *>>,
         entry: ResourceKey<ConfiguredFeature<*, *>>,
-        int: Int = 1
+        int: Int = 1,
     ): WeightedList.Builder<Holder<PlacedFeature>> {
         this.add(PlacementUtils.inlinePlaced(c.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(entry)), int)
         return this
@@ -900,7 +903,7 @@ object ConfiguredFeatureCreator {
     fun WeightedList.Builder<Holder<PlacedFeature>>.addP(
         c: BootstrapContext<ConfiguredFeature<*, *>>,
         entry: ResourceKey<PlacedFeature>,
-        int: Int = 1
+        int: Int = 1,
     ): WeightedList.Builder<Holder<PlacedFeature>> {
         this.add(c.lookup(Registries.PLACED_FEATURE).getOrThrow(entry), int)
         return this

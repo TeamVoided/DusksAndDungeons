@@ -169,6 +169,8 @@ object PlacedFeatureCreator {
             7,
             Direction.UP
         )
+
+        c.register(DnDPlacedFeature.PILE_CORN, DnDConfiguredFeature.PILE_CORN)
     }
 
     fun saplingFeatures(
@@ -341,7 +343,7 @@ object PlacedFeatureCreator {
     fun BootstrapContext<PlacedFeature>.surfacePlacementRare(
         place: ResourceKey<PlacedFeature>,
         conf: ResourceKey<ConfiguredFeature<*, *>>,
-        rarity: Int = 50
+        rarity: Int = 50,
     ) {
         this.register(
             place,
@@ -356,7 +358,7 @@ object PlacedFeatureCreator {
     fun BootstrapContext<PlacedFeature>.surfacePlacement(
         place: ResourceKey<PlacedFeature>,
         conf: ResourceKey<ConfiguredFeature<*, *>>,
-        count: Int = 50
+        count: Int = 50,
     ) {
         this.register(
             place,
@@ -373,7 +375,7 @@ object PlacedFeatureCreator {
         conf: ResourceKey<ConfiguredFeature<*, *>>,
         count: Int,
         direction: Direction,
-        search: BlockPredicate = BlockPredicate.solid()
+        search: BlockPredicate = BlockPredicate.solid(),
     ) = this.cavePlacement(place, conf, RarityFilter.onAverageOnceEvery(count), direction, search)
 
     fun BootstrapContext<PlacedFeature>.cavePlacement(
@@ -381,7 +383,7 @@ object PlacedFeatureCreator {
         conf: ResourceKey<ConfiguredFeature<*, *>>,
         rate: Int,
         direction: Direction,
-        search: BlockPredicate = BlockPredicate.solid()
+        search: BlockPredicate = BlockPredicate.solid(),
     ) = this.cavePlacement(place, conf, CountPlacement.of(rate), direction, search)
 
     fun BootstrapContext<PlacedFeature>.cavePlacement(
@@ -389,7 +391,7 @@ object PlacedFeatureCreator {
         conf: ResourceKey<ConfiguredFeature<*, *>>,
         rate: PlacementModifier,
         direction: Direction,
-        search: BlockPredicate = BlockPredicate.solid()
+        search: BlockPredicate = BlockPredicate.solid(),
     ) {
         this.register(
             place,
@@ -437,4 +439,11 @@ object PlacedFeatureCreator {
         registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
         placementModifiers: List<PlacementModifier>,
     ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
+
+
+    fun BootstrapContext<PlacedFeature>.register(
+        placed: ResourceKey<PlacedFeature>, configured: ResourceKey<ConfiguredFeature<*, *>>,
+    ) {
+        register(placed, PlacedFeature(lookup(Registries.CONFIGURED_FEATURE).getOrThrow(configured), listOf()))
+    }
 }

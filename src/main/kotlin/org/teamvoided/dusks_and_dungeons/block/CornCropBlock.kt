@@ -26,7 +26,9 @@ import org.teamvoided.dusks_and_dungeons.util.cropGetGrowthSpeed
 import org.teamvoided.dusks_and_dungeons.util.cropHasSufficientLight
 import java.lang.Integer.min
 
+// TODO fix corn deleting bedrock
 class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), BonemealableBlock {
+
     init {
         this.registerDefaultState(stateDefinition.any().setValue(SECTION, TripleBlockSection.BOTTOM))
     }
@@ -93,8 +95,7 @@ class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), Bone
         else super.canSurvive(state, world, pos)
     }
 
-    override fun mayPlaceOn(floor: BlockState, world: BlockGetter, pos: BlockPos): Boolean =
-        floor.`is`(Blocks.FARMLAND)
+    override fun mayPlaceOn(floor: BlockState, world: BlockGetter, pos: BlockPos): Boolean = floor.`is`(Blocks.FARMLAND)
 
     public override fun entityInside(state: BlockState, world: Level, pos: BlockPos, entity: Entity) {
         if (entity is Ravager && world.gameRules.getBoolean(GameRules.RULE_MOBGRIEFING)) {
@@ -128,13 +129,13 @@ class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), Bone
         if (this.canGrow(world, pos, state, newAge)) {
             val blockState = withAge(newAge).trySetValue(AGE, newAge)
             world.setBlock(pos, blockState, 2)
-            //val height = heightAtAge(newAge)
-            //if (height >= 2) {
-            //    world.setBlockState(pos.up(), blockState.with(SECTION, TripleBlockSection.MIDDLE), 2)
-            //    if (height >= 3) {
-            //        world.setBlockState(pos.up(2), blockState.with(SECTION, TripleBlockSection.TOP), 2)
-            //    }
-            //}
+            val height = heightAtAge(newAge)
+            if (height >= 2) {
+                world.setBlock(pos.above(), blockState.setValue(SECTION, TripleBlockSection.MIDDLE), 2)
+                if (height >= 3) {
+                    world.setBlock(pos.above(2), blockState.setValue(SECTION, TripleBlockSection.TOP), 2)
+                }
+            }
         }
     }
 
