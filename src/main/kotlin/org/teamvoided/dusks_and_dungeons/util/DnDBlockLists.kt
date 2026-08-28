@@ -16,6 +16,7 @@ object DnDBlockLists {
         (Blocks.CHERRY_LOG to Blocks.STRIPPED_CHERRY_LOG),
         (DnDBlocks.CASCADE_LOG to DnDBlocks.STRIPPED_CASCADE_LOG),
         (DnDBlocks.SYPIA_LOG to DnDBlocks.STRIPPED_SYPIA_LOG),
+        (DnDBlocks.VERDANT_LOG to DnDBlocks.STRIPPED_VERDANT_LOG),
         (Blocks.CRIMSON_STEM to Blocks.STRIPPED_CRIMSON_STEM),
         (Blocks.WARPED_STEM to Blocks.STRIPPED_WARPED_STEM)
     )
@@ -30,6 +31,7 @@ object DnDBlockLists {
         (Blocks.CHERRY_WOOD to Blocks.STRIPPED_CHERRY_WOOD),
         (DnDBlocks.CASCADE_WOOD to DnDBlocks.STRIPPED_CASCADE_WOOD),
         (DnDBlocks.SYPIA_WOOD to DnDBlocks.STRIPPED_SYPIA_WOOD),
+        (DnDBlocks.VERDANT_WOOD to DnDBlocks.STRIPPED_VERDANT_WOOD),
         (Blocks.CRIMSON_HYPHAE to Blocks.STRIPPED_CRIMSON_HYPHAE),
         (Blocks.WARPED_HYPHAE to Blocks.STRIPPED_WARPED_HYPHAE)
     )
@@ -44,6 +46,7 @@ object DnDBlockLists {
         Blocks.CHERRY_PLANKS,
         DnDBlocks.CASCADE_PLANKS,
         DnDBlocks.SYPIA_PLANKS,
+        DnDBlocks.VERDANT_PLANKS,
         Blocks.CRIMSON_PLANKS,
         Blocks.WARPED_PLANKS,
     )
@@ -58,6 +61,7 @@ object DnDBlockLists {
         Blocks.CHERRY_SLAB,
         DnDBlocks.CASCADE_SLAB,
         DnDBlocks.SYPIA_SLAB,
+        DnDBlocks.VERDANT_SLAB,
         Blocks.CRIMSON_SLAB,
         Blocks.WARPED_SLAB,
     )
@@ -72,6 +76,7 @@ object DnDBlockLists {
         DnDBlocks.CHERRY_WALL,
         DnDBlocks.CASCADE_WALL,
         DnDBlocks.SYPIA_WALL,
+        DnDBlocks.VERDANT_WALL,
         DnDBlocks.CRIMSON_WALL,
         DnDBlocks.WARPED_WALL,
     )
@@ -108,6 +113,7 @@ object DnDBlockLists {
         DnDBlocks.HOLLOW_CHERRY_LOG,
         DnDBlocks.HOLLOW_CASCADE_LOG,
         DnDBlocks.HOLLOW_SYPIA_LOG,
+        DnDBlocks.HOLLOW_VERDANT_LOG,
         DnDBlocks.HOLLOW_CRIMSON_STEM,
         DnDBlocks.HOLLOW_WARPED_STEM
     )
@@ -122,6 +128,7 @@ object DnDBlockLists {
         DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG,
         DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG,
         DnDBlocks.HOLLOW_STRIPPED_SYPIA_LOG,
+        DnDBlocks.HOLLOW_STRIPPED_VERDANT_LOG,
         DnDBlocks.HOLLOW_STRIPPED_CRIMSON_STEM,
         DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM
     )
@@ -136,6 +143,7 @@ object DnDBlockLists {
         DnDBlocks.CHERRY_LOG_PILE,
         DnDBlocks.CASCADE_LOG_PILE,
         DnDBlocks.SYPIA_LOG_PILE,
+        DnDBlocks.VERDANT_LOG_PILE,
         DnDBlocks.CRIMSON_STEM_PILE,
         DnDBlocks.WARPED_STEM_PILE
     )
@@ -150,6 +158,7 @@ object DnDBlockLists {
         DnDBlocks.STRIPPED_CHERRY_LOG_PILE,
         DnDBlocks.STRIPPED_CASCADE_LOG_PILE,
         DnDBlocks.STRIPPED_SYPIA_LOG_PILE,
+        DnDBlocks.STRIPPED_VERDANT_LOG_PILE,
         DnDBlocks.STRIPPED_CRIMSON_STEM_PILE,
         DnDBlocks.STRIPPED_WARPED_STEM_PILE
     )

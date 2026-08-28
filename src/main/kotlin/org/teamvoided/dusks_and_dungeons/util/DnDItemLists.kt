@@ -64,6 +64,26 @@ object DnDItemLists {
         DnDItems.SYPIA_HANGING_SIGN
     )
 
+    val verdantWood = listOf(
+        DnDBlocks.VERDANT_LOG,
+        DnDBlocks.VERDANT_WOOD,
+        DnDBlocks.STRIPPED_VERDANT_LOG,
+        DnDBlocks.STRIPPED_VERDANT_WOOD,
+        DnDBlocks.VERDANT_PLANKS,
+        DnDBlocks.VERDANT_STAIRS,
+        DnDBlocks.VERDANT_SLAB,
+        DnDBlocks.VERDANT_FENCE,
+        DnDBlocks.VERDANT_FENCE_GATE,
+        DnDItems.VERDANT_DOOR,
+        DnDBlocks.VERDANT_TRAPDOOR,
+        DnDBlocks.VERDANT_PRESSURE_PLATE,
+        DnDBlocks.VERDANT_BUTTON
+    )
+    val verdantSigns = listOf(
+        DnDItems.VERDANT_SIGN,
+        DnDItems.VERDANT_HANGING_SIGN
+    )
+
     val overgrownCobblestone = DnDBlocks.OVERGROWN_COBBLESTONE.list
     val overgrownStoneBricks = DnDBlocks.OVERGROWN_STONE_BRICKS.list
     val ice = DnDBlocks.ICE_SET.list + DnDBlocks.PACKED_ICE_SET.list + DnDBlocks.BLUE_ICE_SET.list
@@ -118,6 +138,7 @@ object DnDItemLists {
     val cherryWoodStuff = DnDBlocks.CHERRY_WOOD.headless()
     val cascadeWoodStuff = DnDBlocks.CASCADE_WOOD.headless()
     val sypiaWoodStuff = DnDBlocks.SYPIA_WOOD.headless()
+    val verdantWoodStuff = DnDBlocks.VERDANT_WOOD.headless()
     val crimsonHyphaeStuff = DnDBlocks.CRIMSON_HYPHAE.headless()
     val warpedHyphaeStuff = DnDBlocks.WARPED_HYPHAE.headless()
 
@@ -132,6 +153,7 @@ object DnDItemLists {
         cherryWoodStuff,
         cascadeWoodStuff,
         sypiaWoodStuff,
+        verdantWoodStuff,
         crimsonHyphaeStuff,
         warpedHyphaeStuff
     )
@@ -147,14 +169,15 @@ object DnDItemLists {
         DnDBlocks.STRIPPED_CHERRY_WOOD.headless(),
         DnDBlocks.STRIPPED_CASCADE_WOOD.headless(),
         DnDBlocks.STRIPPED_SYPIA_WOOD.headless(),
+        DnDBlocks.STRIPPED_VERDANT_WOOD.headless(),
         DnDBlocks.STRIPPED_CRIMSON_HYPHAE.headless(),
         DnDBlocks.STRIPPED_WARPED_HYPHAE.headless(),
     )
 
-    val woodStuff = oakWoodStuff + spruceWoodStuff + birchWoodStuff +
-            jungleWoodStuff + acaciaWoodStuff + darkOakWoodStuff +
-            mangroveWoodStuff + cherryWoodStuff + cascadeWoodStuff +
-            sypiaWoodStuff + crimsonHyphaeStuff + warpedHyphaeStuff
+    val woodStuff = oakWoodStuff + spruceWoodStuff + birchWoodStuff + jungleWoodStuff +
+            acaciaWoodStuff + darkOakWoodStuff + mangroveWoodStuff + cherryWoodStuff +
+            cascadeWoodStuff + sypiaWoodStuff + verdantWoodStuff + crimsonHyphaeStuff +
+            warpedHyphaeStuff
 
     val leafPiles = listOf(
         DnDBlocks.OAK_LEAF_PILE,

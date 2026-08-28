@@ -110,20 +110,26 @@ object WoodModels {
         gen.createWood(DnDBlocks.STRIPPED_SYPIA_WOOD, DnDBlocks.STRIPPED_SYPIA_LOG)
 
         DnDBlockLists.hollowLogs.forEachIndexed { idx, hollowLog ->
-            val log = DnDBlockLists.logsAndStrippedLogs[idx].first
-            val strippedLog = DnDBlockLists.logsAndStrippedLogs[idx].second
-            gen.hollowLog(hollowLog, log, strippedLog)
-            gen.hollowLog(DnDBlockLists.hollowStrippedLogs[idx], strippedLog)
+            if (!hollowLog.defaultBlockState().`is`(DnDBlocks.HOLLOW_VERDANT_LOG)) {
+                val log = DnDBlockLists.logsAndStrippedLogs[idx].first
+                val strippedLog = DnDBlockLists.logsAndStrippedLogs[idx].second
+                gen.hollowLog(hollowLog, log, strippedLog)
+                gen.hollowLog(DnDBlockLists.hollowStrippedLogs[idx], strippedLog)
+            }
         }
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_BAMBOO_BLOCK, Blocks.BAMBOO_BLOCK)
         gen.hollowBambooBlock(DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK, Blocks.STRIPPED_BAMBOO_BLOCK)
         gen.hollowTintedLog(DnDBlocks.HOLLOW_VERDANT_LOG, DnDBlocks.VERDANT_LOG, DnDBlocks.STRIPPED_VERDANT_LOG)
         gen.hollowTintedStrippedLog(DnDBlocks.HOLLOW_STRIPPED_VERDANT_LOG, DnDBlocks.STRIPPED_VERDANT_LOG)
         DnDBlockLists.logPiles.forEachIndexed { idx, pile ->
-            gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
+            if (!pile.defaultBlockState().`is`(DnDBlocks.VERDANT_LOG_PILE)) {
+                gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].first)
+            }
         }
         DnDBlockLists.stripedLogPiles.forEachIndexed { idx, pile ->
-            gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].second)
+            if (!pile.defaultBlockState().`is`(DnDBlocks.STRIPPED_VERDANT_LOG_PILE)) {
+                gen.createLogPile(pile, DnDBlockLists.logsAndStrippedLogs[idx].second)
+            }
         }
         gen.createLogPile(DnDBlocks.VERDANT_LOG_PILE, DnDBlocks.VERDANT_LOG, "tint/log")
         gen.createLogPile(DnDBlocks.STRIPPED_VERDANT_LOG_PILE, DnDBlocks.STRIPPED_VERDANT_LOG, "tint/stripped_log")

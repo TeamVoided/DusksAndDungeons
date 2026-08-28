@@ -268,6 +268,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.HOLLOW_CHERRY_LOG,
                 DnDBlocks.HOLLOW_CASCADE_LOG,
                 DnDBlocks.HOLLOW_SYPIA_LOG,
+                DnDBlocks.HOLLOW_VERDANT_LOG,
                 DnDBlocks.HOLLOW_BAMBOO_BLOCK
             )
             .add(
@@ -281,6 +282,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.HOLLOW_STRIPPED_CHERRY_LOG,
                 DnDBlocks.HOLLOW_STRIPPED_CASCADE_LOG,
                 DnDBlocks.HOLLOW_STRIPPED_SYPIA_LOG,
+                DnDBlocks.HOLLOW_STRIPPED_VERDANT_LOG,
                 DnDBlocks.HOLLOW_STRIPPED_BAMBOO_BLOCK
             )
 
@@ -562,6 +564,20 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(
                 DnDBlocks.CRIMSON_HYPHAE.wall, DnDBlocks.WARPED_HYPHAE.wall,
                 DnDBlocks.STRIPPED_CRIMSON_HYPHAE.wall, DnDBlocks.STRIPPED_WARPED_HYPHAE.wall
+            )
+
+
+        getOrCreateTagBuilder(ConventionalBlockTags.STRIPPED_LOGS)
+            .add(
+                DnDBlocks.STRIPPED_CASCADE_LOG,
+                DnDBlocks.STRIPPED_SYPIA_LOG,
+                DnDBlocks.STRIPPED_VERDANT_LOG,
+            )
+        getOrCreateTagBuilder(ConventionalBlockTags.STRIPPED_WOODS)
+            .add(
+                DnDBlocks.STRIPPED_CASCADE_WOOD.parent,
+                DnDBlocks.STRIPPED_SYPIA_WOOD.parent,
+                DnDBlocks.STRIPPED_VERDANT_WOOD.parent,
             )
 
     }

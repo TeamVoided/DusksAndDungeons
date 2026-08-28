@@ -52,14 +52,13 @@ object DnDItems {
     )
 
     val VERDANT_DOOR = register("verdant_door", DoubleHighBlockItem(DnDBlocks.VERDANT_DOOR, Properties()))
-        .tellWitnessesThatIWasMurdered()
     val VERDANT_SIGN = register(
         "verdant_sign", SignItem(countSettings(16), DnDBlocks.VERDANT_SIGN, DnDBlocks.VERDANT_WALL_SIGN)
-    ).tellWitnessesThatIWasMurdered()
+    )
     val VERDANT_HANGING_SIGN = register(
         "verdant_hanging_sign",
         HangingSignItem(DnDBlocks.VERDANT_HANGING_SIGN, DnDBlocks.VERDANT_WALL_HANGING_SIGN, countSettings(16))
-    ).tellWitnessesThatIWasMurdered()
+    )
 
     val FARMERS_HAT = register(
         "farmers_hat", EquipableItem(

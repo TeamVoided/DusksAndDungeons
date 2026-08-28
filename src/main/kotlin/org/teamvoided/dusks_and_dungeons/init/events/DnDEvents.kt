@@ -59,6 +59,12 @@ object DnDEvents {
         compost(DnDBlocks.ROOT_BLOCK, 0.65)
         DnDBlockLists.flowerbedBlocks.forEach { compost(it, 0.3) }
 
+        compost(DnDBlocks.CASCADE_LEAVES, 0.3)
+        compost(DnDBlocks.SYPIA_LEAVES, 0.3)
+        compost(DnDBlocks.VERDANT_LEAVES, 0.3)
+
+        DnDBlockLists.leafPiles.forEach { compost(it, 0.15) }
+
         compost(DnDBlocks.CASCADE_SAPLING, 0.3)
         compost(DnDBlocks.SYPIA_SAPLING, 0.3)
 

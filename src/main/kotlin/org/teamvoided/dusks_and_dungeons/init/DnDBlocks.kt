@@ -215,8 +215,10 @@ object DnDBlocks {
     val BLUE_DOOR = registerNoItem("blue_door", DoorBlock(BlockSetType.DARK_OAK, Set.BLUE_DOOR).wood())
     val CASCADE_TRAPDOOR =
         register("cascade_trapdoor", trapdoorOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
-    val CASCADE_PRESSURE_PLATE =
-        register("cascade_pressure_plate", pressurePlateOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
+    val CASCADE_PRESSURE_PLATE = register(
+        "cascade_pressure_plate",
+        pressurePlateOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS)
+    ).wood()
     val CASCADE_BUTTON = register("cascade_button", woodenButton(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE).wood())
     val CASCADE_SIGN = registerNoItem("cascade_sign", signOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
     val CASCADE_WALL_SIGN = registerNoItem(
@@ -284,73 +286,59 @@ object DnDBlocks {
     // region Verdant
     val VERDANT_LEAVES =
         register("verdant_leaves", LeavesBlock(ofFullCopy(AZALEA_LEAVES))).cutout().grass().tint().hoe()
-            .tellWitnessesThatIWasMurdered()
     val VERDANT_LEAF_PILE = register(
         "verdant_leaf_pile",
         leafPile(VERDANT_LEAVES.defaultMapColor(), SoundType.AZALEA_LEAVES)
     ).cutout().grass().tint().hoe()
-        .tellWitnessesThatIWasMurdered()
+
     val VERDANT_LOG = register("verdant_log", log(MapColor.GRASS, MapColor.COLOR_BROWN)).grass().cutout()
-        .tellWitnessesThatIWasMurdered()
     val VERDANT_WOOD = register(
         createBlockSet("verdant_wood", Set.VERDANT_WOOD).noStoneCutting().parent(::RotatedPillarBlock).build()
     ).woodSet().grass()
-        .tellWitnessesThatIWasMurdered()
+
 
     val VERDANT_LOG_PILE = register("verdant_log_pile", logPile(VERDANT_WOOD.parent)).grass()
-        .tellWitnessesThatIWasMurdered()
     val STRIPPED_VERDANT_LOG = register("stripped_verdant_log", log(MapColor.GRASS, MapColor.GRASS)).grass().tint()
-        .tellWitnessesThatIWasMurdered()
     val STRIPPED_VERDANT_WOOD = register(
-        createBlockSet("stripped_verdant_wood", Set.STRIPPED_VERDANT_WOOD).noStoneCutting().parent(::RotatedPillarBlock)
+        createBlockSet("stripped_verdant_wood", Set.STRIPPED_VERDANT_WOOD)
+            .noStoneCutting()
+            .parent(::RotatedPillarBlock)
             .build()
     ).woodSet().grass().tint()
-        .tellWitnessesThatIWasMurdered()
-    val STRIPPED_VERDANT_LOG_PILE =
-        register("stripped_verdant_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent)).grass().tint()
-            .tellWitnessesThatIWasMurdered()
+    val STRIPPED_VERDANT_LOG_PILE = register("stripped_verdant_log_pile", logPile(STRIPPED_VERDANT_WOOD.parent))
+        .grass().tint()
+
 
     val VERDANT_PLANKS = register("verdant_planks", Block(Set.VERDANT_PLANKS)).flammablePlanks().grass().tint()
-        .tellWitnessesThatIWasMurdered()
-    val VERDANT_STAIRS = register("verdant_stairs", stairsOf(VERDANT_PLANKS).wood()).grass().tint()
-        .tellWitnessesThatIWasMurdered()
-    val VERDANT_SLAB = register("verdant_slab", slabOf(VERDANT_PLANKS).wood()).grass().tint()
-        .tellWitnessesThatIWasMurdered()
-    val VERDANT_WALL = register("verdant_plank_wall", wallOf(VERDANT_PLANKS).wood()).grass().tint()
-        .tellWitnessesThatIWasMurdered()
-    val VERDANT_FENCE = register("verdant_fence", fenceOf(VERDANT_PLANKS).wood()).grass().tint()
-        .tellWitnessesThatIWasMurdered()
-    val VERDANT_FENCE_GATE =
-        register("verdant_fence_gate", fenceGateOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS).wood()).grass()
-            .tint().tellWitnessesThatIWasMurdered()
-    val VERDANT_DOOR =
-        registerNoItem("verdant_door", doorOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()).grass()
-            .tint().tellWitnessesThatIWasMurdered()
-    val VERDANT_TRAPDOOR =
-        register("verdant_trapdoor", trapdoorOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()).grass()
-            .tint().tellWitnessesThatIWasMurdered()
+    val VERDANT_STAIRS = register("verdant_stairs", stairsOf(VERDANT_PLANKS)).wood().grass().tint()
+    val VERDANT_SLAB = register("verdant_slab", slabOf(VERDANT_PLANKS)).wood().grass().tint()
+    val VERDANT_WALL = register("verdant_plank_wall", wallOf(VERDANT_PLANKS)).wood().grass().tint()
+    val VERDANT_FENCE = register("verdant_fence", fenceOf(VERDANT_PLANKS)).wood().grass().tint()
+    val VERDANT_FENCE_GATE = register("verdant_fence_gate", fenceGateOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS))
+        .wood().grass().tint()
+    val VERDANT_DOOR = registerNoItem("verdant_door", doorOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS))
+        .wood().grass().tint()
+    val VERDANT_TRAPDOOR = register(
+        "verdant_trapdoor", trapdoorOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS)
+    ).wood().grass().tint()
     val VERDANT_PRESSURE_PLATE = register(
-        "verdant_pressure_plate",
-        pressurePlateOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS).wood()
-    ).grass().tint().tellWitnessesThatIWasMurdered()
-    val VERDANT_BUTTON =
-        register("verdant_button", woodenButton(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE)).wood().grass().tint()
-            .tellWitnessesThatIWasMurdered()
-    val VERDANT_SIGN =
-        registerNoItem("verdant_sign", signOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS))
-            .wood().tint().grass().tellWitnessesThatIWasMurdered()
+        "verdant_pressure_plate", pressurePlateOf(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE, VERDANT_PLANKS)
+    ).wood().grass().tint()
+    val VERDANT_BUTTON = register("verdant_button", woodenButton(DnDBlockSetTypes.VERDANT_BLOCK_SET_TYPE))
+        .wood().grass().tint()
+
+    val VERDANT_SIGN = registerNoItem("verdant_sign", signOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS))
+        .wood().tint().grass()
     val VERDANT_WALL_SIGN = registerNoItem(
-        "verdant_wall_sign",
-        wallSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_SIGN)
-    ).wood().tint().grass().tellWitnessesThatIWasMurdered()
+        "verdant_wall_sign", wallSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_SIGN)
+    ).wood().tint().grass()
     val VERDANT_HANGING_SIGN = registerNoItem(
-        "verdant_hanging_sign",
-        hangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS)
-    ).wood().tint().grass().tellWitnessesThatIWasMurdered()
+        "verdant_hanging_sign", hangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS)
+    ).wood().tint().grass()
     val VERDANT_WALL_HANGING_SIGN = registerNoItem(
         "verdant_wall_hanging_sign",
         wallHangingSignOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS, VERDANT_HANGING_SIGN)
-    ).wood().tint().grass().tellWitnessesThatIWasMurdered()
+    ).wood().tint().grass()
     // endregion
 
     val OAK_WOOD = registerWoodenSet("oak_wood", Blocks.OAK_WOOD)
@@ -450,11 +438,9 @@ object DnDBlocks {
     val HOLLOW_STRIPPED_CASCADE_LOG = register("hollow_stripped_cascade_log", hollowLog(STRIPPED_CASCADE_LOG))
     val HOLLOW_SYPIA_LOG = register("hollow_sypia_log", hollowLog(CASCADE_LOG))
     val HOLLOW_STRIPPED_SYPIA_LOG = register("hollow_stripped_sypia_log", hollowLog(STRIPPED_CASCADE_LOG))
-    val HOLLOW_VERDANT_LOG =
-        register("hollow_verdant_log", hollowLog(VERDANT_LOG)).cutout().grass().tellWitnessesThatIWasMurdered()
+    val HOLLOW_VERDANT_LOG = register("hollow_verdant_log", hollowLog(VERDANT_LOG)).cutout().grass()
     val HOLLOW_STRIPPED_VERDANT_LOG =
         register("hollow_stripped_verdant_log", hollowLog(STRIPPED_VERDANT_LOG)).grass().tint()
-            .tellWitnessesThatIWasMurdered()
 
     // Refined wood blocks
     val OAK_WALL = register("oak_wall", wallOf(OAK_PLANKS).wood())
@@ -484,7 +470,6 @@ object DnDBlocks {
     val CASCADE_BOOKSHELF = register("cascade_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
     val SYPIA_BOOKSHELF = register("sypia_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
     val VERDANT_BOOKSHELF = register("verdant_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe().grass().tint().cutout()
-        .tellWitnessesThatIWasMurdered()
 
     // endregion
 
@@ -656,15 +641,14 @@ object DnDBlocks {
     // endregion
 
     val TINTED_SAND = register(
-        "tinted_sand",
-        ColoredFallingBlock(ColorRGBA(14406560), ofFullCopy(SAND).mapColor(MapColor.WATER))
+        "tinted_sand", ColoredFallingBlock(ColorRGBA(14406560), ofFullCopy(SAND).mapColor(MapColor.WATER))
     ).tellWitnessesThatIWasMurdered()
 
-    val TINTED_SANDSTONE = register("sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
+    val TINTED_SANDSTONE = register("tinted_sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
         .tellWitnessesThatIWasMurdered()
-    val CHISELED_TINTED_SANDSTONE = register("chiseled_sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
+    val CHISELED_TINTED_SANDSTONE = register("chiseled_tinted_sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
         .tellWitnessesThatIWasMurdered()
-    val CUT_TINTED_SANDSTONE = register("cut_sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
+    val CUT_TINTED_SANDSTONE = register("cut_tinted_sandstone", Block(Set.TINTED_SANDSTONE)).pickaxe().tint()
         .tellWitnessesThatIWasMurdered()
 
     val SUSPICIOUS_RED_SAND = register(
@@ -709,7 +693,6 @@ object DnDBlocks {
     val OVERGROWTH_CARPET_PLATE = register(
         "overgrowth_carpet_plate", CarpetPlateBlock(DnDBlockSetTypes.MOSS, ofFullCopy(OVERGROWTH_CARPET))
     ).hoe().sword().tint().grass()
-    //TODO(1.0) overgrowth carpet
 
 
     // Polished Sandstone

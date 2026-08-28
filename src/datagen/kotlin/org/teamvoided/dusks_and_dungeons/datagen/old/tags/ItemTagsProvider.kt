@@ -146,6 +146,9 @@ class ItemTagsProvider(
         copy(DnDBlockTags.WOOD_SLABS_THAT_BURN, DnDItemTags.WOOD_SLABS_THAT_BURN)
         copy(DnDBlockTags.WOOD_WALLS_THAT_BURN, DnDItemTags.WOOD_WALLS_THAT_BURN)
 
+        copy(ConventionalBlockTags.STRIPPED_LOGS, ConventionalItemTags.STRIPPED_LOGS)
+        copy(ConventionalBlockTags.STRIPPED_WOODS, ConventionalItemTags.STRIPPED_WOODS)
+
         getOrCreateTagBuilder(ItemTags.NON_FLAMMABLE_WOOD)
             .add(
                 DnDBlocks.CRIMSON_HYPHAE.stairs.asItem(),
@@ -193,9 +196,7 @@ class ItemTagsProvider(
         copy(BlockTags.CEILING_HANGING_SIGNS, ItemTags.HANGING_SIGNS)
 
         copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS)
-        getOrCreateTagBuilder(ItemTags.LEAVES)
-            .add(DnDBlocks.CASCADE_LEAVES.asItem())
-            .add(DnDBlocks.SYPIA_LEAVES.asItem())
+        copy(BlockTags.LEAVES,ItemTags.LEAVES)
         copy(BlockTags.FLOWERS, ItemTags.FLOWERS)
 
         copy(BlockTags.STAIRS, ItemTags.STAIRS)

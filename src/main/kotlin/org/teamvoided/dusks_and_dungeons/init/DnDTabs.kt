@@ -50,14 +50,14 @@ object DnDTabs {
         "dnd_experimental", FabricItemGroup.builder()
             .dndName("dnd_experimental")
             .icon(Blocks.BARRIER)
-            .displayItems { _, output -> if (isDev()) output.addLists(EVIL_ITEMS) }
+            .displayItems { _, output -> if (isDev() && EVIL_ITEMS.isNotEmpty()) output.addLists(EVIL_ITEMS) }
     )
 
     fun init() {
         modifyTab(CreativeModeTabs.BUILDING_BLOCKS) {
             addAfter(
                 Items.CHERRY_BUTTON,
-                DnDItemLists.cascadeWood + DnDItemLists.sypiaWood
+                DnDItemLists.cascadeWood + DnDItemLists.sypiaWood + DnDItemLists.verdantWood
             )
 
             addWoodStuffAndLeafPiles(false)
@@ -191,9 +191,12 @@ object DnDTabs {
             addAfter(Items.PINK_PETALS, DnDBlockLists.vivionbedBlocks)
             addAfter(
                 Items.FLOWERING_AZALEA_LEAVES,
-                listOf(DnDBlocks.CASCADE_LEAVES, DnDBlocks.SYPIA_LEAVES)
+                DnDBlocks.CASCADE_LEAVES, DnDBlocks.SYPIA_LEAVES, DnDBlocks.VERDANT_LEAVES
             )
-            addAfter(Items.FLOWERING_AZALEA, DnDBlocks.CASCADE_SAPLING, DnDBlocks.SYPIA_SAPLING)
+            addAfter(
+                Items.FLOWERING_AZALEA,
+                DnDBlocks.CASCADE_SAPLING, DnDBlocks.SYPIA_SAPLING, DnDBlocks.OVERGROWTH_BUSH
+            )
             addAfter(Items.VINE, DnDItems.MOONBERRY_VINELET, DnDBlocks.MOONBERRY_VINE, DnDItems.MOONBERRIES)
             DnDBlockLists.leafPiles.forEachIndexed { idx, leafPile ->
                 addAfter(DnDBlockLists.leaves[idx], leafPile)
@@ -258,7 +261,9 @@ object DnDTabs {
             DnDItemLists.cascadeWood,
             DnDItemLists.cascadeSigns,
             DnDItemLists.sypiaWood,
-            DnDItemLists.sypiaSigns
+            DnDItemLists.sypiaSigns,
+            DnDItemLists.verdantWood,
+            DnDItemLists.verdantSigns,
         )
         addItems(
             DnDItems.BLUE_DOOR,
