@@ -59,6 +59,17 @@ object DnDEvents {
         compost(DnDBlocks.ROOT_BLOCK, 0.65)
         DnDBlockLists.flowerbedBlocks.forEach { compost(it, 0.3) }
 
+        compost(DnDBlocks.CASCADE_SAPLING, 0.3)
+        compost(DnDBlocks.SYPIA_SAPLING, 0.3)
+
+        compost(DnDBlocks.OVERGROWTH_BLOCK, 0.65)
+        compost(DnDBlocks.OVERGROWTH_CARPET, 0.3)
+        compost(DnDBlocks.OVERGROWTH_BUSH, 0.65)
+        compost(DnDBlocks.HANGING_OVERGROWTH, 0.3)
+
+        compost(DnDBlocks.MOSS_CARPET_PLATE, 0.65)
+        compost(DnDBlocks.OVERGROWTH_CARPET_PLATE, 0.65)
+
         compost(DnDBlocks.GOLDEN_MUSHROOM, 0.65)
         compost(DnDBlocks.GOLDEN_MUSHROOM_BLOCK, 0.85)
         compost(DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK, 0.65)

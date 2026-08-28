@@ -48,6 +48,7 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(DnDItemTags.CARPET_PLATES)
             .forceAddTag(DnDItemTags.CARPET_PLATES_WOOL)
             .add(DnDBlocks.MOSS_CARPET_PLATE.asItem())
+            .add(DnDBlocks.OVERGROWTH_CARPET_PLATE.asItem())
 
         copy(DnDBlockTags.CARPET_PLATES_WOOL, DnDItemTags.CARPET_PLATES_WOOL)
 

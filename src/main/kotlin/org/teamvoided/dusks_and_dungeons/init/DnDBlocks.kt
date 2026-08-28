@@ -159,20 +159,18 @@ object DnDBlocks {
 
     // Overgrowth
     val OVERGROWTH_BLOCK = register("overgrowth_block", OvergrowthBlock(ofFullCopy(MOSS_BLOCK))).grass().tint().hoe()
-        .tellWitnessesThatIWasMurdered()
     val OVERGROWTH_CARPET = register("overgrowth_carpet", MossyCarpetBlock(ofFullCopy(MOSS_CARPET).noOcclusion()))
-        .cutout().grass().tint().hoe().tellWitnessesThatIWasMurdered()
+        .cutout().grass().tint().hoe().sword()
     val OVERGROWTH_BUSH = register("overgrowth_bush", OvergrowthBushBlock(ofFullCopy(AZALEA))).cutout().grass().tint()
-        .tellWitnessesThatIWasMurdered()
     val POTTED_OVERGROWTH_BUSH = registerNoItem("potted_overgrowth_bush", flowerPot(OVERGROWTH_BUSH)).cutout().grass()
     val HANGING_OVERGROWTH = register(
         "hanging_overgrowth",
         HangingFloraBlock(
-            Properties.of().mapColor(OVERGROWTH_BLOCK.defaultMapColor()).instabreak().noCollission()
+            Properties.of().mapColor(OVERGROWTH_BLOCK.defaultMapColor())
+                .instabreak().noCollission()
                 .sound(SoundType.CAVE_VINES).pushReaction(PushReaction.DESTROY)
         )
     ).cutout().grass().tint().hoe()
-        .tellWitnessesThatIWasMurdered()
     //overgrowth (covering) (also use this block class for the overlay replacements, may also want to make a moss and pale moss variant of this)
 
     // endregion
@@ -705,9 +703,12 @@ object DnDBlocks {
         }
     )
     val MOSS_CARPET_PLATE = register(
-        "moss_carpet_plate",
-        CarpetPlateBlock(DnDBlockSetTypes.MOSS, ofFullCopy(MOSS_CARPET))
+        "moss_carpet_plate", CarpetPlateBlock(DnDBlockSetTypes.MOSS, ofFullCopy(MOSS_CARPET))
     ).hoe().sword()
+
+    val OVERGROWTH_CARPET_PLATE = register(
+        "overgrowth_carpet_plate", CarpetPlateBlock(DnDBlockSetTypes.MOSS, ofFullCopy(OVERGROWTH_CARPET))
+    ).hoe().sword().tint().grass()
     //TODO(1.0) overgrowth carpet
 
 

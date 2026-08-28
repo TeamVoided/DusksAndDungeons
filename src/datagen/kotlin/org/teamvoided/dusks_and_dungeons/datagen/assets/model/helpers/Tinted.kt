@@ -15,3 +15,10 @@ fun BlockModelGenerators.tintedBookshelf(bookshelf: Block, top: Block) {
 
     blockStateOutput.accept(createSimpleBlock(bookshelf, model))
 }
+
+fun BlockModelGenerators.tintedCarpetPlate(plate: Block, wool: Block) {
+    val up = DnDTexturedModels.TINTED_CARPET.get(wool).createWithSuffix(plate, "_up", modelOutput)
+    val down = DnDTexturedModels.TINTED_CARPET_DOWN.get(wool).createWithSuffix(plate, "_down", modelOutput)
+    delegateItemModel(plate, up)
+    blockStateOutput.accept(BlockModelGenerators.createPressurePlate(plate, up, down))
+}

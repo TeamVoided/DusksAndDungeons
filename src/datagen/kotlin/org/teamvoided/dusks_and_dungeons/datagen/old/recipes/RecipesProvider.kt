@@ -132,7 +132,8 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         for ((idx, block) in DnDBlocks.WOOL_CARPET_PLATE.withIndex()) {
             e.carpetPlate(block, VanillaColorCollections.WOOL.list[idx])
         }
-        e.carpetPlate(DnDBlocks.MOSS_CARPET_PLATE, Blocks.MOSS_CARPET)
+        e.carpetPlate(DnDBlocks.MOSS_CARPET_PLATE, Blocks.MOSS_BLOCK)
+        e.carpetPlate(DnDBlocks.OVERGROWTH_CARPET_PLATE, DnDBlocks.OVERGROWTH_BLOCK)
     }
 
     private fun temporaryRecipes(output: RecipeOutput) {

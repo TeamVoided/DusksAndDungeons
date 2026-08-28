@@ -3,17 +3,12 @@ package org.teamvoided.dusks_and_dungeons.datagen.old.recipes
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.recipes.*
 import net.minecraft.data.recipes.RecipeBuilder.getDefaultRecipeId
+import net.minecraft.data.recipes.RecipeProvider.carpet
 import net.minecraft.data.recipes.RecipeProvider.getConversionRecipeName
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCount
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDoubleCraft
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createPiles
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createPumpkinStuffs
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.smeltDefault
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.suffix
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
@@ -61,6 +56,8 @@ object FloraRecipes {
         corn(output)
 
         flowerbeds(output)
+
+        carpet(output, DnDBlocks.OVERGROWTH_CARPET, DnDBlocks.OVERGROWTH_BLOCK)
     }
 
     fun pumpkins(e: RecipeOutput) {

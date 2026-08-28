@@ -167,12 +167,14 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DnDBlockTags.CARPET_PLATES)
             .forceAddTag(DnDBlockTags.CARPET_PLATES_WOOL)
             .add(DnDBlocks.MOSS_CARPET_PLATE)
+            .add(DnDBlocks.OVERGROWTH_CARPET_PLATE)
 
         getOrCreateTagBuilder(DnDBlockTags.CARPET_PLATES_WOOL)
             .add(DnDBlocks.WOOL_CARPET_PLATE)
 
         getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS)
             .forceAddTag(DnDBlockTags.CARPET_PLATES)
+            .add(DnDBlocks.OVERGROWTH_CARPET)
 
         getOrCreateTagBuilder(BlockTags.DAMPENS_VIBRATIONS)
             .forceAddTag(DnDBlockTags.CARPET_PLATES_WOOL)
@@ -629,6 +631,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.DIRT)
             .add(DnDBlocks.OVERGROWTH_BLOCK)
         getOrCreateTagBuilder(BlockTags.SNIFFER_DIGGABLE_BLOCK)
+            .add(DnDBlocks.OVERGROWTH_BLOCK)
+        getOrCreateTagBuilder(BlockTags.SNIFFER_EGG_HATCH_BOOST)
+            .add(DnDBlocks.OVERGROWTH_BLOCK)
+        getOrCreateTagBuilder(BlockTags.SMALL_DRIPLEAF_PLACEABLE)
             .add(DnDBlocks.OVERGROWTH_BLOCK)
 
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)

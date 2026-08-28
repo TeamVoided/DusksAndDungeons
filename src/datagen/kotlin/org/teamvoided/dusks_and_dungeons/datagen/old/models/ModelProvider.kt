@@ -16,6 +16,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.assets.model.BigModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.StoneModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.fence
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.modelId
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.tintedCarpetPlate
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
@@ -107,6 +108,7 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             gen.carpetPlate(block, VanillaColorCollections.WOOL.list[idx])
         }
         gen.carpetPlate(DnDBlocks.MOSS_CARPET_PLATE, Blocks.MOSS_BLOCK)
+        gen.tintedCarpetPlate(DnDBlocks.OVERGROWTH_CARPET_PLATE, DnDBlocks.OVERGROWTH_BLOCK)
 
         gen.stairs(DnDBlocks.SNOW_SET.stairs, Blocks.SNOW)
         gen.slab(DnDBlocks.SNOW_SET.slab, Blocks.SNOW, Blocks.SNOW_BLOCK)

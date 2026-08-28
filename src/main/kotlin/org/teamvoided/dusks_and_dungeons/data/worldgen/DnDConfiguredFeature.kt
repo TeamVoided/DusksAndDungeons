@@ -1,7 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.data.worldgen
 
-import net.minecraft.resources.ResourceKey
 import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 
@@ -76,10 +76,10 @@ object DnDConfiguredFeature {
     //once i get rule tests make these convert blocks to their overgrown variants
     val OVERGROWTH_FLOOR_V = create("overgrowth/floor_vegetation")
     val OVERGROWTH_PATCH_FLOOR = create("overgrowth/floor")
-    val OVERGROWTH_PATCH_FLOOR_B = create("overgrowth/floor_bonemeal")
+    val OVERGROWTH_PATCH_FLOOR_BONEMEAL = create("overgrowth/floor_bonemeal")
     val OVERGROWTH_CEILING_V = create("overgrowth/ceiling_vegetation")
     val OVERGROWTH_PATCH_CEILING = create("overgrowth/ceiling")
-    val OVERGROWTH_PATCH_CEILING_B = create("overgrowth/ceiling_bonemeal")
+    val OVERGROWTH_PATCH_CEILING_BONEMEAL = create("overgrowth/ceiling_bonemeal")
     val OVERGROWTH_TREE_DOWN = create("tree/verdant/down")
     val OVERGROWTH_TREE_NORTH = create("tree/verdant/north")
     val OVERGROWTH_TREE_SOUTH = create("tree/verdant/south")

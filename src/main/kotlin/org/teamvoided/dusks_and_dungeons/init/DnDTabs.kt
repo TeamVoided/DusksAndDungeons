@@ -449,7 +449,10 @@ object DnDTabs {
             DnDBlocks.BIG_SCAFFOLDING
         )
         addLists(DnDBlocks.WOOL_CARPET_PLATE)
-        addItems(DnDBlocks.MOSS_CARPET_PLATE)
+        addItems(
+            DnDBlocks.MOSS_CARPET_PLATE,
+            DnDBlocks.OVERGROWTH_CARPET_PLATE
+        )
         addItems(
             // This adds the candles in a nice way
             DnDItemLists.bigCandles.flatMapIndexed { idx, item ->

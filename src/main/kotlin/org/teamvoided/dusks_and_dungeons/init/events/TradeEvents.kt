@@ -20,7 +20,7 @@ fun addCommonWanderingTrades(trades: TradeList) {
     trades.addSell(DnDBlocks.CASCADE_SAPLING, 5, 1, 8)
     trades.addSell(DnDBlocks.SYPIA_SAPLING, 5, 1, 8)
 
-    // TODO(1.0) add overgrown moss
+    trades.addSell(DnDBlocks.OVERGROWTH_BLOCK, 1, 2, 5)
 
     trades.add1for1(DnDItems.LANTERN_PUMPKIN_SEEDS, 12)
     trades.add1for1(DnDItems.MOSSKIN_PUMPKIN_SEEDS, 12)

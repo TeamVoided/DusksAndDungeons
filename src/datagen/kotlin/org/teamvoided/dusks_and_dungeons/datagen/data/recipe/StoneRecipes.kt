@@ -62,19 +62,43 @@ object StoneRecipes {
             DnDBlocks.OVERGROWN_STONE_BRICKS.wall
         )
 
+        // Overgrowth transformations
+        output.createTwoPiece(
+            DnDBlocks.OVERGROWN_COBBLESTONE,
+            Blocks.COBBLESTONE, DnDBlocks.OVERGROWTH_BLOCK, "_from_overgrowth"
+        )
+        output.createTwoPiece(
+            DnDBlocks.OVERGROWN_POLISHED_STONE,
+            DnDBlocks.POLISHED_STONE, DnDBlocks.OVERGROWTH_BLOCK, "_from_overgrowth"
+        )
+        output.createTwoPiece(
+            DnDBlocks.OVERGROWN_STONE_BRICKS,
+            Blocks.STONE_BRICKS, DnDBlocks.OVERGROWTH_BLOCK, "_from_overgrowth"
+        )
+
         // Bricks
         output.createChiseled(DnDBlocks.CHISELED_BRICKS, Blocks.BRICK_SLAB, Blocks.BRICKS)
         output.cutChiseled(DnDBlocks.CHISELED_BRICKS, Blocks.BRICKS)
         output.smeltCracked(DnDBlocks.CRACKED_BRICKS.parent, Blocks.BRICKS)
 
         // Gravestones
-        output.createGravestones(DnDBlocks.STONE_BRICK_GRAVESTONE, DnDBlocks.SMALL_STONE_BRICK_GRAVESTONE, Blocks.STONE_BRICKS)
+        output.createGravestones(
+            DnDBlocks.STONE_BRICK_GRAVESTONE,
+            DnDBlocks.SMALL_STONE_BRICK_GRAVESTONE,
+            Blocks.STONE_BRICKS
+        )
         output.createGravestones(
             DnDBlocks.DEEPSLATE_BRICK_GRAVESTONE, DnDBlocks.SMALL_DEEPSLATE_BRICK_GRAVESTONE, Blocks.DEEPSLATE_BRICKS
         )
-        output.createGravestones(DnDBlocks.TUFF_BRICK_GRAVESTONE, DnDBlocks.SMALL_TUFF_BRICK_GRAVESTONE, Blocks.TUFF_BRICKS)
         output.createGravestones(
-            DnDBlocks.BLACKSTONE_BRICK_GRAVESTONE, DnDBlocks.SMALL_BLACKSTONE_BRICK_GRAVESTONE, Blocks.POLISHED_BLACKSTONE_BRICKS
+            DnDBlocks.TUFF_BRICK_GRAVESTONE,
+            DnDBlocks.SMALL_TUFF_BRICK_GRAVESTONE,
+            Blocks.TUFF_BRICKS
+        )
+        output.createGravestones(
+            DnDBlocks.BLACKSTONE_BRICK_GRAVESTONE,
+            DnDBlocks.SMALL_BLACKSTONE_BRICK_GRAVESTONE,
+            Blocks.POLISHED_BLACKSTONE_BRICKS
         )
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DnDBlocks.IRON_HEADSTONE)
             .define('#', Items.IRON_BARS)

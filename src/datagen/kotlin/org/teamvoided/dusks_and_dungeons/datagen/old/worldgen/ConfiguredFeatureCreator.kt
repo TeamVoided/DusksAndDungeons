@@ -46,11 +46,7 @@ import org.teamvoided.dusks_and_dungeons.block.HangingFloraBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.addPumpkins
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.basicCropAges
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createRandomPatchFeatureConfig
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.leafPiles
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.petalBuilder
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.BoulderConfig
@@ -262,9 +258,9 @@ object ConfiguredFeatureCreator {
         //)
 
         c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR, CaveSurface.FLOOR)
-        c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR_B, CaveSurface.FLOOR, true)
+        c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_FLOOR_BONEMEAL, CaveSurface.FLOOR, true)
         c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING, CaveSurface.CEILING)
-        c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING_B, CaveSurface.CEILING, true)
+        c.overgrowthPatch(DnDConfiguredFeature.OVERGROWTH_PATCH_CEILING_BONEMEAL, CaveSurface.CEILING, true)
 
         c.registerConfiguredFeature(
             DnDConfiguredFeature.OVERGROWTH_CARPET_PATCH,
