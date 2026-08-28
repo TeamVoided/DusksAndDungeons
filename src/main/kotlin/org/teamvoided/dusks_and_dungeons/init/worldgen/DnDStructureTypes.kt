@@ -6,11 +6,11 @@ import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.levelgen.structure.StructureType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.register
-import org.teamvoided.dusks_and_dungeons.world.gen.structures.DnDMineshaftStructure
+import org.teamvoided.dusks_and_dungeons.world.gen.structures.MineStructure
 
 object DnDStructureTypes {
 
-    val MINESHAFT = register("mineshaft", DnDMineshaftStructure.CODEC)
+    val MINE = register("mine", MineStructure.CODEC)
 
     fun init() = Unit
 

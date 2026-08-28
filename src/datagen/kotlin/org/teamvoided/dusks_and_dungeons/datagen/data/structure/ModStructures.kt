@@ -16,7 +16,8 @@ import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructures
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDTemplatePool
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
-import org.teamvoided.dusks_and_dungeons.world.gen.structures.DnDMineshaftStructure
+import org.teamvoided.dusks_and_dungeons.world.gen.structures.MineStructure
+import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MineSettings
 
 object ModStructures : RegistryBootstrapper<Structure> {
 
@@ -42,11 +43,11 @@ object ModStructures : RegistryBootstrapper<Structure> {
 
         register(
             DnDStructures.VERDANT_MINESHAFT,
-            DnDMineshaftStructure(
+            MineStructure(
                 StructureSettings.Builder(biomes.getOrThrow(DnDBiomeTags.HAS_STRUCTURE_VERDANT_MINESHAFT))
                     .generationStep(Decoration.UNDERGROUND_STRUCTURES)
                     .build(),
-                DnDMineshaftStructure.Type.VERDANT
+                MineSettings.VERDANT
             )
         )
     }

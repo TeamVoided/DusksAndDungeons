@@ -1,9 +1,14 @@
 package org.teamvoided.dusks_and_dungeons.util
 
+import com.mojang.serialization.Codec
+import com.mojang.serialization.DynamicOps
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Registry
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
+import net.minecraft.nbt.Tag
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -14,14 +19,18 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntitySelector
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.minecraft.world.phys.Vec3
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_and_dungeons.init.DnDLootContext
 import org.teamvoided.voidlib.helpers.mc.getLootTable
+import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.Function
 import java.util.function.Predicate
@@ -59,6 +68,47 @@ fun InteractionHand.asEquipmentSlot(): EquipmentSlot {
 fun <T> tagKeyStreamCodec(resourceKey: ResourceKey<out Registry<T>>): StreamCodec<ByteBuf, TagKey<T>> {
     return ResourceLocation.STREAM_CODEC.map({ TagKey.create(resourceKey, it) }, { it.location() })
 }
+
+fun LevelReader.getMinY(): Int = dimensionType().minY()
+
+fun LevelReader.getMaxY(): Int = dimensionType().minY()
+
+
+// region CompoundTag
+val LOGGER: Logger = LoggerFactory.getLogger(CompoundTag::class.java.simpleName)
+
+
+fun CompoundTag.getBooleanOr(string: String, defaultValue: Boolean): Boolean {
+    return getByteOr(string, (if (defaultValue) 1 else 0).toByte()).toInt() != 0
+}
+
+fun CompoundTag.getByteOr(name: String, defaultValue: Byte): Byte {
+    return if (contains(name, 1)) getByte(name) else defaultValue
+}
+
+fun CompoundTag.getIntOr(name: String, defaultValue: Int): Int {
+    return if (contains(name, 3)) getInt(name) else defaultValue
+}
+
+fun <T : Any> CompoundTag.read(name: String, codec: Codec<T>): Optional<T> {
+    return read(name, codec, NbtOps.INSTANCE)
+}
+
+fun <T : Any> CompoundTag.read(name: String, codec: Codec<T>, ops: DynamicOps<Tag>): Optional<T> {
+    val tag = get(name) ?: return Optional.empty<T>()
+    return codec.parse(ops, tag).resultOrPartial { LOGGER.error("Failed to read field ({}={}): {}", name, tag, it) }
+}
+
+fun <T : Any> CompoundTag.store(name: String, codec: Codec<T>, value: T) {
+    store<T>(name, codec, NbtOps.INSTANCE, value)
+}
+
+fun <T : Any> CompoundTag.store(name: String, codec: Codec<T>, ops: DynamicOps<Tag>, value: T) {
+    put(name, codec.encodeStart(ops, value).getOrThrow())
+}
+
+// endregion
+
 
 // region LootTable
 fun dropFromBlockInteractLootTable(
