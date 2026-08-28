@@ -6,7 +6,9 @@ import net.minecraft.util.StringRepresentable
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.DoublePlantBlock
+import net.minecraft.world.level.block.MossyCarpetBlock
 import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
 import net.minecraft.world.level.block.state.properties.Property
 import net.minecraft.world.level.block.state.properties.SlabType
@@ -53,6 +55,12 @@ fun LootItemBlockStatePropertyCondition.Builder.setProperty(
     return setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, comparable))
 }
 
+fun LootItemBlockStatePropertyCondition.Builder.setProperty(
+    property: Property<Boolean>, comparable: Boolean,
+): LootItemBlockStatePropertyCondition.Builder {
+    return setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, comparable))
+}
+
 fun <T> BlockLootSubProvider.crateDropsWithProperty(
     drop: Block, property: Property<T>, value: T,
 ): LootTable.Builder where T : Comparable<T>, T : StringRepresentable {
@@ -60,6 +68,15 @@ fun <T> BlockLootSubProvider.crateDropsWithProperty(
         applyExplosionCondition(
             drop, LootPool.lootPool()
                 .add(item(drop).`when`(blockProperty(drop).setProperty(property, value)))
+        )
+    )
+}
+
+fun BlockLootSubProvider.crateDropsWithProperty(drop: Block, property: BooleanProperty): LootTable.Builder {
+    return LootTable.lootTable().withPool(
+        applyExplosionCondition(
+            drop, LootPool.lootPool()
+                .add(item(drop).`when`(blockProperty(drop).setProperty(property, true)))
         )
     )
 }
@@ -117,6 +134,10 @@ fun BlockLootSubProvider.dropSlabWhenSilkTouch(block: Block) {
 
 fun BlockLootSubProvider.twoTallDrop(block: Block): LootTable.Builder {
     return crateDropsWithProperty(block, DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)
+}
+
+fun BlockLootSubProvider.mossyCarpetDrop(block: Block): LootTable.Builder {
+    return crateDropsWithProperty(block, MossyCarpetBlock.BASE)
 }
 
 fun BlockLootSubProvider.threeTallDrop(block: Block): LootTable.Builder {

@@ -49,6 +49,7 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
                 is CandelabraBlock -> add(block, ::candelabraDrops)
                 is CandleBlock -> add(block, ::createCandleDrops)
                 is DoublePlantBlock -> add(block, ::twoTallDrop)
+                is MossyCarpetBlock -> add(block, ::mossyCarpetDrop)
                 is TripleTallPlantBlock -> add(block, ::threeTallDrop)
                 is PinkPetalsBlock -> add(block, ::createPetalsDrops)
                 is FlowerPotBlock -> add(block) { createPotFlowerItemTable(block.potted) }
