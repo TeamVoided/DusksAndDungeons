@@ -74,7 +74,7 @@ open class HugeGoldMushroomFeature(codec: Codec<MushroomFeatureConfig>) :
         mutablePos: BlockPos.MutableBlockPos,
         config: MushroomFeatureConfig
     ): Boolean {
-        if (super.canGenerate(world, pos, stemHeight, capHeight, mutablePos, config)) return true
+        if (!super.canGenerate(world, pos, stemHeight, capHeight, mutablePos, config)) return false
 
         if (pos.y >= world.minBuildHeight + 1 && pos.y + stemHeight + capHeight + 1 < world.maxBuildHeight) {
             for (y in 0..capHeight) {
