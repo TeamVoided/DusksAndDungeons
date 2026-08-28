@@ -52,6 +52,7 @@ object DnDEvents {
             SNIFFER_DIGGING -> addToExistingPools(builder, DnDLootTables.SNIFFER_ADD_MOONBERRY)
             SIMPLE_DUNGEON -> addNewPool(builder, DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY)
             ABANDONED_MINESHAFT -> addNewPool(builder, DnDLootTables.ADD_DND_SEEDS)
+            VILLAGE_PLAINS_HOUSE -> addNewPool(builder, DnDLootTables.ADD_CORN)
         }
     }
 

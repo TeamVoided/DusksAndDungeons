@@ -40,7 +40,7 @@ class BlockInteractLootTablesProvider(o: FabricOutput, p: FutureProvider) :
     fun BiConsumer<ResourceKey<LootTable>, LootTable.Builder>.pumpkin(block: Block, seed: Item, amount: Int = 4) {
         carvedBlock(
             block, LootTable.lootTable().pool(
-                LootPool.lootPool().add(item(seed).setAmount(amount)).build()
+                LootPool.lootPool().add(item(seed).setCount(amount)).build()
             )
         )
     }

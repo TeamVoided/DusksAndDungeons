@@ -22,6 +22,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunct
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
@@ -31,8 +32,12 @@ import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 fun item(item: ItemLike): LootPoolSingletonContainer.Builder<*> = LootItem.lootTableItem(item)
 
 
-fun LootPoolSingletonContainer.Builder<*>.setAmount(amount: Int): LootPoolSingletonContainer.Builder<*> {
+fun LootPoolSingletonContainer.Builder<*>.setCount(amount: Int): LootPoolSingletonContainer.Builder<*> {
     return apply(countOf(amount))
+}
+
+fun LootPoolSingletonContainer.Builder<*>.setCount(min: Int, max: Int): LootPoolSingletonContainer.Builder<*> {
+    return apply(SetItemCountFunction.setCount(UniformGenerator.between(min.toFloat(), max.toFloat())))
 }
 
 fun countOf(amount: Number): LootItemConditionalFunction.Builder<*> {

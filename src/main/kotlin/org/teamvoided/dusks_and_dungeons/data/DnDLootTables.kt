@@ -15,9 +15,10 @@ object DnDLootTables {
     val BARTERING_ADD_VIVIONS = key("inject/add_vivions")
     val SIMPLE_DUNGEON_ADD_SPOOKY = key("inject/add_spooky")
     val ADD_DND_SEEDS = key("inject/add_dnd_seeds")
+    val ADD_CORN = key("inject/add_corn")
 
-    val COOL_CHEST = key("chests/cool_chest")
-    val COOL_ARCHAEOLOGY = key("archaeology/cool_archaeology")
+//    val COOL_CHEST = key("chests/cool_chest")
+//    val COOL_ARCHAEOLOGY = key("archaeology/cool_archaeology")
 
     fun key(name: String) = key(id(name))
 

@@ -18,6 +18,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.litho.BiomeInjectors
 import org.teamvoided.dusks_and_dungeons.datagen.data.litho.WorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.datagen.data.loot.BlockInteractLootTablesProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.loot.BlockLootTableProvider
+import org.teamvoided.dusks_and_dungeons.datagen.data.loot.ChestLootTablesProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.registry.ModDamageTypes
 import org.teamvoided.dusks_and_dungeons.datagen.data.registry.ModThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.datagen.data.registry.ModWolfVariants
@@ -56,6 +57,7 @@ object DnDData : DataGeneratorEntrypoint {
             // Loot Tables
             addProvider(::BlockLootTableProvider)
             addProvider(::BlockInteractLootTablesProvider)
+            addProvider(::ChestLootTablesProvider)
             // Misc
             addProvider(::AdvancementsProvider)
 
