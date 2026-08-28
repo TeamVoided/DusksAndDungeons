@@ -77,9 +77,9 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         SETS.filterNot(excludeModels::contains).forEach(gen::createBlockSet)
 
         gen.createTrivialBlock(DnDBlocks.TINTED_SAND, TexturedModel.LEAVES)
-        gen.createTrivialState(DnDBlocks.TINTED_SANDSTONE)
-        gen.createTrivialState(DnDBlocks.CHISELED_TINTED_SANDSTONE)
-        gen.createTrivialState(DnDBlocks.CUT_TINTED_SANDSTONE)
+        gen.createTrivialBlock(DnDBlocks.TINTED_SANDSTONE, TexturedModel.LEAVES)
+        gen.createTrivialBlock(DnDBlocks.CHISELED_TINTED_SANDSTONE, TexturedModel.LEAVES)
+        gen.createTrivialBlock(DnDBlocks.CUT_TINTED_SANDSTONE, TexturedModel.LEAVES)
 
         gen.createBrushableBlock(DnDBlocks.SUSPICIOUS_RED_SAND)
 
