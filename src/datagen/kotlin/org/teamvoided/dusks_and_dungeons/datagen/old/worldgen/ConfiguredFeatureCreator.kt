@@ -531,6 +531,27 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+
+        this.registerConfiguredFeature(
+            DnDConfiguredFeature.OVERGROWTH_TREE_PATCH,
+            LithostitchedFeatures.COMPOSITE,
+            CompositeConfig(
+                HolderSet.direct(
+                    PlacementUtils.inlinePlaced(
+                        this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
+                    ),
+                    PlacementUtils.inlinePlaced(
+                        Feature.RANDOM_PATCH,
+                        FeatureUtils.simpleRandomPatchConfiguration(
+                            96, PlacementUtils.inlinePlaced(
+                                this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
+                            )
+                        )
+                    )
+                ),
+                CompositeConfig.Type.CANCEL_ON_FAILURE
+            )
+        )
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.flowers() {
@@ -541,7 +562,7 @@ object ConfiguredFeatureCreator {
                     Feature.SIMPLE_BLOCK, SimpleBlockConfiguration(
                         WeightedStateProvider(
                             SimpleWeightedRandomList.builder<BlockState>()
-                                .add(Blocks.CORNFLOWER.defaultBlockState(), 5)
+                                //.add(Blocks.CORNFLOWER.defaultBlockState(), 5)
                                 .add(Blocks.POPPY.defaultBlockState(), 5)
                                 .add(DnDBlocks.CASCADE_SAPLING.defaultBlockState(), 1)
                         )
@@ -777,21 +798,12 @@ object ConfiguredFeatureCreator {
         bonemeal: Boolean = false
     ) {
         val isCeil = surface.ordinal == 1
-        val vegFeat = if (bonemeal || isCeil) PlacementUtils.inlinePlaced(
+        val vegFeat = PlacementUtils.inlinePlaced(
             this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(
                 if (isCeil) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
                 else DnDConfiguredFeature.OVERGROWTH_CEILING_V
             )
-        ) else PlacementUtils.inlinePlaced(
-            LithostitchedFeatures.WEIGHTED_SELECTOR,
-            WeightedSelectorConfig(
-                WeightedList.builder<Holder<PlacedFeature>>()
-                    .addC(this, DnDConfiguredFeature.OVERGROWTH_FLOOR_V,2)
-                    .addC(this, DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
-                    .build()
-            )
         )
-
 
         this.registerConfiguredFeature(
             feature,
@@ -804,7 +816,7 @@ object ConfiguredFeatureCreator {
                 ConstantInt.of(1),
                 if (bonemeal) 0f else 0.3f,
                 5,
-                if (bonemeal || isCeil) 0.6f else 1f,
+                if (bonemeal || isCeil) 0.6f else 0.8f,
                 if (bonemeal) UniformInt.of(1, 2) else UniformInt.of(4, 7),
                 if (bonemeal) 0.75f else 0.3f
             )

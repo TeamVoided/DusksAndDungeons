@@ -33,7 +33,7 @@ object DnDPlacedFeature {
     val GOLDEN_PASTURES_VEGETATION = create("golden_pastures_vegetation")
     val FLOWER_AUTUMN = create("flower_autumn")
     val PATCH_ROSEBUSH = create("patch_rosebush")
-    val BLUE_PETALS = create("blue_petals")
+    val ORANGE_PETALS = create("orange_petals")
     val AUTUMN_FARMLANDS = create("autumn_farmlands")
     val CROPS_WILD_WHEAT = create("crops/wild_wheat")
     val WILD_WHEAT_FIELD = create("wild_wheat_field")

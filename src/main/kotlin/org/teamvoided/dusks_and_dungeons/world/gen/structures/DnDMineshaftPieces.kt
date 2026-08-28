@@ -55,14 +55,14 @@ object DnDMineshaftPieces {
         l: Int,
         type: DnDMineshaftStructure.Type
     ): MineShaftPiece? {
-        val m = randomSource.nextInt(100)
-        if (m >= 80) {
+        val m = randomSource.nextInt(10)
+        if (m >= 8) {
             val boundingBox: BoundingBox? =
                 MineShaftCrossing.findCrossing(structurePieceAccessor, randomSource, i, j, k, direction)
             if (boundingBox != null) {
                 return MineShaftCrossing(l, boundingBox, direction, type)
             }
-        } else if (m >= 70) {
+        } else if (m >= 7) {
             val boundingBox: BoundingBox? =
                 MineShaftStairs.findStairs(structurePieceAccessor, randomSource, i, j, k, direction)
             if (boundingBox != null) {
@@ -145,7 +145,7 @@ object DnDMineshaftPieces {
             this.setOrientation(direction)
             this.hasRails = randomSource.nextInt(3) == 0
             this.spiderCorridor = !this.hasRails && randomSource.nextInt(23) == 0
-            if (this.orientation!!.axis === Direction.Axis.Z) {
+            if (this.orientation!!.axis == Direction.Axis.Z) {
                 this.numSections = boundingBox.zSpan / 5
             } else {
                 this.numSections = boundingBox.xSpan / 5

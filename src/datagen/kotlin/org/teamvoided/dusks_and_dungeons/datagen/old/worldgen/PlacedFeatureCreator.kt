@@ -55,15 +55,21 @@ object PlacedFeatureCreator {
             Direction.DOWN,
             BlockPredicate.matchesTag(BlockTags.MOSS_REPLACEABLE)
         )
-        c.pumpkin(DnDPlacedFeature.PATCH_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA)
-        c.pumpkin(DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_LANTERN_EXTRA)
+        c.surfacePlacementRare(DnDPlacedFeature.PATCH_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA)
+        c.surfacePlacementRare(
+            DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA,
+            DnDConfiguredFeature.PATCH_PUMPKIN_LANTERN_EXTRA
+        )
         c.cavePlacement(
             DnDPlacedFeature.PATCH_MOSSKIN_PUMPKIN_EXTRA,
             DnDConfiguredFeature.PATCH_PUMPKIN_MOSSKIN_EXTRA,
             4,
             Direction.DOWN,
         )
-        c.pumpkin(DnDPlacedFeature.PATCH_GLOOM_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_GLOOM_EXTRA)
+        c.surfacePlacementRare(
+            DnDPlacedFeature.PATCH_GLOOM_PUMPKIN_EXTRA,
+            DnDConfiguredFeature.PATCH_PUMPKIN_GLOOM_EXTRA
+        )
         c.register(
             DnDPlacedFeature.DISK_PODZOL, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_PODZOL),
             RarityFilter.onAverageOnceEvery(40),
@@ -111,14 +117,7 @@ object PlacedFeatureCreator {
             SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, Int.MIN_VALUE, -13),
             BiomeFilter.biome()
         )
-        c.register(//places on surface in biomes
-            DnDPlacedFeature.GOLDEN_MUSHROOM_SURFACE,
-            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
-            RarityFilter.onAverageOnceEvery(64),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP,
-            BiomeFilter.biome()
-        )
+        c.surfacePlacementRare(DnDPlacedFeature.GOLDEN_MUSHROOM_SURFACE, DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM, 64)
         c.cavePlacement(//places in caves and surfaces with huge mushrooms
             DnDPlacedFeature.GOLDEN_MUSHROOM_HUGE_PATCH,
             DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM_WITH_HUGE,
@@ -152,7 +151,7 @@ object PlacedFeatureCreator {
         )
         c.cavePlacement(
             DnDPlacedFeature.OVERGROWTH_CAVES_TREES,
-            DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
+            DnDConfiguredFeature.OVERGROWTH_TREE_PATCH,
             125,
             Direction.DOWN,
             BlockPredicate.matchesTag(BlockTags.DIRT)
@@ -305,26 +304,9 @@ object PlacedFeatureCreator {
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FLOWER_AUTUMN),
             noiseThresholdFlowerPlacement(14)
         )
-        c.register(
-            DnDPlacedFeature.BLUE_PETALS, configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.BLUE_PETALS),
-            noiseThresholdFlowerPlacement(18)
-        )
-        c.register(
-            DnDPlacedFeature.FAIRY_RING_RED,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FAIRY_RING_RED),
-            RarityFilter.onAverageOnceEvery(32),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP,
-            BiomeFilter.biome()
-        )
-        c.register(
-            DnDPlacedFeature.WILD_WHEAT_FIELD,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
-            CountPlacement.of(21),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP,
-            BiomeFilter.biome()
-        )
+        c.surfacePlacementRare(DnDPlacedFeature.ORANGE_PETALS, DnDConfiguredFeature.FAIRY_RING_ORANGE, 32)
+        c.surfacePlacementRare(DnDPlacedFeature.FAIRY_RING_RED, DnDConfiguredFeature.FAIRY_RING_RED, 32)
+        c.surfacePlacement(DnDPlacedFeature.WILD_WHEAT_FIELD, DnDConfiguredFeature.CROPS_WILD_WHEAT, 21)
         c.register(
             DnDPlacedFeature.PATCH_ROSEBUSH,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.PATCH_ROSEBUSH),
@@ -343,14 +325,7 @@ object PlacedFeatureCreator {
             PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
             BiomeFilter.biome()
         )
-        c.register(
-            DnDPlacedFeature.CROPS_WILD_WHEAT,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CROPS_WILD_WHEAT),
-            RarityFilter.onAverageOnceEvery(9),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP,
-            BiomeFilter.biome()
-        )
+        c.surfacePlacementRare(DnDPlacedFeature.CROPS_WILD_WHEAT, DnDConfiguredFeature.CROPS_WILD_WHEAT, 9)
     }
 
     fun noiseThresholdFlowerPlacement(rarity: Int): List<PlacementModifier> {
@@ -363,7 +338,7 @@ object PlacedFeatureCreator {
         )
     }
 
-    fun BootstrapContext<PlacedFeature>.pumpkin(
+    fun BootstrapContext<PlacedFeature>.surfacePlacementRare(
         place: ResourceKey<PlacedFeature>,
         conf: ResourceKey<ConfiguredFeature<*, *>>,
         rarity: Int = 50
@@ -372,6 +347,21 @@ object PlacedFeatureCreator {
             place,
             this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
             RarityFilter.onAverageOnceEvery(rarity),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP,
+            BiomeFilter.biome()
+        )
+    }
+
+    fun BootstrapContext<PlacedFeature>.surfacePlacement(
+        place: ResourceKey<PlacedFeature>,
+        conf: ResourceKey<ConfiguredFeature<*, *>>,
+        count: Int = 50
+    ) {
+        this.register(
+            place,
+            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
+            CountPlacement.of(count),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             BiomeFilter.biome()
@@ -389,22 +379,22 @@ object PlacedFeatureCreator {
     fun BootstrapContext<PlacedFeature>.cavePlacement(
         place: ResourceKey<PlacedFeature>,
         conf: ResourceKey<ConfiguredFeature<*, *>>,
-        count: Int,
+        rate: Int,
         direction: Direction,
         search: BlockPredicate = BlockPredicate.solid()
-    ) = this.cavePlacement(place, conf, CountPlacement.of(count), direction, search)
+    ) = this.cavePlacement(place, conf, CountPlacement.of(rate), direction, search)
 
     fun BootstrapContext<PlacedFeature>.cavePlacement(
         place: ResourceKey<PlacedFeature>,
         conf: ResourceKey<ConfiguredFeature<*, *>>,
-        count: PlacementModifier,
+        rate: PlacementModifier,
         direction: Direction,
         search: BlockPredicate = BlockPredicate.solid()
     ) {
         this.register(
             place,
             this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
-            count,
+            rate,
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             EnvironmentScanPlacement.scanningFor(

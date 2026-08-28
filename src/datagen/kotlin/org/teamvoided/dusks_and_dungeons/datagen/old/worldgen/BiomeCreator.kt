@@ -63,7 +63,7 @@ object BiomeCreator {
         generationSettings.addFeature(vd9, DnDPlacedFeature.FLOWER_AUTUMN)
         generationSettings.addFeature(
             vd9,
-            if (golden) DnDPlacedFeature.FAIRY_RING_RED else DnDPlacedFeature.BLUE_PETALS
+            if (golden) DnDPlacedFeature.FAIRY_RING_RED else DnDPlacedFeature.ORANGE_PETALS
         )
         if (!golden) {
             generationSettings.addFeature(vd9, DnDPlacedFeature.CROPS_WILD_WHEAT)
