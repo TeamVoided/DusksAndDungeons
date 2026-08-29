@@ -206,7 +206,7 @@ object DnDBlocks {
     val CASCADE_PLANKS = register("cascade_planks", Block(Set.CASCADE_PLANKS)).flammablePlanks()
     val CASCADE_STAIRS = register("cascade_stairs", stairsOf(CASCADE_PLANKS).wood())
     val CASCADE_SLAB = register("cascade_slab", slabOf(CASCADE_PLANKS).wood())
-    val CASCADE_WALL = register("cascade_plank_wall", wallOf(CASCADE_PLANKS).wood())
+    val CASCADE_WALL = register("cascade_wall", wallOf(CASCADE_PLANKS).wood())
     val CASCADE_FENCE = register("cascade_fence", fenceOf(CASCADE_PLANKS).wood())
     val CASCADE_FENCE_GATE =
         register("cascade_fence_gate", fenceGateOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
@@ -260,7 +260,7 @@ object DnDBlocks {
     val SYPIA_PLANKS = register("sypia_planks", Block(Set.SYPIA_PLANKS)).flammablePlanks()
     val SYPIA_STAIRS = register("sypia_stairs", stairsOf(SYPIA_PLANKS).wood())
     val SYPIA_SLAB = register("sypia_slab", slabOf(SYPIA_PLANKS).wood())
-    val SYPIA_WALL = register("sypia_plank_wall", wallOf(SYPIA_PLANKS).wood())
+    val SYPIA_WALL = register("sypia_wall", wallOf(SYPIA_PLANKS).wood())
     val SYPIA_FENCE = register("sypia_fence", fenceOf(SYPIA_PLANKS).wood())
     val SYPIA_FENCE_GATE =
         register("sypia_fence_gate", fenceGateOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
@@ -312,7 +312,7 @@ object DnDBlocks {
     val VERDANT_PLANKS = register("verdant_planks", Block(Set.VERDANT_PLANKS)).flammablePlanks().grass().tint()
     val VERDANT_STAIRS = register("verdant_stairs", stairsOf(VERDANT_PLANKS)).wood().grass().tint()
     val VERDANT_SLAB = register("verdant_slab", slabOf(VERDANT_PLANKS)).wood().grass().tint()
-    val VERDANT_WALL = register("verdant_plank_wall", wallOf(VERDANT_PLANKS)).wood().grass().tint()
+    val VERDANT_WALL = register("verdant_wall", wallOf(VERDANT_PLANKS)).wood().grass().tint()
     val VERDANT_FENCE = register("verdant_fence", fenceOf(VERDANT_PLANKS)).wood().grass().tint()
     val VERDANT_FENCE_GATE = register("verdant_fence_gate", fenceGateOf(DnDWoodTypes.VERDANT_WOOD_TYPE, VERDANT_PLANKS))
         .wood().grass().tint()
