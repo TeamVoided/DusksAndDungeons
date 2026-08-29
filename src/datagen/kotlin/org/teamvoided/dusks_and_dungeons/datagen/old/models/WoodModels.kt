@@ -16,71 +16,10 @@ import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 
 object WoodModels {
 
-    fun woodModels(gen: BlockModelGenerators) {
-        //CASCADE
-        gen.createPlant(
-            DnDBlocks.CASCADE_SAPLING,
-            DnDBlocks.POTTED_CASCADE_SAPLING,
-            BlockModelGenerators.TintState.NOT_TINTED
-        )
-        gen.createTrivialBlock(DnDBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
-        gen.woodProvider(DnDBlocks.CASCADE_LOG)
-            .logWithHorizontal(DnDBlocks.CASCADE_LOG)
-            .wood(DnDBlocks.CASCADE_WOOD.parent)
-
-        gen.woodProvider(DnDBlocks.STRIPPED_CASCADE_LOG)
-            .logWithHorizontal(DnDBlocks.STRIPPED_CASCADE_LOG)
-            .wood(DnDBlocks.STRIPPED_CASCADE_WOOD.parent)
-        gen.createHangingSign(
-            DnDBlocks.STRIPPED_CASCADE_LOG,
-            DnDBlocks.CASCADE_HANGING_SIGN,
-            DnDBlocks.CASCADE_WALL_HANGING_SIGN
-        )
-        gen.createDoor(DnDBlocks.BLUE_DOOR)
-
-        // Sypia
-        gen.createPlant(
-            DnDBlocks.SYPIA_SAPLING,
-            DnDBlocks.POTTED_SYPIA_SAPLING,
-            BlockModelGenerators.TintState.NOT_TINTED
-        )
-        gen.createTrivialBlock(DnDBlocks.SYPIA_LEAVES, TexturedModel.LEAVES)
-        gen.woodProvider(DnDBlocks.SYPIA_LOG)
-            .logWithHorizontal(DnDBlocks.SYPIA_LOG)
-            .wood(DnDBlocks.SYPIA_WOOD.parent)
-
-        gen.woodProvider(DnDBlocks.STRIPPED_SYPIA_LOG)
-            .logWithHorizontal(DnDBlocks.STRIPPED_SYPIA_LOG)
-            .wood(DnDBlocks.STRIPPED_SYPIA_WOOD.parent)
-        gen.createHangingSign(
-            DnDBlocks.STRIPPED_SYPIA_LOG,
-            DnDBlocks.SYPIA_HANGING_SIGN,
-            DnDBlocks.SYPIA_WALL_HANGING_SIGN
-        )
-
-        // Verdant
-        gen.createItemModel(DnDBlocks.VERDANT_LOG)
-        gen.woodProvider(DnDBlocks.VERDANT_LOG).wood(DnDBlocks.VERDANT_WOOD.parent)
-        gen.strippedTinted(DnDBlocks.STRIPPED_VERDANT_LOG, DnDBlocks.STRIPPED_VERDANT_WOOD)
-        gen.planksTinted(
-            DnDBlocks.VERDANT_PLANKS,
-            DnDBlocks.VERDANT_STAIRS,
-            DnDBlocks.VERDANT_SLAB,
-            DnDBlocks.VERDANT_WALL,
-            DnDBlocks.VERDANT_FENCE,
-            DnDBlocks.VERDANT_FENCE_GATE,
-            DnDBlocks.VERDANT_BUTTON,
-            DnDBlocks.VERDANT_PRESSURE_PLATE,
-        )
-        gen.createTintedOrientableTrapdoor(DnDBlocks.VERDANT_TRAPDOOR)
-        gen.createTintedDoor(DnDBlocks.VERDANT_DOOR)
-
-        gen.createHangingSign(
-            DnDBlocks.STRIPPED_VERDANT_LOG,
-            DnDBlocks.VERDANT_HANGING_SIGN, DnDBlocks.VERDANT_WALL_HANGING_SIGN
-        )
-        gen.createSign(DnDBlocks.VERDANT_PLANKS, DnDBlocks.VERDANT_SIGN, DnDBlocks.VERDANT_WALL_SIGN)
-
+    fun create(gen: BlockModelGenerators) {
+        gen.cascade()
+        gen.sypia()
+        gen.verdant()
         //ASSORTED ADDITIONS
         gen.createWood(DnDBlocks.OAK_WOOD, Blocks.OAK_LOG)
         gen.createWood(DnDBlocks.SPRUCE_WOOD, Blocks.SPRUCE_LOG)
@@ -167,7 +106,73 @@ object WoodModels {
         gen.bookshelf(DnDBlocks.CASCADE_BOOKSHELF, DnDBlocks.CASCADE_PLANKS)
         gen.bookshelf(DnDBlocks.SYPIA_BOOKSHELF, DnDBlocks.SYPIA_PLANKS)
         gen.tintedBookshelf(DnDBlocks.VERDANT_BOOKSHELF, DnDBlocks.VERDANT_PLANKS)
+    }
 
+    fun BlockModelGenerators.cascade() {
+        createPlant(
+            DnDBlocks.CASCADE_SAPLING,
+            DnDBlocks.POTTED_CASCADE_SAPLING,
+            BlockModelGenerators.TintState.NOT_TINTED
+        )
+        createTrivialBlock(DnDBlocks.CASCADE_LEAVES, TexturedModel.LEAVES)
+        woodProvider(DnDBlocks.CASCADE_LOG)
+            .logWithHorizontal(DnDBlocks.CASCADE_LOG)
+            .wood(DnDBlocks.CASCADE_WOOD.parent)
+
+        woodProvider(DnDBlocks.STRIPPED_CASCADE_LOG)
+            .logWithHorizontal(DnDBlocks.STRIPPED_CASCADE_LOG)
+            .wood(DnDBlocks.STRIPPED_CASCADE_WOOD.parent)
+        createHangingSign(
+            DnDBlocks.STRIPPED_CASCADE_LOG,
+            DnDBlocks.CASCADE_HANGING_SIGN,
+            DnDBlocks.CASCADE_WALL_HANGING_SIGN
+        )
+        createDoor(DnDBlocks.BLUE_DOOR)
+    }
+
+    fun BlockModelGenerators.sypia() {
+        createPlant(
+            DnDBlocks.SYPIA_SAPLING,
+            DnDBlocks.POTTED_SYPIA_SAPLING,
+            BlockModelGenerators.TintState.NOT_TINTED
+        )
+        createTrivialBlock(DnDBlocks.SYPIA_LEAVES, TexturedModel.LEAVES)
+        woodProvider(DnDBlocks.SYPIA_LOG)
+            .logWithHorizontal(DnDBlocks.SYPIA_LOG)
+            .wood(DnDBlocks.SYPIA_WOOD.parent)
+
+        woodProvider(DnDBlocks.STRIPPED_SYPIA_LOG)
+            .logWithHorizontal(DnDBlocks.STRIPPED_SYPIA_LOG)
+            .wood(DnDBlocks.STRIPPED_SYPIA_WOOD.parent)
+        createHangingSign(
+            DnDBlocks.STRIPPED_SYPIA_LOG,
+            DnDBlocks.SYPIA_HANGING_SIGN,
+            DnDBlocks.SYPIA_WALL_HANGING_SIGN
+        )
+    }
+
+    fun BlockModelGenerators.verdant() {
+        createItemModel(DnDBlocks.VERDANT_LOG)
+        woodProvider(DnDBlocks.VERDANT_LOG).wood(DnDBlocks.VERDANT_WOOD.parent)
+        strippedTinted(DnDBlocks.STRIPPED_VERDANT_LOG, DnDBlocks.STRIPPED_VERDANT_WOOD)
+        planksTinted(
+            DnDBlocks.VERDANT_PLANKS,
+            DnDBlocks.VERDANT_STAIRS,
+            DnDBlocks.VERDANT_SLAB,
+            DnDBlocks.VERDANT_WALL,
+            DnDBlocks.VERDANT_FENCE,
+            DnDBlocks.VERDANT_FENCE_GATE,
+            DnDBlocks.VERDANT_BUTTON,
+            DnDBlocks.VERDANT_PRESSURE_PLATE,
+        )
+        createTintedOrientableTrapdoor(DnDBlocks.VERDANT_TRAPDOOR)
+        createTintedDoor(DnDBlocks.VERDANT_DOOR)
+
+        createHangingSign(
+            DnDBlocks.STRIPPED_VERDANT_LOG,
+            DnDBlocks.VERDANT_HANGING_SIGN, DnDBlocks.VERDANT_WALL_HANGING_SIGN
+        )
+        createSign(DnDBlocks.VERDANT_PLANKS, DnDBlocks.VERDANT_SIGN, DnDBlocks.VERDANT_WALL_SIGN)
     }
 
 }

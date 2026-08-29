@@ -6,13 +6,14 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.fence
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCropWithParent
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerHandheldItem
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
 
 object NetherModels {
-    fun netherModels(gen: BlockModelGenerators) {
+
+    fun create(gen: BlockModelGenerators) {
         DnDItemLists.blackstoneTools.forEach { gen.registerHandheldItem(it) }
 
         gen.registerCropWithParent(
@@ -54,4 +55,5 @@ object NetherModels {
         gen.createTrivialCube(DnDBlocks.GLOWING_LAVASPONGE)
         gen.createTrivialCube(DnDBlocks.LAVASPONGE)
     }
+
 }

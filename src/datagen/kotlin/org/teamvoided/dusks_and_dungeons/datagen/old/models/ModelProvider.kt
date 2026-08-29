@@ -1,15 +1,12 @@
 package org.teamvoided.dusks_and_dungeons.datagen.old.models
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.ItemModelGenerators
-import net.minecraft.data.models.model.*
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.Block
+import net.minecraft.data.models.model.ModelTemplates
+import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.InfestedBlock
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.BigModels
@@ -23,12 +20,10 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.block.WOOD_SETS
 import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections
+import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.extensions.model.createBlockSet
-import java.util.*
 
-class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
-
-    private val ALL_KRY: TextureSlot = TextureSlot.create("all")
+class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
 
     val excludeModels = WOOD_SETS + listOf(
         DnDBlocks.ICE_SET,
@@ -38,50 +33,23 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         DnDBlocks.OVERGROWN_STONE_BRICKS,
     )
 
-
     override fun generateBlockStateModels(gen: BlockModelGenerators) {
 //        gen.registerItemModel(Items.AIR) //fer debug porpoises
         DnDFamilies.modelsBlockFamilies.forEach {
             gen.family(it.baseBlock).generateFor(it)
         }
 
-        BigModels.register(gen)
-        FloraModels.register(gen)
-        NetherModels.netherModels(gen)
-        StoneModels.stoneModels(gen)
-        WoodModels.woodModels(gen)
+        SETS.filterNot(excludeModels::contains).forEach(gen::createBlockSet)
 
+        BigModels.create(gen)
+        FloraModels.create(gen)
+        NetherModels.create(gen)
+        StoneModels.create(gen)
+        WoodModels.create(gen)
 
         gen.iceStairs(DnDBlocks.ICE_SET.stairs, Blocks.ICE)
         gen.slab(DnDBlocks.ICE_SET.slab, Blocks.ICE)
         gen.wall(DnDBlocks.ICE_SET.wall, Blocks.ICE)
-
-        /* Future Content
-        gen.registerSimpleCubeAll(ICE_BRICKS.parent)
-
-        gen.iceStairs(ICE_BRICKS.stairs, ICE_BRICKS.parent)
-        gen.slab(ICE_BRICKS.slab, ICE_BRICKS.parent)
-        gen.wall(ICE_BRICKS.wall, ICE_BRICKS.parent)
-
-        gen.registerSimpleCubeAll(DnDBlocks.MOLTEN_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDBlocks.BRITTLE_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDBlocks.GLOWING_LAVASPONGE)
-        gen.registerSimpleCubeAll(DnDBlocks.LAVASPONGE)*/
-
-        /*.with(
-            When.create().set(LeafPileBlock.PILE_LAYERS, 8),
-            BlockStateVariant.create().put(VariantSettings.MODEL, id).put(VariantSettings.Y, Rotation.R270)
-                .put(VariantSettings.UVLOCK, true)
-        )*/
-
-        SETS.filterNot(excludeModels::contains).forEach(gen::createBlockSet)
-
-        gen.createTrivialBlock(DnDBlocks.TINTED_SAND, TexturedModel.LEAVES)
-        gen.createTrivialBlock(DnDBlocks.TINTED_SANDSTONE, TexturedModel.LEAVES)
-        gen.createTrivialBlock(DnDBlocks.CHISELED_TINTED_SANDSTONE, TexturedModel.LEAVES)
-        gen.createTrivialBlock(DnDBlocks.CUT_TINTED_SANDSTONE, TexturedModel.LEAVES)
-
-        gen.createBrushableBlock(DnDBlocks.SUSPICIOUS_RED_SAND)
 
         // region TODO(1.0) move all vv to appropriate files and categories
         val infestedBlocks = listOf(
@@ -92,17 +60,12 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
             DnDBlocks.INFESTED_DEEPSLATE_TILES,
             DnDBlocks.INFESTED_CRACKED_DEEPSLATE_TILES,
             DnDBlocks.INFESTED_POLISHED_DEEPSLATE,
-        ).map { it as InfestedBlock }
+        )
 
         for (block in infestedBlocks) {
+            block as InfestedBlock
             gen.copyModel(block.hostBlock, block)
         }
-
-        gen.fence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS)
-        gen.redstoneLantern(DnDBlocks.REDSTONE_LANTERN)
-        gen.denseCube(DnDBlocks.HEAVY_CUBE)
-
-        gen.tintedPane(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
 
         for ((idx, block) in DnDBlocks.WOOL_CARPET_PLATE.withIndex()) {
             gen.carpetPlate(block, VanillaColorCollections.WOOL.list[idx])
@@ -110,12 +73,11 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.carpetPlate(DnDBlocks.MOSS_CARPET_PLATE, Blocks.MOSS_BLOCK)
         gen.tintedCarpetPlate(DnDBlocks.OVERGROWTH_CARPET_PLATE, DnDBlocks.OVERGROWTH_BLOCK)
 
+        gen.fence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS)
+
         gen.stairs(DnDBlocks.SNOW_SET.stairs, Blocks.SNOW)
         gen.slab(DnDBlocks.SNOW_SET.slab, Blocks.SNOW, Blocks.SNOW_BLOCK)
-        gen.wall(DnDBlocks.SNOW_SET.wall, Blocks.SNOW.model())
-
-
-
+        gen.wall(DnDBlocks.SNOW_SET.wall, Blocks.SNOW)
 
         // Pairs
         gen.stairs(DnDBlocks.SMOOTH_STONE_STAIR, Blocks.SMOOTH_STONE)
@@ -137,10 +99,22 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         gen.wallOffset(DnDBlocks.PURPUR_WALL, Blocks.PURPUR_BLOCK)
         gen.wall(DnDBlocks.QUARTZ_WALL, mc("block/quartz_block_side"))
         gen.wall(DnDBlocks.SMOOTH_QUARTZ_WALL, mc("block/quartz_block_bottom"))
-
-
-        gen.addAxis(Blocks.MANGROVE_ROOTS)
         // endregion
+
+        // Misc Blocks
+        gen.redstoneLantern(DnDBlocks.REDSTONE_LANTERN)
+        gen.denseCube(DnDBlocks.HEAVY_CUBE)
+
+        gen.tintedPane(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
+        gen.createBrushableBlock(DnDBlocks.SUSPICIOUS_RED_SAND)
+
+        gen.createTrivialBlock(DnDBlocks.TINTED_SAND, TexturedModel.LEAVES)
+        gen.createTrivialBlock(DnDBlocks.TINTED_SANDSTONE, TexturedModel.LEAVES)
+        gen.createTrivialBlock(DnDBlocks.CHISELED_TINTED_SANDSTONE, TexturedModel.LEAVES)
+        gen.createTrivialBlock(DnDBlocks.CUT_TINTED_SANDSTONE, TexturedModel.LEAVES)
+
+        // Vanilla Overrides
+        gen.addAxis(Blocks.MANGROVE_ROOTS)
 
     }
 
@@ -160,24 +134,4 @@ class ModelProvider(o: FabricDataOutput) : FabricModelProvider(o) {
         single.forEach { gen.generateFlatItem(it, ModelTemplates.FLAT_ITEM) }
     }
 
-    private fun item(parent: String, vararg requiredTextures: TextureSlot): ModelTemplate =
-        ModelTemplate(Optional.of(id("item/$parent")), Optional.empty(), *requiredTextures)
-
-    private fun BlockModelGenerators.parentedModel(
-        block: Block, textBlock: Block, parent: ResourceLocation,
-    ): ResourceLocation =
-        ModelTemplate(parent.myb, Optional.empty(), ALL_KRY)
-            .create(block.model(), TextureMapping().put(ALL_KRY, textBlock.model()), this.modelOutput)
-
-    private fun BlockModelGenerators.parentedModel(
-        block: ResourceLocation, textBlock: Block, parent: ResourceLocation,
-    ): ResourceLocation =
-        ModelTemplate(parent.myb, Optional.empty(), ALL_KRY)
-            .create(block, TextureMapping().put(ALL_KRY, textBlock.model()), this.modelOutput)
-
-    private val <T : Any?> T.myb get() = Optional.ofNullable(this)
-    private fun ResourceLocation.suffix(str: String) =
-        ResourceLocation.fromNamespaceAndPath(this.namespace, "${this.path}$str")
-
-    private fun Block.model(): ResourceLocation = ModelLocationUtils.getModelLocation(this)
 }

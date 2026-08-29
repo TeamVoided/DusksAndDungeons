@@ -4,18 +4,14 @@ import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.cubeAllWithTintedOverlay
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerTintedOverlay
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.slabWithTintedOverlay
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.stairsWithTintedOverlay
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.wallWithTintedOverlay
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.registerGravestones
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.registerHeadstone
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 object StoneModels {
 
-    fun stoneModels(gen: BlockModelGenerators) {
+    fun create(gen: BlockModelGenerators) {
         // Pillars
         gen.createRotatedPillarWithHorizontalVariant(
             DnDBlocks.STONE_PILLAR,

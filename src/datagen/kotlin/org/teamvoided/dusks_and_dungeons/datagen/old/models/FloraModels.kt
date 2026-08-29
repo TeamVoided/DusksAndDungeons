@@ -7,28 +7,16 @@ import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createItemModel
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hangingOvergrowth
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.overgrowthBush
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createMoonberryVine
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.model
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCorn
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCornCrop
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCropWithParent
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerFlowerbed2
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerGoldenMushroomPlant
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerMushroomBlockDiffInside
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerPumpkinSet
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerSmallPumpkins
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.rotatedLikeNetherrack
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.suffix
+import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
 object FloraModels {
 
-    fun register(gen: BlockModelGenerators) {
+    fun create(gen: BlockModelGenerators) {
         gen.registerGoldenMushroomPlant(DnDBlocks.GOLDEN_MUSHROOM)
         gen.registerMushroomBlockDiffInside(DnDBlocks.GOLDEN_MUSHROOM_BLOCK)
         gen.registerMushroomBlockDiffInside(
@@ -95,4 +83,5 @@ object FloraModels {
             TexturedModel.createDefault(TextureMapping::cube, block("parent/cube_in_eighths", TextureSlot.ALL))
         )
     }
+
 }
