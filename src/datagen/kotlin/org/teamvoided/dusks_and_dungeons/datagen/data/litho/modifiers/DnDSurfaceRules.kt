@@ -10,13 +10,14 @@ import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 object DnDSurfaceRules {
 
     val COARSE_DIRT = block(Blocks.COARSE_DIRT)
+    val PODZOL = block(Blocks.PODZOL)
 
     fun overworld(): RuleSource {
         val autumnPasturesSurface = ifTrue(
             isBiome(DnDBiomes.AUTUMN_PASTURES),
             ifTrue(
                 UNDER_FLOOR,
-                ifTrue(surfaceSecondaryNoiseAbove(1.75), COARSE_DIRT)
+                ifTrue(surfaceSecondaryNoiseAbove(-0.25, 0.25), COARSE_DIRT)
             )
         )
 
@@ -24,7 +25,10 @@ object DnDSurfaceRules {
             isBiome(DnDBiomes.AUTUMN_WOODS),
             ifTrue(
                 UNDER_FLOOR,
-                ifTrue(surfaceNoiseAbove(-0.75, 0.75), COARSE_DIRT)
+                sequence(
+                    ifTrue(surfaceSecondaryNoiseAbove(1.25), PODZOL),
+                    ifTrue(surfaceNoiseAbove(-0.75, 0.75), COARSE_DIRT)
+                )
             ),
         )
 

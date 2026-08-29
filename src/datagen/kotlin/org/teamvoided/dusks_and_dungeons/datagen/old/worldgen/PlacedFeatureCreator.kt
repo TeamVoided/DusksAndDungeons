@@ -261,7 +261,7 @@ object PlacedFeatureCreator {
         c.register(
             DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
-            RarityFilter.onAverageOnceEvery(2),
+            RarityFilter.onAverageOnceEvery(20),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,

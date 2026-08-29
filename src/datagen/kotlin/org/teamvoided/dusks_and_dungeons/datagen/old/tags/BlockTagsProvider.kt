@@ -595,6 +595,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.PUMPKINS_SMALL_CARVED)
             .forceAddTag(DnDBlockTags.PUMPKINS_SMALL_GLOWING)
             .add(DnDBlocks.HANGING_OVERGROWTH)
+            .add(DnDBlocks.OVERGROWTH_CARPET)
             .add(DnDBlocks.ROOT_BLOCK)
 
         getOrCreateTagBuilder(BlockTags.BEE_GROWABLES)

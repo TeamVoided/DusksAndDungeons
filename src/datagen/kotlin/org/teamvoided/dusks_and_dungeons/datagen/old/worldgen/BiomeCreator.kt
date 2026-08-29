@@ -17,7 +17,6 @@ import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.addGlobalOverworldGeneration
-import java.awt.Color
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.LOCAL_MODIFICATIONS as lm2
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES as ss4
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES as uo6
@@ -40,12 +39,12 @@ object BiomeCreator {
 
     private const val AUTUMN_WATER = 0x164299
     private const val AUTUMN_WATER_FOG = 0x050533
-    private const val GOLDEN_GRASS = 0xFFD859
+    private const val GOLDEN_FOLIAGE = 0xFFC759
     private const val AUTUMN_PLAINS_GRASS = 0xF09B4F
 
     //no access widener?
     private fun getSkyColor(temperature: Float): Int {
-        val f = Mth.clamp(temperature / 3.0f, -1f, 1f)
+        val f = Mth.clamp(temperature / 3f, -1f, 1f)
         return Mth.hsvToRgb(0.62222224f - f * 0.05f, 0.5f + f * 0.1f, 1f)
     }
 
@@ -71,10 +70,6 @@ object BiomeCreator {
             vd9,
             if (golden) DnDPlacedFeature.FAIRY_RING_RED else DnDPlacedFeature.ORANGE_PETALS
         )
-        if (!golden) {
-            generationSettings.addFeature(vd9, DnDPlacedFeature.CROPS_WILD_WHEAT)
-            generationSettings.addFeature(uo6, DnDPlacedFeature.DISK_MUD)
-        }
     }
 
     private fun createAutumnForest(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
@@ -110,8 +105,8 @@ object BiomeCreator {
             0.8f,
             AUTUMN_WATER,
             AUTUMN_WATER_FOG,
-            if (golden) GOLDEN_GRASS else 16224051,
-            if (golden) GOLDEN_GRASS else 15097636
+            if (golden) GOLDEN_FOLIAGE else 16224051,
+            if (golden) GOLDEN_FOLIAGE else 15097636
         )
     }
 //grass 16434531 15647087
@@ -148,7 +143,7 @@ object BiomeCreator {
             AUTUMN_WATER,
             AUTUMN_WATER_FOG,
             if (golden) 15647087 else AUTUMN_PLAINS_GRASS,
-            if (golden) GOLDEN_GRASS else 15097636
+            if (golden) GOLDEN_FOLIAGE else 15097636
         )
     }
 
@@ -170,6 +165,7 @@ object BiomeCreator {
         BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
         generationSettings.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
         addAutumnFeatures(generationSettings)
+        generationSettings.addFeature(uo6, DnDPlacedFeature.DISK_MUD)
         generationSettings.addFeature(vd9, AquaticPlacements.SEAGRASS_RIVER)
 
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
@@ -181,7 +177,7 @@ object BiomeCreator {
             0.8f,
             AUTUMN_WATER,
             AUTUMN_WATER_FOG,
-            AUTUMN_PLAINS_GRASS,
+            0xF8BA54,
             16081176
         )
     }
@@ -202,8 +198,9 @@ object BiomeCreator {
         addOvergrowthCavesVegetationFeatures(generationSettings)
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES)
 
-        return biomeBuild(spawnSettings, generationSettings, music, 0.5f, 0.5f, 0x58DC6E, 0x17543c, 0x9abe4b)
-
+        return biomeBuild(spawnSettings, generationSettings, music, 0.5f, 0.5f, 0x56C468, 0x17543c, 0x9abe4b)
+        //Color(0x58DC6E)
+        //Color(0x56C468)
         //original grass = 91DB60, water = 4CBF61
         //vibrant grass = A9FF70, water = 63F97A
         //halfway grass = 9DED6D, water = 58DC6E
