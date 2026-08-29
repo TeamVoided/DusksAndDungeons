@@ -204,28 +204,28 @@ object DnDBlocks {
     val STRIPPED_CASCADE_LOG_PILE = register("stripped_cascade_log_pile", logPile(STRIPPED_CASCADE_WOOD.parent))
 
     val CASCADE_PLANKS = register("cascade_planks", Block(Set.CASCADE_PLANKS)).flammablePlanks()
-    val CASCADE_STAIRS = register("cascade_stairs", stairsOf(CASCADE_PLANKS).wood())
-    val CASCADE_SLAB = register("cascade_slab", slabOf(CASCADE_PLANKS).wood())
-    val CASCADE_WALL = register("cascade_wall", wallOf(CASCADE_PLANKS).wood())
-    val CASCADE_FENCE = register("cascade_fence", fenceOf(CASCADE_PLANKS).wood())
+    val CASCADE_STAIRS = register("cascade_stairs", stairsOf(CASCADE_PLANKS)).wood()
+    val CASCADE_SLAB = register("cascade_slab", slabOf(CASCADE_PLANKS)).wood()
+    val CASCADE_WALL = register("cascade_wall", wallOf(CASCADE_PLANKS)).wood()
+    val CASCADE_FENCE = register("cascade_fence", fenceOf(CASCADE_PLANKS)).wood()
     val CASCADE_FENCE_GATE =
-        register("cascade_fence_gate", fenceGateOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
+        register("cascade_fence_gate", fenceGateOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS)).wood()
     val CASCADE_DOOR =
-        registerNoItem("cascade_door", doorOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
-    val BLUE_DOOR = registerNoItem("blue_door", DoorBlock(BlockSetType.DARK_OAK, Set.BLUE_DOOR).wood())
+        registerNoItem("cascade_door", doorOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS)).wood()
+    val BLUE_DOOR = registerNoItem("blue_door", DoorBlock(BlockSetType.DARK_OAK, Set.BLUE_DOOR)).wood()
     val CASCADE_TRAPDOOR =
-        register("cascade_trapdoor", trapdoorOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS).wood())
+        register("cascade_trapdoor", trapdoorOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS)).wood()
     val CASCADE_PRESSURE_PLATE = register(
         "cascade_pressure_plate",
         pressurePlateOf(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE, CASCADE_PLANKS)
     ).wood()
-    val CASCADE_BUTTON = register("cascade_button", woodenButton(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE).wood())
-    val CASCADE_SIGN = registerNoItem("cascade_sign", signOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
+    val CASCADE_BUTTON = register("cascade_button", woodenButton(DnDBlockSetTypes.CASCADE_BLOCK_SET_TYPE)).wood()
+    val CASCADE_SIGN = registerNoItem("cascade_sign", signOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS)).wood()
     val CASCADE_WALL_SIGN = registerNoItem(
         "cascade_wall_sign", wallSignOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS, CASCADE_SIGN).wood()
     )
     val CASCADE_HANGING_SIGN =
-        registerNoItem("cascade_hanging_sign", hangingSignOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS).wood())
+        registerNoItem("cascade_hanging_sign", hangingSignOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS)).wood()
     val CASCADE_WALL_HANGING_SIGN = registerNoItem(
         "cascade_wall_hanging_sign",
         wallHangingSignOf(DnDWoodTypes.CASCADE_WOOD_TYPE, CASCADE_PLANKS, CASCADE_HANGING_SIGN).wood()
@@ -258,25 +258,25 @@ object DnDBlocks {
     val STRIPPED_SYPIA_LOG_PILE = register("stripped_sypia_log_pile", logPile(STRIPPED_SYPIA_WOOD.parent))
 
     val SYPIA_PLANKS = register("sypia_planks", Block(Set.SYPIA_PLANKS)).flammablePlanks()
-    val SYPIA_STAIRS = register("sypia_stairs", stairsOf(SYPIA_PLANKS).wood())
-    val SYPIA_SLAB = register("sypia_slab", slabOf(SYPIA_PLANKS).wood())
-    val SYPIA_WALL = register("sypia_wall", wallOf(SYPIA_PLANKS).wood())
-    val SYPIA_FENCE = register("sypia_fence", fenceOf(SYPIA_PLANKS).wood())
+    val SYPIA_STAIRS = register("sypia_stairs", stairsOf(SYPIA_PLANKS)).wood()
+    val SYPIA_SLAB = register("sypia_slab", slabOf(SYPIA_PLANKS)).wood()
+    val SYPIA_WALL = register("sypia_wall", wallOf(SYPIA_PLANKS)).wood()
+    val SYPIA_FENCE = register("sypia_fence", fenceOf(SYPIA_PLANKS)).wood()
     val SYPIA_FENCE_GATE =
-        register("sypia_fence_gate", fenceGateOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
+        register("sypia_fence_gate", fenceGateOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS)).wood()
     val SYPIA_DOOR =
-        registerNoItem("sypia_door", doorOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
+        registerNoItem("sypia_door", doorOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS)).wood()
     val SYPIA_TRAPDOOR =
-        register("sypia_trapdoor", trapdoorOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
+        register("sypia_trapdoor", trapdoorOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS)).wood()
     val SYPIA_PRESSURE_PLATE =
-        register("sypia_pressure_plate", pressurePlateOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS).wood())
-    val SYPIA_BUTTON = register("sypia_button", woodenButton(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE).wood())
-    val SYPIA_SIGN = registerNoItem("sypia_sign", signOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
+        register("sypia_pressure_plate", pressurePlateOf(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE, SYPIA_PLANKS)).wood()
+    val SYPIA_BUTTON = register("sypia_button", woodenButton(DnDBlockSetTypes.SYPIA_BLOCK_SET_TYPE)).wood()
+    val SYPIA_SIGN = registerNoItem("sypia_sign", signOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS)).wood()
     val SYPIA_WALL_SIGN = registerNoItem(
         "sypia_wall_sign", wallSignOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS, SYPIA_SIGN).wood()
     )
     val SYPIA_HANGING_SIGN =
-        registerNoItem("sypia_hanging_sign", hangingSignOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS).wood())
+        registerNoItem("sypia_hanging_sign", hangingSignOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS)).wood()
     val SYPIA_WALL_HANGING_SIGN = registerNoItem(
         "sypia_wall_hanging_sign",
         wallHangingSignOf(DnDWoodTypes.SYPIA_WOOD_TYPE, SYPIA_PLANKS, SYPIA_HANGING_SIGN).wood()
@@ -443,18 +443,18 @@ object DnDBlocks {
         register("hollow_stripped_verdant_log", hollowLog(STRIPPED_VERDANT_LOG)).grass().tint()
 
     // Refined wood blocks
-    val OAK_WALL = register("oak_wall", wallOf(OAK_PLANKS).wood())
-    val SPRUCE_WALL = register("spruce_wall", wallOf(SPRUCE_PLANKS).wood())
-    val BIRCH_WALL = register("birch_wall", wallOf(BIRCH_PLANKS).wood())
-    val JUNGLE_WALL = register("jungle_wall", wallOf(JUNGLE_PLANKS).wood())
-    val ACACIA_WALL = register("acacia_wall", wallOf(ACACIA_PLANKS).wood())
-    val DARK_OAK_WALL = register("dark_oak_wall", wallOf(DARK_OAK_PLANKS).wood())
-    val MANGROVE_WALL = register("mangrove_wall", wallOf(MANGROVE_PLANKS).wood())
-    val CHERRY_WALL = register("cherry_wall", wallOf(CHERRY_PLANKS).wood())
-    val CRIMSON_WALL = register("crimson_wall", wallOf(CRIMSON_PLANKS).wood())
-    val WARPED_WALL = register("warped_wall", wallOf(WARPED_PLANKS).wood())
-    val BAMBOO_WALL = register("bamboo_wall", wallOf(BAMBOO_PLANKS).wood())
-    val BAMBOO_MOSAIC_WALL = register("bamboo_mosaic_wall", wallOf(BAMBOO_MOSAIC).wood())
+    val OAK_WALL = register("oak_wall", wallOf(OAK_PLANKS)).wood()
+    val SPRUCE_WALL = register("spruce_wall", wallOf(SPRUCE_PLANKS)).wood()
+    val BIRCH_WALL = register("birch_wall", wallOf(BIRCH_PLANKS)).wood()
+    val JUNGLE_WALL = register("jungle_wall", wallOf(JUNGLE_PLANKS)).wood()
+    val ACACIA_WALL = register("acacia_wall", wallOf(ACACIA_PLANKS)).wood()
+    val DARK_OAK_WALL = register("dark_oak_wall", wallOf(DARK_OAK_PLANKS)).wood()
+    val MANGROVE_WALL = register("mangrove_wall", wallOf(MANGROVE_PLANKS)).wood()
+    val CHERRY_WALL = register("cherry_wall", wallOf(CHERRY_PLANKS)).wood()
+    val CRIMSON_WALL = register("crimson_wall", wallOf(CRIMSON_PLANKS)).wood()
+    val WARPED_WALL = register("warped_wall", wallOf(WARPED_PLANKS)).wood()
+    val BAMBOO_WALL = register("bamboo_wall", wallOf(BAMBOO_PLANKS)).wood()
+    val BAMBOO_MOSAIC_WALL = register("bamboo_mosaic_wall", wallOf(BAMBOO_MOSAIC)).wood()
 
     val SPRUCE_BOOKSHELF = register("spruce_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
     val BIRCH_BOOKSHELF = register("birch_bookshelf", Block(ofFullCopy(BOOKSHELF))).axe()
