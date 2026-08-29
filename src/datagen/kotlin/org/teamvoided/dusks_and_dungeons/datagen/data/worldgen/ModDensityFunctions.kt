@@ -16,17 +16,18 @@ import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoises
 object ModDensityFunctions : RegistryBootstrapper<DensityFunction> {
 
     override fun BootstrapContext<DensityFunction>.init() {
+        val autumn_size = -.08
         register(
             DnDDensityFunctions.CASCADE_REGION,
-            noise(noiseHolder(DnDNoises.AUTUMN), 0.12, 0.0)
+            noise(noiseHolder(DnDNoises.AUTUMN), autumn_size, 0.0)
         )
         register(
             DnDDensityFunctions.SYPIA_REGION,
-            noise(noiseHolder(DnDNoises.AUTUMN), -0.09, 0.0).abs(),
+            noise(noiseHolder(DnDNoises.AUTUMN), -autumn_size * 0.7, 0.0),
         )
         register(
             DnDDensityFunctions.OVERGROWN_GROTTO_REGION,
-            noise(noiseHolder(DnDNoises.OVERGROWN_GROTTO), 0.25, 0.0),
+            noise(noiseHolder(DnDNoises.OVERGROWN_GROTTO), 0.09, 0.0),
         )
     }
 //    NoiseRouterData.class

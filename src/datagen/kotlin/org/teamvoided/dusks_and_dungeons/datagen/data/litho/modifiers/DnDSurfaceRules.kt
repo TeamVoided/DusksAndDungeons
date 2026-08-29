@@ -16,7 +16,7 @@ object DnDSurfaceRules {
             isBiome(DnDBiomes.AUTUMN_PASTURES),
             ifTrue(
                 UNDER_FLOOR,
-                ifTrue(surfaceSecondaryNoiseAbove(1.25), COARSE_DIRT)
+                ifTrue(surfaceSecondaryNoiseAbove(1.75), COARSE_DIRT)
             )
         )
 
@@ -40,7 +40,7 @@ object DnDSurfaceRules {
         )
 
         // Return a surface-only sequence of surface rules
-        return ifTrue(yBlockCheck(VerticalAnchor.absolute(-55), 0), surface)
+        return ifTrue(yBlockCheck(VerticalAnchor.aboveBottom(11), 0), surface)
     }
 
     // region Helpers

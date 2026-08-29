@@ -17,6 +17,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.addGlobalOverworldGeneration
+import java.awt.Color
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.LOCAL_MODIFICATIONS as lm2
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES as ss4
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration.UNDERGROUND_ORES as uo6
@@ -36,6 +37,11 @@ object BiomeCreator {
 
         context.register(DnDBiomes.OVERGROWN_GROTTO, overgrownGrotto(context))
     }
+
+    private const val AUTUMN_WATER = 0x164299
+    private const val AUTUMN_WATER_FOG = 0x050533
+    private const val GOLDEN_GRASS = 0xFFD859
+    private const val AUTUMN_PLAINS_GRASS = 0xF09B4F
 
     //no access widener?
     private fun getSkyColor(temperature: Float): Int {
@@ -81,7 +87,6 @@ object BiomeCreator {
         addGlobalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
-        generationSettings.addFeature(uo6, DnDPlacedFeature.DISK_PODZOL)
         generationSettings.addFeature(
             vd9,
             if (golden) DnDPlacedFeature.GOLDEN_WOODS_VEGETATION else DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
@@ -103,10 +108,10 @@ object BiomeCreator {
             music,
             0.25f,
             0.8f,
-            1392275,
-            329011,
-            if (golden) 0xFFD859 else 16224051,
-            if (golden) 0xFFD859 else 15097636
+            AUTUMN_WATER,
+            AUTUMN_WATER_FOG,
+            if (golden) GOLDEN_GRASS else 16224051,
+            if (golden) GOLDEN_GRASS else 15097636
         )
     }
 //grass 16434531 15647087
@@ -140,10 +145,10 @@ object BiomeCreator {
             music,
             0.25f,
             0.8f,
-            1392275,
-            329011,
-            if (golden) 15647087 else 15768399,
-            if (golden) 0xFFD859 else 15097636
+            AUTUMN_WATER,
+            AUTUMN_WATER_FOG,
+            if (golden) 15647087 else AUTUMN_PLAINS_GRASS,
+            if (golden) GOLDEN_GRASS else 15097636
         )
     }
 
@@ -159,7 +164,6 @@ object BiomeCreator {
         addGlobalOverworldGeneration(generationSettings)
         BiomeDefaultFeatures.addDefaultOres(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
-        generationSettings.addFeature(uo6, DnDPlacedFeature.DISK_PODZOL)
         generationSettings.addFeature(vd9, DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION)
         BiomeDefaultFeatures.addPlainGrass(generationSettings)
         BiomeDefaultFeatures.addGiantTaigaVegetation(generationSettings)
@@ -169,7 +173,17 @@ object BiomeCreator {
         generationSettings.addFeature(vd9, AquaticPlacements.SEAGRASS_RIVER)
 
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
-        return biomeBuild(spawnSettings, generationSettings, music, 0.25f, 0.8f, 1392275, 329011, 15768399, 16081176)
+        return biomeBuild(
+            spawnSettings,
+            generationSettings,
+            music,
+            0.25f,
+            0.8f,
+            AUTUMN_WATER,
+            AUTUMN_WATER_FOG,
+            AUTUMN_PLAINS_GRASS,
+            16081176
+        )
     }
 
 
@@ -226,7 +240,9 @@ object BiomeCreator {
         //builder.addFeature(vd9, CavePlacements.LUSH_CAVES_CLAY)
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_FLOOR_VEGETATION)
         builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_TREE_ROOTED)
-        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_CAVES_TREES)
+        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_TREE_CAVE_1)
+        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_TREE_CAVE_2)
+        builder.addFeature(vd9, DnDPlacedFeature.OVERGROWTH_TREE_CAVE_3)
         //builder.addFeature(vd9, CavePlacements.SPORE_BLOSSOM)
         builder.addFeature(vd9, CavePlacements.CLASSIC_VINES)
     }

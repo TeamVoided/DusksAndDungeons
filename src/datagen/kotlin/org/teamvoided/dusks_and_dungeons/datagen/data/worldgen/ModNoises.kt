@@ -10,7 +10,7 @@ object ModNoises : RegistryBootstrapper<NormalNoise.NoiseParameters> {
 
     override fun BootstrapContext<NormalNoise.NoiseParameters>.init() {
         register(DnDNoises.AUTUMN, -7, 1, 1)
-        register(DnDNoises.OVERGROWN_GROTTO, -9, 1, 1, 0, 1)
+        register(DnDNoises.OVERGROWN_GROTTO, -7, 1, 1, 0, 1)
     }
 
     fun BootstrapContext<NormalNoise.NoiseParameters>.register(

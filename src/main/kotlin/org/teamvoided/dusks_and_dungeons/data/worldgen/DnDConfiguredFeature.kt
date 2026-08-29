@@ -9,18 +9,18 @@ import org.teamvoided.dusks_and_dungeons.util.key
 object DnDConfiguredFeature {
 
     val OVERGROWN_COBBLESTONE_BOULDER = key("overgrown_cobblestone_boulder")
-    val FAIRY_RING_WHITE = key("fairy_ring/white")
-    val FAIRY_RING_RED = key("fairy_ring/red")
-    val FAIRY_RING_BLUE = key("fairy_ring/blue")
-    val FAIRY_RING_ORANGE = key("fairy_ring/orange")
-    val FAIRY_RING_WILDFLOWER = key("fairy_ring/wildflower")
-    val FAIRY_RING_COLD_WILDFLOWER = key("fairy_ring/cold_wildflower")
+    val FAIRY_RING_WHITE = key("flower/fairy_ring/white")
+    val FAIRY_RING_RED = key("flower/fairy_ring/red")
+    val FAIRY_RING_BLUE = key("flower/fairy_ring/blue")
+    val FAIRY_RING_ORANGE = key("flower/fairy_ring/orange")
+    val FAIRY_RING_WILDFLOWER = key("flower/fairy_ring/wildflower")
+    val FAIRY_RING_COLD_WILDFLOWER = key("flower/fairy_ring/cold_wildflower")
 
     @JvmField
-    val FAIRY_RING_CRIMSON = key("fairy_ring/crimson")
+    val FAIRY_RING_CRIMSON = key("flower/fairy_ring/crimson")
 
     @JvmField
-    val FAIRY_RING_WARPED = key("fairy_ring/warped")
+    val FAIRY_RING_WARPED = key("flower/fairy_ring/warped")
 
     val CASCADE_TREE = key("tree/sapling/cascade_tree")
     val CASCADE_TREE_BEES = key("tree/sapling/cascade_tree_bees")
@@ -31,15 +31,13 @@ object DnDConfiguredFeature {
     val DARK_OAK_AUTUMN = key("tree/dark_oak_autumn")
     val ACACIA_AUTUMN = key("tree/acacia_autumn")
     val ACACIA_BUSH_AUTUMN = key("tree/acacia_bush_autumn")
-    val DISK_PODZOL = key("disk/disk_podzol")
     val DISK_MUD = key("disk/disk_mud")
-    val DISK_RED_SAND = key("disk/disk_red_sand")
     val AUTUMN_WOODS_VEGETATION = key("biome_vegetation/autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = key("biome_vegetation/autumn_pastures_vegetation")
     val GOLDEN_VEGETATION = key("biome_vegetation/golden_vegetation")
     val FLOWER_AUTUMN = key("flower/flower_autumn")
     val PATCH_ROSEBUSH = key("flower/patch_rosebush")
-    val BLUE_PETALS = key("flower/blue_petals")
+    val ORANGE_PETALS = key("flower/orange_petals")
     val AUTUMN_FARMLAND = key("autumn_farmland")
     val AUTUMN_FARMLAND_CROPS = key("crops/autumn_farmland_crops")
     val CROPS_WILD_WHEAT = key("crops/wild_wheat")
@@ -87,7 +85,6 @@ object DnDConfiguredFeature {
     val OVERGROWTH_TREE_EAST = key("tree/verdant/east")
     val OVERGROWTH_TREE_WEST = key("tree/verdant/west")
     val OVERGROWTH_TREE_ROOTED = key("tree/verdant/rooted")
-    val OVERGROWTH_TREE_PATCH = key("tree/verdant/patch")
     val OVERGROWTH_LEAF_DECORATORS = key("tree/verdant/leaf_decorator")
     val OVERGROWTH_CARPET_PATCH = key("overgrowth/carpet_patch")
     val OVERGROWTH_HANGING = key("overgrowth/hanging")

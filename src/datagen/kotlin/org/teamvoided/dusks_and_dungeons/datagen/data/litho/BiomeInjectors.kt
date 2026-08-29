@@ -22,15 +22,15 @@ object BiomeInjectors : RegistryBootstrapper<BiomeInjector> {
             DBInject.OVERGROWN_GROTTO,
             BiomeTags.IS_OVERWORLD,
             DnDBiomes.OVERGROWN_GROTTO,
-            parameterMap(cave, dfParam(DnDDensityFunctions.OVERGROWN_GROTTO_REGION, 0.25, 2.0)),
+            parameterMap(cave, dfParam(DnDDensityFunctions.OVERGROWN_GROTTO_REGION, 0.7, 2.0)),
             1000
         )
     }
 
     fun BootstrapContext<BiomeInjector>.autumnBiomes() {
         val temperature = climateParam(TEMPERATURE, -2.0, -0.15)
-        val regionCascade = dfParam(DnDDensityFunctions.CASCADE_REGION, 0.4, 2.0)
-        val regionSypia = dfParam(DnDDensityFunctions.SYPIA_REGION, 0.4, 2.0)
+        val regionCascade = dfParam(DnDDensityFunctions.CASCADE_REGION, 0.5, 2.0)
+        val regionSypia = dfParam(DnDDensityFunctions.SYPIA_REGION, 0.5, 2.0)
 
         val autumn = parameterMap(temperature, regionCascade)
         val golden = parameterMap(temperature, regionSypia)
@@ -61,5 +61,4 @@ object BiomeInjectors : RegistryBootstrapper<BiomeInjector> {
             DnDBiomeTags.AUTUMN_RIVERS, DnDBiomes.AUTUMN_CASCADES, golden
         )
     }
-
 }

@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 
 
 open class CarpetPlateBlock(type: BlockSetType, properties: Properties) : PressurePlateBlock(type, properties) {
@@ -22,8 +23,8 @@ open class CarpetPlateBlock(type: BlockSetType, properties: Properties) : Pressu
 
     companion object {
 
-        val PRESSED_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 0.5, 16.0)
-        val DEFAULT_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 1.0, 16.0)
+        val PRESSED_SHAPE: VoxelShape = symmetricalBoxY(0.0, 0.0, 0.5)
+        val DEFAULT_SHAPE: VoxelShape = symmetricalBoxY(0.0, 0.0, 1.0)
 
     }
 }

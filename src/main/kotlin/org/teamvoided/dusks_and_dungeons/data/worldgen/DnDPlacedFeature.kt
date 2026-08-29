@@ -24,9 +24,7 @@ object DnDPlacedFeature {
     val PATCH_LANTERN_PUMPKIN_EXTRA = key("pumpkin/lantern_extra")
     val PATCH_MOSSKIN_PUMPKIN_EXTRA = key("pumpkin/mosskin_extra")
     val PATCH_GLOOM_PUMPKIN_EXTRA = key("pumpkin/gloom_extra")
-    val DISK_PODZOL = key("disk_podzol")
     val DISK_MUD = key("disk_mud")
-    val DISK_RED_SAND = key("disk_red_sand")
     val AUTUMN_WOODS_VEGETATION = key("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = key("autumn_pastures_vegetation")
     val GOLDEN_WOODS_VEGETATION = key("golden_woods_vegetation")
@@ -42,7 +40,10 @@ object DnDPlacedFeature {
     val OVERGROWTH_HANGING = key("cave/overgrowth_hanging")
     val OVERGROWTH_CAVES_FLOOR_VEGETATION = key("cave/overgrowth_floor_vegetation")
     val OVERGROWTH_CAVES_CEILING_VEGETATION = key("cave/overgrowth_ceiling_vegetation")
-    val OVERGROWTH_CAVES_TREES = key("cave/overgrowth_tree")
+    val OVERGROWTH_TREE_CAVE_1 = key("cave/verdant_tree_1")
+    val OVERGROWTH_TREE_CAVE_2 = key("cave/verdant_tree_2")
+    val OVERGROWTH_TREE_CAVE_3 = key("cave/verdant_tree_3")
+    val VERDANT_DOWN = key("tree/verdant")
 
 
     val FAIRY_RING_RED = key("fairy_ring_red")

@@ -38,7 +38,6 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.block.HangingFloraBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
@@ -333,7 +332,7 @@ object ConfiguredFeatureCreator {
     fun BootstrapContext<ConfiguredFeature<*, *>>.hangingCaveColumn(
         feature: ResourceKey<ConfiguredFeature<*, *>>,
         list: List<BlockColumnConfiguration.Layer>,
-        tip: Boolean = false,
+        tip: Boolean = false
     ) {
 
         this.registerConfiguredFeature(
@@ -529,28 +528,6 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
-
-        this.registerConfiguredFeature(
-            DnDConfiguredFeature.OVERGROWTH_TREE_PATCH,
-            LithostitchedFeatures.COMPOSITE,
-            CompositeConfig(
-                HolderSet.direct(
-                    PlacementUtils.inlinePlaced(
-                        this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
-                    ),
-                    PlacementUtils.inlinePlaced(
-                        Feature.RANDOM_PATCH,
-                        FeatureUtils.simpleRandomPatchConfiguration(
-                            96, PlacementUtils.inlinePlaced(
-                                this.lookup(Registries.CONFIGURED_FEATURE)
-                                    .getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
-                            )
-                        )
-                    )
-                ),
-                CompositeConfig.Type.CANCEL_ON_FAILURE
-            )
-        )
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.flowers() {
@@ -577,11 +554,11 @@ object ConfiguredFeatureCreator {
             )
         )
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.BLUE_PETALS, Feature.FLOWER, RandomPatchConfiguration(
+            DnDConfiguredFeature.ORANGE_PETALS, Feature.FLOWER, RandomPatchConfiguration(
                 96, 6, 2,
                 PlacementUtils.onlyWhenEmpty(
                     Feature.SIMPLE_BLOCK,
-                    SimpleBlockConfiguration(WeightedStateProvider(petalBuilder(DnDBlocks.BLUE_PETALS)))
+                    SimpleBlockConfiguration(WeightedStateProvider(petalBuilder(DnDBlocks.ORANGE_PETALS)))
                 )
             )
         )
@@ -744,44 +721,8 @@ object ConfiguredFeatureCreator {
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.disks() {
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.DISK_PODZOL, Feature.DISK, DiskConfiguration(
-                RuleBasedBlockStateProvider(
-                    BlockStateProvider.simple(Blocks.DIRT), listOf(
-                        RuleBasedBlockStateProvider.Rule(
-                            BlockPredicate.not(
-                                BlockPredicate.anyOf(
-                                    BlockPredicate.solid(Direction.UP.normal),
-                                    BlockPredicate.matchesFluids(Direction.UP.normal, Fluids.WATER)
-                                )
-                            ), BlockStateProvider.simple(Blocks.PODZOL)
-                        )
-                    )
-                ),
-                BlockPredicate.matchesBlocks(listOf(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.STONE)),
-                UniformInt.of(2, 6), 2
-            )
-        )
-        this.registerConfiguredFeature(
             DnDConfiguredFeature.DISK_MUD, Feature.DISK, DiskConfiguration(
                 RuleBasedBlockStateProvider.simple(Blocks.MUD), BlockPredicate.matchesBlocks(
-                    listOf(
-                        Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.MYCELIUM,
-                        Blocks.PODZOL, Blocks.GRAVEL, Blocks.SAND, Blocks.MUD
-                    )
-                ), UniformInt.of(2, 6), 1
-            )
-        )
-
-        this.registerConfiguredFeature(
-            DnDConfiguredFeature.DISK_RED_SAND, Feature.DISK, DiskConfiguration(
-                RuleBasedBlockStateProvider(
-                    BlockStateProvider.simple(Blocks.RED_SAND), listOf(
-                        RuleBasedBlockStateProvider.Rule(
-                            BlockPredicate.matchesBlocks(Direction.DOWN.normal, Blocks.AIR),
-                            BlockStateProvider.simple(Blocks.RED_SANDSTONE)
-                        )
-                    )
-                ), BlockPredicate.matchesBlocks(
                     listOf(
                         Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.MYCELIUM,
                         Blocks.PODZOL, Blocks.GRAVEL, Blocks.SAND, Blocks.MUD
@@ -794,7 +735,7 @@ object ConfiguredFeatureCreator {
     fun BootstrapContext<ConfiguredFeature<*, *>>.overgrowthPatch(
         feature: ResourceKey<ConfiguredFeature<*, *>>,
         surface: CaveSurface,
-        bonemeal: Boolean = false,
+        bonemeal: Boolean = false
     ) {
         val isCeil = surface.ordinal == 1
         val vegFeat = PlacementUtils.inlinePlaced(
@@ -824,7 +765,7 @@ object ConfiguredFeatureCreator {
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.overgrowthTree(
         cf: ResourceKey<ConfiguredFeature<*, *>>,
-        dir: Direction,
+        dir: Direction
     ) {
         val trunk =
             if (dir.axis == Direction.Axis.Y)
@@ -894,7 +835,7 @@ object ConfiguredFeatureCreator {
     fun WeightedList.Builder<Holder<PlacedFeature>>.addC(
         c: BootstrapContext<ConfiguredFeature<*, *>>,
         entry: ResourceKey<ConfiguredFeature<*, *>>,
-        int: Int = 1,
+        int: Int = 1
     ): WeightedList.Builder<Holder<PlacedFeature>> {
         this.add(PlacementUtils.inlinePlaced(c.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(entry)), int)
         return this
@@ -903,7 +844,7 @@ object ConfiguredFeatureCreator {
     fun WeightedList.Builder<Holder<PlacedFeature>>.addP(
         c: BootstrapContext<ConfiguredFeature<*, *>>,
         entry: ResourceKey<PlacedFeature>,
-        int: Int = 1,
+        int: Int = 1
     ): WeightedList.Builder<Holder<PlacedFeature>> {
         this.add(c.lookup(Registries.PLACED_FEATURE).getOrThrow(entry), int)
         return this

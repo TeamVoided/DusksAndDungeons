@@ -21,8 +21,6 @@ import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
-import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -68,18 +66,8 @@ object PlacedFeatureCreator {
         )
         c.surfacePlacementRare(
             DnDPlacedFeature.PATCH_GLOOM_PUMPKIN_EXTRA,
-            DnDConfiguredFeature.PATCH_PUMPKIN_GLOOM_EXTRA
-        )
-        c.register(
-            DnDPlacedFeature.DISK_PODZOL, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_PODZOL),
-            RarityFilter.onAverageOnceEvery(40),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP_TOP_SOLID,
-            RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
-            BlockPredicateFilter.forPredicate(
-                BlockPredicate.matchesBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK), (Blocks.PODZOL))
-            ),
-            BiomeFilter.biome()
+            DnDConfiguredFeature.PATCH_PUMPKIN_GLOOM_EXTRA,
+            35
         )
         c.register(
             DnDPlacedFeature.DISK_MUD, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_MUD),
@@ -87,20 +75,7 @@ object PlacedFeatureCreator {
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
             RandomOffsetPlacement.vertical(ConstantInt.of(-1)),
-            BlockPredicateFilter.forPredicate(
-                BlockPredicate.matchesBlocks(*arrayOf(Blocks.DIRT), (Blocks.GRASS_BLOCK), (Blocks.PODZOL))
-            ),
-            BiomeFilter.biome()
-        )
-        c.register(
-            DnDPlacedFeature.DISK_RED_SAND,
-            cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_RED_SAND),
-            CountPlacement.of(3),
-            InSquarePlacement.spread(),
-            PlacementUtils.HEIGHTMAP_TOP_SOLID,
-            BlockPredicateFilter.forPredicate(
-                BlockPredicate.matchesFluids(*arrayOf<Fluid>(Fluids.WATER))
-            ),
+            BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(BlockTags.DIRT)),
             BiomeFilter.biome()
         )
         saplingFeatures(c, cfgLookup)
@@ -149,13 +124,9 @@ object PlacedFeatureCreator {
             125,
             Direction.UP
         )
-        c.cavePlacement(
-            DnDPlacedFeature.OVERGROWTH_CAVES_TREES,
-            DnDConfiguredFeature.OVERGROWTH_TREE_PATCH,
-            125,
-            Direction.DOWN,
-            BlockPredicate.matchesTag(BlockTags.DIRT)
-        )
+        c.overgrowthTree(DnDPlacedFeature.OVERGROWTH_TREE_CAVE_1)
+        c.overgrowthTree(DnDPlacedFeature.OVERGROWTH_TREE_CAVE_2)
+        c.overgrowthTree(DnDPlacedFeature.OVERGROWTH_TREE_CAVE_3)
 
         c.cavePlacementRare(
             DnDPlacedFeature.CRIMSON_WART,
@@ -172,6 +143,14 @@ object PlacedFeatureCreator {
 
         c.register(DnDPlacedFeature.PILE_CORN, DnDConfiguredFeature.PILE_CORN)
     }
+
+    fun BootstrapContext<PlacedFeature>.overgrowthTree(feature: ResourceKey<PlacedFeature>) = this.cavePlacement(
+        feature,
+        DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
+        255,
+        Direction.DOWN,
+        BlockPredicate.matchesTag(BlockTags.DIRT)
+    )
 
     fun saplingFeatures(
         c: BootstrapContext<PlacedFeature>,
@@ -196,6 +175,11 @@ object PlacedFeatureCreator {
             DnDPlacedFeature.SYPIA_TALL_BEES,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SYPIA_TALL_BEES),
             sypiaSapling
+        )
+        c.register(
+            DnDPlacedFeature.VERDANT_DOWN,
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN),
+            PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING)
         )
     }
 
@@ -306,7 +290,7 @@ object PlacedFeatureCreator {
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FLOWER_AUTUMN),
             noiseThresholdFlowerPlacement(14)
         )
-        c.surfacePlacementRare(DnDPlacedFeature.ORANGE_PETALS, DnDConfiguredFeature.FAIRY_RING_ORANGE, 32)
+        c.surfacePlacementRare(DnDPlacedFeature.ORANGE_PETALS, DnDConfiguredFeature.ORANGE_PETALS, 32)
         c.surfacePlacementRare(DnDPlacedFeature.FAIRY_RING_RED, DnDConfiguredFeature.FAIRY_RING_RED, 32)
         c.surfacePlacement(DnDPlacedFeature.WILD_WHEAT_FIELD, DnDConfiguredFeature.CROPS_WILD_WHEAT, 21)
         c.register(
