@@ -41,10 +41,13 @@ object DnDSurfaceRules {
 
         val autumnWoodsSurface = ifTrue(
             isBiome(DnDBiomes.AUTUMN_WOODS),
-            ifTrue(
-                UNDER_FLOOR,
-                sequence(
-                    ifTrue(surfaceSecondaryNoiseAbove(1.75), ifTrue(waterBlockCheck(0, 0), PODZOL)),
+            sequence(
+                ifTrue(
+                    ON_FLOOR,
+                    ifTrue(surfaceSecondaryNoiseAbove(1.75), ifTrue(waterBlockCheck(0, 0), PODZOL))
+                ),
+                ifTrue(
+                    UNDER_FLOOR,
                     ifTrue(surfaceNoiseAbove(-0.75, 0.75), COARSE_DIRT)
                 )
             )
