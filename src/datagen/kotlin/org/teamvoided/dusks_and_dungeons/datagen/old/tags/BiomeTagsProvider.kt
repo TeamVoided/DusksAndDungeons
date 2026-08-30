@@ -22,10 +22,11 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
 
     fun duskTags() {
         getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_WOODS)
-            .add(Biomes.FOREST)
+            .forceAddTag(ConventionalBiomeTags.IS_FOREST)
             .add(Biomes.TAIGA)
+            .remove(Biomes.GROVE)
         getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_PASTURES)
-            .add(Biomes.PLAINS)
+            .forceAddTag(ConventionalBiomeTags.IS_PLAINS)
             .add(Biomes.MEADOW)
             .add(Biomes.CHERRY_GROVE)
         getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_RIVERS)
