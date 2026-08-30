@@ -33,7 +33,7 @@ object DnDPlacedFeature {
     val PATCH_ROSEBUSH = key("patch_rosebush")
     val ORANGE_PETALS = key("orange_petals")
     val AUTUMN_FARMLANDS = key("autumn_farmlands")
-    val CROPS_WILD_WHEAT = key("crops/wild_wheat")
+    val WILD_WHEAT = key("wild_wheat")
     val WILD_WHEAT_FIELD = key("wild_wheat_field")
 
     val OVERGROWTH_TREE_ROOTED = key("cave/overgrowth_tree_rooted")

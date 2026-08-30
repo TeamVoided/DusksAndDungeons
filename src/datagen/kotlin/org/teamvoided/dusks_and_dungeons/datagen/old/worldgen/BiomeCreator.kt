@@ -73,33 +73,33 @@ object BiomeCreator {
     }
 
     private fun createAutumnForest(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
-        val spawnSettings = MobSpawnSettings.Builder()
-        addAutumnAnimals(spawnSettings)
-        BiomeDefaultFeatures.commonSpawns(spawnSettings)
+        val ss = MobSpawnSettings.Builder()
+        addAutumnAnimals(ss)
+        BiomeDefaultFeatures.commonSpawns(ss)
 
-        val generationSettings = BiomeGenerationSettings
-            .Builder(c.lookup(Registries.PLACED_FEATURE), c.lookup(Registries.CONFIGURED_CARVER))
-        addGlobalOverworldGeneration(generationSettings)
-        BiomeDefaultFeatures.addDefaultOres(generationSettings)
-        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
-        generationSettings.addFeature(
+        val gs =
+            BiomeGenerationSettings.Builder(c.lookup(Registries.PLACED_FEATURE), c.lookup(Registries.CONFIGURED_CARVER))
+        addGlobalOverworldGeneration(gs)
+        BiomeDefaultFeatures.addDefaultOres(gs)
+        BiomeDefaultFeatures.addDefaultSoftDisks(gs)
+        gs.addFeature(
             vd9,
             if (golden) DnDPlacedFeature.GOLDEN_WOODS_VEGETATION else DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
         )
-        if (golden) BiomeDefaultFeatures.addForestGrass(generationSettings)
-        generationSettings.addFeature(vd9, VegetationPlacements.PATCH_DEAD_BUSH)
-        generationSettings.addFeature(vd9, VegetationPlacements.BROWN_MUSHROOM_OLD_GROWTH)
-        generationSettings.addFeature(vd9, VegetationPlacements.RED_MUSHROOM_OLD_GROWTH)
-        BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
-        if (golden) generationSettings.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
-        else BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
-        addAutumnFeatures(generationSettings, golden)
-        generationSettings.addFeature(vd9, DnDPlacedFeature.PATCH_ROSEBUSH)
+        if (golden) BiomeDefaultFeatures.addForestGrass(gs)
+        gs.addFeature(vd9, VegetationPlacements.PATCH_DEAD_BUSH)
+        gs.addFeature(vd9, VegetationPlacements.BROWN_MUSHROOM_OLD_GROWTH)
+        gs.addFeature(vd9, VegetationPlacements.RED_MUSHROOM_OLD_GROWTH)
+        BiomeDefaultFeatures.addDefaultMushrooms(gs)
+        if (golden) gs.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
+        else BiomeDefaultFeatures.addDefaultExtraVegetation(gs)
+        addAutumnFeatures(gs, golden)
+        gs.addFeature(vd9, DnDPlacedFeature.PATCH_ROSEBUSH)
 
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
         return biomeBuild(
-            spawnSettings,
-            generationSettings,
+            ss,
+            gs,
             music,
             0.25f,
             0.8f,
@@ -112,31 +112,31 @@ object BiomeCreator {
 //grass 16434531 15647087
 
     private fun createAutumnPlains(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
-        val spawnSettings = MobSpawnSettings.Builder()
-        addAutumnAnimals(spawnSettings)
-        BiomeDefaultFeatures.commonSpawns(spawnSettings)
+        val ss = MobSpawnSettings.Builder()
+        addAutumnAnimals(ss)
+        BiomeDefaultFeatures.commonSpawns(ss)
 
-        val generationSettings = BiomeGenerationSettings
-            .Builder(c.lookup(Registries.PLACED_FEATURE), c.lookup(Registries.CONFIGURED_CARVER))
-        addGlobalOverworldGeneration(generationSettings)
-        BiomeDefaultFeatures.addDefaultOres(generationSettings)
-        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
-        generationSettings.addFeature(
+        val gs =
+            BiomeGenerationSettings.Builder(c.lookup(Registries.PLACED_FEATURE), c.lookup(Registries.CONFIGURED_CARVER))
+        addGlobalOverworldGeneration(gs)
+        BiomeDefaultFeatures.addDefaultOres(gs)
+        BiomeDefaultFeatures.addDefaultSoftDisks(gs)
+        gs.addFeature(
             vd9,
             if (golden) DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION else DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
         )
-        generationSettings.addFeature(vd9, DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN)
-        generationSettings.addFeature(vd9, DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN)
-        BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
-        if (golden) generationSettings.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
-        else BiomeDefaultFeatures.addDefaultExtraVegetation(generationSettings)
-        addAutumnFeatures(generationSettings, golden)
-        if (golden) generationSettings.addFeature(vd9, DnDPlacedFeature.WILD_WHEAT_FIELD)
+        gs.addFeature(vd9, DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN)
+        gs.addFeature(vd9, DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN)
+        BiomeDefaultFeatures.addDefaultMushrooms(gs)
+        if (golden) gs.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
+        else BiomeDefaultFeatures.addDefaultExtraVegetation(gs)
+        addAutumnFeatures(gs, golden)
+        gs.addFeature(vd9, if (golden) DnDPlacedFeature.WILD_WHEAT_FIELD else DnDPlacedFeature.WILD_WHEAT)
 
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
         return biomeBuild(
-            spawnSettings,
-            generationSettings,
+            ss,
+            gs,
             music,
             0.25f,
             0.8f,
@@ -148,57 +148,57 @@ object BiomeCreator {
     }
 
     private fun createAutumnRiver(context: BootstrapContext<Biome>): Biome {
-        val spawnSettings = MobSpawnSettings.Builder()
+        val ss = MobSpawnSettings.Builder()
             .addSpawn(MobCategory.WATER_CREATURE, SpawnerData(EntityType.SQUID, 2, 1, 4))
             .addSpawn(MobCategory.WATER_AMBIENT, SpawnerData(EntityType.SALMON, 5, 1, 5))
             .addSpawn(MobCategory.MONSTER, SpawnerData(EntityType.DROWNED, 100, 1, 1))
-        BiomeDefaultFeatures.commonSpawns(spawnSettings)
+        BiomeDefaultFeatures.commonSpawns(ss)
 
-        val generationSettings = BiomeGenerationSettings
+        val gs = BiomeGenerationSettings
             .Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER))
-        addGlobalOverworldGeneration(generationSettings)
-        BiomeDefaultFeatures.addDefaultOres(generationSettings)
-        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
-        generationSettings.addFeature(vd9, DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION)
-        BiomeDefaultFeatures.addPlainGrass(generationSettings)
-        BiomeDefaultFeatures.addGiantTaigaVegetation(generationSettings)
-        BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
-        generationSettings.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
-        addAutumnFeatures(generationSettings)
-        generationSettings.addFeature(uo6, DnDPlacedFeature.DISK_MUD)
-        generationSettings.addFeature(vd9, AquaticPlacements.SEAGRASS_RIVER)
+        addGlobalOverworldGeneration(gs)
+        BiomeDefaultFeatures.addDefaultOres(gs)
+        BiomeDefaultFeatures.addDefaultSoftDisks(gs)
+        gs.addFeature(vd9, DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION)
+        BiomeDefaultFeatures.addPlainGrass(gs)
+        BiomeDefaultFeatures.addGiantTaigaVegetation(gs)
+        BiomeDefaultFeatures.addDefaultMushrooms(gs)
+        gs.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
+        addAutumnFeatures(gs)
+        gs.addFeature(uo6, DnDPlacedFeature.DISK_MUD)
+        gs.addFeature(vd9, AquaticPlacements.SEAGRASS_RIVER)
 
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
         return biomeBuild(
-            spawnSettings,
-            generationSettings,
+            ss,
+            gs,
             music,
             0.25f,
             0.8f,
             AUTUMN_WATER,
             AUTUMN_WATER_FOG,
             0xF8BA54,
-            16081176
+            0xCC833B //CC8F3B
         )
     }
 
 
     private fun overgrownGrotto(context: BootstrapContext<Biome>): Biome {
-        val spawnSettings = MobSpawnSettings.Builder()
+        val ss = MobSpawnSettings.Builder()
         //.addSpawn(MobCategory.AXOLOTLS, SpawnerData(EntityType.AXOLOTL, 10, 4, 6))
         //.addSpawn(MobCategory.WATER_AMBIENT, SpawnerData(EntityType.TROPICAL_FISH, 25, 8, 8))
-        BiomeDefaultFeatures.commonSpawns(spawnSettings)
-        val generationSettings = BiomeGenerationSettings
+        BiomeDefaultFeatures.commonSpawns(ss)
+        val gs = BiomeGenerationSettings
             .Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER))
-        addGlobalOverworldGeneration(generationSettings)
-        BiomeDefaultFeatures.addPlainGrass(generationSettings)
-        BiomeDefaultFeatures.addDefaultOres(generationSettings)
-        //BiomeDefaultFeatures.addLushCavesSpecialOres(generationSettings)
-        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
-        addOvergrowthCavesVegetationFeatures(generationSettings)
+        addGlobalOverworldGeneration(gs)
+        BiomeDefaultFeatures.addPlainGrass(gs)
+        BiomeDefaultFeatures.addDefaultOres(gs)
+        //BiomeDefaultFeatures.addLushCavesSpecialOres(gs)
+        BiomeDefaultFeatures.addDefaultSoftDisks(gs)
+        addOvergrowthCavesVegetationFeatures(gs)
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES)
 
-        return biomeBuild(spawnSettings, generationSettings, music, 0.5f, 0.5f, 0x56C468, 0x17543c, 0x9abe4b)
+        return biomeBuild(ss, gs, music, 0.5f, 0.5f, 0x56C468, 0x17543c, 0x9abe4b)
         //Color(0x58DC6E)
         //Color(0x56C468)
         //original grass = 91DB60, water = 4CBF61

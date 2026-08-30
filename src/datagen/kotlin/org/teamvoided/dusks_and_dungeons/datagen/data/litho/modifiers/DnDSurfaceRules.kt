@@ -11,13 +11,31 @@ object DnDSurfaceRules {
 
     val COARSE_DIRT = block(Blocks.COARSE_DIRT)
     val PODZOL = block(Blocks.PODZOL)
+    val MUD = block(Blocks.MUD)
 
     fun overworld(): RuleSource {
+        val autumnCascadesSurface = ifTrue(
+            isBiome(
+                DnDBiomes.AUTUMN_WOODS,
+                DnDBiomes.AUTUMN_PASTURES,
+                DnDBiomes.AUTUMN_CASCADES,
+                DnDBiomes.GOLDEN_WOODS,
+                DnDBiomes.GOLDEN_PASTURES
+            ),
+            ifTrue(
+                not(waterBlockCheck(-1, 0)),
+                ifTrue(
+                    UNDER_FLOOR,
+                    MUD
+                )
+            )
+        )
+
         val autumnPasturesSurface = ifTrue(
-            isBiome(DnDBiomes.AUTUMN_PASTURES),
+            isBiome(DnDBiomes.AUTUMN_PASTURES, DnDBiomes.AUTUMN_CASCADES),
             ifTrue(
                 UNDER_FLOOR,
-                ifTrue(surfaceSecondaryNoiseAbove(-0.25, 0.25), COARSE_DIRT)
+                ifTrue(surfaceSecondaryNoiseAbove(-0.35, 0.35), COARSE_DIRT)
             )
         )
 
@@ -26,19 +44,22 @@ object DnDSurfaceRules {
             ifTrue(
                 UNDER_FLOOR,
                 sequence(
-                    ifTrue(surfaceSecondaryNoiseAbove(1.25), PODZOL),
+                    ifTrue(surfaceSecondaryNoiseAbove(1.75), ifTrue(waterBlockCheck(0, 0), PODZOL)),
                     ifTrue(surfaceNoiseAbove(-0.75, 0.75), COARSE_DIRT)
                 )
-            ),
+            )
         )
 
         val surface = ifTrue(
             abovePreliminarySurface(),
-            ifTrue(
-                waterBlockCheck(-6, 0),
-                sequence(
-                    autumnWoodsSurface,
-                    autumnPasturesSurface
+            sequence(
+                autumnCascadesSurface,
+                ifTrue(
+                    waterBlockCheck(-6, 0),
+                    sequence(
+                        autumnWoodsSurface,
+                        autumnPasturesSurface
+                    )
                 )
             )
         )

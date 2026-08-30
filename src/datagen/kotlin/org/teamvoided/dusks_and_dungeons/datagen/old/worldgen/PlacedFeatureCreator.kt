@@ -144,13 +144,17 @@ object PlacedFeatureCreator {
         c.register(DnDPlacedFeature.PILE_CORN, DnDConfiguredFeature.PILE_CORN)
     }
 
-    fun BootstrapContext<PlacedFeature>.overgrowthTree(feature: ResourceKey<PlacedFeature>) = this.cavePlacement(
-        feature,
-        DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
-        255,
-        Direction.DOWN,
-        BlockPredicate.matchesTag(BlockTags.DIRT)
-    )
+    fun BootstrapContext<PlacedFeature>.overgrowthTree(feature: ResourceKey<PlacedFeature>) {
+        val predicate = //for trial chambers >:)
+            if (feature.registry().path.last() == '1') BlockPredicate.solid() else BlockPredicate.matchesTag(BlockTags.DIRT)
+        this.cavePlacement(
+            feature,
+            DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
+            255,
+            Direction.DOWN,
+            predicate
+        )
+    }
 
     fun saplingFeatures(
         c: BootstrapContext<PlacedFeature>,
@@ -305,13 +309,13 @@ object PlacedFeatureCreator {
         c.register(
             DnDPlacedFeature.AUTUMN_FARMLANDS,
             configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND),
-            RarityFilter.onAverageOnceEvery(21),
+            RarityFilter.onAverageOnceEvery(63),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
             PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
             BiomeFilter.biome()
         )
-        c.surfacePlacementRare(DnDPlacedFeature.CROPS_WILD_WHEAT, DnDConfiguredFeature.CROPS_WILD_WHEAT, 9)
+        c.surfacePlacementRare(DnDPlacedFeature.WILD_WHEAT, DnDConfiguredFeature.CROPS_WILD_WHEAT, 9)
     }
 
     fun noiseThresholdFlowerPlacement(rarity: Int): List<PlacementModifier> {

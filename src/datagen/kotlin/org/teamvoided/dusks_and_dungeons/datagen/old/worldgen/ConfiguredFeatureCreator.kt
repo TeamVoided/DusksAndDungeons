@@ -756,7 +756,7 @@ object ConfiguredFeatureCreator {
                 ConstantInt.of(1),
                 if (bonemeal) 0f else 0.3f,
                 5,
-                if (bonemeal || isCeil) 0.6f else 0.8f,
+                (if (bonemeal) 0.6f else 0.8f) * (if (isCeil) 0.2f else 1f),
                 if (bonemeal) UniformInt.of(1, 2) else UniformInt.of(4, 7),
                 if (bonemeal) 0.75f else 0.3f
             )
