@@ -8,7 +8,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createBigLantern
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandelabra
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandle
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDyed
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
@@ -41,10 +40,10 @@ object BigRecipes {
             output.createDyed(DnDBlockLists.bigCandles[idx].first, DnDBlocks.BIG_CANDLES.uncolored, dye)
             output.createDyed(DnDBlockLists.soulCandles[idx].first, DnDBlocks.SOUL_CANDLES.uncolored, dye)
             output.createDyed(DnDBlockLists.bigSoulCandles[idx].first, DnDBlocks.BIG_SOUL_CANDLES.uncolored, dye)
-            output.createDyed(DnDBlockLists.candelabras[idx], DnDBlocks.CANDELABRAS.uncolored, dye, true)
-            output.createDyed(DnDBlockLists.soulCandelabras[idx], DnDBlocks.SOUL_CANDELABRAS.uncolored, dye, true)
+//            output.createDyed(DnDBlockLists.candelabras[idx], DnDBlocks.CANDELABRAS.uncolored, dye, true)
+//            output.createDyed(DnDBlockLists.soulCandelabras[idx], DnDBlocks.SOUL_CANDELABRAS.uncolored, dye, true)
         }
-        DnDBlockLists.allCandelabras.forEach(output::createCandelabra)
+//        DnDBlockLists.allCandelabras.forEach(output::createCandelabra)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
             .define('|', Ingredient.of(Items.BAMBOO_PLANKS))
