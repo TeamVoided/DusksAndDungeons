@@ -7,6 +7,7 @@
   "client": [
     "FoxRendererMixin",
     "LookAtItemAnimationMixin",
+    "PaintingRendererMixin",
     "ShadowAttributeMixin",
     "directional_sculk.LevelRendererMixin",
     "signs.AbstractSignEditScreenMixin",
