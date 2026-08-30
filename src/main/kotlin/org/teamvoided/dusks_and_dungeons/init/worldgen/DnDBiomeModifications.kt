@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.init.worldgen
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications.create
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors.includeByKey
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors.tag
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase
 import net.minecraft.data.worldgen.placement.VegetationPlacements
@@ -45,6 +46,12 @@ object DnDBiomeModifications {
     internal fun addFeature(id: String, step: Decoration, feature: ResourceKey<PlacedFeature>, tag: TagKey<Biome>) {
         create(id("add_$id")).add(ModificationPhase.ADDITIONS, tag(tag)) {
             it.generationSettings.addFeature(step, feature)
+        }
+    }
+
+    internal fun addFeature(id: String, feature: ResourceKey<PlacedFeature>, biome: ResourceKey<Biome>) {
+        create(id("add_$id")).add(ModificationPhase.ADDITIONS, includeByKey(biome)) {
+            it.generationSettings.addFeature(Decoration.VEGETAL_DECORATION, feature)
         }
     }
 
