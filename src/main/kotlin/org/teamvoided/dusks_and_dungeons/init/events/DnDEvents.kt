@@ -60,6 +60,21 @@ object DnDEvents {
         compost(DnDBlocks.ROOT_BLOCK, 0.65)
         DnDBlockLists.flowerbedBlocks.forEach { compost(it, 0.3) }
 
+        compost(DnDBlocks.CRIMSON_VIVIONS, 0.3)
+        compost(DnDBlocks.WARPED_VIVIONS, 0.3)
+        compost(DnDBlocks.WARPED_WART, 0.65)
+
+        compost(DnDItems.MOONBERRY_VINELET, 0.3)
+        compost(DnDBlocks.MOONBERRY_VINE, 0.85)
+        compost(DnDItems.MOONBERRIES, 0.3)
+
+        compost(DnDItems.CORN_STALK, 0.65)
+        compost(DnDItems.CORN, 0.65)
+        compost(DnDBlocks.CORN_BLOCK, 0.85)
+        compost(DnDItems.CORN_KERNELS, 0.3)
+
+        compost(DnDBlocks.WILD_WHEAT, 0.5)
+
         compost(DnDBlocks.CASCADE_LEAVES, 0.3)
         compost(DnDBlocks.SYPIA_LEAVES, 0.3)
         compost(DnDBlocks.VERDANT_LEAVES, 0.3)
