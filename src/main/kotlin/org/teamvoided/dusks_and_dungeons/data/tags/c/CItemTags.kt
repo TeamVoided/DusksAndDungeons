@@ -18,6 +18,8 @@ object CItemTags {
 
     val GLASS_PANES_TINTED = c("glass_panes/tinted")
 
+    val SEEDS_CORN = c("seeds/corn")
+
     fun c(id: String): TagKey<Item> = DnDItemTags.tag(id("c", id))
 
 }

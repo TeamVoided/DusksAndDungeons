@@ -68,6 +68,8 @@ class ItemTagsProvider(
             .forceAddTag(CItemTags.RED_SANDSTONE_WALLS)
         copy(CBlockTags.UNCOLORED_SANDSTONE_WALLS, CItemTags.UNCOLORED_SANDSTONE_WALLS)
         copy(CBlockTags.RED_SANDSTONE_WALLS, CItemTags.RED_SANDSTONE_WALLS)
+
+        flora()
     }
 
     fun duskTags() {
@@ -196,7 +198,7 @@ class ItemTagsProvider(
         copy(BlockTags.CEILING_HANGING_SIGNS, ItemTags.HANGING_SIGNS)
 
         copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS)
-        copy(BlockTags.LEAVES,ItemTags.LEAVES)
+        copy(BlockTags.LEAVES, ItemTags.LEAVES)
         copy(BlockTags.FLOWERS, ItemTags.FLOWERS)
 
         copy(BlockTags.STAIRS, ItemTags.STAIRS)
@@ -276,4 +278,16 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ConventionalItemTags.MUSHROOMS)
             .add(DnDBlocks.GOLDEN_MUSHROOM.asItem())
     }
+
+
+    // Start of rework tags
+    fun flora() {
+        getOrCreateTagBuilder(CItemTags.SEEDS_CORN)
+            .add(DnDItems.CORN_KERNELS)
+
+        getOrCreateTagBuilder(ConventionalItemTags.SEEDS)
+            .forceAddTag(CItemTags.SEEDS_CORN)
+            .forceAddTag(DnDItemTags.PUMPKIN_SEEDS)
+    }
+
 }
