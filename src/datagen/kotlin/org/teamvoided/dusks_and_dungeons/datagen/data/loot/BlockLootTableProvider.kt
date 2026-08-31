@@ -64,6 +64,9 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
 
         leafPiles.forEachIndexed { idx, pile -> add(pile) { createLeafPileDrops(it, DnDBlockLists.leaves[idx]) } }
 
+        add(DnDBlocks.GOLDEN_MUSHROOM_BLOCK) { createMushroomBlockDrop(it, DnDBlocks.GOLDEN_MUSHROOM) }
+        add(DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK) { createMushroomBlockDrop(it, DnDBlocks.GOLDEN_MUSHROOM) }
+
         bigCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         soulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         bigSoulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
