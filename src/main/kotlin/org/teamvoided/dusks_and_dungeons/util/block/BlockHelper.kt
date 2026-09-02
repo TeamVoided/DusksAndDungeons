@@ -70,8 +70,8 @@ fun BlockPlaceContext.getOrientation(): FrontAndTop {
     return FrontAndTop.fromFrontAndTop(nearestLookingDirection, verticalDirection)
 }
 
-fun light(lightLevel: Int): ToIntFunction<BlockState> = ToIntFunction { lightLevel }
-fun BlockBehaviour.Properties.luminance(lightLevel: Int): BlockBehaviour.Properties = this.lightLevel { lightLevel }
+fun light(lightLevel: Int): ToIntFunction<BlockState> = { lightLevel }
+fun BlockBehaviour.Properties.luminance(lightLevel: Int): BlockBehaviour.Properties = lightLevel { lightLevel }
 
 val CUTOUT_BLOCKS = mutableSetOf<Block>()
 val TRANSLUCENT_BLOCKS = mutableSetOf<Block>()
@@ -102,12 +102,25 @@ fun Block.pickaxe(): Block = PICKAXABLE.addDev(this)
 fun Block.axe(): Block = AXABLE.addDev(this)
 fun Block.shovel(): Block = SHOVELABLE.addDev(this)
 fun Block.hoe(): Block = HOEABLE.addDev(this)
+fun <T : Block> T.cutout(): T = CUTOUT_BLOCKS.addAndReturn(this)
+fun <T : Block> T.translucent(): T = TRANSLUCENT_BLOCKS.addAndReturn(this)
+fun <T : Block> T.grass(): T = GRASS_TINT_BLOCKS.addAndReturn(this)
+fun <T : Block> T.tint(): T = TINT_PARTICLES.addAndReturn(this)
+fun <T : Block> T.foliage(): T = FOLIAGE_TINT_BLOCKS.addAndReturn(this)
+fun <T : Block> T.flammablePlanks(): T = FLAMMABLE_PLANKS.addDev(this)
+fun <T : Block> T.flammableLogs(): T = FLAMMABLE_LOGS.addDev(this)
+fun <T : Block> T.flammableLeaves(): T = FLAMMABLE_LEAVES.addDev(this)
+fun <T : Block> T.sword(): T = SWORDABLE.addDev(this)
+fun <T : Block> T.pickaxe(): T = PICKAXABLE.addDev(this)
+fun <T : Block> T.axe(): T = AXABLE.addDev(this)
+fun <T : Block> T.shovel(): T = SHOVELABLE.addDev(this)
+fun <T : Block> T.hoe(): T = HOEABLE.addDev(this)
 
-fun Block.plant() = this.cutout().sword().hoe()
-fun Block.grassLike() = this.cutout().sword().axe()
-fun Block.leaves() = this.cutout().hoe().flammableLeaves()
-fun Block.wood() = this.axe().flammablePlanks()
-fun Block.rocky() = this.cutout().pickaxe().shovel()
+fun <T : Block> T.plant(): T = cutout().sword().hoe()
+fun <T : Block> T.grassLike(): T = cutout().sword().axe()
+fun <T : Block> T.leaves(): T = cutout().hoe().flammableLeaves()
+fun <T : Block> T.wood(): T = axe().flammablePlanks()
+fun <T : Block> T.rocky(): T = cutout().pickaxe().shovel()
 
 fun AbstractBlockSet.cutout(): AbstractBlockSet = CUTOUT_BLOCKS.addSet(this)
 fun AbstractBlockSet.translucent(): AbstractBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
@@ -123,15 +136,15 @@ fun AbstractBlockSet.axe(): AbstractBlockSet = AXABLE.addDevSet(this)
 fun AbstractBlockSet.shovel(): AbstractBlockSet = SHOVELABLE.addDevSet(this)
 fun AbstractBlockSet.hoe(): AbstractBlockSet = HOEABLE.addDevSet(this)
 
-fun AbstractBlockSet.overgrown(): AbstractBlockSet = this.cutout().grass().pickaxe()
+fun AbstractBlockSet.overgrown(): AbstractBlockSet = cutout().grass().pickaxe()
 
 // Custom Collections
 val WOOD_SETS = mutableSetOf<AbstractBlockSet>()
 fun AbstractBlockSet.woodSet(): AbstractBlockSet = WOOD_SETS.addDevSets(this)
 
 // Block Helpers
-fun <T : Any> MutableCollection<T>.addDev(element: T): T {
-    if (isDev()) this.add(element)
+fun <T : Any, Y : T> MutableCollection<T>.addDev(element: Y): Y {
+    if (isDev()) add(element)
     return element
 }
 
@@ -248,18 +261,18 @@ fun removeRocks(input: Block, output: Block, craftingIngredient: ItemLike) = Til
 
 // Set Helpers
 fun MutableCollection<Block>.addSet(set: AbstractBlockSet): AbstractBlockSet {
-    this.addAll(set.list)
+    addAll(set.list)
     return set
 }
 
 // Use for populating tags when running data-gen in dev mode
 fun MutableCollection<Block>.addDevSet(set: AbstractBlockSet): AbstractBlockSet {
-    if (isDev()) this.addAll(set.list)
+    if (isDev()) addAll(set.list)
     return set
 }
 
 fun MutableCollection<AbstractBlockSet>.addDevSets(set: AbstractBlockSet): AbstractBlockSet {
-    if (isDev()) this.add(set)
+    if (isDev()) add(set)
     return set
 }
 

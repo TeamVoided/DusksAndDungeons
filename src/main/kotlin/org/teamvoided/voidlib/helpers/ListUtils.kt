@@ -2,17 +2,17 @@
 
 package org.teamvoided.voidlib.helpers
 
-fun <T : Any> MutableCollection<T>.addInPlace(element: T): MutableCollection<T> {
+fun <T : Any, Y : T> MutableCollection<T>.addInPlace(element: Y): MutableCollection<T> {
     this.add(element)
     return this
 }
 
-fun <T : Any> MutableCollection<T>.addAllInPlace(vararg element: T): MutableCollection<T> {
+fun <T : Any, Y : T> MutableCollection<T>.addAllInPlace(vararg element: Y): MutableCollection<T> {
     this.addAll(element)
     return this
 }
 
-fun <T : Any> MutableCollection<T>.addAndReturn(element: T): T {
+fun <T : Any, Y : T> MutableCollection<T>.addAndReturn(element: Y): Y {
     this.add(element)
     return element
 }

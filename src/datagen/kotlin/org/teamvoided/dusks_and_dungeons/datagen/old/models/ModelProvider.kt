@@ -6,7 +6,6 @@ import net.minecraft.data.models.ItemModelGenerators
 import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.InfestedBlock
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.BigModels
@@ -63,7 +62,6 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         )
 
         for (block in infestedBlocks) {
-            block as InfestedBlock
             gen.copyModel(block.hostBlock, block)
         }
 
