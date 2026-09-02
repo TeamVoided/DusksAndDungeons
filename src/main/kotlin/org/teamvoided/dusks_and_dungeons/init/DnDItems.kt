@@ -12,7 +12,7 @@ import net.minecraft.world.item.component.DyedItemColor
 import net.minecraft.world.level.block.DispenserBlock
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDToolMaterials
-import org.teamvoided.dusks_and_dungeons.item.DnDFoodComponents
+import org.teamvoided.dusks_and_dungeons.item.DnDFoods
 import org.teamvoided.dusks_and_dungeons.item.PlaceInFluidBlockItem.Companion.placeInLavaItem
 import org.teamvoided.dusks_and_dungeons.item.ScarecrowItem
 import org.teamvoided.dusks_and_dungeons.item.TripleTallBlockItem
@@ -86,7 +86,7 @@ object DnDItems {
     val CORN_KERNELS = register("corn_kernels", { NameBlockItem(DnDBlocks.CORN_CROP, it) })
     val CORN_STALK = register("corn_stalk", { TripleTallBlockItem(DnDBlocks.CORN, it) })
     val CORN = register("corn", ::Item) {
-        it.food(DnDFoodComponents.CORN)
+        it.food(DnDFoods.CORN)
     }
     val CORN_SYRUP_BOTTLE = register("corn_syrup_bottle", ::HoneyBottleItem) {
         it.craftRemainder(Items.GLASS_BOTTLE)
@@ -95,12 +95,12 @@ object DnDItems {
     }
 
     val GOLDEN_BEETROOT = register("golden_beetroot", { NameBlockItem(DnDBlocks.GOLDEN_BEETROOTS, it) }) {
-        it.food(DnDFoodComponents.GOLDEN_BEETROOT)
+        it.food(DnDFoods.GOLDEN_BEETROOT)
     }
 
     val MOONBERRY_VINELET = register("moonberry_vinelet", { NameBlockItem(DnDBlocks.MOONBERRY_VINELET, it) })
     val MOONBERRIES = register("moonberries", ::Item) {
-        it.food(DnDFoodComponents.MOONBERRIES)
+        it.food(DnDFoods.MOONBERRIES)
     }
 
     val BIG_SCAFFOLDING = register("big_scaffolding", { ScaffoldingBlockItem(DnDBlocks.BIG_SCAFFOLDING, it) })
