@@ -70,6 +70,7 @@ class ItemTagsProvider(
         copy(CBlockTags.RED_SANDSTONE_WALLS, CItemTags.RED_SANDSTONE_WALLS)
 
         flora()
+        food()
     }
 
     fun duskTags() {
@@ -288,6 +289,17 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ConventionalItemTags.SEEDS)
             .forceAddTag(CItemTags.SEEDS_CORN)
             .forceAddTag(DnDItemTags.PUMPKIN_SEEDS)
+    }
+
+    fun food() {
+        getOrCreateTagBuilder(ConventionalItemTags.DRINKS)
+            .forceAddTag(CItemTags.DRINKS_CORN_SYRUP)
+
+        getOrCreateTagBuilder(CItemTags.DRINKS_CORN_SYRUP)
+            .add(DnDItems.CORN_SYRUP_BOTTLE)
+
+        getOrCreateTagBuilder(ConventionalItemTags.DRINK_CONTAINING_BOTTLE)
+            .add(DnDItems.CORN_SYRUP_BOTTLE)
     }
 
 }
