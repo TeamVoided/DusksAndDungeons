@@ -110,5 +110,9 @@ open class GravestoneBlock(val shape: VoxelShape, val centerShape: VoxelShape, s
         val HEADSTONE_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 16.0, 2.0)
         val CENTER_HEADSTONE_SHAPE: VoxelShape = box(0.0, 0.0, 7.0, 16.0, 16.0, 9.0)
 
+        fun newGrave(properties: Properties) = GravestoneBlock(WALL_SHAPE, CENTER_SHAPE, properties)
+        fun newSmallGrave(properties: Properties) = GravestoneBlock(SMALL_WALL_SHAPE, CENTER_CENTER_SHAPE, properties)
+        fun newHeadstone(properties: Properties) = GravestoneBlock(HEADSTONE_SHAPE, CENTER_HEADSTONE_SHAPE, properties)
+
     }
 }

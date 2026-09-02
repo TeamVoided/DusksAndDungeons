@@ -31,7 +31,7 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.*
-import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSettings
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockProperties
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.helpers.addAndReturn
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
@@ -88,6 +88,7 @@ val SHOVELABLE = mutableSetOf<Block>()
 val HOEABLE = mutableSetOf<Block>()
 
 // Extensions
+// TODO make these use generics
 fun Block.cutout(): Block = CUTOUT_BLOCKS.addAndReturn(this)
 fun Block.translucent(): Block = TRANSLUCENT_BLOCKS.addAndReturn(this)
 fun Block.grass(): Block = GRASS_TINT_BLOCKS.addAndReturn(this)
@@ -230,7 +231,7 @@ fun carvedPumpkin(color: MapColor) = DnDCarvedPumpkinBlock(ofFullCopy(CARVED_PUM
 
 fun sPumpkinOf(block: Block) = SmallPumpkinBlock(block, ofFullCopy(block))
 fun sGlowingPumpkinOf(block: Block) = SmallCarvedPumpkinBlock(ofFullCopy(block).luminance(15))
-fun sCarvedPumpkinOf(block: Block) = SmallCarvedPumpkinBlock(DnDBlockSettings.smallPumpkin(block.defaultMapColor()))
+fun sCarvedPumpkinOf(block: Block) = SmallCarvedPumpkinBlock(DnDBlockProperties.smallPumpkin(block.defaultMapColor()))
 
 fun stemOf(block: Block) = DnDPumpkinStemBlock(block, ofFullCopy(PUMPKIN_STEM))
 

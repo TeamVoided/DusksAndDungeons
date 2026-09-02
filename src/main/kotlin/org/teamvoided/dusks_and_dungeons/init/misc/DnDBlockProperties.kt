@@ -14,7 +14,7 @@ import org.teamvoided.dusks_and_dungeons.util.block.luminance
 import org.teamvoided.dusks_and_dungeons.util.block.rootBlockSound
 
 //(ender) This file should not reference DnDBlocks
-object DnDBlockSettings {
+object DnDBlockProperties {
 
     val ICE: Properties = ofFullCopy(Blocks.ICE)
 
@@ -112,7 +112,24 @@ object DnDBlockSettings {
         .hasPostProcess(Blocks::always)
         .pushReaction(PushReaction.DESTROY)
 
-    val INFESTED_DEEPSLATE: Properties =  Properties.of().mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE)
+    val INFESTED_DEEPSLATE: Properties = Properties.of()
+        .mapColor(MapColor.DEEPSLATE)
+        .sound(SoundType.DEEPSLATE)
+
+    val RED_SUS_SAND: Properties = ofFullCopy(RED_SAND)
+        .instrument(NoteBlockInstrument.SNARE)
+        .strength(0.25f)
+        .sound(SoundType.SUSPICIOUS_SAND)
+        .pushReaction(PushReaction.DESTROY)
+
+    val RESTONE_LANTERN: Properties = Properties.of()
+        .mapColor(MapColor.METAL)
+        .forceSolidOn()
+        .strength(3.5F)
+        .sound(SoundType.LANTERN)
+        .lightLevel(litBlockEmission(8))
+        .noOcclusion()
+        .pushReaction(PushReaction.DESTROY)
 
     val TINTED_SANDSTONE: Properties = Properties.of()
         .mapColor(MapColor.WATER)
