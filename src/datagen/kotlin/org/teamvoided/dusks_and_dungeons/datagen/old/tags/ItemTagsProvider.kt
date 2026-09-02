@@ -69,6 +69,7 @@ class ItemTagsProvider(
         copy(CBlockTags.UNCOLORED_SANDSTONE_WALLS, CItemTags.UNCOLORED_SANDSTONE_WALLS)
         copy(CBlockTags.RED_SANDSTONE_WALLS, CItemTags.RED_SANDSTONE_WALLS)
 
+        earths()
         flora()
         food()
     }
@@ -280,6 +281,9 @@ class ItemTagsProvider(
             .add(DnDBlocks.GOLDEN_MUSHROOM.asItem())
     }
 
+    fun earths() {
+        copy(BlockTags.SAND, ItemTags.SAND)
+    }
 
     // Start of rework tags
     fun flora() {
