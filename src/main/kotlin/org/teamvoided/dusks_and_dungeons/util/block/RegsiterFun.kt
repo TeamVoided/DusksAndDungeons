@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_and_dungeons.util.block
 
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
@@ -17,17 +16,12 @@ import org.teamvoided.voidlib.consortium.block.set.createBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
 import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 
+// TODO delete this, it will case problems later
 fun registerHeadEquipable(id: String, block: Block): Block {
     val regBlock = registerNoItem(id, block)
-    DnDItems.register(id, EquipableBlockItem(regBlock, Item.Properties()))
+    DnDItems.register(id, { EquipableBlockItem(regBlock, it) })
     return regBlock
 }
-
-/*fun registerEdible(id: String, foodComponent: FoodComponent, block: Block): Block {
-    val regBlock = registerNoItem(id, block)
-    DnDItems.register(id, BlockItem(regBlock, Item.Settings().food(foodComponent)))
-    return regBlock
-}*/
 
 // region Color Consortiums
 typealias BlockMaker<T> = (coloredBlock: Block) -> T

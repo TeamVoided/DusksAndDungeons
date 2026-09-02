@@ -53,7 +53,8 @@ fun <T : Any> Level.getTag(tag: TagKey<T>): HolderSet.Named<T>? {
 fun ResourceKey<*>.toLangKey(): String = location().toLangKey()
 fun ResourceLocation.toLangKey(): String = toLanguageKey().replace("/", ".")
 
-fun ensureUnique(id: ResourceLocation, registry: DefaultedRegistry<*>) {
+fun <T : Any> ensureUnique(id: ResourceKey<T>, registry: Registry<T>) = ensureUnique(id.location(), registry)
+fun <T : Any> ensureUnique(id: ResourceLocation, registry: Registry<T>) {
     require(!registry.containsKey(id)) { "Duplicate block: $id" }
 }
 

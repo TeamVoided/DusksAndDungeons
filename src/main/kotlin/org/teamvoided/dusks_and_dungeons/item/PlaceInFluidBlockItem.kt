@@ -29,6 +29,10 @@ class PlaceInFluidBlockItem(
 
     companion object {
 
+        fun placeInLavaItem(block: Block, properties: Properties): PlaceInFluidBlockItem {
+            return PlaceInFluidBlockItem(LAVA, block, properties)
+        }
+
         val LAVA = Predicate<FluidState> { fluid -> fluid.`is`(FluidTags.LAVA) }
         val NONE = Predicate<FluidState> { false }
 

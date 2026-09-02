@@ -7,7 +7,6 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.Blocks.*
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
@@ -836,7 +835,7 @@ object DnDBlocks {
     // TODO(1.0) make this use 21.11 rules
     fun <T : Block> register(id: String, block: T): T {
         val regBlock = registerNoItem(id, block)
-        DnDItems.register(id, BlockItem(regBlock, Item.Properties()))
+        DnDItems.register(id, { BlockItem(regBlock, it) })
         return regBlock
     }
 
