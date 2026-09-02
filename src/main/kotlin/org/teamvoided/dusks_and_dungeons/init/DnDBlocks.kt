@@ -714,7 +714,7 @@ object DnDBlocks {
         createHeadlessSet("snow", SNOW_BLOCK)
             .noStoneCutting()
             .buildHeadless()
-    ).shovel()
+    ).shovel().notPickaxe()
     val CALCITE_SET = registerHeadlessSet("calcite", CALCITE).pickaxe()
     val DRIPSTONE_SET = registerHeadlessSet("dripstone", DRIPSTONE_BLOCK).pickaxe()
     val END_STONE_SET = registerHeadlessSet("end_stone", END_STONE).pickaxe()

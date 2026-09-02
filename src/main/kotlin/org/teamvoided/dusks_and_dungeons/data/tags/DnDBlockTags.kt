@@ -92,6 +92,7 @@ object DnDBlockTags {
     val THROWN_BRICK_BREAK = key("thrown_brick_break")
     val SCULK_SPREAD_SEARCH = key("sculk_spread_search")
     val SHRIEKER_SEARCH_BYPASSES = key("shrieker_search_bypasses")
+    val NOT_MINEABLE_WITH_PICKAXE = key("mineable/not/pickaxe")
 
 
     fun supports(id: String) = key("supports/$id")
