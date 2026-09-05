@@ -20,9 +20,8 @@ public abstract class WallBlockMixin extends Block implements SimpleWaterloggedB
 
     @ModifyReturnValue(method = "connectsTo", at = @At("RETURN"))
     private boolean connectToWoodenOrRegular(boolean original, BlockState state) {
-        if (this.defaultBlockState().is(DnDBlockTags.WOODEN_WALLS)) {
-            if (state.is(DnDBlockTags.WOODEN_WALLS)) return true;
-            else if (state.is(BlockTags.WALLS)) return false;
+        if (original && state.is(BlockTags.WALLS)) {
+            return state.is(DnDBlockTags.WOODEN_WALLS) == defaultBlockState().is(DnDBlockTags.WOODEN_WALLS);
         }
         return original;
     }

@@ -101,6 +101,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
                 DnDBlocks.CUT_RED_SANDSTONE_STAIR,
             )
         getOrCreateTagBuilder(BlockTags.WALLS)
+            .forceAddTag(DnDBlockTags.WOODEN_WALLS)
             .add(
                 DnDBlocks.STONE_WALL,
                 DnDBlocks.SMOOTH_STONE_WALL,
@@ -628,6 +629,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(PICKAXABLE)
             .removeTag(DnDBlockTags.NOT_MINEABLE_WITH_PICKAXE)
         getOrCreateTagBuilder(DnDBlockTags.NOT_MINEABLE_WITH_PICKAXE)
+            .forceAddTag(DnDBlockTags.WOODEN_WALLS)
             .add(NOT_PICKAXABLE)
         getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE)
             .forceAddTag(DnDBlockTags.LOG_PILES)
