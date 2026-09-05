@@ -16,6 +16,7 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.level.storage.loot.LootTable
@@ -28,6 +29,8 @@ import org.teamvoided.dusks_and_dungeons.util.key
 interface CarvableBlock {
 
     fun getId(): ResourceLocation
+
+    fun getCarvedBlock(): Block
 
     fun getCarvedBlockState(stack: ItemStack, state: BlockState, clickedDir: Direction, hit: BlockHitResult): BlockState
 

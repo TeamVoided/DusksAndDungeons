@@ -30,7 +30,7 @@ import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxZ
 
-open class SmallPumpkinBlock(val carvedBlock: Block, settings: Properties) : SixWayFacingBlock(settings),
+open class SmallPumpkinBlock(private val carvedBlock: Block, settings: Properties) : SixWayFacingBlock(settings),
     CarvableBlock, SimpleWaterloggedBlock {
 
     init {
@@ -43,6 +43,8 @@ open class SmallPumpkinBlock(val carvedBlock: Block, settings: Properties) : Six
 
     override fun getId(): ResourceLocation = getId(this)
 
+    override fun getCarvedBlock(): Block = carvedBlock
+
     override fun getCarvedBlockState(
         stack: ItemStack, state: BlockState, clickedDir: Direction, hit: BlockHitResult,
     ): BlockState {
@@ -54,7 +56,7 @@ open class SmallPumpkinBlock(val carvedBlock: Block, settings: Properties) : Six
             else clickedDir
         )
 
-        return carvedBlock.defaultBlockState().setValue(SmallCarvedPumpkinBlock.ORIENTATION, orientation)
+        return getCarvedBlock().defaultBlockState().setValue(SmallCarvedPumpkinBlock.ORIENTATION, orientation)
     }
 
     override fun useItemOn(

@@ -16,7 +16,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.material.Fluid
 import org.teamvoided.dusks_and_dungeons.util.tag
 import kotlin.jvm.optionals.getOrNull
 
@@ -28,7 +27,13 @@ val AXE_TAGS = mutableListOf(
     "forge:tools/axes"
 ).map { Registries.ITEM.tag(ResourceLocation.parse(it)) }
 
+val SHEARS_TAGS = mutableListOf(
+    "c:tools/shear",
+    "c:tools/shears",
+).map { Registries.ITEM.tag(ResourceLocation.parse(it)) }
+
 fun getAxes(): EmiIngredient = damagedTool(getPreferredTag(AXE_TAGS, EmiStack.of(Items.IRON_AXE)), 1)
+fun getShears(): EmiIngredient = damagedTool(getPreferredTag(SHEARS_TAGS, EmiStack.of(Items.SHEARS)), 1)
 
 fun damagedTool(tool: EmiIngredient, damage: Int): EmiIngredient {
     for (stack in tool.emiStacks) {
@@ -53,7 +58,7 @@ fun getPreferredTag(candidates: List<TagKey<Item>>, fallback: EmiIngredient): Em
 fun subId(id: ResourceLocation): String = "${id.namespace}/${id.path}"
 fun subId(block: Block): String = subId(BuiltInRegistries.BLOCK.getKey(block))
 fun subId(item: Item): String = subId(BuiltInRegistries.ITEM.getKey(item))
-fun subId(fluid: Fluid): String = subId(BuiltInRegistries.FLUID.getKey(fluid))
+//fun subId(fluid: Fluid): String = subId(BuiltInRegistries.FLUID.getKey(fluid))
 
 fun setPotion(stack: ItemStack, potion: Potion): ItemStack {
     stack.update(
