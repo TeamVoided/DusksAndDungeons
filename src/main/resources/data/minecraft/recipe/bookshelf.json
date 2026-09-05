@@ -1,0 +1,24 @@
+{
+  "type": "dusks_and_dungeons:strict_crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "strict": true,
+      "ingredient": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "X": {
+      "item": "minecraft:book"
+    }
+  },
+  "pattern": [
+    "###",
+    "XXX",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:bookshelf"
+  }
+}
