@@ -20,7 +20,6 @@ import net.minecraft.world.item.ItemUtils
 import net.minecraft.world.item.PotionItem
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
@@ -28,6 +27,8 @@ import net.minecraft.world.level.gameevent.GameEvent
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.appendTintedTooltip
 import org.teamvoided.dusks_and_dungeons.util.giveItem
+import org.teamvoided.taglighting.data.tags.TaglightingPotionTags
+import kotlin.jvm.optionals.getOrNull
 
 open class TintedPotionItem(properties: Properties) : PotionItem(properties) {
 
@@ -80,7 +81,7 @@ open class TintedPotionItem(properties: Properties) : PotionItem(properties) {
         val stack = ctx.itemInHand
         val potion = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
         val state = level.getBlockState(pos)
-        if (ctx.clickedFace != Direction.DOWN && state.`is`(BlockTags.CONVERTABLE_TO_MUD) && potion.`is`(Potions.WATER)) {
+        if (ctx.clickedFace != Direction.DOWN && state.`is`(BlockTags.CONVERTABLE_TO_MUD) && canMud(potion)) {
             level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0f, 1.0f)
             player.setItemInHand(ctx.hand, ItemUtils.createFilledResult(stack, player, getBottle()))
             player.awardStat(Stats.ITEM_USED.get(stack.item))
@@ -102,6 +103,11 @@ open class TintedPotionItem(properties: Properties) : PotionItem(properties) {
             return InteractionResult.sidedSuccess(level.isClientSide)
         }
         return super.useOn(ctx)
+    }
+
+    fun canMud(contents: PotionContents): Boolean {
+        return contents.potion().getOrNull()?.`is`(TaglightingPotionTags.MAKES_MUD) == true
+                && contents.customEffects().isEmpty()
     }
 
     open fun getBottle(): ItemStack = DnDItems.TINTED_GLASS_BOTTLE.defaultInstance
