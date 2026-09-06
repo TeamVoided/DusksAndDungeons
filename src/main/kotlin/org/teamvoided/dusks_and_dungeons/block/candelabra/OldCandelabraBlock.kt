@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.EnumProperty
-import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
@@ -27,6 +26,7 @@ import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.util.rotate
@@ -143,7 +143,7 @@ open class OldCandelabraBlock(val candle: Block, settings: Properties) : Abstrac
 
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
         val HORIZONTAL_AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS
-        val CANDLES: IntegerProperty = IntegerProperty.create("candles", 1, 5)
+        val CANDLES = DnDBlockStateProperties.CANDLES
         val LIT: BooleanProperty = BlockStateProperties.LIT
         val LUMINANCE = ToIntFunction<BlockState> { if (it.getValue(LIT)) 3 * it.getValue(CANDLES) as Int else 0 }
 
