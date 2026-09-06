@@ -9,7 +9,12 @@ import net.minecraft.advancements.critereon.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.DamageTypeTags
+import net.minecraft.world.damagesource.DamageType
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.biome.Biome
@@ -17,7 +22,9 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements.description
 import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements.title
+import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDWolfVariants
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDDamageTypeTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.FabricOutput
@@ -51,6 +58,17 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
             .parent(adventuringTime)
             .save(gen, DnDAdvancements.FALL)
 
+        //Advancement.Builder.advancement()
+        //    .addBiomes(provider, autumnBiomes)
+        //    .display(
+        //        DnDBlocks.CASCADE_SAPLING,
+        //        title(DnDAdvancements.ALL_BIOMES), description(DnDAdvancements.ALL_BIOMES),
+        //        null, AdvancementType.GOAL, true, true, false
+        //    )
+        //    .rewards(expReward(100))
+        //    .parent(AdvancementHolder(DnDAdvancements.FALL.registry(),null))
+        //    .save(gen, DnDAdvancements.ALL_BIOMES)
+
         Advancement.Builder.advancement()
             .addCriterion(
                 DnDWolfVariants.AUTUMN.location().toString(),
@@ -72,6 +90,25 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
             .rewards(expReward(5))
             .parent(theWholePack)
             .save(gen, DnDAdvancements.WOOF)
+
+        Advancement.Builder.advancement()
+            .display(
+                Items.BRICK,
+                title(DnDAdvancements.THROWING_STONES), description(DnDAdvancements.THROWING_STONES),
+                null, AdvancementType.GOAL, true, true, false
+            ).addCriterion(
+                DnDAdvancements.THROWING_STONES.location().toString(),
+                PlayerHurtEntityTrigger.TriggerInstance.playerHurtEntityWithDamage(
+                    DamagePredicate.Builder.damageInstance()//.dealtDamage(MinMaxBounds.Doubles.atLeast(1.0))
+                        .type(
+                            DamageSourcePredicate.Builder.damageType()
+                                .tag(TagPredicate.`is`(DnDDamageTypeTags.BRICK_DAMAGE))
+                        )
+                )
+            )
+            .rewards(AdvancementRewards.Builder.experience(50))
+            .parent(adventure)
+            .save(gen, DnDAdvancements.THROWING_STONES)
 
         Advancement.Builder.advancement()
             .addCollectItems(

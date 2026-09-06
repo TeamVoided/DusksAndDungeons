@@ -26,6 +26,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModProcessorList
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModStructureSets
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModStructures
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModTemplatePools
+import org.teamvoided.dusks_and_dungeons.datagen.data.tag.DamageTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.tag.EntityTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModDensityFunctions
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModNoises
@@ -68,6 +69,7 @@ object DnDData : DataGeneratorEntrypoint {
             val blockTags = addProvider(::BlockTagsProvider)
             addProvider { o, p -> ItemTagsProvider(o, p, blockTags) }
             addProvider(::BiomeTagsProvider)
+            addProvider(::DamageTypeTagProvider)
             addProvider(::EntityTypeTagProvider)
         }
 

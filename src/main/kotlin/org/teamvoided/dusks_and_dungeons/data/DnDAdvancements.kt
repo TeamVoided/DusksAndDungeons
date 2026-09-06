@@ -11,6 +11,7 @@ import org.teamvoided.dusks_and_dungeons.util.toLangKey
 
 object DnDAdvancements {
 
+    val ALL_BIOMES = key("adventure/biomes")
     val FALL = key("adventure/fall")
     val WOOF = key("husbandry/woof")
     val THROWING_STONES = key("adventure/throwing_stones")

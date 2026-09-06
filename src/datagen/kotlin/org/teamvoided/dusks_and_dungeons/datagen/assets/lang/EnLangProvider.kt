@@ -24,10 +24,12 @@ class EnLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, 
 
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, getLang(it.location)) }
         gen.advancement(DnDAdvancements.FALL, "Fall!", "Visit the golden and autumn biomes!")
+        gen.advancement(DnDAdvancements.ALL_BIOMES, "Adventurering Times", "Visit all the biomes added with Dusk's and Dungeons!")
         gen.advancement(DnDAdvancements.WOOF, "Woof", "Find and tame the Autumn Wolf")
+        gen.advancement(DnDAdvancements.THROWING_STONES, "Woe!", "Throw a brick")
         gen.advancement(
             DnDAdvancements.GET_BIG,
-            "NOW$ YOUR CH4NCE TO B3 [[BIG]]!!",
+            "NOW$ YOUR3 CH4NCE TO B3 [BIG]!!",
             "Obtain all of the Big items"
         )
 
