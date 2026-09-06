@@ -81,6 +81,7 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
                 state = state.trySetValue(AbstractCandleBlock.LIT, isLit)
                 blockRenderer.renderSingleBlock(state, posStack, buffers, light, overlay)
             } else {
+                posStack.translate(0.5, 0.5, 0.5)
                 itemRenderer.renderStatic(
                     stack, ItemDisplayContext.FIXED, light, overlay, posStack, buffers, candelabra.level, 0
                 )

@@ -34,12 +34,12 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
             return false
         }
         candles[slot] = candle.copyWithCount(1)
-        updateCollisionShape()
+        updateBlockStateCache()
 
         return true
     }
 
-    fun updateCollisionShape() {
+    fun updateBlockStateCache() {
     }
 
     override fun loadAdditional(nbt: CompoundTag, provider: HolderLookup.Provider) {
