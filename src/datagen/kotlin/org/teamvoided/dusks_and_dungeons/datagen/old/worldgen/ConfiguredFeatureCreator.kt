@@ -599,7 +599,15 @@ object ConfiguredFeatureCreator {
             )
         )
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.GOLDEN_VEGETATION,
+            DnDConfiguredFeature.GOLDEN_WOODS_VEGETATION,
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            this.weightedSelector(
+                (DnDPlacedFeature.SYPIA_TALL to 9),
+                (DnDPlacedFeature.SYPIA_TALL_BEES to 1)
+            )
+        )
+        this.registerConfiguredFeature(
+            DnDConfiguredFeature.GOLDEN_PASTURES_VEGETATION,
             LithostitchedFeatures.WEIGHTED_SELECTOR,
             this.weightedSelector(
                 (DnDPlacedFeature.SYPIA_TALL to 5),
@@ -860,7 +868,7 @@ object ConfiguredFeatureCreator {
             DnDFeatures.FAIRY_RING,
             FairyRingConfig(
                 BlockStateProvider.simple(block.defaultBlockState()),
-                DnDBlockTags.VEGETATION_REPLACEABLE,
+                BlockTags.AIR,
                 verticalRange
             )
         )

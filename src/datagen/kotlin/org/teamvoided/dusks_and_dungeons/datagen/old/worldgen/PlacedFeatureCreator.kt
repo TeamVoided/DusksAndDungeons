@@ -273,7 +273,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DnDPlacedFeature.GOLDEN_WOODS_VEGETATION,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_WOODS_VEGETATION),
             PlacementUtils.countExtra(10, 0.1f, 1),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
@@ -282,7 +282,7 @@ object PlacedFeatureCreator {
         )
         c.register(
             DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_VEGETATION),
+            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_PASTURES_VEGETATION),
             RarityFilter.onAverageOnceEvery(5),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
