@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.data.registry
+package org.teamvoided.dusks_and_dungeons.data
 
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.registries.Registries
@@ -13,6 +13,8 @@ object DnDAdvancements {
 
     val FALL = key("adventure/fall")
     val WOOF = key("husbandry/woof")
+    val THROWING_STONES = key("adventure/throwing_stones")
+    val BIG_BLOCKS = key("adventure/big_blocks")
 
     fun key(id: String) = Registries.ADVANCEMENT.key(id(id))
 

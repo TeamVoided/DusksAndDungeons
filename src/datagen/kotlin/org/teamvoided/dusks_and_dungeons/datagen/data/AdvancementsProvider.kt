@@ -10,11 +10,12 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
-import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
-import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.description
-import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements.title
+import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements
+import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements.description
+import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements.title
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDWolfVariants
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -25,7 +26,7 @@ import java.util.function.Consumer
 class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvancementProvider(o, p) {
 
     val adventuringTime = vanillaAdv("adventure/adventuring_time")
-//    val adventure = vanillaAdv("adventure/root")
+    val adventure = vanillaAdv("adventure/root")
     val theWholePack = vanillaAdv("husbandry/whole_pack")
 
     val autumnBiomes = listOf( //move this to a list file and use for the IS_AUTUMN tag?
@@ -37,38 +38,6 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
     )
 
     override fun generateAdvancement(provider: HolderLookup.Provider, gen: Consumer<AdvancementHolder>) {
-
-        /*  val bigItems = arrayOf<ItemPredicate.Builder>(
-              ItemPredicate.Builder.create().items(DnDBlocks.BIG_CHAIN),
-              ItemPredicate.Builder.create().items(DnDBlocks.BIG_LANTERN),
-              ItemPredicate.Builder.create().items(DnDBlocks.BIG_SOUL_LANTERN),
-          )
-          DnDBlockLists.bigCandles.forEach {
-              bigItems + (ItemPredicate.Builder.create().items(it.first))
-          }
-          DnDBlockLists.bigSoulCandles.forEach {
-              bigItems + (ItemPredicate.Builder.create().items(it.first))
-          }
-
-          Advancement.Builder.create().parent(adventure).display(
-              DnDBlocks.BIG_CANDLE,
-              Text.of("NOW$ YOURE CH4NCE TO B3 A [[BIG]]!!"),
-              Text.of("Obtain all of the Big items"),
-              null,
-              AdvancementType.CHALLENGE,
-              true,
-              true,
-              true
-          ).putCriteria(
-              "get_big", InventoryChangedCriterionTrigger.Conditions.create(
-                  arrayOf<ItemPredicate.Builder>(
-                      ItemPredicate.Builder.create().items(DnDBlocks.BIG_CHAIN.asItem()),
-                      ItemPredicate.Builder.create().items(DnDBlocks.BIG_LANTERN.asItem()),
-                      ItemPredicate.Builder.create().items(DnDBlocks.BIG_SOUL_LANTERN.asItem()),
-                  )
-              )
-          ).build(c, "story/mine_stone")*/
-
         Advancement.Builder.advancement()
             .addBiomes(provider, autumnBiomes)
             .display(
@@ -101,6 +70,24 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
             .rewards(expReward(5))
             .parent(theWholePack)
             .save(gen, DnDAdvancements.WOOF)
+
+        Advancement.Builder.advancement()
+            .addCollectItems(
+                DnDBlocks.BIG_CANDLES + DnDBlocks.BIG_SOUL_CANDLES + listOf(
+                    DnDBlocks.BIG_CHAIN,
+                    DnDBlocks.BIG_LANTERN,
+                    DnDBlocks.BIG_SOUL_LANTERN,
+                    DnDBlocks.BIG_SCAFFOLDING
+                )
+            )
+            .display(
+                DnDBlocks.BIG_CANDLES.uncolored,
+                title(DnDAdvancements.BIG_BLOCKS), description(DnDAdvancements.BIG_BLOCKS),
+                null, AdvancementType.CHALLENGE, true, true, false
+            )
+            .rewards(expReward(3))
+            .parent(adventure)
+            .save(gen, DnDAdvancements.BIG_BLOCKS)
     }
 
     // Once there are more than 5 functions here. Move them to a helper file to keep this file clean.
@@ -121,6 +108,16 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
             addCriterion(
                 resourceKey.location().toString(),
                 PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inBiome(lookup.getOrThrow(resourceKey)))
+            )
+        }
+        return this
+    }
+
+    fun Advancement.Builder.addCollectItems(items: List<ItemLike>): Advancement.Builder {
+        for (holder in items.map { it.asItem().builtInRegistryHolder() }) {
+            addCriterion(
+                "has_" + holder.key().location().toString().replace(":", "_"),
+                InventoryChangeTrigger.TriggerInstance.hasItems(holder.value())
             )
         }
         return this

@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.Transl
 import net.minecraft.advancements.Advancement
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.damagesource.DamageType
-import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
+import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.util.toLangKey
 
 fun TranslationBuilder.advancement(key: ResourceKey<Advancement>, title: String, description: String) {

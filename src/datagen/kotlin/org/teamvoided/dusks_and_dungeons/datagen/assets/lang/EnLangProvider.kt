@@ -3,7 +3,7 @@ package org.teamvoided.dusks_and_dungeons.datagen.assets.lang
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import org.teamvoided.dusks_and_dungeons.data.registry.DnDAdvancements
+import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.util.HEAVY_CUBE_TOOLTIP
@@ -25,6 +25,11 @@ class EnLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, 
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, getLang(it.location)) }
         gen.advancement(DnDAdvancements.FALL, "Fall!", "Visit the golden and autumn biomes!")
         gen.advancement(DnDAdvancements.WOOF, "Woof", "Find and tame the Autumn Wolf")
+        gen.advancement(
+            DnDAdvancements.BIG_BLOCKS,
+            "NOW$ YOUR CH4NCE TO B3 [[BIG]]!!",
+            "Obtain all of the Big items"
+        )
 
         gen.damageType(
             DnDDamageTypes.THROWN_BRICK,
