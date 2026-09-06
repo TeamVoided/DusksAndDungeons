@@ -13,6 +13,7 @@ import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CandleBlock
+import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.SimpleWaterloggedBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
@@ -26,7 +27,6 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
-import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
 
 open class EmptyCandelabraBlock(properties: Properties) : Block(properties), SimpleWaterloggedBlock {
@@ -46,7 +46,7 @@ open class EmptyCandelabraBlock(properties: Properties) : Block(properties), Sim
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return CANDELABRA_SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
+        return Candelabra.SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
     }
 
     // Waterlogging
@@ -106,47 +106,23 @@ open class EmptyCandelabraBlock(properties: Properties) : Block(properties), Sim
         } else super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
     }
 
+    override fun rotate(state: BlockState, rotation: Rotation): BlockState {
+        return when (rotation) {
+            Rotation.COUNTERCLOCKWISE_90, Rotation.CLOCKWISE_90 -> when (state.getValue(HORIZONTAL_AXIS)) {
+                Direction.Axis.Z -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.X)
+                Direction.Axis.X -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.Z)
+                else -> state
+            }
+            else -> state
+        }
+    }
+
     companion object {
 
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
         val HORIZONTAL_AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS
         val CANDLES = DnDBlockStateProperties.CANDLES
         val LIT: BooleanProperty = BlockStateProperties.LIT
-
-        val SINGLE_SHAPE: VoxelShape = box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0)
-        val DOUBLE_SHAPE: VoxelShape = Shapes.or(
-            box(6.0, 0.0, 6.0, 10.0, 4.0, 10.0),
-            box(2.0, 4.0, 6.0, 14.0, 8.0, 10.0),
-        )
-        val TRIPLE_SHAPE: VoxelShape = Shapes.or(
-            box(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
-            box(6.0, 0.0, 6.0, 10.0, 10.0, 10.0),
-        )
-        val QUADRUPLE_SHAPE: VoxelShape = Shapes.or(
-            box(6.0, 0.0, 6.0, 10.0, 4.0, 10.0),
-            box(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
-            box(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
-        )
-        val QUINTUPLE_SHAPE: VoxelShape = Shapes.or(
-            box(6.0, 0.0, 6.0, 10.0, 10.0, 10.0),
-            box(1.0, 4.0, 6.0, 15.0, 8.0, 10.0),
-            box(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
-        )
-
-        val CANDELABRA_SHAPES = HORIZONTAL_AXIS.possibleValues.associateWith { dir ->
-            CANDLES.possibleValues.associateWith { count ->
-                when (count) {
-                    1 -> SINGLE_SHAPE
-                    2 -> DOUBLE_SHAPE
-                    3 -> TRIPLE_SHAPE
-                    4 -> QUADRUPLE_SHAPE
-                    5 -> QUINTUPLE_SHAPE
-                    else -> Shapes.block()
-                }.rotate(dir.getRotations())
-            }
-        }
-
-        fun Direction.Axis.getRotations(): Int = if (this == Direction.Axis.X) 0 else 1
 
     }
 }
