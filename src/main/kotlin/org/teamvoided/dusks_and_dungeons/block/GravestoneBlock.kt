@@ -114,5 +114,15 @@ open class GravestoneBlock(val shape: VoxelShape, val centerShape: VoxelShape, s
         fun newSmallGrave(properties: Properties) = GravestoneBlock(SMALL_WALL_SHAPE, CENTER_CENTER_SHAPE, properties)
         fun newHeadstone(properties: Properties) = GravestoneBlock(HEADSTONE_SHAPE, CENTER_HEADSTONE_SHAPE, properties)
 
+        @JvmStatic
+        fun connectsToDirection(state: BlockState, dir: Direction): Boolean {
+            if (state.block !is GravestoneBlock) {
+                return false
+            }
+            val centered = state.getValue(CENTERED)
+            val facing = state.getValue(FACING)
+            return (centered && facing.axis === dir.clockWise.axis) || (!centered && facing.opposite == dir)
+        }
+
     }
 }

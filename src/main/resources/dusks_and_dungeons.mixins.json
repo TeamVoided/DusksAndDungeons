@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DispenserBlockMixin",
+    "FenceBlockMixin",
     "FoxEntityVariantMixin",
     "IceBlockMixin",
     "ItemEntityMixin",
@@ -26,8 +27,8 @@
     "bugfix.ThrownPotionMixin",
     "bugfix.furnace.AbstractFurnaceBlockEntityMixin",
     "bugfix.furnace.FurnaceFuelSlotMixin",
-    "debug.ItemDisplayBuilderMixin",
     "debug.HolderMixin",
+    "debug.ItemDisplayBuilderMixin",
     "directional_sculk.blockstates.SculkCatalystBlockEntityMixin",
     "directional_sculk.blockstates.SculkCatalystBlockMixin",
     "directional_sculk.blockstates.SculkSensorBlockMixin",
