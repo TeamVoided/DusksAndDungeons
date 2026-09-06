@@ -7,6 +7,7 @@ import net.minecraft.world.item.FireChargeItem;
 import net.minecraft.world.item.FlintAndSteelItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock;
 import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock;
 
 // TODO(lib) add a void lib reg for this
@@ -15,6 +16,6 @@ public class LighterItemMixin {
 
     @ModifyExpressionValue(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/CampfireBlock;canLight(Lnet/minecraft/world/level/block/state/BlockState;)Z"))
     boolean additionCanBeLitChecks(boolean original, @Local BlockState state) {
-        return original ^ OldCandelabraBlock.canLiteCandelabra(state);
+        return original ^ OldCandelabraBlock.canLiteCandelabra(state)^ CandelabraBlock.canLiteCandelabra(state);
     }
 }
