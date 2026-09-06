@@ -23,6 +23,7 @@ import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moon
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
@@ -795,6 +796,9 @@ object DnDBlocks {
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
     @Suppress("unused")
     val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))//otherwise known as the Glock
+
+    val EMPTY_IRON_CANDELABRA = register("empty_iron_candelabra", ::EmptyCandelabraBlock, ofFullCopy(IRON_BLOCK))
+    val IRON_CANDELABRA = register("iron_candelabra", ::EmptyCandelabraBlock, ofFullCopy(IRON_BLOCK))
 
     fun init() {
         // Striping

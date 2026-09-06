@@ -20,6 +20,12 @@ data object DnDModels {
     val BIG_CHAIN = parent("big_chain", PARTICLE, ALL)
     val BIG_LANTERN = parent("big_lantern", PARTICLE, SIDE, END)
 
+    val CANDELABRA_1 = parent("candelabra/1", "_1", TEXTURE)
+    val CANDELABRA_2 = parent("candelabra/2", "_2", TEXTURE)
+    val CANDELABRA_3 = parent("candelabra/3", "_3", TEXTURE)
+    val CANDELABRA_4 = parent("candelabra/4", "_4", TEXTURE)
+    val CANDELABRA_5 = parent("candelabra/5", "_5", TEXTURE)
+
     // region Graves
     val GRAVESTONE = parent("gravestone", FRONT, SIDE)
     val GRAVESTONE_CENTERED = parent("gravestone_centered", FRONT, SIDE)

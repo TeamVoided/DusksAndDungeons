@@ -1,10 +1,11 @@
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
+import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.blockstates.MultiVariantGenerator
-import net.minecraft.data.models.blockstates.PropertyDispatch
-import net.minecraft.data.models.blockstates.Variant
-import net.minecraft.data.models.blockstates.VariantProperties
+import net.minecraft.data.models.blockstates.PropertyDispatch.property
+import net.minecraft.data.models.blockstates.Variant.variant
+import net.minecraft.data.models.blockstates.VariantProperties.*
 import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot.*
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
 
 
 fun BlockModelGenerators.createBigChain(block: Block) {
@@ -43,7 +45,7 @@ fun BlockModelGenerators.createBigLantern(block: Block, bottom: ResourceLocation
     val model = DnDModels.BIG_LANTERN.create(block, texture, modelOutput)
 
     val multiGenerator =
-        MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model))
+        MultiVariantGenerator.multiVariant(block, variant().with(MODEL, model))
             .with(createUpFacing())
 
     if (hasOffVariant) {
@@ -54,9 +56,9 @@ fun BlockModelGenerators.createBigLantern(block: Block, bottom: ResourceLocation
         val modelOff = DnDModels.BIG_LANTERN.createWithSuffix(block, "_off", textureOff, modelOutput)
 
         multiGenerator.with(
-            PropertyDispatch.property(BigRedstoneLanternBlock.LIT)
-                .select(true, Variant.variant())
-                .select(false, Variant.variant().with(VariantProperties.MODEL, modelOff))
+            property(BigRedstoneLanternBlock.LIT)
+                .select(true, variant())
+                .select(false, variant().with(MODEL, modelOff))
         )
     }
 
@@ -73,3 +75,38 @@ fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
             .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.BOTTOM, unstable, stable))
     )
 }
+
+// region Candelabra
+
+fun BlockModelGenerators.createCandelabra(emptyCandelabra: Block, candelabra: Block) {
+    val texture = TextureMapping.defaultTexture(candelabra)
+        .put(TEXTURE, modelId(candelabra))
+    val models = listOf(
+        DnDModels.CANDELABRA_1,
+        DnDModels.CANDELABRA_2,
+        DnDModels.CANDELABRA_3,
+        DnDModels.CANDELABRA_4,
+        DnDModels.CANDELABRA_5
+    ).map { it.create(candelabra, texture, modelOutput) }
+
+    blockStateOutput.accept(candelabraProperties(candelabra, models))
+    delegateItemModel(candelabra, models.first())
+
+    blockStateOutput.accept(candelabraProperties(emptyCandelabra, models))
+    delegateItemModel(emptyCandelabra, models.first())
+}
+
+fun candelabraProperties(candelabra: Block, models: List<ResourceLocation>): MultiVariantGenerator {
+    return MultiVariantGenerator.multiVariant(candelabra)
+        .with(
+            property(BlockStateProperties.HORIZONTAL_AXIS)
+                .select(Direction.Axis.X, variant())
+                .select(Direction.Axis.Z, variant().with(Y_ROT, Rotation.R90))
+        )
+        .with(
+            property(EmptyCandelabraBlock.CANDLES)
+                .generate { variant().with(MODEL, models[it - 1]) }
+        )
+}
+
+// endregion

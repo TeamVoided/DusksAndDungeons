@@ -4,6 +4,7 @@ import net.minecraft.data.models.BlockModelGenerators
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigChain
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigLantern
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigScaffolding
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createCandelabra
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerBigCandle
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCandelabra
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCandle2
@@ -27,6 +28,8 @@ object BigModels {
         DnDBlockLists.soulCandelabras.forEach(gen::registerDnDCandelabra) //TODO(1.0) move this out?
 
         gen.createBigScaffolding(DnDBlocks.BIG_SCAFFOLDING)
+
+        gen.createCandelabra(DnDBlocks.EMPTY_IRON_CANDELABRA, DnDBlocks.IRON_CANDELABRA)
     }
 
 }
