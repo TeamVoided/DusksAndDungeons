@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 
 fun RecipeBuilder.unlockedBy(item: ItemLike): RecipeBuilder =
@@ -67,7 +67,7 @@ fun RecipeOutput.createCandle(
 }
 
 fun RecipeOutput.createCandelabra(candelabra: Block) {
-    if (candelabra !is CandelabraBlock) error("Block provided isn't a CandelabraBlock!")
+    if (candelabra !is OldCandelabraBlock) error("Block provided isn't a CandelabraBlock!")
 
     ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candelabra, 1)
         .pattern("NCN")

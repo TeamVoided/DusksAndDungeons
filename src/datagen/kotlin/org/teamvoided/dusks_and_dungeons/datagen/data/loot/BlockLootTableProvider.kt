@@ -10,7 +10,7 @@ import net.minecraft.world.level.storage.loot.entries.NestedLootTable
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -46,7 +46,7 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
                 is SlabBlock -> add(block, ::createSlabItemTable)
                 is DoorBlock -> add(block, ::createDoorTable)
                 is LogPileBlock -> add(block, ::createLogPileDrops)
-                is CandelabraBlock -> add(block, ::candelabraDrops)
+                is OldCandelabraBlock -> add(block, ::candelabraDrops)
                 is CandleBlock -> add(block, ::createCandleDrops)
                 is DoublePlantBlock -> add(block, ::twoTallDrop)
                 is MossyCarpetBlock -> add(block, ::mossyCarpetDrop)

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock;
+import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock;
 
 import java.util.Set;
 
@@ -19,6 +19,6 @@ public class LookAtItemAnimationMixin {
     @Redirect(method = "isValid", at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"), remap = false)
     boolean addDnDItems(Set<Item> instance, Object item) {
         return instance.contains((Item) item) ||
-                (item instanceof BlockItem block && block.getBlock() instanceof CandelabraBlock);
+                (item instanceof BlockItem block && block.getBlock() instanceof OldCandelabraBlock);
     }
 }

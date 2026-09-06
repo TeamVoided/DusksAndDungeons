@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.properties.*
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
-import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -1281,7 +1281,7 @@ fun BlockModelGenerators.registerDnDCandelabra(candelabra: Block) =
     this.registerCandelabra(candelabra, true)
 
 fun BlockModelGenerators.registerCandelabra(candelabra: Block, isDnD: Boolean = false) {
-    if (candelabra !is CandelabraBlock) error("Provided blocks is not a CandelabraBlock!")
+    if (candelabra !is OldCandelabraBlock) error("Provided blocks is not a CandelabraBlock!")
     this.blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(candelabra)
             .with(
@@ -1295,7 +1295,7 @@ fun BlockModelGenerators.registerCandelabra(candelabra: Block, isDnD: Boolean = 
 }
 
 fun BlockModelGenerators.candelabraStates(
-    candelabra: CandelabraBlock, isDnD: Boolean,
+    candelabra: OldCandelabraBlock, isDnD: Boolean,
 ): PropertyDispatch {
     val candle = candelabra.candle.prefixed(if (isDnD) "candle/" else "")
 
@@ -1307,7 +1307,7 @@ fun BlockModelGenerators.candelabraStates(
         .put(TEXTURE, id("block/candelabra_iron"))
     val models = listOf(CANDELABRA_1, CANDELABRA_2, CANDELABRA_3, CANDELABRA_4, CANDELABRA_5)
 
-    return PropertyDispatch.properties(BlockStateProperties.LIT, CandelabraBlock.CANDLES).generate { isLit, candles ->
+    return PropertyDispatch.properties(BlockStateProperties.LIT, OldCandelabraBlock.CANDLES).generate { isLit, candles ->
         val model = models[candles - 1]
         Variant.variant().with(
             MODEL,

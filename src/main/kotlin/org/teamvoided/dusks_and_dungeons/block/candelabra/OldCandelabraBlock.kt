@@ -35,7 +35,7 @@ import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Compan
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import java.util.function.ToIntFunction
 
-open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCandleBlock(settings),
+open class OldCandelabraBlock(val candle: Block, settings: Properties) : AbstractCandleBlock(settings),
     SimpleWaterloggedBlock {
     override fun codec(): MapCodec<out AbstractCandleBlock> = CODEC
 
@@ -139,7 +139,7 @@ open class CandelabraBlock(val candle: Block, settings: Properties) : AbstractCa
     override fun canBeLit(state: BlockState): Boolean = !state.getValue(WATERLOGGED) && super.canBeLit(state)
 
     companion object {
-        val CODEC: MapCodec<CandelabraBlock> = simpleCodec { CandelabraBlock(Blocks.CANDLE, it) }
+        val CODEC: MapCodec<OldCandelabraBlock> = simpleCodec { OldCandelabraBlock(Blocks.CANDLE, it) }
 
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
         val HORIZONTAL_AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS

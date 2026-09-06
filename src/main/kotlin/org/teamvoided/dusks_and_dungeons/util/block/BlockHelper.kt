@@ -30,7 +30,7 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleCakeBlock
-import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.*
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockProperties
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
@@ -185,7 +185,7 @@ fun wallHangingSignOf(woodType: WoodType, block: Block, hangingSign: Block): Blo
 // Candles
 fun bigCandleOf(candle: Block) = BigCandleBlock(ParticleTypes.FLAME, ofFullCopy(candle).sound(bigCandleSound))
 fun bigCandleCakeOf(block: Block) = BigCandleCakeBlock(block, ParticleTypes.FLAME, ofFullCopy(CANDLE_CAKE))
-fun candelabraOf(candle: Block) = CandelabraBlock(candle, ofFullCopy(candle).lightLevel(CandelabraBlock.LUMINANCE))
+fun candelabraOf(candle: Block) = OldCandelabraBlock(candle, ofFullCopy(candle).lightLevel(OldCandelabraBlock.LUMINANCE))
 
 // Soul
 fun soulCandleOf(candle: Block) = SoulCandleBlock(ofFullCopy(candle))

@@ -23,7 +23,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
@@ -120,7 +120,7 @@ fun BlockLootSubProvider.candelabraDrops(drop: Block): LootTable.Builder {
         LootPool.lootPool().add(
             applyExplosionDecay(drop, item(drop).apply(2..5) { candles ->
                 countOf(candles)
-                    .`when`(blockProperty(drop).setProperty(CandelabraBlock.CANDLES, candles))
+                    .`when`(blockProperty(drop).setProperty(OldCandelabraBlock.CANDLES, candles))
             })
         )
     )
