@@ -90,10 +90,8 @@ fun BlockModelGenerators.createCandelabra(emptyCandelabra: Block, candelabra: Bl
     ).map { it.create(candelabra, texture, modelOutput) }
 
     blockStateOutput.accept(candelabraProperties(candelabra, models))
-    delegateItemModel(candelabra, models.first())
-
     blockStateOutput.accept(candelabraProperties(emptyCandelabra, models))
-    delegateItemModel(emptyCandelabra, models.first())
+    delegateItemModel(candelabra, models.first())
 }
 
 fun candelabraProperties(candelabra: Block, models: List<ResourceLocation>): MultiVariantGenerator {

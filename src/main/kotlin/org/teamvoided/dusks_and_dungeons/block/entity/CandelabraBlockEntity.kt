@@ -10,7 +10,9 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities.CANDELABRA
+import kotlin.math.min
 
 class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CANDELABRA, pos, state) {
 
@@ -28,7 +30,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
     }
 
     fun tryAddCandle(candle: ItemStack, slot: Int): Boolean {
-        if (candles.size <= slot || !candles[slot].isEmpty) {
+        if (min(candles.size, blockState.getValue(CandelabraBlock.CANDLES)) <= slot || !candles[slot].isEmpty) {
             return false
         }
         candles[slot] = candle.copyWithCount(1)

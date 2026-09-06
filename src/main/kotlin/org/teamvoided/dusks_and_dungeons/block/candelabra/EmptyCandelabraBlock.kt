@@ -12,7 +12,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.CandleBlock
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.SimpleWaterloggedBlock
 import net.minecraft.world.level.block.state.BlockState
@@ -27,9 +26,12 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
 
-open class EmptyCandelabraBlock(properties: Properties) : Block(properties), SimpleWaterloggedBlock {
+open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBlock) : Block(properties),
+    SimpleWaterloggedBlock {
 
     init {
         registerDefaultState(
@@ -80,16 +82,17 @@ open class EmptyCandelabraBlock(properties: Properties) : Block(properties), Sim
                 super.canBeReplaced(state, ctx)
     }
 
-    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
-        return canSupportCenter(world, pos.below(), Direction.UP) && !world.getBlockState(pos.below()).`is`(this)
+    override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
+        return canSupportCenter(level, pos.below(), Direction.UP) && !level.getBlockState(pos.below()).`is`(this)
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
-        val state = ctx.level.getBlockState(ctx.clickedPos)
-        if (state.`is`(this)) {
+        val pos = ctx.clickedPos
+        val state = ctx.level.getBlockState(pos)
+        if (state.`is`(this) || state.`is`(filled)) {
             return state.cycle(CANDLES)
         }
-        val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
+        val waterlogged = ctx.level.getFluidState(pos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)
             ?.setValue(CANDLES, 1)
             ?.setValue(WATERLOGGED, waterlogged)
@@ -97,13 +100,16 @@ open class EmptyCandelabraBlock(properties: Properties) : Block(properties), Sim
     }
 
     override fun useItemOn(
-        stack: ItemStack, state: BlockState, world: Level, pos: BlockPos,
-        entity: Player, hand: InteractionHand, hitResult: BlockHitResult,
+        stack: ItemStack, state: BlockState, level: Level, pos: BlockPos,
+        player: Player, hand: InteractionHand, hit: BlockHitResult,
     ): ItemInteractionResult {
-        return if (stack.isEmpty && entity.abilities.mayBuild && state.getValue(CandleBlock.LIT)) {
-//            extinguish(entity, state, world, pos)
-            ItemInteractionResult.sidedSuccess(world.isClientSide)
-        } else super.useItemOn(stack, state, world, pos, entity, hand, hitResult)
+        if (canAddToCandelabra(stack)) {
+            level.setBlockAndUpdate(pos, filled.withPropertiesOf(state))
+            if (tryAddToCandelabra(level, pos, stack, player)) {
+                return ItemInteractionResult.sidedSuccess(level.isClientSide)
+            }
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hit)
     }
 
     override fun rotate(state: BlockState, rotation: Rotation): BlockState {
@@ -113,6 +119,7 @@ open class EmptyCandelabraBlock(properties: Properties) : Block(properties), Sim
                 Direction.Axis.X -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.Z)
                 else -> state
             }
+
             else -> state
         }
     }

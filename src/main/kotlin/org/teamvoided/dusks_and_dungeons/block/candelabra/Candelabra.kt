@@ -1,12 +1,21 @@
 package org.teamvoided.dusks_and_dungeons.block.candelabra
 
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.tags.ItemTags
+import net.minecraft.world.Containers
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.box
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.CANDLES
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.HORIZONTAL_AXIS
+import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.util.rotate
+import kotlin.jvm.optionals.getOrNull
 
 object Candelabra {
 
@@ -45,4 +54,30 @@ object Candelabra {
 
     fun Direction.Axis.getRotations(): Int = if (this == Direction.Axis.X) 0 else 1
 
+    fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(ItemTags.CANDLES)
+
+    fun tryAddToCandelabra(level: Level, pos: BlockPos, stack: ItemStack, player: Player): Boolean {
+        val candelabra = level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull() ?: return false
+        var idx = 0
+        for (item in candelabra.candles) {
+            if (item.isEmpty) {
+                break
+            }
+            idx++
+        }
+        if (candelabra.tryAddCandle(stack, idx)) {
+            stack.consume(1, player)
+            return true
+        }
+        return false
+    }
+
+    fun dropContentsOnDestroy(state: BlockState, otherState: BlockState, level: Level, pos: BlockPos) {
+        if (state.`is`(otherState.block)) {
+            return
+        }
+        val be = level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull() ?: return
+        Containers.dropContents(level, pos, be.candles)
+        level.updateNeighbourForOutputSignal(pos, state.block)
+    }
 }

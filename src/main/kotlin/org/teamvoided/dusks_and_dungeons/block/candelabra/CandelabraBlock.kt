@@ -3,7 +3,6 @@ package org.teamvoided.dusks_and_dungeons.block.candelabra
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.tags.ItemTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -29,14 +28,14 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getRotations
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
-import kotlin.jvm.optionals.getOrNull
 
 open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(properties),
     SimpleWaterloggedBlock, EntityBlock {
@@ -76,7 +75,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         }
     }
 
-    private fun spawnParticles(level: Level, offset: Vec3, random: RandomSource): Unit {
+    private fun spawnParticles(level: Level, offset: Vec3, random: RandomSource) {
         level.spawnCandleParticles(offset, random)
     }
 
@@ -143,21 +142,8 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
 
-        if (stack.`is`(ItemTags.CANDLES)) {
-            val candelabra = level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull()
-            if (candelabra != null) {
-                var idx = 0
-                for (item in candelabra.candles) {
-                    if (item.isEmpty) {
-                        break
-                    }
-                    idx++
-                }
-                if (candelabra.tryAddCandle(stack, idx)) {
-                    stack.consume(1, player)
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide)
-                }
-            }
+        if (canAddToCandelabra(stack) && tryAddToCandelabra(level, pos, stack, player)) {
+            return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
 
         return super.useItemOn(stack, state, level, pos, player, hand, hit)
@@ -165,13 +151,21 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
 
     override fun canBeLit(state: BlockState): Boolean = !state.getValue(WATERLOGGED) && super.canBeLit(state)
 
+    override fun onRemove(
+        state: BlockState, level: Level, pos: BlockPos, otherState: BlockState, movedByPiston: Boolean,
+    ) {
+        Candelabra.dropContentsOnDestroy(state, otherState, level, pos)
+        super.onRemove(state, level, pos, otherState, movedByPiston)
+    }
+
     override fun rotate(state: BlockState, rotation: Rotation): BlockState {
         return when (rotation) {
-            Rotation.COUNTERCLOCKWISE_90, Rotation.CLOCKWISE_90 -> when (state.getValue(EmptyCandelabraBlock.HORIZONTAL_AXIS)) {
-                Direction.Axis.Z -> state.setValue(EmptyCandelabraBlock.HORIZONTAL_AXIS, Direction.Axis.X)
-                Direction.Axis.X -> state.setValue(EmptyCandelabraBlock.HORIZONTAL_AXIS, Direction.Axis.Z)
+            Rotation.COUNTERCLOCKWISE_90, Rotation.CLOCKWISE_90 -> when (state.getValue(HORIZONTAL_AXIS)) {
+                Direction.Axis.Z -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.X)
+                Direction.Axis.X -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.Z)
                 else -> state
             }
+
             else -> state
         }
     }

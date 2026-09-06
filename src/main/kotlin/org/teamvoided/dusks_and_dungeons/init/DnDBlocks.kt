@@ -798,8 +798,10 @@ object DnDBlocks {
     @Suppress("unused")
     val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))//otherwise known as the Glock
 
-    val EMPTY_IRON_CANDELABRA = register("empty_iron_candelabra", ::EmptyCandelabraBlock, ofFullCopy(IRON_BLOCK))
-    val IRON_CANDELABRA = register("iron_candelabra", ::CandelabraBlock, ofFullCopy(IRON_BLOCK))
+    val IRON_CANDELABRA = registerNoItem("iron_candelabra", ::CandelabraBlock, ofFullCopy(IRON_BLOCK)).pickaxe()
+    val EMPTY_IRON_CANDELABRA =
+        registerNoItem("empty_iron_candelabra", { EmptyCandelabraBlock(it, IRON_CANDELABRA) }, ofFullCopy(IRON_BLOCK))
+            .pickaxe()
 
     fun init() {
         // Striping

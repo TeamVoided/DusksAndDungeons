@@ -10,9 +10,9 @@ import net.minecraft.world.level.storage.loot.entries.NestedLootTable
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -70,6 +70,9 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
         bigCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         soulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         bigSoulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
+
+        add(DnDBlocks.IRON_CANDELABRA, ::candelabraDrops)
+        add(DnDBlocks.EMPTY_IRON_CANDELABRA, ::candelabraDrops)
 
         add(DnDBlocks.WARPED_WART) {
             val state = blockProperty(it).setProperty(NetherWartBlock.AGE, 3)
