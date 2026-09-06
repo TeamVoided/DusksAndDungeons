@@ -30,6 +30,7 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleCakeBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.*
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockProperties
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet

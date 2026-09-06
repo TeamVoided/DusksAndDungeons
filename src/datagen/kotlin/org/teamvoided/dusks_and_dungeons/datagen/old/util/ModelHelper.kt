@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.*
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks

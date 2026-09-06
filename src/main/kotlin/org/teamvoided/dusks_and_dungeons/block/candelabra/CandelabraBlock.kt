@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.block
+package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos

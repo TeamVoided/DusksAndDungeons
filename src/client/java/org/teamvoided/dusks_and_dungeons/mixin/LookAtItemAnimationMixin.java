@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock;
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock;
 
 import java.util.Set;
 

@@ -7,7 +7,7 @@ import net.minecraft.world.item.FireChargeItem;
 import net.minecraft.world.item.FlintAndSteelItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.teamvoided.dusks_and_dungeons.block.CandelabraBlock;
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock;
 
 // TODO(lib) add a void lib reg for this
 @Mixin({FireChargeItem.class, FlintAndSteelItem.class})
