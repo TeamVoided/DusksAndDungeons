@@ -14,7 +14,7 @@ object DnDAdvancements {
     val FALL = key("adventure/fall")
     val WOOF = key("husbandry/woof")
     val THROWING_STONES = key("adventure/throwing_stones")
-    val BIG_BLOCKS = key("adventure/big_blocks")
+    val GET_BIG = key("adventure/get_big")
 
     fun key(id: String) = Registries.ADVANCEMENT.key(id(id))
 

@@ -10,6 +10,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
@@ -29,7 +30,8 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
     val adventure = vanillaAdv("adventure/root")
     val theWholePack = vanillaAdv("husbandry/whole_pack")
 
-    val autumnBiomes = listOf( //move this to a list file and use for the IS_AUTUMN tag?
+    val autumnBiomes = listOf(
+        //move this to a list file and use for the IS_AUTUMN tag?
         DnDBiomes.AUTUMN_WOODS,
         DnDBiomes.AUTUMN_PASTURES,
         DnDBiomes.AUTUMN_CASCADES,
@@ -77,17 +79,18 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
                     DnDBlocks.BIG_CHAIN,
                     DnDBlocks.BIG_LANTERN,
                     DnDBlocks.BIG_SOUL_LANTERN,
-                    DnDBlocks.BIG_SCAFFOLDING
+                    DnDBlocks.BIG_SCAFFOLDING,
+                    Items.BIG_DRIPLEAF
                 )
             )
             .display(
                 DnDBlocks.BIG_CANDLES.uncolored,
-                title(DnDAdvancements.BIG_BLOCKS), description(DnDAdvancements.BIG_BLOCKS),
+                title(DnDAdvancements.GET_BIG), description(DnDAdvancements.GET_BIG),
                 null, AdvancementType.CHALLENGE, true, true, false
             )
             .rewards(expReward(3))
             .parent(adventure)
-            .save(gen, DnDAdvancements.BIG_BLOCKS)
+            .save(gen, DnDAdvancements.GET_BIG)
     }
 
     // Once there are more than 5 functions here. Move them to a helper file to keep this file clean.

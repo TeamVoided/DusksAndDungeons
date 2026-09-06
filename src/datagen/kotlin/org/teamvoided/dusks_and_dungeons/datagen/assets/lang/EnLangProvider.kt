@@ -26,7 +26,7 @@ class EnLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, 
         gen.advancement(DnDAdvancements.FALL, "Fall!", "Visit the golden and autumn biomes!")
         gen.advancement(DnDAdvancements.WOOF, "Woof", "Find and tame the Autumn Wolf")
         gen.advancement(
-            DnDAdvancements.BIG_BLOCKS,
+            DnDAdvancements.GET_BIG,
             "NOW$ YOUR CH4NCE TO B3 [[BIG]]!!",
             "Obtain all of the Big items"
         )
