@@ -10,6 +10,7 @@ import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.GrassColor
 import net.minecraft.world.level.block.Block
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.CUTOUT_BLOCKS
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
@@ -19,7 +20,9 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE 
 
 
 object DnDBlocksClient {
+
     fun init() {
+
         registerTint(
             { _, world, pos, _ -> foliageColor(world, pos) },
             DnDBlocks.OAK_LEAF_PILE,
@@ -47,6 +50,12 @@ object DnDBlocksClient {
         CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.cutout()) }
         TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.translucent()) }
         ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS || state.block in TINT_PARTICLES }
+
+        if (!isDev()) {
+            CUTOUT_BLOCKS.clear()
+            TRANSLUCENT_BLOCKS.clear()
+        }
+
     }
 
     fun registerTint(provider: BlockColor, vararg blocks: Block) =
@@ -68,4 +77,5 @@ object DnDBlocksClient {
         return if (world != null && pos != null) BiomeColors.getAverageWaterColor(world, pos)
         else -1
     }
+
 }
