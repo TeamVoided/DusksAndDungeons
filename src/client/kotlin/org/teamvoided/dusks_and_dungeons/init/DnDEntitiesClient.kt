@@ -2,13 +2,14 @@ package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
+import org.teamvoided.dusks_and_dungeons.entity.ThrownStackRenderer
 import org.teamvoided.dusks_and_dungeons.entity.scarecrow.ScarecrowEntityRenderer
 
 object DnDEntitiesClient {
 
     fun init() {
         EntityRendererRegistry.register(DnDEntityTypes.SCARECROW, ::ScarecrowEntityRenderer)
-        EntityRendererRegistry.register(DnDEntityTypes.THROWN_ITEM, ::ThrownItemRenderer)
+        EntityRendererRegistry.register(DnDEntityTypes.THROWN_ITEM, ::ThrownStackRenderer)
     }
 
 }

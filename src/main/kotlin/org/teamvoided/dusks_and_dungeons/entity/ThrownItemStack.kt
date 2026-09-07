@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -37,6 +38,8 @@ class ThrownItemStack : ThrowableItemProjectile {
     constructor(level: Level, x: Double, y: Double, z: Double) : super(DnDEntityTypes.THROWN_ITEM, x, y, z, level)
 
     override fun getDefaultItem(): Item = Items.BRICK
+    var age = 0
+    var inGround = false
 
     override fun defineSynchedData(builder: SynchedEntityData.Builder) {
         super.defineSynchedData(builder)
@@ -70,11 +73,46 @@ class ThrownItemStack : ThrowableItemProjectile {
             )
         }
 
+    override fun tick() {
+        age++
+
+        //val blockPos = blockPosition()
+        //val blockState = level().getBlockState(blockPos)
+        //if (!blockState.isAir) {
+        //    val voxelShape = blockState.getCollisionShape(level(), blockPos)
+        //    if (!voxelShape.isEmpty) {
+        //        val vec32 = position()
+        //        for (aABB in voxelShape.toAabbs()) {
+        //            if (aABB.move(blockPos).contains(vec32)) {
+        //                inGround = true
+        //                break
+        //            }
+        //        }
+        //    }
+        //}
+
+        val velocity = deltaMovement
+        if (xRotO == 0f && yRotO == 0f) {
+            val d = velocity.horizontalDistance()
+            yRot = (Mth.atan2(velocity.x, velocity.z) * (180f / Math.PI)).toFloat()
+            xRot = (Mth.atan2(velocity.y, d) * (180f / Math.PI)).toFloat()
+            yRotO = yRot
+            xRotO = xRot
+        }
+        super.tick()
+    }
+
     override fun handleEntityEvent(id: Byte) {
         if (id == BREAK_ID) {
             val options = particle
             for (i in 0..7) {
-                level().addParticle(options, x, y, z, 0.0, 0.0, 0.0)
+                level().addParticle(
+                    options,
+                    x, y, z,
+                    (random.nextDouble() * 2) - 1,
+                    (random.nextDouble() * 2) - 1,
+                    (random.nextDouble() * 2) - 1
+                )
             }
         }
     }
@@ -82,9 +120,7 @@ class ThrownItemStack : ThrowableItemProjectile {
     override fun onHitEntity(hit: EntityHitResult) {
         super.onHitEntity(hit)
         val definition = getDefinition().value()
-        hit.entity.hurt(
-            damageSources().source(definition.damageType.key(), this, owner), definition.damage
-        )
+        hit.entity.hurt(damageSources().source(definition.damageType.key(), this, owner), definition.damage)
     }
 
     override fun onHitBlock(hit: BlockHitResult) {
@@ -113,7 +149,13 @@ class ThrownItemStack : ThrowableItemProjectile {
         super.onHit(hitResult)
         if (!level().isClientSide) {
             level().broadcastEntityEvent(this, BREAK_ID)
-            discard()
+            deltaMovement = deltaMovement.multiply(
+                random.nextFloat() * 0.2,
+                random.nextFloat() * 0.2,
+                random.nextFloat() * 0.2
+            )
+
+            //discard()
         }
     }
 
