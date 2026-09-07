@@ -19,6 +19,8 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.GameRules
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
@@ -38,8 +40,9 @@ class ThrownItemStack : ThrowableItemProjectile {
     constructor(level: Level, x: Double, y: Double, z: Double) : super(DnDEntityTypes.THROWN_ITEM, x, y, z, level)
 
     override fun getDefaultItem(): Item = Items.BRICK
-    var age = 0
+
     var inGround = false
+    var lastState: BlockState? = null
 
     override fun defineSynchedData(builder: SynchedEntityData.Builder) {
         super.defineSynchedData(builder)
@@ -74,23 +77,6 @@ class ThrownItemStack : ThrowableItemProjectile {
         }
 
     override fun tick() {
-        age++
-
-        //val blockPos = blockPosition()
-        //val blockState = level().getBlockState(blockPos)
-        //if (!blockState.isAir) {
-        //    val voxelShape = blockState.getCollisionShape(level(), blockPos)
-        //    if (!voxelShape.isEmpty) {
-        //        val vec32 = position()
-        //        for (aABB in voxelShape.toAabbs()) {
-        //            if (aABB.move(blockPos).contains(vec32)) {
-        //                inGround = true
-        //                break
-        //            }
-        //        }
-        //    }
-        //}
-
         val velocity = deltaMovement
         if (xRotO == 0f && yRotO == 0f) {
             val d = velocity.horizontalDistance()
@@ -99,13 +85,51 @@ class ThrownItemStack : ThrowableItemProjectile {
             yRotO = yRot
             xRotO = xRot
         }
-        super.tick()
+
+        val isNoclip = noPhysics
+
+        val blockPos = blockPosition()
+        val state = level().getBlockState(blockPos)
+
+        if (!state.isAir && !isNoclip) {
+            val shape = state.getCollisionShape(level(), blockPos)
+            if (!shape.isEmpty) {
+                val pos = position()
+                for (aabb in shape.toAabbs()) {
+                    if (aabb.move(blockPos).contains(pos)) {
+                        inGround = true
+                        break
+                    }
+                }
+            }
+        }
+
+        if (inGround && !isNoclip) {
+            if (lastState !== state && shouldFall()) {
+                startFalling()
+            }
+        } else {
+            super.tick()
+        }
+    }
+
+    fun shouldFall(): Boolean {
+        return inGround && level().noCollision(AABB(position(), position()).inflate(0.06))
+    }
+
+    fun startFalling() {
+        inGround = false
+        deltaMovement = deltaMovement.multiply(
+            random.nextDouble() * 0.2,
+            random.nextDouble() * 0.2,
+            random.nextDouble() * 0.2,
+        )
     }
 
     override fun handleEntityEvent(id: Byte) {
         if (id == BREAK_ID) {
             val options = particle
-            for (i in 0..7) {
+            repeat(7) {
                 level().addParticle(
                     options,
                     x, y, z,
@@ -125,15 +149,15 @@ class ThrownItemStack : ThrowableItemProjectile {
 
     override fun onHitBlock(hit: BlockHitResult) {
         super.onHitBlock(hit)
+        val pos = hit.blockPos
+        val state = level().getBlockState(pos)
+        lastState = state
+
         if (level().isClientSide) {
             return
         }
 
         val definition = getDefinition().value()
-
-        val pos = hit.blockPos
-        val state = level().getBlockState(pos)
-
         if (mayBreak(level()) && state.`is`(definition.blockBreakTag)) {
             level().destroyBlock(pos, shouldDropBlocks(owner), owner)
         }
