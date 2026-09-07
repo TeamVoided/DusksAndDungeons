@@ -15,7 +15,11 @@ public interface HolderMixin<T> {
 
     @ModifyExpressionValue(method = "getRegisteredName", at = @At(value = "INVOKE", target = "Ljava/util/Optional;orElse(Ljava/lang/Object;)Ljava/lang/Object;"))
     default <Y> Y moreClearHolders(@Nullable Y original) {
-        //noinspection unchecked
-        return (Y) ("[unregistered:" + value().getClass().getSimpleName() + "]");
+        if (original != null && original.equals("[unregistered]")) {
+            //noinspection unchecked
+            return (Y) ("[unregistered:" + value().getClass().getSimpleName() + "]");
+        }
+        return original;
     }
+
 }
