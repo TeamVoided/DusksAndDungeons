@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.util.RandomSource
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.item.ItemStack
@@ -9,6 +10,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.TorchBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.phys.Vec3
@@ -16,12 +18,17 @@ import org.teamvoided.dusks_and_dungeons.init.DnDRecipes
 import org.teamvoided.dusks_and_dungeons.mixin.accessors.AbstractCandleBlockAccessor
 import org.teamvoided.dusks_and_dungeons.mixin.accessors.CropBlockAccessor
 import org.teamvoided.dusks_and_dungeons.mixin.accessors.MultifaceBlockAccessor
+import org.teamvoided.dusks_and_dungeons.mixin.accessors.TorchBlockAccessor
 import java.util.function.BiConsumer
 import kotlin.jvm.optionals.getOrNull
 
 
 fun Level.spawnCandleParticles(vec3d: Vec3, random: RandomSource) {
     return AbstractCandleBlockAccessor.dnd_addParticlesAndSound(this, vec3d, random)
+}
+
+fun TorchBlock.getFlameParticle(): SimpleParticleType {
+    return (this as TorchBlockAccessor).dnd_fameParticle()
 }
 
 fun cropHasSufficientLight(level: LevelReader, pos: BlockPos): Boolean {

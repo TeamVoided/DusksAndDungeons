@@ -54,7 +54,7 @@ open class BigCandleBlock(val particle: SimpleParticleType, settings: Properties
         return BIG_CANDLES_PARTICLE_OFFSETS[state.getValue(FACING)]?.get(state.getValue(CANDLES)) ?: RAW_OFFSETS[1]!!
     }
 
-    private fun spawnCandleParticles(world: Level, vec3d: Vec3, random: RandomSource) {
+    fun spawnCandleParticles(world: Level, vec3d: Vec3, random: RandomSource) {
         val f = random.nextFloat()
         if (f < 0.3f) {
             world.addParticle(ParticleTypes.SMOKE, vec3d.x, vec3d.y, vec3d.z, 0.0, 0.0, 0.0)

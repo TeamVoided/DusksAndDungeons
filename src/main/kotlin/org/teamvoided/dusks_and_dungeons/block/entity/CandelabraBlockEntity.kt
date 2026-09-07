@@ -79,7 +79,11 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
                 val cShape = state.getCollisionShape(level, blockPos).move(offset.x, offset.y, offset.z)
                 shape = Shapes.or(shape, bShape)
                 collisionShape = Shapes.or(collisionShape, cShape)
-                particleOffsets[idx] = offset.add(0.0, bShape.max(Direction.Axis.Y) + Candelabra.PIXEL_SCALER, 0.0)
+                particleOffsets[idx] = offset.add(
+                    0.5,
+                    bShape.max(Direction.Axis.Y) - bShape.min(Direction.Axis.Y) + Candelabra.PIXEL_SCALER * 2,
+                    0.5,
+                )
 
 
             }

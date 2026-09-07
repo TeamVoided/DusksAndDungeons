@@ -19,6 +19,7 @@
     "accessors.LootContextParamSetsAccessor",
     "accessors.MultifaceBlockAccessor",
     "accessors.SculkBlockAccessor",
+    "accessors.TorchBlockAccessor",
     "accessors.UtilAccessor",
     "apis.AxeItemMixin",
     "apis.EntityCollisionContextMixin",
