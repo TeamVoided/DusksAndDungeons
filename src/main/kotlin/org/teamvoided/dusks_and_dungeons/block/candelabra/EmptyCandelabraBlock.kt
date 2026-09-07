@@ -23,7 +23,6 @@ import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
-import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
@@ -48,7 +47,7 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return Candelabra.SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
+        return Candelabra.getBaseShape(state)
     }
 
     // Waterlogging

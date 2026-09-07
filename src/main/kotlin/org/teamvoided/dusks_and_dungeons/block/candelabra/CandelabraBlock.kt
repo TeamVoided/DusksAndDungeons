@@ -15,6 +15,8 @@ import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -25,13 +27,13 @@ import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.CollisionContext
-import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getRotations
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
+import org.teamvoided.dusks_and_dungeons.block.entity.createTicker
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
@@ -60,12 +62,19 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        var shape = Candelabra.SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
         level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull()?.let { be ->
-            shape = Shapes.or(be.dynamicShape, shape)
+            return be.dynamicShape
         }
-        return shape
+        return Candelabra.getBaseShape(state)
+    }
 
+    override fun getCollisionShape(
+        state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext,
+    ): VoxelShape {
+        level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull()?.let { be ->
+            return be.dynamicCollisionShape
+        }
+        return Candelabra.getBaseShape(state)
     }
 
     // Particles
@@ -94,7 +103,12 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level))
         }
+        level.updateBECache(pos)
         return super.updateShape(state, dir, neighborState, level, pos, neighborPos)
+    }
+
+    fun LevelAccessor.updateBECache(pos: BlockPos) {
+        getBlockEntity(pos, DnDBlockEntities.CANDELABRA)?.getOrNull()?.updateStateCache()
     }
 
     override fun getFluidState(state: BlockState): FluidState {
@@ -183,6 +197,12 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = CandelabraBlockEntity(pos, state)
+
+    override fun <T : BlockEntity> getTicker(
+        level: Level, state: BlockState, be: BlockEntityType<T>,
+    ): BlockEntityTicker<T>? {
+        return createTicker(be, DnDBlockEntities.CANDELABRA, CandelabraBlockEntity::tick)
+    }
 
     companion object {
 

@@ -10,6 +10,7 @@ import net.minecraft.nbt.Tag
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -25,6 +26,8 @@ import kotlin.math.min
 class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CANDELABRA, pos, state) {
 
     internal val candles: NonNullList<ItemStack> = NonNullList.withSize(CANDLES, ItemStack.EMPTY)
+
+    var hasTicked = false
 
     fun getCandles() = candles
 
@@ -51,13 +54,17 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
 
     val stateCache: NonNullList<BlockState> = NonNullList.withSize(CANDLES, Blocks.AIR.defaultBlockState())
     var dynamicShape: VoxelShape = Shapes.empty()
-    val offsets: Array<Vec3?> = arrayOfNulls(CANDLES)
+    var dynamicCollisionShape: VoxelShape = Shapes.empty()
+    val particleOffsets: Array<Vec3?> = arrayOfNulls(CANDLES)
 
     fun updateStateCache() {
-        var updateShape = Shapes.empty()
+        val baseShape = Candelabra.getBaseShape(blockState)
+
+        var shape = baseShape
+        var collisionShape = baseShape
         for ((idx, stack) in candles.withIndex()) {
             if (stack.isEmpty) {
-                offsets[idx] = null
+                particleOffsets[idx] = null
                 continue
             }
             val item = stack.item
@@ -68,15 +75,17 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
                 }
                 stateCache[idx] = state
                 val offset = Candelabra.OFFSETS[getMaxCandles() - 1][idx]
-                val shape = state.getShape(level, blockPos).move(offset.x, offset.y, offset.z)
-                updateShape = Shapes.or(updateShape, shape)
-                offsets[idx] = offset.add(0.0, shape.max(Direction.Axis.Y), 0.0)
+                val bShape = state.getShape(level, blockPos).move(offset.x, offset.y, offset.z)
+                val cShape = state.getCollisionShape(level, blockPos).move(offset.x, offset.y, offset.z)
+                shape = Shapes.or(shape, bShape)
+                collisionShape = Shapes.or(collisionShape, cShape)
+                particleOffsets[idx] = offset.add(0.0, bShape.max(Direction.Axis.Y) + Candelabra.PIXEL_SCALER, 0.0)
 
 
             }
         }
-        dynamicShape = updateShape.optimize()
-        println("Shape code ${level?.isClientSide}, $candles")
+        dynamicShape = shape
+        dynamicCollisionShape = collisionShape
     }
 
     override fun loadAdditional(nbt: CompoundTag, provider: HolderLookup.Provider) {
@@ -106,6 +115,13 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
 
         const val CANDLES = 5
         const val KEY_CANDLES = "candles"
+
+        fun tick(level: Level, pos: BlockPos, state: BlockState, candelabra: CandelabraBlockEntity) {
+            if (!candelabra.hasTicked) {
+                candelabra.updateStateCache()
+                candelabra.hasTicked = true
+            }
+        }
 
     }
 }

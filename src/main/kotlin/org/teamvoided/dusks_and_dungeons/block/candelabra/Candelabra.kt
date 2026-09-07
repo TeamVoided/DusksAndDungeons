@@ -53,8 +53,16 @@ object Candelabra {
         }
     }
 
+    fun getBaseShape(state: BlockState): VoxelShape {
+        return SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
+    }
+
+    const val PIXEL_SCALER = 0.0625
+
     val OFFSETS = listOf(
-        listOf(Vec3(0.0, 8.0, 0.0)),
+        listOf(
+            Vec3(0.0, 8.0, 0.0)
+        ),
         listOf(
             Vec3(4.0, 8.0, 0.0),
             Vec3(-4.0, 8.0, 0.0),
@@ -71,13 +79,13 @@ object Candelabra {
             Vec3(0.0, 8.0, -5.0),
         ),
         listOf(
-            Vec3(0.0, 10.0, 0.0),
             Vec3(5.0, 8.0, 0.0),
             Vec3(-5.0, 8.0, 0.0),
             Vec3(0.0, 8.0, 5.0),
             Vec3(0.0, 8.0, -5.0),
+            Vec3(0.0, 10.0, 0.0),
         )
-    )
+    ).map { list -> list.map { it.scale(PIXEL_SCALER) } }
 
     fun Direction.Axis.getRotations(): Int = if (this == Direction.Axis.X) 0 else 1
 
