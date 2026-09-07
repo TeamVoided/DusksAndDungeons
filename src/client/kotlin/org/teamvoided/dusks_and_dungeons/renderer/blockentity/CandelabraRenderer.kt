@@ -45,12 +45,10 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
             }
             val item = stack.item
             val off = offsets.getOrElse(index) { Vec3.ZERO }
-            val pixelOffset = 0.0625
             posStack.pushPose()
-            posStack.translate(off.x * pixelOffset, off.y * pixelOffset, off.z * pixelOffset)
+            posStack.translate(off.x, off.y, off.z)
             if (item is BlockItem) {
-                val block = item.block
-                var state = block.defaultBlockState()
+                var state = candelabra.stateCache[index]
                 state = state.trySetValue(AbstractCandleBlock.LIT, isLit)
                 blockRenderer.renderSingleBlock(state, posStack, buffers, light, overlay)
             } else {
