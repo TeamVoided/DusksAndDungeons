@@ -1,4 +1,5 @@
 {
+	"parent": "dusks_and_dungeons:block/parent/candelabra/1",
 	"ambientocclusion": false,
 	"textures": {
 		"texture": "dusks_and_dungeons:candelabra_iron",
@@ -63,30 +64,5 @@
 				"down": {"uv": [6, 8, 16, 6], "texture": "#texture"}
 			}
 		}
-	],
-	"display": {
-		"thirdperson_righthand": {
-			"translation": [0, 2, 2]
-		},
-		"thirdperson_lefthand": {
-			"translation": [0, 2, 2]
-		},
-		"firstperson_righthand": {
-			"translation": [0, 2.5, 0]
-		},
-		"firstperson_lefthand": {
-			"translation": [0, 2.5, 0]
-		},
-		"ground": {
-			"translation": [0, 3, 0],
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"gui": {
-			"rotation": [30, -135, 0],
-			"scale": [0.75, 0.75, 0.75]
-		},
-		"head": {
-			"translation": [0, 0, -5.25]
-		}
-	}
+	]
 }
