@@ -8,10 +8,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.core.Direction
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemDisplayContext
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.AbstractCandleBlock
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.Vec3
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 
@@ -19,32 +20,7 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
 
     internal val blockRenderer = ctx.blockRenderDispatcher
     internal val itemRenderer = ctx.itemRenderer
-
-    val offsetList = listOf(
-        listOf(Vec3(0.0, 8.0, 0.0)),
-        listOf(
-            Vec3(4.0, 8.0, 0.0),
-            Vec3(-4.0, 8.0, 0.0),
-        ),
-        listOf(
-            Vec3(5.0, 8.0, 0.0),
-            Vec3(-5.0, 8.0, 0.0),
-            Vec3(0.0, 10.0, 0.0),
-        ),
-        listOf(
-            Vec3(5.0, 8.0, 0.0),
-            Vec3(-5.0, 8.0, 0.0),
-            Vec3(0.0, 8.0, 5.0),
-            Vec3(0.0, 8.0, -5.0),
-        ),
-        listOf(
-            Vec3(0.0, 10.0, 0.0),
-            Vec3(5.0, 8.0, 0.0),
-            Vec3(-5.0, 8.0, 0.0),
-            Vec3(0.0, 8.0, 5.0),
-            Vec3(0.0, 8.0, -5.0),
-        )
-    )
+    val emptyStack: ItemStack = Items.BARRIER.defaultInstance
 
     override fun render(
         candelabra: CandelabraBlockEntity,
@@ -62,22 +38,19 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
         val candles = state.getValue(CandelabraBlock.CANDLES)
         val isLit = state.getValue(CandelabraBlock.LIT)
 
-        val offsets = offsetList[candles - 1]
+        val offsets = Candelabra.OFFSETS[candles - 1]
         for ((index, stack) in candelabra.getCandles().withIndex()) {
             if (stack.isEmpty) {
                 continue
             }
             val item = stack.item
             val off = offsets.getOrElse(index) { Vec3.ZERO }
-            val x = 0.0625
+            val pixelOffset = 0.0625
             posStack.pushPose()
-            posStack.translate(off.x * x, off.y * x, off.z * x)
+            posStack.translate(off.x * pixelOffset, off.y * pixelOffset, off.z * pixelOffset)
             if (item is BlockItem) {
                 val block = item.block
                 var state = block.defaultBlockState()
-                if (state.hasProperty(BlockStateProperties.FACING)) {
-//                state = state.setValue(BlockStateProperties.FACING, direction)
-                }
                 state = state.trySetValue(AbstractCandleBlock.LIT, isLit)
                 blockRenderer.renderSingleBlock(state, posStack, buffers, light, overlay)
             } else {
@@ -90,15 +63,13 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
         }
         if (candelabra.isEmpty()) {
             posStack.pushPose()
-            posStack.translate(0.5, 0.5, 0.5)
+            posStack.translate(0.5, 1.0, 0.5)
             itemRenderer.renderStatic(
-                Items.BARRIER.defaultInstance, ItemDisplayContext.FIXED,
-                light, overlay,
-                posStack, buffers,
-                candelabra.level, 0
+                emptyStack, ItemDisplayContext.FIXED, light, overlay, posStack, buffers, candelabra.level, 0
             )
             posStack.popPose()
         }
         posStack.popPose()
     }
+
 }

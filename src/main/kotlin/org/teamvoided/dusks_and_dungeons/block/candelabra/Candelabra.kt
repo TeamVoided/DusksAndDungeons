@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.box
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.CANDLES
@@ -52,6 +53,32 @@ object Candelabra {
         }
     }
 
+    val OFFSETS = listOf(
+        listOf(Vec3(0.0, 8.0, 0.0)),
+        listOf(
+            Vec3(4.0, 8.0, 0.0),
+            Vec3(-4.0, 8.0, 0.0),
+        ),
+        listOf(
+            Vec3(5.0, 8.0, 0.0),
+            Vec3(-5.0, 8.0, 0.0),
+            Vec3(0.0, 10.0, 0.0),
+        ),
+        listOf(
+            Vec3(5.0, 8.0, 0.0),
+            Vec3(-5.0, 8.0, 0.0),
+            Vec3(0.0, 8.0, 5.0),
+            Vec3(0.0, 8.0, -5.0),
+        ),
+        listOf(
+            Vec3(0.0, 10.0, 0.0),
+            Vec3(5.0, 8.0, 0.0),
+            Vec3(-5.0, 8.0, 0.0),
+            Vec3(0.0, 8.0, 5.0),
+            Vec3(0.0, 8.0, -5.0),
+        )
+    )
+
     fun Direction.Axis.getRotations(): Int = if (this == Direction.Axis.X) 0 else 1
 
     fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(ItemTags.CANDLES)
@@ -80,4 +107,5 @@ object Candelabra {
         Containers.dropContents(level, pos, be.candles)
         level.updateNeighbourForOutputSignal(pos, state.block)
     }
+
 }
