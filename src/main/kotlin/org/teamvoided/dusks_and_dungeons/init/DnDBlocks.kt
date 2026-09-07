@@ -804,8 +804,15 @@ object DnDBlocks {
         .strength(5.0F, 6.0F)
         .forceSolidOn()
 
+    val iCandelabra2: Properties = Properties.of()
+        .mapColor(MapColor.METAL)
+        .sound(SoundType.METAL)
+        .strength(5.0F, 6.0F)
+        .forceSolidOn()
+        .dynamicShape()
+
     val IRON_CANDELABRA =
-        registerNoItem("iron_candelabra", ::CandelabraBlock, iCandelabra).pickaxe()
+        registerNoItem("iron_candelabra", ::CandelabraBlock, iCandelabra2).pickaxe()
     val EMPTY_IRON_CANDELABRA =
         registerNoItem("empty_iron_candelabra", { EmptyCandelabraBlock(it, IRON_CANDELABRA) }, iCandelabra)
             .pickaxe()
