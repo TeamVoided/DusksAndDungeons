@@ -9,6 +9,7 @@ import net.minecraft.world.Containers
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.box
 import net.minecraft.world.level.block.CandleBlock
@@ -99,7 +100,7 @@ object Candelabra {
         )
     ).map { list -> list.map { it.scale(PIXEL_SCALER) } }
 
-    fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(ItemTags.CANDLES) || stack.`is`(Items.TRIAL_KEY)
+    fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(ItemTags.CANDLES) || stack.`is`(Items.HEAVY_CORE)
 
     fun tryAddToCandelabra(level: Level, pos: BlockPos, stack: ItemStack, player: Player): Boolean {
         val candelabra = level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull() ?: return false
@@ -159,6 +160,14 @@ object Candelabra {
             val z = offset.z + (random.nextDouble() - 0.5) * 0.2
             level.addParticle(DustParticleOptions.REDSTONE, x, y, z, 0.0, 0.0, 0.0)
         }
+    }
+
+    fun BlockGetter.updateCandelabra(pos: BlockPos) {
+        getCandelabra(pos)?.updateStateCache()
+    }
+
+    fun BlockGetter.getCandelabra(pos: BlockPos): CandelabraBlockEntity? {
+        return getBlockEntity(pos, DnDBlockEntities.CANDELABRA)?.getOrNull()
     }
 
 }

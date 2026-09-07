@@ -7,6 +7,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.BlockItemStateProperties
@@ -32,15 +33,16 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getCandelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.spawnCandelabraParticles
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.updateCandelabra
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.block.entity.createTicker
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
-import kotlin.jvm.optionals.getOrNull
 
 open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(properties),
     SimpleWaterloggedBlock, EntityBlock {
@@ -63,7 +65,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull()?.let { be ->
+        level.getCandelabra(pos)?.let { be ->
             return be.dynamicShape
         }
         return Candelabra.getBaseShape(state)
@@ -72,7 +74,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     override fun getCollisionShape(
         state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext,
     ): VoxelShape {
-        level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull()?.let { be ->
+        level.getCandelabra(pos)?.let { be ->
             return be.dynamicCollisionShape
         }
         return Candelabra.getBaseShape(state)
@@ -86,7 +88,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         if (!state.getValue(AbstractCandleBlock.LIT)) return
 
-        val be = level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull()
+        val be = level.getCandelabra(pos)
         if (be == null) {
             for (it in getParticleOffsets(state)) {
                 spawnParticles(level, it.add(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()), random)
@@ -108,12 +110,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level))
         }
-        level.updateBECache(pos)
         return super.updateShape(state, dir, neighborState, level, pos, neighborPos)
-    }
-
-    fun LevelAccessor.updateBECache(pos: BlockPos) {
-        getBlockEntity(pos, DnDBlockEntities.CANDELABRA)?.getOrNull()?.updateStateCache()
     }
 
     override fun getFluidState(state: BlockState): FluidState {
@@ -196,6 +193,13 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     ) {
         Candelabra.dropContentsOnDestroy(state, otherState, level, pos)
         super.onRemove(state, level, pos, otherState, movedByPiston)
+    }
+
+    override fun setPlacedBy(
+        level: Level, pos: BlockPos, state: BlockState, entity: LivingEntity?, stack: ItemStack,
+    ) {
+        super.setPlacedBy(level, pos, state, entity, stack)
+        level.updateCandelabra(pos)
     }
 
     override fun rotate(state: BlockState, rotation: Rotation): BlockState {

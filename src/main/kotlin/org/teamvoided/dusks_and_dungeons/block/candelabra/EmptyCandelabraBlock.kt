@@ -94,9 +94,9 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
             return state.cycle(CANDLES)
         }
 
-        if (ctx.itemInHand.get(DataComponents.BLOCK_ENTITY_DATA) != null) {
+        /*if (ctx.itemInHand.get(DataComponents.BLOCK_ENTITY_DATA) != null) {
             return filled.getStateForPlacement(ctx)
-        }
+        }*/
 
         val waterlogged = ctx.level.getFluidState(pos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)

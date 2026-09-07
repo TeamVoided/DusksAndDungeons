@@ -52,6 +52,11 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
         return true
     }
 
+    override fun setChanged() {
+        super.setChanged()
+        updateStateCache()
+    }
+
     fun getMaxCandles(): Int = blockState.getValue(CandelabraBlock.CANDLES)
 
     val stateCache: NonNullList<BlockState> = NonNullList.withSize(CANDLES, Blocks.AIR.defaultBlockState())
@@ -114,7 +119,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
 
     override fun getUpdatePacket(): ClientboundBlockEntityDataPacket = ClientboundBlockEntityDataPacket.create(this)
 
-    override fun getUpdateTag(provider: HolderLookup.Provider): CompoundTag = saveCustomOnly(provider)
+    override fun getUpdateTag(provider: HolderLookup.Provider): CompoundTag = saveWithoutMetadata(provider)
 
     companion object {
 
