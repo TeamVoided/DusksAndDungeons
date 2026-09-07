@@ -163,7 +163,7 @@ object Candelabra {
     }
 
     fun BlockGetter.updateCandelabra(pos: BlockPos) {
-        getCandelabra(pos)?.updateStateCache()
+        getCandelabra(pos)?.updateStateCache(getCandelabra(pos)!!.level!!)
     }
 
     fun BlockGetter.getCandelabra(pos: BlockPos): CandelabraBlockEntity? {

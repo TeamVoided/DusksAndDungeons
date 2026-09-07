@@ -46,8 +46,7 @@ object DnDBlockEntitiesClient {
             data.loadInto(candelabra, level.registryAccess())
         }
         // setting the level might be a problem
-        candelabra.level = level
-        candelabra.updateStateCache()
+        candelabra.updateStateCache(level)
         Minecraft.getInstance().blockEntityRenderDispatcher.renderItem(
             candelabra, poseStack, buffers, light, overlay
         )

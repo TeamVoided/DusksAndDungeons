@@ -47,14 +47,14 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
             return false
         }
         candles[slot] = candle.copyWithCount(1)
-        updateStateCache()
+        updateStateCache(level!!)
 
         return true
     }
 
     override fun setChanged() {
         super.setChanged()
-        updateStateCache()
+        level?.let(::updateStateCache)
     }
 
     fun getMaxCandles(): Int = blockState.getValue(CandelabraBlock.CANDLES)
@@ -64,7 +64,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
     var dynamicCollisionShape: VoxelShape = Shapes.empty()
     val particleOffsets: Array<Vec3?> = arrayOfNulls(CANDLES)
 
-    fun updateStateCache() {
+    fun updateStateCache(uLevel: Level) {
         val dir = blockState.getValue(CandelabraBlock.FACING).opposite.get2DDataValue()
         val baseShape = Candelabra.getBaseShape(blockState)
 
@@ -83,8 +83,8 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
                 }
                 stateCache[idx] = state
                 val offset = Candelabra.OFFSETS.getOrNull(getMaxCandles() - 1)?.getOrNull(idx) ?: Vec3.ZERO
-                val bShape = state.getShape(level, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
-                val cShape = state.getCollisionShape(level, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
+                val bShape = state.getShape(uLevel, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
+                val cShape = state.getCollisionShape(uLevel, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
                 shape = Shapes.or(shape, bShape)
                 collisionShape = Shapes.or(collisionShape, cShape)
                 particleOffsets[idx] = offset.add(
@@ -128,7 +128,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
 
         fun tick(level: Level, pos: BlockPos, state: BlockState, candelabra: CandelabraBlockEntity) {
             if (!candelabra.hasTicked) {
-                candelabra.updateStateCache()
+                candelabra.updateStateCache(level)
                 candelabra.hasTicked = true
             }
         }
