@@ -33,9 +33,11 @@ import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getRotation
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
+import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
+import kotlin.jvm.optionals.getOrNull
 
 open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(properties),
     SimpleWaterloggedBlock, EntityBlock {
@@ -58,7 +60,12 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return Candelabra.SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
+        var shape = Candelabra.SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
+        level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull()?.let { be ->
+            shape = Shapes.or(be.dynamicShape, shape)
+        }
+        return shape
+
     }
 
     // Particles

@@ -1,22 +1,30 @@
 package org.teamvoided.dusks_and_dungeons.block.entity
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.Vec3
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities.CANDELABRA
 import kotlin.math.min
 
+
 class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CANDELABRA, pos, state) {
 
-    internal val candles: NonNullList<ItemStack> = NonNullList.withSize(5, ItemStack.EMPTY)
+    internal val candles: NonNullList<ItemStack> = NonNullList.withSize(CANDLES, ItemStack.EMPTY)
 
     fun getCandles() = candles
 
@@ -30,16 +38,45 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
     }
 
     fun tryAddCandle(candle: ItemStack, slot: Int): Boolean {
-        if (min(candles.size, blockState.getValue(CandelabraBlock.CANDLES)) <= slot || !candles[slot].isEmpty) {
+        if (min(candles.size, getMaxCandles()) <= slot || !candles[slot].isEmpty) {
             return false
         }
         candles[slot] = candle.copyWithCount(1)
-        updateBlockStateCache()
+        updateStateCache()
 
         return true
     }
 
-    fun updateBlockStateCache() {
+    fun getMaxCandles(): Int = blockState.getValue(CandelabraBlock.CANDLES)
+
+    val stateCache: NonNullList<BlockState> = NonNullList.withSize(CANDLES, Blocks.AIR.defaultBlockState())
+    var dynamicShape: VoxelShape = Shapes.empty()
+    val offsets: Array<Vec3?> = arrayOfNulls(CANDLES)
+
+    fun updateStateCache() {
+        var updateShape = Shapes.empty()
+        for ((idx, stack) in candles.withIndex()) {
+            if (stack.isEmpty) {
+                offsets[idx] = null
+                continue
+            }
+            val item = stack.item
+            if (item is BlockItem) {
+                val state = item.block.defaultBlockState()
+                if (state.isAir) {
+                    continue
+                }
+                stateCache[idx] = state
+                val offset = Candelabra.OFFSETS[getMaxCandles() - 1][idx]
+                val shape = state.getShape(level, blockPos).move(offset.x, offset.y, offset.z)
+                updateShape = Shapes.or(updateShape, shape)
+                offsets[idx] = offset.add(0.0, shape.max(Direction.Axis.Y), 0.0)
+
+
+            }
+        }
+        dynamicShape = updateShape.optimize()
+        println("Shape code ${level?.isClientSide}, $candles")
     }
 
     override fun loadAdditional(nbt: CompoundTag, provider: HolderLookup.Provider) {
@@ -67,6 +104,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
 
     companion object {
 
+        const val CANDLES = 5
         const val KEY_CANDLES = "candles"
 
     }
