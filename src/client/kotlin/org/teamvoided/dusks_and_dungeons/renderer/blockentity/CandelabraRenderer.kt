@@ -5,7 +5,6 @@ import com.mojang.math.Axis
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
-import net.minecraft.core.Direction
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
@@ -27,13 +26,10 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
         tickDelta: Float, poseStack: PoseStack, buffers: MultiBufferSource, light: Int, overlay: Int,
     ) {
         val state = candelabra.blockState
-        val direction = when (state.getValue(CandelabraBlock.HORIZONTAL_AXIS)) {
-            Direction.Axis.Z -> Direction.EAST
-            else -> Direction.NORTH
-        }
         poseStack.pushPose()
 
-        poseStack.rotateAround(Axis.YP.rotationDegrees(-direction.toYRot() - 180), 0.5f, 0.5f, 0.5f)
+        val dir = state.getValue(CandelabraBlock.FACING)
+        poseStack.rotateAround(Axis.YP.rotationDegrees(-dir.toYRot() - 180), 0.5f, 0.5f, 0.5f)
 
         val candles = state.getValue(CandelabraBlock.CANDLES)
         val isLit = state.getValue(CandelabraBlock.LIT)

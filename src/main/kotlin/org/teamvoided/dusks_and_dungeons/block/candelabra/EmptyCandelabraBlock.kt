@@ -14,13 +14,14 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.SimpleWaterloggedBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
@@ -29,7 +30,6 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
-import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
 
 open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBlock) : Block(properties),
     SimpleWaterloggedBlock {
@@ -38,14 +38,14 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
         registerDefaultState(
             stateDefinition.any()
                 .setValue(WATERLOGGED, false)
-                .setValue(HORIZONTAL_AXIS, Direction.Axis.X)
+                .setValue(FACING, Direction.NORTH)
                 .setValue(CANDLES, 1)
         )
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)
-        builder.add(WATERLOGGED, HORIZONTAL_AXIS, CANDLES)
+        builder.add(WATERLOGGED, FACING, CANDLES)
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
@@ -102,7 +102,7 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
         return super.getStateForPlacement(ctx)
             ?.setValue(CANDLES, 1)
             ?.setValue(WATERLOGGED, waterlogged)
-            ?.setValue(HORIZONTAL_AXIS, ctx.horizontalDirection.axis.invert())
+            ?.setValue(FACING, ctx.horizontalDirection.opposite)
     }
 
     override fun getCloneItemStack(level: LevelReader, pos: BlockPos, state: BlockState): ItemStack {
@@ -133,21 +133,17 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
     }
 
     override fun rotate(state: BlockState, rotation: Rotation): BlockState {
-        return when (rotation) {
-            Rotation.COUNTERCLOCKWISE_90, Rotation.CLOCKWISE_90 -> when (state.getValue(HORIZONTAL_AXIS)) {
-                Direction.Axis.Z -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.X)
-                Direction.Axis.X -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.Z)
-                else -> state
-            }
+        return state.setValue(CandelabraBlock.FACING, rotation.rotate(state.getValue(CandelabraBlock.FACING)))
+    }
 
-            else -> state
-        }
+    override fun mirror(state: BlockState, mirror: Mirror): BlockState {
+        return state.rotate(mirror.getRotation(state.getValue(CandelabraBlock.FACING)))
     }
 
     companion object {
 
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
-        val HORIZONTAL_AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS
+        val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
         val CANDLES = DnDBlockStateProperties.CANDLES
         val LIT: BooleanProperty = BlockStateProperties.LIT
 

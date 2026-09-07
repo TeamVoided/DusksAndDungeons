@@ -20,6 +20,8 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities.CANDELABRA
+import org.teamvoided.dusks_and_dungeons.util.rotate
+import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import kotlin.math.min
 
 
@@ -58,6 +60,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
     val particleOffsets: Array<Vec3?> = arrayOfNulls(CANDLES)
 
     fun updateStateCache() {
+        val dir = blockState.getValue(CandelabraBlock.FACING).opposite.get2DDataValue()
         val baseShape = Candelabra.getBaseShape(blockState)
 
         var shape = baseShape
@@ -75,15 +78,15 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
                 }
                 stateCache[idx] = state
                 val offset = Candelabra.OFFSETS.getOrNull(getMaxCandles() - 1)?.getOrNull(idx) ?: Vec3.ZERO
-                val bShape = state.getShape(level, blockPos).move(offset.x, offset.y, offset.z)
-                val cShape = state.getCollisionShape(level, blockPos).move(offset.x, offset.y, offset.z)
+                val bShape = state.getShape(level, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
+                val cShape = state.getCollisionShape(level, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
                 shape = Shapes.or(shape, bShape)
                 collisionShape = Shapes.or(collisionShape, cShape)
                 particleOffsets[idx] = offset.add(
                     0.5,
                     bShape.max(Direction.Axis.Y) - bShape.min(Direction.Axis.Y) + Candelabra.PIXEL_SCALER * 2,
                     0.5,
-                )
+                ).rotateFlat90(dir)
             }
         }
         dynamicShape = shape

@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.tags.ItemTags
@@ -9,19 +8,21 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.box
 import net.minecraft.world.level.block.CandleBlock
 import net.minecraft.world.level.block.RedstoneTorchBlock
 import net.minecraft.world.level.block.TorchBlock
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
-import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.CANDLES
-import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.HORIZONTAL_AXIS
+import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.FACING
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.util.getFlameParticle
@@ -51,8 +52,8 @@ object Candelabra {
         box(6.0, 4.0, 1.0, 10.0, 8.0, 15.0),
     )
 
-    val SHAPES = HORIZONTAL_AXIS.possibleValues.associateWith { dir ->
-        CANDLES.possibleValues.associateWith { count ->
+    val SHAPES = BlockStateProperties.HORIZONTAL_FACING.possibleValues.associateWith { dir ->
+        DnDBlockStateProperties.CANDLES.possibleValues.associateWith { count ->
             when (count) {
                 1 -> SINGLE_SHAPE
                 2 -> DOUBLE_SHAPE
@@ -60,12 +61,12 @@ object Candelabra {
                 4 -> QUADRUPLE_SHAPE
                 5 -> QUINTUPLE_SHAPE
                 else -> Shapes.block()
-            }.rotate(dir.getRotations())
+            }.rotate(dir.get2DDataValue())
         }
     }
 
     fun getBaseShape(state: BlockState): VoxelShape {
-        return SHAPES[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
+        return SHAPES[state.getValue(FACING)]?.get(state.getValue(DnDBlockStateProperties.CANDLES)) ?: Shapes.block()
     }
 
     const val PIXEL_SCALER = 0.0625
@@ -98,9 +99,7 @@ object Candelabra {
         )
     ).map { list -> list.map { it.scale(PIXEL_SCALER) } }
 
-    fun Direction.Axis.getRotations(): Int = if (this == Direction.Axis.X) 0 else 1
-
-    fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(ItemTags.CANDLES)
+    fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(ItemTags.CANDLES) || stack.`is`(Items.TRIAL_KEY)
 
     fun tryAddToCandelabra(level: Level, pos: BlockPos, stack: ItemStack, player: Player): Boolean {
         val candelabra = level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull() ?: return false

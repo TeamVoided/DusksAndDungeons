@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
@@ -32,7 +32,6 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
-import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getRotations
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.spawnCandelabraParticles
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
@@ -40,7 +39,6 @@ import org.teamvoided.dusks_and_dungeons.block.entity.createTicker
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
-import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import kotlin.jvm.optionals.getOrNull
 
@@ -53,7 +51,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         registerDefaultState(
             stateDefinition.any()
                 .setValue(WATERLOGGED, false)
-                .setValue(HORIZONTAL_AXIS, Direction.Axis.X)
+                .setValue(FACING, Direction.NORTH)
                 .setValue(CANDLES, 1)
                 .setValue(LIT, false)
         )
@@ -61,7 +59,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)
-        builder.add(WATERLOGGED, HORIZONTAL_AXIS, CANDLES, LIT)
+        builder.add(WATERLOGGED, FACING, CANDLES, LIT)
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
@@ -82,8 +80,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
 
     // Particles
     override fun getParticleOffsets(state: BlockState): Iterable<Vec3> {
-        return CANDELABRA_PARTICLE_OFFSETS[state.getValue(HORIZONTAL_AXIS)]?.get(state.getValue(CANDLES))
-            ?: RAW_OFFSETS[0]
+        return CANDELABRA_PARTICLE_OFFSETS[state.getValue(FACING)]?.get(state.getValue(CANDLES)) ?: RAW_OFFSETS[0]
     }
 
     override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
@@ -159,7 +156,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         return super.getStateForPlacement(ctx)
             ?.setValue(CANDLES, 1)
             ?.setValue(WATERLOGGED, waterlogged)
-            ?.setValue(HORIZONTAL_AXIS, ctx.horizontalDirection.axis.invert())
+            ?.setValue(FACING, ctx.horizontalDirection.opposite)
     }
 
     override fun useItemOn(
@@ -202,15 +199,11 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     override fun rotate(state: BlockState, rotation: Rotation): BlockState {
-        return when (rotation) {
-            Rotation.COUNTERCLOCKWISE_90, Rotation.CLOCKWISE_90 -> when (state.getValue(HORIZONTAL_AXIS)) {
-                Direction.Axis.Z -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.X)
-                Direction.Axis.X -> state.setValue(HORIZONTAL_AXIS, Direction.Axis.Z)
-                else -> state
-            }
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)))
+    }
 
-            else -> state
-        }
+    override fun mirror(state: BlockState, mirror: Mirror): BlockState {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)))
     }
 
     override fun triggerEvent(state: BlockState, level: Level, pos: BlockPos, id: Int, data: Int): Boolean {
@@ -231,7 +224,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         val CODEC: MapCodec<CandelabraBlock> = simpleCodec(::CandelabraBlock)
 
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
-        val HORIZONTAL_AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS
+        val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
         val CANDLES = DnDBlockStateProperties.CANDLES
         val LIT: BooleanProperty = BlockStateProperties.LIT
 
@@ -247,8 +240,8 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
             )
         )
 
-        val CANDELABRA_PARTICLE_OFFSETS = HORIZONTAL_AXIS.possibleValues.associateWith { dir ->
-            CANDLES.possibleValues.associateWith { count -> RAW_OFFSETS[count - 1].rotateFlat90(dir.getRotations()) }
+        val CANDELABRA_PARTICLE_OFFSETS = FACING.possibleValues.associateWith { dir ->
+            CANDLES.possibleValues.associateWith { count -> RAW_OFFSETS[count - 1].rotateFlat90(dir.get2DDataValue()) }
         }
 
         @JvmStatic

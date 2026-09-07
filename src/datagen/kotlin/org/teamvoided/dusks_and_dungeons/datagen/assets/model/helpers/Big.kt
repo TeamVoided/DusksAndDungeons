@@ -3,12 +3,11 @@ package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.blockstates.MultiVariantGenerator
 import net.minecraft.data.models.blockstates.PropertyDispatch.property
 import net.minecraft.data.models.blockstates.Variant.variant
-import net.minecraft.data.models.blockstates.VariantProperties.*
+import net.minecraft.data.models.blockstates.VariantProperties.MODEL
 import net.minecraft.data.models.model.DelegatedModel
 import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.TextureMapping
@@ -106,11 +105,7 @@ fun BlockModelGenerators.createCandelabra(emptyCandelabra: Block, candelabra: Bl
 
 fun candelabraProperties(candelabra: Block, models: List<ResourceLocation>): MultiVariantGenerator {
     return MultiVariantGenerator.multiVariant(candelabra)
-        .with(
-            property(BlockStateProperties.HORIZONTAL_AXIS)
-                .select(Direction.Axis.X, variant())
-                .select(Direction.Axis.Z, variant().with(Y_ROT, Rotation.R90))
-        )
+        .with(BlockModelGenerators.createHorizontalFacingDispatch())
         .with(
             property(EmptyCandelabraBlock.CANDLES)
                 .generate { variant().with(MODEL, models[it - 1]) }
