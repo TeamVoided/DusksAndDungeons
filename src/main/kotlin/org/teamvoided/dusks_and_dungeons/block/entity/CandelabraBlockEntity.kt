@@ -74,7 +74,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
                     continue
                 }
                 stateCache[idx] = state
-                val offset = Candelabra.OFFSETS[getMaxCandles() - 1][idx]
+                val offset = Candelabra.OFFSETS.getOrNull(getMaxCandles() - 1)?.getOrNull(idx) ?: Vec3.ZERO
                 val bShape = state.getShape(level, blockPos).move(offset.x, offset.y, offset.z)
                 val cShape = state.getCollisionShape(level, blockPos).move(offset.x, offset.y, offset.z)
                 shape = Shapes.or(shape, bShape)
@@ -84,8 +84,6 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
                     bShape.max(Direction.Axis.Y) - bShape.min(Direction.Axis.Y) + Candelabra.PIXEL_SCALER * 2,
                     0.5,
                 )
-
-
             }
         }
         dynamicShape = shape

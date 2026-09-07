@@ -3,13 +3,13 @@ package org.teamvoided.dusks_and_dungeons.block.candelabra
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.particles.DustParticleOptions
-import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.core.component.DataComponents
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.BlockItemStateProperties
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -31,16 +31,14 @@ import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
-import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
-import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getRotations
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.spawnCandelabraParticles
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.block.entity.createTicker
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
-import org.teamvoided.dusks_and_dungeons.util.getFlameParticle
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
 import org.teamvoided.dusks_and_dungeons.world.gen.root.CascadeRootPlacer.Companion.invert
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
@@ -98,36 +96,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
             }
             return
         }
-        for ((idx, offset) in be.particleOffsets.withIndex()) {
-            if (offset == null || be.stateCache[idx].isAir) {
-                continue
-            }
-            val inWorldPos = offset.add(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
-            when (val block = be.stateCache[idx].block) {
-                is SoulCandleBlock -> block.spawnCandleParticles(level, inWorldPos, random)
-                is BigCandleBlock -> block.spawnCandleParticles(level, inWorldPos, random)
-                is CandleBlock -> level.spawnCandleParticles(inWorldPos, random)
-                is TorchBlock -> block.spawnTorchParticles(level, inWorldPos)
-                is RedstoneTorchBlock -> state.spawnRedstoneTorchParticles(level, inWorldPos, random)
-            }
-        }
-    }
-
-    fun TorchBlock.spawnTorchParticles(level: Level, offset: Vec3) {
-        val x = offset.x
-        val y = offset.y - (Candelabra.PIXEL_SCALER)
-        val z = offset.z
-        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0)
-        level.addParticle(getFlameParticle(), x, y, z, 0.0, 0.0, 0.0)
-    }
-
-    fun BlockState.spawnRedstoneTorchParticles(level: Level, offset: Vec3, random: RandomSource) {
-        if (getValue(RedstoneTorchBlock.LIT)) {
-            val x = offset.x + (random.nextDouble() - 0.5) * 0.2
-            val y = offset.y - (Candelabra.PIXEL_SCALER) + (random.nextDouble() - 0.5) * 0.2
-            val z = offset.z + (random.nextDouble() - 0.5) * 0.2
-            level.addParticle(DustParticleOptions.REDSTONE, x, y, z, 0.0, 0.0, 0.0)
-        }
+        spawnCandelabraParticles(be, Vec3(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()), level, random, state)
     }
 
     private fun spawnParticles(level: Level, offset: Vec3, random: RandomSource) {
@@ -182,9 +151,9 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
-        val blockState = ctx.level.getBlockState(ctx.clickedPos)
-        if (blockState.`is`(this)) {
-            return blockState.cycle(CANDLES)
+        val state = ctx.level.getBlockState(ctx.clickedPos)
+        if (state.`is`(this)) {
+            return state.cycle(CANDLES)
         }
         val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)
@@ -207,6 +176,20 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         }
 
         return super.useItemOn(stack, state, level, pos, player, hand, hit)
+    }
+
+    override fun getCloneItemStack(level: LevelReader, pos: BlockPos, state: BlockState): ItemStack {
+        val stack = super.getCloneItemStack(level, pos, state)
+        if (stack.isEmpty) {
+            return stack
+        }
+        if (state.getValue(CANDLES) > 1) {
+            stack.set(
+                DataComponents.BLOCK_STATE,
+                stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties(mapOf())).with(CANDLES, state)
+            )
+        }
+        return stack
     }
 
     override fun canBeLit(state: BlockState): Boolean = !state.getValue(WATERLOGGED) && super.canBeLit(state)

@@ -1,11 +1,15 @@
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.blockstates.MultiVariantGenerator
 import net.minecraft.data.models.blockstates.PropertyDispatch.property
 import net.minecraft.data.models.blockstates.Variant.variant
 import net.minecraft.data.models.blockstates.VariantProperties.*
+import net.minecraft.data.models.model.DelegatedModel
 import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot.*
@@ -15,6 +19,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
+import org.teamvoided.dusks_and_dungeons.init.DnDItemsClient
+import java.util.function.Supplier
 
 
 fun BlockModelGenerators.createBigChain(block: Block) {
@@ -91,7 +97,11 @@ fun BlockModelGenerators.createCandelabra(emptyCandelabra: Block, candelabra: Bl
 
     blockStateOutput.accept(candelabraProperties(candelabra, models))
     blockStateOutput.accept(candelabraProperties(emptyCandelabra, models))
-    delegateItemModel(candelabra, models.first())
+
+    modelOutput.accept(
+        ModelLocationUtils.getModelLocation(candelabra.asItem()),
+        createCandelabraItemModels(models.first(), models)
+    )
 }
 
 fun candelabraProperties(candelabra: Block, models: List<ResourceLocation>): MultiVariantGenerator {
@@ -105,6 +115,23 @@ fun candelabraProperties(candelabra: Block, models: List<ResourceLocation>): Mul
             property(EmptyCandelabraBlock.CANDLES)
                 .generate { variant().with(MODEL, models[it - 1]) }
         )
+}
+
+fun createCandelabraItemModels(baseModel: ResourceLocation, models: List<ResourceLocation>): Supplier<JsonElement> {
+    val modelObj = DelegatedModel(baseModel).get().asJsonObject
+    val jsonArray = JsonArray()
+
+    for ((idx, model) in models.drop(1).withIndex()) {
+        val predicate = JsonObject()
+        predicate.addProperty(DnDItemsClient.CANDELABRA_PREDICATE_ID.toString(), (idx + 1) / (models.size - 1.0))
+        val modelObj = JsonObject()
+        modelObj.add("predicate", predicate)
+        modelObj.addProperty("model", model.toString())
+        jsonArray.add(modelObj)
+    }
+
+    modelObj.add("overrides", jsonArray)
+    return Supplier { modelObj }
 }
 
 // endregion

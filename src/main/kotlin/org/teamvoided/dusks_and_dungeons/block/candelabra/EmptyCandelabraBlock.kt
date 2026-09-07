@@ -2,10 +2,12 @@ package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.BlockItemStateProperties
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -91,11 +93,30 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
         if (state.`is`(this) || state.`is`(filled)) {
             return state.cycle(CANDLES)
         }
+
+        if (ctx.itemInHand.get(DataComponents.BLOCK_ENTITY_DATA) != null) {
+            return filled.getStateForPlacement(ctx)
+        }
+
         val waterlogged = ctx.level.getFluidState(pos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)
             ?.setValue(CANDLES, 1)
             ?.setValue(WATERLOGGED, waterlogged)
             ?.setValue(HORIZONTAL_AXIS, ctx.horizontalDirection.axis.invert())
+    }
+
+    override fun getCloneItemStack(level: LevelReader, pos: BlockPos, state: BlockState): ItemStack {
+        val stack = super.getCloneItemStack(level, pos, state)
+        if (stack.isEmpty) {
+            return stack
+        }
+        if (state.getValue(CANDLES) > 1) {
+            stack.set(
+                DataComponents.BLOCK_STATE,
+                stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties(mapOf())).with(CANDLES, state)
+            )
+        }
+        return stack
     }
 
     override fun useItemOn(

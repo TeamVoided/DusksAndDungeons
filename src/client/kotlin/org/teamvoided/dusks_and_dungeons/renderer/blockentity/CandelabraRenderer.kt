@@ -24,16 +24,16 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
 
     override fun render(
         candelabra: CandelabraBlockEntity,
-        tickDelta: Float, posStack: PoseStack, buffers: MultiBufferSource, light: Int, overlay: Int,
+        tickDelta: Float, poseStack: PoseStack, buffers: MultiBufferSource, light: Int, overlay: Int,
     ) {
         val state = candelabra.blockState
         val direction = when (state.getValue(CandelabraBlock.HORIZONTAL_AXIS)) {
             Direction.Axis.Z -> Direction.EAST
             else -> Direction.NORTH
         }
-        posStack.pushPose()
+        poseStack.pushPose()
 
-        posStack.rotateAround(Axis.YP.rotationDegrees(-direction.toYRot() - 180), 0.5f, 0.5f, 0.5f)
+        poseStack.rotateAround(Axis.YP.rotationDegrees(-direction.toYRot() - 180), 0.5f, 0.5f, 0.5f)
 
         val candles = state.getValue(CandelabraBlock.CANDLES)
         val isLit = state.getValue(CandelabraBlock.LIT)
@@ -45,29 +45,29 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
             }
             val item = stack.item
             val off = offsets.getOrElse(index) { Vec3.ZERO }
-            posStack.pushPose()
-            posStack.translate(off.x, off.y, off.z)
+            poseStack.pushPose()
+            poseStack.translate(off.x, off.y, off.z)
             if (item is BlockItem) {
                 var state = candelabra.stateCache[index]
                 state = state.trySetValue(AbstractCandleBlock.LIT, isLit)
-                blockRenderer.renderSingleBlock(state, posStack, buffers, light, overlay)
+                blockRenderer.renderSingleBlock(state, poseStack, buffers, light, overlay)
             } else {
-                posStack.translate(0.5, 0.5, 0.5)
+                poseStack.translate(0.5, 0.5, 0.5)
                 itemRenderer.renderStatic(
-                    stack, ItemDisplayContext.FIXED, light, overlay, posStack, buffers, candelabra.level, 0
+                    stack, ItemDisplayContext.FIXED, light, overlay, poseStack, buffers, candelabra.level, 0
                 )
             }
-            posStack.popPose()
+            poseStack.popPose()
         }
         if (candelabra.isEmpty()) {
-            posStack.pushPose()
-            posStack.translate(0.5, 1.0, 0.5)
+            poseStack.pushPose()
+            poseStack.translate(0.5, 1.0, 0.5)
             itemRenderer.renderStatic(
-                emptyStack, ItemDisplayContext.FIXED, light, overlay, posStack, buffers, candelabra.level, 0
+                emptyStack, ItemDisplayContext.FIXED, light, overlay, poseStack, buffers, candelabra.level, 0
             )
-            posStack.popPose()
+            poseStack.popPose()
         }
-        posStack.popPose()
+        poseStack.popPose()
     }
 
 }
