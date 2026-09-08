@@ -62,6 +62,7 @@ fun ResourceKey<LootTable>.isEmpty(): Boolean = this == BuiltInLootTables.EMPTY
 
 // TODO(1.0) remove this
 fun Vec3.map(func: (Double) -> Double): Vec3 = Vec3(func(this.x), func(this.y), func(this.z))
+fun Vec3.add(pos: BlockPos): Vec3 = add(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
 
 
 // TODO sort somewhere?

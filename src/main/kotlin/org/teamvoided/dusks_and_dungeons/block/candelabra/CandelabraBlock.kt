@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.block.BlockPickInteractionAware
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
+import net.minecraft.world.Containers.dropContents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
@@ -164,7 +165,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
 
-        if (canAddToCandelabra(stack) && tryAddToCandelabra(level, pos, stack, player)) {
+        if (canAddToCandelabra(stack) && tryAddToCandelabra(level, pos, state, stack, player, hit)) {
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
         }
 
@@ -182,7 +183,11 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     override fun onRemove(
         state: BlockState, level: Level, pos: BlockPos, otherState: BlockState, movedByPiston: Boolean,
     ) {
-        Candelabra.dropContentsOnDestroy(state, otherState, level, pos)
+        if (!state.`is`(otherState.block)) {
+            level.getCandelabra(pos)?.let { be ->
+                dropContents(level, pos, be.candles)
+            }
+        }
         super.onRemove(state, level, pos, otherState, movedByPiston)
     }
 

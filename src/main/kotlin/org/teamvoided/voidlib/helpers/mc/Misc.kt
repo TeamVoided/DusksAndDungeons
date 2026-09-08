@@ -26,6 +26,14 @@ fun Vec3.rotateFlat90(times: Int): Vec3 {
     return vector
 }
 
+// TODO i dont know if this is CW it might be CCW
+fun Vec3.rotateCW(times: Int): Vec3 {
+    if (times == 0) return this
+    var vector = this
+    repeat(times) { vector = Vec3(vector.z, y, 1 - vector.x) }
+    return vector
+}
+
 fun Vec3.rotateOnAxis(axis: Direction.Axis): Vec3 = when (axis) {
     Direction.Axis.X -> Vec3(y, 1 - x, z)
     Direction.Axis.Y -> Vec3(1 - z, y, x)

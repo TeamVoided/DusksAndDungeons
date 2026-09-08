@@ -4,9 +4,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.sounds.SoundSource
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.RandomSource
-import net.minecraft.world.Containers
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -14,13 +14,11 @@ import net.minecraft.world.item.component.BlockItemStateProperties
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.Block.box
-import net.minecraft.world.level.block.CandleBlock
-import net.minecraft.world.level.block.RedstoneTorchBlock
-import net.minecraft.world.level.block.TorchBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
@@ -33,6 +31,8 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.util.getFlameParticle
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
+import org.teamvoided.voidlib.helpers.mc.rotateCW
+import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 object Candelabra {
@@ -106,30 +106,69 @@ object Candelabra {
 
     fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(ItemTags.CANDLES) || stack.`is`(Items.HEAVY_CORE)
 
-    fun tryAddToCandelabra(level: Level, pos: BlockPos, stack: ItemStack, player: Player): Boolean {
+    fun tryAddToCandelabra(
+        level: Level, pos: BlockPos, state: BlockState, stack: ItemStack, player: Player, hit: BlockHitResult,
+    ): Boolean {
         val candelabra = level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull() ?: return false
-        var idx = 0
-        for (item in candelabra.candles) {
-            if (item.isEmpty) {
-                break
-            }
-            idx++
+        // check if candelabra is full
+        if (state.getValue(CANDLES) == candelabra.getCandles().sumOf { if (it.isEmpty) 0 else 1 }) {
+            return false
         }
-        if (candelabra.tryAddCandle(stack, idx)) {
+        val slot = getSlot(pos, state, { !candelabra.isSlotFull(it) }, hit)
+        if (candelabra.tryAddCandle(stack, slot)) {
             stack.consume(1, player)
+            level.playSound(null, pos, candelabra.stateCache[slot].soundType.placeSound, SoundSource.BLOCKS, 1f, 1f)
             return true
         }
         return false
     }
 
-    fun dropContentsOnDestroy(state: BlockState, otherState: BlockState, level: Level, pos: BlockPos) {
-        if (state.`is`(otherState.block)) {
-            return
+    fun getSlot(blockPos: BlockPos, state: BlockState, isSelectable: Predicate<Int>, hit: BlockHitResult): Int {
+        val maxCandles = state.getValue(CANDLES)
+        if (maxCandles == 1) {
+            return 0
         }
-        val be = level.getBlockEntity(pos, DnDBlockEntities.CANDELABRA).getOrNull() ?: return
-        Containers.dropContents(level, pos, be.candles)
-        level.updateNeighbourForOutputSignal(pos, state.block)
+        val hitPos = hit.location
+        // make position be relative
+        var pos = Vec3(hitPos.x - blockPos.x, 0.0, hitPos.z - blockPos.z)
+        // rotate position to be default (south)
+        val dir = state.getValue(HorizontalDirectionalBlock.FACING)
+        pos = pos.rotateCW(dir.get2DDataValue())
+        // get possible slots from shape
+        val placements = PLACEMENTS.getOrNull(maxCandles - 2) ?: return -1
+        placements.sortBy { it.first.distanceToSqr(pos) }
+        for ((_, slot) in placements) {
+            if (isSelectable.test(slot)) {
+                return slot
+            }
+        }
+        return -1
     }
+
+    val PLACEMENTS = arrayOf(
+        arrayOf(
+            Vec3(4 / 16.0, 0.0, 0.5) to 0,
+            Vec3(12 / 16.0, 0.0, 0.5) to 1,
+        ),
+        arrayOf(
+            Vec3(3 / 16.0, 0.0, 0.5) to 0,
+            Vec3(13 / 16.0, 0.0, 0.5) to 1,
+            Vec3(0.5, 0.0, 0.5) to 2,
+        ),
+        arrayOf(
+            Vec3(3 / 16.0, 0.0, 0.5) to 0,
+            Vec3(13 / 16.0, 0.0, 0.5) to 1,
+            Vec3(0.5, 0.0, 3 / 16.0) to 2,
+            Vec3(0.5, 0.0, 13 / 16.0) to 3,
+        ),
+        arrayOf(
+            Vec3(3 / 16.0, 0.0, 0.5) to 0,
+            Vec3(13 / 16.0, 0.0, 0.5) to 1,
+            Vec3(0.5, 0.0, 3 / 16.0) to 2,
+            Vec3(0.5, 0.0, 13 / 16.0) to 3,
+            Vec3(0.5, 0.0, 0.5) to 4,
+        ),
+    )
 
     fun spawnCandelabraParticles(
         be: CandelabraBlockEntity, pos: Vec3, level: Level, random: RandomSource, state: BlockState,

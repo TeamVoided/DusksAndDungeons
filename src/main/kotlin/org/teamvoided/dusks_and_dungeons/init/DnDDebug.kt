@@ -14,9 +14,11 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.meltable.Meltable
 
+@Suppress("unused")
 object DnDDebug {
 
     fun init() {
@@ -82,6 +84,11 @@ object DnDDebug {
                 sendParticles(type, pos.x + x, pos.y + y, pos.z + z, 1, 0.0, 0.0, 0.0, 0.0)
             }
         }
+    }
+
+    fun Level.spawnParticles(pos: Vec3, type: ParticleOptions = ParticleTypes.RAID_OMEN) {
+        if (this !is ServerLevel) return
+        sendParticles(type, pos.x, pos.y, pos.z, 1, 0.0, 0.0, 0.0, 0.0)
     }
 
 }

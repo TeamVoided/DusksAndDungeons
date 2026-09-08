@@ -42,7 +42,15 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
         return true
     }
 
+    fun isSlotFull(slot: Int): Boolean {
+        require(slot > -1 && slot < candles.size) { "Index out of bonds in Candelabra" }
+        return !candles[slot].isEmpty
+    }
+
     fun tryAddCandle(candle: ItemStack, slot: Int): Boolean {
+        if (slot < 0) {
+            return false
+        }
         if (min(candles.size, getMaxCandles()) <= slot || !candles[slot].isEmpty) {
             return false
         }
@@ -127,6 +135,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
         const val CANDLES = 5
         const val KEY_CANDLES = "candles"
 
+        @Suppress("unused")
         fun tick(level: Level, pos: BlockPos, state: BlockState, candelabra: CandelabraBlockEntity) {
             if (!candelabra.hasTicked) {
                 candelabra.updateStateCache(level)

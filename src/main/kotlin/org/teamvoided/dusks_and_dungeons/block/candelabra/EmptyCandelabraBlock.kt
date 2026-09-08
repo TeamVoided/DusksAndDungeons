@@ -111,8 +111,9 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
         player: Player, hand: InteractionHand, hit: BlockHitResult,
     ): ItemInteractionResult {
         if (canAddToCandelabra(stack)) {
-            level.setBlockAndUpdate(pos, filled.withPropertiesOf(state))
-            if (tryAddToCandelabra(level, pos, stack, player)) {
+            val newState = filled.withPropertiesOf(state)
+            level.setBlockAndUpdate(pos, newState)
+            if (tryAddToCandelabra(level, pos, newState, stack, player, hit)) {
                 return ItemInteractionResult.sidedSuccess(level.isClientSide)
             }
         }
