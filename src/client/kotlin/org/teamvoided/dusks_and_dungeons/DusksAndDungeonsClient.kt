@@ -2,10 +2,13 @@ package org.teamvoided.dusks_and_dungeons
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.registries.Registries
 import org.teamvoided.creative_works.util.mc.textMain
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.util.BETTER_BRICK_NAMES
@@ -26,6 +29,8 @@ object DusksAndDungeonsClient {
         DnDClientNetworking.init()
 
         registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
+
+        ClientTickEvents.END_CLIENT_TICK.register { Candelabra.isCtrlDown = Screen.hasControlDown() }
 
         if (isDev()) ClientCommandRegistrationCallback.EVENT.register { dispatcher, access ->
             val test = literal("dump_vile").executes { scc ->

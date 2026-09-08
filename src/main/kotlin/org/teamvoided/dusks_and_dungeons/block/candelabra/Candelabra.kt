@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.tags.ItemTags
@@ -9,6 +10,7 @@ import net.minecraft.world.Containers
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.component.BlockItemStateProperties
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.box
@@ -23,6 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.CANDLES
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.FACING
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
@@ -169,5 +172,17 @@ object Candelabra {
     fun BlockGetter.getCandelabra(pos: BlockPos): CandelabraBlockEntity? {
         return getBlockEntity(pos, DnDBlockEntities.CANDELABRA)?.getOrNull()
     }
+
+    fun getPickedBlock(player: Player, state: BlockState, stack: ItemStack): ItemStack {
+        if ((player.isShiftKeyDown || isCtrlDown) && state.getValue(CANDLES) > 1) {
+            stack.set(
+                DataComponents.BLOCK_STATE,
+                stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties(mapOf())).with(CANDLES, state)
+            )
+        }
+        return stack
+    }
+
+    var isCtrlDown = false
 
 }

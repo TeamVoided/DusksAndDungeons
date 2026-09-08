@@ -1,16 +1,15 @@
 package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import com.mojang.serialization.MapCodec
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.component.DataComponents
 import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.component.BlockItemStateProperties
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -28,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
@@ -45,7 +45,7 @@ import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 
 open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(properties),
-    SimpleWaterloggedBlock, EntityBlock {
+    SimpleWaterloggedBlock, EntityBlock, BlockPickInteractionAware {
 
     override fun codec(): MapCodec<out AbstractCandleBlock> = CODEC
 
@@ -172,18 +172,10 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         return super.useItemOn(stack, state, level, pos, player, hand, hit)
     }
 
-    override fun getCloneItemStack(level: LevelReader, pos: BlockPos, state: BlockState): ItemStack {
-        val stack = super.getCloneItemStack(level, pos, state)
-        if (stack.isEmpty) {
-            return stack
-        }
-        if (state.getValue(CANDLES) > 1) {
-            stack.set(
-                DataComponents.BLOCK_STATE,
-                stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties(mapOf())).with(CANDLES, state)
-            )
-        }
-        return stack
+    override fun getPickedStack(
+        state: BlockState, level: BlockGetter, pos: BlockPos, player: Player, hit: HitResult,
+    ): ItemStack {
+        return Candelabra.getPickedBlock(player, state, getCloneItemStack(level as LevelReader, pos, state))
     }
 
     override fun canBeLit(state: BlockState): Boolean = !state.getValue(WATERLOGGED) && super.canBeLit(state)
