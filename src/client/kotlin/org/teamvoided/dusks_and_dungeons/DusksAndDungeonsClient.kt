@@ -3,10 +3,16 @@ package org.teamvoided.dusks_and_dungeons
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.registries.Registries
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.resources.ResourceManager
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener
 import org.teamvoided.creative_works.util.mc.textMain
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.entity.DnDEntityModelLayers
@@ -29,6 +35,17 @@ object DusksAndDungeonsClient {
         DnDClientNetworking.init()
 
         registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
+
+        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES)
+            .registerReloadListener(object : ResourceManagerReloadListener, IdentifiableResourceReloadListener {
+
+                override fun getFabricId() = id("cache_invalidator")
+
+                override fun onResourceManagerReload(resourceManager: ResourceManager) {
+                    DnDBlockEntitiesClient.CANDELABRA_ITEM_CACHE.clear()
+                }
+
+            })
 
         ClientTickEvents.END_CLIENT_TICK.register { Candelabra.isCtrlDown = Screen.hasControlDown() }
 

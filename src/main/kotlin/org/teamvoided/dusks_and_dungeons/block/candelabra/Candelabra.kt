@@ -24,10 +24,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
+import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties.CANDLES
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
-import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.CANDLES
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.FACING
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
@@ -59,7 +58,7 @@ object Candelabra {
     )
 
     val SHAPES = BlockStateProperties.HORIZONTAL_FACING.possibleValues.associateWith { dir ->
-        DnDBlockStateProperties.CANDLES.possibleValues.associateWith { count ->
+        CANDLES.possibleValues.associateWith { count ->
             when (count) {
                 1 -> SINGLE_SHAPE
                 2 -> DOUBLE_SHAPE
@@ -72,7 +71,7 @@ object Candelabra {
     }
 
     fun getBaseShape(state: BlockState): VoxelShape {
-        return SHAPES[state.getValue(FACING)]?.get(state.getValue(DnDBlockStateProperties.CANDLES)) ?: Shapes.block()
+        return SHAPES[state.getValue(FACING)]?.get(state.getValue(CANDLES)) ?: Shapes.block()
     }
 
     const val PIXEL_SCALER = 0.0625

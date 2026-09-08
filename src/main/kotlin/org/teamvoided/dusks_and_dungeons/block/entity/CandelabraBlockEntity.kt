@@ -81,6 +81,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
                 if (state.isAir) {
                     continue
                 }
+                // TODO apply DataComponents.BLOCK_STATE if present
                 stateCache[idx] = state
                 val offset = Candelabra.OFFSETS.getOrNull(getMaxCandles() - 1)?.getOrNull(idx) ?: Vec3.ZERO
                 val bShape = state.getShape(uLevel, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
