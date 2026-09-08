@@ -22,7 +22,7 @@ import java.util.function.Function
 import kotlin.math.max
 import kotlin.math.min
 
-// TODO clean up and optimize
+// TODO(1.0) clean up and optimize
 class StrictShapedRecipePattern(
     val width: Int, val height: Int,
     val ingredients: NonNullList<Ingredient>,

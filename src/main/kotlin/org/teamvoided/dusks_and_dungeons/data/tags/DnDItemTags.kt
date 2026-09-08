@@ -75,7 +75,6 @@ object DnDItemTags {
     val EMPTY = tag("empty")
     val BLACKSTONE_TOOL_MATERIALS = tag("blackstone_tool_materials")
 
-    // TODO remove these?
     val SCARECROW_WOOD_ITEMS = tag("scarecrow/wood")
     val SCARECROW_BALE_ITEMS = tag("scarecrow/bale")
     val SCARECROW_HEAD_ITEMS = tag("scarecrow/head")
