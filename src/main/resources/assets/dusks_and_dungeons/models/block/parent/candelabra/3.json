@@ -2,7 +2,7 @@
 	"parent": "dusks_and_dungeons:block/parent/candelabra/1",
 	"ambientocclusion": false,
 	"textures": {
-		"texture": "dusks_and_dungeons:candelabra_iron",
+		"texture": "dusks_and_dungeons:block/candelabra_iron",
 		"particle": "#texture"
 	},
 	"elements": [
