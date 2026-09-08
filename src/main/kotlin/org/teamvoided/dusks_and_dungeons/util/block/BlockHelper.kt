@@ -89,7 +89,6 @@ val SHOVELABLE = mutableSetOf<Block>()
 val HOEABLE = mutableSetOf<Block>()
 
 // Extensions
-// TODO make these use generics
 fun <T : Block> T.cutout(): T = CUTOUT_BLOCKS.addAndReturn(this)
 fun <T : Block> T.translucent(): T = TRANSLUCENT_BLOCKS.addAndReturn(this)
 fun <T : Block> T.grass(): T = GRASS_TINT_BLOCKS.addAndReturn(this)
