@@ -11,8 +11,10 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.BlockItemStateProperties
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Block.box
 import net.minecraft.world.level.block.CandleBlock
 import net.minecraft.world.level.block.RedstoneTorchBlock
@@ -184,5 +186,26 @@ object Candelabra {
     }
 
     var isCtrlDown = false
+
+    fun canAddCandles(ctx: BlockPlaceContext, state: BlockState, block: Block): Boolean {
+        return (!ctx.isSecondaryUseActive
+                && ctx.itemInHand.item === block.asItem()
+                && state.getValue(CANDLES) + getCandleCount(ctx.itemInHand) <= 5)
+    }
+
+    fun cycleShapedFromItem(state: BlockState, stack: ItemStack): BlockState? {
+        val simple = state.cycle(CANDLES)
+
+        val addedCandles = getCandleCount(stack)
+        if (addedCandles > 1) {
+            val candles = state.getValue(CANDLES) + addedCandles
+            return if (candles <= 5) state.setValue(CANDLES, candles) else null
+        }
+        return simple
+    }
+
+    fun getCandleCount(stack: ItemStack): Int {
+        return stack.get(DataComponents.BLOCK_STATE)?.get(CANDLES) ?: 1
+    }
 
 }

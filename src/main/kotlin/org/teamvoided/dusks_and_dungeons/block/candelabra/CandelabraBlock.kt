@@ -135,9 +135,8 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     // Logic
-    override fun canBeReplaced(state: BlockState, context: BlockPlaceContext): Boolean {
-        return (!context.isSecondaryUseActive && context.itemInHand.item === asItem() && state.getValue(CANDLES) < 5) ||
-                super.canBeReplaced(state, context)
+    override fun canBeReplaced(state: BlockState, ctx: BlockPlaceContext): Boolean {
+        return Candelabra.canAddCandles(ctx, state, this) || super.canBeReplaced(state, ctx)
     }
 
     override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
@@ -147,7 +146,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
         val state = ctx.level.getBlockState(ctx.clickedPos)
         if (state.`is`(this)) {
-            return state.cycle(CANDLES)
+            return Candelabra.cycleShapedFromItem(state, ctx.itemInHand)
         }
         val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)
