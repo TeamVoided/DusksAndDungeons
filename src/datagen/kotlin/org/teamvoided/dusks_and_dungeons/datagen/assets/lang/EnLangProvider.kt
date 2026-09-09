@@ -36,8 +36,8 @@ class EnLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, 
         gen.damageType(
             DnDDamageTypes.THROWN_BRICK,
             "was bricked down",
-            "was brought down by" to "with the certainty of",
-            "was brought down with a cast brick from"
+            "was brought down with a cast brick from",
+            "was brought down by" to "with the certainty of"
         )
 
         gen.add(HEAVY_CUBE_TOOLTIP, "This block contains custom state!")

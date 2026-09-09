@@ -22,15 +22,15 @@ fun TranslationBuilder.defaultDamageType(key: ResourceKey<DamageType>, message: 
 fun TranslationBuilder.damageType(
     key: ResourceKey<DamageType>, message: String, messageItem: String, messageAttacker: String,
 ) {
-    damageType(key, message, (messageItem to "using"), messageAttacker)
+    damageType(key, message, messageAttacker, (messageItem to "using"))
 }
 
 fun TranslationBuilder.damageType(
-    key: ResourceKey<DamageType>, message: String, messageItem: Pair<String, String>, messageAttacker: String,
+    key: ResourceKey<DamageType>, defaultMessage: String, attackerMessage: String, weaponMessage: Pair<String, String>,
 ) {
     val lang = key.toLangKey()
-    add("death.attack.$lang", "%s $message")
-    add("death.attack.$lang.item", "%s ${messageItem.first} %s ${messageItem.second} %s")
-    add("death.attack.$lang.player", "%s $messageAttacker %s")
+    add("death.attack.$lang", "%s $defaultMessage")
+    add("death.attack.$lang.player", "%s $attackerMessage %s")
+    add("death.attack.$lang.item", "%s ${weaponMessage.first} %s ${weaponMessage.second} %s")
 }
 
