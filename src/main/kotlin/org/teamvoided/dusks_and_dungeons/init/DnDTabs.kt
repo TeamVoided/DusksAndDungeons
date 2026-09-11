@@ -272,6 +272,10 @@ object DnDTabs {
             DnDBlocks.SYPIA_SAPLING,
             DnDBlocks.SYPIA_LEAVES,
 
+            DnDBlocks.OVERGROWTH_BLOCK,
+            DnDBlocks.OVERGROWTH_CARPET,
+            DnDBlocks.HANGING_OVERGROWTH,
+
             DnDItems.FARMERS_HAT,
             DnDItems.WILD_WHEAT,
             DnDItems.GOLDEN_BEETROOT,

@@ -264,16 +264,7 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
     half.forEach { (half, rotationX) ->
         directions.forEach { (direction, rotationY) ->
             stairShape.forEach { (shape, models) ->
-                rotatY = if (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT) {
-                    when (rotationY) {
-                        Rotation.R0 -> Rotation.R270
-                        Rotation.R90 -> Rotation.R0
-                        Rotation.R180 -> Rotation.R90
-                        else -> Rotation.R180
-                    }
-                } else {
-                    rotationY
-                }
+                rotatY = getStairRotation(half, shape, rotationY)
                 model.with(
                     condition()
                         .term(BlockStateProperties.HORIZONTAL_FACING, direction)
@@ -317,6 +308,29 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
         slabOrStairWithOverlayModel("parent/tint/stairs_inventory_overlay")
             .create(stairsBlock, texture, this.modelOutput)
     )
+}
+
+fun getStairRotation(half: Half, shape: StairsShape, rotationY: Rotation, ): Rotation {
+    val bottomCheck = half == Half.BOTTOM && (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT)
+    val topCheck = half == Half.TOP && (shape == StairsShape.INNER_RIGHT || shape == StairsShape.OUTER_RIGHT)
+    return if (bottomCheck) {
+        when (rotationY) {
+            Rotation.R0 -> Rotation.R270
+            Rotation.R90 -> Rotation.R0
+            Rotation.R180 -> Rotation.R90
+            else -> Rotation.R180
+        }
+    }else if(topCheck){
+        when (rotationY) {
+            Rotation.R0 -> Rotation.R90
+            Rotation.R90 -> Rotation.R180
+            Rotation.R180 -> Rotation.R270
+            else -> Rotation.R0
+        }
+    }
+    else {
+        rotationY
+    }
 }
 
 fun stairTitle(block: Block, suffix: String): ResourceLocation {
