@@ -78,6 +78,7 @@ object DnDConfiguredFeature {
     val OVERGROWTH_PATCH_FLOOR = key("overgrowth/floor")
     val OVERGROWTH_PATCH_FLOOR_BONEMEAL = key("overgrowth/floor_bonemeal")
     val OVERGROWTH_CEILING_V = key("overgrowth/ceiling_vegetation")
+    val OVERGROWTH_CEILING_V_BONEMEAL = key("overgrowth/ceiling_vegetation_bonemeal")
     val OVERGROWTH_PATCH_CEILING = key("overgrowth/ceiling")
     val OVERGROWTH_PATCH_CEILING_BONEMEAL = key("overgrowth/ceiling_bonemeal")
     val OVERGROWTH_TREE_DOWN = key("tree/verdant/down")

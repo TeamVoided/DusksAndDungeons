@@ -39,6 +39,8 @@ import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CaveSurface
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import org.teamvoided.dusks_and_dungeons.block.HangingFloraBlock
+import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
+import org.teamvoided.dusks_and_dungeons.block.OvergrowthBushBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
@@ -222,11 +224,25 @@ object ConfiguredFeatureCreator {
             Feature.SIMPLE_BLOCK,
             SimpleBlockConfiguration(
                 WeightedStateProvider(
-                    SimpleWeightedRandomList.builder<BlockState>()
-                        .add(DnDBlocks.OVERGROWTH_BUSH.defaultBlockState(), 2)
-                        .add(DnDBlocks.OVERGROWTH_CARPET.defaultBlockState(), 5)
-                        .add(Blocks.SHORT_GRASS.defaultBlockState(), 10)
-                        .add(Blocks.TALL_GRASS.defaultBlockState(), 2)
+                    leafPileList(DnDBlocks.VERDANT_LEAF_PILE)
+                        .add(DnDBlocks.OVERGROWTH_BUSH.defaultBlockState(), 6)
+                        .add(DnDBlocks.OVERGROWTH_CARPET.defaultBlockState(), 15)
+                        .add(Blocks.SHORT_GRASS.defaultBlockState(), 30)
+                        .add(Blocks.TALL_GRASS.defaultBlockState(), 6)
+                )
+            )
+        )
+        c.registerConfiguredFeature(
+            DnDConfiguredFeature.OVERGROWTH_CEILING_V_BONEMEAL,
+            Feature.SIMPLE_BLOCK,
+            SimpleBlockConfiguration(
+                WeightedStateProvider(
+                    leafPileList(DnDBlocks.VERDANT_LEAF_PILE, true)
+                        .add(DnDBlocks.HANGING_OVERGROWTH.defaultBlockState(), 10)
+                        .add(
+                            DnDBlocks.OVERGROWTH_BUSH.defaultBlockState()
+                                .setValue(OvergrowthBushBlock.FACING, Direction.UP), 5
+                        )
                 )
             )
         )
@@ -235,6 +251,7 @@ object ConfiguredFeatureCreator {
             LithostitchedFeatures.WEIGHTED_SELECTOR,
             WeightedSelectorConfig(
                 WeightedList.builder<Holder<PlacedFeature>>()
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_CEILING_V_BONEMEAL, 7)
                     .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING, 5)
                     .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_BLOCKS, 3)
                     .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_LEAVES)
@@ -301,7 +318,9 @@ object ConfiguredFeatureCreator {
                 BlockColumnConfiguration.layer(
                     UniformInt.of(1, 6),
                     BlockStateProvider.simple(
-                        DnDBlocks.VERDANT_LEAVES.defaultBlockState().setValue(BlockStateProperties.PERSISTENT, true)
+                        (DnDBlocks.VERDANT_LEAF_PILE as LeafPileBlock).defaultWorldState()
+                            .setValue(LeafPileBlock.PILE_LAYERS, LeafPileBlock.MAX_LAYERS)
+                            .setValue(LeafPileBlock.HANGING, true)
                     )
                 )
             )
@@ -312,13 +331,6 @@ object ConfiguredFeatureCreator {
                 BlockColumnConfiguration.layer(
                     BiasedToBottomInt.of(0, 5),
                     BlockStateProvider.simple(DnDBlocks.OVERGROWTH_BLOCK.defaultBlockState())
-                ),
-                BlockColumnConfiguration.layer(
-                    BiasedToBottomInt.of(0, 1),
-                    BlockStateProvider.simple(
-                        DnDBlocks.OVERGROWTH_BUSH.defaultBlockState()
-                            .setValue(BlockStateProperties.FACING, Direction.UP)
-                    )
                 )
             )
         )
@@ -745,11 +757,13 @@ object ConfiguredFeatureCreator {
         surface: CaveSurface,
         bonemeal: Boolean = false
     ) {
-        val isCeil = surface.ordinal == 1
+        val isCeil = surface.ordinal == 0
         val vegFeat = PlacementUtils.inlinePlaced(
             this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(
-                if (isCeil) DnDConfiguredFeature.OVERGROWTH_FLOOR_V
-                else DnDConfiguredFeature.OVERGROWTH_CEILING_V
+                if (isCeil)
+                    if (bonemeal) DnDConfiguredFeature.OVERGROWTH_CEILING_V_BONEMEAL
+                    else DnDConfiguredFeature.OVERGROWTH_CEILING_V
+                else DnDConfiguredFeature.OVERGROWTH_FLOOR_V
             )
         )
 
@@ -761,7 +775,7 @@ object ConfiguredFeatureCreator {
                 BlockStateProvider.simple(DnDBlocks.OVERGROWTH_BLOCK),
                 vegFeat,
                 surface,
-                ConstantInt.of(1),
+                ConstantInt.of(if (bonemeal) 1 else 2),
                 if (bonemeal) 0f else 0.3f,
                 5,
                 (if (bonemeal) 0.6f else 0.8f) * (if (isCeil) 0.2f else 1f),

@@ -80,14 +80,19 @@ fun petalBuilder(flower: Block): SimpleWeightedRandomList.Builder<BlockState> {
 fun leafPiles(leafPile: Block, blockTags: HolderGetter<Block>): TreeDecorator {
     return AlterOnGroundTreeDecorator(
         WeightedStateProvider(
-            SimpleWeightedRandomList.builder<BlockState>()
-                .add(leafPile.defaultBlockState(), 9)
-                .add(leafPile.defaultBlockState().setValue(LeafPileBlock.PILE_LAYERS, 2), 4)
-                .add(leafPile.defaultBlockState().setValue(LeafPileBlock.PILE_LAYERS, 3), 1)
+            leafPileList(leafPile)
         ),
         3, 10, 20,
         blockTags.getOrThrow(DnDBlockTags.LEAF_PILES_PLACE_ON)
     )
+}
+
+fun leafPileList(leafPile: Block, hanging: Boolean = false): SimpleWeightedRandomList.Builder<BlockState> {
+    val state = (leafPile as LeafPileBlock).defaultWorldState()
+    return SimpleWeightedRandomList.builder<BlockState>()
+        .add(state, 9)
+        .add(state.setValue(LeafPileBlock.PILE_LAYERS, 2).setValue(LeafPileBlock.HANGING, hanging), 4)
+        .add(state.setValue(LeafPileBlock.PILE_LAYERS, 3).setValue(LeafPileBlock.HANGING, hanging), 1)
 }
 
 

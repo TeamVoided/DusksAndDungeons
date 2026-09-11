@@ -4,13 +4,13 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.tags.BlockTags
 import net.minecraft.util.ParticleUtils
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SimpleWaterloggedBlock
 import net.minecraft.world.level.block.state.BlockState
@@ -22,7 +22,6 @@ import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import java.util.*
 import kotlin.math.min
 
 
@@ -31,12 +30,14 @@ open class LeafPileBlock(settings: Properties) : Block(settings), SimpleWaterlog
     init {
         this.registerDefaultState(
             stateDefinition.any()
-                .setValue(DISTANCE, 6)
                 .setValue(HANGING, false)
+                .setValue(PERSISTENT, true)
                 .setValue(PILE_LAYERS, 1)
                 .setValue(WATERLOGGED, false)
         )
     }
+
+    fun defaultWorldState(): BlockState = this.defaultBlockState().setValue(PERSISTENT, false)
 
     override fun canBeReplaced(state: BlockState, context: BlockPlaceContext): Boolean {
         return if (context.itemInHand.`is`(this.asItem()) && state.getValue(PILE_LAYERS) < MAX_LAYERS) {
@@ -91,10 +92,6 @@ open class LeafPileBlock(settings: Properties) : Block(settings), SimpleWaterlog
         state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext,
     ): VoxelShape = Shapes.empty()
 
-    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
-        world.setBlock(pos, updateDistanceFromLogs(state, world, pos), UPDATE_ALL)
-    }
-
     override fun getLightBlock(state: BlockState, world: BlockGetter, pos: BlockPos): Int = 1
     override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
@@ -103,25 +100,31 @@ open class LeafPileBlock(settings: Properties) : Block(settings), SimpleWaterlog
         if (state.getValue(WATERLOGGED))
             world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
 
-        val i = getDistanceFromLog(neighborState) + 1
-        if (i != 1 || state.getValue(DISTANCE) != i) {
+        if (!state.canSurvive(world, pos)) {
             world.scheduleTick(pos, this, 1)
         }
 
         return state
     }
 
-    private fun updateDistanceFromLogs(state: BlockState, world: LevelAccessor, pos: BlockPos): BlockState {
-        var i = 7
-        val mutable = BlockPos.MutableBlockPos()
-
-        for (direction in Direction.entries) {
-            mutable.setWithOffset(pos, direction)
-            i = min(i, (getDistanceFromLog(world.getBlockState(mutable)) + 1))
-            if (i == 1) break
+    override fun tick(
+        blockState: BlockState,
+        serverLevel: ServerLevel,
+        blockPos: BlockPos,
+        randomSource: RandomSource
+    ) {
+        if (!blockState.canSurvive(serverLevel, blockPos)) {
+            serverLevel.destroyBlock(blockPos, true)
         }
-        return state.setValue(DISTANCE, i)
     }
+
+
+    override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
+        if (state.getValue(PERSISTENT)) return true
+        val offsetPos = if (state.getValue(HANGING)) pos.above() else pos.below()
+        return !level.getBlockState(offsetPos).isAir
+    }
+
 
     override fun getFluidState(state: BlockState): FluidState {
         return if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false) else super.getFluidState(state)
@@ -140,16 +143,16 @@ open class LeafPileBlock(settings: Properties) : Block(settings), SimpleWaterlog
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        builder.add(DISTANCE, HANGING, PILE_LAYERS, WATERLOGGED)
+        builder.add(HANGING, PERSISTENT, PILE_LAYERS, WATERLOGGED)
     }
 
     companion object {
         const val MAX_LAYERS = 4
 
+        val HANGING = BlockStateProperties.HANGING
+        val PERSISTENT = BlockStateProperties.PERSISTENT
         val PILE_LAYERS = IntegerProperty.create("layers", 1, MAX_LAYERS)
         val WATERLOGGED = BlockStateProperties.WATERLOGGED
-        val DISTANCE = BlockStateProperties.DISTANCE
-        val HANGING = BlockStateProperties.HANGING
 
         val FULL_SHAPE = box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 
@@ -168,11 +171,5 @@ open class LeafPileBlock(settings: Properties) : Block(settings), SimpleWaterlog
 
 
         fun addLayer(i: Int): Int = min(MAX_LAYERS, (i + 1))
-        private fun getDistanceFromLog(state: BlockState): Int = getOptionalDistanceFromLog(state).orElse(7)
-        private fun getOptionalDistanceFromLog(state: BlockState): OptionalInt {
-            return if (state.`is`(BlockTags.LOGS)) OptionalInt.of(0)
-            else if (state.hasProperty(DISTANCE)) OptionalInt.of((state.getValue(DISTANCE)))
-            else OptionalInt.empty()
-        }
     }
 }
