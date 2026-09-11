@@ -26,12 +26,12 @@ object DnDBiomeModifications {
             "golden_mushrooms_common", DnDPlacedFeature.GOLDEN_MUSHROOM_HUGE_PATCH, DnDBiomeTags.GOLD_MUSHROOMS_HUGE
         )
         addVegetation(
-            "mosskin_pumpkins_extra", DnDPlacedFeature.PATCH_MOSSKIN_PUMPKIN_EXTRA, DnDBiomeTags.MOSSKIN_PUMPKINS_CAVE
+            "mosskin_pumpkins_extra", DnDPlacedFeature.MOSSKIN_PUMPKIN_EXTRA, DnDBiomeTags.MOSSKIN_PUMPKINS_CAVE
         )
         replaceVegetation(
             "gloom_pumpkins_extra",
             VegetationPlacements.PATCH_PUMPKIN,
-            DnDPlacedFeature.PATCH_GLOOM_PUMPKIN_EXTRA,
+            DnDPlacedFeature.GLOOM_PUMPKIN_EXTRA,
             DnDBiomeTags.GLOOM_PUMPKINS_EXTRA
         )
 

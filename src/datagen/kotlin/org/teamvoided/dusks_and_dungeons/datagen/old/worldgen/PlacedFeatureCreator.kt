@@ -53,19 +53,19 @@ object PlacedFeatureCreator {
             Direction.DOWN,
             BlockPredicate.matchesTag(BlockTags.MOSS_REPLACEABLE)
         )
-        c.surfacePlacementRare(DnDPlacedFeature.PATCH_PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA)
+        c.surfacePlacementRare(DnDPlacedFeature.PUMPKIN_EXTRA, DnDConfiguredFeature.PATCH_PUMPKIN_EXTRA)
         c.surfacePlacementRare(
-            DnDPlacedFeature.PATCH_LANTERN_PUMPKIN_EXTRA,
+            DnDPlacedFeature.LANTERN_PUMPKIN_EXTRA,
             DnDConfiguredFeature.PATCH_PUMPKIN_LANTERN_EXTRA
         )
         c.cavePlacement(
-            DnDPlacedFeature.PATCH_MOSSKIN_PUMPKIN_EXTRA,
+            DnDPlacedFeature.MOSSKIN_PUMPKIN_EXTRA,
             DnDConfiguredFeature.PATCH_PUMPKIN_MOSSKIN_EXTRA,
             4,
             Direction.DOWN,
         )
         c.surfacePlacementRare(
-            DnDPlacedFeature.PATCH_GLOOM_PUMPKIN_EXTRA,
+            DnDPlacedFeature.GLOOM_PUMPKIN_EXTRA,
             DnDConfiguredFeature.PATCH_PUMPKIN_GLOOM_EXTRA,
             35
         )
@@ -146,7 +146,8 @@ object PlacedFeatureCreator {
 
     fun BootstrapContext<PlacedFeature>.overgrowthTree(feature: ResourceKey<PlacedFeature>) {
         val predicate = //for trial chambers >:)
-            if (feature.registry().path.last() == '1') BlockPredicate.solid() else BlockPredicate.matchesTag(BlockTags.DIRT)
+            if (feature.location().toString().last() == '1') BlockPredicate.solid()
+            else BlockPredicate.matchesTag(BlockTags.DIRT)
         this.cavePlacement(
             feature,
             DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
@@ -155,6 +156,7 @@ object PlacedFeatureCreator {
             predicate
         )
     }
+
 
     fun saplingFeatures(
         c: BootstrapContext<PlacedFeature>,
