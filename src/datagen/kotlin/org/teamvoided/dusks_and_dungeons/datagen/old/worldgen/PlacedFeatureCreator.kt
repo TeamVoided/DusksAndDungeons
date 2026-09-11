@@ -108,7 +108,7 @@ object PlacedFeatureCreator {
         )
         c.cavePlacement(
             DnDPlacedFeature.OVERGROWTH_HANGING,
-            DnDConfiguredFeature.OVERGROWTH_HANGING,
+            DnDConfiguredFeature.OVERGROWTH_HANGING_FLORA,
             188,
             Direction.UP
         )
@@ -146,8 +146,9 @@ object PlacedFeatureCreator {
 
     fun BootstrapContext<PlacedFeature>.overgrowthTree(feature: ResourceKey<PlacedFeature>) {
         val predicate = //for trial chambers >:)
-            if (feature.location().toString().last() == '1') BlockPredicate.solid()
-            else BlockPredicate.matchesTag(BlockTags.DIRT)
+            //if (feature.location().toString().last() == '1') BlockPredicate.solid()
+            //else
+                BlockPredicate.matchesTag(BlockTags.DIRT)
         this.cavePlacement(
             feature,
             DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,

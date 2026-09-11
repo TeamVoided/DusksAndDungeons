@@ -21,7 +21,6 @@ import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
@@ -209,7 +208,7 @@ object ConfiguredFeatureCreator {
             LithostitchedFeatures.WEIGHTED_SELECTOR,
             WeightedSelectorConfig(
                 WeightedList.builder<Holder<PlacedFeature>>()
-                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING, 9)
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_FLORA, 9)
                     .add(
                         PlacementUtils.inlinePlaced(
                             Feature.SIMPLE_BLOCK,
@@ -251,10 +250,10 @@ object ConfiguredFeatureCreator {
             LithostitchedFeatures.WEIGHTED_SELECTOR,
             WeightedSelectorConfig(
                 WeightedList.builder<Holder<PlacedFeature>>()
-                    .addC(c, DnDConfiguredFeature.OVERGROWTH_CEILING_V_BONEMEAL, 7)
-                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING, 5)
-                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_BLOCKS, 3)
-                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_LEAVES)
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_CEILING_V_BONEMEAL, 15)
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_FLORA, 5)
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_LEAVES,3)
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_BLOCKS)
                     .build()
             )
         )
@@ -293,7 +292,7 @@ object ConfiguredFeatureCreator {
             )
         )
         c.hangingCaveColumn(
-            DnDConfiguredFeature.OVERGROWTH_HANGING,
+            DnDConfiguredFeature.OVERGROWTH_HANGING_FLORA,
             listOf(
                 BlockColumnConfiguration.layer(
                     BiasedToBottomInt.of(0, 5),
@@ -778,7 +777,7 @@ object ConfiguredFeatureCreator {
                 ConstantInt.of(if (bonemeal) 1 else 2),
                 if (bonemeal) 0f else 0.3f,
                 5,
-                (if (bonemeal) 0.6f else 0.8f) * (if (isCeil) 0.2f else 1f),
+                (if (bonemeal) 0.6f else 0.8f) * (if (isCeil) 0.6f else 1f),
                 if (bonemeal) UniformInt.of(1, 2) else UniformInt.of(4, 7),
                 if (bonemeal) 0.75f else 0.3f
             )

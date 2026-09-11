@@ -89,7 +89,7 @@ object DnDConfiguredFeature {
     val OVERGROWTH_TREE_ROOTED = key("tree/verdant/rooted")
     val OVERGROWTH_LEAF_DECORATORS = key("tree/verdant/leaf_decorator")
     val OVERGROWTH_CARPET_PATCH = key("overgrowth/carpet_patch")
-    val OVERGROWTH_HANGING = key("overgrowth/hanging")
+    val OVERGROWTH_HANGING_FLORA = key("overgrowth/hanging")
     val OVERGROWTH_HANGING_LEAVES = key("overgrowth/hanging_leaves")
     val OVERGROWTH_HANGING_BLOCKS = key("overgrowth/hanging_blocks")
 
