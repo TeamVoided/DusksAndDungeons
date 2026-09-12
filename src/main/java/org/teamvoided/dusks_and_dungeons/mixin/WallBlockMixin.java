@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock;
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags;
+import org.teamvoided.dusks_and_dungeons.util.mixin.FenceGateWallConnection;
 
 @Mixin(WallBlock.class)
 public abstract class WallBlockMixin extends Block {
@@ -25,7 +26,7 @@ public abstract class WallBlockMixin extends Block {
         if (original && state.is(BlockTags.WALLS)) {
             return state.is(DnDBlockTags.WOODEN_WALLS) == defaultBlockState().is(DnDBlockTags.WOODEN_WALLS);
         }
-        return original || GravestoneBlock.connectsToDirection(state, dir);
+        return original || FenceGateWallConnection.wallsAndFencesConnect(state, dir);
     }
 
 }

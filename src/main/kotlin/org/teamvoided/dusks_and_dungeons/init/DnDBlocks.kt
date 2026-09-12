@@ -784,6 +784,10 @@ object DnDBlocks {
         val BLACKSTONE_PRESSURE_PLATE = createStonePlate(Blocks.BLACKSTONE)
     */
 
+    //add after fencegates
+    //all woods, iron, (and copper [future])
+    val SPRUCE_SCONCE = registerOld("spruce_sconce", SconceBlock(ofFullCopy(SPRUCE_FENCE))).wood().cutout()
+
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
     @Suppress("unused")
     val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))//otherwise known as the Glock

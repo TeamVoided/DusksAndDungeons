@@ -8,13 +8,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock;
+import org.teamvoided.dusks_and_dungeons.util.mixin.FenceGateWallConnection;
 
 @Mixin(FenceBlock.class)
 public abstract class FenceBlockMixin {
 
     @ModifyReturnValue(method = "connectsTo", at = @At("RETURN"))
     private boolean connectToWoodenOrRegular(boolean original, BlockState state, @Local(argsOnly = true) Direction dir) {
-        return original || GravestoneBlock.connectsToDirection(state, dir);
+        return original || FenceGateWallConnection.wallsAndFencesConnect(state, dir);
     }
 
 }

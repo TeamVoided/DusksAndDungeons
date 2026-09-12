@@ -65,6 +65,8 @@ data object DnDModels {
     val OFFSET_WALL_INVENTORY = parent("offset/wall_inventory", "_inventory", WALL)
     // endregion
 
+    val SCONCE = parent("sconce", SIDE, TOP)
+
 
     // region Func's
     fun tintedBlock(name: String, vararg slots: TextureSlot): ModelTemplate {

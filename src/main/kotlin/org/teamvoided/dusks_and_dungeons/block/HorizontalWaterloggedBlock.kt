@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.block.state.properties.BooleanProperty
 
 open class HorizontalWaterloggedBlock(settings: Properties) : HorizontalDirectionalBlock(settings),
     SimpleWaterloggedBlock {
@@ -49,7 +50,7 @@ open class HorizontalWaterloggedBlock(settings: Properties) : HorizontalDirectio
     }
 
     companion object {
-        val CODEC = simpleCodec(::HorizontalWaterloggedBlock)
-        val WATERLOGGED = BlockStateProperties.WATERLOGGED
+        val CODEC: MapCodec<HorizontalWaterloggedBlock> = simpleCodec(::HorizontalWaterloggedBlock)
+        val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
     }
 }
