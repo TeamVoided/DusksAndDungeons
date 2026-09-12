@@ -5,8 +5,10 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.LevelSimulatedReader
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.levelgen.feature.TreeFeature
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
@@ -31,11 +33,11 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
     ): List<FoliagePlacer.FoliageAttachment> {
         val list: MutableList<FoliagePlacer.FoliageAttachment> = Lists.newArrayList()
         val blockPos = startPos.below()
+        setDirtAt(world, replacer, random, blockPos, config)
         setDirtAt(world, replacer, random, blockPos.north().west(), config)
         setDirtAt(world, replacer, random, blockPos.north(), config)
         setDirtAt(world, replacer, random, blockPos.north().east(), config)
         setDirtAt(world, replacer, random, blockPos.west(), config)
-        setDirtAt(world, replacer, random, blockPos, config)
         setDirtAt(world, replacer, random, blockPos.east(), config)
         setDirtAt(world, replacer, random, blockPos.south().west(), config)
         setDirtAt(world, replacer, random, blockPos.south(), config)
@@ -51,11 +53,11 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
             val blockPos2 = BlockPos(posX, r, posZ)
             if (TreeFeature.isAirOrLeaves(world, blockPos2)) {
                 val chance = (height * 1.2 - g).toInt()
+                placeLog(world, replacer, random, blockPos2, config)
                 placeLog(world, replacer, random, blockPos2.north().west(), config)
                 placeLog(world, replacer, random, blockPos2.north(), config)
                 placeLog(world, replacer, random, blockPos2.north().east(), config)
                 placeLog(world, replacer, random, blockPos2.west(), config)
-                placeLog(world, replacer, random, blockPos2, config)
                 placeLog(world, replacer, random, blockPos2.east(), config)
                 placeLog(world, replacer, random, blockPos2.south().west(), config)
                 placeLog(world, replacer, random, blockPos2.south(), config)
@@ -66,6 +68,40 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
 
         list.add(FoliagePlacer.FoliageAttachment(BlockPos(posX, posYAlt, posZ), 0, true))
 
+
+        //Direction.Plane.HORIZONTAL.forEach {
+        //    val horizOffDir = if (it.axis == Direction.Axis.X) Direction.SOUTH else Direction.EAST
+        //    val predicate = { state: BlockState -> state.trySetValue(RotatedPillarBlock.AXIS, it.axis) }
+        //    for (h in -1..1) {
+        //        if (random.nextFloat() <= 0.5f) {
+        //            val branchHeight = random.nextInt(5)
+        //            val branchLength = random.nextInt(4)
+        //            val branchOffset = random.nextInt((2 * height) / 3)
+        //            for (i in 0..branchLength + branchHeight) {
+        //                val isHorizontal = i <= branchLength
+        //                val blockPos = startPos
+        //                    .relative(it, Math.min(i, branchLength) + 1)
+        //                    .relative(horizOffDir, h)
+        //                    .above(Math.max(i - branchLength, 0) - branchOffset + height)
+        //                if (!isFree(world, blockPos)) break
+        //                if (isHorizontal) this.placeLog(world, replacer, random, blockPos, config, predicate)
+        //                else this.placeLog(world, replacer, random, blockPos, config)
+        //            }
+        //            //list.add(
+        //            //    FoliagePlacer.FoliageAttachment(
+        //            //        startPos
+        //            //            .relative(it, branchLength + 1)
+        //            //            .relative(horizOffDir, h)
+        //            //            .above(branchHeight - branchOffset + height),
+        //            //        0,
+        //            //        false
+        //            //    )
+        //            //)
+        //        }
+        //    }
+        //}
+
+
         g = -2
         while (g <= 3) {
             r = -2
@@ -74,7 +110,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
                 if (!((g < -1 || g > 2) && (r < -1 || r > 2)) && (g < 0 || g > 1 || r < 0 || r > 1) && random.nextInt(9) <= 0) {
                     val randMax = random.nextInt(3) + 3
                     val randOffset = random.nextInt(4) - 1
-
+//
                     for (t in 0 until randMax) {
                         val y = posYAlt - t + randOffset
                         placeLog(
@@ -108,7 +144,7 @@ class ThreeWideTrunkPlacer(i: Int, j: Int, k: Int) : TrunkPlacer(i, j, k) {
 //              Debug
 //                        placeTrunkBlock(world, replacer, random, BlockPos(posX + q, posYAlt - t + randOffset + 20, posZ + r), config)
                     }
-                    list.add(FoliagePlacer.FoliageAttachment(BlockPos(posX + g, posYAlt + randOffset, posZ + r), 0, false))
+                    //list.add(FoliagePlacer.FoliageAttachment(BlockPos(posX + g, posYAlt + randOffset, posZ + r), 0, false))
                 }
                 ++r
             }
