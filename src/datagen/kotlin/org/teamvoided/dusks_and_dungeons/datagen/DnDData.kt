@@ -30,12 +30,12 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.tag.DamageTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.tag.EntityTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModDensityFunctions
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModNoises
+import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.recipes.RecipesProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.ItemTagsProvider
-import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.ConfiguredFeatureCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.PlacedFeatureCreator
 import org.teamvoided.dusks_and_dungeons.datagen.packs.FancyNamesPack
@@ -81,7 +81,7 @@ object DnDData : DataGeneratorEntrypoint {
         // Word Gen
         gen.add(Registries.NOISE, ModNoises::bootstrap)
         gen.add(Registries.DENSITY_FUNCTION, ModDensityFunctions::bootstrap)
-        gen.add(Registries.BIOME, BiomeCreator::boostrap)
+        gen.add(Registries.BIOME, BiomeCreator::bootstrap)
         gen.add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureCreator::bootstrap)
         gen.add(Registries.PLACED_FEATURE, PlacedFeatureCreator::bootstrap)
         // Structures

@@ -3,33 +3,24 @@ package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.sounds.Music
 import net.minecraft.util.Mth
-import net.minecraft.world.level.biome.AmbientMoodSettings
-import net.minecraft.world.level.biome.Biome
-import net.minecraft.world.level.biome.BiomeGenerationSettings
-import net.minecraft.world.level.biome.BiomeSpecialEffects
-import net.minecraft.world.level.biome.MobSpawnSettings
+import net.minecraft.world.level.biome.*
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
+import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
 
-object BiomeCreator {
+object BiomeCreator : RegistryBootstrapper<Biome> {
 
-    fun boostrap(context: BootstrapContext<Biome>) {
-        context.register(DnDBiomes.AUTUMN_WOODS, AutumnBiomeCreator.createAutumnForest(context))
-        context.register(DnDBiomes.AUTUMN_PASTURES, AutumnBiomeCreator.createAutumnPlains(context))
-        context.register(DnDBiomes.AUTUMN_CASCADES, AutumnBiomeCreator.createAutumnRiver(context))
+    override fun BootstrapContext<Biome>.init() {
+        register(DnDBiomes.AUTUMN_WOODS, AutumnBiomeCreator.createAutumnForest(this))
+        register(DnDBiomes.AUTUMN_PASTURES, AutumnBiomeCreator.createAutumnPlains(this))
+        register(DnDBiomes.AUTUMN_CASCADES, AutumnBiomeCreator.createAutumnRiver(this))
 
-        context.register(DnDBiomes.GOLDEN_WOODS, AutumnBiomeCreator.createAutumnForest(context, true))
-        context.register(DnDBiomes.GOLDEN_PASTURES, AutumnBiomeCreator.createAutumnPlains(context, true))
+        register(DnDBiomes.GOLDEN_WOODS, AutumnBiomeCreator.createAutumnForest(this, true))
+        register(DnDBiomes.GOLDEN_PASTURES, AutumnBiomeCreator.createAutumnPlains(this, true))
 
-        context.register(DnDBiomes.OVERGROWN_GROTTO, CaveBiomeCreator.overgrownGrotto(context))
+        register(DnDBiomes.OVERGROWN_GROTTO, CaveBiomeCreator.overgrownGrotto(this))
     }
 
-    //no access widener?
-    fun getSkyColor(temperature: Float): Int {
-        val f = Mth.clamp(temperature / 3f, -1f, 1f)
-        return Mth.hsvToRgb(0.62222224f - f * 0.05f, 0.5f + f * 0.1f, 1f)
-    }
-
-    fun biomeBuild(
+    fun biomeBuild( // TODO nuke this and make it be a better builder
         ss: MobSpawnSettings.Builder,
         gs: BiomeGenerationSettings.Builder,
         music: Music,
@@ -49,9 +40,21 @@ object BiomeCreator {
             .backgroundMusic(music)
         if (grassOveride >= 0) special.grassColorOverride(grassOveride)
         if (foliageOveride >= 0) special.foliageColorOverride(grassOveride)
-        return Biome.BiomeBuilder().temperature(temperature).downfall(downfall).specialEffects(special.build())
-            .mobSpawnSettings(ss.build()).generationSettings(gs.build()).build()
+        return Biome.BiomeBuilder()
+            .temperature(temperature)
+            .downfall(downfall)
+            .specialEffects(special.build())
+            .mobSpawnSettings(ss.build())
+            .generationSettings(gs.build())
+            .build()
     }
+
+    //no access widener?
+    fun getSkyColor(temperature: Float): Int {
+        val f = Mth.clamp(temperature / 3f, -1f, 1f)
+        return Mth.hsvToRgb(0.62222224f - f * 0.05f, 0.5f + f * 0.1f, 1f)
+    }
+
 
     /*Generation Steps Reference:
       RAW_GENERATION
