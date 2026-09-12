@@ -83,6 +83,7 @@ object DnDBlockTags {
     val VEGETATION_REPLACEABLE = key("vegetation_replaceable")
     val FARMLAND_PLACES_UNDER = key("farmland_places_under")
     val GOLD_MUSH_GROW_ON = key("golden_mushroom_grows_on")
+    val GOLD_MUSH_GROW_FROM = key("golden_mushroom_grows_from")
     val LEAF_PILES_PLACE_ON = key("leaf_piles_place_on")
     val PUMPKIN_PATCH_PLACE_ON = key("pumpkin_patch_place_on")
 

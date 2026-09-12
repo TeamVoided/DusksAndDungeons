@@ -3,6 +3,7 @@ package org.teamvoided.dusks_and_dungeons.block
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceKey
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -34,6 +35,11 @@ class MushroomWithSporesPlantBlock(
 
     override fun isValidBonemealTarget(world: LevelReader, pos: BlockPos, state: BlockState): Boolean =
         world.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_GROW_ON)
+
+    override fun randomTick(blockState: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        if (level.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_GROW_FROM))
+            super.randomTick(blockState, level, pos, random)
+    }
 
     override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
         super.animateTick(state, world, pos, random)
