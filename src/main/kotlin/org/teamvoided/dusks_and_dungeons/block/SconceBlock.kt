@@ -12,14 +12,13 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock.Companion.CENTERED
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
-class SconceBlock(settings: Properties) : HorizontalWaterloggedBlock(settings) {
+class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(properties) {
 
     init {
-        this.registerDefaultState(
+        registerDefaultState(
             stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(HANGING, false)
@@ -27,27 +26,28 @@ class SconceBlock(settings: Properties) : HorizontalWaterloggedBlock(settings) {
         )
     }
 
-    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
-        val blockPos = ctx.clickedPos
-        val direction = ctx.clickedFace
-        val state = super.getStateForPlacement(ctx)
-        if (direction != Direction.UP && (direction == Direction.DOWN || (ctx.clickLocation.y - blockPos.y > 0.5)))
-            return state
-
-        return state.setValue(HANGING, true)
-    }
-
-
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return SHAPES[state.getValue(FACING)]?.get(state.getValue(HANGING)) ?: Shapes.block()
-    }
-
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)
         builder.add(HANGING)
     }
 
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        return SHAPES[state.getValue(FACING)]?.get(state.getValue(HANGING)) ?: Shapes.block()
+    }
+
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
+        val state = super.getStateForPlacement(ctx) ?: return null
+        val pos = ctx.clickedPos
+        val dir = ctx.clickedFace
+        if (dir != Direction.UP && (dir == Direction.DOWN || (ctx.clickLocation.y - pos.y > 0.5))) {
+            return state
+        }
+
+        return state.setValue(HANGING, true)
+    }
+
     companion object {
+
         val HANGING: BooleanProperty = BlockStateProperties.HANGING
 
         val SHAPE: VoxelShape = Shapes.or(
@@ -63,14 +63,13 @@ class SconceBlock(settings: Properties) : HorizontalWaterloggedBlock(settings) {
 
         val SHAPES = FACING.possibleValues.associateWith { dir ->
             HANGING.possibleValues.associateWith { hanging ->
-                (if (hanging) HANGING_SHAPE else SHAPE).rotate((2 + dir.get2DDataValue()) % 4)
+                (if (hanging) HANGING_SHAPE else SHAPE).rotate(dir.opposite.get2DDataValue())
             }
         }
 
-
         fun connectsToDirection(state: BlockState, dir: Direction): Boolean {
-            if (state.block !is SconceBlock) return false
-            return state.getValue(FACING) == dir.opposite
+            return state.block is SconceBlock && state.getValue(FACING) == dir.opposite
         }
+
     }
 }
