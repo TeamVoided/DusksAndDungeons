@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.BiomeGenerationSettings
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
+import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.BiomeCreator.addDefaultDisks
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.BiomeCreator.biomeBuild
 
 object CaveBiomeCreator {
@@ -23,7 +24,7 @@ object CaveBiomeCreator {
             BiomeDefaultFeatures.addPlainGrass(this)
             BiomeDefaultFeatures.addDefaultOres(this)
             //BiomeDefaultFeatures.addLushCavesSpecialOres(this)
-            BiomeDefaultFeatures.addDefaultSoftDisks(this)
+            addDefaultDisks()
             addOvergrowthCavesVegetationFeatures()
         }
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES)

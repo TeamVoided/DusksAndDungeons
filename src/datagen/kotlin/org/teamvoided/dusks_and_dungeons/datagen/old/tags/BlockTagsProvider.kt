@@ -450,6 +450,11 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DnDBlockTags.VEGETATION_REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE)
             .forceAddTag(BlockTags.REPLACEABLE_BY_TREES)
+        getOrCreateTagBuilder(DnDBlockTags.DISK_REPLACEABLE)
+            .forceAddTag(BlockTags.DIRT)
+            .forceAddTag(BlockTags.SAND)
+            .add(Blocks.GRAVEL)
+            .add(Blocks.CLAY)
 
         getOrCreateTagBuilder(DnDBlockTags.PUMPKIN_PATCH_PLACE_ON)
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)

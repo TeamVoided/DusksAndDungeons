@@ -252,7 +252,7 @@ object ConfiguredFeatureCreator {
                 WeightedList.builder<Holder<PlacedFeature>>()
                     .addC(c, DnDConfiguredFeature.OVERGROWTH_CEILING_V_BONEMEAL, 15)
                     .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_FLORA, 5)
-                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_LEAVES,3)
+                    .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_LEAVES, 3)
                     .addC(c, DnDConfiguredFeature.OVERGROWTH_HANGING_BLOCKS)
                     .build()
             )
@@ -748,14 +748,61 @@ object ConfiguredFeatureCreator {
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.disks() {
+        this.disk(DnDConfiguredFeature.DISK_MUD, Blocks.MUD, 6)
+        this.diskFall(DnDConfiguredFeature.DISK_SAND, Blocks.SAND, Blocks.SANDSTONE, 6)
+        this.diskFall(DnDConfiguredFeature.DISK_GRAVEL, Blocks.GRAVEL, Blocks.STONE, 5)
+        this.disk(DnDConfiguredFeature.DISK_CLAY, Blocks.CLAY, 3)
         this.registerConfiguredFeature(
-            DnDConfiguredFeature.DISK_MUD, Feature.DISK, DiskConfiguration(
-                RuleBasedBlockStateProvider.simple(Blocks.MUD), BlockPredicate.matchesBlocks(
-                    listOf(
-                        Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.MYCELIUM,
-                        Blocks.PODZOL, Blocks.GRAVEL, Blocks.SAND, Blocks.MUD
+            DnDConfiguredFeature.DISKS_WATER,
+            LithostitchedFeatures.WEIGHTED_SELECTOR,
+            WeightedSelectorConfig(
+                WeightedList.builder<Holder<PlacedFeature>>()
+                    .addC(this, DnDConfiguredFeature.DISK_SAND, 3)
+                    .addC(this, DnDConfiguredFeature.DISK_GRAVEL)
+                    .addC(this, DnDConfiguredFeature.DISK_CLAY)
+                    .build()
+            )
+        )
+    }
+
+    private fun BootstrapContext<ConfiguredFeature<*, *>>.diskFall(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        fallingBlock: Block,
+        solidBlock: Block,
+        maxSize: Int
+    ) {
+        this.disk(
+            feature, RuleBasedBlockStateProvider(
+                BlockStateProvider.simple(fallingBlock),
+                listOf(
+                    RuleBasedBlockStateProvider.Rule(
+                        BlockPredicate.not(BlockPredicate.solid(Direction.DOWN.normal)),
+                        BlockStateProvider.simple(solidBlock)
                     )
-                ), UniformInt.of(2, 6), 2
+                )
+            ), maxSize
+        )
+    }
+
+    private fun BootstrapContext<ConfiguredFeature<*, *>>.disk(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        block: Block,
+        maxSize: Int
+    ) {
+        this.disk(feature, RuleBasedBlockStateProvider.simple(block), maxSize)
+    }
+
+    private fun BootstrapContext<ConfiguredFeature<*, *>>.disk(
+        feature: ResourceKey<ConfiguredFeature<*, *>>,
+        block: RuleBasedBlockStateProvider,
+        maxSize: Int
+    ) {
+        this.registerConfiguredFeature(
+            feature, Feature.DISK, DiskConfiguration(
+                block,
+                BlockPredicate.matchesTag(DnDBlockTags.DISK_REPLACEABLE),
+                UniformInt.of(2, maxSize),
+                if (maxSize < 4) 1 else 2
             )
         )
     }

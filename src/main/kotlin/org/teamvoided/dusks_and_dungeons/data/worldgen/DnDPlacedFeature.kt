@@ -25,6 +25,7 @@ object DnDPlacedFeature {
     val MOSSKIN_PUMPKIN_EXTRA = key("pumpkin/mosskin_extra")
     val GLOOM_PUMPKIN_EXTRA = key("pumpkin/gloom_extra")
     val DISK_MUD = key("disk_mud")
+    val DISKS_WATER = key("disks_water")
     val AUTUMN_WOODS_VEGETATION = key("autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = key("autumn_pastures_vegetation")
     val GOLDEN_WOODS_VEGETATION = key("golden_woods_vegetation")

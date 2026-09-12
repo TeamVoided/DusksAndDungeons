@@ -1,10 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome
 
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.placement.MiscOverworldPlacements
 import net.minecraft.sounds.Music
 import net.minecraft.util.Mth
 import net.minecraft.world.level.biome.*
+import net.minecraft.world.level.levelgen.GenerationStep
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
+import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
 
 object BiomeCreator : RegistryBootstrapper<Biome> {
@@ -20,7 +23,8 @@ object BiomeCreator : RegistryBootstrapper<Biome> {
         register(DnDBiomes.OVERGROWN_GROTTO, CaveBiomeCreator.overgrownGrotto(this))
     }
 
-    fun biomeBuild( // TODO nuke this and make it be a better builder
+    fun biomeBuild(
+        // TODO nuke this and make it be a better builder
         ss: MobSpawnSettings.Builder,
         gs: BiomeGenerationSettings.Builder,
         music: Music,
@@ -55,6 +59,9 @@ object BiomeCreator : RegistryBootstrapper<Biome> {
         return Mth.hsvToRgb(0.62222224f - f * 0.05f, 0.5f + f * 0.1f, 1f)
     }
 
+    fun BiomeGenerationSettings.Builder.addDefaultDisks() {
+        add6UndergroundOres(DnDPlacedFeature.DISKS_WATER)
+    }
 
     /*Generation Steps Reference:
       RAW_GENERATION

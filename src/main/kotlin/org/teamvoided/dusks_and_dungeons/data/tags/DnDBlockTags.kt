@@ -81,6 +81,7 @@ object DnDBlockTags {
     // Feature
     val REPLACEABLE_OR_DIRT = key("replaceable_or_dirt")
     val VEGETATION_REPLACEABLE = key("vegetation_replaceable")
+    val DISK_REPLACEABLE = key("disk_replaceable")
     val FARMLAND_PLACES_UNDER = key("farmland_places_under")
     val GOLD_MUSH_GROW_ON = key("golden_mushroom_grows_on")
     val GOLD_MUSH_GROW_FROM = key("golden_mushroom_grows_from")

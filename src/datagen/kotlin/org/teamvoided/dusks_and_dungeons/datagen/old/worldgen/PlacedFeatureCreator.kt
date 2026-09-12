@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.*
+import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -78,6 +79,15 @@ object PlacedFeatureCreator {
             BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(BlockTags.DIRT)),
             BiomeFilter.biome()
         )
+        c.register(
+            DnDPlacedFeature.DISKS_WATER, cfgLookup.getOrThrow(DnDConfiguredFeature.DISKS_WATER),
+            CountPlacement.of(5),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
+            BlockPredicateFilter.forPredicate(BlockPredicate.matchesFluids(Fluids.WATER)),
+            BiomeFilter.biome()
+        )
+
         saplingFeatures(c, cfgLookup)
         autumnBiomeFeatures(c, cfgLookup)
 

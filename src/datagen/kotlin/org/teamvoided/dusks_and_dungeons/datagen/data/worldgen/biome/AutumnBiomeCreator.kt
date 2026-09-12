@@ -13,6 +13,7 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.BiomeGenerationSettings
 import net.minecraft.world.level.biome.MobSpawnSettings
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
+import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.BiomeCreator.addDefaultDisks
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.BiomeCreator.biomeBuild
 
 object AutumnBiomeCreator {
@@ -34,7 +35,7 @@ object AutumnBiomeCreator {
         val generation = ctx.createGenerationSettings {
             addGlobalOverworldGeneration()
             BiomeDefaultFeatures.addDefaultOres(this)
-            BiomeDefaultFeatures.addDefaultSoftDisks(this)
+            addDefaultDisks()
             add9VegetalDecoration(
                 if (golden) DnDPlacedFeature.GOLDEN_WOODS_VEGETATION else DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
             )
@@ -72,7 +73,7 @@ object AutumnBiomeCreator {
         val generation = ctx.createGenerationSettings {
             addGlobalOverworldGeneration()
             BiomeDefaultFeatures.addDefaultOres(this)
-            BiomeDefaultFeatures.addDefaultSoftDisks(this)
+            addDefaultDisks()
             add9VegetalDecoration(
                 if (golden) DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION else DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION
             )
@@ -108,7 +109,7 @@ object AutumnBiomeCreator {
         val generation = ctx.createGenerationSettings {
             addGlobalOverworldGeneration()
             BiomeDefaultFeatures.addDefaultOres(this)
-            BiomeDefaultFeatures.addDefaultSoftDisks(this)
+            addDefaultDisks()
             add9VegetalDecoration(DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION)
             BiomeDefaultFeatures.addPlainGrass(this)
             BiomeDefaultFeatures.addGiantTaigaVegetation(this)
