@@ -19,6 +19,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
 open class GravestoneBlock(val shape: VoxelShape, val centerShape: VoxelShape, settings: Properties) :
@@ -116,7 +117,7 @@ open class GravestoneBlock(val shape: VoxelShape, val centerShape: VoxelShape, s
 
         @JvmStatic
         fun connectsToDirection(state: BlockState, dir: Direction): Boolean {
-            if (state.block !is GravestoneBlock) {
+            if (state.block !is GravestoneBlock && !state.`is`(DnDBlockTags.SMALL_GRAVESTONES)) {
                 return false
             }
             val centered = state.getValue(CENTERED)
