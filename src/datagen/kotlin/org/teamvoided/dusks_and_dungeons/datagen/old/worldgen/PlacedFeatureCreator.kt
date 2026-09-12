@@ -298,6 +298,7 @@ object PlacedFeatureCreator {
             noiseThresholdFlowerPlacement(14)
         )
         c.surfacePlacementRare(DnDPlacedFeature.ORANGE_PETALS, DnDConfiguredFeature.ORANGE_PETALS, 32)
+        c.surfacePlacementRare(DnDPlacedFeature.COLD_WILDFLOWER, DnDConfiguredFeature.COLD_WILDFLOWER, 32)
         c.surfacePlacementRare(DnDPlacedFeature.FAIRY_RING_RED, DnDConfiguredFeature.FAIRY_RING_RED, 32)
         c.surfacePlacement(DnDPlacedFeature.WILD_WHEAT_FIELD, DnDConfiguredFeature.CROPS_WILD_WHEAT, 21)
         c.register(

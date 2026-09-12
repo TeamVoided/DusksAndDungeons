@@ -573,6 +573,15 @@ object ConfiguredFeatureCreator {
                 )
             )
         )
+        this.registerConfiguredFeature(
+            DnDConfiguredFeature.COLD_WILDFLOWER, Feature.FLOWER, RandomPatchConfiguration(
+                96, 6, 2,
+                PlacementUtils.onlyWhenEmpty(
+                    Feature.SIMPLE_BLOCK,
+                    SimpleBlockConfiguration(WeightedStateProvider(petalBuilder(DnDBlocks.COLD_WILDFLOWER)))
+                )
+            )
+        )
     }
 
     fun BootstrapContext<ConfiguredFeature<*, *>>.fairyRings() {

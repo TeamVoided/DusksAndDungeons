@@ -39,6 +39,7 @@ object DnDConfiguredFeature {
     val FLOWER_AUTUMN = key("flower/flower_autumn")
     val PATCH_ROSEBUSH = key("flower/patch_rosebush")
     val ORANGE_PETALS = key("flower/orange_petals")
+    val COLD_WILDFLOWER = key("flower/cold_wildflower")
     val AUTUMN_FARMLAND = key("autumn_farmland")
     val AUTUMN_FARMLAND_CROPS = key("crops/autumn_farmland_crops")
     val CROPS_WILD_WHEAT = key("crops/wild_wheat")

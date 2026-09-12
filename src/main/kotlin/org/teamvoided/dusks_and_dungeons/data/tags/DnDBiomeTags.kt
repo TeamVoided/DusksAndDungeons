@@ -29,6 +29,7 @@ object DnDBiomeTags {
     val GOLD_MUSHROOMS_CAVE = features("golden_mushroom/cave")
     val GOLD_MUSHROOMS_SURFACE = features("golden_mushroom/surface")
     val GOLD_MUSHROOMS_HUGE = features("golden_mushroom/huge")
+    val COLD_WILDFLOWER = features("cold_wildflower")
 
     val MOSSKIN_PUMPKINS_CAVE = features("pumpkins/mosskin_cave")
     val GLOOM_PUMPKINS_EXTRA = features("pumpkins/gloom_extra")

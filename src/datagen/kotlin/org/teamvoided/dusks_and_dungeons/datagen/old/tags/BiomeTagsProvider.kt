@@ -8,6 +8,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BiomeTags
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biomes
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import java.util.concurrent.CompletableFuture
@@ -60,6 +61,11 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
             .forceAddTag(ConventionalBiomeTags.IS_MUSHROOM)
             .add(DnDBiomes.OVERGROWN_GROTTO)
             .add(Biomes.DARK_FOREST)
+        getOrCreateTagBuilder(DnDBiomeTags.COLD_WILDFLOWER)
+            .forceAddTag(ConventionalBiomeTags.IS_TAIGA)
+            .forceAddTag(ConventionalBiomeTags.IS_HILL)
+            .addOptional(id("dusks_biomes", "cold_plains"))
+            .addOptional(id("dusks_biomes", "cold_forest"))
 
         getOrCreateTagBuilder(DnDBiomeTags.MOSSKIN_PUMPKINS_CAVE)
             .add(DnDBiomes.OVERGROWN_GROTTO)
