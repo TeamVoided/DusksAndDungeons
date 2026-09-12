@@ -45,7 +45,7 @@ object AutumnBiomeCreator {
         gs.addFeature(vd9, if (golden) DnDPlacedFeature.FAIRY_RING_RED else DnDPlacedFeature.ORANGE_PETALS)
     }
 
-     fun createAutumnForest(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
+    fun createAutumnForest(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
         val ss = MobSpawnSettings.Builder()
         addAutumnAnimals(ss)
         BiomeDefaultFeatures.commonSpawns(ss)
@@ -60,9 +60,9 @@ object AutumnBiomeCreator {
             if (golden) DnDPlacedFeature.GOLDEN_WOODS_VEGETATION else DnDPlacedFeature.AUTUMN_WOODS_VEGETATION
         )
         if (golden) BiomeDefaultFeatures.addForestGrass(gs)
-        gs.addFeature(vd9, VegetationPlacements.PATCH_DEAD_BUSH)
         gs.addFeature(vd9, VegetationPlacements.BROWN_MUSHROOM_OLD_GROWTH)
         gs.addFeature(vd9, VegetationPlacements.RED_MUSHROOM_OLD_GROWTH)
+        gs.addFeature(vd9, VegetationPlacements.PATCH_DEAD_BUSH_2) //I LOVE FEATURE ORDER CYCLES!!!
         BiomeDefaultFeatures.addDefaultMushrooms(gs)
         if (golden) gs.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
         else BiomeDefaultFeatures.addDefaultExtraVegetation(gs)
@@ -85,7 +85,7 @@ object AutumnBiomeCreator {
     }
 //grass 16434531 15647087
 
-     fun createAutumnPlains(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
+    fun createAutumnPlains(c: BootstrapContext<Biome>, golden: Boolean = false): Biome {
         val ss = MobSpawnSettings.Builder()
         addAutumnAnimals(ss)
         BiomeDefaultFeatures.commonSpawns(ss)
@@ -101,6 +101,7 @@ object AutumnBiomeCreator {
         )
         gs.addFeature(vd9, DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN)
         gs.addFeature(vd9, DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN)
+        gs.addFeature(vd9, VegetationPlacements.PATCH_DEAD_BUSH_2)
         BiomeDefaultFeatures.addDefaultMushrooms(gs)
         if (golden) gs.addFeature(vd9, VegetationPlacements.PATCH_SUGAR_CANE)
         else BiomeDefaultFeatures.addDefaultExtraVegetation(gs)
@@ -122,7 +123,7 @@ object AutumnBiomeCreator {
         )
     }
 
-     fun createAutumnRiver(context: BootstrapContext<Biome>): Biome {
+    fun createAutumnRiver(context: BootstrapContext<Biome>): Biome {
         val ss = MobSpawnSettings.Builder()
             .addSpawn(MobCategory.WATER_CREATURE, MobSpawnSettings.SpawnerData(EntityType.SQUID, 2, 1, 4))
             .addSpawn(MobCategory.WATER_AMBIENT, MobSpawnSettings.SpawnerData(EntityType.SALMON, 5, 1, 5))

@@ -35,9 +35,11 @@ open class HorizontalWaterloggedBlock(settings: Properties) : HorizontalDirectio
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
         val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
+
+        val face = ctx.clickedFace
         return defaultBlockState()
-            .setValue(FACING, ctx.horizontalDirection.opposite)
             .setValue(WATERLOGGED, waterlogged)
+            .setValue(FACING, if (face.axis != Direction.Axis.Y) face else ctx.horizontalDirection.opposite)
     }
 
     override fun getFluidState(state: BlockState): FluidState {

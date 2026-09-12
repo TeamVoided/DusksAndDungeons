@@ -104,6 +104,7 @@ fun <T : Block> T.axe(): T = AXABLE.addDev(this)
 fun <T : Block> T.shovel(): T = SHOVELABLE.addDev(this)
 fun <T : Block> T.hoe(): T = HOEABLE.addDev(this)
 
+//these should probably all be ___Like, or rename the above tints to ___Colored?
 fun <T : Block> T.plant(): T = cutout().sword().hoe()
 fun <T : Block> T.grassLike(): T = cutout().sword().axe()
 fun <T : Block> T.leaves(): T = cutout().hoe().flammableLeaves()

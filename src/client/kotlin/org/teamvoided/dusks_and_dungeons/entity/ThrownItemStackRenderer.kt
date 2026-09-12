@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemDisplayContext
 class ThrownItemStackRenderer(ctx: EntityRendererProvider.Context) : EntityRenderer<ThrownItemStack>(ctx) {
 
     private val itemRenderer: ItemRenderer = ctx.itemRenderer
-    val scale = 2f
+    val scale = 1.5f
     val fullBright = false
 
     override fun getBlockLightLevel(entity: ThrownItemStack, blockPos: BlockPos): Int {
@@ -29,8 +29,12 @@ class ThrownItemStackRenderer(ctx: EntityRendererProvider.Context) : EntityRende
         if (entity.tickCount >= 2 || !(entityRenderDispatcher.camera.entity.distanceToSqr(entity) < MIN_CAMERA_DISTANCE_SQUARED)) {
             poseStack.pushPose()
             poseStack.scale(scale, scale, scale)
-            poseStack.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))
-            poseStack.mulPose(Axis.ZN.rotationDegrees(entity.getViewXRot(tickDelta) + entity.tickCount + tickDelta))
+            if (entity.onGround()) {
+                poseStack.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))
+                poseStack.mulPose(Axis.ZN.rotationDegrees(entity.getViewXRot(tickDelta) + entity.tickCount + tickDelta))
+            }else{
+                poseStack.mulPose(Axis.YN.rotationDegrees(90f))
+            }
             itemRenderer.renderStatic(
                 entity.item, ItemDisplayContext.GROUND,
                 light, OverlayTexture.NO_OVERLAY,

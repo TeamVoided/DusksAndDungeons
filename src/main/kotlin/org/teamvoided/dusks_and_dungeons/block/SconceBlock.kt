@@ -31,7 +31,6 @@ class SconceBlock(settings: Properties) : HorizontalWaterloggedBlock(settings) {
         val blockPos = ctx.clickedPos
         val direction = ctx.clickedFace
         val state = super.getStateForPlacement(ctx)
-        if (direction.axis != Direction.Axis.Y) state.setValue(FACING, direction)
         if (direction != Direction.UP && (direction == Direction.DOWN || (ctx.clickLocation.y - blockPos.y > 0.5)))
             return state
 

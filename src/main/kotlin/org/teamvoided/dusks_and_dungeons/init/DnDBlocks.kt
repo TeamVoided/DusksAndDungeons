@@ -298,11 +298,11 @@ object DnDBlocks {
 
     // region Verdant
     val VERDANT_LEAVES = register("verdant_leaves", ::LeavesBlock, ofFullCopy(AZALEA_LEAVES))
-        .cutout().grass().tint().hoe()
+        .leaves().grass().tint()
     val VERDANT_LEAF_PILE = registerOld(
         "verdant_leaf_pile",
         leafPile(VERDANT_LEAVES.defaultMapColor(), SoundType.AZALEA_LEAVES)
-    ).cutout().grass().tint().hoe()
+    ).cutout().grass().tint()
 
     val VERDANT_LOG = registerOld("verdant_log", log(MapColor.GRASS, MapColor.COLOR_BROWN)).grass().cutout()
     val VERDANT_WOOD = register(
