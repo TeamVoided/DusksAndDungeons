@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.sounds.SoundSource
@@ -79,34 +80,38 @@ object Candelabra {
      * Offsets are original defied in pixels and then scaled in a map func
      */
     val OFFSETS = listOf(
-        listOf(
+        arrayOf(
             Vec3(0.0, 8.0, 0.0)
         ),
-        listOf(
+        arrayOf(
             Vec3(4.0, 8.0, 0.0),
             Vec3(-4.0, 8.0, 0.0),
         ),
-        listOf(
+        arrayOf(
             Vec3(5.0, 8.0, 0.0),
             Vec3(-5.0, 8.0, 0.0),
             Vec3(0.0, 10.0, 0.0),
         ),
-        listOf(
+        arrayOf(
             Vec3(5.0, 8.0, 0.0),
             Vec3(-5.0, 8.0, 0.0),
             Vec3(0.0, 8.0, 5.0),
             Vec3(0.0, 8.0, -5.0),
         ),
-        listOf(
+        arrayOf(
             Vec3(5.0, 8.0, 0.0),
             Vec3(-5.0, 8.0, 0.0),
             Vec3(0.0, 8.0, 5.0),
             Vec3(0.0, 8.0, -5.0),
             Vec3(0.0, 10.0, 0.0),
         )
-    ).map { list -> list.map { it.scale(PIXEL_SCALER) } }
+    ).map { list -> list.map { it.scale(PIXEL_SCALER) }.toTypedArray() }.toTypedArray()
 
-    fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(ItemTags.CANDLES) || stack.`is`(Items.HEAVY_CORE)
+    val MISSING_OFFSET = Vec3(0.0, 1.0, 0.0)
+
+    // TODO make this a tag
+    fun canAddToCandelabra(stack: ItemStack): Boolean =
+        stack.`is`(ItemTags.CANDLES) || stack.`is`(Items.HEAVY_CORE) || stack.`is`(Items.END_ROD)
 
     fun tryAddToCandelabra(
         level: Level, pos: BlockPos, state: BlockState, stack: ItemStack, player: Player, hit: BlockHitResult,
@@ -119,7 +124,14 @@ object Candelabra {
         val slot = getSlot(pos, state, { !candelabra.isSlotFull(it) }, hit)
         if (candelabra.tryAddCandle(stack, slot)) {
             stack.consume(1, player)
-            level.playSound(null, pos, candelabra.stateCache[slot].soundType.placeSound, SoundSource.BLOCKS, 1f, 1f)
+            level.playSound(
+                null,
+                pos,
+                candelabra.internalBlockStates[slot].soundType.placeSound,
+                SoundSource.BLOCKS,
+                1f,
+                1f
+            )
             return true
         }
         return false
@@ -176,11 +188,11 @@ object Candelabra {
         be: CandelabraBlockEntity, pos: Vec3, level: Level, random: RandomSource, state: BlockState,
     ) {
         for ((idx, offset) in be.particleOffsets.withIndex()) {
-            if (offset == null || be.stateCache[idx].isAir) {
+            if (offset == null || be.internalBlockStates[idx].isAir) {
                 continue
             }
             val inWorldPos = offset.add(pos)
-            when (val block = be.stateCache[idx].block) {
+            when (val block = be.internalBlockStates[idx].block) {
                 is SoulCandleBlock -> block.spawnCandleParticles(level, inWorldPos, random)
                 is BigCandleBlock -> block.spawnCandleParticles(level, inWorldPos, random)
                 is CandleBlock -> level.spawnCandleParticles(inWorldPos, random)
@@ -207,10 +219,6 @@ object Candelabra {
         }
     }
 
-    fun BlockGetter.updateCandelabra(pos: BlockPos) {
-        getCandelabra(pos)?.updateStateCache(getCandelabra(pos)!!.level!!)
-    }
-
     fun BlockGetter.getCandelabra(pos: BlockPos): CandelabraBlockEntity? {
         return getBlockEntity(pos, DnDBlockEntities.CANDELABRA)?.getOrNull()
     }
@@ -222,9 +230,10 @@ object Candelabra {
         return stack
     }
 
-    fun canAddCandles(ctx: BlockPlaceContext, state: BlockState, block: Block): Boolean {
+    fun canReplace(ctx: BlockPlaceContext, state: BlockState, block: Block): Boolean {
         return (!ctx.isSecondaryUseActive
                 && ctx.itemInHand.item === block.asItem()
+                && !ctx.itemInHand.has(DataComponents.BLOCK_STATE)
                 && (state.getValue(CANDLES) + getSlotCount(ctx.itemInHand)) <= 5)
     }
 

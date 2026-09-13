@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.AbstractCandleBlock
-import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.MISSING_OFFSET
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 
@@ -40,11 +40,11 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
                 continue
             }
             val item = stack.item
-            val off = offsets.getOrElse(index) { Vec3.ZERO }
+            val off = offsets.getOrElse(index) { MISSING_OFFSET }
             poseStack.pushPose()
             poseStack.translate(off.x, off.y, off.z)
             if (item is BlockItem) {
-                var state = candelabra.stateCache[index]
+                var state = candelabra.internalBlockStates[index]
                 state = state.trySetValue(AbstractCandleBlock.LIT, isLit)
                 blockRenderer.renderSingleBlock(state, poseStack, buffers, light, overlay)
             } else {

@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.item
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
@@ -48,10 +49,14 @@ class CandelabraItem(block: Block, val filledBlock: Block, properties: Propertie
         if (!content.isEmpty()) {
             val filled = filledBlock.getStateForPlacement(ctx)
             if (filled != null) {
-                return if (canPlace(ctx, filled)) filled else null
+                return if (canPlace(ctx, filled) && notStacking(ctx, filled)) filled else null
             }
         }
         return super.getPlacementState(ctx)
+    }
+
+    fun notStacking(ctx: BlockPlaceContext, filled: BlockState): Boolean {
+        return ctx.clickedFace != Direction.UP || !ctx.level.getBlockState(ctx.clickedPos.below()).`is`(filled.block)
     }
 
     override fun updateCustomBlockEntityTag(

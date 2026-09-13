@@ -82,12 +82,12 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
 
     // Logic
     override fun canBeReplaced(state: BlockState, ctx: BlockPlaceContext): Boolean {
-        return Candelabra.canAddCandles(ctx, state, this) || super.canBeReplaced(state, ctx)
+        return Candelabra.canReplace(ctx, state, this) || super.canBeReplaced(state, ctx)
     }
 
 
     override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
-        return canSupportCenter(level, pos.below(), Direction.UP) && !level.getBlockState(pos.below()).`is`(this)
+        return canSupportCenter(level, pos.below(), Direction.UP)
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {

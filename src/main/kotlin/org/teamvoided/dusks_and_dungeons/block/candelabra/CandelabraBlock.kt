@@ -38,13 +38,10 @@ import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getCandelab
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getSlotCount
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.spawnCandelabraParticles
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
-import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.updateCandelabra
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.block.entity.createTicker
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
-import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
-import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 
 open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(properties),
     SimpleWaterloggedBlock, EntityBlock, BlockPickInteractionAware {
@@ -83,25 +80,13 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     // Particles
-    override fun getParticleOffsets(state: BlockState): Iterable<Vec3> {
-        return CANDELABRA_PARTICLE_OFFSETS[state.getValue(FACING)]?.get(state.getValue(CANDLES)) ?: RAW_OFFSETS[0]
-    }
+    override fun getParticleOffsets(state: BlockState): Iterable<Vec3> = EMPTY_OFFSETS
 
     override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         if (!state.getValue(AbstractCandleBlock.LIT)) return
+        val be = level.getCandelabra(pos) ?: return
 
-        val be = level.getCandelabra(pos)
-        if (be == null) {
-            for (it in getParticleOffsets(state)) {
-                spawnParticles(level, it.add(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()), random)
-            }
-            return
-        }
         spawnCandelabraParticles(be, Vec3(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()), level, random, state)
-    }
-
-    private fun spawnParticles(level: Level, offset: Vec3, random: RandomSource) {
-        level.spawnCandleParticles(offset, random)
     }
 
     // Waterlogging
@@ -138,7 +123,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
 
     // Logic
     override fun canBeReplaced(state: BlockState, ctx: BlockPlaceContext): Boolean {
-        return Candelabra.canAddCandles(ctx, state, this) || super.canBeReplaced(state, ctx)
+        return Candelabra.canReplace(ctx, state, this) || super.canBeReplaced(state, ctx)
     }
 
     override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
@@ -148,8 +133,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
         val state = ctx.level.getBlockState(ctx.clickedPos)
         if (state.`is`(this) || state.`is`(getEmpty())) {
-            val pState = Candelabra.cycleShapedFromItem(state, ctx.itemInHand)
-            return if (pState != null) withPropertiesOf(pState) else null
+            return Candelabra.cycleShapedFromItem(withPropertiesOf(state), ctx.itemInHand)
         }
         val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)
@@ -187,7 +171,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     ) {
         if (!state.`is`(otherState.block)) {
             level.getCandelabra(pos)?.let { be ->
-                dropContents(level, pos, be.candles)
+                dropContents(level, pos, be.getCandles())
             }
         }
         super.onRemove(state, level, pos, otherState, movedByPiston)
@@ -197,7 +181,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         level: Level, pos: BlockPos, state: BlockState, entity: LivingEntity?, stack: ItemStack,
     ) {
         super.setPlacedBy(level, pos, state, entity, stack)
-        level.updateCandelabra(pos)
+        level.getCandelabra(pos)?.updateStateCache(level)
     }
 
     override fun rotate(state: BlockState, rotation: Rotation): BlockState {
@@ -240,21 +224,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         val CANDLES = DnDBlockStateProperties.CANDLES
         val LIT: BooleanProperty = BlockStateProperties.LIT
 
-        val RAW_OFFSETS = listOf(
-            listOf(Vec3(0.5, 1.0, 0.5)),
-            listOf(Vec3(0.25, 1.0, 0.5), Vec3(0.75, 1.0, 0.5)),
-            listOf(Vec3(0.5, 1.125, 0.5), Vec3(0.1875, 1.0, 0.5), Vec3(0.8125, 1.0, 0.5)),
-            listOf(Vec3(0.1875, 1.0, 0.5), Vec3(0.8125, 1.0, 0.5), Vec3(0.5, 1.0, 0.1875), Vec3(0.5, 1.0, 0.8125)),
-            listOf(
-                Vec3(0.1875, 1.0, 0.5), Vec3(0.8125, 1.0, 0.5),
-                Vec3(0.5, 1.125, 0.5),
-                Vec3(0.5, 1.0, 0.1875), Vec3(0.5, 1.0, 0.8125)
-            )
-        )
-
-        val CANDELABRA_PARTICLE_OFFSETS = FACING.possibleValues.associateWith { dir ->
-            CANDLES.possibleValues.associateWith { count -> RAW_OFFSETS[count - 1].rotateFlat90(dir.get2DDataValue()) }
-        }
+        val EMPTY_OFFSETS = listOf<Vec3>()
 
         @JvmStatic
         fun canLiteCandelabra(state: BlockState): Boolean {

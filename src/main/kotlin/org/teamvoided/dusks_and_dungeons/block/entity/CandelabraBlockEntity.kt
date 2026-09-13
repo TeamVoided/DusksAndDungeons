@@ -5,6 +5,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
 import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
@@ -30,7 +31,7 @@ import kotlin.math.min
 
 class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CANDELABRA, pos, state) {
 
-    internal val candles: NonNullList<ItemStack> = NonNullList.withSize(MAX_CANDLES, ItemStack.EMPTY)
+    private val candles: NonNullList<ItemStack> = NonNullList.withSize(MAX_CANDLES, ItemStack.EMPTY)
 
     var hasTicked = false
     var addingCandles = false
@@ -47,7 +48,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
     }
 
     fun isSlotFull(slot: Int): Boolean {
-        require(slot > -1 && slot < candles.size) { "Index out of bonds in Candelabra" }
+        require(slot > -1 && slot < candles.size) { "Index[$slot] out of bonds in Candelabra" }
         return !candles[slot].isEmpty
     }
 
@@ -59,7 +60,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
             return false
         }
         candles[slot] = candle.copyWithCount(1)
-        updateStateCache(level!!)
+        updateStateCache(level!!) //myb move level to param
 
         return true
     }
@@ -71,7 +72,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
 
     fun getMaxCandles(): Int = blockState.getValue(CandelabraBlock.CANDLES)
 
-    val stateCache: NonNullList<BlockState> = NonNullList.withSize(MAX_CANDLES, Blocks.AIR.defaultBlockState())
+    val internalBlockStates: NonNullList<BlockState> = NonNullList.withSize(MAX_CANDLES, Blocks.AIR.defaultBlockState())
     var dynamicShape: VoxelShape = Shapes.empty()
     var dynamicCollisionShape: VoxelShape = Shapes.empty()
     val particleOffsets: Array<Vec3?> = arrayOfNulls(MAX_CANDLES)
@@ -89,22 +90,27 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
             }
             val item = stack.item
             if (item is BlockItem) {
-                val state = item.block.defaultBlockState()
+                var state = item.block.defaultBlockState()
                 if (state.isAir) {
                     continue
                 }
-                // TODO apply DataComponents.BLOCK_STATE if present
-                stateCache[idx] = state
+                val blockStateData = stack.get(DataComponents.BLOCK_STATE)
+                if (blockStateData != null) {
+                    state = blockStateData.apply(state)
+                }
+                internalBlockStates[idx] = state
                 val offset = Candelabra.OFFSETS.getOrNull(getMaxCandles() - 1)?.getOrNull(idx) ?: Vec3.ZERO
                 val bShape = state.getShape(uLevel, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
                 val cShape = state.getCollisionShape(uLevel, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
                 shape = Shapes.or(shape, bShape)
                 collisionShape = Shapes.or(collisionShape, cShape)
-                particleOffsets[idx] = offset.add(
-                    0.5,
-                    bShape.max(Direction.Axis.Y) - bShape.min(Direction.Axis.Y) + Candelabra.PIXEL_SCALER * 2,
-                    0.5,
-                ).rotateFlat90(dir)
+                particleOffsets[idx] = offset
+                    .add(
+                        0.5,
+                        bShape.max(Direction.Axis.Y) - bShape.min(Direction.Axis.Y) + Candelabra.PIXEL_SCALER * 2,
+                        0.5,
+                    )
+                    .rotateFlat90(dir)
             }
         }
         dynamicShape = shape
@@ -115,7 +121,7 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
         super.loadAdditional(nbt, provider)
         if (nbt.contains(KEY_CANDLES)) {
             val list = nbt.getList(KEY_CANDLES, Tag.TAG_COMPOUND.toInt())
-            repeat(list.size) { index ->
+            for (index in list.indices) {
                 candles[index] = ItemStack.parseOptional(provider, list.getCompound(index))
             }
         }

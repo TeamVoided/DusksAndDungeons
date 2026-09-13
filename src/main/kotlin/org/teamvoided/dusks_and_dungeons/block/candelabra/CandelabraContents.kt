@@ -7,21 +7,12 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import org.teamvoided.dusks_and_dungeons.util.emptyItemList
 import java.util.List.copyOf
 
 
 @Suppress("DEPRECATION")
 data class CandelabraContents(val candles: NonNullList<ItemStack>) {
-
-    override fun equals(other: Any?): Boolean {
-        return other is CandelabraContents && ItemStack.listMatches(candles, other.candles)
-    }
-
-    override fun hashCode(): Int {
-        var result = slots
-        result = 31 * result + ItemStack.hashStackList(candles)
-        return result
-    }
 
     val slots = candles.size
     val fullSlots = candles.sumOf { if (it.isEmpty) 0 else 1 }
@@ -37,6 +28,16 @@ data class CandelabraContents(val candles: NonNullList<ItemStack>) {
     }
 
     override fun toString(): String = "CandelabraContents[candles=${candles}]"
+
+    override fun equals(other: Any?): Boolean {
+        return other is CandelabraContents && ItemStack.listMatches(candles, other.candles)
+    }
+
+    override fun hashCode(): Int {
+        var result = fullSlots
+        result = 31 * result + ItemStack.hashStackList(candles)
+        return result
+    }
 
     companion object {
 
@@ -55,7 +56,6 @@ data class CandelabraContents(val candles: NonNullList<ItemStack>) {
 
         fun getStatic(value: Int): CandelabraContents {
             return when (value) {
-                1 -> ONE
                 2 -> TWO
                 3 -> THREE
                 4 -> FOUR
@@ -69,10 +69,6 @@ data class CandelabraContents(val candles: NonNullList<ItemStack>) {
         val THREE = CandelabraContents(emptyItemList(3))
         val FOUR = CandelabraContents(emptyItemList(4))
         val FIVE = CandelabraContents(emptyItemList(5))
-
-        fun emptyItemList(capacity: Int): NonNullList<ItemStack> {
-            return NonNullList.withSize(capacity, ItemStack.EMPTY)
-        }
 
         val CODEC: Codec<CandelabraContents> =
             ItemStack.OPTIONAL_CODEC

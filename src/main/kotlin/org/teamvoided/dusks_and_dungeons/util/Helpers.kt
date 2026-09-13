@@ -7,6 +7,7 @@ import net.minecraft.core.*
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
@@ -127,4 +128,8 @@ fun VoxelShape.rotateColumn(axis: Direction.Axis): VoxelShape {
     }
 
     return shapes[0]
+}
+
+fun emptyItemList(capacity: Int): NonNullList<ItemStack> {
+    return NonNullList.withSize(capacity, ItemStack.EMPTY)
 }
