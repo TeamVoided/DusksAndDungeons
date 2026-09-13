@@ -1,7 +1,6 @@
-package org.teamvoided.dusks_and_dungeons.mixin;
+package org.teamvoided.dusks_and_dungeons.mixin.wii.connect;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +12,7 @@ public abstract class FenceGateBlockMixin {
 
     @ModifyReturnValue(method = "isWall", at = @At("RETURN"))
     private boolean connectToWoodenOrRegular(boolean original, BlockState state) {
-        return original || (state instanceof BlockConnection && ((BlockConnection) state).gateInWall(state));
+        return original || (state.getBlock() instanceof BlockConnection connection && connection.allowGateInWallState(state));
     }
 
 }

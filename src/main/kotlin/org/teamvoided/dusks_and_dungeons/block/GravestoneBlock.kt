@@ -62,8 +62,10 @@ open class GravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, propertie
 
     override fun isPathfindable(state: BlockState, navigationType: PathComputationType): Boolean = false
 
-    override fun allConnect(state: BlockState, dir: Direction): Boolean {
-        if (state.`is`(DnDBlockTags.SMALL_GRAVESTONES)) return false
+    override fun allowAllConnections(state: BlockState, dir: Direction): Boolean {
+        if (state.`is`(DnDBlockTags.SMALL_GRAVESTONES)) {
+            return false
+        }
         val centered = state.getValue(CENTERED)
         val facing = state.getValue(FACING)
         return (centered && facing.axis === dir.clockWise.axis) || (!centered && facing.opposite == dir)

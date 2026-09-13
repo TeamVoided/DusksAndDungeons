@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin;
+package org.teamvoided.dusks_and_dungeons.mixin.wii.connect;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -14,7 +14,7 @@ public abstract class FenceBlockMixin {
 
     @ModifyReturnValue(method = "connectsTo", at = @At("RETURN"))
     private boolean connectToWoodenOrRegular(boolean original, BlockState state, @Local(argsOnly = true) Direction dir) {
-        return original || (state instanceof BlockConnection && ((BlockConnection) state).fencesConnect(state, dir));
+        return original || (state.getBlock() instanceof BlockConnection connection && connection.allowFencesToConnect(state, dir));
     }
 
 }

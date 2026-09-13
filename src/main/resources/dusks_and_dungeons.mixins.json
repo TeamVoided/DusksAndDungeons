@@ -5,8 +5,6 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DispenserBlockMixin",
-    "FenceBlockMixin",
-    "FenceGateBlockMixin",
     "FoxEntityVariantMixin",
     "IceBlockMixin",
     "ItemEntityMixin",
@@ -15,7 +13,6 @@
     "MangroveRootsBlockMixin",
     "MushroomBlockMixin",
     "NyliumBlockMixin",
-    "WallBlockMixin",
     "WitherSkeletonMixin",
     "accessors.AbstractCandleBlockAccessor",
     "accessors.CropBlockAccessor",
@@ -39,7 +36,11 @@
     "directional_sculk.spreading.SculkPatchFeatureMixin",
     "evil.UtilMixin",
     "taglighting.FallLocationMixin",
-    "taglighting.LivingEntityMixin"
+    "taglighting.LivingEntityMixin",
+    "wii.connect.FenceBlockMixin",
+    "wii.connect.FenceGateBlockMixin",
+    "wii.connect.IronBarsBlockMixin",
+    "wii.connect.WallBlockMixin"
   ],
   "client": [],
   "injectors": {

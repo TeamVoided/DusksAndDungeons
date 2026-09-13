@@ -47,7 +47,9 @@ class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(propertie
         return state.setValue(HANGING, true)
     }
 
-    override fun allConnect(state: BlockState, dir: Direction): Boolean = state.getValue(FACING) == dir.opposite
+    override fun allowAllConnections(state: BlockState, dir: Direction): Boolean {
+        return state.getValue(FACING) == dir.opposite
+    }
 
     companion object {
 

@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin;
+package org.teamvoided.dusks_and_dungeons.mixin.wii.connect;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -25,7 +25,7 @@ public abstract class WallBlockMixin extends Block {
         if (original && state.is(BlockTags.WALLS)) {
             return state.is(DnDBlockTags.WOODEN_WALLS) == defaultBlockState().is(DnDBlockTags.WOODEN_WALLS);
         }
-        return original || (state instanceof BlockConnection && ((BlockConnection) state).wallsConnect(state, dir));
+        return original || (state.getBlock() instanceof BlockConnection connection && connection.allowWallsToConnect(state, dir));
     }
 
 }
