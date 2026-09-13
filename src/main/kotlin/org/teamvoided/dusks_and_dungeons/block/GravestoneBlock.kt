@@ -13,10 +13,11 @@ import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.block.not_blocks.BlockConnection
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 
 open class GravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, properties: Properties) :
-    HorizontalWaterloggedBlock(properties) {
+    HorizontalWaterloggedBlock(properties), BlockConnection {
 
     val wallMap = createShapeMap(shape)
     val centerMap = createShapeMap(centerShape)
@@ -61,6 +62,13 @@ open class GravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, propertie
 
     override fun isPathfindable(state: BlockState, navigationType: PathComputationType): Boolean = false
 
+    override fun allConnect(state: BlockState, dir: Direction): Boolean {
+        if (state.`is`(DnDBlockTags.SMALL_GRAVESTONES)) return false
+        val centered = state.getValue(CENTERED)
+        val facing = state.getValue(FACING)
+        return (centered && facing.axis === dir.clockWise.axis) || (!centered && facing.opposite == dir)
+    }
+
     companion object {
 
         val CENTERED: BooleanProperty = BooleanProperty.create("centered")
@@ -87,16 +95,5 @@ open class GravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, propertie
         fun newGrave(properties: Properties) = GravestoneBlock(WALL_SHAPE, CENTER_SHAPE, properties)
         fun newSmallGrave(properties: Properties) = GravestoneBlock(SMALL_WALL_SHAPE, CENTER_CENTER_SHAPE, properties)
         fun newHeadstone(properties: Properties) = GravestoneBlock(HEADSTONE_SHAPE, CENTER_HEADSTONE_SHAPE, properties)
-
-        @JvmStatic
-        fun connectsToDirection(state: BlockState, dir: Direction): Boolean {
-            if (state.block !is GravestoneBlock || state.`is`(DnDBlockTags.SMALL_GRAVESTONES)) {
-                return false
-            }
-            val centered = state.getValue(CENTERED)
-            val facing = state.getValue(FACING)
-            return (centered && facing.axis === dir.clockWise.axis) || (!centered && facing.opposite == dir)
-        }
-
     }
 }

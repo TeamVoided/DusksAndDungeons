@@ -6,6 +6,7 @@
   "mixins": [
     "DispenserBlockMixin",
     "FenceBlockMixin",
+    "FenceGateBlockMixin",
     "FoxEntityVariantMixin",
     "IceBlockMixin",
     "ItemEntityMixin",

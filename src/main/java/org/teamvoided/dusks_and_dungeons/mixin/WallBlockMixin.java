@@ -10,9 +10,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock;
+import org.teamvoided.dusks_and_dungeons.block.not_blocks.BlockConnection;
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags;
-import org.teamvoided.dusks_and_dungeons.util.mixin.FenceGateWallConnection;
 
 @Mixin(WallBlock.class)
 public abstract class WallBlockMixin extends Block {
@@ -26,7 +25,7 @@ public abstract class WallBlockMixin extends Block {
         if (original && state.is(BlockTags.WALLS)) {
             return state.is(DnDBlockTags.WOODEN_WALLS) == defaultBlockState().is(DnDBlockTags.WOODEN_WALLS);
         }
-        return original || FenceGateWallConnection.wallsAndFencesConnect(state, dir);
+        return original || (state instanceof BlockConnection && ((BlockConnection) state).wallsConnect(state, dir));
     }
 
 }

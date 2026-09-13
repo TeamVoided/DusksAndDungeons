@@ -12,10 +12,11 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.block.not_blocks.BlockConnection
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
-class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(properties) {
+class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(properties), BlockConnection {
 
     init {
         registerDefaultState(
@@ -46,6 +47,8 @@ class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(propertie
         return state.setValue(HANGING, true)
     }
 
+    override fun allConnect(state: BlockState, dir: Direction): Boolean = state.getValue(FACING) == dir.opposite
+
     companion object {
 
         val HANGING: BooleanProperty = BlockStateProperties.HANGING
@@ -66,10 +69,5 @@ class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(propertie
                 (if (hanging) HANGING_SHAPE else SHAPE).rotate(dir.opposite.get2DDataValue())
             }
         }
-
-        fun connectsToDirection(state: BlockState, dir: Direction): Boolean {
-            return state.block is SconceBlock && state.getValue(FACING) == dir.opposite
-        }
-
     }
 }
