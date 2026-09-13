@@ -31,9 +31,15 @@ class ItemTagsProvider(
         vanillaTags()
         conventionTags()
 
-        getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).remove(Items.BLACKSTONE)
-        getOrCreateTagBuilder(DnDItemTags.BLACKSTONE_TOOL_MATERIALS).add(Items.BLACKSTONE)
+        // Functional
+        getOrCreateTagBuilder(DnDItemTags.GOES_IN_CANDELABRA)
+            .forceAddTag(ItemTags.CANDLES)
+        // Misc
         getOrCreateTagBuilder(DnDItemTags.EMPTY)
+        getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS)
+            .remove(Items.BLACKSTONE)
+        getOrCreateTagBuilder(DnDItemTags.BLACKSTONE_TOOL_MATERIALS)
+            .add(Items.BLACKSTONE)
 
         // TODO(1.0) VV tags
         copy(ConventionalBlockTags.BOOKSHELVES, ConventionalItemTags.BOOKSHELVES)

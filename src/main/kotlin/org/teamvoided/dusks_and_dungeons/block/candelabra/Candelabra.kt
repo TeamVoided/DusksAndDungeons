@@ -5,11 +5,9 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.sounds.SoundSource
-import net.minecraft.tags.ItemTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -26,6 +24,7 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.FACING
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
 import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 import org.teamvoided.dusks_and_dungeons.util.getFlameParticle
@@ -109,9 +108,7 @@ object Candelabra {
 
     val MISSING_OFFSET = Vec3(0.0, 1.0, 0.0)
 
-    // TODO make this a tag
-    fun canAddToCandelabra(stack: ItemStack): Boolean =
-        stack.`is`(ItemTags.CANDLES) || stack.`is`(Items.HEAVY_CORE) || stack.`is`(Items.END_ROD)
+    fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(DnDItemTags.GOES_IN_CANDELABRA)
 
     fun tryAddToCandelabra(
         level: Level, pos: BlockPos, state: BlockState, stack: ItemStack, player: Player, hit: BlockHitResult,
