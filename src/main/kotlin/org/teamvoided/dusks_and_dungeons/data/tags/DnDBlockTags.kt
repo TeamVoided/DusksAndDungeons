@@ -72,6 +72,8 @@ object DnDBlockTags {
     val HEADSTONES = key("headstones")
     val CARPET_PLATES = key("carpet_plates")
     val CARPET_PLATES_WOOL = key("carpet_plates/wool")
+    val SCONCES_THAT_BURN = key("sconces_that_burn")
+    val SCONCES = key("sconces")
 
     // Nether Bricks
     val NETHER_BRICKS = key("nether_bricks")

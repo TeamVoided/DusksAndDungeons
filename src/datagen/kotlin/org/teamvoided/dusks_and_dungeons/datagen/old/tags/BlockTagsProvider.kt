@@ -169,9 +169,14 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(DnDBlockTags.CARPET_PLATES_WOOL)
             .add(DnDBlocks.MOSS_CARPET_PLATE)
             .add(DnDBlocks.OVERGROWTH_CARPET_PLATE)
-
         getOrCreateTagBuilder(DnDBlockTags.CARPET_PLATES_WOOL)
             .add(DnDBlocks.WOOL_CARPET_PLATE)
+
+        getOrCreateTagBuilder(DnDBlockTags.SCONCES)
+            .forceAddTag(DnDBlockTags.SCONCES_THAT_BURN)
+            .add(DnDBlocks.IRON_SCONCE)
+        getOrCreateTagBuilder(DnDBlockTags.SCONCES_THAT_BURN)
+            .add(DnDBlocks.SPRUCE_SCONCE)
 
         getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS)
             .forceAddTag(DnDBlockTags.CARPET_PLATES)
@@ -304,6 +309,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.STRIPPED_VERDANT_WOOD.parent)
 
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_PLANKS)
+            .forceAddTag(DnDBlockTags.SCONCES_THAT_BURN)
             .add(FLAMMABLE_PLANKS)
         getOrCreateTagBuilder(DnDBlockTags.FLAMMABLE_LOGS)
             .forceAddTag(DnDBlockTags.CASCADE_LOGS)

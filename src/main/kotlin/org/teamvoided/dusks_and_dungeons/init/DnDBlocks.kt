@@ -787,6 +787,7 @@ object DnDBlocks {
     //add after fencegates
     //all woods, iron, (and copper [future])
     val SPRUCE_SCONCE = registerOld("spruce_sconce", SconceBlock(ofFullCopy(SPRUCE_FENCE))).wood().cutout()
+    val IRON_SCONCE = registerOld("iron_sconce", SconceBlock(ofFullCopy(IRON_BARS))).pickaxe().cutout()
 
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
     @Suppress("unused")

@@ -109,6 +109,7 @@ object WoodModels {
         gen.tintedBookshelf(DnDBlocks.VERDANT_BOOKSHELF, DnDBlocks.VERDANT_PLANKS)
 
         gen.scone(DnDBlocks.SPRUCE_SCONCE)
+        gen.scone(DnDBlocks.IRON_SCONCE)
     }
 
     fun BlockModelGenerators.cascade() {

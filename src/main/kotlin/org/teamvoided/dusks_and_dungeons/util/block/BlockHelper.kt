@@ -109,7 +109,6 @@ fun <T : Block> T.plant(): T = cutout().sword().hoe()
 fun <T : Block> T.grassLike(): T = cutout().sword().axe()
 fun <T : Block> T.leaves(): T = cutout().hoe().flammableLeaves()
 fun <T : Block> T.wood(): T = axe().flammablePlanks()
-fun <T : Block> T.rocky(): T = cutout().pickaxe().shovel()
 
 fun AbstractBlockSet.cutout(): AbstractBlockSet = CUTOUT_BLOCKS.addSet(this)
 fun AbstractBlockSet.translucent(): AbstractBlockSet = TRANSLUCENT_BLOCKS.addSet(this)
