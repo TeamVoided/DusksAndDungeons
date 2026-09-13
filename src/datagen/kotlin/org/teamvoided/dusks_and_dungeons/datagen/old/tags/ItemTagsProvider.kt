@@ -32,8 +32,19 @@ class ItemTagsProvider(
         conventionTags()
 
         // Functional
+        getOrCreateTagBuilder(DnDItemTags.CANDELABRAS)
+            .add(DnDItems.IRON_CANDELABRA)
         getOrCreateTagBuilder(DnDItemTags.GOES_IN_CANDELABRA)
             .forceAddTag(ItemTags.CANDLES)
+            .forceAddTag(DnDItemTags.TORCHES)
+
+        getOrCreateTagBuilder(DnDItemTags.TORCHES)
+            .add(
+                Items.TORCH,
+                Items.SOUL_TORCH,
+                Items.REDSTONE_TORCH
+            )
+
         // Misc
         getOrCreateTagBuilder(DnDItemTags.EMPTY)
         getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS)
@@ -91,8 +102,6 @@ class ItemTagsProvider(
         copy(DnDBlockTags.VIVIONBEDS, DnDItemTags.VIVIONBEDS)
         copy(DnDBlockTags.BIG_CANDLES, DnDItemTags.BIG_CANDLES)
         copy(DnDBlockTags.SOUL_CANDLES, DnDItemTags.SOUL_CANDLES)
-        copy(DnDBlockTags.CANDELABRAS, DnDItemTags.CANDELABRAS)
-        copy(DnDBlockTags.SOUL_CANDELABRAS, DnDItemTags.SOUL_CANDELABRAS)
         copy(DnDBlockTags.BIG_SOUL_CANDLES, DnDItemTags.BIG_SOUL_CANDLES)
         copy(DnDBlockTags.GRAVESTONES, DnDItemTags.GRAVESTONES)
         copy(DnDBlockTags.SMALL_GRAVESTONES, DnDItemTags.SMALL_GRAVESTONES)

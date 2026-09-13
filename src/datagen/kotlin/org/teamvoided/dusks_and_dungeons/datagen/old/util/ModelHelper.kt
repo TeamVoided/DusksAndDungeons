@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.properties.*
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.*
-import org.teamvoided.dusks_and_dungeons.block.candelabra.OldCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -1275,46 +1274,6 @@ fun BlockModelGenerators.createMoonberryVine(block: Block) {
         )
     }
     this.blockStateOutput.accept(model)
-}
-
-fun BlockModelGenerators.registerDnDCandelabra(candelabra: Block) =
-    this.registerCandelabra(candelabra, true)
-
-fun BlockModelGenerators.registerCandelabra(candelabra: Block, isDnD: Boolean = false) {
-    if (candelabra !is OldCandelabraBlock) error("Provided blocks is not a CandelabraBlock!")
-    this.blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(candelabra)
-            .with(
-                PropertyDispatch.property(BlockStateProperties.HORIZONTAL_AXIS)
-                    .select(Direction.Axis.X, Variant.variant())
-                    .select(Direction.Axis.Z, Variant.variant().with(Y_ROT, Rotation.R90))
-            )
-            .with(this.candelabraStates(candelabra, isDnD))
-    )
-    this.delegateItemModel(candelabra, candelabra.model("_1"))
-}
-
-fun BlockModelGenerators.candelabraStates(
-    candelabra: OldCandelabraBlock, isDnD: Boolean,
-): PropertyDispatch {
-    val candle = candelabra.candle.prefixed(if (isDnD) "candle/" else "")
-
-    val texture = TextureMapping.defaultTexture(candelabra)
-        .put(CANDLE, candle)
-        .put(TEXTURE, id("block/candelabra_iron"))
-    val textureLit = TextureMapping.defaultTexture(candelabra)
-        .put(CANDLE, candle.suffix("_lit"))
-        .put(TEXTURE, id("block/candelabra_iron"))
-    val models = listOf(CANDELABRA_1, CANDELABRA_2, CANDELABRA_3, CANDELABRA_4, CANDELABRA_5)
-
-    return PropertyDispatch.properties(BlockStateProperties.LIT, OldCandelabraBlock.CANDLES).generate { isLit, candles ->
-        val model = models[candles - 1]
-        Variant.variant().with(
-            MODEL,
-            if (isLit) model.createWithSuffix(candelabra, "_lit", textureLit, this.modelOutput)
-            else model.create(candelabra, texture, this.modelOutput)
-        )
-    }
 }
 
 fun BlockModelGenerators.hangingFlora(block: Block, tinted: BlockModelGenerators.TintState) {

@@ -98,9 +98,6 @@ object DnDBlockLists {
     val bigCandles = DnDBlocks.BIG_CANDLES.zip(DnDBlocks.BIG_CANDLE_CAKES)
     val soulCandles = DnDBlocks.SOUL_CANDLES.zip(DnDBlocks.SOUL_CANDLE_CAKES)
     val bigSoulCandles = DnDBlocks.BIG_SOUL_CANDLES.zip(DnDBlocks.BIG_SOUL_CANDLE_CAKES)
-    val candelabras = DnDBlocks.CANDELABRAS.toList()
-    val soulCandelabras = DnDBlocks.SOUL_CANDELABRAS.toList()
-    val allCandelabras = candelabras + soulCandelabras
 
     val hollowLogs = listOf(
         DnDBlocks.HOLLOW_OAK_LOG,

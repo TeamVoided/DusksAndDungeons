@@ -65,7 +65,7 @@ object DnDBlockTags {
     val SOUL_CANDLES = key("soul_candles")
     val BIG_SOUL_CANDLES = key("big_soul_candles")
     val CANDELABRAS = key("candelabras")
-    val SOUL_CANDELABRAS = key("soul_candelabras")
+    val EMPTY_CANDELABRAS = key("empty_candelabras")
 
     val GRAVESTONES = key("gravestones")
     val SMALL_GRAVESTONES = key("small_gravestones")

@@ -56,8 +56,8 @@ object DnDItemTags {
     val BIG_CANDLES = tag("big_candles")
     val BIG_SOUL_CANDLES = tag("big_soul_candles")
     val CANDELABRAS = tag("candelabras")
-    val SOUL_CANDELABRAS = tag("soul_candelabras")
     val GOES_IN_CANDELABRA = tag("goes_in_candelabra")
+    val TORCHES = tag("torches")
 
     val GRAVESTONES = tag("gravestones")
     val SMALL_GRAVESTONES = tag("small_gravestones")

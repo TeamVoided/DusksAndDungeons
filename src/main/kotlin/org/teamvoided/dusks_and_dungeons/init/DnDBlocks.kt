@@ -510,7 +510,6 @@ object DnDBlocks {
     val BIG_CANDLES = register("big_", "candle", CANDLES, ::bigCandleOf)
     val BIG_CANDLE_CAKES =
         registerNoItem("big_", "candle_cake", BIG_CANDLES.toColorCollection(), ::bigCandleCakeOf)
-    val CANDELABRAS = register("candelabra", CANDLES, ::candelabraOf)
 
     // Soul
     val SOUL_CANDLES = register("soul_candle", CANDLES, ::soulCandleOf)
@@ -518,7 +517,25 @@ object DnDBlocks {
     val BIG_SOUL_CANDLES = register("big_", "soul_candle", CANDLES, ::bigSoulCandleOf)
     val BIG_SOUL_CANDLE_CAKES =
         registerNoItem("big_", "soul_candle_cake", BIG_SOUL_CANDLES.toColorCollection(), ::bigSoulCandleCakeOf)
-    val SOUL_CANDELABRAS = register("soul_candelabra", SOUL_CANDLES.toColorCollection(), ::candelabraOf)
+
+    // TODO move props to proper file
+    val iCandelabra: Properties = Properties.of()
+        .mapColor(MapColor.METAL)
+        .sound(SoundType.METAL)
+        .strength(5.0F, 6.0F)
+        .forceSolidOn()
+
+    val iCandelabra2: Properties = Properties.of()
+        .mapColor(MapColor.METAL)
+        .sound(SoundType.METAL)
+        .strength(5.0F, 6.0F)
+        .forceSolidOn()
+        .dynamicShape()
+
+    val IRON_CANDELABRA = registerNoItem("iron_candelabra", ::CandelabraBlock, iCandelabra2).pickaxe()
+    val EMPTY_IRON_CANDELABRA =
+        registerNoItem("empty_iron_candelabra", { EmptyCandelabraBlock(it, IRON_CANDELABRA) }, iCandelabra)
+            .pickaxe()
 
     val BIG_SCAFFOLDING = registerNoItem("big_scaffolding", ::BigScaffoldingBlock, ofFullCopy(SCAFFOLDING))
         .cutout().axe()
@@ -798,24 +815,6 @@ object DnDBlocks {
     @Suppress("unused")
     val GAY_BLOCK = registerSet("gay_block", ofFullCopy(BEACON))//otherwise known as the Glock
 
-    val iCandelabra: Properties = Properties.of()
-        .mapColor(MapColor.METAL)
-        .sound(SoundType.METAL)
-        .strength(5.0F, 6.0F)
-        .forceSolidOn()
-
-    val iCandelabra2: Properties = Properties.of()
-        .mapColor(MapColor.METAL)
-        .sound(SoundType.METAL)
-        .strength(5.0F, 6.0F)
-        .forceSolidOn()
-        .dynamicShape()
-
-    val IRON_CANDELABRA =
-        registerNoItem("iron_candelabra", ::CandelabraBlock, iCandelabra2).pickaxe()
-    val EMPTY_IRON_CANDELABRA =
-        registerNoItem("empty_iron_candelabra", { EmptyCandelabraBlock(it, IRON_CANDELABRA) }, iCandelabra)
-            .pickaxe()
 
     fun init() {
         // Striping

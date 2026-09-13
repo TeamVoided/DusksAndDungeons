@@ -389,10 +389,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(DnDBlockTags.BIG_SOUL_CANDLES)
             .add(DnDBlocks.BIG_SOUL_CANDLES)
         getOrCreateTagBuilder(DnDBlockTags.CANDELABRAS)
-            .add(DnDBlocks.CANDELABRAS)
-            .forceAddTag(DnDBlockTags.SOUL_CANDELABRAS)
-        getOrCreateTagBuilder(DnDBlockTags.SOUL_CANDELABRAS)
-            .add(DnDBlocks.SOUL_CANDELABRAS)
+            .add(DnDBlocks.IRON_CANDELABRA)
+            .forceAddTag(DnDBlockTags.EMPTY_CANDELABRAS)
+        getOrCreateTagBuilder(DnDBlockTags.EMPTY_CANDELABRAS)
+            .add(DnDBlocks.EMPTY_IRON_CANDELABRA)
 
         getOrCreateTagBuilder(DnDBlockTags.GRAVESTONES)
             .forceAddTag(DnDBlockTags.SMALL_GRAVESTONES)
@@ -708,7 +708,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.CANDLES)
             .forceAddTag(DnDBlockTags.SOUL_CANDLES)
             .forceAddTag(DnDBlockTags.BIG_CANDLES)
-            .forceAddTag(DnDBlockTags.CANDELABRAS)
 
         getOrCreateTagBuilder(BlockTags.CANDLE_CAKES)
             .add(DnDBlocks.BIG_CANDLE_CAKES)

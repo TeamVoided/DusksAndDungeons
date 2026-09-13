@@ -64,8 +64,8 @@ fun FabricItemGroupEntries.addColors(item: ItemLike, color: ColorConsortium<*>) 
 
 fun FabricItemGroupEntries.addCandles() {
     val candles = listOf(
-        DnDBlocks.BIG_CANDLES, DnDBlocks.CANDELABRAS,
-        DnDBlocks.SOUL_CANDLES, DnDBlocks.BIG_SOUL_CANDLES, DnDBlocks.SOUL_CANDELABRAS
+        DnDBlocks.BIG_CANDLES,
+        DnDBlocks.SOUL_CANDLES, DnDBlocks.BIG_SOUL_CANDLES,
     )
     addAfter(Items.CANDLE, candles.map { it.uncolored })
     addAfter(Items.WHITE_CANDLE, candles.map { it.white })

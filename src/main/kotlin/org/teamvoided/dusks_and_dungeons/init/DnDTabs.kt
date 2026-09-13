@@ -467,10 +467,8 @@ object DnDTabs {
             DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
                 listOf(
                     item,
-                    DnDBlockLists.candelabras[idx],
                     DnDItemLists.soulCandles[idx],
                     DnDItemLists.bigSoulCandles[idx],
-                    DnDBlockLists.soulCandelabras[idx],
                 )
             }
         )

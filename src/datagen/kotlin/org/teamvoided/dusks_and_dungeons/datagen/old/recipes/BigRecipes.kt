@@ -40,10 +40,8 @@ object BigRecipes {
             output.createDyed(DnDBlockLists.bigCandles[idx].first, DnDBlocks.BIG_CANDLES.uncolored, dye)
             output.createDyed(DnDBlockLists.soulCandles[idx].first, DnDBlocks.SOUL_CANDLES.uncolored, dye)
             output.createDyed(DnDBlockLists.bigSoulCandles[idx].first, DnDBlocks.BIG_SOUL_CANDLES.uncolored, dye)
-//            output.createDyed(DnDBlockLists.candelabras[idx], DnDBlocks.CANDELABRAS.uncolored, dye, true)
-//            output.createDyed(DnDBlockLists.soulCandelabras[idx], DnDBlocks.SOUL_CANDELABRAS.uncolored, dye, true)
         }
-//        DnDBlockLists.allCandelabras.forEach(output::createCandelabra)
+        //TODO(1.0) add new candelabra recipes
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
             .define('|', Ingredient.of(Items.BAMBOO_PLANKS))
