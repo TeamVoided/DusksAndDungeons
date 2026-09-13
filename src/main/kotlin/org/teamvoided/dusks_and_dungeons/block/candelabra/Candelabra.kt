@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.sounds.SoundSource
@@ -10,7 +9,6 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.component.BlockItemStateProperties
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -28,6 +26,7 @@ import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock.Companion.FACING
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities
+import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 import org.teamvoided.dusks_and_dungeons.util.getFlameParticle
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.dusks_and_dungeons.util.spawnCandleParticles
@@ -76,6 +75,9 @@ object Candelabra {
 
     const val PIXEL_SCALER = 0.0625
 
+    /**
+     * Offsets are original defied in pixels and then scaled in a map func
+     */
     val OFFSETS = listOf(
         listOf(
             Vec3(0.0, 8.0, 0.0)
@@ -214,27 +216,22 @@ object Candelabra {
     }
 
     fun getPickedBlock(player: Player, state: BlockState, stack: ItemStack): ItemStack {
-        if ((player.isShiftKeyDown || isCtrlDown) && state.getValue(CANDLES) > 1) {
-            stack.set(
-                DataComponents.BLOCK_STATE,
-                stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties(mapOf())).with(CANDLES, state)
-            )
+        if (!player.isShiftKeyDown && state.getValue(CANDLES) > 1) {
+            stack.set(CANDELABRA_CONTENTS, CandelabraContents.getStatic(state.getValue(EmptyCandelabraBlock.CANDLES)))
         }
         return stack
     }
 
-    var isCtrlDown = false
-
     fun canAddCandles(ctx: BlockPlaceContext, state: BlockState, block: Block): Boolean {
         return (!ctx.isSecondaryUseActive
                 && ctx.itemInHand.item === block.asItem()
-                && state.getValue(CANDLES) + getCandleCount(ctx.itemInHand) <= 5)
+                && (state.getValue(CANDLES) + getSlotCount(ctx.itemInHand)) <= 5)
     }
 
     fun cycleShapedFromItem(state: BlockState, stack: ItemStack): BlockState? {
         val simple = state.cycle(CANDLES)
 
-        val addedCandles = getCandleCount(stack)
+        val addedCandles = getSlotCount(stack)
         if (addedCandles > 1) {
             val candles = state.getValue(CANDLES) + addedCandles
             return if (candles <= 5) state.setValue(CANDLES, candles) else null
@@ -242,8 +239,6 @@ object Candelabra {
         return simple
     }
 
-    fun getCandleCount(stack: ItemStack): Int {
-        return stack.get(DataComponents.BLOCK_STATE)?.get(CANDLES) ?: 1
-    }
+    fun getSlotCount(stack: ItemStack): Int = stack.get(CANDELABRA_CONTENTS)?.slots ?: 1
 
 }

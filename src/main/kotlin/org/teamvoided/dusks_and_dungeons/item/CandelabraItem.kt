@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.item
 
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
@@ -11,6 +10,8 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getCandelabra
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraContents
+import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 
 class CandelabraItem(block: Block, val filledBlock: Block, properties: Properties) : BlockItem(block, properties) {
     /*
@@ -43,32 +44,25 @@ class CandelabraItem(block: Block, val filledBlock: Block, properties: Propertie
     }*/
 
     override fun getPlacementState(ctx: BlockPlaceContext): BlockState? {
-        val data = ctx.itemInHand.get(DataComponents.BLOCK_ENTITY_DATA)
-        if (data != null) {
+        val content = ctx.itemInHand.getOrDefault(CANDELABRA_CONTENTS, CandelabraContents.ONE).validate()
+        if (!content.isEmpty()) {
             val filled = filledBlock.getStateForPlacement(ctx)
-            if (filled != null && canPlace(ctx, filled)) {
-                return filled
+            if (filled != null) {
+                return if (canPlace(ctx, filled)) filled else null
             }
         }
-
         return super.getPlacementState(ctx)
     }
 
     override fun updateCustomBlockEntityTag(
         pos: BlockPos, level: Level, player: Player?, stack: ItemStack, state: BlockState,
     ): Boolean {
-        val result = super.updateCustomBlockEntityTag(pos, level, player, stack, state)
-        if (!result && level.isClientSide) {
-            val data = stack.get(DataComponents.BLOCK_ENTITY_DATA) ?: return false
-            level.getCandelabra(pos)?.let { be ->
-                if (!be.onlyOpCanSetNbt() || player != null && player.canUseGameMasterBlocks()) {
-                    return data.loadInto(be, level.registryAccess())
-                }
-            }
+        val candelabra = level.getCandelabra(pos)
+        if (candelabra != null && !candelabra.isEmpty()) {
+            candelabra.addingCandles = true
         }
-        return result
+        return super.updateCustomBlockEntityTag(pos, level, player, stack, state)
     }
-
 
     override fun registerBlocks(map: MutableMap<Block, Item>, item: Item) {
         super.registerBlocks(map, item)

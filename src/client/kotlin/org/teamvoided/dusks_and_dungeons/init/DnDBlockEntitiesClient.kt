@@ -7,13 +7,13 @@ import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.component.CustomData
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraContents
 import org.teamvoided.dusks_and_dungeons.block.entity.CandelabraBlockEntity
+import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 import org.teamvoided.dusks_and_dungeons.renderer.blockentity.CandelabraRenderer
 
 object DnDBlockEntitiesClient {
@@ -24,36 +24,33 @@ object DnDBlockEntitiesClient {
         BuiltinItemRendererRegistry.INSTANCE.register(DnDItems.IRON_CANDELABRA, ::renderCandelabraItem)
     }
 
-    var CANDELABRA_ITEM_CACHE = mutableMapOf<CustomData, CandelabraBlockEntity>()
+    var CANDELABRA_ITEM_CACHE = mutableMapOf<CandelabraContents, CandelabraBlockEntity>()
 
-    fun getCandelabra(
-        stack: ItemStack, level: ClientLevel, candelabraBlock: CandelabraBlock
-    ): CandelabraBlockEntity? {
-        val data = stack.get(DataComponents.BLOCK_ENTITY_DATA) ?: return null
-        if (data.isEmpty) {
+    fun getCandelabra(stack: ItemStack, level: ClientLevel, block: CandelabraBlock): CandelabraBlockEntity? {
+        val contents = stack.get(CANDELABRA_CONTENTS) ?: return null
+        if (contents.isEmpty()) {
             return null
         }
 
-        var candelabra = CANDELABRA_ITEM_CACHE[data]
+        var candelabra = CANDELABRA_ITEM_CACHE[contents]
 
         if (candelabra == null) {
             candelabra = CandelabraBlockEntity(
                 BlockPos.ZERO,
-                candelabraBlock.defaultBlockState()
+                block.defaultBlockState()
                     .setValue(CandelabraBlock.LIT, true)
-                    .setValue(CandelabraBlock.CANDLES, Candelabra.getCandleCount(stack))
+                    .setValue(CandelabraBlock.CANDLES, Candelabra.getSlotCount(stack))
             )
-            data.loadInto(candelabra, level.registryAccess())
+            candelabra.applyComponentsFromItemStack(stack)
             candelabra.updateStateCache(level)
-            println("Create new Candelabra")
-            CANDELABRA_ITEM_CACHE[data] = candelabra
+            CANDELABRA_ITEM_CACHE[contents] = candelabra
         }
 
         return candelabra
     }
 
     fun renderCandelabraItem(
-        stack: ItemStack?, displayCtx: ItemDisplayContext,
+        stack: ItemStack?, ctx: ItemDisplayContext,
         poseStack: PoseStack, buffers: MultiBufferSource, light: Int, overlay: Int,
     ) {
         stack ?: return

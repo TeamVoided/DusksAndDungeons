@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
+import net.minecraft.core.component.DataComponentMap
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
@@ -19,7 +20,9 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraContents
 import org.teamvoided.dusks_and_dungeons.init.DnDBlockEntities.CANDELABRA
+import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.voidlib.helpers.mc.rotateFlat90
 import kotlin.math.min
@@ -27,9 +30,10 @@ import kotlin.math.min
 
 class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CANDELABRA, pos, state) {
 
-    internal val candles: NonNullList<ItemStack> = NonNullList.withSize(CANDLES, ItemStack.EMPTY)
+    internal val candles: NonNullList<ItemStack> = NonNullList.withSize(MAX_CANDLES, ItemStack.EMPTY)
 
     var hasTicked = false
+    var addingCandles = false
 
     fun getCandles() = candles
 
@@ -67,10 +71,10 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
 
     fun getMaxCandles(): Int = blockState.getValue(CandelabraBlock.CANDLES)
 
-    val stateCache: NonNullList<BlockState> = NonNullList.withSize(CANDLES, Blocks.AIR.defaultBlockState())
+    val stateCache: NonNullList<BlockState> = NonNullList.withSize(MAX_CANDLES, Blocks.AIR.defaultBlockState())
     var dynamicShape: VoxelShape = Shapes.empty()
     var dynamicCollisionShape: VoxelShape = Shapes.empty()
-    val particleOffsets: Array<Vec3?> = arrayOfNulls(CANDLES)
+    val particleOffsets: Array<Vec3?> = arrayOfNulls(MAX_CANDLES)
 
     fun updateStateCache(uLevel: Level) {
         val dir = blockState.getValue(CandelabraBlock.FACING).opposite.get2DDataValue()
@@ -126,13 +130,51 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
         nbt.put(KEY_CANDLES, list)
     }
 
+    override fun applyImplicitComponents(input: DataComponentInput) {
+        super.applyImplicitComponents(input)
+        val contents = input.get(CANDELABRA_CONTENTS)
+        if (contents != null && contents.fullSlots > 0) {
+            if (!addingCandles) {
+                candles.clear()
+                for ((idx, stack) in contents.candles.withIndex()) {
+                    candles[idx] = stack.copy()
+                }
+            } else {
+                val candlesLeft = contents.getItems().filterNot(ItemStack::isEmpty).toMutableList()
+                for ((idx, stack) in candles.withIndex()) {
+                    if (stack.isEmpty) {
+                        candles[idx] = candlesLeft.removeFirst().copy()
+                    }
+                    if (candlesLeft.isEmpty()) {
+                        break
+                    }
+                }
+            }
+        }
+    }
+
+    override fun collectImplicitComponents(builder: DataComponentMap.Builder) {
+        super.collectImplicitComponents(builder)
+        builder.set(
+            CANDELABRA_CONTENTS,
+            CandelabraContents.of(candles, blockState.getValue(CandelabraBlock.CANDLES))
+        )
+    }
+
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
+    override fun removeComponentsFromTag(compoundTag: CompoundTag) {
+        super.removeComponentsFromTag(compoundTag)
+        compoundTag.remove(KEY_CANDLES)
+    }
+
     override fun getUpdatePacket(): ClientboundBlockEntityDataPacket = ClientboundBlockEntityDataPacket.create(this)
 
     override fun getUpdateTag(provider: HolderLookup.Provider): CompoundTag = saveWithoutMetadata(provider)
 
     companion object {
 
-        const val CANDLES = 5
+        const val MAX_CANDLES = 5
         const val KEY_CANDLES = "candles"
 
         @Suppress("unused")

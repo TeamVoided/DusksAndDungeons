@@ -35,6 +35,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getCandelabra
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getSlotCount
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.spawnCandelabraParticles
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.updateCandelabra
@@ -141,17 +142,18 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
-        return canSupportCenter(world, pos.below(), Direction.UP) && !world.getBlockState(pos.below()).`is`(this)
+        return canSupportCenter(world, pos.below(), Direction.UP)
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
         val state = ctx.level.getBlockState(ctx.clickedPos)
-        if (state.`is`(this)) {
-            return Candelabra.cycleShapedFromItem(state, ctx.itemInHand)
+        if (state.`is`(this) || state.`is`(getEmpty())) {
+            val pState = Candelabra.cycleShapedFromItem(state, ctx.itemInHand)
+            return if (pState != null) withPropertiesOf(pState) else null
         }
         val waterlogged = ctx.level.getFluidState(ctx.clickedPos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)
-            ?.setValue(CANDLES, 1)
+            ?.setValue(CANDLES, getSlotCount(ctx.itemInHand))
             ?.setValue(WATERLOGGED, waterlogged)
             ?.setValue(FACING, ctx.horizontalDirection.opposite)
     }
@@ -217,6 +219,16 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         level: Level, state: BlockState, be: BlockEntityType<T>,
     ): BlockEntityTicker<T>? {
         return createTicker(be, DnDBlockEntities.CANDELABRA, CandelabraBlockEntity::tick)
+    }
+
+    private var empty: EmptyCandelabraBlock? = null
+
+    @Suppress("DEPRECATION")
+    fun getEmpty(): EmptyCandelabraBlock {
+        if (empty == null) {
+            empty = EmptyCandelabraBlock.FULL_TO_EMPTY[this]
+        }
+        return empty ?: error("Candelabra(${builtInRegistryHolder()}) does not have empty variant registered!")
     }
 
     companion object {

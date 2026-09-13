@@ -6,7 +6,6 @@ import net.minecraft.ChatFormatting
 import net.minecraft.client.color.item.ItemColor
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.component.DataComponents.BLOCK_STATE
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
 import net.minecraft.world.item.Item
@@ -16,7 +15,7 @@ import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.GrassColor
 import net.minecraft.world.level.ItemLike
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
 
 object DnDItemsClient {
@@ -66,9 +65,8 @@ object DnDItemsClient {
 
     fun registerCandelabraPredicate(item: Item) {
         ItemProperties.register(item, CANDELABRA_PREDICATE_ID) { stack, _, _, _ ->
-            val states = stack.get(BLOCK_STATE) ?: return@register 0f
-            val candles = states.get(CandelabraBlock.CANDLES) ?: return@register 0f
-            if (candles == 0) 0f else candles / 5f
+            val slots = stack.get(CANDELABRA_CONTENTS)?.slots ?: return@register 0f
+            if (slots == 1) 0f else slots / 5f
         }
     }
 

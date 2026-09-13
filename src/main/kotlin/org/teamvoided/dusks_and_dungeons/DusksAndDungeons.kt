@@ -30,6 +30,7 @@ object DusksAndDungeons {
         DnDLootContext.init()
         DnDRecipes.init()
 
+        DnDDataComponents.init()
         DnDBlockEntities.init()
         DnDEffects.init()
         DnDEntityTypes.init()

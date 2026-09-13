@@ -29,6 +29,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.canAddToCandelabra
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getSlotCount
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.tryAddToCandelabra
 
 open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBlock) : Block(properties),
@@ -41,6 +42,8 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
                 .setValue(FACING, Direction.NORTH)
                 .setValue(CANDLES, 1)
         )
+
+        FULL_TO_EMPTY[filled] = this
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
@@ -95,7 +98,7 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
         }
         val waterlogged = ctx.level.getFluidState(pos).type === Fluids.WATER
         return super.getStateForPlacement(ctx)
-            ?.setValue(CANDLES, 1)
+            ?.setValue(CANDLES, getSlotCount(ctx.itemInHand))
             ?.setValue(WATERLOGGED, waterlogged)
             ?.setValue(FACING, ctx.horizontalDirection.opposite)
     }
@@ -134,6 +137,8 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
         val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
         val CANDLES = DnDBlockStateProperties.CANDLES
         val LIT: BooleanProperty = BlockStateProperties.LIT
+
+        val FULL_TO_EMPTY = mutableMapOf<CandelabraBlock, EmptyCandelabraBlock>()
 
     }
 }
