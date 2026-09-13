@@ -491,6 +491,7 @@ object DnDBlocks {
 
     // endregion
 
+    // TODO soon functional
     // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Big Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
 
     val BIG_CHAIN = register("big_chain", ::BigChainBlock, ofFullCopy(CHAIN).sound(bigChainSound)).pickaxe().cutout()
@@ -498,6 +499,7 @@ object DnDBlocks {
     val BIG_SOUL_LANTERN =
         register("big_soul_lantern", ::BigLanternBlock, ofFullCopy(SOUL_LANTERN).sound(bigLanternSound)).pickaxe()
 
+    val REDSTONE_LANTERN = register("redstone_lantern", ::RedstoneLanternBlock, Prop.RESTONE_LANTERN).pickaxe().cutout()
     val BIG_REDSTONE_LANTERN = register(
         "big_redstone_lantern", ::BigRedstoneLanternBlock, ofFullCopy(BIG_LANTERN).lightLevel(litBlockEmission(8))
     ).pickaxe()
@@ -518,6 +520,38 @@ object DnDBlocks {
 
     val BIG_SCAFFOLDING = registerNoItem("big_scaffolding", ::BigScaffoldingBlock, ofFullCopy(SCAFFOLDING))
         .cutout().axe()
+
+    //add after fencegates
+    //all woods, iron, (and copper [future])
+    val SPRUCE_SCONCE = register("spruce_sconce", ::SconceBlock, ofFullCopy(SPRUCE_FENCE)).wood().cutout()
+    val IRON_SCONCE = register("iron_sconce", ::SconceBlock, ofFullCopy(IRON_BARS)).pickaxe().cutout()
+
+    // Carpet Plates
+    val WOOL_CARPET_PLATE = register(
+        ColorConsortium("carpet_plate", VanillaColorCollections.WOOL) { wool ->
+            CarpetPlateBlock(DnDBlockSetTypes.WOOL, ofFullCopy(wool))
+        }
+    )
+    val MOSS_CARPET_PLATE = register(
+        "moss_carpet_plate", { CarpetPlateBlock(DnDBlockSetTypes.MOSS, it) }, ofFullCopy(MOSS_CARPET)
+    ).hoe().sword()
+
+    val OVERGROWTH_CARPET_PLATE = register(
+        "overgrowth_carpet_plate", { CarpetPlateBlock(DnDBlockSetTypes.MOSS, it) }, ofFullCopy(OVERGROWTH_CARPET)
+    ).hoe().sword().tint().grass()
+
+    val SUSPICIOUS_RED_SAND = register(
+        "suspicious_red_sand",
+        { BrushableBlock(RED_SAND, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED, it) },
+        Prop.RED_SUS_SAND
+    ).shovel()
+
+    val HEAVY_CUBE = register("heavy_cube", ::CompositeBlock, ofFullCopy(HEAVY_CORE).noOcclusion()).pickaxe().cutout()
+
+    // TODO add to colored & functional tab
+    val TINTED_GLASS_PANE = register("tinted_glass_pane", ::TintedPaneBlock, ofFullCopy(TINTED_GLASS)).translucent()
+
+
     // endregion
 
     // region  🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 --- Rock & Stone --- 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨 🪨
@@ -671,33 +705,6 @@ object DnDBlocks {
     val CUT_TINTED_SANDSTONE = register("cut_tinted_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint()
         .tellWitnessesThatIWasMurdered()
 
-    val SUSPICIOUS_RED_SAND = register(
-        "suspicious_red_sand",
-        { BrushableBlock(RED_SAND, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED, it) },
-        Prop.RED_SUS_SAND
-    ).shovel()
-
-    val REDSTONE_LANTERN = register("redstone_lantern", ::RedstoneLanternBlock, Prop.RESTONE_LANTERN).pickaxe().cutout()
-
-    val HEAVY_CUBE = register("heavy_cube", ::CompositeBlock, ofFullCopy(HEAVY_CORE).noOcclusion()).pickaxe().cutout()
-
-    val TINTED_GLASS_PANE = register("tinted_glass_pane", ::TintedPaneBlock, ofFullCopy(TINTED_GLASS)).translucent()
-
-    // Carpet Plates
-    val WOOL_CARPET_PLATE = register(
-        ColorConsortium("carpet_plate", VanillaColorCollections.WOOL) { wool ->
-            CarpetPlateBlock(DnDBlockSetTypes.WOOL, ofFullCopy(wool))
-        }
-    )
-    val MOSS_CARPET_PLATE = register(
-        "moss_carpet_plate", { CarpetPlateBlock(DnDBlockSetTypes.MOSS, it) }, ofFullCopy(MOSS_CARPET)
-    ).hoe().sword()
-
-    val OVERGROWTH_CARPET_PLATE = register(
-        "overgrowth_carpet_plate", { CarpetPlateBlock(DnDBlockSetTypes.MOSS, it) }, ofFullCopy(OVERGROWTH_CARPET)
-    ).hoe().sword().tint().grass()
-
-
     // Polished Sandstone
     val POLISHED_SANDSTONE = registerSet("polished_sandstone", ofFullCopy(CUT_SANDSTONE)).pickaxe()
     val POLISHED_RED_SANDSTONE = registerSet("polished_red_sandstone", ofFullCopy(CUT_RED_SANDSTONE)).pickaxe()
@@ -784,10 +791,6 @@ object DnDBlocks {
         val BLACKSTONE_PRESSURE_PLATE = createStonePlate(Blocks.BLACKSTONE)
     */
 
-    //add after fencegates
-    //all woods, iron, (and copper [future])
-    val SPRUCE_SCONCE = registerOld("spruce_sconce", SconceBlock(ofFullCopy(SPRUCE_FENCE))).wood().cutout()
-    val IRON_SCONCE = registerOld("iron_sconce", SconceBlock(ofFullCopy(IRON_BARS))).pickaxe().cutout()
 
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
     @Suppress("unused")
