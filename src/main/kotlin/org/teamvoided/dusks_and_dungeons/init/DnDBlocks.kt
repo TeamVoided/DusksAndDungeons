@@ -147,7 +147,7 @@ object DnDBlocks {
 
     val GOLDEN_MUSHROOM = register(
         "golden_mushroom",
-        { MushroomWithSporesPlantBlock(DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM, 0xFFD800, 0.5, it) },
+        { MushroomWithSporesPlantBlock(0xFFD800, 0.5, DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM, it) },
         Prop.GOLDEN_MUSHROOM
     ).cutout().axe().sword()
     val GOLDEN_MUSHROOM_BLOCK = register(

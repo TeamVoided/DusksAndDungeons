@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.init.worldgen
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications.create
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors.includeByKey
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors.tag
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase
 import net.minecraft.data.worldgen.placement.VegetationPlacements
@@ -23,9 +22,7 @@ object DnDBiomeModifications {
         addVegetation(DnDPlacedFeature.GOLDEN_MUSHROOM_HUGE_PATCH, DnDBiomeTags.GOLD_MUSHROOMS_HUGE)
         addVegetation(DnDPlacedFeature.MOSSKIN_PUMPKIN_EXTRA, DnDBiomeTags.MOSSKIN_PUMPKINS_CAVE)
         replaceVegetation(
-            VegetationPlacements.PATCH_PUMPKIN,
-            DnDPlacedFeature.GLOOM_PUMPKIN_EXTRA,
-            DnDBiomeTags.GLOOM_PUMPKINS_EXTRA
+            VegetationPlacements.PATCH_PUMPKIN, DnDPlacedFeature.GLOOM_PUMPKIN_EXTRA, DnDBiomeTags.GLOOM_PUMPKINS_EXTRA
         )
         addVegetation(DnDPlacedFeature.COLD_WILDFLOWER, DnDBiomeTags.COLD_WILDFLOWER)
 
@@ -38,16 +35,8 @@ object DnDBiomeModifications {
     }
 
     internal fun addFeature(step: Decoration, feature: ResourceKey<PlacedFeature>, tag: TagKey<Biome>) {
-        val id = feature.location().path
-        create(id("add_$id")).add(ModificationPhase.ADDITIONS, tag(tag)) {
+        create(id("add/${feature.location().path}")).add(ModificationPhase.ADDITIONS, tag(tag)) {
             it.generationSettings.addFeature(step, feature)
-        }
-    }
-
-    internal fun addFeature(feature: ResourceKey<PlacedFeature>, biome: ResourceKey<Biome>) {
-        val id = feature.location().path
-        create(id("add_$id")).add(ModificationPhase.ADDITIONS, includeByKey(biome)) {
-            it.generationSettings.addFeature(Decoration.VEGETAL_DECORATION, feature)
         }
     }
 
@@ -56,12 +45,9 @@ object DnDBiomeModifications {
         newFeature: ResourceKey<PlacedFeature>,
         tag: TagKey<Biome>,
     ) {
-        val id = newFeature.location().path
-        create(id("replace_$id")).add(ModificationPhase.REPLACEMENTS, tag(tag)) { ctx ->
-            with(ctx.generationSettings) {
-                removeFeature(Decoration.VEGETAL_DECORATION, oldFeature)
-                addFeature(Decoration.VEGETAL_DECORATION, newFeature)
-            }
+        create(id("replace/${newFeature.location().path}")).add(ModificationPhase.REPLACEMENTS, tag(tag)) { ctx ->
+            ctx.generationSettings.removeFeature(Decoration.VEGETAL_DECORATION, oldFeature)
+            ctx.generationSettings.addFeature(Decoration.VEGETAL_DECORATION, newFeature)
         }
     }
 

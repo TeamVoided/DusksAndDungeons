@@ -434,7 +434,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
             .forceAddTag(BlockTags.DIRT)
             .add(Blocks.FARMLAND)
-        getOrCreateTagBuilder(DnDBlockTags.GOLD_MUSH_GROW_ON)
+        getOrCreateTagBuilder(DnDBlockTags.GOLD_MUSH_GROW_FROM)
             .forceAddTag(BlockTags.LOGS)
             .add(Blocks.MYCELIUM)
         getOrCreateTagBuilder(DnDBlockTags.SUPPORTS_MOONBERRY)

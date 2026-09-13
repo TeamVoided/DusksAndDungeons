@@ -18,34 +18,34 @@ import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 
 class MushroomWithSporesPlantBlock(
-    registryKey: ResourceKey<ConfiguredFeature<*, *>>,
-    private val color: Int,
-    private val particleChance: Double,
-    settings: Properties
-) : MushroomBlock(registryKey, settings) {
+    val color: Int, val particleChance: Double,
+    registryKey: ResourceKey<ConfiguredFeature<*, *>>, properties: Properties,
+) : MushroomBlock(registryKey, properties) {
 
-    override fun getShape(state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
-        val offset = state.getOffset(world, pos)
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        val offset = state.getOffset(level, pos)
         return LARGER_SHAPE.move(offset.x, 0.0, offset.z)
     }
 
-    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
-        return canSupportCenter(world, pos.below(), Direction.UP)
+    override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
+        return canSupportCenter(level, pos.below(), Direction.UP)
     }
 
-    override fun isValidBonemealTarget(world: LevelReader, pos: BlockPos, state: BlockState): Boolean =
-        world.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_GROW_ON)
-
-    override fun randomTick(blockState: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-        if (level.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_GROW_FROM))
-            super.randomTick(blockState, level, pos, random)
+    override fun isValidBonemealTarget(level: LevelReader, pos: BlockPos, state: BlockState): Boolean {
+        return level.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_GROW_ON)
     }
 
-    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
-        super.animateTick(state, world, pos, random)
+    override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        if (level.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_GROW_FROM)) {
+            super.randomTick(state, level, pos, random)
+        }
+    }
+
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
+        super.animateTick(state, level, pos, random)
         if (random.nextDouble() >= particleChance) {
-            val offset = state.getOffset(world, pos)
-            world.addParticle(
+            val offset = state.getOffset(level, pos)
+            level.addParticle(
                 ColorableParticleEffect(color),
                 pos.x + offset.x + (random.nextDouble() * 0.6 + 0.2),
                 pos.y + offset.y + (random.nextDouble() * 0.7 - 0.1),

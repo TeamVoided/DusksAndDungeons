@@ -7,10 +7,11 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 object DnDGui {
-    val LANTERN_PUMPKIN_BLUR: ResourceLocation = misc("lantern_pumpkin_blur")
-    val MOSSKIN_PUMPKIN_BLUR: ResourceLocation = misc("mosskin_pumpkin_blur")
-    val GLOOM_PUMPKIN_BLUR: ResourceLocation = misc("gloom_pumpkin_blur")
-    val PALE_PUMPKIN_BLUR: ResourceLocation = mc("textures/misc/pumpkinblur.png")
+
+    val LANTERN_PUMPKIN_BLUR = misc("lantern_pumpkin_blur")
+    val MOSSKIN_PUMPKIN_BLUR = misc("mosskin_pumpkin_blur")
+    val GLOOM_PUMPKIN_BLUR = misc("gloom_pumpkin_blur")
+    val PALE_PUMPKIN_BLUR = mc("textures/misc/pumpkinblur.png")
 
     @JvmStatic
     fun carvedOverlay(item: Item): ResourceLocation? {//toss the peasants this slop (no need to backport)
@@ -23,5 +24,6 @@ object DnDGui {
         }
     }
 
-    private fun misc(path: String) = id("textures/misc/$path.png")
+    fun misc(path: String) = id("textures/misc/$path.png")
+
 }

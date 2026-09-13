@@ -6,7 +6,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +23,8 @@ public abstract class GuiMixin {
     void renderPumpkinOverlays(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci, @Local ItemStack stack) {
         var resourceLocation = DnDGui.carvedOverlay(stack.getItem());
         if (resourceLocation != null) {
-            this.renderTextureOverlay(guiGraphics, resourceLocation, 1F);
+            renderTextureOverlay(guiGraphics, resourceLocation, 1F);
         }
     }
+
 }
