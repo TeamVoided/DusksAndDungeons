@@ -1,5 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.compat
 
+import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.EmiIngredient
@@ -15,6 +16,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.util.tag
 import kotlin.jvm.optionals.getOrNull
@@ -34,6 +39,10 @@ val SHEARS_TAGS = mutableListOf(
 
 fun getAxes(): EmiIngredient = damagedTool(getPreferredTag(AXE_TAGS, EmiStack.of(Items.IRON_AXE)), 1)
 fun getShears(): EmiIngredient = damagedTool(getPreferredTag(SHEARS_TAGS, EmiStack.of(Items.SHEARS)), 1)
+
+fun <C : RecipeInput, T : Recipe<C>> getRecipes(registry: EmiRegistry, type: RecipeType<T>): Iterator<RecipeHolder<T>> {
+    return registry.recipeManager.getAllRecipesFor<C, T>(type).iterator()
+}
 
 fun damagedTool(tool: EmiIngredient, damage: Int): EmiIngredient {
     for (stack in tool.emiStacks) {

@@ -4,6 +4,7 @@ import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
+import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
@@ -12,6 +13,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
@@ -19,9 +21,12 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.CarvableBlock
+import org.teamvoided.dusks_and_dungeons.compat.recipe.EmiCandelabraContentsRecipe
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.impl.BlockStrippingRegistryIml
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
+import org.teamvoided.dusks_and_dungeons.recipe.CandelabraContentsRecipe
 import java.util.function.Function
 
 object DnDEmiPlugin : EmiPlugin {
@@ -31,6 +36,22 @@ object DnDEmiPlugin : EmiPlugin {
 
         safely("hide experimental") { handleExperimental(registry) }
         safely("world interaction") { addWorldInteraction(registry, hiddenItems) }
+
+        safely("special recipes") {
+            for (recipe in getRecipes(registry, RecipeType.CRAFTING)) {
+                if (recipe.value() is CandelabraContentsRecipe) {
+                    addCandelabraRecipes(registry)
+                }
+            }
+        }
+    }
+
+    fun addCandelabraRecipes(registry: EmiRegistry) {
+        for (stack in EmiIngredient.of(DnDItemTags.CANDELABRAS).emiStacks) {
+            registry.addRecipeSafe(synthetic("crafting/adding_candles", subId(stack.itemStack.item))) {
+                EmiCandelabraContentsRecipe(stack, it)
+            }
+        }
     }
 
     fun handleExperimental(reg: EmiRegistry) {

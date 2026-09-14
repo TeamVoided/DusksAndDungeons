@@ -3,10 +3,12 @@ package org.teamvoided.dusks_and_dungeons.datagen.data.recipe
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.SpecialRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.candelabra
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createBigLantern
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandle
@@ -14,6 +16,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDyed
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.dusks_and_dungeons.recipe.CandelabraContentsRecipe
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
 
@@ -45,6 +48,7 @@ object BigRecipes {
         }
 
         output.candelabra(DnDItems.IRON_CANDELABRA, Items.IRON_INGOT, Items.IRON_NUGGET)
+        SpecialRecipeBuilder.special(::CandelabraContentsRecipe).save(output, id("candelabra_contents"))
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
             .define('|', Ingredient.of(Items.BAMBOO_PLANKS))

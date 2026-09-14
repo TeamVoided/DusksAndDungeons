@@ -46,6 +46,10 @@ data class CandelabraContents(val candles: NonNullList<ItemStack>) {
             return CandelabraContents(copyOf(Lists.transform(items, ItemStack::copy)).toItemList())
         }
 
+        fun create(stack: ItemStack): CandelabraContents {
+            return CandelabraContents(NonNullList.of(ItemStack.EMPTY, stack.copy()))
+        }
+
         fun Collection<ItemStack>.toItemList(): NonNullList<ItemStack> {
             return NonNullList.of(ItemStack.EMPTY, *toTypedArray())
         }
