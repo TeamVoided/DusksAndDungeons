@@ -51,6 +51,7 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
                 is TripleTallPlantBlock -> add(block, ::threeTallDrop)
                 is PinkPetalsBlock -> add(block, ::createPetalsDrops)
                 is FlowerPotBlock -> add(block) { createPotFlowerItemTable(block.potted) }
+                is InfestedBlock -> otherWhenSilkTouch(block, block.hostBlock)
                 else -> dropSelf(block)
             }
         }
