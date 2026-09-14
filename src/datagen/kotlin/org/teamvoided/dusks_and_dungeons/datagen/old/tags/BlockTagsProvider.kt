@@ -55,6 +55,21 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(BlockTags.SAND)
             .add(DnDBlocks.SUSPICIOUS_RED_SAND)
+            .add(DnDBlocks.AZURINE_SAND)
+            .add(DnDBlocks.SUSPICIOUS_AZURINE_SAND)
+
+        getOrCreateTagBuilder(BlockTags.SMELTS_TO_GLASS)
+            .add(DnDBlocks.AZURINE_SAND)
+
+        getOrCreateTagBuilder(ConventionalBlockTags.SANDS)
+            .add(DnDBlocks.AZURINE_SAND)
+
+        getOrCreateTagBuilder(BlockTags.LUSH_GROUND_REPLACEABLE)
+            .add(DnDBlocks.AZURINE_SAND)
+
+        getOrCreateTagBuilder(BlockTags.AZALEA_ROOT_REPLACEABLE)
+            .add(DnDBlocks.AZURINE_SAND)
+
 
         getOrCreateTagBuilder(DnDBlockTags.EMPTY)
 
@@ -252,6 +267,7 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(
                 DnDBlocks.ROUGH_SANDSTONE.parent,
                 DnDBlocks.ROUGH_RED_SANDSTONE.parent,
+                DnDBlocks.AZURINE_SAND
             )
     }
 
@@ -633,7 +649,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
         getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE)
             .forceAddTag(DnDBlockTags.PUMPKINS)
             .forceAddTag(DnDBlockTags.PUMPKINS_CARVED)
-            .add(DnDBlocks.GOLDEN_MUSHROOM)
+            .add(
+                DnDBlocks.GOLDEN_MUSHROOM,
+                DnDBlocks.AZURINE_SAND
+            )
 
 
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)

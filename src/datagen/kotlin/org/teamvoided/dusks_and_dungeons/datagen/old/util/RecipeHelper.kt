@@ -307,8 +307,8 @@ fun RecipeOutput.createStackedCraft(output: ItemLike, block1: ItemLike, block2: 
         .save(this)
 }
 
-fun RecipeOutput.createStackedCraft(output: ItemLike, block: ItemLike) {
-    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, 2)
+fun RecipeOutput.createStackedCraft(output: ItemLike, block: ItemLike, amount: Int = 2) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, amount)
         .define('#', block)
         .pattern("#")
         .pattern("#")

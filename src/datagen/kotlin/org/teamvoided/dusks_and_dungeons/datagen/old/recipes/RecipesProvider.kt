@@ -114,7 +114,11 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .save(e)
 
         // Bookshelf
-        e.bookshelf(BOOKSHELF, Blocks.OAK_PLANKS, mc("oak_bookshelf")) // TODO(1.0) maybe make this gen under mc for real
+        e.bookshelf(
+            BOOKSHELF,
+            Blocks.OAK_PLANKS,
+            mc("oak_bookshelf")
+        ) // TODO(1.0) maybe make this gen under mc for real
         e.bookshelf(DnDBlocks.SPRUCE_BOOKSHELF, Blocks.SPRUCE_PLANKS)
         e.bookshelf(DnDBlocks.BIRCH_BOOKSHELF, Blocks.BIRCH_PLANKS)
         e.bookshelf(DnDBlocks.JUNGLE_BOOKSHELF, Blocks.JUNGLE_PLANKS)
@@ -134,6 +138,26 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         }
         e.carpetPlate(DnDBlocks.MOSS_CARPET_PLATE, Blocks.MOSS_BLOCK)
         e.carpetPlate(DnDBlocks.OVERGROWTH_CARPET_PLATE, DnDBlocks.OVERGROWTH_BLOCK)
+
+        e.sandRecipes()
+    }
+
+    fun RecipeOutput.sandRecipes() {
+        create2x2(DnDBlocks.AZURINE_SANDSTONE.parent, DnDBlocks.AZURINE_SAND, 1)
+
+        createStackedCraft(DnDBlocks.CHISELED_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.slab, 1)
+        createStonecutting(DnDBlocks.CHISELED_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.parent)
+
+        smeltDefault(DnDBlocks.SMOOTH_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.parent)
+
+        create2x2(DnDBlocks.CUT_AZURINE_SANDSTONE.parent, DnDBlocks.AZURINE_SANDSTONE.parent)
+        createStonecuttingSet(DnDBlocks.CUT_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.parent)
+
+        create2x2(DnDBlocks.POLISHED_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.parent)
+        createStonecuttingSet(DnDBlocks.POLISHED_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.parent)
+        createStonecuttingSet(DnDBlocks.POLISHED_AZURINE_SANDSTONE, DnDBlocks.CUT_AZURINE_SANDSTONE.parent)
+
+        createStonecuttingSet(DnDBlocks.ROUGH_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.parent)
     }
 
     private fun temporaryRecipes(output: RecipeOutput) {
@@ -149,10 +173,10 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             4
         )
 
-       /* HurtItemRecipeBuilder.hurtItem(Ingredient.of(Items.APPLE), DamageTypeTags.IS_FIRE, Items.DIAMOND)
-            .invulnerableTime(25)
-            .criterion(Items.APPLE)
-            .save(output, id("crushing_ur_balls"))*/
+        /* HurtItemRecipeBuilder.hurtItem(Ingredient.of(Items.APPLE), DamageTypeTags.IS_FIRE, Items.DIAMOND)
+             .invulnerableTime(25)
+             .criterion(Items.APPLE)
+             .save(output, id("crushing_ur_balls"))*/
     }
 
 

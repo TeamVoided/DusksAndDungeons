@@ -111,6 +111,7 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
         }
 
         add(DnDBlocks.SUSPICIOUS_RED_SAND, noDrop())
+        add(DnDBlocks.SUSPICIOUS_AZURINE_SAND, noDrop())
     }
 
 }

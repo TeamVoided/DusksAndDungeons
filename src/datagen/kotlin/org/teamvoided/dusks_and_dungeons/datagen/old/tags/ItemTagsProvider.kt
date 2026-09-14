@@ -298,6 +298,8 @@ class ItemTagsProvider(
 
     fun earths() {
         copy(BlockTags.SAND, ItemTags.SAND)
+        copy(ConventionalBlockTags.SANDS, ConventionalItemTags.SANDS)
+        copy(BlockTags.SMELTS_TO_GLASS, ItemTags.SMELTS_TO_GLASS)
     }
 
     // Start of rework tags
