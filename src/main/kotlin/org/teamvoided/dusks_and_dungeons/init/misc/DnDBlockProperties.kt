@@ -131,11 +131,18 @@ object DnDBlockProperties {
         .noOcclusion()
         .pushReaction(PushReaction.DESTROY)
 
-    val TINTED_SANDSTONE: Properties = Properties.of()
+    val AZURINE_SANDSTONE: Properties = Properties.of()
         .mapColor(MapColor.WATER)
         .instrument(NoteBlockInstrument.BASEDRUM)
         .requiresCorrectToolForDrops()
         .strength(0.8f)
+
+    val AZURINE_SUS_SAND: Properties = ofFullCopy(RED_SAND)
+        .mapColor(MapColor.WATER)
+        .instrument(NoteBlockInstrument.SNARE)
+        .strength(0.25f)
+        .sound(SoundType.SUSPICIOUS_SAND)
+        .pushReaction(PushReaction.DESTROY)
 
     // Fun!
     fun petals(color: MapColor): Properties = ofFullCopy(PINK_PETALS).mapColor(color)

@@ -726,25 +726,25 @@ object DnDBlocks {
     val SUSPICIOUS_AZURINE_SAND = register(
         "suspicious_azurine_sand",
         { BrushableBlock(AZURINE_SAND, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED, it) },
-        Prop.RED_SUS_SAND
+        Prop.AZURINE_SUS_SAND
     ).shovel().tint().water()
         .tellWitnessesThatIWasMurdered()
 
-    val AZURINE_SANDSTONE = registerSet("azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
+    val AZURINE_SANDSTONE = registerSet("azurine_sandstone", Prop.AZURINE_SANDSTONE).pickaxe().tint().water()
         .tellWitnessesThatIWasMurdered()
-    val CHISELED_AZURINE_SANDSTONE = register("chiseled_azurine_sandstone", Prop.TINTED_SANDSTONE)
+    val CHISELED_AZURINE_SANDSTONE = register("chiseled_azurine_sandstone", Prop.AZURINE_SANDSTONE)
         .pickaxe().tint().water()
         .tellWitnessesThatIWasMurdered()
 
     val SMOOTH_AZURINE_SANDSTONE =
-        registerSet("smooth_azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
+        registerSet("smooth_azurine_sandstone", Prop.AZURINE_SANDSTONE).pickaxe().tint().water()
             .tellWitnessesThatIWasMurdered()
-    val CUT_AZURINE_SANDSTONE = registerSet("cut_azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
+    val CUT_AZURINE_SANDSTONE = registerSet("cut_azurine_sandstone", Prop.AZURINE_SANDSTONE).pickaxe().tint().water()
         .tellWitnessesThatIWasMurdered()
     val POLISHED_AZURINE_SANDSTONE =
-        registerSet("polished_azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
+        registerSet("polished_azurine_sandstone", Prop.AZURINE_SANDSTONE).pickaxe().tint().water()
             .tellWitnessesThatIWasMurdered()
-    val ROUGH_AZURINE_SANDSTONE = registerSet("rough_azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
+    val ROUGH_AZURINE_SANDSTONE = registerSet("rough_azurine_sandstone", Prop.AZURINE_SANDSTONE).pickaxe().tint().water()
         .tellWitnessesThatIWasMurdered()
 
     // Polished Sandstone
