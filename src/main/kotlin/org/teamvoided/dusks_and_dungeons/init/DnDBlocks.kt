@@ -579,9 +579,15 @@ object DnDBlocks {
     val INFESTED_MOSSY_COBBLESTONE = register(
         "infested_mossy_cobblestone", { InfestedBlock(MOSSY_COBBLESTONE, it) }, Properties.of().mapColor(MapColor.CLAY)
     ).pickaxe()
+
     val INFESTED_COBBLED_DEEPSLATE = register(
         "infested_cobbled_deepslate", { InfestedBlock(COBBLED_DEEPSLATE, it) }, Prop.INFESTED_DEEPSLATE
     ).pickaxe()
+
+    val INFESTED_CHISELED_DEEPSLATE = register(
+        "infested_chiseled_deepslate", { InfestedBlock(CHISELED_DEEPSLATE, it) }, Prop.INFESTED_DEEPSLATE
+    ).pickaxe()
+
     val INFESTED_DEEPSLATE_BRICKS = register(
         "infested_deepslate_bricks", { InfestedBlock(DEEPSLATE_BRICKS, it) }, Prop.INFESTED_DEEPSLATE
     ).pickaxe()

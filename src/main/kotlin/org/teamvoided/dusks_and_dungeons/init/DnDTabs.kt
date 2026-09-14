@@ -176,6 +176,7 @@ object DnDTabs {
             addAfter(
                 Blocks.INFESTED_DEEPSLATE,
                 DnDBlocks.INFESTED_COBBLED_DEEPSLATE,
+                DnDBlocks.INFESTED_CHISELED_DEEPSLATE,
                 DnDBlocks.INFESTED_POLISHED_DEEPSLATE,
                 DnDBlocks.INFESTED_DEEPSLATE_BRICKS,
                 DnDBlocks.INFESTED_CRACKED_DEEPSLATE_BRICKS,

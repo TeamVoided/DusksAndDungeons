@@ -58,6 +58,7 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         val infestedBlocks = listOf(
             DnDBlocks.INFESTED_MOSSY_COBBLESTONE,
             DnDBlocks.INFESTED_COBBLED_DEEPSLATE,
+            DnDBlocks.INFESTED_CHISELED_DEEPSLATE,
             DnDBlocks.INFESTED_DEEPSLATE_BRICKS,
             DnDBlocks.INFESTED_CRACKED_DEEPSLATE_BRICKS,
             DnDBlocks.INFESTED_DEEPSLATE_TILES,
