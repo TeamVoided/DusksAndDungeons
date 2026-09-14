@@ -15,7 +15,7 @@
     "client": [
       {
         "adapter": "kotlin",
-        "value": "org.teamvoided.dusks_and_dungeons.DusksAndDungeonsClient::init"
+        "value": "org.teamvoided.dusks_and_dungeons.client.DusksAndDungeonsClient::init"
       }
     ],
     "emi": [

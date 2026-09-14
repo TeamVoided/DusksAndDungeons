@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
-import org.teamvoided.dusks_and_dungeons.init.DnDItemsClient
+import org.teamvoided.dusks_and_dungeons.client.init.DnDItemsClient
 import java.util.function.Supplier
 
 
