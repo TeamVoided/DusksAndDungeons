@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.IronBarsBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
 
+// TODO(lib) move to voidlib
 interface BlockConnection {
     //class that would override most false result block connection logic, since a few have funky rules
     /**
