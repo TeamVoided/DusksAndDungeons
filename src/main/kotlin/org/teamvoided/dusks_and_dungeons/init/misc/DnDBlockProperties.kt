@@ -144,6 +144,20 @@ object DnDBlockProperties {
         .sound(SoundType.SUSPICIOUS_SAND)
         .pushReaction(PushReaction.DESTROY)
 
+    val EMPTY_CANDELABRA: Properties = Properties.of()
+        .mapColor(MapColor.METAL)
+        .sound(SoundType.METAL)
+        .strength(3.5F)
+        .forceSolidOn()
+
+    val CANDELABRA: Properties = Properties.of()
+        .mapColor(MapColor.METAL)
+        .lightLevel(litBlockEmission(15))
+        .sound(SoundType.METAL)
+        .strength(3.5F)
+        .forceSolidOn()
+        .dynamicShape()
+
     // Fun!
     fun petals(color: MapColor): Properties = ofFullCopy(PINK_PETALS).mapColor(color)
     fun vivions(color: MapColor): Properties = petals(color).sound(SoundType.NETHER_SPROUTS)

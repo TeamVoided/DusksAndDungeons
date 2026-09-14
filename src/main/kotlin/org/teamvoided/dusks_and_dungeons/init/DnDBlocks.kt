@@ -518,23 +518,10 @@ object DnDBlocks {
     val BIG_SOUL_CANDLE_CAKES =
         registerNoItem("big_", "soul_candle_cake", BIG_SOUL_CANDLES.toColorCollection(), ::bigSoulCandleCakeOf)
 
-    // TODO move props to proper file
-    val iCandelabra: Properties = Properties.of()
-        .mapColor(MapColor.METAL)
-        .sound(SoundType.METAL)
-        .strength(5.0F, 6.0F)
-        .forceSolidOn()
-
-    val iCandelabra2: Properties = Properties.of()
-        .mapColor(MapColor.METAL)
-        .sound(SoundType.METAL)
-        .strength(5.0F, 6.0F)
-        .forceSolidOn()
-        .dynamicShape()
-
-    val IRON_CANDELABRA = registerNoItem("iron_candelabra", ::CandelabraBlock, iCandelabra2).pickaxe()
+    // Candelabras
+    val IRON_CANDELABRA = registerNoItem("iron_candelabra", ::CandelabraBlock, Prop.CANDELABRA).pickaxe()
     val EMPTY_IRON_CANDELABRA =
-        registerNoItem("empty_iron_candelabra", { EmptyCandelabraBlock(it, IRON_CANDELABRA) }, iCandelabra)
+        registerNoItem("empty_iron_candelabra", { EmptyCandelabraBlock(it, IRON_CANDELABRA) }, Prop.EMPTY_CANDELABRA)
             .pickaxe()
 
     val BIG_SCAFFOLDING = registerNoItem("big_scaffolding", ::BigScaffoldingBlock, ofFullCopy(SCAFFOLDING))
@@ -744,8 +731,9 @@ object DnDBlocks {
     val POLISHED_AZURINE_SANDSTONE =
         registerSet("polished_azurine_sandstone", Prop.AZURINE_SANDSTONE).pickaxe().tint().water()
             .tellWitnessesThatIWasMurdered()
-    val ROUGH_AZURINE_SANDSTONE = registerSet("rough_azurine_sandstone", Prop.AZURINE_SANDSTONE).pickaxe().tint().water()
-        .tellWitnessesThatIWasMurdered()
+    val ROUGH_AZURINE_SANDSTONE =
+        registerSet("rough_azurine_sandstone", Prop.AZURINE_SANDSTONE).pickaxe().tint().water()
+            .tellWitnessesThatIWasMurdered()
 
     // Polished Sandstone
     val POLISHED_SANDSTONE = registerSet("polished_sandstone", ofFullCopy(CUT_SANDSTONE)).pickaxe()
