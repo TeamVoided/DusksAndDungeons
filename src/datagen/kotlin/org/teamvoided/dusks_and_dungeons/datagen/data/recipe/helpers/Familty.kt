@@ -8,7 +8,6 @@ import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 
 // region Chiseled
@@ -33,6 +32,3 @@ fun RecipeOutput.smeltCracked(cracked: ItemLike, source: ItemLike) {
         .save(this)
 }
 // endregion
-
-
-fun conversionName(from: Block, to: Block) = id(getConversionRecipeName(to, from))

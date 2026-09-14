@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.datagen.old.recipes
+package org.teamvoided.dusks_and_dungeons.datagen.data.recipe
 
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
@@ -7,11 +7,13 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.candelabra
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createBigLantern
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandle
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDyed
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
 
@@ -30,7 +32,7 @@ object BigRecipes {
             .save(output)
         output.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         output.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
-        output.createBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, Blocks.REDSTONE_TORCH,DnDBlocks.REDSTONE_LANTERN)
+        output.createBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, Blocks.REDSTONE_TORCH, DnDBlocks.REDSTONE_LANTERN)
         // Candles
         output.createCandle(DnDBlocks.BIG_CANDLES.uncolored, Items.HONEYCOMB_BLOCK)
         output.createCandle(DnDBlocks.SOUL_CANDLES.uncolored, Items.HONEYCOMB, ItemTags.SOUL_FIRE_BASE_BLOCKS)
@@ -41,7 +43,8 @@ object BigRecipes {
             output.createDyed(DnDBlockLists.soulCandles[idx].first, DnDBlocks.SOUL_CANDLES.uncolored, dye)
             output.createDyed(DnDBlockLists.bigSoulCandles[idx].first, DnDBlocks.BIG_SOUL_CANDLES.uncolored, dye)
         }
-        //TODO(1.0) add new candelabra recipes
+
+        output.candelabra(DnDItems.IRON_CANDELABRA, Items.IRON_INGOT, Items.IRON_NUGGET)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
             .define('|', Ingredient.of(Items.BAMBOO_PLANKS))
@@ -52,4 +55,5 @@ object BigRecipes {
             .unlockedBy(Items.BAMBOO_PLANKS)
             .save(output)
     }
+
 }
