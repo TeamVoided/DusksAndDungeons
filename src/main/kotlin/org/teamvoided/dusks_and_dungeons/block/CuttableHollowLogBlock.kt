@@ -39,7 +39,7 @@ import kotlin.math.round
 
 open class CuttableHollowLogBlock(settings: Properties) : HollowLogBlock(settings) {
 
-    open val shapeMap = crateShapeMap(NORTH_SHAPE, EAST_SHAPE, SOUTH_SHAPE, WEST_SHAPE)
+    open val shapeMap = createShapeMap(NORTH_SHAPE, EAST_SHAPE, SOUTH_SHAPE, WEST_SHAPE)
 
     init {
         registerDefaultState(
@@ -237,7 +237,7 @@ open class CuttableHollowLogBlock(settings: Properties) : HollowLogBlock(setting
         val EAST_SHAPE: VoxelShape = box(14.0, 0.0, 0.0, 16.0, 16.0, 16.0)
         val WEST_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 2.0, 16.0, 16.0)
 
-        fun crateShapeMap(
+        fun createShapeMap(
             north: VoxelShape, east: VoxelShape, south: VoxelShape, west: VoxelShape,
         ): Map<Direction.Axis, Array<VoxelShape>> {
             val array = arrayOfNulls<VoxelShape>(32)

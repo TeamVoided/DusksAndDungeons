@@ -6,7 +6,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 class HollowBambooBlock(settings: Properties) : CuttableHollowLogBlock(settings) {
 
     override val shapeMap: Map<Direction.Axis, Array<VoxelShape>> =
-        crateShapeMap(NORTH_BAMBOO_SHAPE, EAST_BAMBOO_SHAPE, SOUTH_BAMBOO_SHAPE, WEST_BAMBOO_SHAPE)
+        createShapeMap(NORTH_BAMBOO_SHAPE, EAST_BAMBOO_SHAPE, SOUTH_BAMBOO_SHAPE, WEST_BAMBOO_SHAPE)
 
     override fun getParticleDensity(): Double = 0.3
 
