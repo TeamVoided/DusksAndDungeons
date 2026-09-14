@@ -16,6 +16,7 @@ object DnDBlockEntities {
 
     fun init() {
         BlockEntityType.BRUSHABLE_BLOCK.addSupportedBlock(DnDBlocks.SUSPICIOUS_RED_SAND)
+        BlockEntityType.BRUSHABLE_BLOCK.addSupportedBlock(DnDBlocks.SUSPICIOUS_AZURINE_SAND)
     }
 
     internal fun <T : BlockEntity> register(

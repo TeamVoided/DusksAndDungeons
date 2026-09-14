@@ -5,31 +5,11 @@ import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.data.models.model.TextureSlot.*
-import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.CUBE_COLUMN_HORIZONTAL_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.CUBE_COLUMN_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_GATE_CLOSED_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_GATE_OPEN_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_GATE_WALL_CLOSED_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_GATE_WALL_OPEN_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_INVENTORY_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_POST_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.FENCE_SIDE_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.INNER
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.SLAB_BOTTOM_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.SLAB_TOP_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.STAIRS_INNER_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.STAIRS_OUTER_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.STAIRS_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.WALL_INVENTORY_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.WALL_LOW_SIDE_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.WALL_POST_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.WALL_TALL_SIDE_TINTED
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.block
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.model
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.DnDModels
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.DnDTexturedModels
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 
 val TINTED: TextureSlot = create("tinted")
@@ -37,7 +17,7 @@ val TINTED: TextureSlot = create("tinted")
 fun BlockModelGenerators.planksTinted(
     planks: Block, stairs: Block, slab: Block, wall: Block, fence: Block, fenceGate: Block, button: Block, plate: Block,
 ) {
-    createTrivialBlock(planks, TexturedModel.LEAVES)
+    createTrivialBlock(planks, DnDTexturedModels.TINTED_CUBE)
     stairsTinted(stairs, planks)
     slabTinted(slab, planks)
     wallTinted(wall, planks)
@@ -184,7 +164,7 @@ fun BlockModelGenerators.createTintedDoor(block: Block) {
 
 fun BlockModelGenerators.columnWithHorizontalTinted(block: Block) {
     val texture = TextureMapping.logColumn(block)
-    val resourceLocation = CUBE_COLUMN_TINTED.create(block, texture, this.modelOutput)
+    val resourceLocation = DnDModels.CUBE_COLUMN_TINTED.create(block, texture, this.modelOutput)
     val resourceLocation2 = CUBE_COLUMN_HORIZONTAL_TINTED.create(block, texture, this.modelOutput)
     this.blockStateOutput.accept(
         BlockModelGenerators.createRotatedPillarWithHorizontalVariant(
@@ -197,7 +177,7 @@ fun BlockModelGenerators.columnWithHorizontalTinted(block: Block) {
 
 fun BlockModelGenerators.columnTinted(block: Block, texture: Block) {
     val texture = TextureMapping.cube(texture)
-    val resourceLocation = CUBE_COLUMN_TINTED.create(block, texture, this.modelOutput)
+    val resourceLocation = DnDModels.CUBE_COLUMN_TINTED.create(block, texture, this.modelOutput)
     this.blockStateOutput.accept(
         BlockModelGenerators.createAxisAlignedPillarBlock(
             block,

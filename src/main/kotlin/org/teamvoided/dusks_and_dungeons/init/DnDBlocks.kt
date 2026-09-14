@@ -713,15 +713,32 @@ object DnDBlocks {
             .tellWitnessesThatIWasMurdered()
     // endregion
 
-    val TINTED_SAND = register(
-        "tinted_sand", { ColoredFallingBlock(ColorRGBA(14406560), it) }, ofFullCopy(SAND).mapColor(MapColor.WATER)
-    ).tellWitnessesThatIWasMurdered()
+    val AZURINE_SAND = register(
+        "azurine_sand", { ColoredFallingBlock(ColorRGBA(14406560), it) }, ofFullCopy(SAND).mapColor(MapColor.WATER)
+    ).shovel().water()
+        .tellWitnessesThatIWasMurdered()
+    val SUSPICIOUS_AZURINE_SAND = register(
+        "suspicious_azurine_sand",
+        { BrushableBlock(AZURINE_SAND, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED, it) },
+        Prop.RED_SUS_SAND
+    ).shovel().tint().water()
+        .tellWitnessesThatIWasMurdered()
 
-    val TINTED_SANDSTONE = register("tinted_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint()
+    val AZURINE_SANDSTONE = registerSet("azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
         .tellWitnessesThatIWasMurdered()
-    val CHISELED_TINTED_SANDSTONE = register("chiseled_tinted_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint()
+    val CHISELED_AZURINE_SANDSTONE = register("chiseled_azurine_sandstone", Prop.TINTED_SANDSTONE)
+        .pickaxe().tint().water()
         .tellWitnessesThatIWasMurdered()
-    val CUT_TINTED_SANDSTONE = register("cut_tinted_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint()
+
+    val SMOOTH_AZURINE_SANDSTONE =
+        registerSet("smooth_azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
+            .tellWitnessesThatIWasMurdered()
+    val CUT_AZURINE_SANDSTONE = registerSet("cut_azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
+        .tellWitnessesThatIWasMurdered()
+    val POLISHED_AZURINE_SANDSTONE =
+        registerSet("polished_azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
+            .tellWitnessesThatIWasMurdered()
+    val ROUGH_AZURINE_SANDSTONE = registerSet("rough_azurine_sandstone", Prop.TINTED_SANDSTONE).pickaxe().tint().water()
         .tellWitnessesThatIWasMurdered()
 
     // Polished Sandstone

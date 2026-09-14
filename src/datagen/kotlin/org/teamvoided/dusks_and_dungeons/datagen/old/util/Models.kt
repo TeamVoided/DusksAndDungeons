@@ -9,7 +9,6 @@ val CANDELABRA_3 = block("parent/candelabra_3", "_3", TEXTURE, CANDLE)
 val CANDELABRA_4 = block("parent/candelabra_4", "_4", TEXTURE, CANDLE)
 val CANDELABRA_5 = block("parent/candelabra_5", "_5", TEXTURE, CANDLE)
 
-val CUBE_COLUMN_TINTED = block("parent/tint/cube_column", END, SIDE)
 val CUBE_COLUMN_HORIZONTAL_TINTED = block("parent/tint/cube_column_horizontal", "_horizontal", END, SIDE)
 val STAIRS_TINTED = block("parent/tint/stairs", BOTTOM, TOP, SIDE)
 val STAIRS_INNER_TINTED = block("parent/tint/stairs_inner", "_inner", BOTTOM, TOP, SIDE)

@@ -36,6 +36,10 @@ data object DnDModels {
     // endregion
 
     // region Tinted
+    val CUBE_ALL_TINTED = tintedBlock("cube_all", ALL)
+    val CUBE_COLUMN_TINTED = tintedBlock("cube_column", END, SIDE)
+    val CUBE_BOTTOM_TOP = tintedBlock("cube_bottom_top", TOP, BOTTOM, SIDE)
+
     val BUTTON_TINTED = tintedBlock("button", TEXTURE)
     val BUTTON_PRESSED_TINTED = tintedBlock("button_pressed", "_pressed", TEXTURE)
     val BUTTON_INVENTORY_TINTED = tintedBlock("button_inventory", "_inventory", TEXTURE)

@@ -10,9 +10,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.BigModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.StoneModels
-import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.fence
-import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.modelId
-import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.tintedCarpetPlate
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
@@ -30,6 +28,12 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         DnDBlocks.OVERGROWN_POLISHED_STONE,
         DnDBlocks.OVERGROWN_COBBLESTONE,
         DnDBlocks.OVERGROWN_STONE_BRICKS,
+
+        DnDBlocks.AZURINE_SANDSTONE,
+        DnDBlocks.SMOOTH_AZURINE_SANDSTONE,
+        DnDBlocks.CUT_AZURINE_SANDSTONE,
+        DnDBlocks.POLISHED_AZURINE_SANDSTONE,
+        DnDBlocks.ROUGH_AZURINE_SANDSTONE,
     )
 
     override fun generateBlockStateModels(gen: BlockModelGenerators) {
@@ -104,19 +108,32 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         gen.denseCube(DnDBlocks.HEAVY_CUBE)
 
         gen.tintedPane(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
-        gen.createBrushableBlock(DnDBlocks.SUSPICIOUS_RED_SAND)
-
-        gen.createTrivialBlock(DnDBlocks.TINTED_SAND, TexturedModel.LEAVES)
-        gen.createTrivialBlock(DnDBlocks.TINTED_SANDSTONE, TexturedModel.LEAVES)
-        gen.createTrivialBlock(DnDBlocks.CHISELED_TINTED_SANDSTONE, TexturedModel.LEAVES)
-        gen.createTrivialBlock(DnDBlocks.CUT_TINTED_SANDSTONE, TexturedModel.LEAVES)
+        gen.genSandModels()
 
         // Vanilla Overrides
         gen.addAxis(Blocks.MANGROVE_ROOTS)
 
     }
 
-    private val single = listOf(
+    fun BlockModelGenerators.genSandModels() {
+        createBrushableBlock(DnDBlocks.SUSPICIOUS_RED_SAND)
+
+        // Azurine
+        createTrivialBlock(DnDBlocks.AZURINE_SAND, TexturedModel.LEAVES)
+        tintedBrushableBlock(DnDBlocks.SUSPICIOUS_AZURINE_SAND)
+
+        tintedSandstoneSet(DnDBlocks.AZURINE_SANDSTONE)
+        val azurineTop = modelId(DnDBlocks.AZURINE_SANDSTONE.parent, "_top")
+        tintedChiseledSandstone(DnDBlocks.CHISELED_AZURINE_SANDSTONE, azurineTop)
+
+        tintedSet(DnDBlocks.SMOOTH_AZURINE_SANDSTONE, azurineTop)
+        tintedCutSandstoneSet(DnDBlocks.CUT_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.parent)
+
+        tintedSet(DnDBlocks.POLISHED_AZURINE_SANDSTONE)
+        tintedSet(DnDBlocks.ROUGH_AZURINE_SANDSTONE, modelId(DnDBlocks.AZURINE_SANDSTONE.parent, "_bottom"))
+    }
+
+    val single = listOf(
         DnDItems.SCARECROW_ITEM,
         DnDItems.LANTERN_PUMPKIN_SEEDS,
         DnDItems.MOSSKIN_PUMPKIN_SEEDS,

@@ -17,6 +17,7 @@ import net.minecraft.world.level.ItemLike
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
+import org.teamvoided.dusks_and_dungeons.util.block.WATER_TINT_BLOCKS
 
 object DnDItemsClient {
 
@@ -24,6 +25,7 @@ object DnDItemsClient {
 
     fun init() {
         registerTint({ _, _ -> GrassColor.getDefaultColor() }, *GRASS_TINT_BLOCKS.toTypedArray())
+        registerTint({ _, _ -> DnDBlocksClient.DEFAULT_WATER_COLOR }, *WATER_TINT_BLOCKS.toTypedArray())
         registerTint(
             FoliageColor.getDefaultColor(),
             DnDBlocks.OAK_LEAF_PILE,

@@ -12,10 +12,7 @@ import net.minecraft.world.level.GrassColor
 import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.dusks_and_dungeons.util.block.CUTOUT_BLOCKS
-import org.teamvoided.dusks_and_dungeons.util.block.GRASS_TINT_BLOCKS
-import org.teamvoided.dusks_and_dungeons.util.block.TINT_PARTICLES
-import org.teamvoided.dusks_and_dungeons.util.block.TRANSLUCENT_BLOCKS
+import org.teamvoided.dusks_and_dungeons.util.block.*
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE as BlockRenderLayerMap
 
 
@@ -39,13 +36,7 @@ object DnDBlocksClient {
             *DnDBlockLists.flowerbedBlocks.toTypedArray()
         )
 
-        registerTint(
-            { _, world, pos, _ -> waterColor(world, pos) },
-            DnDBlocks.TINTED_SAND,
-            DnDBlocks.TINTED_SANDSTONE,
-            DnDBlocks.CHISELED_TINTED_SANDSTONE,
-            DnDBlocks.CUT_TINTED_SANDSTONE,
-        )
+        registerTint({ _, world, pos, _ -> waterColor(world, pos) }, *WATER_TINT_BLOCKS.toTypedArray())
 
         CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.cutout()) }
         TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.translucent()) }
@@ -73,9 +64,11 @@ object DnDBlocksClient {
         else FoliageColor.get(0.8, 0.4)
     }
 
+    const val DEFAULT_WATER_COLOR = 0x3f76e4 // Ocean water color. It's what fabric fluid api uses
+
     fun waterColor(world: BlockAndTintGetter?, pos: BlockPos?): Int {
         return if (world != null && pos != null) BiomeColors.getAverageWaterColor(world, pos)
-        else -1
+        else DEFAULT_WATER_COLOR
     }
 
 }
