@@ -12,7 +12,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Blocks.BOOKSHELF
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.StoneRecipes
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.WoodRecipes
@@ -114,11 +114,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .save(e)
 
         // Bookshelf
-        e.bookshelf(
-            BOOKSHELF,
-            Blocks.OAK_PLANKS,
-            mc("oak_bookshelf")
-        ) // TODO(1.0) maybe make this gen under mc for real
+        e.bookshelf(BOOKSHELF, Blocks.OAK_PLANKS, id("oak_bookshelf"))
         e.bookshelf(DnDBlocks.SPRUCE_BOOKSHELF, Blocks.SPRUCE_PLANKS)
         e.bookshelf(DnDBlocks.BIRCH_BOOKSHELF, Blocks.BIRCH_PLANKS)
         e.bookshelf(DnDBlocks.JUNGLE_BOOKSHELF, Blocks.JUNGLE_PLANKS)
