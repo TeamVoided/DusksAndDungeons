@@ -24,6 +24,7 @@ object DnDBlockEntitiesClient {
     fun init() {
         BlockEntityRenderers.register(DnDBlockEntities.CANDELABRA, ::CandelabraRenderer)
 
+        // TODO make this compatible with other custom candelabras
         BuiltinItemRendererRegistry.INSTANCE.register(DnDItems.IRON_CANDELABRA, ::renderCandelabraItem)
     }
 
