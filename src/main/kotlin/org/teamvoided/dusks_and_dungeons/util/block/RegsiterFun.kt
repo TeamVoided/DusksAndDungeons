@@ -117,7 +117,7 @@ internal fun registerGravestone(name: String, block: Block): Block {
 }
 
 internal fun registerSmallGravestone(name: String, block: Block): Block {
-    return register(name, GravestoneBlock::newSmallGrave, ofFullCopy(block)).pickaxe()
+    return register(name, GravestoneBlock::newSmallGrave, ofFullCopy(block).forceSolidOn()).pickaxe()
 }
 
 // endregion

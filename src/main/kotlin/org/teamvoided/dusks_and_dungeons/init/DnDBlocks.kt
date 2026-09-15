@@ -625,15 +625,15 @@ object DnDBlocks {
 
     // Graves
     val STONE_BRICK_GRAVESTONE = registerGravestone("stone_brick_gravestone", CHISELED_STONE_BRICKS)
-    val SMALL_STONE_BRICK_GRAVESTONE = registerSmallGravestone("small_stone_brick_gravestone", STONE_BRICK_GRAVESTONE)
+    val SMALL_STONE_BRICK_GRAVESTONE = registerSmallGravestone("small_stone_brick_gravestone", CHISELED_STONE_BRICKS)
     val DEEPSLATE_BRICK_GRAVESTONE = registerGravestone("deepslate_brick_gravestone", CHISELED_DEEPSLATE)
     val SMALL_DEEPSLATE_BRICK_GRAVESTONE =
-        registerSmallGravestone("small_deepslate_brick_gravestone", DEEPSLATE_BRICK_GRAVESTONE)
+        registerSmallGravestone("small_deepslate_brick_gravestone", CHISELED_DEEPSLATE)
     val TUFF_BRICK_GRAVESTONE = registerGravestone("tuff_brick_gravestone", CHISELED_TUFF_BRICKS)
-    val SMALL_TUFF_BRICK_GRAVESTONE = registerSmallGravestone("small_tuff_brick_gravestone", TUFF_BRICK_GRAVESTONE)
+    val SMALL_TUFF_BRICK_GRAVESTONE = registerSmallGravestone("small_tuff_brick_gravestone", CHISELED_TUFF_BRICKS)
     val BLACKSTONE_BRICK_GRAVESTONE = registerGravestone("blackstone_brick_gravestone", CHISELED_POLISHED_BLACKSTONE)
     val SMALL_BLACKSTONE_BRICK_GRAVESTONE =
-        registerSmallGravestone("small_blackstone_brick_gravestone", BLACKSTONE_BRICK_GRAVESTONE)
+        registerSmallGravestone("small_blackstone_brick_gravestone", CHISELED_POLISHED_BLACKSTONE)
     val IRON_HEADSTONE = register("iron_headstone", GravestoneBlock::newHeadstone, ofFullCopy(BIG_CHAIN))
         .cutout().pickaxe()
     // endregion
