@@ -188,8 +188,10 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
             .add(DnDBlocks.WOOL_CARPET_PLATE)
 
         getOrCreateTagBuilder(DnDBlockTags.SCONCES)
-            .forceAddTag(DnDBlockTags.SCONCES_THAT_BURN)
+            .forceAddTag(DnDBlockTags.WOODEN_SCONCES)
             .add(DnDBlocks.IRON_SCONCE)
+        getOrCreateTagBuilder(DnDBlockTags.WOODEN_SCONCES)
+            .forceAddTag(DnDBlockTags.SCONCES_THAT_BURN)
         getOrCreateTagBuilder(DnDBlockTags.SCONCES_THAT_BURN)
             .add(DnDBlocks.SPRUCE_SCONCE)
 

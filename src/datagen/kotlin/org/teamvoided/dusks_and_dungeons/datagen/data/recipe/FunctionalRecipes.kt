@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.candelabra
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.sconce
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -48,6 +49,9 @@ object FunctionalRecipes {
 
         output.candelabra(DnDItems.IRON_CANDELABRA, Items.IRON_INGOT, Items.IRON_NUGGET)
         SpecialRecipeBuilder.special(::CandelabraContentsRecipe).save(output, id("candelabra_contents"))
+
+        output.sconce(DnDBlocks.SPRUCE_SCONCE, Items.SPRUCE_PLANKS, Items.STICK)
+        output.sconce(DnDBlocks.IRON_SCONCE, Items.IRON_INGOT, Items.IRON_NUGGET)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
             .define('|', Ingredient.of(Items.BAMBOO_PLANKS))

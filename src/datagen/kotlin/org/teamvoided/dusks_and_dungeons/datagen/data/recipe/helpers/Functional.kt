@@ -9,7 +9,7 @@ import net.minecraft.world.level.ItemLike
 
 
 fun RecipeOutput.candelabra(candelabra: ItemLike, ingot: ItemLike, nuget: ItemLike) {
-    ShapedRecipeBuilder.shaped(RecipeCategory.MISC, candelabra, 4)
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candelabra, 4)
         .define('|', Ingredient.of(ingot))
         .define('~', Ingredient.of(nuget))
         .pattern("~~~")
@@ -20,4 +20,15 @@ fun RecipeOutput.candelabra(candelabra: ItemLike, ingot: ItemLike, nuget: ItemLi
     SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingot), RecipeCategory.BUILDING_BLOCKS, candelabra, 3)
         .unlockedBy(ingot)
         .save(this, conversionName(ingot, candelabra))
+}
+
+fun RecipeOutput.sconce(sconce: ItemLike, ingot: ItemLike, nuget: ItemLike) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, sconce)
+        .define('#', Ingredient.of(ingot))
+        .define('.', Ingredient.of(nuget))
+        .pattern("##")
+        .pattern("#.")
+        .unlockedBy(ingot)
+        .unlockedBy(sconce)
+        .save(this)
 }

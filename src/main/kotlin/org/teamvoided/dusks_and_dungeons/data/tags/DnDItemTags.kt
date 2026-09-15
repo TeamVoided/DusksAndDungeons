@@ -64,6 +64,9 @@ object DnDItemTags {
     val HEADSTONES = tag("headstones")
     val CARPET_PLATES = tag("carpet_plates")
     val CARPET_PLATES_WOOL = tag("carpet_plates/wool")
+    val SCONCES = tag("sconces")
+    val WOODEN_SCONCES = tag("wooden_sconces")
+    val SCONCES_THAT_BURN = tag("sconces_that_burn")
 
     // Nether Bricks
     val NETHER_BRICKS = tag("nether_bricks")

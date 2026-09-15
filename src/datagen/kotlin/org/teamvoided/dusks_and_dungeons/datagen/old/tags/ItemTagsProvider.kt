@@ -72,6 +72,10 @@ class ItemTagsProvider(
         getOrCreateTagBuilder(ItemTags.DAMPENS_VIBRATIONS).forceAddTag(DnDItemTags.CARPET_PLATES_WOOL)
 
 
+        copy(DnDBlockTags.SCONCES, DnDItemTags.SCONCES)
+        copy(DnDBlockTags.WOODEN_SCONCES, DnDItemTags.WOODEN_SCONCES)
+        copy(DnDBlockTags.SCONCES_THAT_BURN, DnDItemTags.SCONCES_THAT_BURN)
+
         // sandstone
 
         copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS)
