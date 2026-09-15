@@ -20,7 +20,7 @@ import org.teamvoided.dusks_and_dungeons.recipe.CandelabraContentsRecipe
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists
 
-object BigRecipes {
+object FunctionalRecipes {
 
     fun build(output: RecipeOutput) {
         // Chains and Lanterns

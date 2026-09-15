@@ -20,7 +20,7 @@ fun RecipeBuilder.unlockedBy(item: ItemLike): RecipeBuilder =
 fun RecipeBuilder.unlockedBy(tag: TagKey<Item>): RecipeBuilder =
     this.unlockedBy("has_${tag.location.path}", has(tag))
 
-// TODO(1.0) move to big blocks
+// TODO(1.0) move to functional blocks
 fun RecipeOutput.createBigLantern(
     block: ItemLike,
     torch: ItemLike,

@@ -10,7 +10,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCandle2
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 
-object BigModels {
+object FunctionalModels {
 
     fun create(gen: BlockModelGenerators) {
         gen.createBigChain(DnDBlocks.BIG_CHAIN)
@@ -19,7 +19,7 @@ object BigModels {
         gen.createBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, true)
 
         DnDBlockLists.bigCandles.forEach(gen::registerBigCandle)
-        DnDBlockLists.soulCandles.forEach(gen::registerCandle2) //TODO(1.0) move this out?
+        DnDBlockLists.soulCandles.forEach(gen::registerCandle2)
         DnDBlockLists.bigSoulCandles.forEach(gen::registerBigCandle)
 
         gen.createCandelabra(DnDBlocks.EMPTY_IRON_CANDELABRA, DnDBlocks.IRON_CANDELABRA)

@@ -493,8 +493,7 @@ object DnDBlocks {
 
     // endregion
 
-    // TODO soon functional
-    // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Big Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
+    // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Functional Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
 
     val BIG_CHAIN = register("big_chain", ::BigChainBlock, ofFullCopy(CHAIN).sound(bigChainSound)).pickaxe().cutout()
     val BIG_LANTERN = register("big_lantern", ::BigLanternBlock, ofFullCopy(LANTERN).sound(bigLanternSound)).pickaxe()

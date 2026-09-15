@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Blocks.BOOKSHELF
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
-import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.BigRecipes
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.FunctionalRecipes
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.StoneRecipes
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.WoodRecipes
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
@@ -34,7 +34,7 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         SETS.forEach(e::createSet)
 
         WoodRecipes.build(e)
-        BigRecipes.build(e)
+        FunctionalRecipes.build(e)
         StoneRecipes.generateStoneRecipes(e)
         NetherRecipes.generateNetherRecipes(e)
         FloraRecipes.generateFloraRecipes(e)

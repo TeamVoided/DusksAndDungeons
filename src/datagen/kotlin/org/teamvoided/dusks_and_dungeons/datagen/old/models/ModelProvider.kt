@@ -8,7 +8,7 @@ import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
-import org.teamvoided.dusks_and_dungeons.datagen.assets.model.BigModels
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.FunctionalModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.StoneModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
@@ -44,7 +44,7 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
 
         SETS.filterNot(excludeModels::contains).forEach(gen::createBlockSet)
 
-        BigModels.create(gen)
+        FunctionalModels.create(gen)
         FloraModels.create(gen)
         NetherModels.create(gen)
         StoneModels.create(gen)
