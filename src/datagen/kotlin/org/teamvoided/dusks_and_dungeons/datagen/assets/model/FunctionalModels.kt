@@ -29,8 +29,23 @@ object FunctionalModels {
 
         gen.createBigScaffolding(DnDBlocks.BIG_SCAFFOLDING)
 
-        gen.scone(DnDBlocks.SPRUCE_SCONCE)
-        gen.scone(DnDBlocks.IRON_SCONCE)
+//        gen.sconce(DnDBlocks.OAK_SCONCE)
+        gen.sconce(DnDBlocks.SPRUCE_SCONCE)
+//        gen.sconce(DnDBlocks.BIRCH_SCONCE)
+//        gen.sconce(DnDBlocks.JUNGLE_SCONCE)
+//        gen.sconce(DnDBlocks.ACACIA_SCONCE)
+//        gen.sconce(DnDBlocks.DARK_OAK_SCONCE)
+//        gen.sconce(DnDBlocks.MANGROVE_SCONCE)
+//        gen.sconce(DnDBlocks.CHERRY_SCONCE)
+//        gen.sconce(DnDBlocks.CASCADE_SCONCE)
+//        gen.sconce(DnDBlocks.SYPIA_SCONCE)
+//        gen.sconce(DnDBlocks.VERDANT_SCONCE)
+//        gen.sconce(DnDBlocks.BAMBOO_SCONCE)
+//        gen.sconce(DnDBlocks.CRIMSON_SCONCE)
+//        gen.sconce(DnDBlocks.WARPED_SCONCE)
+
+        gen.sconce(DnDBlocks.IRON_SCONCE)
+//        gen.sconce(DnDBlocks.GOLD_SCONCE)
 
         gen.tintedPane(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
     }

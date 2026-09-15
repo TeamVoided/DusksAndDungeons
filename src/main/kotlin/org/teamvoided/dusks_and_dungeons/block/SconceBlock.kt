@@ -71,5 +71,6 @@ class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(propertie
                 (if (hanging) HANGING_SHAPE else SHAPE).rotate(dir.opposite.get2DDataValue())
             }
         }
+
     }
 }

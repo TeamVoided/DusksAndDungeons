@@ -140,7 +140,7 @@ fun createCandelabraItemModels(baseModel: ResourceLocation, models: List<Resourc
 
 // region Sconce
 
-fun BlockModelGenerators.scone(block: Block) {
+fun BlockModelGenerators.sconce(block: Block) {
     val texture = TextureMapping()
         .put(SIDE, TextureMapping.getBlockTexture(block))
         .put(TOP, TextureMapping.getBlockTexture(block, "_top"))

@@ -528,9 +528,24 @@ object DnDBlocks {
 
     //add after fencegates
     //all woods,
+//    val OAK_SCONCE = register("oak_sconce", ::SconceBlock, ofFullCopy(OAK_FENCE)).wood().cutout()
     val SPRUCE_SCONCE = register("spruce_sconce", ::SconceBlock, ofFullCopy(SPRUCE_FENCE)).wood().cutout()
+//    val BIRCH_SCONCE = register("birch_sconce", ::SconceBlock, ofFullCopy(BIRCH_FENCE)).wood().cutout()
+//    val JUNGLE_SCONCE = register("jungle_sconce", ::SconceBlock, ofFullCopy(JUNGLE_FENCE)).wood().cutout()
+//    val ACACIA_SCONCE = register("acacia_sconce", ::SconceBlock, ofFullCopy(ACACIA_FENCE)).wood().cutout()
+//    val DARK_OAK_SCONCE = register("dark_oak_sconce", ::SconceBlock, ofFullCopy(DARK_OAK_FENCE)).wood().cutout()
+//    val MANGROVE_SCONCE = register("mangrove_sconce", ::SconceBlock, ofFullCopy(MANGROVE_FENCE)).wood().cutout()
+//    val CHERRY_SCONCE = register("cherry_sconce", ::SconceBlock, ofFullCopy(CHERRY_FENCE)).wood().cutout()
+//    val CASCADE_SCONCE = register("cascade_sconce", ::SconceBlock, ofFullCopy(CASCADE_FENCE)).wood().cutout()
+//    val SYPIA_SCONCE = register("sypia_sconce", ::SconceBlock, ofFullCopy(SYPIA_FENCE)).wood().cutout()
+//    val VERDANT_SCONCE = register("verdant_sconce", ::SconceBlock, ofFullCopy(VERDANT_FENCE)).wood().cutout()
+//    val BAMBOO_SCONCE = register("bamboo_sconce", ::SconceBlock, ofFullCopy(BAMBOO_FENCE)).wood().cutout()
+//    val CRIMSON_SCONCE = register("crimson_sconce", ::SconceBlock, ofFullCopy(CRIMSON_FENCE)).wood().cutout()
+//    val WARPED_SCONCE = register("warped_sconce", ::SconceBlock, ofFullCopy(WARPED_FENCE)).wood().cutout()
+
     // iron, gold, (and copper [future])
     val IRON_SCONCE = register("iron_sconce", ::SconceBlock, ofFullCopy(IRON_BARS)).pickaxe().cutout()
+//    val GOLD_SCONCE = register("gold_sconce", ::SconceBlock, ofFullCopy(GOLD_BLOCK)).wood().cutout()
 
     // Carpet Plates
     val WOOL_CARPET_PLATE = register(

@@ -189,11 +189,31 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
         getOrCreateTagBuilder(DnDBlockTags.SCONCES)
             .forceAddTag(DnDBlockTags.WOODEN_SCONCES)
-            .add(DnDBlocks.IRON_SCONCE)
+            .add(
+                DnDBlocks.IRON_SCONCE,
+//                DnDBlocks.GOLD_SCONCE
+            )
         getOrCreateTagBuilder(DnDBlockTags.WOODEN_SCONCES)
             .forceAddTag(DnDBlockTags.SCONCES_THAT_BURN)
+//            .add(
+//                DnDBlocks.CRIMSON_SCONCE,
+//                DnDBlocks.WARPED_SCONCE
+//            )
         getOrCreateTagBuilder(DnDBlockTags.SCONCES_THAT_BURN)
-            .add(DnDBlocks.SPRUCE_SCONCE)
+            .add(
+//                DnDBlocks.OAK_SCONCE,
+                DnDBlocks.SPRUCE_SCONCE,
+//                DnDBlocks.BIRCH_SCONCE,
+//                DnDBlocks.JUNGLE_SCONCE,
+//                DnDBlocks.ACACIA_SCONCE,
+//                DnDBlocks.DARK_OAK_SCONCE,
+//                DnDBlocks.MANGROVE_SCONCE,
+//                DnDBlocks.CHERRY_SCONCE,
+//                DnDBlocks.CASCADE_SCONCE,
+//                DnDBlocks.SYPIA_SCONCE,
+//                DnDBlocks.VERDANT_SCONCE,
+//                DnDBlocks.BAMBOO_SCONCE,
+            )
 
         getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS)
             .forceAddTag(DnDBlockTags.CARPET_PLATES)
