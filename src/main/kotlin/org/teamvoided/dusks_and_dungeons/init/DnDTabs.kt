@@ -151,6 +151,7 @@ object DnDTabs {
         modifyTab(CreativeModeTabs.COLORED_BLOCKS) {
             addColors(Blocks.PINK_CARPET, DnDBlocks.WOOL_CARPET_PLATE)
             addCandles()
+            addAfter(Blocks.GLASS_PANE, DnDBlocks.TINTED_GLASS_PANE)
         }
 
         modifyTab(CreativeModeTabs.FUNCTIONAL_BLOCKS) {
@@ -167,6 +168,8 @@ object DnDTabs {
             addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
 
             addAfter(Items.SUSPICIOUS_SAND, DnDBlocks.SUSPICIOUS_RED_SAND)
+
+            addAfter(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
 
             addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
 

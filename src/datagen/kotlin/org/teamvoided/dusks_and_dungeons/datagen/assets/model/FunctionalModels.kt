@@ -1,12 +1,15 @@
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model
 
 import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigChain
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigLantern
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createBigScaffolding
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createCandelabra
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.redstoneLantern
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerBigCandle
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCandle2
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.tintedPane
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 
@@ -14,8 +17,11 @@ object FunctionalModels {
 
     fun create(gen: BlockModelGenerators) {
         gen.createBigChain(DnDBlocks.BIG_CHAIN)
+
         gen.createBigLantern(DnDBlocks.BIG_LANTERN)
         gen.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN)
+
+        gen.redstoneLantern(DnDBlocks.REDSTONE_LANTERN)
         gen.createBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, true)
 
         DnDBlockLists.bigCandles.forEach(gen::registerBigCandle)
@@ -25,6 +31,8 @@ object FunctionalModels {
         gen.createCandelabra(DnDBlocks.EMPTY_IRON_CANDELABRA, DnDBlocks.IRON_CANDELABRA)
 
         gen.createBigScaffolding(DnDBlocks.BIG_SCAFFOLDING)
+
+        gen.tintedPane(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
     }
 
 }

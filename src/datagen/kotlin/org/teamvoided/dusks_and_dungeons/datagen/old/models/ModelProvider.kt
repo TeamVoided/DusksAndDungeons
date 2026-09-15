@@ -105,12 +105,8 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         // endregion
 
         // Misc Blocks
-        gen.redstoneLantern(DnDBlocks.REDSTONE_LANTERN)
         gen.denseCube(DnDBlocks.HEAVY_CUBE)
-
-        gen.tintedPane(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
         gen.genSandModels()
-
         // Vanilla Overrides
         gen.addAxis(Blocks.MANGROVE_ROOTS)
 

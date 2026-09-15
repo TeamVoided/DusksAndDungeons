@@ -527,8 +527,9 @@ object DnDBlocks {
         .cutout().axe()
 
     //add after fencegates
-    //all woods, iron, (and copper [future])
+    //all woods,
     val SPRUCE_SCONCE = register("spruce_sconce", ::SconceBlock, ofFullCopy(SPRUCE_FENCE)).wood().cutout()
+    // iron, gold, (and copper [future])
     val IRON_SCONCE = register("iron_sconce", ::SconceBlock, ofFullCopy(IRON_BARS)).pickaxe().cutout()
 
     // Carpet Plates
@@ -553,9 +554,7 @@ object DnDBlocks {
 
     val HEAVY_CUBE = register("heavy_cube", ::CompositeBlock, ofFullCopy(HEAVY_CORE).noOcclusion()).pickaxe().cutout()
 
-    // TODO add to colored & functional tab
     val TINTED_GLASS_PANE = register("tinted_glass_pane", ::TintedPaneBlock, ofFullCopy(TINTED_GLASS)).translucent()
-
 
     // endregion
 

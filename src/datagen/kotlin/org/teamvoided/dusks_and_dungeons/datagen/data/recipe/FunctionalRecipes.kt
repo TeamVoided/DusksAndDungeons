@@ -10,10 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.candelabra
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createBigLantern
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createCandle
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createDyed
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.recipe.CandelabraContentsRecipe
@@ -35,6 +32,8 @@ object FunctionalRecipes {
             .save(output)
         output.createBigLantern(DnDBlocks.BIG_LANTERN, Blocks.TORCH, Blocks.LANTERN)
         output.createBigLantern(DnDBlocks.BIG_SOUL_LANTERN, Blocks.SOUL_TORCH, Blocks.SOUL_LANTERN)
+
+        output.lantern(DnDBlocks.REDSTONE_LANTERN, Items.REDSTONE_TORCH)
         output.createBigLantern(DnDBlocks.BIG_REDSTONE_LANTERN, Blocks.REDSTONE_TORCH, DnDBlocks.REDSTONE_LANTERN)
         // Candles
         output.createCandle(DnDBlocks.BIG_CANDLES.uncolored, Items.HONEYCOMB_BLOCK)
@@ -58,6 +57,14 @@ object FunctionalRecipes {
             .pattern("| |")
             .unlockedBy(Items.BAMBOO_PLANKS)
             .save(output)
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DnDBlocks.TINTED_GLASS_PANE, 16)
+            .define('#', Blocks.TINTED_GLASS)
+            .pattern("###")
+            .pattern("###")
+            .unlockedBy(Blocks.TINTED_GLASS)
+            .save(output)
+
     }
 
 }

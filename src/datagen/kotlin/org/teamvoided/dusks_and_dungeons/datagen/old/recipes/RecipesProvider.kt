@@ -99,15 +99,6 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
         e.createStonecutting(DnDBlocks.BRICK_FENCE, Blocks.BRICKS)
         e.compositeBlock(DnDBlocks.HEAVY_CUBE, Blocks.HEAVY_CORE)
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DnDBlocks.TINTED_GLASS_PANE, 16)
-            .define('#', Blocks.TINTED_GLASS)
-            .pattern("###")
-            .pattern("###")
-            .unlockedBy("has_glass", has(Blocks.TINTED_GLASS))
-            .save(e)
-
-        e.lantern(DnDBlocks.REDSTONE_LANTERN, Items.REDSTONE_TORCH)
-
         SimpleCookingRecipeBuilder.smelting(
             Ingredient.of(Blocks.LAPIS_BLOCK), RecipeCategory.BUILDING_BLOCKS, DnDBlocks.SMOOTH_LAPIS, 0.1f, 200
         )
