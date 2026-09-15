@@ -3,11 +3,15 @@ package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.blockstates.MultiVariantGenerator
+import net.minecraft.data.models.blockstates.PropertyDispatch
 import net.minecraft.data.models.blockstates.PropertyDispatch.property
 import net.minecraft.data.models.blockstates.Variant.variant
+import net.minecraft.data.models.blockstates.VariantProperties
 import net.minecraft.data.models.blockstates.VariantProperties.MODEL
+import net.minecraft.data.models.blockstates.VariantProperties.Rotation
 import net.minecraft.data.models.model.DelegatedModel
 import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.TextureMapping
@@ -16,6 +20,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.block.SconceBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.client.init.DnDItemsClient
@@ -32,8 +37,9 @@ fun BlockModelGenerators.createBigChain(block: Block) {
     createSimpleFlatItemModel(block.asItem())
 }
 
-fun BlockModelGenerators.createBigLantern(block: Block, hasOffVariant: Boolean = false) =
+fun BlockModelGenerators.createBigLantern(block: Block, hasOffVariant: Boolean = false) {
     createBigLantern(block, id("block/big_lantern_bottom"), hasOffVariant)
+}
 
 /**
  * Generate Big Lantern models
@@ -127,6 +133,41 @@ fun createCandelabraItemModels(baseModel: ResourceLocation, models: List<Resourc
 
     modelObj.add("overrides", jsonArray)
     return Supplier { modelObj }
+}
+
+// endregion
+
+
+// region Sconce
+
+fun BlockModelGenerators.scone(block: Block) {
+    val texture = TextureMapping()
+        .put(SIDE, TextureMapping.getBlockTexture(block))
+        .put(TOP, TextureMapping.getBlockTexture(block, "_top"))
+    val model = DnDModels.SCONCE.create(block, texture, modelOutput)
+
+    blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(block, variant(model))
+            .with(createSconceDispatch())
+    )
+}
+
+fun createSconceDispatch(): PropertyDispatch {
+    return PropertyDispatch.properties(BlockStateProperties.HORIZONTAL_FACING, SconceBlock.HANGING)
+        .generate { facing, hanging ->
+            val rotation = when (facing) {
+                Direction.EAST -> Rotation.R90
+                Direction.SOUTH -> Rotation.R180
+                Direction.WEST -> Rotation.R270
+                else -> Rotation.R0
+            }
+            if (hanging)
+                variant()
+                    .with(VariantProperties.X_ROT, Rotation.R180)
+                    .with(VariantProperties.Y_ROT, rotation.opposite())
+            else
+                variant().with(VariantProperties.Y_ROT, rotation)
+        }
 }
 
 // endregion

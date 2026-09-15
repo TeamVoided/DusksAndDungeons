@@ -5,7 +5,6 @@ import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.bookshelf
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createItemModel
-import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.scone
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createSign
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.tintedBookshelf
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.*
@@ -108,8 +107,6 @@ object WoodModels {
         gen.bookshelf(DnDBlocks.SYPIA_BOOKSHELF, DnDBlocks.SYPIA_PLANKS)
         gen.tintedBookshelf(DnDBlocks.VERDANT_BOOKSHELF, DnDBlocks.VERDANT_PLANKS)
 
-        gen.scone(DnDBlocks.SPRUCE_SCONCE)
-        gen.scone(DnDBlocks.IRON_SCONCE)
     }
 
     fun BlockModelGenerators.cascade() {

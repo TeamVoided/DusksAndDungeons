@@ -11,7 +11,6 @@ import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.BooleanProperty
 
 // TODO(1.0) re order the file to have simple functions upto
 /**
@@ -54,10 +53,13 @@ fun BlockModelGenerators.createOrientable(block: Block) {
     )
 }
 
-fun verticalFlip(property: BooleanProperty, default: Boolean = false): PropertyDispatch {
-    return PropertyDispatch.property(property)
-        .select(default, Variant.variant())
-        .select(!default, Variant.variant().with(VariantProperties.X_ROT, Rotation.R180))
+fun Rotation.opposite(): Rotation {
+    return when (this) {
+        Rotation.R0 -> Rotation.R180
+        Rotation.R90 -> Rotation.R270
+        Rotation.R180 -> Rotation.R0
+        Rotation.R270 -> Rotation.R90
+    }
 }
 
 /**
