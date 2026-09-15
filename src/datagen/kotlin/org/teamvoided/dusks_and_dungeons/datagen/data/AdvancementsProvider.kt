@@ -9,12 +9,7 @@ import net.minecraft.advancements.critereon.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.DamageTypeTags
-import net.minecraft.world.damagesource.DamageType
-import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.biome.Biome
@@ -22,7 +17,6 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements.description
 import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements.title
-import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDWolfVariants
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDDamageTypeTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
@@ -128,6 +122,17 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
             .rewards(expReward(3))
             .parent(adventure)
             .save(gen, DnDAdvancements.GET_BIG)
+
+        Advancement.Builder.advancement()
+            .addCollectItems(DnDBlocks.HEAVY_CUBE)
+            .display(
+                DnDBlocks.HEAVY_CUBE,
+                title(DnDAdvancements.GETTING_DENSE), description(DnDAdvancements.GETTING_DENSE),
+                null, AdvancementType.TASK, true, true, false
+            )
+            .rewards(expReward(3))
+            .parent(adventure)
+            .save(gen, DnDAdvancements.GETTING_DENSE)
     }
 
     // Once there are more than 5 functions here. Move them to a helper file to keep this file clean.
@@ -154,6 +159,10 @@ class AdvancementsProvider(o: FabricOutput, p: FutureProvider) : FabricAdvanceme
     }
 
     fun Advancement.Builder.addCollectItems(items: List<ItemLike>): Advancement.Builder {
+        return addCollectItems(*items.toTypedArray())
+    }
+
+    fun Advancement.Builder.addCollectItems(vararg items: ItemLike): Advancement.Builder {
         for (holder in items.map { it.asItem().builtInRegistryHolder() }) {
             addCriterion(
                 "has_" + holder.key().location().toString().replace(":", "_"),

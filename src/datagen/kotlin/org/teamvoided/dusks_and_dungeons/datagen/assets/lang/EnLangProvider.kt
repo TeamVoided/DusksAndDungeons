@@ -33,6 +33,8 @@ class EnLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, 
             "Obtain all of the Big items"
         )
 
+        gen.advancement(DnDAdvancements.GETTING_DENSE, "Getting D e n s e", "Obtain the Heavy Cube")
+
         gen.damageType(
             DnDDamageTypes.THROWN_BRICK,
             "was bricked down",
