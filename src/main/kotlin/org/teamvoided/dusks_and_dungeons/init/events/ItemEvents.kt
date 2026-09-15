@@ -47,8 +47,10 @@ fun addToCompositeFromCoreItem(
 
     val clickedPos = getCornerPosition(BlockHitResult(hit.location, hit.direction.opposite, pos, hit.isInside))
     val cornerToBeAdded = POS_TO_CORNER[clickedPos] ?: return InteractionResult.PASS
-    addToComposite(state, cornerToBeAdded, level, pos, player, stack)
-    return InteractionResult.SUCCESS
+    if (addToComposite(state, cornerToBeAdded, level, pos, player, stack)) {
+        return InteractionResult.SUCCESS
+    }
+    return InteractionResult.PASS
 }
 
 

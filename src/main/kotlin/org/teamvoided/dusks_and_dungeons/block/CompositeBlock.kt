@@ -35,7 +35,7 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.*
 
-class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), BlockPickInteractionAware {
+open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), BlockPickInteractionAware {
 
     init {
         registerDefaultState(
@@ -57,6 +57,26 @@ class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), Block
         )
     }
 
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        val list = mutableListOf<VoxelShape>()
+
+        if (state.getValue(UPPER_NORTH_EAST)) list.add(UPPER_TOP_RIGHT_SHAPE)
+        if (state.getValue(UPPER_NORTH_WEST)) list.add(UPPER_TOP_LEFT_SHAPE)
+        if (state.getValue(UPPER_SOUTH_EAST)) list.add(UPPER_BOTTOM_RIGHT_SHAPE)
+        if (state.getValue(UPPER_SOUTH_WEST)) list.add(UPPER_BOTTOM_LEFT_SHAPE)
+
+        if (state.getValue(LOWER_NORTH_EAST)) list.add(LOWER_TOP_RIGHT_SHAPE)
+        if (state.getValue(LOWER_NORTH_WEST)) list.add(LOWER_TOP_LEFT_SHAPE)
+        if (state.getValue(LOWER_SOUTH_EAST)) list.add(LOWER_BOTTOM_RIGHT_SHAPE)
+        if (state.getValue(LOWER_SOUTH_WEST)) list.add(LOWER_BOTTOM_LEFT_SHAPE)
+
+        if (list.isEmpty()) return Shapes.block()
+
+        return Shapes.or(Shapes.empty(), *list.toTypedArray())
+    }
+
+    open fun getCompositeItem(): Item = Items.HEAVY_CORE
+
     override fun useWithoutItem(
         state: BlockState, level: Level, pos: BlockPos, player: Player, hit: BlockHitResult,
     ): InteractionResult {
@@ -68,8 +88,8 @@ class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), Block
                 val newState = state.setValue(corner, false)
                 level.setBlockAndUpdate(pos, newState)
                 if (state.getValue(WATERLOGGED)) level.scheduleFluidTick(pos, state)
-                if (!(player.isCreative && player.inventory.contains(Items.HEAVY_CORE.defaultInstance))) {
-                    player.giveItem(ItemStack(Items.HEAVY_CORE))
+                if (!(player.isCreative && player.inventory.contains(getCompositeItem().defaultInstance))) {
+                    player.giveItem(ItemStack(getCompositeItem()))
                 }
                 if (!newState.hasAnyCorners()) {
                     if (newState.getValue(WATERLOGGED))
@@ -88,14 +108,16 @@ class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), Block
         stack: ItemStack, state: BlockState, level: Level,
         pos: BlockPos, player: Player, hand: InteractionHand, hit: BlockHitResult,
     ): ItemInteractionResult {
-        if (hit.type != HitResult.Type.BLOCK || !stack.`is`(Items.HEAVY_CORE) || state.isFull())
+        if (hit.type != HitResult.Type.BLOCK || !stack.`is`(getCompositeItem()) || state.isFull())
             return super.useItemOn(stack, state, level, pos, player, hand, hit)
 
         val clickedPos = getCornerPosition(hit).add(hit.direction.getOffset().map { it * -2 })
         val cornerToBeAdded = POS_TO_CORNER[clickedPos] ?: return PASS_TO_DEFAULT_BLOCK_INTERACTION
 
-        addToComposite(state, cornerToBeAdded, level, pos, player, stack)
-        return ItemInteractionResult.SUCCESS
+        if (addToComposite(state, cornerToBeAdded, level, pos, player, stack)) {
+            return ItemInteractionResult.SUCCESS
+        }
+        return PASS_TO_DEFAULT_BLOCK_INTERACTION
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
@@ -132,24 +154,6 @@ class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), Block
         }
     }
 
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        val list = mutableListOf<VoxelShape>()
-
-        if (state.getValue(UPPER_NORTH_EAST)) list.add(UPPER_TOP_RIGHT_SHAPE)
-        if (state.getValue(UPPER_NORTH_WEST)) list.add(UPPER_TOP_LEFT_SHAPE)
-        if (state.getValue(UPPER_SOUTH_EAST)) list.add(UPPER_BOTTOM_RIGHT_SHAPE)
-        if (state.getValue(UPPER_SOUTH_WEST)) list.add(UPPER_BOTTOM_LEFT_SHAPE)
-
-        if (state.getValue(LOWER_NORTH_EAST)) list.add(LOWER_TOP_RIGHT_SHAPE)
-        if (state.getValue(LOWER_NORTH_WEST)) list.add(LOWER_TOP_LEFT_SHAPE)
-        if (state.getValue(LOWER_SOUTH_EAST)) list.add(LOWER_BOTTOM_RIGHT_SHAPE)
-        if (state.getValue(LOWER_SOUTH_WEST)) list.add(LOWER_BOTTOM_LEFT_SHAPE)
-
-        if (list.isEmpty()) return Shapes.block()
-
-        return Shapes.or(Shapes.empty(), *list.toTypedArray())
-    }
-
     companion object {
 
         val UPPER_NORTH_EAST: BooleanProperty = BooleanProperty.create("upper_north_east")
@@ -174,12 +178,17 @@ class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), Block
         fun addToComposite(
             state: BlockState, cornerToBeAdded: BooleanProperty, level: Level,
             pos: BlockPos, player: Player, stack: ItemStack,
-        ) {
+        ): Boolean {
+            if (state.getValue(cornerToBeAdded)) {
+                return false
+            }
+
             val newState = state.setValue(cornerToBeAdded, true)
             pushEntitiesUp(state, newState, level, pos)
             level.setBlockAndUpdateFluid(pos, newState)
             stack.consume(1, player)
             level.playSound(null, pos, SoundEvents.HEAVY_CORE_BREAK, SoundSource.BLOCKS, 0.8f, 1.0f)
+            return true
         }
 
         fun BlockState.hasAnyCorners(): Boolean {
