@@ -474,6 +474,7 @@ object DnDTabs {
             }
         )
         addItems(
+            DnDItems.IRON_CANDELABRA,
             DnDBlocks.HEAVY_CUBE,
             DnDBlocks.TINTED_GLASS_PANE
         )
