@@ -10,6 +10,9 @@ import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -20,6 +23,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.GameRules
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
@@ -28,6 +32,7 @@ import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.init.DnDEntityTypes
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistries
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
+import org.teamvoided.dusks_and_dungeons.util.giveItem
 import org.teamvoided.dusks_and_dungeons.util.key
 import kotlin.jvm.optionals.getOrNull
 
@@ -105,11 +110,35 @@ class ThrownItemStack : ThrowableItemProjectile {
         }
 
         if (inGround && !isNoclip) {
-            if (lastState !== state && shouldFall()) {
+            if (lastState != state && shouldFall()) {
                 startFalling()
             }
         } else {
             super.tick()
+        }
+    }
+
+    override fun interact(player: Player, interactionHand: InteractionHand): InteractionResult {
+        if (player.isCreative || player.getItemInHand(interactionHand).isEmpty || player.getItemInHand(interactionHand) == item) {
+            player.giveItem(item)
+            discard()
+            return InteractionResult.SUCCESS
+        }
+        return super.interact(player, interactionHand)
+    }
+
+    override fun hurt(source: DamageSource, amount: Float): Boolean {
+        if (isInvulnerableTo(source) || !item.canBeHurtBy(source)) {
+            return false
+        } else if (level().isClientSide) {
+            level().broadcastEntityEvent(this, BREAK_ID)
+            return true
+        } else {
+            markHurt()
+            gameEvent(GameEvent.ENTITY_DAMAGE, source.entity)
+            //item.onDestroyed(entity)
+            discard()
+            return true
         }
     }
 
@@ -133,9 +162,9 @@ class ThrownItemStack : ThrowableItemProjectile {
                 level().addParticle(
                     options,
                     x, y, z,
-                    (random.nextDouble() * 2) - 1,
-                    (random.nextDouble() * 2) - 1,
-                    (random.nextDouble() * 2) - 1
+                    (random.nextDouble() - 0.5),
+                    (random.nextDouble() - 0.5),
+                    (random.nextDouble() - 0.5)
                 )
             }
         }
@@ -152,7 +181,6 @@ class ThrownItemStack : ThrowableItemProjectile {
         val pos = hit.blockPos
         val state = level().getBlockState(pos)
         lastState = state
-
         if (level().isClientSide) {
             return
         }
