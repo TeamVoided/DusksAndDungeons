@@ -30,11 +30,11 @@ class ThrownItemStackRenderer(ctx: EntityRendererProvider.Context) : EntityRende
         if (entity.tickCount >= 2 || !(entityRenderDispatcher.camera.entity.distanceToSqr(entity) < MIN_CAMERA_DISTANCE_SQUARED)) {
             poseStack.pushPose()
             poseStack.scale(scale, scale, scale)
-            if (entity.onGround()) {
+            if (entity.inGround) {
+                poseStack.mulPose(Axis.XP.rotationDegrees(90f))
+            } else {
                 poseStack.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))
-                poseStack.mulPose(Axis.ZN.rotationDegrees(entity.getViewXRot(tickDelta) + entity.tickCount + tickDelta))
-            }else{
-                poseStack.mulPose(Axis.YN.rotationDegrees(90f))
+                poseStack.mulPose(Axis.ZN.rotationDegrees(entity.getViewXRot(tickDelta) + ((entity.tickCount + tickDelta) * 20)))
             }
             itemRenderer.renderStatic(
                 entity.item, ItemDisplayContext.GROUND,

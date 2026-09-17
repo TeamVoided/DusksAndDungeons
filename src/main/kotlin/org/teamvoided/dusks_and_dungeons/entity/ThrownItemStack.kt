@@ -4,6 +4,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.particles.ItemParticleOption
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
@@ -48,6 +49,7 @@ class ThrownItemStack : ThrowableItemProjectile {
 
     var inGround = false
     var lastState: BlockState? = null
+    var age: Int = 0
 
     override fun defineSynchedData(builder: SynchedEntityData.Builder) {
         super.defineSynchedData(builder)
@@ -110,12 +112,28 @@ class ThrownItemStack : ThrowableItemProjectile {
         }
 
         if (inGround && !isNoclip) {
+            age++
             if (lastState != state && shouldFall()) {
                 startFalling()
+            } else if (age > 1200) {
+                spawnAtLocation(item)
+                discard()
             }
         } else {
             super.tick()
         }
+    }
+
+    override fun addAdditionalSaveData(compoundTag: CompoundTag) {
+        super.addAdditionalSaveData(compoundTag)
+        compoundTag.putShort("TickCount", age.toShort())
+        compoundTag.putBoolean("InGround", inGround)
+    }
+
+    override fun readAdditionalSaveData(compoundTag: CompoundTag) {
+        super.readAdditionalSaveData(compoundTag)
+        age = compoundTag.getShort("TickCount").toInt()
+        inGround = compoundTag.getBoolean("InGround")
     }
 
     override fun interact(player: Player, interactionHand: InteractionHand): InteractionResult {
@@ -131,7 +149,6 @@ class ThrownItemStack : ThrowableItemProjectile {
         if (isInvulnerableTo(source) || !item.canBeHurtBy(source)) {
             return false
         } else if (level().isClientSide) {
-            level().broadcastEntityEvent(this, BREAK_ID)
             return true
         } else {
             markHurt()
@@ -148,6 +165,7 @@ class ThrownItemStack : ThrowableItemProjectile {
 
     fun startFalling() {
         inGround = false
+        age = 0
         deltaMovement = deltaMovement.multiply(
             random.nextDouble() * 0.2,
             random.nextDouble() * 0.2,
@@ -162,9 +180,9 @@ class ThrownItemStack : ThrowableItemProjectile {
                 level().addParticle(
                     options,
                     x, y, z,
-                    (random.nextDouble() - 0.5),
-                    (random.nextDouble() - 0.5),
-                    (random.nextDouble() - 0.5)
+                    (random.nextDouble() - 0.5) * 0.3,
+                    (random.nextDouble() - 0.5) * 0.3,
+                    (random.nextDouble() - 0.5) * 0.3
                 )
             }
         }
