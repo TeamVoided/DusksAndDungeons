@@ -124,6 +124,8 @@ class ThrownItemStack : ThrowableItemProjectile {
         }
     }
 
+    override fun isPickable(): Boolean = true
+
     override fun addAdditionalSaveData(compoundTag: CompoundTag) {
         super.addAdditionalSaveData(compoundTag)
         compoundTag.putShort("TickCount", age.toShort())
@@ -153,7 +155,7 @@ class ThrownItemStack : ThrowableItemProjectile {
         } else {
             markHurt()
             gameEvent(GameEvent.ENTITY_DAMAGE, source.entity)
-            //item.onDestroyed(entity)
+            spawnAtLocation(item)
             discard()
             return true
         }
