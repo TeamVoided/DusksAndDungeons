@@ -7,9 +7,5 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.tag
 
 object DnDEntityTypeTags {
-
-    val ANTS_ATTACKS = key("ants_attack")
-
     fun key(id: String): TagKey<EntityType<*>> = Registries.ENTITY_TYPE.tag(id(id))
-
 }

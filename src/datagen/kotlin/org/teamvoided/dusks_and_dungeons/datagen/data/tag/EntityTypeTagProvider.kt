@@ -19,10 +19,6 @@ class EntityTypeTagProvider(o: FabricOutput, p: FutureProvider) : EntityTypeTagP
             .add(DnDEntityTypes.SCARECROW)
     }
 
-    private fun dndTags(){
-        getOrCreateTagBuilder(DnDEntityTypeTags.ANTS_ATTACKS)
-            .forceAddTag(EntityTypeTags.SKELETONS)
-            //.add(EntityType.SKELETON)
-    }
+    private fun dndTags() {}
 
 }
