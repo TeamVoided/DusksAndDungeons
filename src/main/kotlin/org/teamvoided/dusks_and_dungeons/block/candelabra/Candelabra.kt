@@ -19,6 +19,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties.CANDLES
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
@@ -35,6 +36,8 @@ import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 object Candelabra {
+
+    var CANDLES_DYNAMIC_DROP_ID = id("candles")
 
     val SINGLE_SHAPE: VoxelShape = box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0)
     val DOUBLE_SHAPE: VoxelShape = Shapes.or(

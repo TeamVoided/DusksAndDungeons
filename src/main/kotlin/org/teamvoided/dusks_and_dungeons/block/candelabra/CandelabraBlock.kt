@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.block.BlockPickInteractionAware
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
-import net.minecraft.world.Containers.dropContents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
@@ -27,6 +26,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.level.storage.loot.LootParams
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
@@ -166,16 +167,16 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
 
     override fun canBeLit(state: BlockState): Boolean = !state.getValue(WATERLOGGED) && super.canBeLit(state)
 
-    override fun onRemove(
-        state: BlockState, level: Level, pos: BlockPos, otherState: BlockState, movedByPiston: Boolean,
-    ) {
-        if (!state.`is`(otherState.block)) {
-            level.getCandelabra(pos)?.let { be ->
-                dropContents(level, pos, be.getCandles())
-            }
-        }
-        super.onRemove(state, level, pos, otherState, movedByPiston)
-    }
+    /*   override fun onRemove(
+           state: BlockState, level: Level, pos: BlockPos, otherState: BlockState, movedByPiston: Boolean,
+       ) {
+           if (!state.`is`(otherState.block)) {
+               level.getCandelabra(pos)?.let { be ->
+                   dropContents(level, pos, be.getCandles())
+               }
+           }
+           super.onRemove(state, level, pos, otherState, movedByPiston)
+       }*/
 
     override fun setPlacedBy(
         level: Level, pos: BlockPos, state: BlockState, entity: LivingEntity?, stack: ItemStack,
@@ -213,6 +214,17 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
             empty = EmptyCandelabraBlock.FULL_TO_EMPTY[this]
         }
         return empty ?: error("Candelabra(${builtInRegistryHolder()}) does not have empty variant registered!")
+    }
+
+    override fun getDrops(state: BlockState, builder: LootParams.Builder): MutableList<ItemStack> {
+        val blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY)
+        if (blockEntity is CandelabraBlockEntity) {
+            builder.withDynamicDrop(Candelabra.CANDLES_DYNAMIC_DROP_ID) {
+                blockEntity.getCandles().forEach(it::accept)
+            }
+        }
+
+        return super.getDrops(state, builder)
     }
 
     companion object {

@@ -14,10 +14,7 @@ import net.minecraft.world.level.block.state.properties.Property
 import net.minecraft.world.level.block.state.properties.SlabType
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
-import net.minecraft.world.level.storage.loot.entries.AlternativesEntry
-import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
-import net.minecraft.world.level.storage.loot.entries.NestedLootTable
+import net.minecraft.world.level.storage.loot.entries.*
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
@@ -27,6 +24,7 @@ import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
 import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 
 fun item(item: ItemLike): LootPoolSingletonContainer.Builder<*> = LootItem.lootTableItem(item)
@@ -115,7 +113,7 @@ fun BlockLootSubProvider.createLogPileDrops(drop: Block): LootTable.Builder {
 }
 
 
-fun BlockLootSubProvider.candelabraDrops(drop: Block): LootTable.Builder {
+fun BlockLootSubProvider.emptyCandelabraDrops(drop: Block): LootTable.Builder {
     return LootTable.lootTable().withPool(
         LootPool.lootPool().add(
             applyExplosionDecay(drop, item(drop).apply(2..5) { candles ->
@@ -124,6 +122,23 @@ fun BlockLootSubProvider.candelabraDrops(drop: Block): LootTable.Builder {
             })
         )
     )
+}
+
+fun BlockLootSubProvider.candelabraDrops(drop: Block): LootTable.Builder {
+    return LootTable.lootTable()
+        .withPool(
+            LootPool.lootPool().add(
+                applyExplosionDecay(drop, item(drop).apply(2..5) { candles ->
+                    countOf(candles)
+                        .`when`(blockProperty(drop).setProperty(DnDBlockStateProperties.CANDLES, candles))
+                })
+            )
+        )
+        .withPool(
+            LootPool.lootPool().add(
+                DynamicLoot.dynamicEntry(Candelabra.CANDLES_DYNAMIC_DROP_ID)
+            )
+        )
 }
 
 fun BlockLootSubProvider.dropSlabWhenSilkTouch(block: Block) {

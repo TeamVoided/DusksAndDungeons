@@ -71,7 +71,7 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
         bigSoulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
 
         add(DnDBlocks.IRON_CANDELABRA, ::candelabraDrops)
-        add(DnDBlocks.EMPTY_IRON_CANDELABRA, ::candelabraDrops)
+        add(DnDBlocks.EMPTY_IRON_CANDELABRA, ::emptyCandelabraDrops)
 
         add(DnDBlocks.WARPED_WART) {
             val state = blockProperty(it).setProperty(NetherWartBlock.AGE, 3)
