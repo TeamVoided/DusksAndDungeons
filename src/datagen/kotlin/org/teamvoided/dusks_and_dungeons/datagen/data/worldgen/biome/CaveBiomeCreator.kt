@@ -43,7 +43,7 @@ object CaveBiomeCreator {
         add2LocalModifications(DnDPlacedFeature.OVERGROWN_CAVE_BOULDER)
         add9VegetalDecoration(DnDPlacedFeature.OVERGROWTH_CAVES_CEILING_VEGETATION)
         add9VegetalDecoration(DnDPlacedFeature.OVERGROWTH_HANGING)
-        //builder.add9VegetalDecoration(CavePlacements.LUSH_CAVES_CLAY)
+        add6UndergroundOres(DnDPlacedFeature.AZURINE_SAND_ORE)
         add9VegetalDecoration(DnDPlacedFeature.OVERGROWTH_CAVES_FLOOR_VEGETATION)
         add9VegetalDecoration(DnDPlacedFeature.OVERGROWTH_TREE_ROOTED)
         add9VegetalDecoration(DnDPlacedFeature.OVERGROWTH_TREE_CAVE_1)

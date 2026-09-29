@@ -720,7 +720,7 @@ object DnDBlocks {
     // endregion
 
     val AZURINE_SAND = register(
-        "azurine_sand", { ColoredFallingBlock(ColorRGBA(14406560), it) }, ofFullCopy(SAND).mapColor(MapColor.WATER)
+        "azurine_sand", { FallingWaterColorBlock(it) }, ofFullCopy(SAND).mapColor(MapColor.WATER)
     ).shovel().water()
         .tellWitnessesThatIWasMurdered()
     val SUSPICIOUS_AZURINE_SAND = register(

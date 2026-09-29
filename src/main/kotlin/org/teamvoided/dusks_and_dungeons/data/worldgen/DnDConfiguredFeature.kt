@@ -98,6 +98,8 @@ object DnDConfiguredFeature {
     val OVERGROWTH_HANGING_LEAVES = key("overgrowth/hanging_leaves")
     val OVERGROWTH_HANGING_BLOCKS = key("overgrowth/hanging_blocks")
 
+    val AZURINE_SAND_ORE = key("ore/azurine_sand")
+
     val PILE_CORN = key("pile_corn")
 
     fun key(id: String): ResourceKey<ConfiguredFeature<*, *>> = Registries.CONFIGURED_FEATURE.key(id(id))

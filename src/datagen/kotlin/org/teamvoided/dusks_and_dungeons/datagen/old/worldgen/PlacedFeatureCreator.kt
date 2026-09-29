@@ -24,6 +24,7 @@ import net.minecraft.world.level.levelgen.placement.*
 import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
+import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.placed_features.Underground.underground
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 @Suppress("MemberVisibilityCanBePrivate", "MagicNumber", "LongMethod")
@@ -38,10 +39,13 @@ object PlacedFeatureCreator {
         PlacementUtils.filteredByBlockSurvival(Blocks.ACACIA_SAPLING)
 
     fun bootstrap(c: BootstrapContext<PlacedFeature>) {
-        val cfgLookup = c.lookup(Registries.CONFIGURED_FEATURE)
+        c.saplingFeatures()
+        c.autumnBiomeFeatures()
+        c.underground()
+
         c.register(
             DnDPlacedFeature.OVERGROWN_BOULDER,
-            cfgLookup.getOrThrow(DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER),
+            DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
             RarityFilter.onAverageOnceEvery(7),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
@@ -71,7 +75,8 @@ object PlacedFeatureCreator {
             35
         )
         c.register(
-            DnDPlacedFeature.DISK_MUD, cfgLookup.getOrThrow(DnDConfiguredFeature.DISK_MUD),
+            DnDPlacedFeature.DISK_MUD,
+            DnDConfiguredFeature.DISK_MUD,
             RarityFilter.onAverageOnceEvery(10),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_TOP_SOLID,
@@ -80,7 +85,8 @@ object PlacedFeatureCreator {
             BiomeFilter.biome()
         )
         c.register(
-            DnDPlacedFeature.DISKS_WATER, cfgLookup.getOrThrow(DnDConfiguredFeature.DISKS_WATER),
+            DnDPlacedFeature.DISKS_WATER,
+            DnDConfiguredFeature.DISKS_WATER,
             CountPlacement.of(5),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
@@ -88,14 +94,11 @@ object PlacedFeatureCreator {
             BiomeFilter.biome()
         )
 
-        saplingFeatures(c, cfgLookup)
-        autumnBiomeFeatures(c, cfgLookup)
-
 
         // Golden Mushrooms
         c.register(//places in caves in biomes
             DnDPlacedFeature.GOLDEN_MUSHROOM_CAVE,
-            cfgLookup.getOrThrow(DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM),
+            DnDConfiguredFeature.PATCH_GOLDEN_MUSHROOM,
             RarityFilter.onAverageOnceEvery(4),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
             InSquarePlacement.spread(),
@@ -156,9 +159,9 @@ object PlacedFeatureCreator {
 
     fun BootstrapContext<PlacedFeature>.overgrowthTree(feature: ResourceKey<PlacedFeature>) {
         val predicate = //for trial chambers >:)
-            //if (feature.location().toString().last() == '1') BlockPredicate.solid()
+        //if (feature.location().toString().last() == '1') BlockPredicate.solid()
             //else
-                BlockPredicate.matchesTag(BlockTags.DIRT)
+            BlockPredicate.matchesTag(BlockTags.DIRT)
         this.cavePlacement(
             feature,
             DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
@@ -169,77 +172,71 @@ object PlacedFeatureCreator {
     }
 
 
-    fun saplingFeatures(
-        c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>,
-    ) {
-        c.register(
+    fun BootstrapContext<PlacedFeature>.saplingFeatures() {
+        register(
             DnDPlacedFeature.CASCADE_TREE,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CASCADE_TREE),
+            DnDConfiguredFeature.CASCADE_TREE,
             cascadeSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.CASCADE_TREE_BEES,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CASCADE_TREE_BEES),
+            DnDConfiguredFeature.CASCADE_TREE_BEES,
             cascadeSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.SYPIA_TALL,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SYPIA_TALL),
+            DnDConfiguredFeature.SYPIA_TALL,
             sypiaSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.SYPIA_TALL_BEES,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SYPIA_TALL_BEES),
+            DnDConfiguredFeature.SYPIA_TALL_BEES,
             sypiaSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.VERDANT_DOWN,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.OVERGROWTH_TREE_DOWN),
+            DnDConfiguredFeature.OVERGROWTH_TREE_DOWN,
             PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING)
         )
     }
 
-    fun autumnBiomeFeatures(
-        c: BootstrapContext<PlacedFeature>,
-        configuredFeatureProvider: HolderGetter<ConfiguredFeature<*, *>>,
-    ) {
-        c.register(
+    fun BootstrapContext<PlacedFeature>.autumnBiomeFeatures() {
+        register(
             DnDPlacedFeature.ORE_LAPIS_EXTRA,
-            configuredFeatureProvider.getOrThrow(OreFeatures.ORE_LAPIS),
+            OreFeatures.ORE_LAPIS,
             commonOrePlacementModifiers(
                 20,
                 HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(80))
             )
         )
-        c.register(
+        register(
             DnDPlacedFeature.CASCADE_TREE_AUTUMN,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.CASCADE_TREE_AUTUMN),
+            DnDConfiguredFeature.CASCADE_TREE_AUTUMN,
             cascadeSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.SYPIA_TALL_AUTUMN,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.SYPIA_TALL_AUTUMN),
+            DnDConfiguredFeature.SYPIA_TALL_AUTUMN,
             sypiaSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.DARK_OAK_AUTUMN,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.DARK_OAK_AUTUMN),
+            DnDConfiguredFeature.DARK_OAK_AUTUMN,
             darkOakSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.ACACIA_AUTUMN,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.ACACIA_AUTUMN),
+            DnDConfiguredFeature.ACACIA_AUTUMN,
             acaciaSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.ACACIA_BUSH_AUTUMN,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.ACACIA_BUSH_AUTUMN),
+            DnDConfiguredFeature.ACACIA_BUSH_AUTUMN,
             acaciaSapling
         )
-        c.register(
+        register(
             DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN,
-            configuredFeatureProvider.getOrThrow(VegetationFeatures.PATCH_GRASS),
+            VegetationFeatures.PATCH_GRASS,
             NoiseThresholdCountPlacement.of(-0.8, 5, 10),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
@@ -251,9 +248,9 @@ object PlacedFeatureCreator {
             ),
             BiomeFilter.biome()
         )
-        c.register(
+        register(
             DnDPlacedFeature.PATCH_TALL_GRASS_AUTUMN_PLAIN,
-            configuredFeatureProvider.getOrThrow(VegetationFeatures.PATCH_TALL_GRASS),
+            VegetationFeatures.PATCH_TALL_GRASS,
             NoiseThresholdCountPlacement.of(-0.8, 0, 7),
             RarityFilter.onAverageOnceEvery(32),
             InSquarePlacement.spread(),
@@ -266,70 +263,70 @@ object PlacedFeatureCreator {
             ),
             BiomeFilter.biome()
         )
-        c.register(
+        register(
             DnDPlacedFeature.AUTUMN_WOODS_VEGETATION,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION),
+            DnDConfiguredFeature.AUTUMN_WOODS_VEGETATION,
             CountPlacement.of(14),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
             BiomeFilter.biome()
         )
-        c.register(
+        register(
             DnDPlacedFeature.AUTUMN_PASTURES_VEGETATION,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION),
+            DnDConfiguredFeature.AUTUMN_PASTURES_VEGETATION,
             RarityFilter.onAverageOnceEvery(20),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
             BiomeFilter.biome()
         )
-        c.register(
+        register(
             DnDPlacedFeature.GOLDEN_WOODS_VEGETATION,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_WOODS_VEGETATION),
+            DnDConfiguredFeature.GOLDEN_WOODS_VEGETATION,
             PlacementUtils.countExtra(10, 0.1f, 1),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
             BiomeFilter.biome()
         )
-        c.register(
+        register(
             DnDPlacedFeature.GOLDEN_PASTURES_VEGETATION,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.GOLDEN_PASTURES_VEGETATION),
+            DnDConfiguredFeature.GOLDEN_PASTURES_VEGETATION,
             RarityFilter.onAverageOnceEvery(5),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
             PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
             BiomeFilter.biome()
         )
-        c.register(
+        register(
             DnDPlacedFeature.FLOWER_AUTUMN,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.FLOWER_AUTUMN),
+            DnDConfiguredFeature.FLOWER_AUTUMN,
             noiseThresholdFlowerPlacement(14)
         )
-        c.surfacePlacementRare(DnDPlacedFeature.ORANGE_PETALS, DnDConfiguredFeature.ORANGE_PETALS, 32)
-        c.surfacePlacementRare(DnDPlacedFeature.COLD_WILDFLOWER, DnDConfiguredFeature.COLD_WILDFLOWER, 32)
-        c.surfacePlacementRare(DnDPlacedFeature.FAIRY_RING_RED, DnDConfiguredFeature.FAIRY_RING_RED, 32)
-        c.surfacePlacement(DnDPlacedFeature.WILD_WHEAT_FIELD, DnDConfiguredFeature.CROPS_WILD_WHEAT, 21)
-        c.register(
+        surfacePlacementRare(DnDPlacedFeature.ORANGE_PETALS, DnDConfiguredFeature.ORANGE_PETALS, 32)
+        surfacePlacementRare(DnDPlacedFeature.COLD_WILDFLOWER, DnDConfiguredFeature.COLD_WILDFLOWER, 32)
+        surfacePlacementRare(DnDPlacedFeature.FAIRY_RING_RED, DnDConfiguredFeature.FAIRY_RING_RED, 32)
+        surfacePlacement(DnDPlacedFeature.WILD_WHEAT_FIELD, DnDConfiguredFeature.CROPS_WILD_WHEAT, 21)
+        register(
             DnDPlacedFeature.PATCH_ROSEBUSH,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.PATCH_ROSEBUSH),
+            DnDConfiguredFeature.PATCH_ROSEBUSH,
             RarityFilter.onAverageOnceEvery(7),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
             CountPlacement.of(ClampedInt.of(UniformInt.of(-3, 1), 0, 1)),
             BiomeFilter.biome()
         )
-        c.register(
+        register(
             DnDPlacedFeature.AUTUMN_FARMLANDS,
-            configuredFeatureProvider.getOrThrow(DnDConfiguredFeature.AUTUMN_FARMLAND),
+            DnDConfiguredFeature.AUTUMN_FARMLAND,
             RarityFilter.onAverageOnceEvery(63),
             InSquarePlacement.spread(),
             SurfaceWaterDepthFilter.forMaxDepth(0),
             PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
             BiomeFilter.biome()
         )
-        c.surfacePlacementRare(DnDPlacedFeature.WILD_WHEAT, DnDConfiguredFeature.CROPS_WILD_WHEAT, 9)
+        surfacePlacementRare(DnDPlacedFeature.WILD_WHEAT, DnDConfiguredFeature.CROPS_WILD_WHEAT, 9)
     }
 
     fun noiseThresholdFlowerPlacement(rarity: Int): List<PlacementModifier> {
@@ -349,7 +346,7 @@ object PlacedFeatureCreator {
     ) {
         this.register(
             place,
-            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
+            conf,
             RarityFilter.onAverageOnceEvery(rarity),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
@@ -364,7 +361,7 @@ object PlacedFeatureCreator {
     ) {
         this.register(
             place,
-            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
+            conf,
             CountPlacement.of(count),
             InSquarePlacement.spread(),
             PlacementUtils.HEIGHTMAP,
@@ -397,7 +394,7 @@ object PlacedFeatureCreator {
     ) {
         this.register(
             place,
-            this.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(conf),
+            conf,
             rate,
             InSquarePlacement.spread(),
             PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
@@ -433,14 +430,20 @@ object PlacedFeatureCreator {
 
 
     fun BootstrapContext<PlacedFeature>.register(
-        registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
+        registryKey: ResourceKey<PlacedFeature>, configuredFeature: ResourceKey<ConfiguredFeature<*, *>>,
         vararg placementModifiers: PlacementModifier,
-    ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers.toList()))
+    ): Any = this.register(
+        registryKey,
+        PlacedFeature(lookup(Registries.CONFIGURED_FEATURE).getOrThrow(configuredFeature), placementModifiers.toList())
+    )
 
     fun BootstrapContext<PlacedFeature>.register(
-        registryKey: ResourceKey<PlacedFeature>, configuredFeature: Holder<ConfiguredFeature<*, *>>,
+        registryKey: ResourceKey<PlacedFeature>, configuredFeature: ResourceKey<ConfiguredFeature<*, *>>,
         placementModifiers: List<PlacementModifier>,
-    ): Any = this.register(registryKey, PlacedFeature(configuredFeature, placementModifiers))
+    ): Any = this.register(
+        registryKey,
+        PlacedFeature(lookup(Registries.CONFIGURED_FEATURE).getOrThrow(configuredFeature), placementModifiers)
+    )
 
 
     fun BootstrapContext<PlacedFeature>.register(

@@ -43,6 +43,8 @@ import org.teamvoided.dusks_and_dungeons.block.OvergrowthBushBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
+import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.configured_features.Underground.underground
+import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.placed_features.Underground.underground
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
@@ -68,7 +70,6 @@ object ConfiguredFeatureCreator {
 
     @Suppress("LongMethod")
     fun bootstrap(c: BootstrapContext<ConfiguredFeature<*, *>>) {
-//        val blockTags = c.lookup(Registries.BLOCK)
         val cF = c.lookup(Registries.CONFIGURED_FEATURE)
         val pF = c.lookup(Registries.PLACED_FEATURE)
 
@@ -80,6 +81,7 @@ object ConfiguredFeatureCreator {
         c.pumpkinPatches()
         c.crops()
         c.disks()
+        c.underground()
 
         c.registerConfiguredFeature(
             DnDConfiguredFeature.OVERGROWN_COBBLESTONE_BOULDER,
@@ -965,7 +967,7 @@ object ConfiguredFeatureCreator {
         this.pumpkinPatch(feature, BlockStateProvider.simple(block))
     }
 
-    private fun <FC : FeatureConfiguration, F : Feature<FC>> BootstrapContext<ConfiguredFeature<*, *>>.registerConfiguredFeature(
+    fun <FC : FeatureConfiguration, F : Feature<FC>> BootstrapContext<ConfiguredFeature<*, *>>.registerConfiguredFeature(
         registryKey: ResourceKey<ConfiguredFeature<*, *>>,
         feature: F,
         featureConfig: FC,

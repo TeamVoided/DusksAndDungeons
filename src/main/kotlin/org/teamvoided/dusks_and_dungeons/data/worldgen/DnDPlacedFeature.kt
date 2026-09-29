@@ -46,6 +46,7 @@ object DnDPlacedFeature {
     val OVERGROWTH_TREE_CAVE_2 = key("cave/verdant_tree_2")
     val OVERGROWTH_TREE_CAVE_3 = key("cave/verdant_tree_3")
     val VERDANT_DOWN = key("tree/verdant")
+    val AZURINE_SAND_ORE = key("ore/azurine_sand")
 
 
     val FAIRY_RING_RED = key("fairy_ring_red")
