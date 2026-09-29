@@ -1,6 +1,7 @@
 package org.teamvoided.dusks_and_dungeons.datagen.data.loot
 
 import net.minecraft.core.registries.Registries
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.storage.loot.LootPool
@@ -9,6 +10,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
@@ -30,6 +32,22 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
     // This list is here for manually written JSON files
     val manual = listOf(
         DnDBlocks.MOONBERRY_VINE
+    )
+
+    val bookshelfs = listOf(
+        DnDBlocks.SPRUCE_BOOKSHELF,
+        DnDBlocks.BIRCH_BOOKSHELF,
+        DnDBlocks.JUNGLE_BOOKSHELF,
+        DnDBlocks.ACACIA_BOOKSHELF,
+        DnDBlocks.DARK_OAK_BOOKSHELF,
+        DnDBlocks.MANGROVE_BOOKSHELF,
+        DnDBlocks.CHERRY_BOOKSHELF,
+        DnDBlocks.BAMBOO_BOOKSHELF,
+        DnDBlocks.CRIMSON_BOOKSHELF,
+        DnDBlocks.WARPED_BOOKSHELF,
+        DnDBlocks.CASCADE_BOOKSHELF,
+        DnDBlocks.SYPIA_BOOKSHELF,
+        DnDBlocks.VERDANT_BOOKSHELF,
     )
 
     override fun generate() {
@@ -93,6 +111,11 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
                 blockProperty(Blocks.BEETROOTS).setProperty(BeetrootBlock.AGE, 3)
             )
         )
+        for (bookshelf in bookshelfs) {
+            add(bookshelf) {
+                createSingleItemTableWithSilkTouch(it, Items.BOOK, ConstantValue.exactly(3f))
+            }
+        }
 
         dropWhenSilkTouch(ICE_SET.slab)
         dropSlabWhenSilkTouch(ICE_SET.slab)
