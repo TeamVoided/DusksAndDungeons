@@ -93,7 +93,7 @@ object DnDEmiPlugin : EmiPlugin {
                     .leftInput(input)
                     .rightInput(shears, true)
                     .output(output)
-                    // TODO add seed loot tables
+                    // TODO add seed loot tables (needs loot table fetching)
                     .build()
             }
         }
