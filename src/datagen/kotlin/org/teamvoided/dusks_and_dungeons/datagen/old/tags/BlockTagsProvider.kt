@@ -568,8 +568,6 @@ class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableF
 
     private fun woodTags() {
         WOOD_SETS.filterNot(excludeWood::contains).forEach { it.createWoodTags(::getOrCreateTagBuilder) }
-        // TODO(1.0) make wood walls work as part of walls tags
-        // getOrCreateTagBuilder(BlockTags.WALLS).forceAddTag(DnDBlockTags.WOODEN_WALLS)
         getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE).forceAddTag(DnDBlockTags.WOODEN_WALLS)
 
         getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS)
