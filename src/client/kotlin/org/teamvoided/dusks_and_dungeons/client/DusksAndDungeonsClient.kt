@@ -17,6 +17,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.client.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.client.init.*
+import org.teamvoided.dusks_and_dungeons.client.item.CandelabraItemRenderer
 import org.teamvoided.dusks_and_dungeons.client.util.BETTER_BRICK_NAMES
 import org.teamvoided.voidlib.helpers.registerBuiltInPack
 import kotlin.jvm.optionals.getOrNull
@@ -42,14 +43,14 @@ object DusksAndDungeonsClient {
                 override fun getFabricId() = id("cache_invalidator")
 
                 override fun onResourceManagerReload(resourceManager: ResourceManager) {
-                    DnDBlockEntitiesClient.CANDELABRA_ITEM_CACHE.clear()
+                    CandelabraItemRenderer.CANDELABRA_ITEM_CACHE.clear()
                 }
 
             })
 
         if (isDev()) ClientTickEvents.END_WORLD_TICK.register { level ->
             val player = Minecraft.getInstance().player ?: return@register
-            val particlePos = DnDBlockEntitiesClient.vecPos
+            val particlePos = CandelabraItemRenderer.vecPos
 //            player.displayClientMessage(Component.literal("Vec: $particlePos"), true)
 
             if (particlePos != null) {
@@ -60,7 +61,7 @@ object DusksAndDungeonsClient {
                     (particlePos.z.toDouble()),
                     0.0, 0.0, 0.0,
                 )
-                DnDBlockEntitiesClient.vecPos = null
+                CandelabraItemRenderer.vecPos = null
             }
         }
 
