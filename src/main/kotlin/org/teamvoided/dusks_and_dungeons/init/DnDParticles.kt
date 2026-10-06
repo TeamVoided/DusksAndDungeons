@@ -10,7 +10,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
-import org.teamvoided.dusks_and_dungeons.particle.ShriekDirectionalParticleEffect
+import org.teamvoided.dusks_and_dungeons.particle.ShriekDirectionalParticleOption
 import org.teamvoided.dusks_and_dungeons.util.register
 
 
@@ -24,7 +24,7 @@ object DnDParticles {
     )
     val SNOWFLAKE = register("snowflake")
     val SHRIEK_DIRECTIONAL = register(
-        "shriek_directional", ShriekDirectionalParticleEffect.CODEC, ShriekDirectionalParticleEffect.PACKET_CODEC
+        "shriek_directional", ShriekDirectionalParticleOption.CODEC, ShriekDirectionalParticleOption.PACKET_CODEC
     )
 
     fun init() = Unit

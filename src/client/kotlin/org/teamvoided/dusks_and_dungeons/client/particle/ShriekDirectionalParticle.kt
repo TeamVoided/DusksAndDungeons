@@ -1,69 +1,83 @@
 package org.teamvoided.dusks_and_dungeons.client.particle
 
 import com.mojang.blaze3d.vertex.VertexConsumer
-import net.fabricmc.api.EnvType
-import net.fabricmc.api.Environment
 import net.minecraft.client.Camera
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.client.particle.Particle
-import net.minecraft.client.particle.ParticleProvider
-import net.minecraft.client.particle.ShriekParticle
-import net.minecraft.client.particle.SpriteSet
+import net.minecraft.client.particle.*
 import net.minecraft.core.Direction
 import net.minecraft.util.Mth
 import org.joml.Quaternionf
 import org.joml.Vector3f
-import org.teamvoided.dusks_and_dungeons.particle.ShriekDirectionalParticleEffect
+import org.teamvoided.dusks_and_dungeons.particle.ShriekDirectionalParticleOption
 import org.teamvoided.dusks_and_dungeons.util.Utils
 
 class ShriekDirectionalParticle(
-    world: ClientLevel, x: Double, y: Double, z: Double,
-    private val direction: Direction,
-    delay: Int
-) : ShriekParticle(world, x, y, z, delay) {
+    level: ClientLevel, x: Double, y: Double, z: Double,
+    val direction: Direction,
+    var delay: Int,
+) : TextureSheetParticle(level, x, y, z, 0.0, 0.0, 0.0) {
+
+    val rotVec = direction.rotationFormDirection()
+
     init {
-        this.xd = direction.normal.x * 0.1
-        this.yd = direction.normal.y * 0.1
-        this.zd = direction.normal.z * 0.1
+        quadSize = 0.85f
+        lifetime = 30
+        gravity = 0f
+        xd = direction.normal.x * 0.1
+        yd = direction.normal.y * 0.1
+        zd = direction.normal.z * 0.1
     }
 
     override fun render(vertexConsumer: VertexConsumer, camera: Camera, tickDelta: Float) {
-        if (this.delay <= 0) {
-            this.alpha = 1.0f - Mth.clamp((age + tickDelta) / lifetime, 0.0f, 1.0f)
-            val rotate = directionalRotation()
-            val quaternionf = Quaternionf()
-            quaternionf.rotationYXZ(rotate.y, rotate.x, rotate.z)
-            this.renderRotatedQuad(vertexConsumer, camera, quaternionf, tickDelta)
-            quaternionf.rotationYXZ(rotate.y - Utils.rotate180, -rotate.x, rotate.z)
-            this.renderRotatedQuad(vertexConsumer, camera, quaternionf, tickDelta)
+        if (delay <= 0) {
+            alpha = 1.0f - Mth.clamp((age + tickDelta) / lifetime, 0.0f, 1.0f)
+            val rot = Quaternionf()
+            rot.rotationYXZ(rotVec.y, rotVec.x, rotVec.z)
+            renderRotatedQuad(vertexConsumer, camera, rot, tickDelta)
+            rot.rotationYXZ(rotVec.y - Utils.rotate180, -rotVec.x, rotVec.z)
+            renderRotatedQuad(vertexConsumer, camera, rot, tickDelta)
         }
     }
 
-    fun directionalRotation(): Vector3f {
-        return when (direction) {
-            Direction.UP, Direction.DOWN -> Vector3f(-Utils.rotate60, 0f, 0f)
-            Direction.NORTH -> Vector3f(-Utils.rotate30, 0f, 0f)
-            Direction.SOUTH -> Vector3f(Utils.rotate30, 0f, 0f)
-            Direction.EAST -> Vector3f(Utils.rotate30, Utils.rotate90, 0f)
-            Direction.WEST -> Vector3f(-Utils.rotate30, Utils.rotate90, 0f)
+    override fun getLightColor(tickDelta: Float): Int = 240
+
+    override fun getRenderType(): ParticleRenderType = ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT
+
+    override fun getQuadSize(tickDelta: Float) = quadSize * Mth.clamp((age + tickDelta) / lifetime * 0.75f, 0f, 1f)
+
+    override fun tick() {
+        if (delay > 0) {
+            delay--
+        } else {
+            super.tick()
         }
     }
 
-    @Environment(EnvType.CLIENT)
-    class Factory(private val spriteProvider: SpriteSet) : ParticleProvider<ShriekDirectionalParticleEffect> {
+    class Provider(private val sprite: SpriteSet) : ParticleProvider<ShriekDirectionalParticleOption> {
         override fun createParticle(
-            type: ShriekDirectionalParticleEffect,
-            world: ClientLevel,
-            posX: Double,
-            posY: Double,
-            posZ: Double,
-            velX: Double,
-            velY: Double,
-            velZ: Double,
+            options: ShriekDirectionalParticleOption,
+            clientLevel: ClientLevel,
+            x: Double, y: Double, z: Double,
+            velX: Double, velY: Double, velZ: Double,
         ): Particle {
-            val particle = ShriekDirectionalParticle(world, posX, posY, posZ, type.direction, type.delay)
-            particle.pickSprite(spriteProvider)
+            val particle = ShriekDirectionalParticle(clientLevel, x, y, z, options.direction, options.delay)
+            particle.pickSprite(sprite)
+            particle.setAlpha(1.0f)
             return particle
         }
+    }
+
+    companion object {
+
+        fun Direction.rotationFormDirection(): Vector3f {
+            return when (this) {
+                Direction.UP, Direction.DOWN -> Vector3f(-Utils.rotate60, 0f, 0f)
+                Direction.NORTH -> Vector3f(-Utils.rotate30, 0f, 0f)
+                Direction.SOUTH -> Vector3f(Utils.rotate30, 0f, 0f)
+                Direction.EAST -> Vector3f(Utils.rotate30, Utils.rotate90, 0f)
+                Direction.WEST -> Vector3f(-Utils.rotate30, Utils.rotate90, 0f)
+            }
+        }
+
     }
 }

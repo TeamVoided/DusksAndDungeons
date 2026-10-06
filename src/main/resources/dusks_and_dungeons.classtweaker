@@ -2,6 +2,3 @@ classTweaker v2 named
 
 transitive-inject-interface net/minecraft/world/phys/shapes/EntityCollisionContext org/teamvoided/dusks_and_dungeons/api/EntityCollisionContextExtension
 
-# TODO(1.0) rework to not use this
-accessible method net/minecraft/client/particle/ShriekParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDI)V
-accessible field net/minecraft/client/particle/ShriekParticle delay I

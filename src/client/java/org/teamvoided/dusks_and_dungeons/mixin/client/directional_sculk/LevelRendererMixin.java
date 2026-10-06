@@ -13,10 +13,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.teamvoided.dusks_and_dungeons.particle.ShriekDirectionalParticleEffect;
+import org.teamvoided.dusks_and_dungeons.particle.ShriekDirectionalParticleOption;
 
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
+
     @Shadow
     private ClientLevel level;
 
@@ -28,7 +29,7 @@ public class LevelRendererMixin {
             var center = pos.getCenter();
             for (int count = 0; count < 10; ++count) {
                 this.level.addParticle(
-                        new ShriekDirectionalParticleEffect(direction, count * 5),
+                        new ShriekDirectionalParticleOption(direction, count * 5),
                         false,
                         center.x, center.y, center.z,
                         0.0, 0.0, 0.0
@@ -47,4 +48,5 @@ public class LevelRendererMixin {
             ci.cancel();
         }
     }
+
 }
