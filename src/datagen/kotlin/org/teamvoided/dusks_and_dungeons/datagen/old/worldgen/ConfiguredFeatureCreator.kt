@@ -44,7 +44,6 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.configured_features.Underground.underground
-import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.placed_features.Underground.underground
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
@@ -88,10 +87,10 @@ object ConfiguredFeatureCreator {
             DnDFeatures.BOULDER,
             BoulderConfig(
                 BlockStateProvider.simple(DnDBlocks.OVERGROWN_COBBLESTONE.get().defaultBlockState()),
-                UniformInt.of(2, 5),
-                UniformInt.of(1, 4),
-                UniformInt.of(1, 2),
-                UniformInt.of(2, 4)
+                size = UniformInt.of(2, 5),
+                boulderCount = UniformInt.of(1, 4),
+                weirdness = UniformInt.of(1, 2),
+                otherBoulderOffset = UniformInt.of(2, 4)
             )
         )
         c.registerConfiguredFeature(

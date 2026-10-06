@@ -12,20 +12,22 @@ data class BoulderConfig(
     val boulderCount: IntProvider,
     val weirdness: IntProvider,
     val otherBoulderOffset: IntProvider,
-    val moveDownIfReplaceable: Boolean = true
+    val moveDownIfReplaceable: Boolean = true,
 ) : FeatureConfiguration {
     companion object {
-        val CODEC =
-            RecordCodecBuilder.create { instance: RecordCodecBuilder.Instance<BoulderConfig> ->
-                instance.group(
+
+        val CODEC: Codec<BoulderConfig> = RecordCodecBuilder.create { inst ->
+            inst
+                .group(
                     BlockStateProvider.CODEC.fieldOf("block").forGetter { it.block },
                     IntProvider.codec(1, 16).fieldOf("size").forGetter { it.size },
                     IntProvider.codec(1, 8).fieldOf("boulder_count").forGetter { it.boulderCount },
                     IntProvider.codec(1, 16).fieldOf("weirdness").forGetter { it.weirdness },
-                    IntProvider.codec(0, 16).fieldOf("other_boulder_offset")
-                        .forGetter { it.otherBoulderOffset },
-                    Codec.BOOL.fieldOf("move_Down_If_Replaceable").orElse(true).forGetter { it.moveDownIfReplaceable }
-                ).apply(instance, ::BoulderConfig)
-            }
+                    IntProvider.codec(0, 16).fieldOf("other_boulder_offset").forGetter { it.otherBoulderOffset },
+                    Codec.BOOL.fieldOf("move_down_if_replaceable").orElse(true).forGetter { it.moveDownIfReplaceable }
+                )
+                .apply(inst, ::BoulderConfig)
+        }
+
     }
 }

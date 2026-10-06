@@ -1,71 +1,75 @@
 package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature
 
 import com.mojang.serialization.Codec
-import net.minecraft.tags.BlockTags
 import net.minecraft.core.BlockPos
+import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config.BoulderConfig
+import kotlin.math.max
 
-class BoulderFeature(codec: Codec<BoulderConfig>) :
-    Feature<BoulderConfig>(codec) {
-    override fun place(context: FeaturePlaceContext<BoulderConfig>): Boolean {
-        var blockPos = context.origin()
-        val structureWorldAccess = context.level()
-        val randomGenerator = context.random()
-        val config = context.config() as BoulderConfig
+class BoulderFeature(codec: Codec<BoulderConfig>) : Feature<BoulderConfig>(codec) {
 
-        var size = config.size.sample(randomGenerator)
-        val boulderCount = config.boulderCount.sample(randomGenerator)
+    override fun place(ctx: FeaturePlaceContext<BoulderConfig>): Boolean {
+        var origin = ctx.origin()
+        val level = ctx.level()
+        val random = ctx.random()
+        val config = ctx.config()
 
-        if (blockPos.y <= structureWorldAccess.minBuildHeight + 1 + size) {
+        var size = config.size.sample(random)
+        val boulderCount = config.boulderCount.sample(random)
+
+        if (origin.y <= level.minBuildHeight + 1 + size) {
             return false
-        } else {
-            if (!structureWorldAccess.getBlockState(blockPos).`is`(BlockTags.FEATURES_CANNOT_REPLACE)) {
-                structureWorldAccess.setBlock(blockPos, config.block.getState(randomGenerator, blockPos), 3)
-            }
-            for (i in 0..boulderCount) {
-                size = config.size.sample(randomGenerator)
-                val x = randomGenerator.nextInt(size)
-                val y = randomGenerator.nextInt(size)
-                val z = randomGenerator.nextInt(size)
-                val f = (x + y + z) * 0.333 + 0.5
-                val var11: Iterator<*> =
-                    BlockPos.betweenClosed(blockPos.offset(-x, -y, -z), blockPos.offset(x, y, z)).iterator()
+        }
 
-                while (var11.hasNext()) {
-                    val blockPosPlace = var11.next() as BlockPos
-                    val xOffset = blockPos.x - blockPosPlace.x
-                    val yOffset = blockPos.y - blockPosPlace.y
-                    val zOffset = blockPos.z - blockPosPlace.z
-                    val distance =
-                        (config.weirdness.sample(randomGenerator) * xOffset * xOffset) +
-                                (config.weirdness.sample(randomGenerator) * zOffset * zOffset) +
-                                (config.weirdness.sample(randomGenerator) * yOffset * yOffset)
-                    if (distance <= (f * f) &&
-                        !structureWorldAccess.getBlockState(blockPosPlace).`is`(BlockTags.FEATURES_CANNOT_REPLACE)
-                    ) {
-                        structureWorldAccess.setBlock(
-                            blockPosPlace,
-                            config.block.getState(randomGenerator, blockPosPlace),
-                            3
-                        )
+        if (!level.getBlockState(origin).`is`(BlockTags.FEATURES_CANNOT_REPLACE)) {
+            level.setBlock(origin, config.block.getState(random, origin), 3)
+        }
+        repeat(boulderCount) {
+            size = config.size.sample(random)
+            val x = max(random.nextInt(size), 1)
+            val y = random.nextInt(size)
+            val z = max(random.nextInt(size), 1)
+            val radius = (x + y + z) * 0.333 + 0.5
+
+            val smallSmoother = if (x + y + z < 9) 0.45 else 1.0
+            val boulderArea =
+                BlockPos.betweenClosed(origin.offset(-x, -y, -z), origin.offset(x, y, z)).iterator()
+            for (pos in boulderArea) {
+                val xOffset = origin.x - pos.x
+                val yOffset = origin.y - pos.y
+                val zOffset = origin.z - pos.z
+                val distance = (config.weirdness.sample(random) * smallSmoother) *
+                        (xOffset * xOffset) +
+                        (zOffset * zOffset) +
+                        (yOffset * yOffset)
+
+                if (distance <= (radius * radius) && !level.getBlockState(pos)
+                        .`is`(BlockTags.FEATURES_CANNOT_REPLACE)
+                ) {
+                    level.setBlock(pos, config.block.getState(random, pos), Block.UPDATE_ALL)
+                }
+            }
+            origin = origin.offset(
+                config.otherBoulderOffset.sample(random) - config.otherBoulderOffset.sample(random),
+                random.nextInt(size) - random.nextInt(size),
+                config.otherBoulderOffset.sample(random) - config.otherBoulderOffset.sample(random)
+            )
+            if (config.moveDownIfReplaceable) {
+                for (i in 0..size) {
+                    if (level.getBlockState(origin).`is`(BlockTags.REPLACEABLE)) {
+                        origin = origin.below()
+                    }
+                    else {
+                        break
                     }
                 }
-                blockPos = blockPos.offset(
-                    config.otherBoulderOffset.sample(randomGenerator) - config.otherBoulderOffset.sample(randomGenerator),
-                    randomGenerator.nextInt(size) - randomGenerator.nextInt(size),
-                    config.otherBoulderOffset.sample(randomGenerator) - config.otherBoulderOffset.sample(randomGenerator)
-                )
-                if (config.moveDownIfReplaceable)
-                    for (i in 0..size) {
-                        if (structureWorldAccess.getBlockState(blockPos).`is`(BlockTags.REPLACEABLE)) {
-                            blockPos = blockPos.below()
-                        }
-                    }
             }
-
-            return true
         }
+
+        return true
     }
+
 }
