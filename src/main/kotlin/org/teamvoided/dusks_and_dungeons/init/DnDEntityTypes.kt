@@ -2,6 +2,7 @@ package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.EntityType.EntityFactory
@@ -10,6 +11,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 import org.teamvoided.dusks_and_dungeons.entity.ThrownItemStack
 import org.teamvoided.dusks_and_dungeons.util.doEvil
+import org.teamvoided.dusks_and_dungeons.util.key
 import org.teamvoided.dusks_and_dungeons.util.register
 
 object DnDEntityTypes {
@@ -33,8 +35,8 @@ object DnDEntityTypes {
     }
 
     fun <T : Entity> register(name: String, entityType: EntityType.Builder<T>): EntityType<T> {
-        val id = id(name)
-        return BuiltInRegistries.ENTITY_TYPE.register(id, entityType.build(id.toString()))
+        val key = Registries.ENTITY_TYPE.key(id(name))
+        return BuiltInRegistries.ENTITY_TYPE.register(key.location(), entityType.build(key.location().toString()))
     }
 
 }
