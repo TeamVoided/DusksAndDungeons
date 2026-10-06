@@ -2,8 +2,11 @@ package org.teamvoided.dusks_and_dungeons.client
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
+import net.minecraft.client.Minecraft
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.resources.ResourceManager
@@ -43,6 +46,23 @@ object DusksAndDungeonsClient {
                 }
 
             })
+
+        if (isDev()) ClientTickEvents.END_WORLD_TICK.register { level ->
+            val player = Minecraft.getInstance().player ?: return@register
+            val particlePos = DnDBlockEntitiesClient.vecPos
+//            player.displayClientMessage(Component.literal("Vec: $particlePos"), true)
+
+            if (particlePos != null) {
+                level.addParticle(
+                    ParticleTypes.SMALL_FLAME,
+                    (particlePos.x.toDouble()),
+                    (particlePos.y.toDouble()),
+                    (particlePos.z.toDouble()),
+                    0.0, 0.0, 0.0,
+                )
+                DnDBlockEntitiesClient.vecPos = null
+            }
+        }
 
         if (isDev()) ClientCommandRegistrationCallback.EVENT.register { dispatcher, access ->
             val test = literal("dump_vile").executes { scc ->

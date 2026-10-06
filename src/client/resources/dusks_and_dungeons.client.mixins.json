@@ -3,11 +3,10 @@
   "minVersion": "0.8",
   "package": "org.teamvoided.dusks_and_dungeons.mixin.client",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
   "client": [
     "FoxRendererMixin",
-    "ItemRendererMixin",
     "GuiMixin",
+    "ItemRendererMixin",
     "LookAtItemAnimationMixin",
     "PaintingRendererMixin",
     "ShadowAttributeMixin",

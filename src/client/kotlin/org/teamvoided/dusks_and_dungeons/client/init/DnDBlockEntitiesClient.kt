@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.phys.AABB
+import org.joml.Vector3f
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraContents
@@ -53,6 +55,9 @@ object DnDBlockEntitiesClient {
         return candelabra
     }
 
+    var vecPos: Vector3f? = null
+    var bb = AABB(0.0, 0.0, 0.0, 0.1, 0.1, 0.1)
+
     fun renderCandelabraItem(
         stack: ItemStack?, ctx: ItemDisplayContext,
         poseStack: PoseStack, buffers: MultiBufferSource, light: Int, overlay: Int,
@@ -63,13 +68,16 @@ object DnDBlockEntitiesClient {
         Minecraft.getInstance().blockEntityRenderDispatcher.renderItem(candelabra, poseStack, buffers, light, overlay)
 
         // TODO(1.0) make particles work
-
-        /*  if (displayCtx.thirdPerson() && Minecraft.getInstance().fps % 2 == 0) {
-              Candelabra.spawnCandelabraParticles(
-                  candelabra, Minecraft.getInstance().player?.position() ?: Vec3.ZERO,
-                  level, level.random, candelabra.blockState
-              )
-          }*/
+//        val lineConsumer = buffers.getBuffer(RenderType.LINES)
+//        LevelRenderer.renderLineBox(poseStack, lineConsumer, bb, 1f, 1f, 1f, 1f)
+//        if (ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND || ctx == ItemDisplayContext.HEAD) {
+//            poseStack.pushPose()
+//            poseStack.translate(-10f, 10f, 10f)
+//            val scale = -0.0001f
+//            poseStack.scale(scale, -1f, scale)
+//            vecPos = poseStack.last().pose().transformPosition(0f, 0f, 0f, Vector3f())
+//            poseStack.popPose()
+//        }
     }
 
 }
