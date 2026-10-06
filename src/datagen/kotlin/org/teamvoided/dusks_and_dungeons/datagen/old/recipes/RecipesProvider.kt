@@ -1,8 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.datagen.old.recipes
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
@@ -22,26 +20,27 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
 import org.teamvoided.voidlib.devin.extensions.recipe.createSet
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecuttingSet
-import java.util.concurrent.CompletableFuture
 
-class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) : FabricRecipeProvider(o, r) {
+class RecipesProvider(o: FabricOutput, p: FutureProvider) : FabricRecipeProvider(o, p) {
 
-    override fun buildRecipes(e: RecipeOutput) {
-        recipesBlockFamilies.forEach { generateRecipes(e, it, FeatureFlags.DEFAULT_FLAGS) }
-        SETS.forEach(e::createSet)
+    override fun buildRecipes(output: RecipeOutput) {
+        recipesBlockFamilies.forEach { generateRecipes(output, it, FeatureFlags.DEFAULT_FLAGS) }
+        SETS.forEach(output::createSet)
 
-        WoodRecipes.build(e)
-        FunctionalRecipes.build(e)
-        StoneRecipes.generateStoneRecipes(e)
-        NetherRecipes.generateNetherRecipes(e)
-        FloraRecipes.generateFloraRecipes(e)
+        WoodRecipes.build(output)
+        FunctionalRecipes.build(output)
+        StoneRecipes.generateStoneRecipes(output)
+        NetherRecipes.generateNetherRecipes(output)
+        FloraRecipes.generateFloraRecipes(output)
 
-        MinecraftRecipeOverrides.generate(e)
+        MinecraftRecipeOverrides.generate(output)
 
-        temporaryRecipes(e)
+        temporaryRecipes(output)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDItems.FARMERS_HAT)
             .define('#', Ingredient.of(Items.WHEAT))
@@ -51,83 +50,83 @@ class RecipesProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Pro
             .pattern("@%@")
             .pattern("# #")
             .unlockedBy(DnDItems.FARMERS_HAT)
-            .save(e)
+            .save(output)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BREWING, DnDItems.TINTED_GLASS_BOTTLE, 3)
             .pattern("# #")
             .pattern(" # ")
             .define('#', Blocks.TINTED_GLASS)
             .unlockedBy(Blocks.TINTED_GLASS)
-            .save(e)
+            .save(output)
 
         // TODO(1.0) sort VV recipes
 
         // Missing Sets
-        e.createStonecuttingSet(DnDBlocks.QUARTZ_BRICK_SET, Blocks.QUARTZ_BLOCK)
+        output.createStonecuttingSet(DnDBlocks.QUARTZ_BRICK_SET, Blocks.QUARTZ_BLOCK)
 
-        e.createStonecuttingSet(DnDBlocks.ROUGH_SANDSTONE, Blocks.SANDSTONE)
-        e.createStonecuttingSet(DnDBlocks.ROUGH_RED_SANDSTONE, Blocks.RED_SANDSTONE)
+        output.createStonecuttingSet(DnDBlocks.ROUGH_SANDSTONE, Blocks.SANDSTONE)
+        output.createStonecuttingSet(DnDBlocks.ROUGH_RED_SANDSTONE, Blocks.RED_SANDSTONE)
 
-        e.create2x2(DnDBlocks.POLISHED_SANDSTONE, Blocks.CUT_SANDSTONE)
-        e.createStonecuttingSet(DnDBlocks.POLISHED_SANDSTONE, Blocks.SANDSTONE)
-        e.createStonecuttingSet(DnDBlocks.POLISHED_RED_SANDSTONE, Blocks.RED_SANDSTONE)
-        e.create2x2(DnDBlocks.POLISHED_RED_SANDSTONE, Blocks.CUT_RED_SANDSTONE)
-        e.createStonecuttingSet(DnDBlocks.POLISHED_SANDSTONE, Blocks.CUT_SANDSTONE)
-        e.createStonecuttingSet(DnDBlocks.POLISHED_RED_SANDSTONE, Blocks.CUT_RED_SANDSTONE)
+        output.create2x2(DnDBlocks.POLISHED_SANDSTONE, Blocks.CUT_SANDSTONE)
+        output.createStonecuttingSet(DnDBlocks.POLISHED_SANDSTONE, Blocks.SANDSTONE)
+        output.createStonecuttingSet(DnDBlocks.POLISHED_RED_SANDSTONE, Blocks.RED_SANDSTONE)
+        output.create2x2(DnDBlocks.POLISHED_RED_SANDSTONE, Blocks.CUT_RED_SANDSTONE)
+        output.createStonecuttingSet(DnDBlocks.POLISHED_SANDSTONE, Blocks.CUT_SANDSTONE)
+        output.createStonecuttingSet(DnDBlocks.POLISHED_RED_SANDSTONE, Blocks.CUT_RED_SANDSTONE)
 
         // Pairs
-        e.createStoneStairs(DnDBlocks.SMOOTH_STONE_STAIR, Blocks.SMOOTH_STONE)
-        e.createStoneWall(DnDBlocks.SMOOTH_STONE_WALL, Blocks.SMOOTH_STONE)
-        e.createStoneStairs(DnDBlocks.CUT_SANDSTONE_STAIR, Blocks.CUT_SANDSTONE)
-        e.createStoneWall(DnDBlocks.CUT_SANDSTONE_WALL, Blocks.CUT_SANDSTONE)
-        e.createStoneStairs(DnDBlocks.CUT_RED_SANDSTONE_STAIR, Blocks.CUT_RED_SANDSTONE)
-        e.createStoneWall(DnDBlocks.CUT_RED_SANDSTONE_WALL, Blocks.CUT_RED_SANDSTONE)
+        output.createStoneStairs(DnDBlocks.SMOOTH_STONE_STAIR, Blocks.SMOOTH_STONE)
+        output.createStoneWall(DnDBlocks.SMOOTH_STONE_WALL, Blocks.SMOOTH_STONE)
+        output.createStoneStairs(DnDBlocks.CUT_SANDSTONE_STAIR, Blocks.CUT_SANDSTONE)
+        output.createStoneWall(DnDBlocks.CUT_SANDSTONE_WALL, Blocks.CUT_SANDSTONE)
+        output.createStoneStairs(DnDBlocks.CUT_RED_SANDSTONE_STAIR, Blocks.CUT_RED_SANDSTONE)
+        output.createStoneWall(DnDBlocks.CUT_RED_SANDSTONE_WALL, Blocks.CUT_RED_SANDSTONE)
         // Walls
-        e.createStoneWall(DnDBlocks.STONE_WALL, Blocks.STONE)
-        e.createStoneWall(DnDBlocks.POLISHED_GRANITE_WALL, Blocks.POLISHED_GRANITE)
-        e.createStoneWall(DnDBlocks.POLISHED_DIORITE_WALL, Blocks.POLISHED_DIORITE)
-        e.createStoneWall(DnDBlocks.POLISHED_ANDESITE_WALL, Blocks.POLISHED_ANDESITE)
-        e.createStoneWall(DnDBlocks.SMOOTH_SANDSTONE_WALL, Blocks.SMOOTH_SANDSTONE)
-        e.createStoneWall(DnDBlocks.SMOOTH_RED_SANDSTONE_WALL, Blocks.SMOOTH_RED_SANDSTONE)
-        e.createStoneWall(DnDBlocks.PRISMARINE_BRICKS_WALL, Blocks.PRISMARINE_BRICKS)
-        e.createStoneWall(DnDBlocks.DARK_PRISMARINE_WALL, Blocks.DARK_PRISMARINE)
-        e.createStoneWall(DnDBlocks.PURPUR_WALL, Blocks.PURPUR_BLOCK)
-        e.createStoneWall(DnDBlocks.QUARTZ_WALL, Blocks.QUARTZ_BLOCK)
-        e.createStoneWall(DnDBlocks.SMOOTH_QUARTZ_WALL, Blocks.SMOOTH_QUARTZ)
+        output.createStoneWall(DnDBlocks.STONE_WALL, Blocks.STONE)
+        output.createStoneWall(DnDBlocks.POLISHED_GRANITE_WALL, Blocks.POLISHED_GRANITE)
+        output.createStoneWall(DnDBlocks.POLISHED_DIORITE_WALL, Blocks.POLISHED_DIORITE)
+        output.createStoneWall(DnDBlocks.POLISHED_ANDESITE_WALL, Blocks.POLISHED_ANDESITE)
+        output.createStoneWall(DnDBlocks.SMOOTH_SANDSTONE_WALL, Blocks.SMOOTH_SANDSTONE)
+        output.createStoneWall(DnDBlocks.SMOOTH_RED_SANDSTONE_WALL, Blocks.SMOOTH_RED_SANDSTONE)
+        output.createStoneWall(DnDBlocks.PRISMARINE_BRICKS_WALL, Blocks.PRISMARINE_BRICKS)
+        output.createStoneWall(DnDBlocks.DARK_PRISMARINE_WALL, Blocks.DARK_PRISMARINE)
+        output.createStoneWall(DnDBlocks.PURPUR_WALL, Blocks.PURPUR_BLOCK)
+        output.createStoneWall(DnDBlocks.QUARTZ_WALL, Blocks.QUARTZ_BLOCK)
+        output.createStoneWall(DnDBlocks.SMOOTH_QUARTZ_WALL, Blocks.SMOOTH_QUARTZ)
         // other
-        e.createFence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS, Items.BRICK)
-        e.createStonecutting(DnDBlocks.BRICK_FENCE, Blocks.BRICKS)
-        e.compositeBlock(DnDBlocks.HEAVY_CUBE, Blocks.HEAVY_CORE)
+        output.createFence(DnDBlocks.BRICK_FENCE, Blocks.BRICKS, Items.BRICK)
+        output.createStonecutting(DnDBlocks.BRICK_FENCE, Blocks.BRICKS)
+        output.compositeBlock(DnDBlocks.HEAVY_CUBE, Blocks.HEAVY_CORE)
 
         SimpleCookingRecipeBuilder.smelting(
             Ingredient.of(Blocks.LAPIS_BLOCK), RecipeCategory.BUILDING_BLOCKS, DnDBlocks.SMOOTH_LAPIS, 0.1f, 200
         )
             .unlockedBy(Blocks.LAPIS_BLOCK)
-            .save(e)
+            .save(output)
 
         // Bookshelf
-        e.bookshelf(BOOKSHELF, Blocks.OAK_PLANKS, id("oak_bookshelf"))
-        e.bookshelf(DnDBlocks.SPRUCE_BOOKSHELF, Blocks.SPRUCE_PLANKS)
-        e.bookshelf(DnDBlocks.BIRCH_BOOKSHELF, Blocks.BIRCH_PLANKS)
-        e.bookshelf(DnDBlocks.JUNGLE_BOOKSHELF, Blocks.JUNGLE_PLANKS)
-        e.bookshelf(DnDBlocks.ACACIA_BOOKSHELF, Blocks.ACACIA_PLANKS)
-        e.bookshelf(DnDBlocks.DARK_OAK_BOOKSHELF, Blocks.DARK_OAK_PLANKS)
-        e.bookshelf(DnDBlocks.MANGROVE_BOOKSHELF, Blocks.MANGROVE_PLANKS)
-        e.bookshelf(DnDBlocks.CHERRY_BOOKSHELF, Blocks.CHERRY_PLANKS)
-        e.bookshelf(DnDBlocks.BAMBOO_BOOKSHELF, Blocks.BAMBOO_PLANKS)
-        e.bookshelf(DnDBlocks.CRIMSON_BOOKSHELF, Blocks.CRIMSON_PLANKS)
-        e.bookshelf(DnDBlocks.WARPED_BOOKSHELF, Blocks.WARPED_PLANKS)
-        e.bookshelf(DnDBlocks.CASCADE_BOOKSHELF, DnDBlocks.CASCADE_PLANKS)
-        e.bookshelf(DnDBlocks.SYPIA_BOOKSHELF, DnDBlocks.SYPIA_PLANKS)
-        e.bookshelf(DnDBlocks.VERDANT_BOOKSHELF, DnDBlocks.VERDANT_PLANKS)
+        output.bookshelf(BOOKSHELF, Blocks.OAK_PLANKS, id("oak_bookshelf"))
+        output.bookshelf(DnDBlocks.SPRUCE_BOOKSHELF, Blocks.SPRUCE_PLANKS)
+        output.bookshelf(DnDBlocks.BIRCH_BOOKSHELF, Blocks.BIRCH_PLANKS)
+        output.bookshelf(DnDBlocks.JUNGLE_BOOKSHELF, Blocks.JUNGLE_PLANKS)
+        output.bookshelf(DnDBlocks.ACACIA_BOOKSHELF, Blocks.ACACIA_PLANKS)
+        output.bookshelf(DnDBlocks.DARK_OAK_BOOKSHELF, Blocks.DARK_OAK_PLANKS)
+        output.bookshelf(DnDBlocks.MANGROVE_BOOKSHELF, Blocks.MANGROVE_PLANKS)
+        output.bookshelf(DnDBlocks.CHERRY_BOOKSHELF, Blocks.CHERRY_PLANKS)
+        output.bookshelf(DnDBlocks.BAMBOO_BOOKSHELF, Blocks.BAMBOO_PLANKS)
+        output.bookshelf(DnDBlocks.CRIMSON_BOOKSHELF, Blocks.CRIMSON_PLANKS)
+        output.bookshelf(DnDBlocks.WARPED_BOOKSHELF, Blocks.WARPED_PLANKS)
+        output.bookshelf(DnDBlocks.CASCADE_BOOKSHELF, DnDBlocks.CASCADE_PLANKS)
+        output.bookshelf(DnDBlocks.SYPIA_BOOKSHELF, DnDBlocks.SYPIA_PLANKS)
+        output.bookshelf(DnDBlocks.VERDANT_BOOKSHELF, DnDBlocks.VERDANT_PLANKS)
         // Carpet Plate
         for ((idx, block) in DnDBlocks.WOOL_CARPET_PLATE.withIndex()) {
-            e.carpetPlate(block, VanillaColorCollections.WOOL.list[idx])
+            output.carpetPlate(block, VanillaColorCollections.WOOL.list[idx])
         }
-        e.carpetPlate(DnDBlocks.MOSS_CARPET_PLATE, Blocks.MOSS_BLOCK)
-        e.carpetPlate(DnDBlocks.OVERGROWTH_CARPET_PLATE, DnDBlocks.OVERGROWTH_BLOCK)
+        output.carpetPlate(DnDBlocks.MOSS_CARPET_PLATE, Blocks.MOSS_BLOCK)
+        output.carpetPlate(DnDBlocks.OVERGROWTH_CARPET_PLATE, DnDBlocks.OVERGROWTH_BLOCK)
 
-        e.sandRecipes()
+        output.sandRecipes()
     }
 
     fun RecipeOutput.sandRecipes() {

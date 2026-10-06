@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.datagen.old.tags
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.ItemTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.core.HolderLookup
@@ -15,16 +14,12 @@ import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
 import org.teamvoided.voidlib.devin.extensions.tag.copyColorTags
-import java.util.concurrent.CompletableFuture
 
-@Suppress("MemberVisibilityCanBePrivate")
-class ItemTagsProvider(
-    output: FabricDataOutput,
-    registriesFuture: CompletableFuture<HolderLookup.Provider>,
-    blockTags: BlockTagsProvider,
-) :
-    FabricTagProvider.ItemTagProvider(output, registriesFuture, blockTags) {
+class ItemTagsProvider(o: FabricOutput, p: FutureProvider, bt: BlockTagsProvider) : ItemTagProvider(o, p, bt) {
+
     override fun addTags(arg: HolderLookup.Provider) {
         duskTags()
         woodTags()

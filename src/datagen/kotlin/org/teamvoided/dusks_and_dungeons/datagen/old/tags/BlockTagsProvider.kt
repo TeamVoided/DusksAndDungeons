@@ -1,7 +1,6 @@
 package org.teamvoided.dusks_and_dungeons.datagen.old.tags
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.BlockTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.BlockTags
@@ -18,14 +17,13 @@ import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.taglighting.data.tags.TaglightingBlockTags
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
 import org.teamvoided.voidlib.devin.extensions.tag.add
 import org.teamvoided.voidlib.devin.extensions.tag.createColorTags
 import org.teamvoided.voidlib.devin.extensions.tag.createSetTags
-import java.util.concurrent.CompletableFuture
 
-@Suppress("LongMethod")
-class BlockTagsProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
-    FabricTagProvider.BlockTagProvider(output, registriesFuture) {
+class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o, p) {
 
     val excludeWood: List<AbstractBlockSet> = listOf(
         DnDBlocks.CRIMSON_HYPHAE, DnDBlocks.WARPED_HYPHAE,

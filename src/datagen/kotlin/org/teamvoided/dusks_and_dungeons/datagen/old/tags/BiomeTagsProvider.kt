@@ -1,6 +1,5 @@
 package org.teamvoided.dusks_and_dungeons.datagen.old.tags
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.core.HolderLookup
@@ -11,10 +10,11 @@ import net.minecraft.world.level.biome.Biomes
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
-import java.util.concurrent.CompletableFuture
+import org.teamvoided.voidlib.devin.FabricOutput
+import org.teamvoided.voidlib.devin.FutureProvider
 
-class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    FabricTagProvider<Biome>(o, Registries.BIOME, r) {
+class BiomeTagsProvider(o: FabricOutput, p: FutureProvider) : FabricTagProvider<Biome>(o, Registries.BIOME, p) {
+
     override fun addTags(arg: HolderLookup.Provider) {
         duskTags()
         vanillaTags()
@@ -142,4 +142,5 @@ class BiomeTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.P
         getOrCreateTagBuilder(ConventionalBiomeTags.IS_CAVE)
             .forceAddTag(DnDBiomeTags.IS_CAVE)
     }
+
 }
