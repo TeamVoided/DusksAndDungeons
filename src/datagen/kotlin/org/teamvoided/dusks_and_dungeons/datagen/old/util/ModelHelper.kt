@@ -1511,7 +1511,7 @@ fun BlockModelGenerators.addAxis(block: Block) = blockStateOutput.accept(
     BlockModelGenerators.createAxisAlignedPillarBlock(block, ModelLocationUtils.getModelLocation(block))
 )
 
-fun BlockModelGenerators.wallOffset(block: Block, texture: Block = block) = wallOffset(block, modelId(texture))
+fun BlockModelGenerators.wallOffset(block: Block, texture: Block = block) = wallOffset(block, blockId(texture))
 fun BlockModelGenerators.wallOffset(wallBlock: Block, inId: ResourceLocation) {
     val texture = TextureMapping.defaultTexture(wallBlock.model())
         .put(WALL, inId)

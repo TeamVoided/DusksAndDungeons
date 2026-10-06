@@ -20,10 +20,10 @@ private const val CENTER = "_centered"
 
 fun BlockModelGenerators.registerGravestones(gravestone: Block, smallGravestone: Block) {
     registerGravestone(gravestone)
-    registerSmallGravestone(smallGravestone, modelId(gravestone))
+    registerSmallGravestone(smallGravestone, blockId(gravestone))
 }
 
-fun BlockModelGenerators.registerGravestone(gravestone: Block, texture: ResourceLocation = modelId(gravestone)) {
+fun BlockModelGenerators.registerGravestone(gravestone: Block, texture: ResourceLocation = blockId(gravestone)) {
     val texture = TextureMapping()
         .put(FRONT, texture.suffix("_front"))
         .put(SIDE, texture.suffix("_side"))
@@ -35,7 +35,7 @@ fun BlockModelGenerators.registerGravestone(gravestone: Block, texture: Resource
     )
 }
 
-fun BlockModelGenerators.registerSmallGravestone(gravestone: Block, texture: ResourceLocation = modelId(gravestone)) {
+fun BlockModelGenerators.registerSmallGravestone(gravestone: Block, texture: ResourceLocation = blockId(gravestone)) {
     val texture = TextureMapping()
         .put(FRONT, texture.suffix("_front"))
     val wallModel = DnDModels.SMALL_GRAVESTONE.create(gravestone, texture, modelOutput)
@@ -49,8 +49,8 @@ fun BlockModelGenerators.registerSmallGravestone(gravestone: Block, texture: Res
 
 @Suppress("unused") // TODO either remove this or add the funny graves back
 fun BlockModelGenerators.registerHauntedGravestone(hauntedGravestone: Block, gravestone: Block) {
-    val wallModel = modelId(gravestone)
-    val centerModel = modelId(gravestone, CENTER)
+    val wallModel = blockId(gravestone)
+    val centerModel = blockId(gravestone, CENTER)
     delegateItemModel(hauntedGravestone, centerModel)
     blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(hauntedGravestone).with(dispatchGravestone(wallModel, centerModel))
@@ -58,7 +58,7 @@ fun BlockModelGenerators.registerHauntedGravestone(hauntedGravestone: Block, gra
 }
 
 fun BlockModelGenerators.registerHeadstone(headstone: Block) {
-    val texture = TextureMapping().put(ALL, modelId(headstone))
+    val texture = TextureMapping().put(ALL, blockId(headstone))
     val wallModel = DnDModels.HEADSTONE.create(headstone, texture, modelOutput)
     val centerModel = DnDModels.HEADSTONE_CENTERED.createWithSuffix(headstone, CENTER, texture, modelOutput)
     createSimpleFlatItemModel(headstone)

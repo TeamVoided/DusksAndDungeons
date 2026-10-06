@@ -91,7 +91,7 @@ fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
 
 fun BlockModelGenerators.createCandelabra(emptyCandelabra: Block, candelabra: Block) {
     val texture = TextureMapping.defaultTexture(candelabra)
-        .put(TEXTURE, modelId(candelabra))
+        .put(TEXTURE, blockId(candelabra))
     val models = listOf(
         DnDModels.CANDELABRA_1,
         DnDModels.CANDELABRA_2,

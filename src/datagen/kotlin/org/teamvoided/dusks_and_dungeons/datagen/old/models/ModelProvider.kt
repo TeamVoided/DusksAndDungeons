@@ -85,9 +85,9 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         // Pairs
         gen.stairs(DnDBlocks.SMOOTH_STONE_STAIR, Blocks.SMOOTH_STONE)
         gen.wall(DnDBlocks.SMOOTH_STONE_WALL, Blocks.SMOOTH_STONE)
-        gen.stairs(DnDBlocks.CUT_SANDSTONE_STAIR, mc("block/sandstone_top"), modelId(Blocks.CUT_SANDSTONE))
+        gen.stairs(DnDBlocks.CUT_SANDSTONE_STAIR, mc("block/sandstone_top"), blockId(Blocks.CUT_SANDSTONE))
         gen.wall(DnDBlocks.CUT_SANDSTONE_WALL, Blocks.CUT_SANDSTONE)
-        gen.stairs(DnDBlocks.CUT_RED_SANDSTONE_STAIR, mc("block/red_sandstone_top"), modelId(Blocks.CUT_RED_SANDSTONE))
+        gen.stairs(DnDBlocks.CUT_RED_SANDSTONE_STAIR, mc("block/red_sandstone_top"), blockId(Blocks.CUT_RED_SANDSTONE))
         gen.wall(DnDBlocks.CUT_RED_SANDSTONE_WALL, Blocks.CUT_RED_SANDSTONE)
 
         // Walls
@@ -120,14 +120,14 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         tintedBrushableBlock(DnDBlocks.SUSPICIOUS_AZURINE_SAND)
 
         tintedSandstoneSet(DnDBlocks.AZURINE_SANDSTONE)
-        val azurineTop = modelId(DnDBlocks.AZURINE_SANDSTONE.parent, "_top")
+        val azurineTop = blockId(DnDBlocks.AZURINE_SANDSTONE.parent, "_top")
         tintedChiseledSandstone(DnDBlocks.CHISELED_AZURINE_SANDSTONE, azurineTop)
 
         tintedSet(DnDBlocks.SMOOTH_AZURINE_SANDSTONE, azurineTop)
         tintedCutSandstoneSet(DnDBlocks.CUT_AZURINE_SANDSTONE, DnDBlocks.AZURINE_SANDSTONE.parent)
 
         tintedSet(DnDBlocks.POLISHED_AZURINE_SANDSTONE)
-        tintedSet(DnDBlocks.ROUGH_AZURINE_SANDSTONE, modelId(DnDBlocks.AZURINE_SANDSTONE.parent, "_bottom"))
+        tintedSet(DnDBlocks.ROUGH_AZURINE_SANDSTONE, blockId(DnDBlocks.AZURINE_SANDSTONE.parent, "_bottom"))
     }
 
     val single = listOf(

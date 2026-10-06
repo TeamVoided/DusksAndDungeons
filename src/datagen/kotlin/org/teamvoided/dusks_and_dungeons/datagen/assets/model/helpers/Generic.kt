@@ -9,10 +9,37 @@ import net.minecraft.data.models.blockstates.VariantProperties
 import net.minecraft.data.models.blockstates.VariantProperties.Rotation
 import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 
-// TODO(1.0) re order the file to have simple functions upto
+
+fun blockId(block: Block): ResourceLocation = ModelLocationUtils.getModelLocation(block)
+fun blockId(block: Block, suffix: String): ResourceLocation = ModelLocationUtils.getModelLocation(block, suffix)
+
+fun itemId(item: Item): ResourceLocation = ModelLocationUtils.getModelLocation(item)
+fun itemId(item: Item, suffix: String): ResourceLocation = ModelLocationUtils.getModelLocation(item, suffix)
+
+
+fun variant(model: ResourceLocation): Variant = Variant.variant().with(VariantProperties.MODEL, model)
+
+/**
+ * Create an item model that references a block model with the provided block's id.
+ */
+fun BlockModelGenerators.createItemModel(block: Block) {
+    delegateItemModel(block, blockId(block))
+}
+
+fun Rotation.opposite(): Rotation {
+    return when (this) {
+        Rotation.R0 -> Rotation.R180
+        Rotation.R90 -> Rotation.R270
+        Rotation.R180 -> Rotation.R0
+        Rotation.R270 -> Rotation.R90
+    }
+}
+
+// region PropertyDispatchers
 /**
  * Creates a property map for blocks with `BlockStateProperties.FACING` propery with the default state being `Direction.UP`
  */
@@ -42,6 +69,7 @@ fun createUpFacing(): PropertyDispatch {
                 .with(VariantProperties.Y_ROT, Rotation.R90)
         )
 }
+// endregion
 
 fun BlockModelGenerators.createOrientable(block: Block) {
     val model = ModelLocationUtils.getModelLocation(block)
@@ -52,24 +80,3 @@ fun BlockModelGenerators.createOrientable(block: Block) {
         )
     )
 }
-
-fun Rotation.opposite(): Rotation {
-    return when (this) {
-        Rotation.R0 -> Rotation.R180
-        Rotation.R90 -> Rotation.R270
-        Rotation.R180 -> Rotation.R0
-        Rotation.R270 -> Rotation.R90
-    }
-}
-
-/**
- * Create an item model that references a block model with the provided block's id.
- */
-fun BlockModelGenerators.createItemModel(block: Block) {
-    delegateItemModel(block, modelId(block))
-}
-
-fun variant(model: ResourceLocation): Variant = Variant.variant().with(VariantProperties.MODEL, model)
-
-fun modelId(block: Block): ResourceLocation = ModelLocationUtils.getModelLocation(block)
-fun modelId(block: Block, suffix: String): ResourceLocation = ModelLocationUtils.getModelLocation(block, suffix)
