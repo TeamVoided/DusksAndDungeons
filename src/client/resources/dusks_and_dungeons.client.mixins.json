@@ -13,8 +13,7 @@
     "signs.AbstractSignEditScreenMixin",
     "signs.HangingSignEditScreenMixin",
     "signs.SignEditScreenMixin",
-    "signs.SignRendererMixin",
-    "vlib.ShadowAttributeMixin"
+    "signs.SignRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
