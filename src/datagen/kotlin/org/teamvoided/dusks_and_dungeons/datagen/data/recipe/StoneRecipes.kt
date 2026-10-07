@@ -12,6 +12,7 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.createChiseled
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.cutChiseled
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.smeltCracked
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.unlockedBy
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting

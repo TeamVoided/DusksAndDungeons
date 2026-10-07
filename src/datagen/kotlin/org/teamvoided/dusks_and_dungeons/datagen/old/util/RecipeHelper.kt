@@ -11,72 +11,11 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.unlockedBy
 import org.teamvoided.voidlib.devin.extensions.recipe.createStonecutting
 
 fun RecipeBuilder.unlockedBy(item: ItemLike): RecipeBuilder =
     this.unlockedBy(getHasName(item), has(item))
-
-fun RecipeBuilder.unlockedBy(tag: TagKey<Item>): RecipeBuilder =
-    this.unlockedBy("has_${tag.location.path}", has(tag))
-
-// TODO(1.0) move to functional blocks
-fun RecipeOutput.createBigLantern(
-    block: ItemLike,
-    torch: ItemLike,
-    smallLantern: ItemLike? = null,
-) {
-    val criteriaItem = smallLantern ?: torch
-    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block)
-        .define('#', Ingredient.of(torch))
-        .define('O', Ingredient.of(Items.IRON_INGOT))
-        .define('X', Ingredient.of(Items.IRON_NUGGET))
-        .pattern("XOX")
-        .pattern("O#O")
-        .pattern("XOX")
-        .unlockedBy(criteriaItem)
-        .save(this)
-}
-
-fun RecipeOutput.createCandle(
-    candle: ItemLike,
-    honeycomb: ItemLike,
-    soul: TagKey<Item>? = null,
-) {
-    if (soul == null) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candle, 1)
-            .define('S', Ingredient.of(Items.STRING))
-            .define('H', Ingredient.of(honeycomb))
-            .pattern("S")
-            .pattern("H")
-            .unlockedBy(Items.STRING)
-            .unlockedBy(honeycomb)
-            .save(this)
-    } else {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candle, 1)
-            .define('S', Ingredient.of(Items.STRING))
-            .define('H', Ingredient.of(honeycomb))
-            .define('#', Ingredient.of(soul))
-            .pattern("S")
-            .pattern("H")
-            .pattern("#")
-            .unlockedBy(soul)
-            .save(this)
-    }
-}
-
-fun RecipeOutput.createDyed(
-    dyedBlock: ItemLike,
-    input: ItemLike,
-    dye: ItemLike,
-    sufixed: Boolean = false,
-) {
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, dyedBlock)
-        .requires(Ingredient.of(input))
-        .requires(Ingredient.of(dye))
-        .unlockedBy(dye)
-        .save(this, if (sufixed) id("${dyedBlock.id.path}_dyed") else dyedBlock.id)
-}
 
 fun RecipeOutput.createGravestones(
     gravestone: ItemLike, smallGravestone: ItemLike, block: ItemLike,
@@ -450,18 +389,6 @@ fun RecipeOutput.compositeBlock(full: ItemLike, part: ItemLike) {
     ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, part, 8)
         .requires(full)
         .unlockedBy(full)
-        .save(this)
-}
-
-fun RecipeOutput.lantern(lantern: ItemLike, torch: ItemLike) {
-    ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, lantern)
-        .pattern("XXX")
-        .pattern("X#X")
-        .pattern("XXX")
-        .define('#', torch)
-        .define('X', Items.IRON_NUGGET)
-        .unlockedBy(Items.IRON_NUGGET)
-        .unlockedBy(Items.IRON_INGOT)
         .save(this)
 }
 
