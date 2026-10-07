@@ -179,7 +179,4 @@ object DnDItems {
             .component(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
     }
 
-    // TODO(lib) clean up & move to voidlib
-    @JvmField
-    val CUSTOM_STATS = listOf(id("base_block_range"), id("base_entity_range"))
 }
