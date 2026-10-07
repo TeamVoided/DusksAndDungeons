@@ -12,8 +12,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.phys.Vec3
-import net.minecraft.world.phys.shapes.Shapes
-import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import kotlin.jvm.optionals.getOrNull
 
@@ -61,8 +59,6 @@ fun Vec3.map(func: (Double) -> Double): Vec3 = Vec3(func(this.x), func(this.y), 
 fun Vec3.add(pos: BlockPos): Vec3 = add(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
 
 
-// TODO sort somewhere?
-
 fun Direction.counterClockWise(rotations: Int): Direction {
     if (axis.isVertical) {
         return this
@@ -76,54 +72,6 @@ fun Direction.counterClockWise(rotations: Int): Direction {
     return directionReturn
 }
 
-
-//TODO move to Shape file?
-fun VoxelShape.rotate(times: Int): VoxelShape {
-    val shapes = arrayOf(this, Shapes.empty())
-    for (i in 0 until times) {
-        shapes[0].forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
-            shapes[1] = Shapes.or(
-                shapes[1], Shapes.box(
-                    1 - maxZ, minY, minX,
-                    1 - minZ, maxY, maxX
-                )
-            )
-        }
-        shapes[0] = shapes[1]
-        shapes[1] = Shapes.empty()
-    }
-    return shapes[0]
-}
-
-fun VoxelShape.rotateColumn(axis: Direction.Axis): VoxelShape {
-    val shapes = arrayOf(this, Shapes.empty())
-
-    if (axis == Direction.Axis.X) {
-        shapes[0].forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
-            shapes[1] = Shapes.or(
-                shapes[1], Shapes.box(
-                    minY, minX, minZ,
-                    maxY, maxX, maxZ
-                )
-            )
-        }
-        shapes[0] = shapes[1]
-        shapes[1] = Shapes.empty()
-    } else if (axis == Direction.Axis.Z) {
-        shapes[0].forAllBoxes { minX, minY, minZ, maxX, maxY, maxZ ->
-            shapes[1] = Shapes.or(
-                shapes[1], Shapes.box(
-                    minX, minZ, minY,
-                    maxX, maxZ, maxY
-                )
-            )
-        }
-        shapes[0] = shapes[1]
-        shapes[1] = Shapes.empty()
-    }
-
-    return shapes[0]
-}
 
 fun emptyItemList(capacity: Int): NonNullList<ItemStack> {
     return NonNullList.withSize(capacity, ItemStack.EMPTY)
