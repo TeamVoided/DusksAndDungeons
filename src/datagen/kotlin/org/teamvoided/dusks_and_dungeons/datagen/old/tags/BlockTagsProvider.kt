@@ -83,7 +83,6 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o,
 
         // TODO(1.0) deal with VV stuff
 
-        // TODO(1.0) add a mixin for this tag to only apply if the top has a full side
         getOrCreateTagBuilder(BlockTags.SNOW)
             .add(
                 DnDBlocks.SNOW_SET.stairs,

@@ -11,6 +11,8 @@
     "MangroveRootsBlockMixin",
     "MushroomBlockMixin",
     "NyliumBlockMixin",
+    "SnowyDirtBlockMixin",
+    "SpreadingSnowyDirtBlockMixin",
     "WitherSkeletonMixin",
     "WoodenWallMixin",
     "accessors.AbstractCandleBlockAccessor",
