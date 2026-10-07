@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin.client;
+package org.teamvoided.dusks_and_dungeons.mixin.client.vlib;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;

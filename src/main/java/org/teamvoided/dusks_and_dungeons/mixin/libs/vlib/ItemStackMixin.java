@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin;
+package org.teamvoided.dusks_and_dungeons.mixin.libs.vlib;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
@@ -22,6 +22,7 @@ import static org.teamvoided.dusks_and_dungeons.init.DnDItems.CUSTOM_STATS;
 // TODO(lib) move to voidlib
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
+
     @Inject(method = "addModifierTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;is(Lnet/minecraft/resources/ResourceLocation;)Z", ordinal = 0))
     void modifyTooltipContent(Consumer<Component> textConsumer, @Nullable Player player, Holder<Attribute> attribute, AttributeModifier modifier, CallbackInfo ci,
                               @Local(ordinal = 0) LocalDoubleRef amount, @Local(ordinal = 0) LocalBooleanRef greenText) {
@@ -31,4 +32,5 @@ public class ItemStackMixin {
             greenText.set(true);
         }
     }
+
 }

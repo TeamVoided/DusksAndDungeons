@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.block.not_blocks
+package org.teamvoided.voidlib.api
 
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.FenceBlock

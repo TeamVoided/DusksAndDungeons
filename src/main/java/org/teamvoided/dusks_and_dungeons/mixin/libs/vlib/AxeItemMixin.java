@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin.apis;
+package org.teamvoided.dusks_and_dungeons.mixin.libs.vlib;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.item.AxeItem;
@@ -8,8 +8,9 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Optional;
 
-import static org.teamvoided.dusks_and_dungeons.impl.BlockStrippingRegistryIml.getPossibleStrippedState;
+import static org.teamvoided.voidlib.impl.BlockStrippingRegistryIml.getPossibleStrippedState;
 
+// TODO(lib) move to voidlib
 @Mixin(AxeItem.class)
 public abstract class AxeItemMixin {
 

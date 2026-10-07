@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin.wii.connect;
+package org.teamvoided.dusks_and_dungeons.mixin.libs.vlib.wii.connect;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -9,8 +9,9 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.teamvoided.dusks_and_dungeons.block.not_blocks.BlockConnection;
+import org.teamvoided.voidlib.api.BlockConnection;
 
+// TODO(lib) move to voidlib
 @Mixin(IronBarsBlock.class)
 public class IronBarsBlockMixin {
 

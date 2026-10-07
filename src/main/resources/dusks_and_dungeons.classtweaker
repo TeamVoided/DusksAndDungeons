@@ -1,4 +1,4 @@
 classTweaker v2 named
 
-transitive-inject-interface net/minecraft/world/phys/shapes/EntityCollisionContext org/teamvoided/dusks_and_dungeons/api/EntityCollisionContextExtension
+transitive-inject-interface net/minecraft/world/phys/shapes/EntityCollisionContext org/teamvoided/voidlib/api/EntityCollisionContextExtension
 

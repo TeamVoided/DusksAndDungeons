@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin.taglighting;
+package org.teamvoided.dusks_and_dungeons.mixin.libs.taglighting;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.world.damagesource.FallLocation;

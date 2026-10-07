@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin;
+package org.teamvoided.dusks_and_dungeons.mixin.libs.vlib;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -17,4 +17,5 @@ public class LighterItemMixin {
     boolean additionCanBeLitChecks(boolean original, @Local BlockState state) {
         return original ^ CandelabraBlock.canLiteCandelabra(state);
     }
+
 }

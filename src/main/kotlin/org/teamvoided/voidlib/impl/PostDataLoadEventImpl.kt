@@ -1,9 +1,10 @@
-package org.teamvoided.dusks_and_dungeons.impl
+package org.teamvoided.voidlib.impl
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
-import org.teamvoided.dusks_and_dungeons.api.PostDataLoadEvent
+import org.teamvoided.voidlib.api.PostDataLoadEvent
 
-object DnDApiImpl {
+// TODO(lib) move to voidlib
+object PostDataLoadEventImpl {
 
     fun init() {
         ServerLifecycleEvents.SERVER_STARTED.register { server ->

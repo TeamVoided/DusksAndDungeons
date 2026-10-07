@@ -9,7 +9,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.level.storage.loot.BuiltInLootTables.*
 import net.minecraft.world.level.storage.loot.LootTable
-import org.teamvoided.dusks_and_dungeons.api.PostDataLoadEvent
+import org.teamvoided.voidlib.api.PostDataLoadEvent
 import org.teamvoided.dusks_and_dungeons.data.DnDLootTables
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks

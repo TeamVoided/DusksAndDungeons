@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.api
+package org.teamvoided.voidlib.api
 
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory

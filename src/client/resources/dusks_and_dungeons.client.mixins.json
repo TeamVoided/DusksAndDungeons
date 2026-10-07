@@ -9,12 +9,12 @@
     "ItemRendererMixin",
     "LookAtItemAnimationMixin",
     "PaintingRendererMixin",
-    "ShadowAttributeMixin",
     "directional_sculk.LevelRendererMixin",
     "signs.AbstractSignEditScreenMixin",
     "signs.HangingSignEditScreenMixin",
     "signs.SignEditScreenMixin",
-    "signs.SignRendererMixin"
+    "signs.SignRendererMixin",
+    "vlib.ShadowAttributeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

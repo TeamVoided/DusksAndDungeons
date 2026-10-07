@@ -1,11 +1,13 @@
-package org.teamvoided.dusks_and_dungeons.impl
+package org.teamvoided.voidlib.impl
 
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import org.jetbrains.annotations.ApiStatus
 import java.util.*
 
+// TODO(lib) move to voidlib
 object BlockStrippingRegistryIml {
+
     @ApiStatus.Internal
     val BLOCK_STATE_MAP = mutableMapOf<Block, Block>()
 
@@ -17,4 +19,5 @@ object BlockStrippingRegistryIml {
             original
         }
     }
+
 }

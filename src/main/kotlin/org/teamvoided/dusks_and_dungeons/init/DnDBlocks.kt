@@ -6,7 +6,6 @@ import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.Blocks.*
@@ -17,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.api.BlockStrippingRegistry
+import org.teamvoided.voidlib.api.BlockStrippingRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock

@@ -12,9 +12,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.block.not_blocks.BlockConnection
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.rotate
+import org.teamvoided.voidlib.api.BlockConnection
 
 class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(properties), BlockConnection {
 

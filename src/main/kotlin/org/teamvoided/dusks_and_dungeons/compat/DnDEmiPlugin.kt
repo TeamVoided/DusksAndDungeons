@@ -23,7 +23,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.CarvableBlock
 import org.teamvoided.dusks_and_dungeons.compat.recipe.EmiCandelabraContentsRecipe
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
-import org.teamvoided.dusks_and_dungeons.impl.BlockStrippingRegistryIml
+import org.teamvoided.voidlib.impl.BlockStrippingRegistryIml
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.recipe.CandelabraContentsRecipe
@@ -63,6 +63,7 @@ object DnDEmiPlugin : EmiPlugin {
 
     fun addWorldInteraction(registry: EmiRegistry, hiddenItems: Set<Item>) {
         val axes = getAxes()
+        // TODO(lib) this should be part of the voidlib plugin
         for ((from, to) in BlockStrippingRegistryIml.BLOCK_STATE_MAP) {
             val input = EmiStack.of(from)
             val output = EmiStack.of(to)

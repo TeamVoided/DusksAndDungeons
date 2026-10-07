@@ -13,8 +13,8 @@ import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.block.not_blocks.BlockConnection
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
+import org.teamvoided.voidlib.api.BlockConnection
 
 open class GravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, properties: Properties) :
     HorizontalWaterloggedBlock(properties), BlockConnection {

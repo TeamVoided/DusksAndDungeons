@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin.apis;
+package org.teamvoided.dusks_and_dungeons.mixin.libs.vlib;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -10,10 +10,12 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.teamvoided.dusks_and_dungeons.api.EntityCollisionContextExtension;
+import org.teamvoided.voidlib.api.EntityCollisionContextExtension;
 
+// TODO (lib) move to lib
 @Mixin(EntityCollisionContext.class)
 public abstract class EntityCollisionContextMixin implements EntityCollisionContextExtension {
+
     @Shadow
     @Final
     private ItemStack heldItem;

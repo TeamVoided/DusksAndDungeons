@@ -5,12 +5,12 @@ import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
-import org.teamvoided.dusks_and_dungeons.impl.DnDApiImpl
 import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.EVIL_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.events.DnDEvents
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomeModifications
+import org.teamvoided.voidlib.init.VEventInit
 
 @Suppress("unused")
 object DusksAndDungeons {
@@ -43,7 +43,7 @@ object DusksAndDungeons {
         DnDAttachmentTypes.init()
         DnDNetworking.init()
         DnDEvents.init()
-        DnDApiImpl.init()
+        VEventInit.init()
 
         if (isDev()) {
             DnDDebug.init()
