@@ -109,7 +109,7 @@ object DnDTabs {
             addAfter(Blocks.CUT_RED_SANDSTONE, DnDBlocks.CUT_RED_SANDSTONE_STAIR)
             addAfter(Blocks.CUT_RED_SANDSTONE_SLAB, DnDBlocks.CUT_RED_SANDSTONE_WALL)
 
-            addAfter(Blocks.PRISMARINE_BRICK_SLAB, DnDBlocks.PRISMARINE_BRICKS_WALL)
+            addAfter(Blocks.PRISMARINE_BRICK_SLAB, DnDBlocks.PRISMARINE_BRICK_WALL)
             addAfter(Blocks.DARK_PRISMARINE_SLAB, DnDBlocks.DARK_PRISMARINE_WALL)
 
             addAfter(Items.NETHERRACK, DnDItemLists.netherrackStuff)

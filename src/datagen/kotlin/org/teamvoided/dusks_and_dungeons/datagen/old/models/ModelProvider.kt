@@ -97,7 +97,7 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         gen.wall(DnDBlocks.POLISHED_ANDESITE_WALL, Blocks.POLISHED_ANDESITE)
         gen.wall(DnDBlocks.SMOOTH_SANDSTONE_WALL, mc("block/sandstone_top"))
         gen.wall(DnDBlocks.SMOOTH_RED_SANDSTONE_WALL, mc("block/red_sandstone_top"))
-        gen.wall(DnDBlocks.PRISMARINE_BRICKS_WALL, Blocks.PRISMARINE_BRICKS)
+        gen.wall(DnDBlocks.PRISMARINE_BRICK_WALL, Blocks.PRISMARINE_BRICKS)
         gen.wall(DnDBlocks.DARK_PRISMARINE_WALL, Blocks.DARK_PRISMARINE)
         gen.wallOffset(DnDBlocks.PURPUR_WALL, Blocks.PURPUR_BLOCK)
         gen.wall(DnDBlocks.QUARTZ_WALL, mc("block/quartz_block_side"))

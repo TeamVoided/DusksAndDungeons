@@ -88,7 +88,7 @@ class RecipesProvider(o: FabricOutput, p: FutureProvider) : FabricRecipeProvider
         output.createStoneWall(DnDBlocks.POLISHED_ANDESITE_WALL, Blocks.POLISHED_ANDESITE)
         output.createStoneWall(DnDBlocks.SMOOTH_SANDSTONE_WALL, Blocks.SMOOTH_SANDSTONE)
         output.createStoneWall(DnDBlocks.SMOOTH_RED_SANDSTONE_WALL, Blocks.SMOOTH_RED_SANDSTONE)
-        output.createStoneWall(DnDBlocks.PRISMARINE_BRICKS_WALL, Blocks.PRISMARINE_BRICKS)
+        output.createStoneWall(DnDBlocks.PRISMARINE_BRICK_WALL, Blocks.PRISMARINE_BRICKS)
         output.createStoneWall(DnDBlocks.DARK_PRISMARINE_WALL, Blocks.DARK_PRISMARINE)
         output.createStoneWall(DnDBlocks.PURPUR_WALL, Blocks.PURPUR_BLOCK)
         output.createStoneWall(DnDBlocks.QUARTZ_WALL, Blocks.QUARTZ_BLOCK)

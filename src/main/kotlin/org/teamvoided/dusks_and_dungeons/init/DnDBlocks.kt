@@ -31,6 +31,7 @@ import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSetTypes
+import org.teamvoided.dusks_and_dungeons.init.misc.VVAliases
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.getModEntries
 import org.teamvoided.dusks_and_dungeons.util.key
@@ -812,7 +813,7 @@ object DnDBlocks {
     val SMOOTH_SANDSTONE_WALL = registerWall("smooth_sandstone_wall", SMOOTH_SANDSTONE)
     val SMOOTH_RED_SANDSTONE_WALL = registerWall("smooth_red_sandstone_wall", SMOOTH_RED_SANDSTONE)
 
-    val PRISMARINE_BRICKS_WALL = registerWall("prismarine_bricks_wall", PRISMARINE_BRICKS)
+    val PRISMARINE_BRICK_WALL = registerWall("prismarine_brick_wall", PRISMARINE_BRICKS)
     val DARK_PRISMARINE_WALL = registerWall("dark_prismarine_wall", DARK_PRISMARINE)
     val PURPUR_WALL = registerWall("purpur_wall", PURPUR_BLOCK)
 
@@ -886,6 +887,7 @@ object DnDBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
         FlammableBlockRegistry.getDefaultInstance().add(DnDBlockTags.BOOKSHELVES_THAT_BURN, 30, 20)
 
+        VVAliases.init()
     }
 
     fun registerStrippedSet(set: AbstractBlockSet, strippedSet: AbstractBlockSet) {
