@@ -27,6 +27,7 @@
     "bugfix.furnace.FurnaceFuelSlotMixin",
     "debug.HolderMixin",
     "debug.ItemDisplayBuilderMixin",
+    "debug.MappedRegistryMixin",
     "directional_sculk.blockstates.SculkCatalystBlockEntityMixin",
     "directional_sculk.blockstates.SculkCatalystBlockMixin",
     "directional_sculk.blockstates.SculkSensorBlockMixin",

@@ -21,7 +21,6 @@ import org.teamvoided.dusks_and_dungeons.item.potion.CustomGlassBottleItem
 import org.teamvoided.dusks_and_dungeons.item.potion.TintedLingeringPotionItem
 import org.teamvoided.dusks_and_dungeons.item.potion.TintedPotionItem
 import org.teamvoided.dusks_and_dungeons.item.potion.TintedSplashPotionItem
-import org.teamvoided.dusks_and_dungeons.util.ensureUnique
 import org.teamvoided.dusks_and_dungeons.util.getModEntries
 import org.teamvoided.dusks_and_dungeons.util.key
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
@@ -168,7 +167,6 @@ object DnDItems {
 
     fun register(name: String, item: Function<Properties, Item>, properties: Properties = Properties()): Item {
         val id = Registries.ITEM.key(id(name))
-        ensureUnique(id, BuiltInRegistries.ITEM)
 //        properties.setId(id) // 1.21.11 code
         return Registry.register(BuiltInRegistries.ITEM, id.location(), item.apply(properties))
     }

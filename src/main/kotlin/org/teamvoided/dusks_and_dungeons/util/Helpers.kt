@@ -54,11 +54,6 @@ fun <T : Any> Level.getTag(tag: TagKey<T>): HolderSet.Named<T>? {
 fun ResourceKey<*>.toLangKey(): String = location().toLangKey()
 fun ResourceLocation.toLangKey(): String = toLanguageKey().replace("/", ".")
 
-fun <T : Any> ensureUnique(id: ResourceKey<T>, registry: Registry<T>) = ensureUnique(id.location(), registry)
-fun <T : Any> ensureUnique(id: ResourceLocation, registry: Registry<T>) {
-    require(!registry.containsKey(id)) { "Duplicate block: $id" }
-}
-
 fun ResourceKey<LootTable>.isEmpty(): Boolean = this == BuiltInLootTables.EMPTY
 
 // TODO(1.0) remove this

@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.voidlib.api.BlockStrippingRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
@@ -32,8 +31,12 @@ import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSetTypes
-import org.teamvoided.dusks_and_dungeons.util.*
 import org.teamvoided.dusks_and_dungeons.util.block.*
+import org.teamvoided.dusks_and_dungeons.util.getModEntries
+import org.teamvoided.dusks_and_dungeons.util.key
+import org.teamvoided.dusks_and_dungeons.util.register
+import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
+import org.teamvoided.voidlib.api.BlockStrippingRegistry
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
 import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections
 import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections.CANDLES
@@ -911,7 +914,6 @@ object DnDBlocks {
 
     fun <T : Block> registerNoItem(name: String, block: Function<Properties, T>, properties: Properties): T {
         val id = Registries.BLOCK.key(id(name))
-        ensureUnique(id, BuiltInRegistries.BLOCK)
 //        properties.setId(id) // 1.21.11 code
         return BuiltInRegistries.BLOCK.register(id.location(), block.apply(properties))
     }
