@@ -51,6 +51,10 @@ class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(propertie
         return state.getValue(FACING) == dir.opposite
     }
 
+    override fun allowGateInWallState(state: BlockState, dir: Direction): Boolean {
+        return state.getValue(FACING).opposite == dir && state.getValue(HANGING)
+    }
+
     companion object {
 
         val HANGING: BooleanProperty = BlockStateProperties.HANGING
