@@ -3,6 +3,7 @@ package org.teamvoided.dusks_and_dungeons.datagen.data.loot
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.DoublePlantBlock
@@ -17,13 +18,11 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.*
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import org.teamvoided.dusks_and_dungeons.block.DnDBlockStateProperties
-import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
-import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
-import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
+import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 
@@ -40,6 +39,10 @@ fun LootPoolSingletonContainer.Builder<*>.setCount(min: Int, max: Int): LootPool
 
 fun countOf(amount: Number): LootItemConditionalFunction.Builder<*> {
     return SetItemCountFunction.setCount(ConstantValue.exactly(amount.toFloat()))
+}
+
+fun addCount(amount: Number, add: Boolean): LootItemConditionalFunction.Builder<*> {
+    return SetItemCountFunction.setCount(ConstantValue.exactly(amount.toFloat()), add)
 }
 
 fun blockProperty(block: Block): LootItemBlockStatePropertyCondition.Builder {
@@ -139,6 +142,33 @@ fun BlockLootSubProvider.candelabraDrops(drop: Block): LootTable.Builder {
                 DynamicLoot.dynamicEntry(Candelabra.CANDLES_DYNAMIC_DROP_ID)
             )
         )
+}
+
+// TODO add custom condition
+fun BlockLootSubProvider.compositeBlockDrops(block: Block, part: Item): LootTable.Builder {
+    val partItem = LootItem.lootTableItem(part).setCount(0)
+    CompositeBlock.POS_TO_MASK.forEach { (_, mask) ->
+        partItem.apply(addCount(1f, true).`when`(buildCondition(block, mask)))
+    }
+    return LootTable.lootTable().pool(
+        LootPool.lootPool().add(
+            applyExplosionDecay(
+                block, LootItem.lootTableItem(block)
+                    .`when`(blockProperty(block).setProperty(CompositeBlock.SHAPE, 255))
+            ).otherwise(partItem)
+        ).build()
+    )
+}
+
+fun buildCondition(block: Block, mask: Int): AnyOfCondition.Builder {
+    val builder = AnyOfCondition.Builder()
+
+    for (shape in 0..254) {
+        if (shape and mask != 0) {
+            builder.or(blockProperty(block).setProperty(CompositeBlock.SHAPE, shape))
+        }
+    }
+    return builder
 }
 
 fun BlockLootSubProvider.dropSlabWhenSilkTouch(block: Block) {

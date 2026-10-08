@@ -24,7 +24,10 @@ import net.minecraft.world.level.block.SnowyDirtBlock
 import net.minecraft.world.level.block.state.properties.*
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
-import org.teamvoided.dusks_and_dungeons.block.*
+import org.teamvoided.dusks_and_dungeons.block.CornCropBlock
+import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
+import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock
+import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
 import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -310,7 +313,7 @@ fun BlockModelGenerators.stairsWithTintedOverlay(
     )
 }
 
-fun getStairRotation(half: Half, shape: StairsShape, rotationY: Rotation, ): Rotation {
+fun getStairRotation(half: Half, shape: StairsShape, rotationY: Rotation): Rotation {
     val bottomCheck = half == Half.BOTTOM && (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT)
     val topCheck = half == Half.TOP && (shape == StairsShape.INNER_RIGHT || shape == StairsShape.OUTER_RIGHT)
     return if (bottomCheck) {
@@ -320,15 +323,14 @@ fun getStairRotation(half: Half, shape: StairsShape, rotationY: Rotation, ): Rot
             Rotation.R180 -> Rotation.R90
             else -> Rotation.R180
         }
-    }else if(topCheck){
+    } else if (topCheck) {
         when (rotationY) {
             Rotation.R0 -> Rotation.R90
             Rotation.R90 -> Rotation.R180
             Rotation.R180 -> Rotation.R270
             else -> Rotation.R0
         }
-    }
-    else {
+    } else {
         rotationY
     }
 }
@@ -1426,80 +1428,7 @@ val Item.id get() = BuiltInRegistries.ITEM.getKey(this)
 val ItemLike.id get() = this.asItem().id
 val Block.id get() = BuiltInRegistries.BLOCK.getKey(this)
 
-
 // everything past this is from VV
-
-fun BlockModelGenerators.redstoneLantern(block: Block) {
-    createSimpleFlatItemModel(block.asItem())
-
-    val lantern = TexturedModel.LANTERN.create(block, modelOutput)
-    val lanternHanging = TexturedModel.HANGING_LANTERN.create(block, modelOutput)
-
-    val litTex = TextureMapping().put(LANTERN, block.model("_lit"))
-
-    val litLantern = ModelTemplates.LANTERN.create(block.model("_lit"), litTex, modelOutput)
-    val litLanternHanging = ModelTemplates.HANGING_LANTERN.create(block.model("_lit_hanging"), litTex, modelOutput)
-
-    blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(block).with(
-            PropertyDispatch.properties(BlockStateProperties.HANGING, BlockStateProperties.LIT)
-                .select(false, false, variant(lantern))
-                .select(true, false, variant(lanternHanging))
-                .select(false, true, variant(litLantern))
-                .select(true, true, variant(litLanternHanging))
-        )
-    )
-}
-
-fun BlockModelGenerators.denseCube(block: Block) {
-    val topModel = ModelLocationUtils.getModelLocation(block, "_top")
-    val bottomModel = ModelLocationUtils.getModelLocation(block, "_bottom")
-    val itemModel = TexturedModel.CUBE_TOP_BOTTOM.create(block, modelOutput)
-    delegateItemModel(block.asItem(), itemModel)
-    blockStateOutput.accept(
-        MultiPartGenerator.multiPart(block)
-            .with(
-                condition().term(CompositeBlock.UPPER_NORTH_EAST, true),
-                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R90)
-            )
-            .with(
-                condition().term(CompositeBlock.UPPER_NORTH_WEST, true),
-                variant(topModel)
-            )
-            .with(
-                condition().term(CompositeBlock.UPPER_SOUTH_EAST, true),
-                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R180)
-            )
-            .with(
-                condition().term(CompositeBlock.UPPER_SOUTH_WEST, true),
-                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R270)
-            )
-            .with(
-                condition().term(CompositeBlock.LOWER_NORTH_EAST, true),
-                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R90)
-            )
-            .with(
-                condition().term(CompositeBlock.LOWER_NORTH_WEST, true),
-                variant(bottomModel)
-            )
-            .with(
-                condition().term(CompositeBlock.LOWER_SOUTH_EAST, true),
-                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R180)
-            )
-            .with(
-                condition().term(CompositeBlock.LOWER_SOUTH_WEST, true),
-                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R270)
-            )
-    )
-}
-
-// TODO generate everything
-fun BlockModelGenerators.tintedPane(glass: Block, glassPane: Block) {
-    ModelTemplates.FLAT_ITEM
-        .create(ModelLocationUtils.getModelLocation(glassPane.asItem()), TextureMapping.layer0(glass), modelOutput)
-}
-
-
 fun BlockModelGenerators.carpetPlate(plate: Block, wool: Block) {
     val up = TexturedModel.CARPET.get(wool).createWithSuffix(plate, "_up", modelOutput)
     val down = DnDTexturedModels.CARPET_DOWN.get(wool).createWithSuffix(plate, "_down", modelOutput)
@@ -1507,9 +1436,11 @@ fun BlockModelGenerators.carpetPlate(plate: Block, wool: Block) {
     blockStateOutput.accept(BlockModelGenerators.createPressurePlate(plate, up, down))
 }
 
-fun BlockModelGenerators.addAxis(block: Block) = blockStateOutput.accept(
-    BlockModelGenerators.createAxisAlignedPillarBlock(block, ModelLocationUtils.getModelLocation(block))
-)
+fun BlockModelGenerators.addAxis(block: Block) {
+    blockStateOutput.accept(
+        BlockModelGenerators.createAxisAlignedPillarBlock(block, ModelLocationUtils.getModelLocation(block))
+    )
+}
 
 fun BlockModelGenerators.wallOffset(block: Block, texture: Block = block) = wallOffset(block, blockId(texture))
 fun BlockModelGenerators.wallOffset(wallBlock: Block, inId: ResourceLocation) {

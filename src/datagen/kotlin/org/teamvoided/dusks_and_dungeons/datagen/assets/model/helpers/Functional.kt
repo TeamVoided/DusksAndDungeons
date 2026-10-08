@@ -5,21 +5,21 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
+import net.minecraft.data.models.blockstates.Condition
+import net.minecraft.data.models.blockstates.Condition.condition
+import net.minecraft.data.models.blockstates.MultiPartGenerator
 import net.minecraft.data.models.blockstates.MultiVariantGenerator
 import net.minecraft.data.models.blockstates.PropertyDispatch
 import net.minecraft.data.models.blockstates.PropertyDispatch.property
 import net.minecraft.data.models.blockstates.Variant.variant
-import net.minecraft.data.models.blockstates.VariantProperties
-import net.minecraft.data.models.blockstates.VariantProperties.MODEL
-import net.minecraft.data.models.blockstates.VariantProperties.Rotation
-import net.minecraft.data.models.model.DelegatedModel
-import net.minecraft.data.models.model.ModelLocationUtils
-import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.blockstates.VariantProperties.*
+import net.minecraft.data.models.model.*
 import net.minecraft.data.models.model.TextureSlot.*
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.block.CompositeBlock
 import org.teamvoided.dusks_and_dungeons.block.SconceBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
@@ -74,6 +74,29 @@ fun BlockModelGenerators.createBigLantern(block: Block, bottom: ResourceLocation
     }
 
     blockStateOutput.accept(multiGenerator)
+}
+
+
+fun BlockModelGenerators.redstoneLantern(block: Block) {
+    createSimpleFlatItemModel(block.asItem())
+
+    val lantern = TexturedModel.LANTERN.create(block, modelOutput)
+    val lanternHanging = TexturedModel.HANGING_LANTERN.create(block, modelOutput)
+
+    val litTex = TextureMapping().put(LANTERN, blockId(block, "_lit"))
+
+    val litLantern = ModelTemplates.LANTERN.create(blockId(block, "_lit"), litTex, modelOutput)
+    val litLanternHanging = ModelTemplates.HANGING_LANTERN.create(blockId(block, "_lit_hanging"), litTex, modelOutput)
+
+    blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(block).with(
+            PropertyDispatch.properties(BlockStateProperties.HANGING, BlockStateProperties.LIT)
+                .select(false, false, variant(lantern))
+                .select(true, false, variant(lanternHanging))
+                .select(false, true, variant(litLantern))
+                .select(true, true, variant(litLanternHanging))
+        )
+    )
 }
 
 fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
@@ -163,11 +186,75 @@ fun createSconceDispatch(): PropertyDispatch {
             }
             if (hanging)
                 variant()
-                    .with(VariantProperties.X_ROT, Rotation.R180)
-                    .with(VariantProperties.Y_ROT, rotation.opposite())
+                    .with(X_ROT, Rotation.R180)
+                    .with(Y_ROT, rotation.opposite())
             else
-                variant().with(VariantProperties.Y_ROT, rotation)
+                variant().with(Y_ROT, rotation)
         }
 }
 
 // endregion
+
+
+// TODO add custom condition
+// ref: KeyValueCondition
+fun BlockModelGenerators.denseCube(block: Block) {
+    val topModel = ModelLocationUtils.getModelLocation(block, "_top")
+    val bottomModel = ModelLocationUtils.getModelLocation(block, "_bottom")
+    val itemModel = TexturedModel.CUBE_TOP_BOTTOM.create(block, modelOutput)
+    delegateItemModel(block.asItem(), itemModel)
+    blockStateOutput.accept(
+        MultiPartGenerator.multiPart(block)
+            .with(
+                denseCubeCondition(0b1),
+                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R90)
+            )
+            .with(
+                denseCubeCondition(0b10),
+                variant(topModel)
+            )
+            .with(
+                denseCubeCondition(0b100),
+                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R180)
+            )
+            .with(
+                denseCubeCondition(0b1000),
+                variant(topModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R270)
+            )
+            .with(
+                denseCubeCondition(0b10000),
+                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R90)
+            )
+            .with(
+                denseCubeCondition(0b100000),
+                variant(bottomModel)
+            )
+            .with(
+                denseCubeCondition(0b1000000),
+                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R180)
+            )
+            .with(
+                denseCubeCondition(0b10000000),
+                variant(bottomModel).with(UV_LOCK, true).with(Y_ROT, Rotation.R270)
+            )
+    )
+}
+
+fun denseCubeCondition(mask: Int): Condition {
+    val conditions = mutableListOf<Condition>()
+
+    for (shape in 0..255) {
+        if (shape and mask != 0) {
+            conditions.add(condition().term(CompositeBlock.SHAPE, shape))
+        }
+    }
+
+    return Condition.or(*conditions.toTypedArray())
+}
+
+
+// TODO generate everything
+fun BlockModelGenerators.tintedPane(glass: Block, glassPane: Block) {
+    ModelTemplates.FLAT_ITEM
+        .create(ModelLocationUtils.getModelLocation(glassPane.asItem()), TextureMapping.layer0(glass), modelOutput)
+}

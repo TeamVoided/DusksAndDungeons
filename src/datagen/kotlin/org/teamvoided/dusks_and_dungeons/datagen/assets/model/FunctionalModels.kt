@@ -3,10 +3,8 @@ package org.teamvoided.dusks_and_dungeons.datagen.assets.model
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.redstoneLantern
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerBigCandle
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCandle2
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.tintedPane
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 
@@ -47,6 +45,7 @@ object FunctionalModels {
         gen.sconce(DnDBlocks.IRON_SCONCE)
 //        gen.sconce(DnDBlocks.GOLD_SCONCE)
 
+        gen.denseCube(DnDBlocks.HEAVY_CUBE)
         gen.tintedPane(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
     }
 

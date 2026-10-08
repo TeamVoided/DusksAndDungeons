@@ -90,6 +90,7 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
 
         add(DnDBlocks.IRON_CANDELABRA, ::candelabraDrops)
         add(DnDBlocks.EMPTY_IRON_CANDELABRA, ::emptyCandelabraDrops)
+        add(DnDBlocks.HEAVY_CUBE) { compositeBlockDrops(it, Items.HEAVY_CORE) }
 
         add(DnDBlocks.WARPED_WART) {
             val state = blockProperty(it).setProperty(NetherWartBlock.AGE, 3)

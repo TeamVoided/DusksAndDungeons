@@ -105,7 +105,6 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         // endregion
 
         // Misc Blocks
-        gen.denseCube(DnDBlocks.HEAVY_CUBE)
         gen.genSandModels()
         // Vanilla Overrides
         gen.addAxis(Blocks.MANGROVE_ROOTS)
