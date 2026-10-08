@@ -14,7 +14,8 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
-import org.teamvoided.dusks_and_dungeons.block.CompositeBlock.Companion.POS_TO_CORNER
+import org.teamvoided.dusks_and_dungeons.block.CompositeBlock.Companion.POS_TO_MASK
+import org.teamvoided.dusks_and_dungeons.block.CompositeBlock.Companion.SHAPE
 import org.teamvoided.dusks_and_dungeons.block.CompositeBlock.Companion.addToComposite
 import org.teamvoided.dusks_and_dungeons.block.CompositeBlock.Companion.getCornerPosition
 import org.teamvoided.dusks_and_dungeons.block.CompositeBlock.Companion.getOffset
@@ -36,8 +37,10 @@ fun addToCompositeFromCoreItem(
 
     val hitState = level.getBlockState(hit.blockPos)
     if (hitState.`is`(DnDBlocks.HEAVY_CUBE)) {
-        val corner = POS_TO_CORNER[getCornerPosition(hit).add(hit.direction.getOffset().scale(-2.0))]
-        if (corner != null && !hitState.getValue(corner)) return InteractionResult.PASS
+        val cornerMask = POS_TO_MASK[getCornerPosition(hit).add(hit.direction.getOffset().scale(-2.0))]
+        if (cornerMask != null && hitState.getValue(SHAPE) and cornerMask != 0) {
+            return InteractionResult.PASS
+        }
     }
 
     val pos = hit.blockPos.relative(hit.direction)
@@ -46,7 +49,7 @@ fun addToCompositeFromCoreItem(
     if (!level.mayInteract(player, pos)) return InteractionResult.PASS
 
     val clickedPos = getCornerPosition(BlockHitResult(hit.location, hit.direction.opposite, pos, hit.isInside))
-    val cornerToBeAdded = POS_TO_CORNER[clickedPos] ?: return InteractionResult.PASS
+    val cornerToBeAdded = POS_TO_MASK[clickedPos] ?: return InteractionResult.PASS
     if (addToComposite(state, cornerToBeAdded, level, pos, player, stack)) {
         return InteractionResult.SUCCESS
     }

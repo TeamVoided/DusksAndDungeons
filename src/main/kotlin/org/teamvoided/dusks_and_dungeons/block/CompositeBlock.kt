@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.block.BlockPickInteractionAware
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.component.DataComponents
+import net.minecraft.core.component.DataComponents.BLOCK_STATE
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -40,37 +40,17 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
     init {
         registerDefaultState(
             defaultBlockState()
-                .setValue(UPPER_NORTH_EAST, true).setValue(UPPER_NORTH_WEST, true)
-                .setValue(UPPER_SOUTH_EAST, true).setValue(UPPER_SOUTH_WEST, true)
-                .setValue(LOWER_NORTH_EAST, true).setValue(LOWER_NORTH_WEST, true)
-                .setValue(LOWER_SOUTH_EAST, true).setValue(LOWER_SOUTH_WEST, true)
+                .setValue(SHAPE, 255)
         )
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)
-        builder.add(
-            UPPER_NORTH_WEST, UPPER_NORTH_EAST,
-            UPPER_SOUTH_WEST, UPPER_SOUTH_EAST,
-            LOWER_NORTH_WEST, LOWER_NORTH_EAST,
-            LOWER_SOUTH_WEST, LOWER_SOUTH_EAST
-        )
+        builder.add(SHAPE)
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        var binaryKey = 0
-
-        if (state.getValue(UPPER_NORTH_EAST)) binaryKey = binaryKey or 1
-        if (state.getValue(UPPER_NORTH_WEST)) binaryKey = binaryKey or 0b10
-        if (state.getValue(UPPER_SOUTH_EAST)) binaryKey = binaryKey or 0b100
-        if (state.getValue(UPPER_SOUTH_WEST)) binaryKey = binaryKey or 0b1000
-
-        if (state.getValue(LOWER_NORTH_EAST)) binaryKey = binaryKey or 0b10000
-        if (state.getValue(LOWER_NORTH_WEST)) binaryKey = binaryKey or 0b100000
-        if (state.getValue(LOWER_SOUTH_EAST)) binaryKey = binaryKey or 0b1000000
-        if (state.getValue(LOWER_SOUTH_WEST)) binaryKey = binaryKey or 0b10000000
-
-        return SHAPES[binaryKey]
+        return SHAPES[state.getValue(SHAPE)]
     }
 
     open fun getCompositeItem(): Item = Items.HEAVY_CORE
@@ -81,9 +61,9 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
         val mainStack = player.getItemInHand(InteractionHand.MAIN_HAND)
         val offStack = player.getItemInHand(InteractionHand.OFF_HAND)
         if (player.isShiftKeyDown && mainStack.isEmpty && offStack.isEmpty && hit.type == HitResult.Type.BLOCK) {
-            val corner = POS_TO_CORNER[getCornerPosition(hit)]
-            if (corner != null && state.getValue(corner)) {
-                val newState = state.setValue(corner, false)
+            val cornerMask = POS_TO_MASK[getCornerPosition(hit)]
+            if (cornerMask != null && state.getValue(SHAPE) and cornerMask != 0) {
+                val newState = state.setValue(SHAPE, state.getValue(SHAPE) and cornerMask.inv())
                 level.setBlockAndUpdate(pos, newState)
                 if (state.getValue(WATERLOGGED)) level.scheduleFluidTick(pos, state)
                 if (!(player.isCreative && player.inventory.contains(getCompositeItem().defaultInstance))) {
@@ -110,7 +90,7 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
             return super.useItemOn(stack, state, level, pos, player, hand, hit)
 
         val clickedPos = getCornerPosition(hit).add(hit.direction.getOffset().map { it * -2 })
-        val cornerToBeAdded = POS_TO_CORNER[clickedPos] ?: return PASS_TO_DEFAULT_BLOCK_INTERACTION
+        val cornerToBeAdded = POS_TO_MASK[clickedPos] ?: return PASS_TO_DEFAULT_BLOCK_INTERACTION
 
         if (addToComposite(state, cornerToBeAdded, level, pos, player, stack)) {
             return ItemInteractionResult.SUCCESS
@@ -120,7 +100,7 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
         var state = super.getStateForPlacement(ctx) ?: return null
-        ctx.itemInHand?.get(DataComponents.BLOCK_STATE)?.let {
+        ctx.itemInHand?.get(BLOCK_STATE)?.let {
             state = it.apply(state)
         }
         return state
@@ -133,13 +113,7 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
         if (state.block !is CompositeBlock || stack.isEmpty || !player.isCreative || !player.isShiftKeyDown || state.isFull()) {
             return stack
         }
-
-        var data = stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties(mapOf()))
-        for (property in PROPS) {
-            data = data.with(property, state)
-        }
-        stack.set(DataComponents.BLOCK_STATE, data)
-        stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+        stack[BLOCK_STATE] = stack.getOrDefault(BLOCK_STATE, BlockItemStateProperties.EMPTY).with(SHAPE, state)
         return stack
     }
 
@@ -147,41 +121,33 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
         stack: ItemStack, ctx: Item.TooltipContext, tooltip: MutableList<Component>, flag: TooltipFlag,
     ) {
         super.appendHoverText(stack, ctx, tooltip, flag)
-        stack.get(DataComponents.BLOCK_STATE)?.let {
+        stack.get(BLOCK_STATE)?.let {
             tooltip.add(Component.translatable(HEAVY_CUBE_TOOLTIP).withStyle(ChatFormatting.RED))
         }
     }
 
     companion object {
 
-        val UPPER_NORTH_EAST: BooleanProperty = BooleanProperty.create("upper_north_east")
-        val UPPER_NORTH_WEST: BooleanProperty = BooleanProperty.create("upper_north_west")
-        val UPPER_SOUTH_EAST: BooleanProperty = BooleanProperty.create("upper_south_east")
-        val UPPER_SOUTH_WEST: BooleanProperty = BooleanProperty.create("upper_south_west")
-
-        val LOWER_NORTH_EAST: BooleanProperty = BooleanProperty.create("lower_north_east")
-        val LOWER_NORTH_WEST: BooleanProperty = BooleanProperty.create("lower_north_west")
-        val LOWER_SOUTH_EAST: BooleanProperty = BooleanProperty.create("lower_south_east")
-        val LOWER_SOUTH_WEST: BooleanProperty = BooleanProperty.create("lower_south_west")
-
+        val SHAPE = DnDBlockStateProperties.COMPOSITE_SHAPE
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
 
         fun getCornerPosition(hit: BlockHitResult): Vec3 {
-            return hit.location.add(hit.direction.getOffset())
-                .map { it % 1 }
-                .map { if (it < 0) 1 + it else it }
+            return hit.location
+                .subtract(Vec3.atLowerCornerOf(hit.blockPos))
+                .add(hit.direction.getOffset())
                 .map { if (it < .5) .25 else .75 }
         }
 
         fun addToComposite(
-            state: BlockState, cornerToBeAdded: BooleanProperty, level: Level,
+            state: BlockState, newCornerMask: Int, level: Level,
             pos: BlockPos, player: Player, stack: ItemStack,
         ): Boolean {
-            if (state.getValue(cornerToBeAdded)) {
+            val currentShape = state.getValue(SHAPE)
+            if (currentShape and newCornerMask != 0) {
                 return false
             }
 
-            val newState = state.setValue(cornerToBeAdded, true)
+            val newState = state.setValue(SHAPE, currentShape or newCornerMask)
             pushEntitiesUp(state, newState, level, pos)
             level.setBlockAndUpdateFluid(pos, newState)
             stack.consume(1, player)
@@ -189,28 +155,8 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
             return true
         }
 
-        fun BlockState.hasAnyCorners(): Boolean {
-            return block is CompositeBlock &&
-                    getValue(UPPER_NORTH_EAST) || getValue(UPPER_NORTH_WEST)
-                    || getValue(UPPER_SOUTH_EAST) || getValue(UPPER_SOUTH_WEST)
-                    || getValue(LOWER_NORTH_EAST) || getValue(LOWER_NORTH_WEST)
-                    || getValue(LOWER_SOUTH_EAST) || getValue(LOWER_SOUTH_WEST)
-        }
-
-        fun BlockState.isFull(): Boolean {
-            return block is CompositeBlock &&
-                    getValue(UPPER_NORTH_EAST) && getValue(UPPER_NORTH_WEST)
-                    && getValue(UPPER_SOUTH_EAST) && getValue(UPPER_SOUTH_WEST)
-                    && getValue(LOWER_NORTH_EAST) && getValue(LOWER_NORTH_WEST)
-                    && getValue(LOWER_SOUTH_EAST) && getValue(LOWER_SOUTH_WEST)
-        }
-
-        val PROPS = setOf(
-            UPPER_NORTH_EAST, UPPER_NORTH_WEST,
-            UPPER_SOUTH_EAST, UPPER_SOUTH_WEST,
-            LOWER_NORTH_EAST, LOWER_NORTH_WEST,
-            LOWER_SOUTH_EAST, LOWER_SOUTH_WEST
-        )
+        fun BlockState.hasAnyCorners(): Boolean = hasProperty(SHAPE) && getValue(SHAPE) > 0
+        fun BlockState.isFull(): Boolean = hasProperty(SHAPE) && getValue(SHAPE) == 255
 
         fun Direction.getOffset() = when (this) {
             Direction.UP -> Vec3(0.0, -0.25, 0.0)
@@ -221,18 +167,16 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
             Direction.EAST -> Vec3(-0.25, 0.0, 0.0)
         }
 
-        val POS_TO_CORNER = mapOf(
-            Vec3(0.25, 0.25, 0.25) to LOWER_NORTH_WEST,
-            Vec3(0.75, 0.25, 0.25) to LOWER_NORTH_EAST,
+        val POS_TO_MASK = mapOf(
+            Vec3(0.75, 0.75, 0.25) to 0b1,
+            Vec3(0.25, 0.75, 0.25) to 0b10,
+            Vec3(0.75, 0.75, 0.75) to 0b100,
+            Vec3(0.25, 0.75, 0.75) to 0b1000,
 
-            Vec3(0.25, 0.25, 0.75) to LOWER_SOUTH_WEST,
-            Vec3(0.75, 0.25, 0.75) to LOWER_SOUTH_EAST,
-
-            Vec3(0.25, 0.75, 0.25) to UPPER_NORTH_WEST,
-            Vec3(0.75, 0.75, 0.25) to UPPER_NORTH_EAST,
-
-            Vec3(0.25, 0.75, 0.75) to UPPER_SOUTH_WEST,
-            Vec3(0.75, 0.75, 0.75) to UPPER_SOUTH_EAST,
+            Vec3(0.75, 0.25, 0.25) to 0b10000,
+            Vec3(0.25, 0.25, 0.25) to 0b100000,
+            Vec3(0.75, 0.25, 0.75) to 0b1000000,
+            Vec3(0.25, 0.25, 0.75) to 0b10000000,
         )
 
         val TOP_NE: VoxelShape = box(8.0, 8.0, 0.0, 16.0, 16.0, 8.0)
