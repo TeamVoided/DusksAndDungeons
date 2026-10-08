@@ -58,21 +58,19 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        val list = mutableListOf<VoxelShape>()
+        var binaryKey = 0
 
-        if (state.getValue(UPPER_NORTH_EAST)) list.add(UPPER_TOP_RIGHT_SHAPE)
-        if (state.getValue(UPPER_NORTH_WEST)) list.add(UPPER_TOP_LEFT_SHAPE)
-        if (state.getValue(UPPER_SOUTH_EAST)) list.add(UPPER_BOTTOM_RIGHT_SHAPE)
-        if (state.getValue(UPPER_SOUTH_WEST)) list.add(UPPER_BOTTOM_LEFT_SHAPE)
+        if (state.getValue(UPPER_NORTH_EAST)) binaryKey = binaryKey or 1
+        if (state.getValue(UPPER_NORTH_WEST)) binaryKey = binaryKey or 0b10
+        if (state.getValue(UPPER_SOUTH_EAST)) binaryKey = binaryKey or 0b100
+        if (state.getValue(UPPER_SOUTH_WEST)) binaryKey = binaryKey or 0b1000
 
-        if (state.getValue(LOWER_NORTH_EAST)) list.add(LOWER_TOP_RIGHT_SHAPE)
-        if (state.getValue(LOWER_NORTH_WEST)) list.add(LOWER_TOP_LEFT_SHAPE)
-        if (state.getValue(LOWER_SOUTH_EAST)) list.add(LOWER_BOTTOM_RIGHT_SHAPE)
-        if (state.getValue(LOWER_SOUTH_WEST)) list.add(LOWER_BOTTOM_LEFT_SHAPE)
+        if (state.getValue(LOWER_NORTH_EAST)) binaryKey = binaryKey or 0b10000
+        if (state.getValue(LOWER_NORTH_WEST)) binaryKey = binaryKey or 0b100000
+        if (state.getValue(LOWER_SOUTH_EAST)) binaryKey = binaryKey or 0b1000000
+        if (state.getValue(LOWER_SOUTH_WEST)) binaryKey = binaryKey or 0b10000000
 
-        if (list.isEmpty()) return Shapes.block()
-
-        return Shapes.or(Shapes.empty(), *list.toTypedArray())
+        return SHAPES[binaryKey]
     }
 
     open fun getCompositeItem(): Item = Items.HEAVY_CORE
@@ -214,16 +212,6 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
             LOWER_SOUTH_EAST, LOWER_SOUTH_WEST
         )
 
-        val UPPER_TOP_RIGHT_SHAPE: VoxelShape = box(8.0, 8.0, 0.0, 16.0, 16.0, 8.0)
-        val UPPER_TOP_LEFT_SHAPE: VoxelShape = box(0.0, 8.0, 0.0, 8.0, 16.0, 8.0)
-        val UPPER_BOTTOM_RIGHT_SHAPE: VoxelShape = box(8.0, 8.0, 8.0, 16.0, 16.0, 16.0)
-        val UPPER_BOTTOM_LEFT_SHAPE: VoxelShape = box(0.0, 8.0, 8.0, 8.0, 16.0, 16.0)
-
-        val LOWER_TOP_RIGHT_SHAPE: VoxelShape = box(8.0, 0.0, 0.0, 16.0, 8.0, 8.0)
-        val LOWER_TOP_LEFT_SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 8.0, 8.0, 8.0)
-        val LOWER_BOTTOM_RIGHT_SHAPE: VoxelShape = box(8.0, 0.0, 8.0, 16.0, 8.0, 16.0)
-        val LOWER_BOTTOM_LEFT_SHAPE: VoxelShape = box(0.0, 0.0, 8.0, 8.0, 8.0, 16.0)
-
         fun Direction.getOffset() = when (this) {
             Direction.UP -> Vec3(0.0, -0.25, 0.0)
             Direction.DOWN -> Vec3(0.0, 0.25, 0.0)
@@ -246,6 +234,37 @@ open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), 
             Vec3(0.25, 0.75, 0.75) to UPPER_SOUTH_WEST,
             Vec3(0.75, 0.75, 0.75) to UPPER_SOUTH_EAST,
         )
+
+        val TOP_NE: VoxelShape = box(8.0, 8.0, 0.0, 16.0, 16.0, 8.0)
+        val TOP_NW: VoxelShape = box(0.0, 8.0, 0.0, 8.0, 16.0, 8.0)
+        val TOP_SE: VoxelShape = box(8.0, 8.0, 8.0, 16.0, 16.0, 16.0)
+        val TOP_SW: VoxelShape = box(0.0, 8.0, 8.0, 8.0, 16.0, 16.0)
+
+        val BOTTOM_NE: VoxelShape = box(8.0, 0.0, 0.0, 16.0, 8.0, 8.0)
+        val BOTTOM_NW: VoxelShape = box(0.0, 0.0, 0.0, 8.0, 8.0, 8.0)
+        val BOTTOM_SE: VoxelShape = box(8.0, 0.0, 8.0, 16.0, 8.0, 16.0)
+        val BOTTOM_SW: VoxelShape = box(0.0, 0.0, 8.0, 8.0, 8.0, 16.0)
+
+        val SHAPES = createShapeMap()
+
+        fun createShapeMap(): Array<VoxelShape> {
+            var shape: VoxelShape
+            return Array(256) { idx ->
+                shape = Shapes.empty()
+
+                if ((idx and 1) == 1) shape = Shapes.or(shape, TOP_NE)
+                if (((idx shr 1) and 1) == 1) shape = Shapes.or(shape, TOP_NW)
+                if (((idx shr 2) and 1) == 1) shape = Shapes.or(shape, TOP_SE)
+                if (((idx shr 3) and 1) == 1) shape = Shapes.or(shape, TOP_SW)
+
+                if (((idx shr 4) and 1) == 1) shape = Shapes.or(shape, BOTTOM_NE)
+                if (((idx shr 5) and 1) == 1) shape = Shapes.or(shape, BOTTOM_NW)
+                if (((idx shr 6) and 1) == 1) shape = Shapes.or(shape, BOTTOM_SE)
+                if (((idx shr 7) and 1) == 1) shape = Shapes.or(shape, BOTTOM_SW)
+
+                if (idx == 0) Shapes.block() else shape
+            }
+        }
 
     }
 }
