@@ -26,6 +26,7 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
         tickDelta: Float, poseStack: PoseStack, buffers: MultiBufferSource, light: Int, overlay: Int,
     ) {
         val state = candelabra.blockState
+        val block = candelabra.blockState.block as? CandelabraBlock
         poseStack.pushPose()
 
         val dir = state.getValue(CandelabraBlock.FACING)
@@ -34,7 +35,7 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
         val candles = state.getValue(CandelabraBlock.CANDLES)
         val isLit = state.getValue(CandelabraBlock.LIT)
 
-        val offsets = Candelabra.OFFSETS[candles - 1]
+        val offsets = (block?.getCandleOffsets() ?: Candelabra.OFFSETS)[candles - 1]
         for ((index, stack) in candelabra.getCandles().withIndex()) {
             if (stack.isEmpty) {
                 continue

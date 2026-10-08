@@ -158,6 +158,20 @@ fun createCandelabraItemModels(baseModel: ResourceLocation, models: List<Resourc
     return Supplier { modelObj }
 }
 
+fun BlockModelGenerators.createWallCandelabra(emptyWallCandelabra: Block, wallCandelabra: Block, candelabra: Block) {
+    val texture = TextureMapping.defaultTexture(candelabra)
+    val models = listOf(
+        DnDModels.WALL_CANDELABRA_1,
+        DnDModels.WALL_CANDELABRA_2,
+        DnDModels.WALL_CANDELABRA_3,
+        DnDModels.WALL_CANDELABRA_4,
+        DnDModels.WALL_CANDELABRA_5
+    ).map { it.create(wallCandelabra, texture, modelOutput) }
+
+    blockStateOutput.accept(candelabraProperties(wallCandelabra, models))
+    blockStateOutput.accept(candelabraProperties(emptyWallCandelabra, models))
+}
+
 // endregion
 
 

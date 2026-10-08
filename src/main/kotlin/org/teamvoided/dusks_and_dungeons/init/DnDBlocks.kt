@@ -23,6 +23,8 @@ import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyWallCandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.WallCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
@@ -525,6 +527,11 @@ object DnDBlocks {
     val EMPTY_IRON_CANDELABRA =
         registerNoItem("empty_iron_candelabra", { EmptyCandelabraBlock(it, IRON_CANDELABRA) }, Prop.EMPTY_CANDELABRA)
             .pickaxe()
+
+    val IRON_WALL_CANDELABRA = registerNoItem("iron_wall_candelabra", ::WallCandelabraBlock, Prop.CANDELABRA).pickaxe()
+    val EMPTY_IRON_WALL_CANDELABRA = registerNoItem(
+        "empty_iron_wall_candelabra", { EmptyWallCandelabraBlock(it, IRON_WALL_CANDELABRA) }, Prop.EMPTY_CANDELABRA
+    ).pickaxe()
 
     val BIG_SCAFFOLDING = registerNoItem("big_scaffolding", ::BigScaffoldingBlock, ofFullCopy(SCAFFOLDING))
         .cutout().axe()

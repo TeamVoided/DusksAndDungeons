@@ -26,6 +26,12 @@ data object DnDModels {
     val CANDELABRA_4 = parent("candelabra/4", "_4", TEXTURE)
     val CANDELABRA_5 = parent("candelabra/5", "_5", TEXTURE)
 
+    val WALL_CANDELABRA_1 = parent("candelabra/wall/1", "_1", TEXTURE)
+    val WALL_CANDELABRA_2 = parent("candelabra/wall/2", "_2", TEXTURE)
+    val WALL_CANDELABRA_3 = parent("candelabra/wall/3", "_3", TEXTURE)
+    val WALL_CANDELABRA_4 = parent("candelabra/wall/4", "_4", TEXTURE)
+    val WALL_CANDELABRA_5 = parent("candelabra/wall/5", "_5", TEXTURE)
+
     // region Graves
     val GRAVESTONE = parent("gravestone", FRONT, SIDE)
     val GRAVESTONE_CENTERED = parent("gravestone_centered", FRONT, SIDE)

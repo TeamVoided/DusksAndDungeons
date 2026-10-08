@@ -12,7 +12,11 @@ import org.teamvoided.dusks_and_dungeons.util.register
 
 object DnDBlockEntities {
 
-    val CANDELABRA = register("candelabra", ::CandelabraBlockEntity, DnDBlocks.IRON_CANDELABRA)
+    val CANDELABRA = register(
+        "candelabra", ::CandelabraBlockEntity,
+        DnDBlocks.IRON_CANDELABRA,
+        DnDBlocks.IRON_WALL_CANDELABRA
+    )
 
     fun init() {
         BlockEntityType.BRUSHABLE_BLOCK.addSupportedBlock(DnDBlocks.SUSPICIOUS_RED_SAND)

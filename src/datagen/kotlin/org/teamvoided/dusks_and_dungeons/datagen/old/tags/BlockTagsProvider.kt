@@ -425,9 +425,11 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o,
             .add(DnDBlocks.BIG_SOUL_CANDLES)
         getOrCreateTagBuilder(DnDBlockTags.CANDELABRAS)
             .add(DnDBlocks.IRON_CANDELABRA)
+            .add(DnDBlocks.IRON_WALL_CANDELABRA)
             .forceAddTag(DnDBlockTags.EMPTY_CANDELABRAS)
         getOrCreateTagBuilder(DnDBlockTags.EMPTY_CANDELABRAS)
             .add(DnDBlocks.EMPTY_IRON_CANDELABRA)
+            .add(DnDBlocks.EMPTY_IRON_WALL_CANDELABRA)
 
         getOrCreateTagBuilder(DnDBlockTags.GRAVESTONES)
             .forceAddTag(DnDBlockTags.SMALL_GRAVESTONES)

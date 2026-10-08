@@ -79,7 +79,8 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
 
     fun updateStateCache(uLevel: Level) {
         val dir = blockState.getValue(CandelabraBlock.FACING).opposite.get2DDataValue()
-        val baseShape = Candelabra.getBaseShape(blockState)
+        val candelabraBlock = blockState.block as CandelabraBlock
+        val baseShape = candelabraBlock.getStaticShape(blockState)
 
         var shape = baseShape
         var collisionShape = baseShape
@@ -99,7 +100,8 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
                     state = blockStateData.apply(state)
                 }
                 internalBlockStates[idx] = state
-                val offset = Candelabra.OFFSETS.getOrNull(getMaxCandles() - 1)?.getOrNull(idx) ?: Vec3.ZERO
+                val offset =
+                    candelabraBlock.getCandleOffsets().getOrNull(getMaxCandles() - 1)?.getOrNull(idx) ?: Vec3.ZERO
                 val bShape = state.getShape(uLevel, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
                 val cShape = state.getCollisionShape(uLevel, blockPos).move(offset.x, offset.y, offset.z).rotate(dir)
                 shape = Shapes.or(shape, bShape)

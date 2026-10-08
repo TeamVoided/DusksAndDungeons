@@ -68,7 +68,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         level.getCandelabra(pos)?.let { be ->
             return be.dynamicShape
         }
-        return Candelabra.getBaseShape(state)
+        return getStaticShape(state)
     }
 
     override fun getCollisionShape(
@@ -77,8 +77,12 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         level.getCandelabra(pos)?.let { be ->
             return be.dynamicCollisionShape
         }
-        return Candelabra.getBaseShape(state)
+        return getStaticShape(state)
     }
+
+    open fun getStaticShape(state: BlockState): VoxelShape = Candelabra.getStandingShape(state)
+
+    open fun getCandleOffsets() = Candelabra.OFFSETS
 
     // Particles
     override fun getParticleOffsets(state: BlockState): Iterable<Vec3> = EMPTY_OFFSETS
@@ -166,17 +170,6 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
     }
 
     override fun canBeLit(state: BlockState): Boolean = !state.getValue(WATERLOGGED) && super.canBeLit(state)
-
-    /*   override fun onRemove(
-           state: BlockState, level: Level, pos: BlockPos, otherState: BlockState, movedByPiston: Boolean,
-       ) {
-           if (!state.`is`(otherState.block)) {
-               level.getCandelabra(pos)?.let { be ->
-                   dropContents(level, pos, be.getCandles())
-               }
-           }
-           super.onRemove(state, level, pos, otherState, movedByPiston)
-       }*/
 
     override fun setPlacedBy(
         level: Level, pos: BlockPos, state: BlockState, entity: LivingEntity?, stack: ItemStack,

@@ -24,6 +24,9 @@ object FunctionalModels {
         DnDBlockLists.bigSoulCandles.forEach(gen::registerBigCandle)
 
         gen.createCandelabra(DnDBlocks.EMPTY_IRON_CANDELABRA, DnDBlocks.IRON_CANDELABRA)
+        gen.createWallCandelabra(
+            DnDBlocks.EMPTY_IRON_WALL_CANDELABRA, DnDBlocks.IRON_WALL_CANDELABRA, DnDBlocks.IRON_CANDELABRA
+        )
 
         gen.createBigScaffolding(DnDBlocks.BIG_SCAFFOLDING)
 

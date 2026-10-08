@@ -52,7 +52,7 @@ open class EmptyCandelabraBlock(properties: Properties, val filled: CandelabraBl
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return Candelabra.getBaseShape(state)
+        return Candelabra.getStandingShape(state)
     }
 
     // Waterlogging

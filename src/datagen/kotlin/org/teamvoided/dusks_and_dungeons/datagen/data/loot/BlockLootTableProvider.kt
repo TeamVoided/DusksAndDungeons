@@ -90,6 +90,9 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLoot
 
         add(DnDBlocks.IRON_CANDELABRA, ::candelabraDrops)
         add(DnDBlocks.EMPTY_IRON_CANDELABRA, ::emptyCandelabraDrops)
+        add(DnDBlocks.IRON_WALL_CANDELABRA, ::candelabraDrops)
+        add(DnDBlocks.EMPTY_IRON_WALL_CANDELABRA, ::emptyCandelabraDrops)
+
         add(DnDBlocks.HEAVY_CUBE) { compositeBlockDrops(it, Items.HEAVY_CORE) }
 
         add(DnDBlocks.WARPED_WART) {
