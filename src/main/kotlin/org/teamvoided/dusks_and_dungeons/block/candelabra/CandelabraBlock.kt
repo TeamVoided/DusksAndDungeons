@@ -84,6 +84,8 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
 
     open fun getCandleOffsets() = Candelabra.OFFSETS
 
+    open fun getCandleSlots() = Candelabra.PLACEMENTS
+
     // Particles
     override fun getParticleOffsets(state: BlockState): Iterable<Vec3> = EMPTY_OFFSETS
 
@@ -131,8 +133,8 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         return Candelabra.canReplace(ctx, state, this) || super.canBeReplaced(state, ctx)
     }
 
-    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
-        return canSupportCenter(world, pos.below(), Direction.UP)
+    override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
+        return canSupportCenter(level, pos.below(), Direction.UP)
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {

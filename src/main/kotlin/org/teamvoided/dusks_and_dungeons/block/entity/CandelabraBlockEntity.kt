@@ -34,6 +34,9 @@ class CandelabraBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(CAND
     private val candles: NonNullList<ItemStack> = NonNullList.withSize(MAX_CANDLES, ItemStack.EMPTY)
 
     var hasTicked = false
+    /**
+     * Set to true when addition data should be loaded In the candelabra instead of overriding
+     */
     var addingCandles = false
 
     fun getCandles() = candles

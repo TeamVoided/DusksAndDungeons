@@ -104,8 +104,13 @@ object DnDItems {
     }
 
     val BIG_SCAFFOLDING = register("big_scaffolding", { ScaffoldingBlockItem(DnDBlocks.BIG_SCAFFOLDING, it) })
-    val IRON_CANDELABRA =
-        register("iron_candelabra", { CandelabraItem(DnDBlocks.EMPTY_IRON_CANDELABRA, DnDBlocks.IRON_CANDELABRA, it) })
+    val IRON_CANDELABRA = register("iron_candelabra", {
+        CandelabraItem(
+            DnDBlocks.EMPTY_IRON_CANDELABRA, DnDBlocks.IRON_CANDELABRA,
+            DnDBlocks.EMPTY_IRON_WALL_CANDELABRA, DnDBlocks.IRON_WALL_CANDELABRA,
+            it
+        )
+    })
 
     val BRITTLE_LAVASPONGE = register("brittle_lavasponge", { placeInLavaItem(DnDBlocks.BRITTLE_LAVASPONGE, it) })
         .tellWitnessesThatIWasMurdered()

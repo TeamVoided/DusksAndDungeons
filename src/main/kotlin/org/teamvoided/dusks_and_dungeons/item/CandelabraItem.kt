@@ -14,38 +14,18 @@ import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra.getCandelab
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraContents
 import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 
-class CandelabraItem(block: Block, val filledBlock: Block, properties: Properties) : BlockItem(block, properties) {
-    /*
-    val wallBlock: Block
-    val attachmentDirection = Direction.DOWN
-
-    fun canPlace(level: LevelReader, state: BlockState, pos: BlockPos): Boolean = state.canSurvive(level, pos)
-
-    override fun getPlacementState(ctx: BlockPlaceContext): BlockState? {
-        val wallState = wallBlock.getStateForPlacement(ctx)
-        var placeState: BlockState? = null
-        val level = ctx.level
-        val pos = ctx.clickedPos
-
-        for (direction in ctx.getNearestLookingDirections()) {
-            if (direction != attachmentDirection.opposite) {
-                val state = if (direction == attachmentDirection) block
-                    .getStateForPlacement(ctx) else wallState
-                if (state != null && canPlace(level, state, pos)) {
-                    placeState = state
-                    break
-                }
-            }
-        }
-
-        return if (placeState != null && level.isUnobstructed(placeState, pos, CollisionContext.empty()))
-            placeState
-        else
-            null
-    }*/
+class CandelabraItem(
+    emptyBlock: Block, val filledBlock: Block,
+    val emptyWallBlock: Block, val filledWallBlock: Block,
+    properties: Properties,
+) : BlockItem(emptyBlock, properties) {
 
     override fun getPlacementState(ctx: BlockPlaceContext): BlockState? {
         val content = ctx.itemInHand.getOrDefault(CANDELABRA_CONTENTS, CandelabraContents.ONE).validate()
+        val wallState = getWallPlacement(ctx, content)
+        if (wallState != null) {
+            return wallState
+        }
         if (!content.isEmpty()) {
             val filled = filledBlock.getStateForPlacement(ctx)
             if (filled != null) {
@@ -53,6 +33,20 @@ class CandelabraItem(block: Block, val filledBlock: Block, properties: Propertie
             }
         }
         return super.getPlacementState(ctx)
+    }
+
+    fun getWallPlacement(ctx: BlockPlaceContext, content: CandelabraContents): BlockState? {
+        ctx.horizontalDirection
+
+        if (!content.isEmpty()) {
+            val filled = filledWallBlock.getStateForPlacement(ctx)
+            if (filled != null) {
+                return if (canPlace(ctx, filled)) filled else null
+            }
+        }
+
+        val blockState = emptyWallBlock.getStateForPlacement(ctx)
+        return if (blockState != null && canPlace(ctx, blockState)) blockState else null
     }
 
     fun notStacking(ctx: BlockPlaceContext, filled: BlockState): Boolean {
@@ -72,6 +66,8 @@ class CandelabraItem(block: Block, val filledBlock: Block, properties: Propertie
     override fun registerBlocks(map: MutableMap<Block, Item>, item: Item) {
         super.registerBlocks(map, item)
         map[filledBlock] = item
+        map[emptyWallBlock] = item
+        map[filledWallBlock] = item
     }
 
 }

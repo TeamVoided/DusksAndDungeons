@@ -90,11 +90,15 @@ object Candelabra {
         box(6.0, 2.0, 0.0, 10.0, 6.0, 3.0), // Wall Connector
         box(1.0, 4.0, 3.0, 15.0, 8.0, 7.0),
         box(6.0, 2.0, 3.0, 10.0, 8.0, 7.0),
+        box(3.0, 2.0, 3.0, 7.0, 6.0, 12.0), // Prongs
+        box(9.0, 2.0, 3.0, 13.0, 6.0, 12.0),
     )
     val QUINTUPLE_WALL_SHAPE: VoxelShape = Shapes.or(
         box(6.0, 2.0, 0.0, 10.0, 6.0, 3.0), // Wall Connector
         box(1.0, 4.0, 3.0, 15.0, 8.0, 7.0),
         box(6.0, 2.0, 3.0, 10.0, 10.0, 7.0),
+        box(3.0, 2.0, 3.0, 7.0, 6.0, 12.0), // Prongs
+        box(9.0, 2.0, 3.0, 13.0, 6.0, 12.0),
     )
 
     val WALL_SHAPES = BlockStateProperties.HORIZONTAL_FACING.possibleValues.associateWith { dir ->
@@ -155,34 +159,33 @@ object Candelabra {
     /**
      * Offsets are original defied in pixels and then scaled in a map func
      */
-    val WALL_OFFSETS
-        get() = listOf(
-            arrayOf(
-                Vec3(0.0, 8.0, 3.0)
-            ),
-            arrayOf(
-                Vec3(4.0, 8.0, 3.0),
-                Vec3(-4.0, 8.0, 3.0),
-            ),
-            arrayOf(
-                Vec3(5.0, 8.0, 3.0),
-                Vec3(-5.0, 8.0, 3.0),
-                Vec3(0.0, 10.0, 3.0),
-            ),
-            arrayOf(
-                Vec3(5.0, 8.0, 3.0),
-                Vec3(-3.0, 6.0, -2.0),
-                Vec3(-5.0, 8.0, 3.0),
-                Vec3(3.0, 6.0, -2.0),
-            ),
-            arrayOf(
-                Vec3(5.0, 8.0, 3.0),
-                Vec3(-3.0, 6.0, -2.0),
-                Vec3(-5.0, 8.0, 3.0),
-                Vec3(3.0, 6.0, -2.0),
-                Vec3(0.0, 10.0, 3.0),
-            )
-        ).map { list -> list.map { it.scale(PIXEL_SCALER) }.toTypedArray() }.toTypedArray()
+    val WALL_OFFSETS = listOf(
+        arrayOf(
+            Vec3(0.0, 8.0, 3.0)
+        ),
+        arrayOf(
+            Vec3(4.0, 8.0, 3.0),
+            Vec3(-4.0, 8.0, 3.0),
+        ),
+        arrayOf(
+            Vec3(5.0, 8.0, 3.0),
+            Vec3(-5.0, 8.0, 3.0),
+            Vec3(0.0, 10.0, 3.0),
+        ),
+        arrayOf(
+            Vec3(5.0, 8.0, 3.0),
+            Vec3(-5.0, 8.0, 3.0),
+            Vec3(3.0, 6.0, -2.0),
+            Vec3(-3.0, 6.0, -2.0),
+        ),
+        arrayOf(
+            Vec3(5.0, 8.0, 3.0),
+            Vec3(-5.0, 8.0, 3.0),
+            Vec3(3.0, 6.0, -2.0),
+            Vec3(-3.0, 6.0, -2.0),
+            Vec3(0.0, 10.0, 3.0),
+        )
+    ).map { list -> list.map { it.scale(PIXEL_SCALER) }.toTypedArray() }.toTypedArray()
 
     val MISSING_OFFSET = Vec3(0.0, 1.0, 0.0)
 
@@ -213,6 +216,7 @@ object Candelabra {
     }
 
     fun getSlot(blockPos: BlockPos, state: BlockState, isSelectable: Predicate<Int>, hit: BlockHitResult): Int {
+        val block = state.block as? CandelabraBlock ?: return -1
         val maxCandles = state.getValue(CANDLES)
         if (maxCandles == 1) {
             return 0
@@ -224,7 +228,7 @@ object Candelabra {
         val dir = state.getValue(HorizontalDirectionalBlock.FACING)
         pos = pos.rotateCW(dir.get2DDataValue())
         // get possible slots from shape
-        val placements = PLACEMENTS.getOrNull(maxCandles - 2) ?: return -1
+        val placements = block.getCandleSlots().getOrNull(maxCandles - 2) ?: return -1
         placements.sortBy { it.first.distanceToSqr(pos) }
         for ((_, slot) in placements) {
             if (isSelectable.test(slot)) {
@@ -261,26 +265,26 @@ object Candelabra {
 
     val WALL_PLACEMENTS = arrayOf(
         arrayOf(
-            Vec3(4 / 16.0, 0.0, 0.5) to 0,
-            Vec3(12 / 16.0, 0.0, 0.5) to 1,
+            Vec3(4 / 16.0, 0.0, 5 / 16.0) to 0,
+            Vec3(12 / 16.0, 0.0, 5 / 16.0) to 1,
         ),
         arrayOf(
-            Vec3(3 / 16.0, 0.0, 0.5) to 0,
-            Vec3(13 / 16.0, 0.0, 0.5) to 1,
-            Vec3(0.5, 0.0, 0.5) to 2,
+            Vec3(3 / 16.0, 0.0, 5 / 16.0) to 0,
+            Vec3(13 / 16.0, 0.0, 5 / 16.0) to 1,
+            Vec3(0.5, 0.0, 5 / 16.0) to 2,
         ),
         arrayOf(
-            Vec3(3 / 16.0, 0.0, 0.5) to 0,
-            Vec3(13 / 16.0, 0.0, 0.5) to 1,
-            Vec3(0.5, 0.0, 3 / 16.0) to 2,
-            Vec3(0.5, 0.0, 13 / 16.0) to 3,
+            Vec3(3 / 16.0, 0.0, 5 / 16.0) to 0,
+            Vec3(13 / 16.0, 0.0, 5 / 16.0) to 1,
+            Vec3(5 / 16.0, 0.0, 10 / 16.0) to 2,
+            Vec3(11 / 16.0, 0.0, 10 / 16.0) to 3,
         ),
         arrayOf(
-            Vec3(3 / 16.0, 0.0, 0.5) to 0,
-            Vec3(13 / 16.0, 0.0, 0.5) to 1,
-            Vec3(0.5, 0.0, 3 / 16.0) to 2,
-            Vec3(0.5, 0.0, 13 / 16.0) to 3,
-            Vec3(0.5, 0.0, 0.5) to 4,
+            Vec3(3 / 16.0, 0.0, 5 / 16.0) to 0,
+            Vec3(13 / 16.0, 0.0, 5 / 16.0) to 1,
+            Vec3(5 / 16.0, 0.0, 10 / 16.0) to 2,
+            Vec3(11 / 16.0, 0.0, 10 / 16.0) to 3,
+            Vec3(0.5, 0.0, 5 / 16.0) to 4,
         ),
     )
 
