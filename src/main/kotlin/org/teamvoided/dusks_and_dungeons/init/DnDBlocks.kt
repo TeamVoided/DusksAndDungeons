@@ -25,6 +25,7 @@ import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyWallCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.WallCandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.flower.pot.FlowerPotWithSporesBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableSlabBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableStairsBlock
 import org.teamvoided.dusks_and_dungeons.block.meltable.MeltableWallBlock
@@ -157,6 +158,11 @@ object DnDBlocks {
         { MushroomWithSporesPlantBlock(0xFFD800, 0.5, DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM, it) },
         Prop.GOLDEN_MUSHROOM
     ).cutout().axe().sword()
+    val POTTED_GOLDEN_MUSHROOM = register(
+        "potted_golden_mushroom",
+        { FlowerPotWithSporesBlock(0xFFD800, 0.5, GOLDEN_MUSHROOM, it) },
+        Prop.flowerPot { it.luminance(11) }
+    ).cutout()
     val GOLDEN_MUSHROOM_BLOCK = register(
         "golden_mushroom_block",
         { MushroomWithSporesBlock(0xFFD800, 0.5, it) },

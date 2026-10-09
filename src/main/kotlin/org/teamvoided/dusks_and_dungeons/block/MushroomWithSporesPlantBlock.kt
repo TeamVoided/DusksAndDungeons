@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
+import org.teamvoided.dusks_and_dungeons.block.flower.pot.FlowerPotWithSporesBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
@@ -43,21 +44,32 @@ class MushroomWithSporesPlantBlock(
 
     override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         super.animateTick(state, level, pos, random)
-        if (random.nextDouble() >= particleChance) {
-            val offset = state.getOffset(level, pos)
-            level.addParticle(
-                ColorableParticleEffect(color),
-                pos.x + offset.x + (random.nextDouble() * 0.6 + 0.2),
-                pos.y + offset.y + (random.nextDouble() * 0.7 - 0.1),
-                pos.z + offset.z + (random.nextDouble() * 0.6 + 0.2),
-                (random.nextDouble() - random.nextDouble()) * 0.125,
-                (random.nextDouble() * -0.1) - 0.1,
-                (random.nextDouble() - random.nextDouble()) * 0.125
-            )
-        }
+        spawnSporeParticles(state, level, pos, random, particleChance, color)
     }
 
     companion object {
-        val LARGER_SHAPE: VoxelShape = symmetricalBoxY(5.0, 0.0, 9.0)
+
+        val LARGER_SHAPE = symmetricalBoxY(5.0, 0.0, 9.0)
+
+        fun spawnSporeParticles(
+            state: BlockState, level: Level, pos: BlockPos, random: RandomSource, particleChance: Double, color: Int,
+        ) {
+            if (random.nextDouble() >= particleChance) {
+                var offset = state.getOffset(level, pos)
+                if (state.block is FlowerPotWithSporesBlock) {
+                    offset = offset.add(0.0, 6 / 16.0, 0.0)
+                }
+                level.addParticle(
+                    ColorableParticleEffect(color),
+                    pos.x + offset.x + (random.nextDouble() * 0.6 + 0.2),
+                    pos.y + offset.y + (random.nextDouble() * 0.7 - 0.1),
+                    pos.z + offset.z + (random.nextDouble() * 0.6 + 0.2),
+                    (random.nextDouble() - random.nextDouble()) * 0.125,
+                    (random.nextDouble() * -0.1) - 0.1,
+                    (random.nextDouble() - random.nextDouble()) * 0.125
+                )
+            }
+        }
+
     }
 }

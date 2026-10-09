@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createItemModel
+import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.registerGoldenMushroomPlant
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.hangingOvergrowth
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.overgrowthBush
@@ -17,7 +18,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDItems
 object FloraModels {
 
     fun create(gen: BlockModelGenerators) {
-        gen.registerGoldenMushroomPlant(DnDBlocks.GOLDEN_MUSHROOM)
+        gen.registerGoldenMushroomPlant(DnDBlocks.GOLDEN_MUSHROOM, DnDBlocks.POTTED_GOLDEN_MUSHROOM)
         gen.registerMushroomBlockDiffInside(DnDBlocks.GOLDEN_MUSHROOM_BLOCK)
         gen.registerMushroomBlockDiffInside(
             DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK, DnDBlocks.GOLDEN_MUSHROOM_BLOCK.model().suffix("_inside")

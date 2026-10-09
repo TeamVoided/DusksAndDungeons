@@ -17,6 +17,9 @@ data object DnDModels {
     val SMALL_GLOWING_PUMPKIN = parent("small_glowing_pumpkin", PARTICLE, ALL)
     val SMALL_GLOWING_PUMPKIN_WALL = parent("small_glowing_pumpkin_wall", "_wall", PARTICLE, ALL)
 
+    val FLOWER_POT_CROSS_NO_SHADE = parent("foliage/flower_pot_cross_no_shade", PLANT)
+
+    // region Functional
     val BIG_CHAIN = parent("big_chain", PARTICLE, ALL)
     val BIG_LANTERN = parent("big_lantern", PARTICLE, SIDE, END)
 
@@ -31,6 +34,7 @@ data object DnDModels {
     val WALL_CANDELABRA_3 = parent("candelabra/wall/3", "_3", TEXTURE)
     val WALL_CANDELABRA_4 = parent("candelabra/wall/4", "_4", TEXTURE)
     val WALL_CANDELABRA_5 = parent("candelabra/wall/5", "_5", TEXTURE)
+    // endregion
 
     // region Graves
     val GRAVESTONE = parent("gravestone", FRONT, SIDE)

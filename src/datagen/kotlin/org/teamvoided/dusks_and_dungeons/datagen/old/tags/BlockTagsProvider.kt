@@ -742,6 +742,7 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o,
             .add(DnDBlocks.POTTED_CASCADE_SAPLING)
             .add(DnDBlocks.POTTED_SYPIA_SAPLING)
             .add(DnDBlocks.POTTED_OVERGROWTH_BUSH)
+            .add(DnDBlocks.POTTED_GOLDEN_MUSHROOM)
 
         getOrCreateTagBuilder(BlockTags.CANDLES)
             .forceAddTag(DnDBlockTags.SOUL_CANDLES)

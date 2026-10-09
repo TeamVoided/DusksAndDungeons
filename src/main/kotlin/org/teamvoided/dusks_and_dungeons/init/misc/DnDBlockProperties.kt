@@ -12,11 +12,10 @@ import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.util.block.cornSyrupBlockSound
 import org.teamvoided.dusks_and_dungeons.util.block.luminance
 import org.teamvoided.dusks_and_dungeons.util.block.rootBlockSound
+import java.util.function.Consumer
 
 //(ender) This file should not reference DnDBlocks
 object DnDBlockProperties {
-
-    val ICE: Properties = ofFullCopy(Blocks.ICE)
 
     val WARPED_WART: Properties = Properties.of()
         .mapColor(MapColor.WARPED_STEM)
@@ -181,5 +180,14 @@ object DnDBlockProperties {
         .strength(1.0f)
         .sound(SoundType.WOOD)
         .pushReaction(PushReaction.DESTROY)
+
+    fun flowerPot(mod: Consumer<Properties> = {}): Properties {
+        val props = Properties.of()
+            .instabreak()
+            .noOcclusion()
+            .pushReaction(PushReaction.DESTROY)
+        mod.accept(props)
+        return props
+    }
 
 }

@@ -496,23 +496,6 @@ fun BlockModelGenerators.createVerdureGrowth(block: Block, top: ResourceLocation
     )
 }
 
-fun BlockModelGenerators.registerGoldenMushroomPlant(block: Block) {
-    this.createSimpleFlatItemModel(block, "_1")
-    var array = arrayOf<Variant>()
-    var loop = 1
-    repeat(3) {
-        val texture = TextureMapping.defaultTexture(block).put(CROSS, TextureMapping.getBlockTexture(block, "_$loop"))
-        val model = ModelTemplates.CROSS.createWithSuffix(block, "_$loop", texture, this.modelOutput)
-        array += Variant.variant().with(MODEL, model)
-        loop += 1
-    }
-    this.blockStateOutput.accept(
-        MultiVariantGenerator.multiVariant(
-            block, *array
-        )
-    )
-}
-
 fun BlockModelGenerators.registerMushroomBlockDiffInside(
     block: Block,
     insideTexture: ResourceLocation = block.model().suffix("_inside"),
