@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Blocks.BOOKSHELF
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.FunctionalRecipes
+import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.MinecraftRecipeOverrides
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.StoneRecipes
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.WoodRecipes
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.*
@@ -38,7 +39,7 @@ class RecipesProvider(o: FabricOutput, p: FutureProvider) : FabricRecipeProvider
         NetherRecipes.generateNetherRecipes(output)
         FloraRecipes.generateFloraRecipes(output)
 
-        MinecraftRecipeOverrides.generate(output)
+        MinecraftRecipeOverrides.build(output)
 
         temporaryRecipes(output)
 
