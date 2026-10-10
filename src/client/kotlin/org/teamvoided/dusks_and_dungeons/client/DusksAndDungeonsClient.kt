@@ -7,23 +7,19 @@ package org.teamvoided.dusks_and_dungeons.client
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.registries.Registries
-import net.minecraft.server.packs.PackType
-import net.minecraft.server.packs.resources.ResourceManager
-import net.minecraft.server.packs.resources.ResourceManagerReloadListener
 import org.teamvoided.creative_works.util.mc.textMain
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.client.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.client.init.*
 import org.teamvoided.dusks_and_dungeons.client.item.CandelabraItemRenderer
 import org.teamvoided.dusks_and_dungeons.client.util.BETTER_BRICK_NAMES
+import org.teamvoided.voidlib.api.InvalidateResourcesCallback
 import org.teamvoided.voidlib.helpers.registerBuiltInPack
+import org.teamvoided.voidlib.impl.EventImpl
 import kotlin.jvm.optionals.getOrNull
 
 @Suppress("unused")
@@ -41,16 +37,10 @@ object DusksAndDungeonsClient {
 
         registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
 
-        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES)
-            .registerReloadListener(object : ResourceManagerReloadListener, IdentifiableResourceReloadListener {
-
-                override fun getFabricId() = id("cache_invalidator")
-
-                override fun onResourceManagerReload(resourceManager: ResourceManager) {
-                    CandelabraItemRenderer.CANDELABRA_ITEM_CACHE.clear()
-                }
-
-            })
+        EventImpl.init()
+        InvalidateResourcesCallback.EVENT.register {
+            CandelabraItemRenderer.CANDELABRA_ITEM_CACHE.clear()
+        }
 
         if (isDev()) ClientTickEvents.END_WORLD_TICK.register { level ->
             val player = Minecraft.getInstance().player ?: return@register
