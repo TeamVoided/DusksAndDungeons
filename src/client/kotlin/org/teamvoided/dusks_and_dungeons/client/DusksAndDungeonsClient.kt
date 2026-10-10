@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.client
 
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal

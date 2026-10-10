@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.voidlib.devin.extensions.recipe
 
 import net.minecraft.data.recipes.RecipeOutput

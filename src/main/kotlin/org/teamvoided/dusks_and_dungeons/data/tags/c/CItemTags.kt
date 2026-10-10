@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.data.tags.c
 
 import net.minecraft.tags.TagKey

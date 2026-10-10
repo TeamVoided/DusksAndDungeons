@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
 import com.google.gson.JsonArray

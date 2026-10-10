@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;

@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.item.throwable
 
 import net.minecraft.core.dispenser.BlockSource

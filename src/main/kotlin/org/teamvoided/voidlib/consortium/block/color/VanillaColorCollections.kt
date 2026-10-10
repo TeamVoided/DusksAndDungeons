@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.voidlib.consortium.block.color
 
 import net.minecraft.world.level.block.Blocks

@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.voidlib.devin.extensions.model
 
 import net.minecraft.data.models.BlockModelGenerators

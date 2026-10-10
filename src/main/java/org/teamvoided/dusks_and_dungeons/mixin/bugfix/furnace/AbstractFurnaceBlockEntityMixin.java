@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.mixin.bugfix.furnace;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;

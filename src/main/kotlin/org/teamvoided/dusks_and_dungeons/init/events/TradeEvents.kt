@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.init.events
 
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper

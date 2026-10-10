@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack

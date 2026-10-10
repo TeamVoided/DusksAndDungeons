@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
 import net.minecraft.data.models.model.ModelTemplate

@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.datagen.old.util
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectFunction

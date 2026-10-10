@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.voidlib.impl
 
 import net.minecraft.world.level.block.Block

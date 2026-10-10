@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.placed_features
 
 import com.mojang.serialization.Lifecycle

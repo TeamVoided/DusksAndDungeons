@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.voidlib.helpers.effects
 
 import net.minecraft.world.effect.MobEffect

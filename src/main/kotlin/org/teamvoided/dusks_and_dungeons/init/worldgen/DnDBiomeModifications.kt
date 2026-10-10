@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.init.worldgen
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications.create

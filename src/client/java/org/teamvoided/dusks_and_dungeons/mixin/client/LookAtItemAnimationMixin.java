@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.mixin.client;
 
 import dev.tr7zw.notenoughanimations.animations.hands.LookAtItemAnimation;

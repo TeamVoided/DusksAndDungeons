@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.voidlib.reef.world.gen.foliage
 
 import net.minecraft.core.BlockPos

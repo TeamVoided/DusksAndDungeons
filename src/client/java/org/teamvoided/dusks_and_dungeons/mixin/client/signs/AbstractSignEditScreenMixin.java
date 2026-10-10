@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.mixin.client.signs;
 
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;

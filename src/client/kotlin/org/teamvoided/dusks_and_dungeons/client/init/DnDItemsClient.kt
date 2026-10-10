@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.client.init
 
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback

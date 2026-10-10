@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package net.minecraft.world.level.block;
 
 import com.google.common.collect.ImmutableMap;

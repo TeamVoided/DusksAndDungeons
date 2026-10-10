@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.voidlib.consortium.utils
 
 import net.minecraft.data.BlockFamily

@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags

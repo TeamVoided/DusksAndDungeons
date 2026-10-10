@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.configured_features
 
 import net.minecraft.data.worldgen.BootstrapContext

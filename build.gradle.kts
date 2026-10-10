@@ -9,7 +9,12 @@ plugins {
     alias(libs.plugins.iridium.publish)
     alias(libs.plugins.iridium.upload)
     alias(libs.plugins.fabric.loom)
+//    id("dev.yumi.gradle.licenser") version "4.0.+"
 }
+
+//license {
+//    rule(File("./polulator"))
+//}
 
 repositories {
     maven("https://maven.fabricmc.net/")

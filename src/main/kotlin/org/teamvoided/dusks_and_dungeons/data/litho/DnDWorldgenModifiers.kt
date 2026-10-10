@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.data.litho
 
 import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries

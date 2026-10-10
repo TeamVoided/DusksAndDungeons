@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.world.gen.root
 
 import com.mojang.serialization.MapCodec

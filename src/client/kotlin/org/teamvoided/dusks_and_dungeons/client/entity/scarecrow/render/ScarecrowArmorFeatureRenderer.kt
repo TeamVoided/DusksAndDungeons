@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.render
 
 import net.fabricmc.api.EnvType

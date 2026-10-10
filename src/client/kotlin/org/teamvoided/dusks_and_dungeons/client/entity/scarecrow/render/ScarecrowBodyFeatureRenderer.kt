@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 //
 //import net.minecraft.client.render.VertexConsumerProvider
 //import net.minecraft.client.render.entity.feature.FeatureRenderer

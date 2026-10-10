@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.world.gen.structures.mine
 
 import net.minecraft.core.BlockPos

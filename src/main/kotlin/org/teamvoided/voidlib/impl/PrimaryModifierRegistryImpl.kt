@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.voidlib.impl
 
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef

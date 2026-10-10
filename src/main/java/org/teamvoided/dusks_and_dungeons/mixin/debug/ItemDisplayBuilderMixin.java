@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.mixin.debug;
 
 import net.minecraft.world.item.CreativeModeTab;

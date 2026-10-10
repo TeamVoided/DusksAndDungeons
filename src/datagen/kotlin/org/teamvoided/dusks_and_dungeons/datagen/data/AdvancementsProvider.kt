@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.datagen.data
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider

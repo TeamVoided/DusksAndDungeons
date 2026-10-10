@@ -1,3 +1,7 @@
+/*
+ * TODO(cleanup)
+ */
+
 package org.teamvoided.dusks_and_dungeons.block.not_blocks
 
 import net.minecraft.util.StringRepresentable
