@@ -23,11 +23,12 @@ import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.Ingredient
 import java.util.*
 import java.util.function.Function
+import kotlin.jvm.optionals.getOrNull
 import kotlin.math.max
 import kotlin.math.min
 
 // TODO(1.0) clean up and optimize
-class StrictShapedRecipePattern(
+class MixedRecipePattern(
     val width: Int, val height: Int,
     val ingredients: NonNullList<Ingredient>,
     val groups: NonNullList<Char>,
@@ -118,6 +119,8 @@ class StrictShapedRecipePattern(
 
         companion object {
 
+            const val MIXED_KEY = "enforce_mixed"
+
             private val PATTERN_CODEC: Codec<MutableList<String>> = Codec.STRING.listOf().comapFlatMap(
                 { pattern ->
                     if (pattern.size > MAX_WIDTH_AND_HEIGHT) {
@@ -149,42 +152,40 @@ class StrictShapedRecipePattern(
                 }
             }, { it.toString() })
 
-            val INTERNAL_PAIR_CODEC: Codec<Pair<Boolean, Ingredient>> = Codec.pair(
-                Codec.BOOL.fieldOf("strict").codec(),
-                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").codec()
-            )
-            val PAIR_CODEC: Codec<Pair<Boolean, Ingredient>> = object : Codec<Pair<Boolean, Ingredient>> {
+            val SHAPE_KEY_CODEC: Codec<Pair<Boolean, Ingredient>> = object : Codec<Pair<Boolean, Ingredient>> {
+
                 override fun <T : Any> encode(
                     input: Pair<Boolean, Ingredient>, ops: DynamicOps<T>, prefix: T,
                 ): DataResult<T> {
-                    return if (input.first) {
-                        INTERNAL_PAIR_CODEC.encode(input, ops, prefix)
-                    } else {
-                        val result = Ingredient.CODEC_NONEMPTY.encode(input.second, ops, prefix)
-                        if (result.isSuccess) result
-                        else result.error().get()
+                    return Ingredient.CODEC_NONEMPTY.encode<T>(input.second, ops, prefix).map {
+                        if (input.first)
+                            ops.set(it, MIXED_KEY, ops.createBoolean(true))
+                        else
+                            it
                     }
                 }
 
                 override fun <T : Any> decode(
-                    ops: DynamicOps<T>,
-                    input: T,
+                    ops: DynamicOps<T>, input: T,
                 ): DataResult<Pair<Pair<Boolean, Ingredient>, T>> {
-                    return if (ops.get(input, "strict").isSuccess) {
-                        INTERNAL_PAIR_CODEC.decode(ops, input)
-                    } else {
-                        val result = Ingredient.CODEC_NONEMPTY.decode(ops, input)
-                        if (result.isSuccess)
-                            DataResult.success(Pair.of(Pair.of(false, result.result().get().first), input))
-                        else
-                            DataResult.error { result.error().get().message() }
+                    val isMixed = ops.get(input, MIXED_KEY)
+                        .map { ops.getBooleanValue(it).result().getOrNull() ?: false }
+                        .result().getOrNull() ?: false
+                    if (isMixed) {
+                        ops.remove(input, MIXED_KEY)
                     }
+                    val result = Ingredient.CODEC_NONEMPTY.decode(ops, input)
+                    return if (result.isSuccess)
+                        DataResult.success(Pair.of(Pair.of(isMixed, result.result().get().first), input))
+                    else
+                        DataResult.error { result.error().get().message() }
                 }
+
             }
 
             val CODEC: MapCodec<ShapeData> = RecordCodecBuilder.mapCodec { instance ->
                 instance.group(
-                    ExtraCodecs.strictUnboundedMap(KEY_SYMBOL_CODEC, PAIR_CODEC)
+                    ExtraCodecs.strictUnboundedMap(KEY_SYMBOL_CODEC, SHAPE_KEY_CODEC)
                         .fieldOf("key").forGetter(ShapeData::key),
                     PATTERN_CODEC.fieldOf("pattern").forGetter(ShapeData::pattern)
                 ).apply(instance, ::ShapeData)
@@ -198,21 +199,21 @@ class StrictShapedRecipePattern(
         private const val MAX_WIDTH_AND_HEIGHT = 3
         const val EMPTY_CHAR = ' '
 
-        val CODEC: MapCodec<StrictShapedRecipePattern> = ShapeData.CODEC.flatXmap(::fromData) { pattern ->
+        val CODEC: MapCodec<MixedRecipePattern> = ShapeData.CODEC.flatXmap(::fromData) { pattern ->
             pattern.data
                 .map { DataResult.success(it) }
                 .orElseGet { DataResult.error { "Cannot encode unpacked recipe" } }
         }
 
-        val PACKET_CODEC: StreamCodec<RegistryFriendlyByteBuf, StrictShapedRecipePattern> =
+        val PACKET_CODEC: StreamCodec<RegistryFriendlyByteBuf, MixedRecipePattern> =
             StreamCodec.ofMember({ obj, buf -> obj.toBuf(buf) }, ::fromBuf)
 
-        fun of(key: MutableMap<Char, Pair<Boolean, Ingredient>>, vararg pattern: String): StrictShapedRecipePattern {
+        fun of(key: MutableMap<Char, Pair<Boolean, Ingredient>>, vararg pattern: String): MixedRecipePattern {
             val data = ShapeData(key, pattern.toMutableList())
             return fromData(data).getOrThrow()
         }
 
-        private fun fromData(data: ShapeData): DataResult<StrictShapedRecipePattern> {
+        private fun fromData(data: ShapeData): DataResult<MixedRecipePattern> {
             val strings = trim(data.pattern)
             val i = strings.getOrNull(0)?.length ?: 0
             val j = strings.size
@@ -240,7 +241,7 @@ class StrictShapedRecipePattern(
             return if (!charSet.isEmpty())
                 DataResult.error { "Key defines symbols that aren't used in pattern: $charSet" }
             else
-                DataResult.success(StrictShapedRecipePattern(i, j, defaultedList, groupList, Optional.of(data)))
+                DataResult.success(MixedRecipePattern(i, j, defaultedList, groupList, Optional.of(data)))
         }
 
         @VisibleForTesting
@@ -250,8 +251,7 @@ class StrictShapedRecipePattern(
             var k = 0
             var l = 0
 
-            for (m in 0 until pattern.size) {
-                val string = pattern[m]
+            for ((m, string) in pattern.withIndex()) {
                 i = min(i, findFirstSymbol(string))
                 val n = findLastSymbol(string)
                 j = max(j, n)
@@ -287,7 +287,7 @@ class StrictShapedRecipePattern(
             return i
         }
 
-        private fun fromBuf(buf: RegistryFriendlyByteBuf): StrictShapedRecipePattern {
+        private fun fromBuf(buf: RegistryFriendlyByteBuf): MixedRecipePattern {
             val i = buf.readVarInt()
             val j = buf.readVarInt()
 
@@ -296,7 +296,7 @@ class StrictShapedRecipePattern(
 
             val defaultedList = NonNullList.withSize(i * j, Ingredient.EMPTY)
             defaultedList.replaceAll { Ingredient.CONTENTS_STREAM_CODEC.decode(buf) }
-            return StrictShapedRecipePattern(i, j, defaultedList, groupList, Optional.empty())
+            return MixedRecipePattern(i, j, defaultedList, groupList, Optional.empty())
         }
 
     }
