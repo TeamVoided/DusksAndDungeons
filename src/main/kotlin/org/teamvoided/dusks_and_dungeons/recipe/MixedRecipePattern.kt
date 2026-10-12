@@ -27,101 +27,94 @@ import kotlin.jvm.optionals.getOrNull
 import kotlin.math.max
 import kotlin.math.min
 
-// TODO(1.0) clean up and optimize
 class MixedRecipePattern(
     val width: Int, val height: Int,
     val ingredients: NonNullList<Ingredient>,
     val groups: NonNullList<Char>,
     private val data: Optional<ShapeData>,
 ) {
+    private val symmetric = Util.isSymmetrical(width, height, ingredients)
     private val ingredientCount: Int
-    private val symmetric: Boolean
 
     init {
-        var i = 0
-
+        var count = 0
         for (ingredient in ingredients) {
             if (!ingredient.isEmpty) {
-                i++
+                count++
             }
         }
-
-        this.ingredientCount = i
-        this.symmetric = Util.isSymmetrical(width, height, ingredients)
+        ingredientCount = count
     }
 
     fun matches(input: CraftingInput): Boolean {
-        if (input.ingredientCount() != this.ingredientCount) {
-            return false
-        } else {
-            if (input.width() == this.width && input.height() == this.height) {
-                if (!this.symmetric && this.matches(input, true)) {
-                    return true
-                }
-
-                if (this.matches(input, false)) {
-                    return true
-                }
-            }
-
+        if (input.ingredientCount() != ingredientCount) {
             return false
         }
+
+        if (input.width() == width && input.height() == height) {
+            if (!symmetric && matches(input, true)) {
+                return true
+            }
+
+            if (matches(input, false)) {
+                return true
+            }
+        }
+
+        return false
     }
 
     private fun matches(input: CraftingInput, mirror: Boolean): Boolean {
-        val groups = mutableMapOf<Char, List<ItemStack>>()
-        for (i in 0..<this.height) {
-            for (j in 0..<this.width) {
-                val ingredient: Ingredient =
-                    if (mirror) this.ingredients[this.width - j - 1 + i * this.width]
-                    else this.ingredients[j + i * this.width]
+        val localGroups = mutableMapOf<Char, Pair<ItemStack, Boolean>>()
+        for (y in 0..<height) {
+            for (x in 0..<width) {
+                val arrayIdx = if (mirror) width - x - 1 + y * width else x + y * width
+                val ingredient = ingredients[arrayIdx]
 
-                val itemStack = input.getItem(j, i)
-                if (!ingredient.test(itemStack)) {
+                val stack = input.getItem(x, y)
+                if (!ingredient.test(stack)) {
                     return false
                 }
-                val group: Char =
-                    if (mirror) this.groups[this.width - j - 1 + i * this.width]
-                    else this.groups[j + i * this.width]
+
+                val group = groups[arrayIdx]
                 if (group != EMPTY_CHAR) {
-                    groups[group] = (groups[group] ?: listOf()) + listOf(itemStack)
+                    val tallyStack = localGroups[group]
+                    if (tallyStack == null) {
+                        localGroups[group] = Pair.of(stack, true)
+                    } else if (tallyStack.second) {
+                        localGroups[group] = Pair.of(stack, ItemStack.isSameItem(tallyStack.first, stack))
+                    }
                 }
             }
         }
-        for ((_, stacks) in groups) {
-            if (stacks.size <= 1) continue
-            var uniform = true
-            for (stack in stacks) {
-                if (!stack.`is`(stacks[0].item)) {
-                    uniform = false
-                    break
-                }
+        for ((_, pair) in localGroups) {
+            if (pair.second) {
+                return false
             }
-            if (uniform) return false
         }
 
         return true
     }
 
     private fun toBuf(buf: RegistryFriendlyByteBuf) {
-        buf.writeVarInt(this.width)
-        buf.writeVarInt(this.height)
-        for (group in this.groups) {
+        buf.writeVarInt(width)
+        buf.writeVarInt(height)
+        for (group in groups) {
             buf.writeChar(group?.code ?: EMPTY_CHAR.code)
         }
-        for (ingredient in this.ingredients) {
+        for (ingredient in ingredients) {
             Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ingredient)
         }
     }
 
     @JvmRecord
-    data class ShapeData(val key: MutableMap<Char, Pair<Boolean, Ingredient>>, val pattern: MutableList<String>) {
+    data class ShapeData(val key: Map<Char, Pair<Boolean, Ingredient>>, val pattern: List<String>) {
 
         companion object {
 
             const val MIXED_KEY = "enforce_mixed"
 
-            private val PATTERN_CODEC: Codec<MutableList<String>> = Codec.STRING.listOf().comapFlatMap(
+            private val PATTERN_CODEC: Codec<List<String>> = Codec.STRING.listOf().comapFlatMap(
                 { pattern ->
                     if (pattern.size > MAX_WIDTH_AND_HEIGHT) {
                         return@comapFlatMap DataResult.error { "Invalid pattern: too many rows, 3 is maximum" }
@@ -208,9 +201,8 @@ class MixedRecipePattern(
         val PACKET_CODEC: StreamCodec<RegistryFriendlyByteBuf, MixedRecipePattern> =
             StreamCodec.ofMember({ obj, buf -> obj.toBuf(buf) }, ::fromBuf)
 
-        fun of(key: MutableMap<Char, Pair<Boolean, Ingredient>>, vararg pattern: String): MixedRecipePattern {
-            val data = ShapeData(key, pattern.toMutableList())
-            return fromData(data).getOrThrow()
+        fun of(key: MutableMap<Char, Pair<Boolean, Ingredient>>, pattern: List<String>): MixedRecipePattern {
+            return fromData(ShapeData(key.toMap(), pattern.toList())).getOrThrow()
         }
 
         private fun fromData(data: ShapeData): DataResult<MixedRecipePattern> {
@@ -245,7 +237,7 @@ class MixedRecipePattern(
         }
 
         @VisibleForTesting
-        fun trim(pattern: MutableList<String>): Array<String> {
+        fun trim(pattern: List<String>): Array<String> {
             var i = Int.MAX_VALUE
             var j = 0
             var k = 0

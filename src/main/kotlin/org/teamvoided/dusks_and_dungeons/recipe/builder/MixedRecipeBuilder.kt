@@ -93,7 +93,7 @@ class MixedRecipeBuilder(
 
     private fun ensureValid(id: ResourceLocation): MixedRecipePattern {
         check(criteria.isNotEmpty()) { "No way of obtaining recipe $id" }
-        return MixedRecipePattern.of(key, *rows.toTypedArray())
+        return MixedRecipePattern.of(key, rows)
     }
 
     companion object {

@@ -18,7 +18,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDRecipes
 import java.util.*
 
 
-// TODO(1.0) clean up and optimize
 class MixedShapedRecipe(
     group: String,
     category: CraftingBookCategory,
@@ -37,17 +36,11 @@ class MixedShapedRecipe(
 
     override fun getIngredients(): NonNullList<Ingredient> = mixedPattern.ingredients
 
-    override fun canCraftInDimensions(width: Int, height: Int): Boolean {
-        return width >= getWidth() && height >= getHeight()
-    }
+    override fun canCraftInDimensions(width: Int, height: Int): Boolean = width >= getWidth() && height >= getHeight()
 
-    override fun matches(input: CraftingInput, world: Level): Boolean {
-        return mixedPattern.matches(input)
-    }
+    override fun matches(input: CraftingInput, world: Level): Boolean = mixedPattern.matches(input)
 
-    override fun assemble(input: CraftingInput, provider: HolderLookup.Provider): ItemStack {
-        return getResultItem(provider).copy()
-    }
+    override fun assemble(input: CraftingInput, provider: HolderLookup.Provider): ItemStack = getResultItem(provider).copy()
 
     override fun getWidth(): Int = mixedPattern.width
 

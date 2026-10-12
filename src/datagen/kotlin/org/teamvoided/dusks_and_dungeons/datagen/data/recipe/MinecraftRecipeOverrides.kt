@@ -38,14 +38,6 @@ object MinecraftRecipeOverrides {
             .define('#', ItemTags.PLANKS, true)
             .unlockedBy(Items.BOOK)
             .save(output)
-
-        MixedRecipeBuilder.mixed(RecipeCategory.BUILDING_BLOCKS, Items.DRAGON_BREATH) // TODO remove after testing
-            .pattern("#B")
-            .pattern("B#")
-            .define('B', Items.BOOK)
-            .define('#', ItemTags.PLANKS, true)
-            .unlockedBy(Items.BOOK)
-            .save(output)
     }
 
 }
