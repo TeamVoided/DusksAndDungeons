@@ -162,7 +162,7 @@ object DnDBlocks {
         { MushroomWithSporesPlantBlock(0xFFD800, 0.5, DnDConfiguredFeature.HUGE_GOLDEN_MUSHROOM, it) },
         Prop.GOLDEN_MUSHROOM
     ).cutout().axe().sword()
-    val POTTED_GOLDEN_MUSHROOM = register(
+    val POTTED_GOLDEN_MUSHROOM = registerNoItem(
         "potted_golden_mushroom",
         { FlowerPotWithSporesBlock(0xFFD800, 0.5, GOLDEN_MUSHROOM, it) },
         Prop.flowerPot { it.luminance(11) }
