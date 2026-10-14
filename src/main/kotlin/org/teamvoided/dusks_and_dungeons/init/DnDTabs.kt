@@ -28,12 +28,15 @@ object DnDTabs {
             .displayItems(::mainTab)
     )
 
-    val DND_DRINKS = register(
-        "dnd_drinks", FabricItemGroup.builder()
-            .dndName("dnd_drinks")
-            .icon(DnDItems.TINTED_POTION)
+    val DND_FOOD_AND_DRINKS = register(
+        "dnd_food_and_drinks", FabricItemGroup.builder()
+            .dndName("dnd_food_and_drinks")
+            .icon(DnDItems.CORN)
             .displayItems { params, output ->
                 output.addItems(
+                    DnDItems.MOONBERRIES,
+                    DnDItems.CORN,
+                    DnDItems.GOLDEN_BEETROOT,
                     DnDItems.CORN_SYRUP_BOTTLE,
                     DnDItems.TINTED_GLASS_BOTTLE
                 )
