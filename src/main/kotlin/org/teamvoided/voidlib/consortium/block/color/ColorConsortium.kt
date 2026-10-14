@@ -15,7 +15,7 @@ typealias NameCreator = (prefix: String, color: String) -> String
 fun <T> basedFullColorCollections(
     name: String, provider: FullColorCollections,
     baseConstructor: (coloredBlock: Block) -> T,
-    constructor: (coloredBlock: Block, uncoloredBlock: Block) -> T
+    constructor: (coloredBlock: Block, uncoloredBlock: Block) -> T,
 ): FullColorConsortium<T> where T : Block {
     val uncolored = baseConstructor(provider.uncolored())
     return FullColorConsortium(
@@ -65,6 +65,17 @@ open class FullColorConsortium<T>(
 
     override val list = listOf(uncolored) + super.list
     override fun getIdMap() = mapOf("$prefix$name" to uncolored) + super.getIdMap()
+
+
+    override fun inCreativeOrder(): Array<Block> {
+        return arrayOf(
+            uncolored, white, lightGray, gray, black,
+            brown, red, orange, yellow,
+            lime, green, cyan, lightBlue,
+            blue, purple, magenta, pink,
+        )
+    }
+
 
     override fun toColorCollection(): FullColorCollections = FullColorCollections(
         uncolored,
@@ -124,6 +135,15 @@ open class ColorConsortium<T>(
     override fun containsAll(elements: Collection<T>): Boolean = list.containsAll(elements)
     override fun isEmpty(): Boolean = false
     override fun iterator(): Iterator<T> = list.iterator()
+
+    open fun inCreativeOrder(): Array<Block> {
+        return arrayOf(
+            white, lightGray, gray, black,
+            brown, red, orange, yellow,
+            lime, green, cyan, lightBlue,
+            blue, purple, magenta, pink,
+        )
+    }
 
     open fun toColorCollection(): ColorCollection = ColorCollection(
         white, orange, magenta, lightBlue, yellow, lime, pink, gray,

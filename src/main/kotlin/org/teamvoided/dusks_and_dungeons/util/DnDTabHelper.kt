@@ -44,25 +44,7 @@ fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
 }
 
 fun FabricItemGroupEntries.addColors(item: ItemLike, color: ColorConsortium<*>) {
-    addAfter(
-        item,
-        color.white,
-        color.lightGray,
-        color.gray,
-        color.black,
-        color.brown,
-        color.red,
-        color.orange,
-        color.yellow,
-        color.lime,
-        color.green,
-        color.cyan,
-        color.lightBlue,
-        color.blue,
-        color.purple,
-        color.magenta,
-        color.pink
-    )
+    addAfter(item, *color.inCreativeOrder())
 }
 
 

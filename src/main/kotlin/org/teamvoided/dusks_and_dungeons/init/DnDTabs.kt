@@ -15,6 +15,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
+import org.teamvoided.dusks_and_dungeons.init.tab.WoodsTab
 import org.teamvoided.dusks_and_dungeons.util.*
 import org.teamvoided.voidlib.helpers.mc.*
 
@@ -44,6 +45,51 @@ object DnDTabs {
                 output.addPotionEntries(params, DnDItems.TINTED_SPLASH_POTION)
                 output.addPotionEntries(params, DnDItems.TINTED_LINGERING_POTION)
             }
+    )
+
+    val DND_FUNCTIONAL = register(
+        "dnd_functional", FabricItemGroup.builder()
+            .dndName("dnd_functional")
+            .icon(DnDItems.VERDANT_SIGN)
+            .displayItems { _, output ->
+                output.addItems(
+                    DnDBlocks.REDSTONE_LANTERN,
+                    DnDBlocks.BIG_LANTERN,
+                    DnDBlocks.BIG_SOUL_LANTERN,
+                    DnDBlocks.BIG_REDSTONE_LANTERN,
+                    DnDBlocks.BIG_CHAIN,
+                    DnDItems.IRON_CANDELABRA,
+                    DnDBlocks.BIG_SCAFFOLDING,
+                    DnDBlocks.SUSPICIOUS_RED_SAND,
+                    DnDBlocks.SUSPICIOUS_AZURINE_SAND,
+                    DnDBlocks.TINTED_GLASS_PANE,
+                )
+                output.addLists(
+                    DnDItemLists.cascadeSigns,
+                    DnDItemLists.sypiaSigns,
+                    DnDItemLists.verdantSigns,
+                    DnDBlocks.BIG_CANDLES.inCreativeOrder().toList(),
+                    DnDBlocks.SOUL_CANDLES.inCreativeOrder().toList(),
+                    DnDBlocks.BIG_SOUL_CANDLES.inCreativeOrder().toList(),
+                )
+                output.addItems(
+                    DnDBlocks.INFESTED_MOSSY_COBBLESTONE,
+                    DnDBlocks.INFESTED_COBBLED_DEEPSLATE,
+                    DnDBlocks.INFESTED_CHISELED_DEEPSLATE,
+                    DnDBlocks.INFESTED_DEEPSLATE_BRICKS,
+                    DnDBlocks.INFESTED_CRACKED_DEEPSLATE_BRICKS,
+                    DnDBlocks.INFESTED_DEEPSLATE_TILES,
+                    DnDBlocks.INFESTED_CRACKED_DEEPSLATE_TILES,
+                    DnDBlocks.INFESTED_POLISHED_DEEPSLATE,
+                )
+            }
+    )
+
+    val DND_WOODS = register(
+        "dnd_woods", FabricItemGroup.builder()
+            .dndName("dnd_woods")
+            .icon(Items.OAK_SAPLING)
+            .displayItems(WoodsTab::init)
     )
 
     // Dev Tabs
@@ -174,11 +220,16 @@ object DnDTabs {
 
             addAfter(Items.SCAFFOLDING, DnDBlocks.BIG_SCAFFOLDING)
 
-            addAfter(Items.SUSPICIOUS_SAND, DnDBlocks.SUSPICIOUS_RED_SAND)
+            addAfter(Items.SUSPICIOUS_SAND, DnDBlocks.SUSPICIOUS_RED_SAND, DnDBlocks.SUSPICIOUS_AZURINE_SAND)
 
             addAfter(Blocks.TINTED_GLASS, DnDBlocks.TINTED_GLASS_PANE)
 
-            addAfter(Items.CHERRY_HANGING_SIGN, DnDItems.CASCADE_SIGN, DnDItems.CASCADE_HANGING_SIGN)
+            addAfter(
+                Items.CHERRY_HANGING_SIGN,
+                DnDItemLists.cascadeSigns +
+                        DnDItemLists.sypiaSigns +
+                        DnDItemLists.verdantSigns
+            )
 
             addCandles()
 
@@ -468,7 +519,7 @@ object DnDTabs {
             DnDBlocks.BIG_REDSTONE_LANTERN,
             DnDBlocks.BIG_SCAFFOLDING
         )
-        addLists(DnDBlocks.WOOL_CARPET_PLATE)
+        addLists(DnDBlocks.WOOL_CARPET_PLATE.inCreativeOrder().toList())
         addItems(
             DnDBlocks.MOSS_CARPET_PLATE,
             DnDBlocks.OVERGROWTH_CARPET_PLATE
