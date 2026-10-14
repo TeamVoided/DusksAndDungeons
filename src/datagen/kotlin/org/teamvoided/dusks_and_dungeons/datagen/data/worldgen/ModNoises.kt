@@ -7,7 +7,7 @@ package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.synth.NormalNoise
-import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoises
 
 object ModNoises : RegistryBootstrapper<NormalNoise.NoiseParameters> {

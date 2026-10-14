@@ -20,7 +20,7 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
 import org.teamvoided.dusks_and_dungeons.data.litho.DnDWorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructures
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
-import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.datagen.data.litho.modifiers.DnDSurfaceRules
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModProcessorLists.chanceReplaceRule
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModProcessorLists.ruleProcessor

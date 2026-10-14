@@ -1,12 +1,7 @@
-/*
- * TODO(cleanup)
- */
-
-package org.teamvoided.dusks_and_dungeons.datagen.data
+package org.teamvoided.voidlib.devin
 
 import net.minecraft.data.worldgen.BootstrapContext
 
-// this will become a Devin thing later on
 interface RegistryBootstrapper<T : Any> {
 
     fun bootstrap(context: BootstrapContext<T>) = context.init()

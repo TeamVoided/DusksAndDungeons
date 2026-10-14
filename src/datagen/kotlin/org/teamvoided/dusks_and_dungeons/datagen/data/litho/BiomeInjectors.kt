@@ -10,7 +10,7 @@ import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.Clima
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.ClimateParameter.TEMPERATURE
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.BiomeTags
-import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDDensityFunctions

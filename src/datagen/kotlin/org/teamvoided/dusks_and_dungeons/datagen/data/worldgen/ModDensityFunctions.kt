@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.DensityFunction.NoiseHolder
 import net.minecraft.world.level.levelgen.DensityFunctions.HolderHolder
 import net.minecraft.world.level.levelgen.DensityFunctions.noise
 import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters
-import org.teamvoided.dusks_and_dungeons.datagen.data.RegistryBootstrapper
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDDensityFunctions
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoises
 
