@@ -165,6 +165,14 @@ class RecipesProvider(o: FabricOutput, p: FutureProvider) : FabricRecipeProvider
             4
         )
 
+      /*  UseOnBlockRecipeBuilder.useOnBlock(
+            Ingredient.of(Items.APPLE),
+            Blocks.STONE.defaultBlockState(),
+            Blocks.OAK_LOG.defaultBlockState()
+        )
+            .unlockedBy(Items.APPLE)
+            .save(output)*/
+
         /* HurtItemRecipeBuilder.hurtItem(Ingredient.of(Items.APPLE), DamageTypeTags.IS_FIRE, Items.DIAMOND)
              .invulnerableTime(25)
              .criterion(Items.APPLE)

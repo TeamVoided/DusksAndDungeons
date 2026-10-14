@@ -13,6 +13,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.recipe.CandelabraContentsRecipe
 import org.teamvoided.dusks_and_dungeons.recipe.HurtItemRecipe
 import org.teamvoided.dusks_and_dungeons.recipe.MixedShapedRecipe
+import org.teamvoided.dusks_and_dungeons.recipe.UseOnBlockRecipe
 import org.teamvoided.dusks_and_dungeons.util.register
 
 object DnDRecipes {
@@ -20,6 +21,10 @@ object DnDRecipes {
     @JvmField
     val HURT_ITEM = type<HurtItemRecipe>("hurt_item")
     val HURT_ITEM_SERIALIZER = serializer("hurt_item", HurtItemRecipe.Serializer())
+
+    @JvmField
+    val USE_ON_BLOCK = type<UseOnBlockRecipe>("use_on_block")
+    val USE_ON_BLOCK_SERIALIZER = serializer("use_on_block", UseOnBlockRecipe.Serializer())
 
     val MIXED_CRAFTING_SHAPED_SERIALIZER = serializer("mixed_crafting_shaped", MixedShapedRecipe.Serializer())
 

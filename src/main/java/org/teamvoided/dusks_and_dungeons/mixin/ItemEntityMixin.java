@@ -11,6 +11,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log;
 import static org.teamvoided.dusks_and_dungeons.util.MixinHelperKt.processRecipe;
 
 
@@ -38,6 +38,9 @@ public abstract class ItemEntityMixin extends Entity {
     @Shadow
     private int pickupDelay;
 
+    @Shadow
+    public abstract @Nullable Entity getOwner();
+
     @Inject(method = "tick", at = @At("HEAD"))
     void tickIFrames(CallbackInfo ci) {
         if (invulnerableTime > 0) {
@@ -54,7 +57,7 @@ public abstract class ItemEntityMixin extends Entity {
         ItemStack stack = getItem();
         var input = new SingleRecipeInput(stack);
         Level level = level();
-        processRecipe(source, level, input, (outputStack, iFrames) -> {
+        processRecipe(source, level, input, getOwner(), (outputStack, iFrames) -> {
             setItem(outputStack.copyWithCount(stack.getCount()));
             invulnerableTime += iFrames;
             pickupDelay /= 2;
