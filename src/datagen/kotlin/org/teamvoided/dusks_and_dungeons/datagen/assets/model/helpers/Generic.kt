@@ -45,7 +45,8 @@ fun Rotation.opposite(): Rotation {
 
 // region PropertyDispatchers
 /**
- * Creates a property map for blocks with `BlockStateProperties.FACING` propery with the default state being `Direction.UP`
+ * Creates a property map for blocks with [BlockStateProperties.FACING] property.
+ * Default state: [Direction.UP]
  */
 fun createUpFacing(): PropertyDispatch {
     return PropertyDispatch.property(BlockStateProperties.FACING)

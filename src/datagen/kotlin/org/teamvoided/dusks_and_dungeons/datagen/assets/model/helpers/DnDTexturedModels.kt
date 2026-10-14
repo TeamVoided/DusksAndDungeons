@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block
 import java.util.function.Function
 
 /**
- * Object for all DnD `TexturedModel.Provider`'s
+ * Object for all DnD [TexturedModel.Provider]'s
  */
 object DnDTexturedModels {
 
