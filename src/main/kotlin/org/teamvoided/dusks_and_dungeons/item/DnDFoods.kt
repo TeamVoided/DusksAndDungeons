@@ -10,7 +10,7 @@ object DnDFoods {
 
     val GOLDEN_BEETROOT = food(5, 1.6f)
     val MOONBERRIES = food(4, 0.3f)
-    val CORN = food(4, 0.6f)
+    val CORN = food(4, 0.6f) // TODO nerf this
 
     fun food(nutrition: Int, saturation: Float): FoodProperties {
         return FoodProperties.Builder()
