@@ -36,6 +36,7 @@ class ItemTagsProvider(o: FabricOutput, p: FutureProvider, bt: BlockTagsProvider
         getOrCreateTagBuilder(DnDItemTags.GOES_IN_CANDELABRA)
             .forceAddTag(ItemTags.CANDLES)
             .forceAddTag(DnDItemTags.TORCHES)
+            .add(Items.END_ROD)
 
         getOrCreateTagBuilder(DnDItemTags.TORCHES)
             .add(

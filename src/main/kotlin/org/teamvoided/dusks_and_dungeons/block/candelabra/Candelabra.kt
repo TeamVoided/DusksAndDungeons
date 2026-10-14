@@ -296,16 +296,18 @@ object Candelabra {
         be: CandelabraBlockEntity, pos: Vec3, level: Level, random: RandomSource, state: BlockState,
     ) {
         for ((idx, offset) in be.particleOffsets.withIndex()) {
-            if (offset == null || be.internalBlockStates[idx].isAir) {
+            val virtualState = be.internalBlockStates[idx]
+            if (offset == null || virtualState.isAir) {
                 continue
             }
             val inWorldPos = offset.add(pos)
-            when (val block = be.internalBlockStates[idx].block) {
+            when (val block = virtualState.block) {
                 is SoulCandleBlock -> block.spawnCandleParticles(level, inWorldPos, random)
                 is BigCandleBlock -> block.spawnCandleParticles(level, inWorldPos, random)
                 is CandleBlock -> level.spawnCandleParticles(inWorldPos, random)
                 is TorchBlock -> block.spawnTorchParticles(level, inWorldPos)
-                is RedstoneTorchBlock -> state.spawnRedstoneTorchParticles(level, inWorldPos, random)
+                is RedstoneTorchBlock -> virtualState.spawnRedstoneTorchParticles(level, inWorldPos, random)
+                is EndRodBlock -> virtualState.spawnEndRodParticles(level, inWorldPos, random)
             }
         }
     }
@@ -324,6 +326,25 @@ object Candelabra {
             val y = offset.y - (PIXEL_SCALER) + (random.nextDouble() - 0.5) * 0.2
             val z = offset.z + (random.nextDouble() - 0.5) * 0.2
             level.addParticle(DustParticleOptions.REDSTONE, x, y, z, 0.0, 0.0, 0.0)
+        }
+    }
+
+    fun BlockState.spawnEndRodParticles(level: Level, pos: Vec3, random: RandomSource) {
+        val dir = getValue(DirectionalBlock.FACING)
+        val xOffset = pos.x/* + 0.55*/ - random.nextFloat() * 0.1f
+        val yOffset = pos.y/* + 0.55*/ - random.nextFloat() * 0.1f
+        val zOffset = pos.z /*+ 0.55*/ - random.nextFloat() * 0.1f
+        val variance = (0.4f - (random.nextFloat() + random.nextFloat()) * 0.4f).toDouble()
+        if (random.nextInt(5) == 0) {
+            level.addParticle(
+                ParticleTypes.END_ROD,
+                xOffset + dir.stepX * variance,
+                yOffset + dir.stepY * variance,
+                zOffset + dir.stepZ * variance,
+                random.nextGaussian() * 0.005,
+                random.nextGaussian() * 0.005,
+                random.nextGaussian() * 0.005
+            )
         }
     }
 
