@@ -417,6 +417,7 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o,
             .add(Blocks.FARMLAND)
             .add(Blocks.SOUL_SOIL)
         getOrCreateTagBuilder(DnDBlockTags.ICE_BLOCK_TRANSLUCENT)
+            .add(Blocks.FROSTED_ICE)
             .add(Blocks.ICE)
             .add(ICE_SET.list)
         // Candles

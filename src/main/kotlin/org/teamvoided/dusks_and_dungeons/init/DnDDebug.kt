@@ -60,10 +60,12 @@ object DnDDebug {
             val pos = result.blockPos
             val state = level.getBlockState(pos)
 
-            val shape = Meltable.getShape(state, dir)
+            val shape = Meltable.getFaceShape(state, dir)
             player.msg(buildString {
                 append("Shape: ")
-                append(shape)
+                append(shape.first)
+                append(" | ")
+                append(shape.second.toString(2))
                 append(", Dir: ")
                 append(dir)
             })

@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.meltable
 
 import net.minecraft.core.BlockPos
@@ -16,7 +12,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Half
 import net.minecraft.world.level.block.state.properties.SlabType
 import net.minecraft.world.level.block.state.properties.StairsShape
-import net.minecraft.world.level.block.state.properties.WallSide
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.util.counterClockWise
 
@@ -25,192 +20,210 @@ object Meltable {
     // region Melting Logic
     val waterState: BlockState get() = Blocks.WATER.defaultBlockState()
 
-    fun meltAfterBreak(world: Level, pos: BlockPos, stack: ItemStack) {
+    fun meltAfterBreak(level: Level, pos: BlockPos, stack: ItemStack) {
         if (!EnchantmentHelper.hasTag(stack, EnchantmentTags.PREVENTS_ICE_MELTING)) {
-            meltWithCheck(world, pos)
+            meltWithCheck(level, pos)
         }
     }
 
-    fun meltFromLight(state: BlockState, world: Level, pos: BlockPos) {
-        if (world.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(world, pos)) {
-            meltWithAlwaysWater(world, pos)
+    fun meltFromLight(state: BlockState, level: Level, pos: BlockPos) {
+        if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(level, pos)) {
+            meltWithAlwaysWater(level, pos)
         }
     }
 
     @Suppress("DEPRECATION")
-    fun meltWithCheck(world: Level, pos: BlockPos) {
-        if (world.dimensionType().ultraWarm()) {
-            world.removeBlock(pos, false)
+    fun meltWithCheck(level: Level, pos: BlockPos) {
+        if (level.dimensionType().ultraWarm()) {
+            level.removeBlock(pos, false)
             return
         }
-        val blockState = world.getBlockState(pos.below())
-        if (blockState.blocksMotion() || blockState.liquid()) {
-            world.setBlockAndUpdate(pos, waterState)
+        val state = level.getBlockState(pos.below())
+        if (state.blocksMotion() || state.liquid()) {
+            level.setBlockAndUpdate(pos, waterState)
         }
     }
 
-    fun meltWithAlwaysWater(world: Level, pos: BlockPos) {
-        if (world.dimensionType().ultraWarm()) {
-            world.removeBlock(pos, false)
+    fun meltWithAlwaysWater(level: Level, pos: BlockPos) {
+        if (level.dimensionType().ultraWarm()) {
+            level.removeBlock(pos, false)
         } else {
-            world.setBlockAndUpdate(pos, waterState)
-            world.neighborChanged(pos, waterState.block, pos)
+            level.setBlockAndUpdate(pos, waterState)
+            level.neighborChanged(pos, waterState.block, pos)
         }
     }
     // endregion
 
     @JvmStatic
     fun shouldCullFace(state: BlockState, neighborState: BlockState, direction: Direction): Boolean {
-        if (neighborState.`is`(DnDBlockTags.ICE_BLOCK_TRANSLUCENT)) {
-            val shape = getShape(state, direction) ?: return false
-            val neighborShape = getShape(neighborState, direction.opposite) ?: return false
-
-
-            if (shape.full() && !neighborShape.full())
-                return false
-
-
-
-            return neighborShape.full()
-                    || (shape.isSlab() && shape.halfMatches(neighborShape))
-                    || (shape.isWall() && neighborShape.isWall())
-                    || (stairCullingLogic(state, neighborState, direction, shape, neighborShape))
-                    || (!shape.isStair() && shape == neighborShape)
-        } else {
+        if (!neighborState.`is`(DnDBlockTags.ICE_BLOCK_TRANSLUCENT)) {
             return false
         }
-    }
+        val (shape, mask) = getFaceShape(state, direction)
+        val (neighborShape, neighborMask) = getFaceShape(neighborState, direction.opposite)
 
-    fun stairCullingLogic(
-        state: BlockState, neighborState: BlockState, direction: Direction, shape: SideShape, neighborShape: SideShape,
-    ): Boolean {
-        if (state.block !is StairBlock || neighborState.block !is StairBlock) return false
-
-        val facing = state.getValue(StairBlock.FACING)
-        val neighborFacing = neighborState.getValue(StairBlock.FACING)
-
-        if (shape == neighborShape && facing == neighborFacing) {
-            return true
+        if (shape == FaceShape.WALL) {
+            if (neighborMask == FULL_SHAPE.second) {
+                return true
+            }
+            if (neighborShape == FaceShape.WALL) {
+                //TODO(1.0) wall checks
+                return (flipMask(neighborMask) and mask) == mask
+            }
         }
 
-        return false
+        return (flipMask(neighborMask) and mask) == mask
     }
 
+    fun flipMask(neighborMask: Int): Int {
+        return ((neighborMask and 0b1010) shr 1) or ((neighborMask and 0b0101) shl 1)
+    }
 
-    fun getShape(state: BlockState, dir: Direction): SideShape? {
+    enum class FaceShape {
+        BIT_SHAPE, WALL, UNKNOW
+    }
+
+    val EMPTY_SHAPE = FaceShape.BIT_SHAPE to 0b0000
+    val FULL_SHAPE = FaceShape.BIT_SHAPE to 0b1111
+
+    val TOP_SHAPE = FaceShape.BIT_SHAPE to 0b11_00
+    val BOTTOM_SHAPE = FaceShape.BIT_SHAPE to 0b00_11
+    val RIGHT_SHAPE = FaceShape.BIT_SHAPE to 0b01_01
+    val LEFT_SHAPE = FaceShape.BIT_SHAPE to 0b10_10
+
+    val TL_SHAPE = FaceShape.BIT_SHAPE to 0b01_11
+    val TR_SHAPE = FaceShape.BIT_SHAPE to 0b10_11
+
+    val BL_SHAPE = FaceShape.BIT_SHAPE to 0b11_01
+    val BR_SHAPE = FaceShape.BIT_SHAPE to 0b11_10
+
+    fun getFaceShape(state: BlockState, dir: Direction): Pair<FaceShape, Int> {
         return when (state.block) {
-            is SlabBlock -> when (state.getValue(SlabBlock.TYPE)) {
-                SlabType.TOP -> when (dir) {
-                    Direction.UP -> SideShape.FULL
-                    Direction.DOWN -> null
-                    else -> SideShape.TOP_SLAB
-                }
+            is SlabBlock -> slabShape(state, dir)
+            is StairBlock -> stairShape(state, dir)
+            is HalfTransparentBlock -> FULL_SHAPE
+            is WallBlock -> FaceShape.WALL to 0b0000
+            else -> FaceShape.UNKNOW to 0b0000
+        }
+    }
 
-                SlabType.BOTTOM -> when (dir) {
-                    Direction.DOWN -> SideShape.FULL
-                    Direction.UP -> null
-                    else -> SideShape.BOTTOM_SLAB
-                }
-
-                SlabType.DOUBLE -> SideShape.FULL
+    fun slabShape(slab: BlockState, dir: Direction): Pair<FaceShape, Int> {
+        return when (slab.getValue(SlabBlock.TYPE)) {
+            SlabType.TOP -> when (dir) {
+                Direction.DOWN -> EMPTY_SHAPE
+                Direction.UP -> FULL_SHAPE
+                else -> TOP_SHAPE
             }
 
-            is StairBlock -> getStairShape(state, dir)
-            is WallBlock -> getWallShape(state, dir)
-            is HalfTransparentBlock -> SideShape.FULL
-            else -> null
+            SlabType.BOTTOM -> when (dir) {
+                Direction.DOWN -> FULL_SHAPE
+                Direction.UP -> EMPTY_SHAPE
+                else -> BOTTOM_SHAPE
+            }
+
+            SlabType.DOUBLE -> FULL_SHAPE
         }
+
     }
 
-    var PROP_DIR_MAP = mapOf(
-        Direction.EAST to WallBlock.EAST_WALL,
-        Direction.NORTH to WallBlock.NORTH_WALL,
-        Direction.SOUTH to WallBlock.SOUTH_WALL,
-        Direction.WEST to WallBlock.WEST_WALL,
-    )
-
-    fun getWallShape(state: BlockState, dir: Direction): SideShape? {
-        val shape = when (PROP_DIR_MAP[dir]?.let(state::getValue)) {
-            WallSide.LOW -> SideShape.WALL_SHORT
-            WallSide.TALL -> SideShape.WALL_TALL
-            else -> null
-        }
-
-        if (dir.axis.isVertical) {
-            return if (state.getValue(WallBlock.UP)) {
-                SideShape.WALL_MIDDLE
-            } else {
-                for (wall in PROP_DIR_MAP.values) {
-                    if (state.getValue(wall) == WallSide.TALL) {
-                        return SideShape.WALL_TALL
-                    }
+    // region Stair Logic
+    private fun stairShape(stair: BlockState, dir: Direction): Pair<FaceShape, Int> {
+        val facing = stair.getValue(StairBlock.FACING)
+        val receiving = dir.counterClockWise(facing.get2DDataValue())
+        return when (stair.getValue(StairBlock.HALF)) {
+            Half.TOP -> when (dir) {
+                Direction.UP -> FULL_SHAPE
+                Direction.DOWN -> when (facing) {
+                    Direction.SOUTH -> BOTTOM_SHAPE
+                    Direction.WEST -> LEFT_SHAPE
+                    Direction.EAST -> RIGHT_SHAPE
+                    else -> TOP_SHAPE
                 }
-                null
-            }
-        }
 
-        return shape
-    }
-
-    private fun getStairShape(state: BlockState, dir: Direction): SideShape {
-        val half = state.getValue(StairBlock.HALF)
-        when (dir) {
-            Direction.DOWN -> if (half == Half.BOTTOM) return SideShape.FULL
-            Direction.UP -> if (half == Half.TOP) return SideShape.FULL
-            else -> Unit
-        }
-
-        val shape = state.getValue(StairBlock.SHAPE)
-        val facing = state.getValue(StairBlock.FACING)
-
-        when (shape) {
-            StairsShape.STRAIGHT -> return when (dir.counterClockWise(facing.get2DDataValue())) {
-                Direction.NORTH, Direction.UP -> if (half == Half.BOTTOM) SideShape.BOTTOM_SLAB else SideShape.TOP_SLAB
-                Direction.SOUTH -> SideShape.FULL
-                Direction.DOWN -> SideShape.TOP_SLAB
-                Direction.WEST, Direction.EAST -> if (half == Half.BOTTOM) SideShape.STAIR_SIDE_BOTTOM else SideShape.STAIR_SIDE_TOP
+                else -> stairsTop(stair, receiving)
             }
 
-            StairsShape.INNER_LEFT -> Unit
-            StairsShape.INNER_RIGHT -> Unit
-            StairsShape.OUTER_LEFT -> Unit
-            StairsShape.OUTER_RIGHT -> Unit
+            Half.BOTTOM -> when (dir) {
+                Direction.DOWN -> FULL_SHAPE
+                Direction.UP -> when (facing) {
+                    Direction.SOUTH -> BOTTOM_SHAPE
+                    Direction.WEST -> LEFT_SHAPE
+                    Direction.EAST -> RIGHT_SHAPE
+                    else -> TOP_SHAPE
+                }
+
+                else -> stairsBottom(stair, receiving)
+            }
         }
-
-
-        return if (half == Half.TOP) SideShape.TOP_SLAB else SideShape.BOTTOM_SLAB
     }
 
-    enum class SideShape {
-        FULL,
-        TOP_SLAB, BOTTOM_SLAB,
-        STAIR_SIDE_BOTTOM, STAIR_SIDE_TOP, STAIR_TOP,
-        WALL_MIDDLE, WALL_SHORT, WALL_TALL;
+    fun stairsBottom(stair: BlockState, receiving: Direction): Pair<FaceShape, Int> {
+        return when (stair.getValue(StairBlock.SHAPE)) {
+            StairsShape.STRAIGHT ->
+                when (receiving) {
+                    Direction.NORTH -> BOTTOM_SHAPE
+                    Direction.EAST -> TR_SHAPE
+                    Direction.SOUTH -> FULL_SHAPE
+                    Direction.WEST -> TL_SHAPE
+                    else -> FULL_SHAPE
+                }
 
-        fun getHalf() = when (this) {
-            STAIR_SIDE_TOP, TOP_SLAB -> Half.TOP
-            STAIR_SIDE_BOTTOM, BOTTOM_SLAB -> Half.BOTTOM
-            else -> null
+            StairsShape.INNER_LEFT -> stairBottomInner(receiving)
+            StairsShape.INNER_RIGHT -> stairBottomInner(receiving.counterClockWise)
+            StairsShape.OUTER_LEFT -> stairBottomOuter(receiving)
+            StairsShape.OUTER_RIGHT -> stairBottomOuter(receiving.counterClockWise)
         }
-
-        fun halfMatches(shape: SideShape): Boolean {
-            return (getHalf() ?: return false) == (shape.getHalf() ?: return false)
-        }
-
-        fun full() = this == FULL
-
-        fun isSlab() = this == TOP_SLAB || this == BOTTOM_SLAB
-
-        fun isStair() = when (this) {
-            STAIR_SIDE_BOTTOM, STAIR_SIDE_TOP, STAIR_TOP -> true
-            else -> false
-        }
-
-        fun isWall() = when (this) {
-            WALL_MIDDLE, WALL_SHORT, WALL_TALL -> true
-            else -> false
-        }
-
     }
+
+    fun stairBottomInner(receiving: Direction): Pair<FaceShape, Int> = when (receiving) {
+        Direction.NORTH -> TR_SHAPE
+        Direction.EAST -> FULL_SHAPE
+        Direction.SOUTH -> FULL_SHAPE
+        Direction.WEST -> TL_SHAPE
+        else -> FULL_SHAPE
+    }
+
+    fun stairBottomOuter(receiving: Direction): Pair<FaceShape, Int> = when (receiving) {
+        Direction.NORTH -> BOTTOM_SHAPE
+        Direction.EAST -> TR_SHAPE
+        Direction.SOUTH -> TL_SHAPE
+        Direction.WEST -> BOTTOM_SHAPE
+        else -> FULL_SHAPE
+    }
+
+    fun stairsTop(stair: BlockState, receiving: Direction): Pair<FaceShape, Int> {
+        return when (stair.getValue(StairBlock.SHAPE)) {
+            StairsShape.STRAIGHT ->
+                when (receiving) {
+                    Direction.NORTH -> TOP_SHAPE
+                    Direction.EAST -> BR_SHAPE
+                    Direction.SOUTH -> FULL_SHAPE
+                    Direction.WEST -> BL_SHAPE
+                    else -> FULL_SHAPE
+                }
+
+            StairsShape.INNER_LEFT -> stairTopInner(receiving)
+            StairsShape.INNER_RIGHT -> stairTopInner(receiving.counterClockWise)
+            StairsShape.OUTER_LEFT -> stairTopOuter(receiving)
+            StairsShape.OUTER_RIGHT -> stairTopOuter(receiving.counterClockWise)
+        }
+    }
+
+    fun stairTopInner(receiving: Direction): Pair<FaceShape, Int> = when (receiving) {
+        Direction.NORTH -> BR_SHAPE
+        Direction.EAST -> FULL_SHAPE
+        Direction.SOUTH -> FULL_SHAPE
+        Direction.WEST -> BL_SHAPE
+        else -> FULL_SHAPE
+    }
+
+    fun stairTopOuter(receiving: Direction): Pair<FaceShape, Int> = when (receiving) {
+        Direction.NORTH -> TOP_SHAPE
+        Direction.EAST -> BR_SHAPE
+        Direction.SOUTH -> BL_SHAPE
+        Direction.WEST -> TOP_SHAPE
+        else -> FULL_SHAPE
+    }
+    // endregion
 
 }
