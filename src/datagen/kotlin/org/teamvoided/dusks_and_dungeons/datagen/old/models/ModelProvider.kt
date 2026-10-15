@@ -56,7 +56,7 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
 
         gen.iceStairs(DnDBlocks.ICE_SET.stairs, Blocks.ICE)
         gen.slab(DnDBlocks.ICE_SET.slab, Blocks.ICE)
-        gen.wall(DnDBlocks.ICE_SET.wall, Blocks.ICE)
+        gen.transparentWall(DnDBlocks.ICE_SET.wall, Blocks.ICE)
 
         // region TODO(1.0) move all vv to appropriate files and categories
         val infestedBlocks = listOf(

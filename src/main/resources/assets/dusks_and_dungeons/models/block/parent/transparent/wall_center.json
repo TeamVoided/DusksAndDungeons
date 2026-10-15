@@ -1,0 +1,22 @@
+{
+	"format_version": "1.9.0",
+	"textures": {
+		"particle": "#wall"
+	},
+	"elements": [
+		{
+			"name": "center",
+			"from": [5, 0, 5],
+			"to": [11, 14, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 0, 5]},
+			"faces": {
+				"north": {"uv": [5, 2, 11, 16], "texture": "#wall", "cullface": "north"},
+				"east": {"uv": [5, 2, 11, 16], "texture": "#wall", "cullface": "east"},
+				"south": {"uv": [5, 2, 11, 16], "texture": "#wall", "cullface": "south"},
+				"west": {"uv": [5, 2, 11, 16], "texture": "#wall", "cullface": "west"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#wall"},
+				"down": {"uv": [5, 5, 11, 11], "texture": "#wall", "cullface": "down"}
+			}
+		}
+	]
+}

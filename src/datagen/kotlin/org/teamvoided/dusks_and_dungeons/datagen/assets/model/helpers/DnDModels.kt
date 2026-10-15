@@ -89,6 +89,15 @@ data object DnDModels {
     val OFFSET_WALL_INVENTORY = parent("offset/wall_inventory", "_inventory", WALL)
     // endregion
 
+    // region Transparent Models
+    val TRANSPARENT_WALL_CENTER = parent("transparent/wall_center", "_center", WALL)
+    val TRANSPARENT_WALL_CENTER_TALL = parent("transparent/wall_center_tall", "_center_tall", WALL)
+    val TRANSPARENT_WALL_POST = parent("transparent/wall_post", "_post", WALL)
+    val TRANSPARENT_WALL_SIDE = parent("transparent/wall_side", "_side", WALL)
+    val TRANSPARENT_WALL_SIDE_TALL = parent("transparent/wall_side_tall", "_side_tall", WALL)
+    val TRANSPARENT_WALL_INVENTORY = parent("transparent/wall_inventory", "_inventory", WALL)
+    // endregion
+
     val SCONCE = parent("sconce", SIDE, TOP)
 
 
