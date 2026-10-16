@@ -813,7 +813,7 @@ object DnDBlocks {
         registerHeadlessSet("cracked_polished_blackstone_brick", CRACKED_POLISHED_BLACKSTONE_BRICKS).pickaxe()
 
     // Pairs
-    val SMOOTH_STONE_STAIR = registerStairs("smooth_stone_stairs", SMOOTH_STONE).pickaxe()
+    val SMOOTH_STONE_STAIR = registerStairs("smooth_stone_stairs", SMOOTH_STONE).pickaxe() // TODO rename var
     val SMOOTH_STONE_WALL = registerWall("smooth_stone_wall", SMOOTH_STONE)
 
     val CUT_SANDSTONE_STAIR = registerStairs("cut_sandstone_stairs", CUT_SANDSTONE).pickaxe()
