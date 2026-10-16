@@ -37,7 +37,7 @@
     "minecraft": "${version_range}",
     "fabricloader": "*",
     "fabric-api": "*",
-    "lithostitched": "${lithostitched}"
+    "lithostitched": ">=${lithostitched}"
   },
   "contact": {
     "homepage": "https://github.com/${github_repo}",
