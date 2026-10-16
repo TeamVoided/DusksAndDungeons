@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Blocks.BOOKSHELF
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.block.DnDFamilies.recipesBlockFamilies
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDFamilies.recipesBlockFamilies
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.FunctionalRecipes
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.MinecraftRecipeOverrides
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.StoneRecipes

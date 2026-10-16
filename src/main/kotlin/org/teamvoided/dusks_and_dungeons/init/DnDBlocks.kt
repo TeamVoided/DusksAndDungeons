@@ -38,6 +38,7 @@ import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSetTypes
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDWoodTypes
 import org.teamvoided.dusks_and_dungeons.init.misc.VVAliases
 import org.teamvoided.dusks_and_dungeons.util.block.*
 import org.teamvoided.dusks_and_dungeons.util.getModEntries

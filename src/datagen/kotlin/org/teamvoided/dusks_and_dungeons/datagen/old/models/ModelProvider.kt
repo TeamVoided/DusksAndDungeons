@@ -11,7 +11,7 @@ import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
-import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.FunctionalModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.StoneModels
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*

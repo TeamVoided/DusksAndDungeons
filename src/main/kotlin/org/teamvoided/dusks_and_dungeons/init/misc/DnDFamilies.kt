@@ -2,7 +2,7 @@
  * TODO(cleanup)
  */
 
-package org.teamvoided.dusks_and_dungeons.block
+package org.teamvoided.dusks_and_dungeons.init.misc
 
 import net.minecraft.data.BlockFamilies
 import net.minecraft.data.BlockFamily

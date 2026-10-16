@@ -2,13 +2,12 @@
  * TODO(cleanup)
  */
 
-package org.teamvoided.dusks_and_dungeons.block
+package org.teamvoided.dusks_and_dungeons.init.misc
 
 import net.fabricmc.fabric.api.`object`.builder.v1.block.type.WoodTypeBuilder
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSetTypes
 
 
 object DnDWoodTypes {

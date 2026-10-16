@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.teamvoided.dusks_and_dungeons.block.DnDWoodTypes;
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDWoodTypes;
 import org.teamvoided.dusks_and_dungeons.client.util.SignColorProvider;
 
 import static org.teamvoided.dusks_and_dungeons.client.util.ClientUtilsKt.getColor;
