@@ -63,13 +63,8 @@ object Meltable {
         val (neighborShape, neighborMask) = getFaceShape(neighborState, direction.opposite)
 
         if (shape == FaceShape.WALL) {
-            if (neighborMask == FULL_SHAPE.second) {
-                return true
-            }
-            if (neighborShape == FaceShape.WALL) {
-                //TODO(1.0) wall checks
-                return (flipMask(neighborMask) and mask) == mask
-            }
+            return (neighborMask == FULL_SHAPE.second) || (neighborShape == FaceShape.WALL &&
+                    wallCheck(state, direction, neighborState))
         }
 
         return (flipMask(neighborMask) and mask) == mask
@@ -225,5 +220,18 @@ object Meltable {
         else -> FULL_SHAPE
     }
     // endregion
+
+    fun wallCheck(state: BlockState, direction: Direction, neighborState: BlockState): Boolean {
+        return direction.axis.isVertical || state.getWallId(direction) <= neighborState.getWallId(direction.opposite)
+    }
+
+    fun BlockState.getWallId(direction: Direction): Int = getValue(DIR_TO_WALL[direction.ordinal - 2]).ordinal
+
+    val DIR_TO_WALL = arrayOf(
+        WallBlock.NORTH_WALL,
+        WallBlock.SOUTH_WALL,
+        WallBlock.WEST_WALL,
+        WallBlock.EAST_WALL,
+    )
 
 }
