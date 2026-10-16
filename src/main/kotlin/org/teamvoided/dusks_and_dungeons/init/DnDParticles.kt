@@ -27,7 +27,7 @@ object DnDParticles {
         "colorable_ominous_spawning", ColorableParticleEffect.CODEC, ColorableParticleEffect.PACKET_CODEC
     )
     val SNOWFLAKE = register("snowflake")
-    val SHRIEK_DIRECTIONAL = register(
+    val SHRIEK_DIRECTIONAL = register( // TODO rename to directional_shriek
         "shriek_directional", ShriekDirectionalParticleOption.CODEC, ShriekDirectionalParticleOption.PACKET_CODEC
     )
 
