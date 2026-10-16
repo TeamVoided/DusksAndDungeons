@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
@@ -25,9 +21,9 @@ public abstract class GuiMixin {
 
     @Inject(method = "renderCameraOverlays", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"))
     void renderPumpkinOverlays(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci, @Local ItemStack stack) {
-        var resourceLocation = DnDGui.carvedOverlay(stack.getItem());
-        if (resourceLocation != null) {
-            renderTextureOverlay(guiGraphics, resourceLocation, 1F);
+        var texture = DnDGui.carvedOverlay(stack.getItem());
+        if (texture != null) {
+            renderTextureOverlay(guiGraphics, texture, 1F);
         }
     }
 
