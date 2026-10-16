@@ -23,7 +23,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
-import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
+import org.teamvoided.dusks_and_dungeons.block.extra.TripleBlockSection
 
 open class TripleTallPlantBlock(settings: Properties) : BushBlock(settings) {
 

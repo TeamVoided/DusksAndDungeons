@@ -2,10 +2,10 @@
  * TODO(cleanup)
  */
 
-package org.teamvoided.dusks_and_dungeons.block.not_blocks
+package org.teamvoided.dusks_and_dungeons.block.extra
 
-import net.minecraft.util.StringRepresentable
 import net.minecraft.core.Direction
+import net.minecraft.util.StringRepresentable
 
 enum class TripleBlockSection(val direction: Direction) : StringRepresentable {
     TOP(Direction.DOWN),

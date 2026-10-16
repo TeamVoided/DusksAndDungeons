@@ -32,7 +32,7 @@ import org.teamvoided.dusks_and_dungeons.block.CornCropBlock
 import org.teamvoided.dusks_and_dungeons.block.LeafPileBlock
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
-import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
+import org.teamvoided.dusks_and_dungeons.block.extra.TripleBlockSection
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import java.util.*

@@ -2,13 +2,13 @@
  * TODO(cleanup)
  */
 
-package org.teamvoided.dusks_and_dungeons.block.not_blocks
+package org.teamvoided.dusks_and_dungeons.block.extra
 
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import net.minecraft.world.level.block.state.pattern.BlockPattern
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder
-import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate
 import java.util.function.Predicate
 

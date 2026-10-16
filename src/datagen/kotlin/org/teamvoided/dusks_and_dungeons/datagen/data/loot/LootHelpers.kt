@@ -28,7 +28,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.candelabra.Candelabra
-import org.teamvoided.dusks_and_dungeons.block.not_blocks.TripleBlockSection
+import org.teamvoided.dusks_and_dungeons.block.extra.TripleBlockSection
 
 fun item(item: ItemLike): LootPoolSingletonContainer.Builder<*> = LootItem.lootTableItem(item)
 
