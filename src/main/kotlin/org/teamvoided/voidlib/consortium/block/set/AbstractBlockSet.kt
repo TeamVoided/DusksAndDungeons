@@ -30,5 +30,6 @@ abstract class AbstractBlockSet(
     override fun getDefaultState(): BlockState = parent.defaultBlockState()
 
     open fun headless() = list
+    // TODO This should be more explicit
     override val family: BlockFamily = BlockFamilies.familyBuilder(parent).stairs(stairs).slab(slab).wall(wall).family
 }

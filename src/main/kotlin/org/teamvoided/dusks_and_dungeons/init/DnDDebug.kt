@@ -21,6 +21,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.meltable.Meltable
+import org.teamvoided.dusks_and_dungeons.debug.BlockFamilyValidator
 
 @Suppress("unused")
 object DnDDebug {
@@ -50,6 +51,7 @@ object DnDDebug {
             useEvent(player, level, hand, result)
             InteractionResult.PASS
         }
+        BlockFamilyValidator.init()
     }
 
     fun useEvent(player: Player, level: Level, hand: InteractionHand, result: BlockHitResult) {

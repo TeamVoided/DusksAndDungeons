@@ -8,11 +8,11 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.teamvoided.dusks_and_dungeons.block.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.EVIL_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.events.DnDEvents
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomeModifications
 import org.teamvoided.voidlib.init.VEventInit
 
@@ -47,11 +47,12 @@ object DusksAndDungeons {
         DnDAttachmentTypes.init()
         DnDNetworking.init()
         DnDEvents.init()
+
+        // TODO(lib) move to voidlib
         VEventInit.init()
 
-        if (isDev()) {
-            DnDDebug.init()
-        }
+        // Should always be initialized Last
+        DnDDebug.init()
     }
 
     fun id(modId: String, path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
