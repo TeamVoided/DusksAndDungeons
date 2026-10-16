@@ -4,10 +4,12 @@
 
 package org.teamvoided.dusks_and_dungeons
 
+import me.fzzyhmstrs.fzzy_config.api.ConfigApi
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.teamvoided.dusks_and_dungeons.config.DnDConfig
 import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.EVIL_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
@@ -20,6 +22,8 @@ import org.teamvoided.voidlib.init.VEventInit
 object DusksAndDungeons {
 
     val MODID get() = DnDConst.MODID
+
+    val config = ConfigApi.registerAndLoadConfig(::DnDConfig)
 
     @JvmField
     val log: Logger = LoggerFactory.getLogger(MODID)

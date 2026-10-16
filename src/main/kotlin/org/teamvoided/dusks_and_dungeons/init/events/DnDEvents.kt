@@ -4,24 +4,15 @@
 
 package org.teamvoided.dusks_and_dungeons.init.events
 
-import net.fabricmc.fabric.api.loot.v3.LootTableEvents
-import net.fabricmc.fabric.api.loot.v3.LootTableSource
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder
-import net.minecraft.core.HolderLookup
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionBrewing
-import net.minecraft.world.level.storage.loot.BuiltInLootTables.*
-import net.minecraft.world.level.storage.loot.LootTable
-import org.teamvoided.voidlib.api.PostDataLoadEvent
-import org.teamvoided.dusks_and_dungeons.data.DnDLootTables
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.voidlib.helpers.mc.addNewPool
-import org.teamvoided.voidlib.helpers.mc.addToExistingPools
+import org.teamvoided.voidlib.api.PostDataLoadEvent
 import org.teamvoided.voidlib.helpers.mc.compost
 import org.teamvoided.voidlib.helpers.mc.fuel
 
@@ -29,7 +20,7 @@ object DnDEvents {
 
     fun init() {
         FabricBrewingRecipeRegistryBuilder.BUILD.register(::addBrewingRecipes)
-        LootTableEvents.MODIFY.register(::modifyLootTables)
+        initLootTables()
         initTrades()
         initItemEvents()
         compostItems()
@@ -47,18 +38,6 @@ object DnDEvents {
         builder.addContainerRecipe(DnDItems.TINTED_SPLASH_POTION, Items.DRAGON_BREATH, DnDItems.TINTED_LINGERING_POTION)
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    fun modifyLootTables(
-        table: ResourceKey<LootTable>, builder: LootTable.Builder, src: LootTableSource, lookup: HolderLookup.Provider,
-    ) {
-        when (table) {
-            PIGLIN_BARTERING -> addToExistingPools(builder, DnDLootTables.BARTERING_ADD_VIVIONS)
-            SNIFFER_DIGGING -> addToExistingPools(builder, DnDLootTables.SNIFFER_ADD_MOONBERRY)
-            SIMPLE_DUNGEON -> addNewPool(builder, DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY)
-            ABANDONED_MINESHAFT -> addNewPool(builder, DnDLootTables.ADD_DND_SEEDS)
-            VILLAGE_PLAINS_HOUSE -> addNewPool(builder, DnDLootTables.ADD_CORN)
-        }
-    }
 
     fun compostItems() {
         compost(DnDBlocks.ROOT_BLOCK, 0.65)

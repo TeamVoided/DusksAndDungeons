@@ -4,12 +4,16 @@
 
 package org.teamvoided.dusks_and_dungeons.util
 
+import me.fzzyhmstrs.fzzy_config.cast
+import me.fzzyhmstrs.fzzy_config.nullCast
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.RandomSource
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.BlockGetter
@@ -19,13 +23,15 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.TorchBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.entries.CompositeEntryBase
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer
 import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.init.DnDRecipes
-import org.teamvoided.dusks_and_dungeons.mixin.accessors.AbstractCandleBlockAccessor
-import org.teamvoided.dusks_and_dungeons.mixin.accessors.CropBlockAccessor
-import org.teamvoided.dusks_and_dungeons.mixin.accessors.MultifaceBlockAccessor
-import org.teamvoided.dusks_and_dungeons.mixin.accessors.TorchBlockAccessor
+import org.teamvoided.dusks_and_dungeons.mixin.accessors.*
 import java.util.function.BiConsumer
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -62,3 +68,16 @@ fun processRecipe(
     }
 }
 
+
+fun LootItem.getItem(): Holder<Item> = (this as LootItemAccessor).dnd_getItem()
+fun LootItem.setItem(holder: Holder<Item>) = (this as LootItemAccessor).dnd_setItem(holder)
+
+fun CompositeEntryBase.getChildren(): List<LootPoolEntryContainer> = (this as CompositeEntryBaseAccessor).dnd_children()
+
+
+fun LootPool.Builder.modifyEntries(modifier: Consumer<LootPoolEntryContainer>) {
+    val contents = cast<LootPoolBuilderAccessor>().dnd_entries().cast<ImmutableListBuilderAccessor>().dnd_contents()
+    for (rawEntry in contents) {
+        rawEntry.nullCast<LootPoolEntryContainer>()?.let(modifier::accept)
+    }
+}
