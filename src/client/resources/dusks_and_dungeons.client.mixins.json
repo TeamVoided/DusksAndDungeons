@@ -9,6 +9,7 @@
     "ItemRendererMixin",
     "LookAtItemAnimationMixin",
     "PaintingRendererMixin",
+    "compat.HighlighterRegistryMixin",
     "directional_sculk.LevelRendererMixin",
     "signs.AbstractSignEditScreenMixin",
     "signs.HangingSignEditScreenMixin",

@@ -32,6 +32,9 @@ repositories {
         name = "RyanHCode Maven"
         content { includeGroup("foundry.imguimc") }
     }
+    maven("https://chocolateminecraft.com/maven") {
+        name = "Xaero's Maven"
+    }
     maven("https://api.modrinth.com/maven") { content { includeGroup("maven.modrinth") } }
     mavenLocal()
     mavenCentral()
@@ -59,6 +62,7 @@ dependencies {
 //    modImplementation(libs.voidlib)
     // Compatibility
     modCompileOnly("maven.modrinth:not-enough-animations:kaNdqksl")
+    modImplementation("xaero.map:xaeroworldmap-fabric-1.21.1:1.46.0")
     // Runtime
     modImplementation(libs.modmenu)
     modCompileOnly(variantOf(libs.emi) { classifier("api") })
