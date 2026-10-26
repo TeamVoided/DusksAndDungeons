@@ -10,10 +10,10 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.*
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.unlockedBy
 
 object WoodRecipes {
 
@@ -62,7 +62,11 @@ object WoodRecipes {
 
     fun RecipeOutput.woodWalls() {
         DnDBlockLists.plankWalls.forEachIndexed { idx, it ->
-            woodWall(it, DnDBlockLists.planks[idx], DnDBlockLists.plankSlabs[idx])
+            if (it == DnDBlocks.CASCADE_WALL || it == DnDBlocks.SYPIA_WALL || it == DnDBlocks.VERDANT_WALL) {
+                //TODO fix wall family datagen
+            } else {
+                woodWall(it, DnDBlockLists.planks[idx], DnDBlockLists.plankSlabs[idx])
+            }
         }
         woodWall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS, Blocks.BAMBOO_SLAB)
         woodWall(DnDBlocks.BAMBOO_MOSAIC_WALL, Blocks.BAMBOO_MOSAIC, Blocks.BAMBOO_MOSAIC_SLAB)

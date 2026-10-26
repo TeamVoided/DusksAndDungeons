@@ -93,8 +93,8 @@ object WoodModels {
         gen.wall(DnDBlocks.WARPED_WALL, Blocks.WARPED_PLANKS)
         gen.wall(DnDBlocks.BAMBOO_WALL, Blocks.BAMBOO_PLANKS)
         gen.wall(DnDBlocks.BAMBOO_MOSAIC_WALL, Blocks.BAMBOO_MOSAIC)
-        gen.wall(DnDBlocks.CASCADE_WALL, DnDBlocks.CASCADE_PLANKS)
-        gen.wall(DnDBlocks.SYPIA_WALL, DnDBlocks.SYPIA_PLANKS)
+//        gen.wall(DnDBlocks.CASCADE_WALL, DnDBlocks.CASCADE_PLANKS)
+//        gen.wall(DnDBlocks.SYPIA_WALL, DnDBlocks.SYPIA_PLANKS)
 
         gen.bookshelf(DnDBlocks.SPRUCE_BOOKSHELF, Blocks.SPRUCE_PLANKS)
         gen.bookshelf(DnDBlocks.BIRCH_BOOKSHELF, Blocks.BIRCH_PLANKS)
