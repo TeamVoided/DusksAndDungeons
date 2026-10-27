@@ -89,7 +89,7 @@ object DnDTabs {
         "dnd_woods", FabricItemGroup.builder()
             .dndName("dnd_woods")
             .icon(Items.OAK_SAPLING)
-            .displayItems(WoodsTab::init)
+            .displayItems { _, _ -> }
     )
 
     // Dev Tabs
@@ -107,6 +107,8 @@ object DnDTabs {
     )
 
     fun init() {
+        WoodsTab.init(DND_WOODS)
+
         modifyTab(CreativeModeTabs.BUILDING_BLOCKS) {
             addAfter(
                 Items.CHERRY_BUTTON,

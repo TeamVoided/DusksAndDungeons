@@ -10,6 +10,7 @@ import net.minecraft.core.registries.Registries
 import org.teamvoided.dusks_and_dungeons.data.DnDAdvancements
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
+import org.teamvoided.dusks_and_dungeons.init.tab.WoodsTab
 import org.teamvoided.dusks_and_dungeons.util.HEAVY_CUBE_TOOLTIP
 import org.teamvoided.dusks_and_dungeons.util.TINTED_TOOLTIP
 import org.teamvoided.dusks_and_dungeons.util.getModHolders
@@ -25,6 +26,8 @@ class EnLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, 
         getModHolders(BuiltInRegistries.CREATIVE_MODE_TAB).forEach { gen.add(it.key(), it.lang()) }
         getModHolders(BuiltInRegistries.MOB_EFFECT).forEach { gen.add(it.value(), it.lang()) }
         provider.getModHolders(Registries.BIOME).forEach { gen.add(it.key().location().toLanguageKey("biome"), it.lang()) }
+
+        WoodsTab.LANG_KEYS.forEach { (id, lang) -> gen.add(lang, getLang(id)) }
 
         DnDItemTags.ITEM_TAGS.forEach { gen.add(it.translationKey, getLang(it.location)) }
         gen.advancement(DnDAdvancements.FALL, "Fall!", "Visit the golden and autumn biomes!")

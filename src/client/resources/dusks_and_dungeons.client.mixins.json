@@ -14,9 +14,15 @@
     "signs.AbstractSignEditScreenMixin",
     "signs.HangingSignEditScreenMixin",
     "signs.SignEditScreenMixin",
-    "signs.SignRendererMixin"
+    "signs.SignRendererMixin",
+    "vlib.tab.CreativeModeInventoryScreenMixin",
+    "vlib.tab.ItemPickerMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+    "vlib.tab.ItemPickerMenuAccessor",
+    "vlib.tab.CustomCreativeSlotMixin"
+  ]
 }

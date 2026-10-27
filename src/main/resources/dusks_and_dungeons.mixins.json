@@ -46,6 +46,7 @@
     "libs.vlib.EntityCollisionContextMixin",
     "libs.vlib.ItemStackMixin",
     "libs.vlib.LighterItemMixin",
+    "libs.vlib.tab.CreativeModeTabMixin",
     "libs.vlib.wii.connect.FenceBlockMixin",
     "libs.vlib.wii.connect.FenceGateBlockMixin",
     "libs.vlib.wii.connect.IronBarsBlockMixin",
