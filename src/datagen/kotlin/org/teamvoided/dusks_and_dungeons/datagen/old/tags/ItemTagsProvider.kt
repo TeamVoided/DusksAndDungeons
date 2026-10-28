@@ -76,24 +76,40 @@ class ItemTagsProvider(o: FabricOutput, p: FutureProvider, bt: BlockTagsProvider
         copy(DnDBlockTags.WOODEN_SCONCES, DnDItemTags.WOODEN_SCONCES)
         copy(DnDBlockTags.SCONCES_THAT_BURN, DnDItemTags.SCONCES_THAT_BURN)
 
-        // sandstone
-
-        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS)
-        copy(ConventionalBlockTags.RED_SANDSTONE_BLOCKS, ConventionalItemTags.RED_SANDSTONE_BLOCKS)
-        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_SLABS, ConventionalItemTags.UNCOLORED_SANDSTONE_SLABS)
-        copy(ConventionalBlockTags.RED_SANDSTONE_SLABS, ConventionalItemTags.RED_SANDSTONE_SLABS)
-        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_STAIRS, ConventionalItemTags.UNCOLORED_SANDSTONE_STAIRS)
-        copy(ConventionalBlockTags.RED_SANDSTONE_STAIRS, ConventionalItemTags.RED_SANDSTONE_STAIRS)
-        getOrCreateTagBuilder(CItemTags.SANDSTONE_WALLS)
-            .forceAddTag(CItemTags.UNCOLORED_SANDSTONE_WALLS)
-            .forceAddTag(CItemTags.RED_SANDSTONE_WALLS)
-        copy(CBlockTags.UNCOLORED_SANDSTONE_WALLS, CItemTags.UNCOLORED_SANDSTONE_WALLS)
-        copy(CBlockTags.RED_SANDSTONE_WALLS, CItemTags.RED_SANDSTONE_WALLS)
+        sandTags()
 
         earths()
         flora()
         food()
     }
+
+    fun sandTags() {
+        copy(BlockTags.SAND, ItemTags.SAND)
+        copy(BlockTags.SMELTS_TO_GLASS, ItemTags.SMELTS_TO_GLASS)
+        copy(ConventionalBlockTags.SANDS, ConventionalItemTags.SANDS)
+        copy(CBlockTags.TINTED_SANDS, CItemTags.TINTED_SANDS)
+
+        copy(ConventionalBlockTags.SANDSTONE_BLOCKS, ConventionalItemTags.SANDSTONE_BLOCKS)
+        copy(ConventionalBlockTags.SANDSTONE_STAIRS, ConventionalItemTags.SANDSTONE_STAIRS)
+        copy(ConventionalBlockTags.SANDSTONE_SLABS, ConventionalItemTags.SANDSTONE_SLABS)
+        copy(CBlockTags.SANDSTONE_WALLS, CItemTags.SANDSTONE_WALLS)
+
+        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS)
+        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_SLABS, ConventionalItemTags.UNCOLORED_SANDSTONE_SLABS)
+        copy(ConventionalBlockTags.UNCOLORED_SANDSTONE_STAIRS, ConventionalItemTags.UNCOLORED_SANDSTONE_STAIRS)
+        copy(CBlockTags.UNCOLORED_SANDSTONE_WALLS, CItemTags.UNCOLORED_SANDSTONE_WALLS)
+
+        copy(ConventionalBlockTags.RED_SANDSTONE_BLOCKS, ConventionalItemTags.RED_SANDSTONE_BLOCKS)
+        copy(ConventionalBlockTags.RED_SANDSTONE_SLABS, ConventionalItemTags.RED_SANDSTONE_SLABS)
+        copy(ConventionalBlockTags.RED_SANDSTONE_STAIRS, ConventionalItemTags.RED_SANDSTONE_STAIRS)
+        copy(CBlockTags.RED_SANDSTONE_WALLS, CItemTags.RED_SANDSTONE_WALLS)
+
+        copy(CBlockTags.TINTED_SANDSTONE_BLOCKS, CItemTags.TINTED_SANDSTONE_BLOCKS)
+        copy(CBlockTags.TINTED_SANDSTONE_STAIRS, CItemTags.TINTED_SANDSTONE_STAIRS)
+        copy(CBlockTags.TINTED_SANDSTONE_SLABS, CItemTags.TINTED_SANDSTONE_SLABS)
+        copy(CBlockTags.TINTED_SANDSTONE_WALLS, CItemTags.TINTED_SANDSTONE_WALLS)
+    }
+
 
     fun duskTags() {
         copy(DnDBlockTags.CASCADE_LOGS, DnDItemTags.CASCADE_LOGS)
@@ -301,9 +317,7 @@ class ItemTagsProvider(o: FabricOutput, p: FutureProvider, bt: BlockTagsProvider
     }
 
     fun earths() {
-        copy(BlockTags.SAND, ItemTags.SAND)
-        copy(ConventionalBlockTags.SANDS, ConventionalItemTags.SANDS)
-        copy(BlockTags.SMELTS_TO_GLASS, ItemTags.SMELTS_TO_GLASS)
+
     }
 
     // Start of rework tags

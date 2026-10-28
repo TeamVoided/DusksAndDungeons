@@ -4,7 +4,6 @@
 
 package org.teamvoided.dusks_and_dungeons.datagen.old.tags
 
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.BlockTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.BlockTags
@@ -12,6 +11,7 @@ import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
+import org.teamvoided.dusks_and_dungeons.datagen.data.tag.block.SandTags
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWoodTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
@@ -26,8 +26,9 @@ import org.teamvoided.voidlib.devin.FutureProvider
 import org.teamvoided.voidlib.devin.extensions.tag.add
 import org.teamvoided.voidlib.devin.extensions.tag.createColorTags
 import org.teamvoided.voidlib.devin.extensions.tag.createSetTags
+import org.teamvoided.voidlib.devin.provider.tag.DBlockTagProvider
 
-class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o, p) {
+class BlockTagsProvider(o: FabricOutput, p: FutureProvider) : DBlockTagProvider(o, p) {
 
     val excludeWood: List<AbstractBlockSet> = listOf(
         DnDBlocks.CRIMSON_HYPHAE, DnDBlocks.WARPED_HYPHAE,
@@ -41,6 +42,7 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o,
         woodTags()
         vanillaTags()
         conventionTags()
+        SandTags.createTags(this)
 
         getOrCreateTagBuilder(TaglightingBlockTags.MOB_MOVING_STICKY_BLOCK)
             .add(DnDBlocks.CORN_SYRUP_BLOCK)
@@ -54,24 +56,6 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o,
                 Blocks.DIAMOND_BLOCK
             )
             .addOptionalTag(id("sable", "fragile"))
-
-        getOrCreateTagBuilder(BlockTags.SAND)
-            .add(DnDBlocks.SUSPICIOUS_RED_SAND)
-            .add(DnDBlocks.AZURINE_SAND)
-            .add(DnDBlocks.SUSPICIOUS_AZURINE_SAND)
-
-        getOrCreateTagBuilder(BlockTags.SMELTS_TO_GLASS)
-            .add(DnDBlocks.AZURINE_SAND)
-
-        getOrCreateTagBuilder(ConventionalBlockTags.SANDS)
-            .add(DnDBlocks.AZURINE_SAND)
-
-        getOrCreateTagBuilder(BlockTags.LUSH_GROUND_REPLACEABLE)
-            .add(DnDBlocks.AZURINE_SAND)
-
-        getOrCreateTagBuilder(BlockTags.AZALEA_ROOT_REPLACEABLE)
-            .add(DnDBlocks.AZURINE_SAND)
-
 
         getOrCreateTagBuilder(DnDBlockTags.EMPTY)
 
@@ -223,75 +207,6 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider): BlockTagProvider(o,
         getOrCreateTagBuilder(BlockTags.DAMPENS_VIBRATIONS)
             .forceAddTag(DnDBlockTags.CARPET_PLATES_WOOL)
 
-        // Sandstone
-        getOrCreateTagBuilder(ConventionalBlockTags.UNCOLORED_SANDSTONE_BLOCKS)
-            .add(
-                DnDBlocks.ROUGH_SANDSTONE.parent,
-                DnDBlocks.POLISHED_SANDSTONE.parent,
-            )
-        getOrCreateTagBuilder(ConventionalBlockTags.RED_SANDSTONE_BLOCKS)
-            .add(
-                DnDBlocks.ROUGH_RED_SANDSTONE.parent,
-                DnDBlocks.POLISHED_RED_SANDSTONE.parent,
-            )
-
-        getOrCreateTagBuilder(ConventionalBlockTags.UNCOLORED_SANDSTONE_SLABS)
-            .add(
-                DnDBlocks.ROUGH_SANDSTONE.slab,
-                DnDBlocks.POLISHED_SANDSTONE.slab,
-            )
-        getOrCreateTagBuilder(ConventionalBlockTags.RED_SANDSTONE_SLABS)
-            .add(
-                DnDBlocks.ROUGH_RED_SANDSTONE.slab,
-                DnDBlocks.POLISHED_RED_SANDSTONE.slab,
-            )
-
-        getOrCreateTagBuilder(ConventionalBlockTags.UNCOLORED_SANDSTONE_STAIRS)
-            .add(
-                DnDBlocks.CUT_SANDSTONE_STAIR,
-                DnDBlocks.ROUGH_SANDSTONE.stairs,
-                DnDBlocks.POLISHED_SANDSTONE.stairs,
-            )
-        getOrCreateTagBuilder(ConventionalBlockTags.RED_SANDSTONE_STAIRS)
-            .add(
-                DnDBlocks.CUT_RED_SANDSTONE_STAIR,
-                DnDBlocks.ROUGH_RED_SANDSTONE.stairs,
-                DnDBlocks.POLISHED_RED_SANDSTONE.stairs,
-            )
-
-        getOrCreateTagBuilder(CBlockTags.SANDSTONE_WALLS)
-            .forceAddTag(CBlockTags.UNCOLORED_SANDSTONE_WALLS)
-            .forceAddTag(CBlockTags.RED_SANDSTONE_WALLS)
-
-        getOrCreateTagBuilder(CBlockTags.UNCOLORED_SANDSTONE_WALLS)
-            .add(
-                Blocks.SANDSTONE_WALL,
-                DnDBlocks.SMOOTH_SANDSTONE_WALL,
-                DnDBlocks.CUT_SANDSTONE_WALL,
-                DnDBlocks.ROUGH_SANDSTONE.wall,
-                DnDBlocks.POLISHED_SANDSTONE.wall,
-            )
-        getOrCreateTagBuilder(CBlockTags.RED_SANDSTONE_WALLS)
-            .add(
-                Blocks.RED_SANDSTONE_WALL,
-                DnDBlocks.SMOOTH_RED_SANDSTONE_WALL,
-                DnDBlocks.CUT_RED_SANDSTONE_WALL,
-                DnDBlocks.ROUGH_RED_SANDSTONE.wall,
-                DnDBlocks.POLISHED_RED_SANDSTONE.wall,
-            )
-
-        // These are for latter
-        getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
-            .add(
-                DnDBlocks.ROUGH_SANDSTONE.parent,
-                DnDBlocks.ROUGH_RED_SANDSTONE.parent,
-            )
-        getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
-            .add(
-                DnDBlocks.ROUGH_SANDSTONE.parent,
-                DnDBlocks.ROUGH_RED_SANDSTONE.parent,
-                DnDBlocks.AZURINE_SAND
-            )
     }
 
     private fun duskTags() {
