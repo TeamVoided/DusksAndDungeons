@@ -14,7 +14,7 @@ import xaero.map.highlight.ChunkHighlighter
 object NoiseHighlighter : ChunkHighlighter(false) {
 
     override fun regionHasHighlights(dimension: ResourceKey<Level>, regionX: Int, regionZ: Int): Boolean {
-        return getServerLevel() != null;
+        return getServerLevel() != null
     }
 
     override fun getColors(dimension: ResourceKey<Level>, chunkX: Int, chunkZ: Int): IntArray? {
@@ -26,22 +26,32 @@ object NoiseHighlighter : ChunkHighlighter(false) {
 
     override fun getChunkHighlitColor(dimension: ResourceKey<Level>, chunkX: Int, chunkZ: Int): IntArray? {
         val level = getServerLevel() ?: return null
-        val randomState = level.chunkSource.randomState()
-        val noiseRouter = randomState.router()
-
         for (x in 0..15) {
             for (z in 0..15) {
                 val worldX = SectionPos.sectionToBlockCoord(chunkX, x)
                 val worldZ = SectionPos.sectionToBlockCoord(chunkZ, z)
-                // do the nosie here properly
-                val rawNoise = sampleNoise(worldX, worldZ, noiseRouter.ridges())
-                val compressed = compressNoise(rawNoise)
+                val compressed = compressNoise(getNoiseValue(level, worldX, worldZ))
 
                 val color = ValidatedColor.ColorHolder(compressed, compressed, 230, compressed, true)
                 setResult(x, z, color.argb())
             }
         }
         return resultStore
+    }
+
+    // do the nosie here properly
+    fun getNoiseValue(level: ServerLevel, worldX: Int, worldZ: Int): Double {
+        val randomState = level.chunkSource.randomState()
+        val noiseRouter = randomState.router()
+        val df = noiseRouter.continents()
+//        val df = level.registryAccess()
+//            .lookupOrThrow(Registries.DENSITY_FUNCTION)
+//            .getOrThrow(NoiseRouterData.CONTINENTS)
+//            .value()
+
+
+        val rawNoise = sampleNoise(worldX, worldZ, df)
+        return rawNoise
     }
 
     private fun compressNoise(rawNoise: Double): Int {
@@ -67,7 +77,7 @@ object NoiseHighlighter : ChunkHighlighter(false) {
     }
 
     override fun calculateRegionHash(dimension: ResourceKey<Level>, regionX: Int, regionZ: Int): Int {
-        return (regionX * regionZ) shl 1
+        return regionX.hashCode() * 31 + regionZ.hashCode()
     }
 
     override fun chunkIsHighlit(dimension: ResourceKey<Level>, chunkX: Int, chunkZ: Int): Boolean {
@@ -76,12 +86,10 @@ object NoiseHighlighter : ChunkHighlighter(false) {
 
     override fun getChunkHighlightSubtleTooltip(dimension: ResourceKey<Level>, chunkX: Int, chunkZ: Int): Component {
         val level = getServerLevel() ?: return Component.literal("Bleh")
-        val randomState = level.chunkSource.randomState()
-        val noiseRouter = randomState.router()
-        val rawNoise = sampleNoise(
+        val rawNoise = getNoiseValue(
+            level,
             SectionPos.sectionToBlockCoord(chunkX, 8),
             SectionPos.sectionToBlockCoord(chunkZ, 8),
-            noiseRouter.temperature()
         )
         return Component.literal("Noise: $rawNoise")
     }
