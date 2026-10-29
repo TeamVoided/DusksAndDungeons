@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 @file:Suppress("unused")
 
 package org.teamvoided.voidlib.helpers
@@ -15,19 +11,27 @@ import net.minecraft.resources.ResourceLocation
 import java.util.function.Consumer
 
 fun registerBuiltInPack(
-    modId: String, id: ResourceLocation, packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL
-) = useMod(modId) {
-    assert(ResourceManagerHelper.registerBuiltinResourcePack(id, it, packType))
-    { "Failed to register built-in pack \"$id\" !" }
+    modId: String, id: ResourceLocation,
+    packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL,
+) {
+    useMod(modId) {
+        assert(ResourceManagerHelper.registerBuiltinResourcePack(id, it, packType)) {
+            "Failed to register built-in pack \"$id\" !"
+        }
+    }
 }
 
 fun registerBuiltInPack(
     modId: String, id: ResourceLocation, name: Component,
-    packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL
-) = useMod(modId) {
-    assert(ResourceManagerHelper.registerBuiltinResourcePack(id, it, name, packType))
-    { "Failed to register built-in pack \"$id\" !" }
+    packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL,
+) {
+    useMod(modId) {
+        assert(ResourceManagerHelper.registerBuiltinResourcePack(id, it, name, packType)) {
+            "Failed to register built-in pack \"$id\" !"
+        }
+    }
 }
 
-fun useMod(id: String, consumer: Consumer<ModContainer>) =
+fun useMod(id: String, consumer: Consumer<ModContainer>) {
     FabricLoader.getInstance().getModContainer(id).ifPresent(consumer)
+}

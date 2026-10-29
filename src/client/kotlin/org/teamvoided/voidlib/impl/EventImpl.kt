@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.voidlib.impl
 
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener

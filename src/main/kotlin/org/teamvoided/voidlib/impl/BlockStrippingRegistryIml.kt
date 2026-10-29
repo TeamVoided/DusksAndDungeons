@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.voidlib.impl
 
 import net.minecraft.world.level.block.Block
@@ -16,11 +12,11 @@ object BlockStrippingRegistryIml {
     val BLOCK_STATE_MAP = mutableMapOf<Block, Block>()
 
     @JvmStatic
-    fun getPossibleStrippedState(original: Optional<BlockState>, originalState: BlockState): Optional<BlockState> {
-        return if (original.isEmpty) {
+    fun getPossibleStrippedState(stripped: Optional<BlockState>, originalState: BlockState): Optional<BlockState> {
+        return if (stripped.isEmpty) {
             Optional.ofNullable(BLOCK_STATE_MAP[originalState.block]?.withPropertiesOf(originalState))
         } else {
-            original
+            stripped
         }
     }
 

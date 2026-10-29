@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.voidlib.init
 
 import org.teamvoided.voidlib.impl.PostDataLoadEventImpl

@@ -13,7 +13,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.voidlib.api.tab.TabSection
 import org.teamvoided.voidlib.api.tab.TabSectionRegistry
-import org.teamvoided.voidlib.helpers.mc.addItems
+import org.teamvoided.voidlib.helpers.mc.acceptAll
 
 object WoodsTab {
 
@@ -56,7 +56,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.oak() {
-        addItems(
+        acceptAll(
             // Log
             Items.OAK_LOG,
             DnDBlocks.HOLLOW_OAK_LOG,
@@ -99,7 +99,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.spruce() {
-        addItems(
+        acceptAll(
             // Log
             Items.SPRUCE_LOG,
             DnDBlocks.HOLLOW_SPRUCE_LOG,
@@ -142,7 +142,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.birch() {
-        addItems(
+        acceptAll(
             // Log
             Items.BIRCH_LOG,
             DnDBlocks.HOLLOW_BIRCH_LOG,
@@ -185,7 +185,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.jungle() {
-        addItems(
+        acceptAll(
             // Log
             Items.JUNGLE_LOG,
             DnDBlocks.HOLLOW_JUNGLE_LOG,
@@ -228,7 +228,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.acacia() {
-        addItems(
+        acceptAll(
             // Log
             Items.ACACIA_LOG,
             DnDBlocks.HOLLOW_ACACIA_LOG,
@@ -271,7 +271,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.darkOak() {
-        addItems(
+        acceptAll(
             // Log
             Items.DARK_OAK_LOG,
             DnDBlocks.HOLLOW_DARK_OAK_LOG,
@@ -314,7 +314,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.mangrove() {
-        addItems(
+        acceptAll(
             // Log
             Items.MANGROVE_LOG,
             DnDBlocks.HOLLOW_MANGROVE_LOG,
@@ -359,7 +359,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.cherry() {
-        addItems(
+        acceptAll(
             // Log
             Items.CHERRY_LOG,
             DnDBlocks.HOLLOW_CHERRY_LOG,
@@ -402,7 +402,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.cascade() {
-        addItems(
+        acceptAll(
             // Log
             DnDBlocks.CASCADE_LOG,
             DnDBlocks.HOLLOW_CASCADE_LOG,
@@ -445,7 +445,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.sypia() {
-        addItems(
+        acceptAll(
             // Log
             DnDBlocks.SYPIA_LOG,
             DnDBlocks.HOLLOW_SYPIA_LOG,
@@ -488,7 +488,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.verdant() {
-        addItems(
+        acceptAll(
             // Log
             DnDBlocks.VERDANT_LOG,
             DnDBlocks.HOLLOW_VERDANT_LOG,
@@ -531,7 +531,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.bamboo() {
-        addItems(
+        acceptAll(
             // Log
             Items.BAMBOO_BLOCK,
             DnDBlocks.HOLLOW_BAMBOO_BLOCK,
@@ -569,7 +569,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.crimson() {
-        addItems(
+        acceptAll(
             // Log
             Items.CRIMSON_STEM,
             DnDBlocks.HOLLOW_CRIMSON_STEM,
@@ -610,7 +610,7 @@ object WoodsTab {
     }
 
     fun CreativeModeTab.Output.warped() {
-        addItems(
+        acceptAll(
             // Log
             Items.WARPED_STEM,
             DnDBlocks.HOLLOW_WARPED_STEM,

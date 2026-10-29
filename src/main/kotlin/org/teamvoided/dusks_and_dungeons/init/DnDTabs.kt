@@ -34,7 +34,7 @@ object DnDTabs {
             .dndName("dnd_food_and_drinks")
             .icon(DnDItems.CORN)
             .displayItems { params, output ->
-                output.addItems(
+                output.acceptAll(
                     DnDItems.MOONBERRIES,
                     DnDItems.CORN,
                     DnDItems.GOLDEN_BEETROOT,
@@ -52,7 +52,7 @@ object DnDTabs {
             .dndName("dnd_functional")
             .icon(DnDItems.VERDANT_SIGN)
             .displayItems { _, output ->
-                output.addItems(
+                output.acceptAll(
                     DnDBlocks.REDSTONE_LANTERN,
                     DnDBlocks.BIG_LANTERN,
                     DnDBlocks.BIG_SOUL_LANTERN,
@@ -64,7 +64,7 @@ object DnDTabs {
                     DnDBlocks.SUSPICIOUS_AZURINE_SAND,
                     DnDBlocks.TINTED_GLASS_PANE,
                 )
-                output.addLists(
+                output.acceptAllLists(
                     DnDItemLists.cascadeSigns,
                     DnDItemLists.sypiaSigns,
                     DnDItemLists.verdantSigns,
@@ -72,7 +72,7 @@ object DnDTabs {
                     DnDBlocks.SOUL_CANDLES.inCreativeOrder().toList(),
                     DnDBlocks.BIG_SOUL_CANDLES.inCreativeOrder().toList(),
                 )
-                output.addItems(
+                output.acceptAll(
                     DnDBlocks.INFESTED_MOSSY_COBBLESTONE,
                     DnDBlocks.INFESTED_COBBLED_DEEPSLATE,
                     DnDBlocks.INFESTED_CHISELED_DEEPSLATE,
@@ -97,13 +97,13 @@ object DnDTabs {
         "dnd_everything", FabricItemGroup.builder()
             .dndName("dnd_everything")
             .icon(DnDBlocks.STONE_PILLAR)
-            .displayItems { _, output -> if (isDev()) output.addLists(DnDItems.ITEMS) }
+            .displayItems { _, output -> if (isDev()) output.acceptAllLists(DnDItems.ITEMS) }
     )
     val DND_EXPERIMENTAL = register(
         "dnd_experimental", FabricItemGroup.builder()
             .dndName("dnd_experimental")
             .icon(Blocks.BARRIER)
-            .displayItems { _, output -> if (isDev() && EVIL_ITEMS.isNotEmpty()) output.addLists(EVIL_ITEMS) }
+            .displayItems { _, output -> if (isDev() && EVIL_ITEMS.isNotEmpty()) output.acceptAllLists(EVIL_ITEMS) }
     )
 
     fun init() {
@@ -321,7 +321,7 @@ object DnDTabs {
     }
 
     fun mainTab(params: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) = with(output) {
-        addLists(
+        acceptAllLists(
             DnDItemLists.cascadeWood,
             DnDItemLists.cascadeSigns,
             DnDItemLists.sypiaWood,
@@ -329,7 +329,7 @@ object DnDTabs {
             DnDItemLists.verdantWood,
             DnDItemLists.verdantSigns,
         )
-        addItems(
+        acceptAll(
             DnDItems.BLUE_DOOR,
             DnDBlocks.CASCADE_SAPLING,
             DnDBlocks.CASCADE_LEAVES,
@@ -348,11 +348,11 @@ object DnDTabs {
             DnDBlocks.MOONBERRY_VINE,
             DnDItems.MOONBERRIES
         )
-        addLists(
+        acceptAllLists(
             DnDBlockLists.flowerbedBlocks,
             DnDBlockLists.vivionbedBlocks,
         )
-        addItems(
+        acceptAll(
             DnDBlocks.GOLDEN_MUSHROOM,
             DnDBlocks.GOLDEN_MUSHROOM_BLOCK,
             DnDBlocks.GOLDEN_MUSHROOM_STEM_BLOCK,
@@ -423,7 +423,7 @@ object DnDTabs {
             DnDBlocks.HOLLOW_WARPED_STEM,
             DnDBlocks.HOLLOW_STRIPPED_WARPED_STEM,
         )
-        addLists(
+        acceptAllLists(
             DnDItemLists.woodStuff,
             DnDBlocks.STRIPPED_OAK_WOOD,
             DnDBlocks.STRIPPED_SPRUCE_WOOD,
@@ -437,7 +437,7 @@ object DnDTabs {
             DnDBlocks.STRIPPED_WARPED_HYPHAE,
             DnDBlocks.STRIPPED_CASCADE_WOOD.headless()
         )
-        addItems(
+        acceptAll(
             DnDBlocks.OAK_LOG_PILE,
             DnDBlocks.SPRUCE_LOG_PILE,
             DnDBlocks.BIRCH_LOG_PILE,
@@ -464,8 +464,8 @@ object DnDTabs {
             DnDBlocks.STRIPPED_CRIMSON_STEM_PILE,
             DnDBlocks.STRIPPED_WARPED_STEM_PILE,
         )
-        addLists(DnDItemLists.leafPiles)
-        addItems(
+        acceptAllLists(DnDItemLists.leafPiles)
+        acceptAll(
             DnDBlocks.SPRUCE_BOOKSHELF,
             DnDBlocks.BIRCH_BOOKSHELF,
             DnDBlocks.JUNGLE_BOOKSHELF,
@@ -480,7 +480,7 @@ object DnDTabs {
             DnDBlocks.CRIMSON_BOOKSHELF,
             DnDBlocks.WARPED_BOOKSHELF,
         )
-        addLists(
+        acceptAllLists(
             DnDBlocks.POLISHED_STONE,
             DnDBlocks.MOSSY_POLISHED_STONE,
             DnDBlocks.OVERGROWN_POLISHED_STONE,
@@ -488,14 +488,14 @@ object DnDTabs {
             DnDBlocks.OVERGROWN_STONE_BRICKS,
             DnDItemLists.ice
         )
-        addItems(
+        acceptAll(
             DnDBlocks.ROOT_BLOCK,
             DnDBlocks.STONE_PILLAR,
             DnDBlocks.DEEPSLATE_PILLAR,
             DnDBlocks.CHISELED_BRICKS,
             DnDBlocks.BRICK_FENCE
         )
-        addLists(
+        acceptAllLists(
             DnDBlocks.CRACKED_BRICKS,
             DnDBlocks.ROUGH_SANDSTONE,
             DnDBlocks.POLISHED_SANDSTONE,
@@ -503,7 +503,7 @@ object DnDTabs {
             DnDBlocks.POLISHED_RED_SANDSTONE,
             DnDBlocks.SMOOTH_LAPIS
         )
-        addItems(
+        acceptAll(
             DnDBlocks.STONE_BRICK_GRAVESTONE,
             DnDBlocks.SMALL_STONE_BRICK_GRAVESTONE,
             DnDBlocks.DEEPSLATE_BRICK_GRAVESTONE,
@@ -521,13 +521,12 @@ object DnDTabs {
             DnDBlocks.BIG_REDSTONE_LANTERN,
             DnDBlocks.BIG_SCAFFOLDING
         )
-        addLists(DnDBlocks.WOOL_CARPET_PLATE.inCreativeOrder().toList())
-        addItems(
+        acceptAllLists(DnDBlocks.WOOL_CARPET_PLATE.inCreativeOrder().toList())
+        acceptAll(
             DnDBlocks.MOSS_CARPET_PLATE,
             DnDBlocks.OVERGROWTH_CARPET_PLATE
         )
-        addItems(
-            // This adds the candles in a nice way
+        acceptAll(// This adds the candles in a nice way
             DnDItemLists.bigCandles.flatMapIndexed { idx, item ->
                 listOf(
                     item,
@@ -536,15 +535,15 @@ object DnDTabs {
                 )
             }
         )
-        addItems(
+        acceptAll(
             DnDItems.IRON_CANDELABRA,
             DnDBlocks.HEAVY_CUBE,
             DnDBlocks.TINTED_GLASS_PANE
         )
         accept(DnDBlocks.WARPED_WART)
-        addLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
+        acceptAllLists(DnDItemLists.netherrackStuff, DnDItemLists.netherBrickStuff)
         accept(DnDBlocks.CRACKED_RED_NETHER_BRICKS)
-        addLists(
+        acceptAllLists(
             DnDItemLists.redNetherBrickStuff,
             DnDItemLists.blueNetherBrickStuff,
             DnDItemLists.grayNetherBrickStuff,
@@ -556,6 +555,6 @@ object DnDTabs {
         return BuiltInRegistries.CREATIVE_MODE_TAB.registerHolder(id(name), tab.build())
     }
 
-    fun CreativeModeTab.Builder.dndName(key: String): CreativeModeTab.Builder = translation("itemGroup.$MODID.$key")
+    fun CreativeModeTab.Builder.dndName(key: String): CreativeModeTab.Builder = title("itemGroup.$MODID.$key")
 
 }

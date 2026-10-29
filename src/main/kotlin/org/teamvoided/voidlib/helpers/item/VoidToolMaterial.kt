@@ -24,18 +24,31 @@ data class VoidToolMaterial(
 ) : Tier {
 
     constructor(
-        durability: Int, miningSpeedMultiplier: Float, attackDamage: Float,
-        incorrectForDropsBlocks: TagKey<Block>, enchantability: Int, repairTag: TagKey<Item>,
+        durability: Int,
+        miningSpeedMultiplier: Float,
+        attackDamage: Float,
+        incorrectForDropsBlocks: TagKey<Block>,
+        enchantability: Int,
+        repairTag: TagKey<Item>,
     ) : this(
-        durability, miningSpeedMultiplier, attackDamage,
-        incorrectForDropsBlocks, enchantability, Ingredient.of(repairTag)
+        durability,
+        miningSpeedMultiplier,
+        attackDamage,
+        incorrectForDropsBlocks,
+        enchantability,
+        Ingredient.of(repairTag)
     )
 
     override fun getUses(): Int = durability
+
     override fun getSpeed(): Float = miningSpeedMultiplier
+
     override fun getAttackDamageBonus(): Float = attackDamage
+
     override fun getIncorrectBlocksForDrops(): TagKey<Block> = incorrectForDropsBlocks
+
     override fun getEnchantmentValue(): Int = enchantability
+
     override fun getRepairIngredient(): Ingredient = repairIngredient
 
     companion object {
@@ -53,6 +66,13 @@ data class VoidToolMaterial(
             return VoidToolMaterial(
                 material.uses, material.speed, material.attackDamageBonus,
                 material.incorrectBlocksForDrops, material.enchantmentValue, repairTag,
+            )
+        }
+
+        fun copyOf(material: Tier, repairIngredient: Ingredient): VoidToolMaterial {
+            return VoidToolMaterial(
+                material.uses, material.speed, material.attackDamageBonus,
+                material.incorrectBlocksForDrops, material.enchantmentValue, repairIngredient,
             )
         }
 

@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.voidlib.api
 
 import net.minecraft.core.Direction
@@ -56,5 +52,4 @@ interface BlockConnection {
      */
     fun allowGateInWallState(state: BlockState, dir: Direction): Boolean = false
 
-    //gates do the direction checks themselves or something? fine for blocks that connect to gates (wall) but not good for directionally challenged blocks (grave sconce)
 }
