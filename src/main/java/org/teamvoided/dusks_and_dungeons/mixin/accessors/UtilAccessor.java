@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.accessors;
 
 import net.minecraft.Util;
@@ -16,4 +12,5 @@ public interface UtilAccessor {
     static Logger dnd_logger() {
         throw new IllegalStateException("Mixin Failed");
     }
+
 }

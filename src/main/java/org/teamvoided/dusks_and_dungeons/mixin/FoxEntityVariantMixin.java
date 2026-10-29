@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin;
 
 import net.minecraft.world.entity.animal.Fox;
@@ -22,9 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.IntFunction;
 
+// TODO myb replace with ASM?
 @SuppressWarnings({"SameParameterValue", "deprecation"})
 @Mixin(Fox.Type.class)
 public class FoxEntityVariantMixin {
+
     @Mutable
     @Shadow
     @Final
@@ -70,4 +68,5 @@ public class FoxEntityVariantMixin {
         $VALUES = values.toArray(new Fox.Type[]{});
         return type;
     }
+
 }

@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.debug;
 
 
@@ -23,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
+// TODO(lib) Move to VoidLib
 @Mixin(MappedRegistry.class)
 public abstract class MappedRegistryMixin<T> {
 

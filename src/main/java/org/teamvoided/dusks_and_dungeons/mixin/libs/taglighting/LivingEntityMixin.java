@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.libs.taglighting;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -24,4 +20,5 @@ public abstract class LivingEntityMixin {
     boolean swapForTag(BlockState state, Block block, Operation<Boolean> original) {
         return state.is(CBlockTags.SCAFFOLDING) || original.call(state, block);
     }
+
 }

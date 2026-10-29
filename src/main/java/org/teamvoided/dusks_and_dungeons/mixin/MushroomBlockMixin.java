@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -27,4 +23,5 @@ public abstract class MushroomBlockMixin extends BushBlock implements Bonemealab
     private boolean canPlaceAt(boolean original, BlockState state, LevelReader world, BlockPos pos) {
         return original && canSupportCenter(world, pos.below(), Direction.UP);
     }
+
 }

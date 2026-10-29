@@ -1,9 +1,4 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin;
-
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.tags.BlockTags;

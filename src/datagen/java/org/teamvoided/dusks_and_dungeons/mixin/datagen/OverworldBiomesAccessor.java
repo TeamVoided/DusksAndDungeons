@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.datagen;
 
 import net.minecraft.data.worldgen.biome.OverworldBiomes;

@@ -4,10 +4,10 @@
   "package": "org.teamvoided.dusks_and_dungeons.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "DispenserBlockMixin",
+    "libs.vlib.DispenserBlockMixin",
     "FoxEntityVariantMixin",
     "IceBlockMixin",
-    "ItemEntityMixin",
+    "libs.vlib.ItemEntityMixin",
     "MangroveRootsBlockMixin",
     "MushroomBlockMixin",
     "NyliumBlockMixin",

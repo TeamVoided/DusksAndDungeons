@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -54,4 +50,5 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 
         setItemSlot(hand, new ItemStack(item));
     }
+
 }

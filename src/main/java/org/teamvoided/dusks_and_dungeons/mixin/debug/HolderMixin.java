@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.debug;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -11,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
+// TODO(lib) move to CW
 @Mixin(Holder.class)
 public interface HolderMixin<T> {
 

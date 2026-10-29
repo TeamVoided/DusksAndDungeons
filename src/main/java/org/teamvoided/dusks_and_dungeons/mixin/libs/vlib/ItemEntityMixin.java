@@ -1,8 +1,4 @@
-/*
- * TODO(cleanup)
- */
-
-package org.teamvoided.dusks_and_dungeons.mixin;
+package org.teamvoided.dusks_and_dungeons.mixin.libs.vlib;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -21,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static org.teamvoided.dusks_and_dungeons.util.MixinHelperKt.processRecipe;
 
-
+// TODO(lib) move to VoidLib
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity {
 

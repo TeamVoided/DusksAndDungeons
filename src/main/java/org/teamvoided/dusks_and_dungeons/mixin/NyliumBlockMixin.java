@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
@@ -25,6 +21,7 @@ import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature;
 
 @Mixin(NyliumBlock.class)
 public abstract class NyliumBlockMixin implements BonemealableBlock {
+
     @Shadow
     protected abstract void place(Registry<ConfiguredFeature<?, ?>> registry, ResourceKey<ConfiguredFeature<?, ?>> registryKey, ServerLevel world, ChunkGenerator chunkGenerator, RandomSource random, BlockPos pos);
 
@@ -41,4 +38,5 @@ public abstract class NyliumBlockMixin implements BonemealableBlock {
             }
         }
     }
+
 }

@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.accessors;
 
 import net.minecraft.world.level.block.MultifaceBlock;

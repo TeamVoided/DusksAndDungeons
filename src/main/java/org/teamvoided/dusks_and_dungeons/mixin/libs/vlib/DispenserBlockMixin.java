@@ -1,8 +1,4 @@
-/*
- * TODO(cleanup)
- */
-
-package org.teamvoided.dusks_and_dungeons.mixin;
+package org.teamvoided.dusks_and_dungeons.mixin.libs.vlib;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
@@ -17,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import static org.teamvoided.dusks_and_dungeons.item.DnDDispenserBehaviour.getCustomDispenseMethod;
 
+//TODO(lib) move to voidlib
 @Mixin(DispenserBlock.class)
 public class DispenserBlockMixin {
 

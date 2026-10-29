@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.evil;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;

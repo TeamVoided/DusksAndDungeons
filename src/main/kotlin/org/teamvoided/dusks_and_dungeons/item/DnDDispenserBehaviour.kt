@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.item
 
 import net.minecraft.core.dispenser.DispenseItemBehavior

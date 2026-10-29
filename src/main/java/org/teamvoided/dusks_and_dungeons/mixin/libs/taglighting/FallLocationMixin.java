@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.libs.taglighting;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -22,4 +18,5 @@ public abstract class FallLocationMixin {
     private static boolean swapForTag(boolean original, BlockState state) {
         return state.is(CBlockTags.SCAFFOLDING);
     }
+
 }
