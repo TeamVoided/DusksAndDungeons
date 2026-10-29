@@ -4,6 +4,8 @@
 
 package org.teamvoided.dusks_and_dungeons.client
 
+import me.fzzyhmstrs.fzzy_config.api.ConfigApi
+import me.fzzyhmstrs.fzzy_config.api.RegisterType
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -13,6 +15,7 @@ import net.minecraft.core.registries.Registries
 import org.teamvoided.creative_works.util.mc.textMain
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
+import org.teamvoided.dusks_and_dungeons.client.config.DnDClientConfig
 import org.teamvoided.dusks_and_dungeons.client.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.client.init.*
 import org.teamvoided.dusks_and_dungeons.client.item.CandelabraItemRenderer
@@ -24,6 +27,9 @@ import kotlin.jvm.optionals.getOrNull
 
 @Suppress("unused")
 object DusksAndDungeonsClient {
+
+    @JvmField
+    val config = ConfigApi.registerAndLoadConfig(::DnDClientConfig, RegisterType.CLIENT)
 
     fun init() {
         DnDEntityModelLayers.init()
