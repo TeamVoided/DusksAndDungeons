@@ -27,6 +27,9 @@ data object DnDModels {
     val BIG_CHAIN = parent("big_chain", PARTICLE, ALL)
     val BIG_LANTERN = parent("big_lantern", PARTICLE, SIDE, END)
 
+    val BIG_SCAFFOLDING_STABLE = parent("big_scaffolding_stable", "_stable", BOTTOM, SIDE, TOP)
+    val BIG_SCAFFOLDING_UNSTABLE = parent("big_scaffolding_unstable", "_unstable", BOTTOM, SIDE, TOP)
+
     val CANDELABRA_1 = parent("candelabra/1", "_1", TEXTURE)
     val CANDELABRA_2 = parent("candelabra/2", "_2", TEXTURE)
     val CANDELABRA_3 = parent("candelabra/3", "_3", TEXTURE)

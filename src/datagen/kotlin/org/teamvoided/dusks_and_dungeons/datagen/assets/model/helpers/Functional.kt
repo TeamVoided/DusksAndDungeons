@@ -104,9 +104,9 @@ fun BlockModelGenerators.redstoneLantern(block: Block) {
 }
 
 fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
-    // TODO(1.0) make this be parented models instead
-    val stable = ModelLocationUtils.getModelLocation(scaffolding, "_stable")
-    val unstable = ModelLocationUtils.getModelLocation(scaffolding, "_unstable")
+    val texture = TextureMapping.cubeBottomTop(scaffolding)
+    val stable = DnDModels.BIG_SCAFFOLDING_STABLE.create(scaffolding, texture, modelOutput)
+    val unstable = DnDModels.BIG_SCAFFOLDING_UNSTABLE.create(scaffolding, texture, modelOutput)
     delegateItemModel(scaffolding, stable)
     blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(scaffolding)
