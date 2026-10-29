@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -27,7 +23,8 @@ public class ItemRendererMixin {
     private BlockEntityWithoutLevelRenderer blockEntityRenderer;
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;popPose()V"))
-    void renderExtra(ItemStack itemStack, ItemDisplayContext itemDisplayContext, boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, BakedModel bakedModel, CallbackInfo ci) {
+    void appendCandelabraRendering(ItemStack itemStack, ItemDisplayContext itemDisplayContext, boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, BakedModel bakedModel, CallbackInfo ci) {
+        // TODO(1.0) make this be a registry
         if (itemStack.is(DnDItems.INSTANCE.getIRON_CANDELABRA())) {
             blockEntityRenderer.renderByItem(itemStack, itemDisplayContext, poseStack, multiBufferSource, i, j);
         }

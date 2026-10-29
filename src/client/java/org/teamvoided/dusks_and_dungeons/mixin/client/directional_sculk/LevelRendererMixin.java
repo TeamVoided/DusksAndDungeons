@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.client.directional_sculk;
 
 import net.minecraft.client.multiplayer.ClientLevel;

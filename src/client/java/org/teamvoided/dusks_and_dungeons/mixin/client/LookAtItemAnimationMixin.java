@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.client;
 
 import dev.tr7zw.notenoughanimations.animations.hands.LookAtItemAnimation;
@@ -14,7 +10,6 @@ import org.teamvoided.dusks_and_dungeons.item.CandelabraItem;
 
 import java.util.Set;
 
-
 @Pseudo
 @Mixin(value = LookAtItemAnimation.class)
 public class LookAtItemAnimationMixin {
@@ -23,4 +18,5 @@ public class LookAtItemAnimationMixin {
     boolean addDnDItems(Set<Item> instance, Object item) {
         return instance.contains((Item) item) || item instanceof CandelabraItem;
     }
+
 }

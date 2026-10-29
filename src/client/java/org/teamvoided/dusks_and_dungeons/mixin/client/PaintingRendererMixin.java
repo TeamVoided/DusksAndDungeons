@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.client;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
@@ -19,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+// TODO(extract) Move to Clientside mod
 @Mixin(PaintingRenderer.class)
 public abstract class PaintingRendererMixin {
 
@@ -123,4 +120,5 @@ public abstract class PaintingRendererMixin {
     boolean modifiedVertex(PaintingRenderer instance, PoseStack.Pose pose, VertexConsumer vertexConsumer, float f, float g, float h, float i, float j, int k, int l, int m, int n) {
         return false;
     }
+
 }

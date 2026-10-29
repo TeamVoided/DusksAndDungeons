@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.client.signs;
 
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
@@ -32,7 +28,7 @@ public abstract class AbstractSignEditScreenMixin implements SignColorProvider {
 
     @Inject(method = "<init>(Lnet/minecraft/world/level/block/entity/SignBlockEntity;ZZLnet/minecraft/network/chat/Component;)V", at = @At("RETURN"))
     void getSignColor(SignBlockEntity sign, boolean bl, boolean bl2, Component component, CallbackInfo ci) {
-        if (this.woodType == DnDWoodTypes.VERDANT_WOOD_TYPE) {
+        if (woodType == DnDWoodTypes.VERDANT_WOOD_TYPE) {
             dnd$signColor = getColor(sign);
         }
     }

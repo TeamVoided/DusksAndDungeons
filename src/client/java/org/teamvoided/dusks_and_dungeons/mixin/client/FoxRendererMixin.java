@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.client;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -15,6 +11,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons;
 
 @Mixin(FoxRenderer.class)
 public class FoxRendererMixin {
+
     @Unique
     private static final ResourceLocation SILVER_TEXTURE = DusksAndDungeons.INSTANCE.id("textures/entity/fox/silver_fox.png");
     @Unique
@@ -27,4 +24,5 @@ public class FoxRendererMixin {
         }
         return original;
     }
+
 }
