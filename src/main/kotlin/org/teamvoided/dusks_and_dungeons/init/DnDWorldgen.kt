@@ -16,6 +16,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDDensityFunctionTypes
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDFeatures
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDStructurePiceTypes
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDStructureTypes
@@ -56,6 +57,7 @@ object DnDWorldgen {
 
         DnDStructureTypes.init()
         DnDStructurePiceTypes.init()
+        DnDDensityFunctionTypes.init()
 //        if (isDev()) DnDSurfaceBuilders.init()
     }
 
