@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data
 
 import net.minecraft.advancements.Advancement
@@ -15,15 +11,16 @@ import org.teamvoided.dusks_and_dungeons.util.toLangKey
 
 object DnDAdvancements {
 
+    // Adventure
     val ALL_BIOMES = key("adventure/biomes")
     val FALL = key("adventure/fall")
-    val WOOF = key("husbandry/woof")
     val THROWING_STONES = key("adventure/throwing_stones")
     val GET_BIG = key("adventure/get_big")
     val GETTING_DENSE = key("adventure/getting_dense")
+    // Husbandry
+    val WOOF = key("husbandry/woof")
 
-    fun key(id: String) = Registries.ADVANCEMENT.key(id(id))
-
+    fun key(id: String): ResourceKey<Advancement> = Registries.ADVANCEMENT.key(id(id))
 
     fun title(key: ResourceKey<Advancement>): MutableComponent {
         return translatable("advancements.${key.toLangKey()}.title")
@@ -34,4 +31,3 @@ object DnDAdvancements {
     }
 
 }
-

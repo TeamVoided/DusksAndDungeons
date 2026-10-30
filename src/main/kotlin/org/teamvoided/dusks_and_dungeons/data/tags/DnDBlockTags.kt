@@ -1,10 +1,8 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.tags
 
 import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
+import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.tag
 
@@ -104,9 +102,9 @@ object DnDBlockTags {
     val NOT_MINEABLE_WITH_PICKAXE = key("mineable/not/pickaxe")
 
 
-    fun supports(id: String) = key("supports/$id")
-    fun pumpkins(id: String) = key("pumpkins/$id")
+    fun supports(id: String): TagKey<Block> = key("supports/$id")
+    fun pumpkins(id: String): TagKey<Block> = key("pumpkins/$id")
 
-    fun key(id: String) = Registries.BLOCK.tag(id(id))
+    fun key(id: String): TagKey<Block> = Registries.BLOCK.tag(id(id))
 
 }

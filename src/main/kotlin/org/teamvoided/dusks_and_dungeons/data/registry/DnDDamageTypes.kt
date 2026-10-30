@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.registry
 
 import net.minecraft.core.registries.Registries
@@ -12,8 +8,8 @@ import org.teamvoided.dusks_and_dungeons.util.key
 
 object DnDDamageTypes {
 
-    val THROWN_BRICK = create("thrown_brick")
+    val THROWN_BRICK = key("thrown_brick")
 
-    fun create(id: String): ResourceKey<DamageType> = Registries.DAMAGE_TYPE.key(id(id))
+    fun key(id: String): ResourceKey<DamageType> = Registries.DAMAGE_TYPE.key(id(id))
 
 }

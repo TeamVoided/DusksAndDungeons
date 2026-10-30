@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.tags
 
 import net.minecraft.core.registries.Registries
@@ -15,10 +11,10 @@ object DnDBiomeTags {
     val IS_AUTUMN = key("is_autumn")
     val IS_CAVE = key("is_cave")
 
-    // Replacer
-    val AUTUMN_WOODS = key("autumn_replacer/woods")
-    val AUTUMN_PASTURES = key("autumn_replacer/pastures")
-    val AUTUMN_RIVERS = key("autumn_replacer/river")
+    // Replaceable by
+    val REPLACEABLE_BY_AUTUMN_WOODS = key("replaceable_by/autumn_woods")
+    val REPLACEABLE_BY_AUTUMN_PASTURES = key("replaceable_by/autumn_pastures")
+    val REPLACEABLE_BY_AUTUMN_RIVERS = key("replaceable_by/autumn_river")
 
     // Has Structure
     val HAS_STRUCTURE_AUTUMN_RUINS = key("has_structure/autumn_ruins")

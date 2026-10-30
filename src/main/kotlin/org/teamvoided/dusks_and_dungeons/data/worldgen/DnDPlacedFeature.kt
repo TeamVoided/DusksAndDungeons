@@ -1,13 +1,12 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.worldgen
 
 import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.key
 
+// TODO this should probably be split in to separate files
 object DnDPlacedFeature {
 
     val OVERGROWN_BOULDER = key("boulder/overgrown_cobblestone")
@@ -64,6 +63,6 @@ object DnDPlacedFeature {
 
     val PILE_CORN = key("pile_corn")
 
-    fun key(id: String) = Registries.PLACED_FEATURE.key(id(id))
+    fun key(id: String): ResourceKey<PlacedFeature> = Registries.PLACED_FEATURE.key(id(id))
 
 }

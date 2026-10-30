@@ -1,10 +1,8 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.worldgen
 
 import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.key
 
@@ -20,6 +18,6 @@ object DnDBiomes {
     val OVERGROWN_GROTTO = key("overgrown_grotto")
 
 
-    fun key(id: String) = Registries.BIOME.key(id(id))
+    fun key(id: String): ResourceKey<Biome> = Registries.BIOME.key(id(id))
 
 }

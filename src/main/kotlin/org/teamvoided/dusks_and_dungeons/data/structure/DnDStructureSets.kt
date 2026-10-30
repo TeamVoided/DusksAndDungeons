@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.structure
 
 import net.minecraft.core.registries.Registries
@@ -12,8 +8,8 @@ import org.teamvoided.dusks_and_dungeons.util.key
 
 object DnDStructureSets {
 
-    val AUTUMN_RUINS = create("autumn_ruins")
+    val AUTUMN_RUINS = key("autumn_ruins")
 
-    fun create(id: String): ResourceKey<StructureSet> = Registries.STRUCTURE_SET.key(id(id))
+    fun key(id: String): ResourceKey<StructureSet> = Registries.STRUCTURE_SET.key(id(id))
 
 }

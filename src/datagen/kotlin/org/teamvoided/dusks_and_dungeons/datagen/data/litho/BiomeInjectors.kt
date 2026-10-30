@@ -10,10 +10,10 @@ import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.Clima
 import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector.ClimateParameter.TEMPERATURE
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.BiomeTags
-import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDBiomes
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDDensityFunctions
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.litho.DnDBiomeInjectors as DBInject
 
 object BiomeInjectors : RegistryBootstrapper<BiomeInjector> {
@@ -41,28 +41,28 @@ object BiomeInjectors : RegistryBootstrapper<BiomeInjector> {
 
         replacePartially(
             DBInject.AUTUMN_WOODS,
-            DnDBiomeTags.AUTUMN_WOODS, DnDBiomes.AUTUMN_WOODS, autumn, 801
+            DnDBiomeTags.REPLACEABLE_BY_AUTUMN_WOODS, DnDBiomes.AUTUMN_WOODS, autumn, 801
         )
         replacePartially(
             DBInject.AUTUMN_PASTURES,
-            DnDBiomeTags.AUTUMN_PASTURES, DnDBiomes.AUTUMN_PASTURES, autumn, 801
+            DnDBiomeTags.REPLACEABLE_BY_AUTUMN_PASTURES, DnDBiomes.AUTUMN_PASTURES, autumn, 801
         )
         replacePartially(
             DBInject.AUTUMN_CASCADES,
-            DnDBiomeTags.AUTUMN_RIVERS, DnDBiomes.AUTUMN_CASCADES, autumn, 801
+            DnDBiomeTags.REPLACEABLE_BY_AUTUMN_RIVERS, DnDBiomes.AUTUMN_CASCADES, autumn, 801
         )
 
         replacePartially(
             DBInject.GOLDEN_WOODS,
-            DnDBiomeTags.AUTUMN_WOODS, DnDBiomes.GOLDEN_WOODS, golden
+            DnDBiomeTags.REPLACEABLE_BY_AUTUMN_WOODS, DnDBiomes.GOLDEN_WOODS, golden
         )
         replacePartially(
             DBInject.GOLDEN_PASTURES,
-            DnDBiomeTags.AUTUMN_PASTURES, DnDBiomes.GOLDEN_PASTURES, golden
+            DnDBiomeTags.REPLACEABLE_BY_AUTUMN_PASTURES, DnDBiomes.GOLDEN_PASTURES, golden
         )
         replacePartially(
             DBInject.GOLDEN_CASCADES,
-            DnDBiomeTags.AUTUMN_RIVERS, DnDBiomes.AUTUMN_CASCADES, golden
+            DnDBiomeTags.REPLACEABLE_BY_AUTUMN_RIVERS, DnDBiomes.AUTUMN_CASCADES, golden
         )
     }
 }

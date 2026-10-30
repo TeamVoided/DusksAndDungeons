@@ -26,15 +26,15 @@ class BiomeTagsProvider(o: FabricOutput, p: FutureProvider) : FabricTagProvider<
     }
 
     fun duskTags() {
-        getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_WOODS)
+        getOrCreateTagBuilder(DnDBiomeTags.REPLACEABLE_BY_AUTUMN_WOODS)
             .forceAddTag(ConventionalBiomeTags.IS_FOREST)
             .add(Biomes.TAIGA)
             .remove(Biomes.GROVE)
-        getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_PASTURES)
+        getOrCreateTagBuilder(DnDBiomeTags.REPLACEABLE_BY_AUTUMN_PASTURES)
             .forceAddTag(ConventionalBiomeTags.IS_PLAINS)
             .add(Biomes.MEADOW)
             .add(Biomes.CHERRY_GROVE)
-        getOrCreateTagBuilder(DnDBiomeTags.AUTUMN_RIVERS)
+        getOrCreateTagBuilder(DnDBiomeTags.REPLACEABLE_BY_AUTUMN_RIVERS)
             .add(Biomes.RIVER)
         getOrCreateTagBuilder(DnDBiomeTags.IS_AUTUMN) // use the list in the AdvancementsProvider class?
             .add(DnDBiomes.AUTUMN_WOODS)

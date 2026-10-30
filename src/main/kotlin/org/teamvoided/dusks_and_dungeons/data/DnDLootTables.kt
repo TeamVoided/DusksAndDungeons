@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data
 
 import net.minecraft.core.registries.Registries
@@ -15,16 +11,15 @@ object DnDLootTables {
 
     val LOOT_TABLES = mutableSetOf<ResourceKey<LootTable>>()
 
-    val SNIFFER_ADD_MOONBERRY = key("inject/add_moonberries")
-    val BARTERING_ADD_VIVIONS = key("inject/add_vivions")
-    val SIMPLE_DUNGEON_ADD_SPOOKY = key("inject/add_spooky")
-    val ADD_DND_SEEDS = key("inject/add_dnd_seeds")
-    val ADD_CORN = key("inject/add_corn")
+    val ADD_MOONBERRY = inject("add_moonberries")
+    val ADD_VIVIONS = inject("add_vivions")
+    // Adds graves & pumpkins to Dungeons
+    val ADD_SPOOKY = inject("add_spooky")
+    val ADD_DND_SEEDS = inject("add_dnd_seeds")
+    val ADD_CORN = inject("add_corn")
 
-//    val COOL_CHEST = key("chests/cool_chest")
-//    val COOL_ARCHAEOLOGY = key("archaeology/cool_archaeology")
-
-    fun key(name: String) = key(id(name))
+    fun inject(name: String): ResourceKey<LootTable> = key("inject/$name")
+    fun key(name: String): ResourceKey<LootTable> = key(id(name))
 
     fun key(id: ResourceLocation): ResourceKey<LootTable> {
         val key = Registries.LOOT_TABLE.key(id)

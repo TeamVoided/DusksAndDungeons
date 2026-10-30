@@ -1,10 +1,8 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.litho
 
 import dev.worldgen.lithostitched.api.registry.LithostitchedRegistries
+import dev.worldgen.lithostitched.api.worldgen.biomeinjector.BiomeInjector
+import net.minecraft.resources.ResourceKey
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.key
 
@@ -18,6 +16,6 @@ object DnDBiomeInjectors {
     val GOLDEN_PASTURES = key("golden_pastures")
     val GOLDEN_CASCADES = key("golden_cascades")
 
-    fun key(id: String) = LithostitchedRegistries.BIOME_INJECTOR.key(id(id))
+    fun key(id: String): ResourceKey<BiomeInjector> = LithostitchedRegistries.BIOME_INJECTOR.key(id(id))
 
 }

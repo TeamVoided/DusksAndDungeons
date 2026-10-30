@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.worldgen
 
 import net.minecraft.core.registries.Registries
@@ -10,6 +6,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.key
 
+// TODO this should probably be split in to separate files
 object DnDConfiguredFeature {
 
     val OVERGROWN_COBBLESTONE_BOULDER = key("overgrown_cobblestone_boulder")
@@ -35,11 +32,13 @@ object DnDConfiguredFeature {
     val DARK_OAK_AUTUMN = key("tree/dark_oak_autumn")
     val ACACIA_AUTUMN = key("tree/acacia_autumn")
     val ACACIA_BUSH_AUTUMN = key("tree/acacia_bush_autumn")
+
     val DISK_MUD = key("disk/disk_mud")
     val DISK_SAND = key("disk/disk_sand")
     val DISK_GRAVEL = key("disk/disk_gravel")
     val DISK_CLAY = key("disk/disk_clay")
     val DISKS_WATER = key("disk/disks_water")
+
     val AUTUMN_WOODS_VEGETATION = key("biome_vegetation/autumn_woods_vegetation")
     val AUTUMN_PASTURES_VEGETATION = key("biome_vegetation/autumn_pastures_vegetation")
     val GOLDEN_WOODS_VEGETATION = key("biome_vegetation/golden_woods_vegetation")
@@ -70,13 +69,6 @@ object DnDConfiguredFeature {
 
     val CRIMSON_WART_VEGETATION = key("crimson_wart_vegetation")
     val WARPED_WART_VEGETATION = key("warped_wart_vegetation")
-
-    //val SPRUCE_BIG_FALLEN_TREE = create("fallen_tree/spruce_big")
-    //val JUNGLE_BIG_FALLEN_TREE = create("fallen_tree/jungle_big")
-    //val DARK_OAK_FALLEN_TREE = create("fallen_tree/dark_oak")
-    //val CASCADE_FALLEN_TREE = create("fallen_tree/cascade")
-    //val CRIMSON_FALLEN_STEM = create("fallen_stem/crimson")
-    //val WARPED_FALLEN_STEM = create("fallen_stem/warped")
 
     val HUGE_GOLDEN_MUSHROOM = key("golden_mushroom/huge")
     val PATCH_GOLDEN_MUSHROOM = key("golden_mushroom/patch")

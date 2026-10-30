@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.structure
 
 import net.minecraft.core.registries.Registries
@@ -12,8 +8,8 @@ import org.teamvoided.dusks_and_dungeons.util.key
 
 object DnDProcessorLists {
 
-    val AUTUMN_RUINS_DEFAULT = create("autumn_ruins/default")
+    val AUTUMN_RUINS_DEFAULT = key("autumn_ruins/default")
 
-    fun create(id: String): ResourceKey<StructureProcessorList> = Registries.PROCESSOR_LIST.key(id(id))
+    fun key(id: String): ResourceKey<StructureProcessorList> = Registries.PROCESSOR_LIST.key(id(id))
 
 }

@@ -31,9 +31,9 @@ fun modifyLootTables(
     table: ResourceKey<LootTable>, builder: LootTable.Builder, src: LootTableSource, lookup: HolderLookup.Provider,
 ) {
     when (table) {
-        PIGLIN_BARTERING -> addToExistingPools(builder, DnDLootTables.BARTERING_ADD_VIVIONS)
-        SNIFFER_DIGGING -> addToExistingPools(builder, DnDLootTables.SNIFFER_ADD_MOONBERRY)
-        SIMPLE_DUNGEON -> addNewPool(builder, DnDLootTables.SIMPLE_DUNGEON_ADD_SPOOKY)
+        PIGLIN_BARTERING -> addToExistingPools(builder, DnDLootTables.ADD_VIVIONS)
+        SNIFFER_DIGGING -> addToExistingPools(builder, DnDLootTables.ADD_MOONBERRY)
+        SIMPLE_DUNGEON -> addNewPool(builder, DnDLootTables.ADD_SPOOKY)
         ABANDONED_MINESHAFT -> addNewPool(builder, DnDLootTables.ADD_DND_SEEDS)
         VILLAGE_PLAINS_HOUSE -> addNewPool(builder, DnDLootTables.ADD_CORN)
     }

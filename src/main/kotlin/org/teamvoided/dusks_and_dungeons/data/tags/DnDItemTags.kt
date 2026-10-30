@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.tags
 
 import net.minecraft.core.registries.Registries
@@ -90,10 +86,10 @@ object DnDItemTags {
 
     init {
         // here to init all item tags
-        CItemTags.GLASS_PANES_TINTED
+        CItemTags.DRINKS_CORN_SYRUP
     }
 
-    fun tag(id: String) = tag(id(id))
+    fun tag(id: String): TagKey<Item> = tag(id(id))
 
     fun tag(id: ResourceLocation): TagKey<Item> {
         val tag = Registries.ITEM.tag(id)

@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.tags
 
 import net.minecraft.core.registries.Registries
@@ -11,5 +7,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.util.tag
 
 object DnDEntityTypeTags {
+
     fun key(id: String): TagKey<EntityType<*>> = Registries.ENTITY_TYPE.tag(id(id))
+
 }

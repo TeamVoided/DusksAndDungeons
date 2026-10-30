@@ -20,11 +20,11 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool
 import org.teamvoided.dusks_and_dungeons.data.litho.DnDWorldgenModifiers
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructures
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDPlacedFeature
-import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.datagen.data.litho.modifiers.DnDSurfaceRules
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModProcessorLists.chanceReplaceRule
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModProcessorLists.ruleProcessor
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 
 object WorldgenModifiers : RegistryBootstrapper<WorldgenModifier> {
 
@@ -50,7 +50,7 @@ object WorldgenModifiers : RegistryBootstrapper<WorldgenModifier> {
         val procLists = lookup(Registries.PROCESSOR_LIST)
 
         register(
-            DnDWorldgenModifiers.ADD_CORN,
+            DnDWorldgenModifiers.ADD_CORN_CROP,
             WorldgenModifier.builder()
                 .addProcessorListProcessors(
                     procLists.getOrThrow(ProcessorLists.FARM_PLAINS),

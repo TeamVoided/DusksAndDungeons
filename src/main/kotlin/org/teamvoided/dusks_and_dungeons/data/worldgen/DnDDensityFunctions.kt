@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.data.worldgen
 
 import net.minecraft.core.registries.Registries
@@ -16,8 +12,8 @@ object DnDDensityFunctions {
     val SYPIA_REGION = region("sypia")
     val OVERGROWN_GROTTO_REGION = region("overgrown_grotto")
 
-    fun region(id: String) = create("region/$id")
+    fun region(id: String): ResourceKey<DensityFunction> = key("region/$id")
 
-    fun create(id: String): ResourceKey<DensityFunction> = Registries.DENSITY_FUNCTION.key(id(id))
+    fun key(id: String): ResourceKey<DensityFunction> = Registries.DENSITY_FUNCTION.key(id(id))
 
 }
