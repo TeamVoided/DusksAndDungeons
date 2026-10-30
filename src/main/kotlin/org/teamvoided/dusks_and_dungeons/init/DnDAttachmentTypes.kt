@@ -1,12 +1,7 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.init
 
-@Suppress("UnstableApiUsage")
+//@Suppress("UnstableApiUsage")
 object DnDAttachmentTypes {
-
 
     fun init() = Unit
 

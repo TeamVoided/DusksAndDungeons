@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.init.misc
 
 import net.minecraft.world.level.block.Blocks

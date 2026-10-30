@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.init
 
 import com.mojang.serialization.MapCodec
@@ -16,7 +12,6 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
 import org.teamvoided.dusks_and_dungeons.particle.ShriekDirectionalParticleOption
 import org.teamvoided.dusks_and_dungeons.util.register
-
 
 object DnDParticles {
 
@@ -33,12 +28,14 @@ object DnDParticles {
 
     fun init() = Unit
 
-    fun register(name: String): SimpleParticleType = register(name, FabricParticleTypes.simple())
+    fun register(name: String): SimpleParticleType {
+        return register(name, FabricParticleTypes.simple())
+    }
 
     fun <T : ParticleOptions> register(
-        name: String, codec: MapCodec<T>, packetCodec: StreamCodec<in RegistryFriendlyByteBuf, T>,
+        name: String, codec: MapCodec<T>, streamCodec: StreamCodec<in RegistryFriendlyByteBuf, T>,
     ): ParticleType<T> {
-        return register(name, FabricParticleTypes.complex(codec, packetCodec))
+        return register(name, FabricParticleTypes.complex(codec, streamCodec))
     }
 
     fun <O : ParticleOptions, T : ParticleType<O>> register(id: String, particleType: T): T {

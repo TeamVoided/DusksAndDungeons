@@ -11,11 +11,11 @@ import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDTreeDecoratorTypes
 
 
 class FeatureAtBaseTreeDecorator(private val feature: Holder<PlacedFeature>) : TreeDecorator() {
-    override fun type(): TreeDecoratorType<FeatureAtBaseTreeDecorator> = DnDWorldgen.FEATURE_AT_BASE
+    override fun type(): TreeDecoratorType<FeatureAtBaseTreeDecorator> = DnDTreeDecoratorTypes.FEATURE_AT_BASE
 
     override fun place(placer: Context) {
         val roots: MutableList<BlockPos> = placer.roots()

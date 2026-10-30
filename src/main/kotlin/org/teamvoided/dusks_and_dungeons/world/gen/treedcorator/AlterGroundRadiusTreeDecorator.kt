@@ -8,15 +8,15 @@ import com.google.common.collect.Lists
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.world.level.block.Block
+import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.registries.Registries
-import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
-import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDTreeDecoratorTypes
 import kotlin.math.abs
 
 
@@ -27,7 +27,7 @@ class AlterGroundRadiusTreeDecorator(
     val canReplace: HolderSet<Block>
 ) : TreeDecorator() {
     override fun type(): TreeDecoratorType<*> {
-        return DnDWorldgen.ALTER_GROUND_RADIUS
+        return DnDTreeDecoratorTypes.ALTER_GROUND_RADIUS
     }
 
     override fun place(generator: Context) {

@@ -8,13 +8,13 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.Util
-import net.minecraft.util.ExtraCodecs
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
-import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDTreeDecoratorTypes
 
 class AttachedToTrunkTreeDecorator(
     val probability: Float,
@@ -73,7 +73,7 @@ class AttachedToTrunkTreeDecorator(
     }
 
     override fun type(): TreeDecoratorType<*> {
-        return DnDWorldgen.ATTACHED_TO_TRUNK
+        return DnDTreeDecoratorTypes.ATTACHED_TO_TRUNK
     }
 
     companion object {

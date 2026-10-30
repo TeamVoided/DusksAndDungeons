@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.init.worldgen
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications.create
@@ -34,20 +30,18 @@ object DnDBiomeModifications {
         addVegetation(DnDPlacedFeature.WARPED_WART, DnDBiomeTags.WARPED_WART)
     }
 
-    internal fun addVegetation(feature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>) {
+    fun addVegetation(feature: ResourceKey<PlacedFeature>, biome: TagKey<Biome>) {
         addFeature(Decoration.VEGETAL_DECORATION, feature, biome)
     }
 
-    internal fun addFeature(step: Decoration, feature: ResourceKey<PlacedFeature>, tag: TagKey<Biome>) {
+    fun addFeature(step: Decoration, feature: ResourceKey<PlacedFeature>, tag: TagKey<Biome>) {
         create(id("add/${feature.location().path}")).add(ModificationPhase.ADDITIONS, tag(tag)) {
             it.generationSettings.addFeature(step, feature)
         }
     }
 
-    internal fun replaceVegetation(
-        oldFeature: ResourceKey<PlacedFeature>,
-        newFeature: ResourceKey<PlacedFeature>,
-        tag: TagKey<Biome>,
+    fun replaceVegetation(
+        oldFeature: ResourceKey<PlacedFeature>, newFeature: ResourceKey<PlacedFeature>, tag: TagKey<Biome>,
     ) {
         create(id("replace/${newFeature.location().path}")).add(ModificationPhase.REPLACEMENTS, tag(tag)) { ctx ->
             ctx.generationSettings.removeFeature(Decoration.VEGETAL_DECORATION, oldFeature)

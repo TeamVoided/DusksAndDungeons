@@ -16,7 +16,7 @@ import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDTreeDecoratorTypes
 
 
 class FeatureOnLeavesTreeDecorator(
@@ -25,7 +25,7 @@ class FeatureOnLeavesTreeDecorator(
     val requiredEmptyBlocks: Int,
     val directions: List<Direction>
 ) : TreeDecorator() {
-    override fun type(): TreeDecoratorType<FeatureOnLeavesTreeDecorator> = DnDWorldgen.FEATURE_ON_LEAVES
+    override fun type(): TreeDecoratorType<FeatureOnLeavesTreeDecorator> = DnDTreeDecoratorTypes.FEATURE_ON_LEAVES
 
     override fun place(placer: Context) {
         val worldGenLevel = placer.level() as WorldGenLevel

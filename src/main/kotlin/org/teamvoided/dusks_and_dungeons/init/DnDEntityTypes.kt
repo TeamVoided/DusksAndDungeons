@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
@@ -26,6 +22,7 @@ object DnDEntityTypes {
             .eyeHeight(2.2375F)
             .clientTrackingRange(10)
     )
+
     val THROWN_ITEM = register(
         "thrown_item", EntityType.Builder.of(EntityFactory(::ThrownItemStack), MobCategory.MISC)
             .sized(0.25f, 0.25f)
@@ -38,9 +35,9 @@ object DnDEntityTypes {
         doEvil()
     }
 
-    fun <T : Entity> register(name: String, entityType: EntityType.Builder<T>): EntityType<T> {
+    fun <T : Entity> register(name: String, builder: EntityType.Builder<T>): EntityType<T> {
         val key = Registries.ENTITY_TYPE.key(id(name))
-        return BuiltInRegistries.ENTITY_TYPE.register(key.location(), entityType.build(key.location().toString()))
+        return BuiltInRegistries.ENTITY_TYPE.register(key.location(), builder.build(key.location().toString()))
     }
 
 }

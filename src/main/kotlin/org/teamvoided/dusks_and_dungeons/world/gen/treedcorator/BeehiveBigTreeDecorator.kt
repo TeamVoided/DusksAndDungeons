@@ -6,20 +6,20 @@ package org.teamvoided.dusks_and_dungeons.world.gen.treedcorator
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
+import net.minecraft.core.Direction
 import net.minecraft.world.level.block.BeehiveBlock
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity.Occupant
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraft.core.Direction
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
-import org.teamvoided.dusks_and_dungeons.init.DnDWorldgen
+import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDTreeDecoratorTypes
 import kotlin.math.max
 import kotlin.math.min
 
 class BeehiveBigTreeDecorator(private val probability: Float) : TreeDecorator() {
-    override fun type(): TreeDecoratorType<*> = DnDWorldgen.BEEHIVE_BIG_TREE_DECORATOR
+    override fun type(): TreeDecoratorType<*> = DnDTreeDecoratorTypes.BEEHIVE_BIG_TREE_DECORATOR
 
     override fun place(placer: Context) {
         val randomGenerator = placer.random()

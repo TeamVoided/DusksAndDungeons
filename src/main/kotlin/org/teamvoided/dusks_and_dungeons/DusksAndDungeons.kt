@@ -15,7 +15,6 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.EVIL_BLOCKS
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.events.DnDEvents
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDFamilies
-import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDBiomeModifications
 import org.teamvoided.voidlib.init.VEventInit
 
 @Suppress("unused")
@@ -43,7 +42,6 @@ object DusksAndDungeons {
         DnDEffects.init()
         DnDEntityTypes.init()
         DnDWorldgen.init()
-        DnDBiomeModifications.init()
         DnDParticles.init()
         DnDSoundEvents.init()
         DnDTabs.init()
