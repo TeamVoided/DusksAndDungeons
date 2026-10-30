@@ -12,7 +12,6 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
 import org.teamvoided.dusks_and_dungeons.datagen.data.tag.block.SandTags
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWoodTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
@@ -486,7 +485,11 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider) : DBlockTagProvider(
     }
 
     private fun woodTags() {
-        WOOD_SETS.filterNot(excludeWood::contains).forEach { it.createWoodTags(::getOrCreateTagBuilder) }
+        WOOD_SETS.filterNot(excludeWood::contains).forEach { set ->
+            getOrCreateTagBuilder(DnDBlockTags.WOOD_STAIRS_THAT_BURN).add(set.stairs)
+            getOrCreateTagBuilder(DnDBlockTags.WOOD_SLABS_THAT_BURN).add(set.slab)
+            getOrCreateTagBuilder(DnDBlockTags.WOOD_WALLS_THAT_BURN).add(set.wall)
+        }
         getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE).forceAddTag(DnDBlockTags.WOODEN_WALLS)
 
         getOrCreateTagBuilder(DnDBlockTags.WOODEN_WALLS)

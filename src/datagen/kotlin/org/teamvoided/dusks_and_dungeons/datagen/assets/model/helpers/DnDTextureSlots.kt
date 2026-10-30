@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
 import net.minecraft.data.models.model.TextureSlot
@@ -11,9 +7,10 @@ import net.minecraft.data.models.model.TextureSlot
  */
 object DnDTextureSlots {
 
-    val OVERLAY = create("overlay")
+    val TINTED = slot("tinted")
+    val OVERLAY = slot("overlay")
 
-    fun create(name: String): TextureSlot = TextureSlot.create(name)
-    fun create(name: String, default: TextureSlot): TextureSlot = TextureSlot.create(name, default)
+    fun slot(name: String): TextureSlot = TextureSlot.create(name)
+    fun slot(name: String, default: TextureSlot): TextureSlot = TextureSlot.create(name, default)
 
 }

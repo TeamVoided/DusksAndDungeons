@@ -23,7 +23,7 @@ fun BlockModelGenerators.tintedBookshelf(bookshelf: Block, top: Block) {
         .put(TextureSlot.SIDE, blockId(bookshelf))
         .put(TextureSlot.END, blockId(top))
         .put(DnDTextureSlots.OVERLAY, blockId(bookshelf, "_overlay"))
-    val model = DnDModels.BOOKSHELF_TINTED.create(bookshelf, texture, modelOutput)
+    val model = DnDModels.Tinted.BOOKSHELF_TINTED.create(bookshelf, texture, modelOutput)
 
     blockStateOutput.accept(createSimpleBlock(bookshelf, model))
 }
@@ -41,7 +41,7 @@ fun BlockModelGenerators.tintedBrushableBlock(block: Block) {
             PropertyDispatch.property(BlockStateProperties.DUSTED).generate { dusted ->
                 val suffix = "_$dusted"
                 variant(
-                    DnDModels.CUBE_ALL_TINTED.createWithSuffix(
+                    DnDModels.Tinted.CUBE_ALL.createWithSuffix(
                         block, suffix, TextureMapping().put(TextureSlot.ALL, blockId(block, suffix)), modelOutput
                     )
                 )
@@ -59,7 +59,7 @@ fun BlockModelGenerators.tintedSet(set: AbstractBlockSet) {
 }
 
 fun BlockModelGenerators.tintedSet(set: AbstractBlockSet, texture: ResourceLocation) {
-    val baseModel = DnDModels.CUBE_ALL_TINTED.create(set.parent, TextureMapping.cube(texture), modelOutput)
+    val baseModel = DnDModels.Tinted.CUBE_ALL.create(set.parent, TextureMapping.cube(texture), modelOutput)
     blockStateOutput.accept(createSimpleBlock(set.parent, baseModel))
     stairsTinted(set.stairs, texture, texture, texture)
     slabTinted(set.slab, texture, texture, texture, set.parent)
@@ -70,7 +70,7 @@ fun BlockModelGenerators.tintedChiseledSandstone(chiseled: Block, endTexture: Re
     val texture = TextureMapping()
         .put(TextureSlot.SIDE, blockId(chiseled))
         .put(TextureSlot.END, endTexture)
-    val modelId = DnDModels.CUBE_COLUMN_TINTED.create(chiseled, texture, modelOutput)
+    val modelId = DnDModels.Tinted.CUBE_COLUMN.create(chiseled, texture, modelOutput)
     blockStateOutput.accept(createSimpleBlock(chiseled, modelId))
 }
 
@@ -94,7 +94,7 @@ fun BlockModelGenerators.tintedCutSandstoneSet(set: AbstractBlockSet, sandstone:
     val texture = TextureMapping()
         .put(TextureSlot.SIDE, sideTexture)
         .put(TextureSlot.END, topTexture)
-    val modelId = DnDModels.CUBE_COLUMN_TINTED.create(block, texture, modelOutput)
+    val modelId = DnDModels.Tinted.CUBE_COLUMN.create(block, texture, modelOutput)
     blockStateOutput.accept(createSimpleBlock(block, modelId))
     stairsTinted(set.stairs, topTexture, sideTexture, topTexture)
     slabTinted(set.slab, topTexture, sideTexture, topTexture, block)

@@ -52,36 +52,70 @@ data object DnDModels {
     val HEADSTONE_CENTERED = parent("headstone_centered", ALL)
     // endregion
 
-    // region Tinted
-    val CUBE_ALL_TINTED = tintedBlock("cube_all", ALL)
-    val CUBE_COLUMN_TINTED = tintedBlock("cube_column", END, SIDE)
-    val CUBE_BOTTOM_TOP = tintedBlock("cube_bottom_top", TOP, BOTTOM, SIDE)
+    object Tinted {
 
-    val BUTTON_TINTED = tintedBlock("button", TEXTURE)
-    val BUTTON_PRESSED_TINTED = tintedBlock("button_pressed", "_pressed", TEXTURE)
-    val BUTTON_INVENTORY_TINTED = tintedBlock("button_inventory", "_inventory", TEXTURE)
+        // Cube
+        val CUBE_ALL = tintedBlock("cube_all", ALL)
+        val CUBE_COLUMN = tintedBlock("cube_column", END, SIDE)
+        val CUBE_BOTTOM_TOP = tintedBlock("cube_bottom_top", TOP, BOTTOM, SIDE)
+        val CUBE_COLUMN_HORIZONTAL = tintedBlock("cube_column_horizontal", "_horizontal", END, SIDE)
 
-    val DOOR_BOTTOM_LEFT_TINTED = tintedBlock("door_bottom_left", "_bottom_left", TOP, BOTTOM)
-    val DOOR_BOTTOM_LEFT_OPEN_TINTED = tintedBlock("door_bottom_left_open", "_bottom_left_open", TOP, BOTTOM)
-    val DOOR_BOTTOM_RIGHT_TINTED = tintedBlock("door_bottom_right", "_bottom_right", TOP, BOTTOM)
-    val DOOR_BOTTOM_RIGHT_OPEN_TINTED = tintedBlock("door_bottom_right_open", "_bottom_right_open", TOP, BOTTOM)
-    val DOOR_TOP_LEFT_TINTED = tintedBlock("door_top_left", "_top_left", TOP, BOTTOM)
-    val DOOR_TOP_LEFT_OPEN_TINTED = tintedBlock("door_top_left_open", "_top_left_open", TOP, BOTTOM)
-    val DOOR_TOP_RIGHT_TINTED = tintedBlock("door_top_right", "_top_right", TOP, BOTTOM)
-    val DOOR_TOP_RIGHT_OPEN_TINTED = tintedBlock("door_top_right_open", "_top_right_open", TOP, BOTTOM)
+        // Stairs
+        val STAIRS = tintedBlock("stairs", BOTTOM, TOP, SIDE)
+        val STAIRS_INNER = tintedBlock("stairs_inner", "_inner", BOTTOM, TOP, SIDE)
+        val STAIRS_OUTER = tintedBlock("stairs_outer", "_outer", BOTTOM, TOP, SIDE)
 
-    val PRESSURE_PLATE_UP_TINTED = tintedBlock("pressure_plate_up", TEXTURE)
-    val PRESSURE_PLATE_DOWN_TINTED = tintedBlock("pressure_plate_down", "_down", TEXTURE)
+        // Slab
+        val SLAB_BOTTOM = tintedBlock("slab", BOTTOM, TOP, SIDE)
+        val SLAB_TOP = tintedBlock("slab_top", "_top", BOTTOM, TOP, SIDE)
 
-    val ORIENTABLE_TRAPDOOR_TOP_TINTED = tintedBlock("orientable_trapdoor_top", "_top", TEXTURE)
-    val ORIENTABLE_TRAPDOOR_BOTTOM_TINTED = tintedBlock("orientable_trapdoor_bottom", "_bottom", TEXTURE)
-    val ORIENTABLE_TRAPDOOR_OPEN_TINTED = tintedBlock("orientable_trapdoor_open", "_open", TEXTURE)
+        // Wall
+        val WALL_POST = tintedBlock("wall_post", "_post", WALL)
+        val WALL_LOW_SIDE = tintedBlock("wall_side", "_side", WALL)
+        val WALL_TALL_SIDE = tintedBlock("wall_side_tall", "_side_tall", WALL)
+        val WALL_INVENTORY = tintedBlock("wall_inventory", "_inventory", WALL)
 
-    val BOOKSHELF_TINTED = tintedBlock("bookshelf", SIDE, END, DnDTextureSlots.OVERLAY)
+        // Fence
+        val FENCE_POST = tintedBlock("fence_post", "_post", TEXTURE)
+        val FENCE_SIDE = tintedBlock("fence_side", "_side", TEXTURE)
+        val FENCE_INVENTORY = tintedBlock("fence_inventory", "_inventory", TEXTURE)
 
-    val CARPET_TINTED = tintedBlock("carpet", WOOL)
-    val CARPET_DOWN_TINTED = tintedBlock("carpet_down", "_down", WOOL)
-    // endregion
+        // Fence Gate
+        val FENCE_GATE_CLOSED = tintedBlock("fence_gate", TEXTURE)
+        val FENCE_GATE_OPEN = tintedBlock("fence_gate_open", "_open", TEXTURE)
+        val FENCE_GATE_WALL_CLOSED = tintedBlock("fence_gate_wall", "_wall", TEXTURE)
+        val FENCE_GATE_WALL_OPEN = tintedBlock("fence_gate_wall_open", "_wall_open", TEXTURE)
+
+        // Button
+        val BUTTON = tintedBlock("button", TEXTURE)
+        val BUTTON_PRESSED = tintedBlock("button_pressed", "_pressed", TEXTURE)
+        val BUTTON_INVENTORY = tintedBlock("button_inventory", "_inventory", TEXTURE)
+
+        // Door
+        val DOOR_BOTTOM_LEFT = tintedBlock("door_bottom_left", "_bottom_left", TOP, BOTTOM)
+        val DOOR_BOTTOM_LEFT_OPEN_TINTED = tintedBlock("door_bottom_left_open", "_bottom_left_open", TOP, BOTTOM)
+        val DOOR_BOTTOM_RIGHT_TINTED = tintedBlock("door_bottom_right", "_bottom_right", TOP, BOTTOM)
+        val DOOR_BOTTOM_RIGHT_OPEN_TINTED = tintedBlock("door_bottom_right_open", "_bottom_right_open", TOP, BOTTOM)
+        val DOOR_TOP_LEFT_TINTED = tintedBlock("door_top_left", "_top_left", TOP, BOTTOM)
+        val DOOR_TOP_LEFT_OPEN_TINTED = tintedBlock("door_top_left_open", "_top_left_open", TOP, BOTTOM)
+        val DOOR_TOP_RIGHT_TINTED = tintedBlock("door_top_right", "_top_right", TOP, BOTTOM)
+        val DOOR_TOP_RIGHT_OPEN_TINTED = tintedBlock("door_top_right_open", "_top_right_open", TOP, BOTTOM)
+
+        // Pressure Plate
+        val PRESSURE_PLATE_UP_TINTED = tintedBlock("pressure_plate_up", TEXTURE)
+        val PRESSURE_PLATE_DOWN_TINTED = tintedBlock("pressure_plate_down", "_down", TEXTURE)
+
+        // Trapdoor
+        val ORIENTABLE_TRAPDOOR_TOP_TINTED = tintedBlock("orientable_trapdoor_top", "_top", TEXTURE)
+        val ORIENTABLE_TRAPDOOR_BOTTOM_TINTED = tintedBlock("orientable_trapdoor_bottom", "_bottom", TEXTURE)
+        val ORIENTABLE_TRAPDOOR_OPEN_TINTED = tintedBlock("orientable_trapdoor_open", "_open", TEXTURE)
+
+        // Misc
+        val BOOKSHELF_TINTED = tintedBlock("bookshelf", SIDE, END, DnDTextureSlots.OVERLAY)
+
+        val CARPET_TINTED = tintedBlock("carpet", WOOL)
+        val CARPET_DOWN_TINTED = tintedBlock("carpet_down", "_down", WOOL)
+    }
 
     val CARPET_DOWN = parent("carpet_down", "_down", WOOL)
 

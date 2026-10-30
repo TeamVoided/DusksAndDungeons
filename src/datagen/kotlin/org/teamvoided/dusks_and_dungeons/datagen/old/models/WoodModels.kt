@@ -6,6 +6,7 @@ package org.teamvoided.dusks_and_dungeons.datagen.old.models
 
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.model.TexturedModel
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.bookshelf
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createItemModel
@@ -13,10 +14,12 @@ import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.createSign
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.tintedBookshelf
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.block_model.*
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createLeafPile
-import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWood
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.slab
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.stairs
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.wall
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
+import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 
 object WoodModels {
 
@@ -178,6 +181,12 @@ object WoodModels {
             DnDBlocks.VERDANT_HANGING_SIGN, DnDBlocks.VERDANT_WALL_HANGING_SIGN
         )
         createSign(DnDBlocks.VERDANT_PLANKS, DnDBlocks.VERDANT_SIGN, DnDBlocks.VERDANT_WALL_SIGN)
+    }
+
+    fun BlockModelGenerators.createWood(set: AbstractBlockSet, log: Block) {
+        stairs(set.stairs, log)
+        slab(set.slab, log, set.parent)
+        wall(set.wall, log)
     }
 
 }
