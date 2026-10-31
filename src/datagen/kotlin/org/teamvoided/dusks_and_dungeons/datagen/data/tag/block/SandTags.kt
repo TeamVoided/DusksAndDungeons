@@ -51,7 +51,7 @@ object SandTags {
             )
         getOrCreateTagBuilder(ConventionalBlockTags.UNCOLORED_SANDSTONE_STAIRS)
             .add(
-                DnDBlocks.CUT_SANDSTONE_STAIR,
+                DnDBlocks.CUT_SANDSTONE_STAIRS,
                 DnDBlocks.ROUGH_SANDSTONE.stairs,
                 DnDBlocks.POLISHED_SANDSTONE.stairs,
             )
@@ -78,7 +78,7 @@ object SandTags {
             )
         getOrCreateTagBuilder(ConventionalBlockTags.RED_SANDSTONE_STAIRS)
             .add(
-                DnDBlocks.CUT_RED_SANDSTONE_STAIR,
+                DnDBlocks.CUT_RED_SANDSTONE_STAIRS,
                 DnDBlocks.ROUGH_RED_SANDSTONE.stairs,
                 DnDBlocks.POLISHED_RED_SANDSTONE.stairs,
             )

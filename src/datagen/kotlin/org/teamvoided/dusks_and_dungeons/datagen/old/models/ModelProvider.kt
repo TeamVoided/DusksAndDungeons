@@ -87,11 +87,11 @@ class ModelProvider(o: FabricOutput) : FabricModelProvider(o) {
         gen.wall(DnDBlocks.SNOW_SET.wall, Blocks.SNOW)
 
         // Pairs
-        gen.stairs(DnDBlocks.SMOOTH_STONE_STAIR, Blocks.SMOOTH_STONE)
+        gen.stairs(DnDBlocks.SMOOTH_STONE_STAIRS, Blocks.SMOOTH_STONE)
         gen.wall(DnDBlocks.SMOOTH_STONE_WALL, Blocks.SMOOTH_STONE)
-        gen.stairs(DnDBlocks.CUT_SANDSTONE_STAIR, mc("block/sandstone_top"), blockId(Blocks.CUT_SANDSTONE))
+        gen.stairs(DnDBlocks.CUT_SANDSTONE_STAIRS, mc("block/sandstone_top"), blockId(Blocks.CUT_SANDSTONE))
         gen.wall(DnDBlocks.CUT_SANDSTONE_WALL, Blocks.CUT_SANDSTONE)
-        gen.stairs(DnDBlocks.CUT_RED_SANDSTONE_STAIR, mc("block/red_sandstone_top"), blockId(Blocks.CUT_RED_SANDSTONE))
+        gen.stairs(DnDBlocks.CUT_RED_SANDSTONE_STAIRS, mc("block/red_sandstone_top"), blockId(Blocks.CUT_RED_SANDSTONE))
         gen.wall(DnDBlocks.CUT_RED_SANDSTONE_WALL, Blocks.CUT_RED_SANDSTONE)
 
         // Walls

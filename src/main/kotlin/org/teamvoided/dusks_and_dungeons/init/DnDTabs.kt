@@ -126,7 +126,7 @@ object DnDTabs {
             )
             addAfter(Blocks.STONE_SLAB, DnDBlocks.STONE_WALL)
 
-            addAfter(Blocks.SMOOTH_STONE, DnDBlocks.SMOOTH_STONE_STAIR)
+            addAfter(Blocks.SMOOTH_STONE, DnDBlocks.SMOOTH_STONE_STAIRS)
             addAfter(Blocks.SMOOTH_STONE_SLAB, DnDBlocks.SMOOTH_STONE_WALL)
 
             addAfter(Items.MOSSY_COBBLESTONE_WALL, DnDItemLists.overgrownCobblestone)
@@ -158,10 +158,10 @@ object DnDTabs {
 
             addAfter(Blocks.SMOOTH_SANDSTONE_SLAB, DnDBlocks.SMOOTH_SANDSTONE_WALL)
 
-            addAfter(Blocks.CUT_SANDSTONE, DnDBlocks.CUT_SANDSTONE_STAIR)
+            addAfter(Blocks.CUT_SANDSTONE, DnDBlocks.CUT_SANDSTONE_STAIRS)
             addAfter(Blocks.CUT_SANDSTONE_SLAB, DnDBlocks.CUT_SANDSTONE_WALL)
             addAfter(Blocks.SMOOTH_RED_SANDSTONE_SLAB, DnDBlocks.SMOOTH_RED_SANDSTONE_WALL)
-            addAfter(Blocks.CUT_RED_SANDSTONE, DnDBlocks.CUT_RED_SANDSTONE_STAIR)
+            addAfter(Blocks.CUT_RED_SANDSTONE, DnDBlocks.CUT_RED_SANDSTONE_STAIRS)
             addAfter(Blocks.CUT_RED_SANDSTONE_SLAB, DnDBlocks.CUT_RED_SANDSTONE_WALL)
 
             addAfter(Blocks.PRISMARINE_BRICK_SLAB, DnDBlocks.PRISMARINE_BRICK_WALL)

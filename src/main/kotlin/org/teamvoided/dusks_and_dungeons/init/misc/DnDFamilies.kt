@@ -59,7 +59,7 @@ object DnDFamilies {
 
     val SMOOTH_STONE =
         familyBuilder(Blocks.SMOOTH_STONE)
-            .stairs(DnDBlocks.SMOOTH_STONE_STAIR)
+            .stairs(DnDBlocks.SMOOTH_STONE_STAIRS)
             .slab(Blocks.SMOOTH_STONE_SLAB)
             .wall(DnDBlocks.SMOOTH_STONE_WALL)
             .build()

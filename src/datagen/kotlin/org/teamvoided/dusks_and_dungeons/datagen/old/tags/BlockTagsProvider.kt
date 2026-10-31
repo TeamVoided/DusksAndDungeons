@@ -95,9 +95,9 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider) : DBlockTagProvider(
 
         getOrCreateTagBuilder(BlockTags.STAIRS)
             .add(
-                DnDBlocks.SMOOTH_STONE_STAIR,
-                DnDBlocks.CUT_SANDSTONE_STAIR,
-                DnDBlocks.CUT_RED_SANDSTONE_STAIR,
+                DnDBlocks.SMOOTH_STONE_STAIRS,
+                DnDBlocks.CUT_SANDSTONE_STAIRS,
+                DnDBlocks.CUT_RED_SANDSTONE_STAIRS,
             )
         getOrCreateTagBuilder(BlockTags.WALLS)
             .forceAddTag(DnDBlockTags.WOODEN_WALLS)

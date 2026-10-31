@@ -80,11 +80,11 @@ class RecipesProvider(o: FabricOutput, p: FutureProvider) : FabricRecipeProvider
         output.createStonecuttingSet(DnDBlocks.POLISHED_RED_SANDSTONE, Blocks.CUT_RED_SANDSTONE)
 
         // Pairs
-        output.createStoneStairs(DnDBlocks.SMOOTH_STONE_STAIR, Blocks.SMOOTH_STONE)
+        output.createStoneStairs(DnDBlocks.SMOOTH_STONE_STAIRS, Blocks.SMOOTH_STONE)
         output.createStoneWall(DnDBlocks.SMOOTH_STONE_WALL, Blocks.SMOOTH_STONE)
-        output.createStoneStairs(DnDBlocks.CUT_SANDSTONE_STAIR, Blocks.CUT_SANDSTONE)
+        output.createStoneStairs(DnDBlocks.CUT_SANDSTONE_STAIRS, Blocks.CUT_SANDSTONE)
         output.createStoneWall(DnDBlocks.CUT_SANDSTONE_WALL, Blocks.CUT_SANDSTONE)
-        output.createStoneStairs(DnDBlocks.CUT_RED_SANDSTONE_STAIR, Blocks.CUT_RED_SANDSTONE)
+        output.createStoneStairs(DnDBlocks.CUT_RED_SANDSTONE_STAIRS, Blocks.CUT_RED_SANDSTONE)
         output.createStoneWall(DnDBlocks.CUT_RED_SANDSTONE_WALL, Blocks.CUT_RED_SANDSTONE)
         // Walls
         output.createStoneWall(DnDBlocks.STONE_WALL, Blocks.STONE)
