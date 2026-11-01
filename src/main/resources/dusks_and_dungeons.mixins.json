@@ -16,7 +16,6 @@
     "accessors.AbstractCandleBlockAccessor",
     "accessors.CompositeEntryBaseAccessor",
     "accessors.CropBlockAccessor",
-    "accessors.ImmutableListBuilderAccessor",
     "accessors.LootContextParamSetsAccessor",
     "accessors.LootItemAccessor",
     "accessors.LootPoolBuilderAccessor",

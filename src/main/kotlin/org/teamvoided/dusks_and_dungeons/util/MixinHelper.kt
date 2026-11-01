@@ -4,8 +4,8 @@
 
 package org.teamvoided.dusks_and_dungeons.util
 
+import com.google.common.collect.ImmutableList
 import me.fzzyhmstrs.fzzy_config.cast
-import me.fzzyhmstrs.fzzy_config.nullCast
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.particles.SimpleParticleType
@@ -75,9 +75,18 @@ fun LootItem.setItem(holder: Holder<Item>) = (this as LootItemAccessor).dnd_setI
 fun CompositeEntryBase.getChildren(): List<LootPoolEntryContainer> = (this as CompositeEntryBaseAccessor).dnd_children()
 
 
-fun LootPool.Builder.modifyEntries(modifier: Consumer<LootPoolEntryContainer>) {
-    val contents = cast<LootPoolBuilderAccessor>().dnd_entries().cast<ImmutableListBuilderAccessor>().dnd_contents()
-    for (rawEntry in contents) {
-        rawEntry.nullCast<LootPoolEntryContainer>()?.let(modifier::accept)
+fun LootPool.Builder.modifyEntries(modifier: Consumer<LootPoolEntryContainer>): LootPool.Builder {
+    val self = cast<LootPoolBuilderAccessor>()
+    val list = ArrayList(self.dnd_entries().build())
+    val iterator = list.listIterator()
+
+    while (iterator.hasNext()) {
+        val item = iterator.next()
+        modifier.accept(item)
+        iterator.set(item)
     }
+
+    self.dnd_entries(ImmutableList.builder())
+    self.dnd_entries().addAll(list)
+    return this
 }
