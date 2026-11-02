@@ -12,7 +12,7 @@ import net.minecraft.core.Direction
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.phys.shapes.Shapes
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
+import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
 
 class BigChainBlock(settings: Properties) : ChainBlock(settings) {
 

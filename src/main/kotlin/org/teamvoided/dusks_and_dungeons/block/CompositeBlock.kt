@@ -38,6 +38,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.*
+import org.teamvoided.voidlib.helpers.item.giveItem
 
 open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), BlockPickInteractionAware {
 

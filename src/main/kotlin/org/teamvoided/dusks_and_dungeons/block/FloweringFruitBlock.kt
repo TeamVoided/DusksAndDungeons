@@ -29,8 +29,8 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
-import org.teamvoided.dusks_and_dungeons.util.isShears
+import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
+import org.teamvoided.voidlib.helpers.item.isShears
 
 class FloweringFruitBlock(properties: Properties) : Block(properties), BonemealableBlock,
     SimpleWaterloggedBlock {

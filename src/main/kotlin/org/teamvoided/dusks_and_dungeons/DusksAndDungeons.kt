@@ -11,10 +11,9 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.dusks_and_dungeons.config.DnDConfig
 import org.teamvoided.dusks_and_dungeons.init.*
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.EVIL_BLOCKS
-import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.events.DnDEvents
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDFamilies
+import org.teamvoided.dusks_and_dungeons.util.joinEvilBlockItems
 import org.teamvoided.voidlib.init.VEventInit
 
 @Suppress("unused")
@@ -31,7 +30,7 @@ object DusksAndDungeons {
         log.info("Its DnD time!")
         DnDItems.init()
         DnDBlocks.init()
-        EVIL_ITEMS.addAll(EVIL_BLOCKS.map { it.asItem() })
+        joinEvilBlockItems()
         DnDFamilies.init()
 
         DnDLootContext.init()

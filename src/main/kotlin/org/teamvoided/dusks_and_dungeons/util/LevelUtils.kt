@@ -1,6 +1,3 @@
-/*
- * TODO(cleanup)
- */
 
 package org.teamvoided.dusks_and_dungeons.util
 
@@ -26,19 +23,21 @@ fun Level.setBlockAndUpdateFluid(pos: BlockPos, blockState: BlockState, updateFl
     }
 }
 
+fun Level.scheduleFluidTick(pos: BlockPos, state: BlockState) {
+    scheduleTick(pos, state.fluidState.type, state.fluidState.type.getTickDelay(this))
+}
+
 fun Level.dndLevelEvent(id: ResourceLocation, blockPos: BlockPos, data: Int) = dndLevelEvent(null, id, blockPos, data)
 fun Level.dndLevelEvent(player: Player?, id: ResourceLocation, blockPos: BlockPos, data: Int) {
-    (this as? ServerLevel)?.server
-        ?.playerList
-        ?.broadcast(
-            player,
-            blockPos.x.toDouble(),
-            blockPos.y.toDouble(),
-            blockPos.z.toDouble(),
-            64.0,
-            dimension(),
-            DnDLevelEventPayload(id, blockPos, data)
-        )
+    (this as? ServerLevel)?.server?.playerList?.broadcast(
+        player,
+        blockPos.x.toDouble(),
+        blockPos.y.toDouble(),
+        blockPos.z.toDouble(),
+        64.0,
+        dimension(),
+        DnDLevelEventPayload(id, blockPos, data)
+    )
 }
 
 fun PlayerList.broadcast(
@@ -56,8 +55,4 @@ fun PlayerList.broadcast(
             }
         }
     }
-}
-
-fun Level.scheduleFluidTick(pos: BlockPos, state: BlockState) {
-    scheduleTick(pos, state.fluidState.type, state.fluidState.type.getTickDelay(this))
 }

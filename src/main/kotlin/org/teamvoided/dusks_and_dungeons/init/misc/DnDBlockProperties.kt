@@ -9,9 +9,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCop
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
-import org.teamvoided.dusks_and_dungeons.util.block.cornSyrupBlockSound
 import org.teamvoided.dusks_and_dungeons.util.block.luminance
-import org.teamvoided.dusks_and_dungeons.util.block.rootBlockSound
 import java.util.function.Consumer
 
 //(ender) This file should not reference DnDBlocks
@@ -25,7 +23,7 @@ object DnDBlockProperties {
         .pushReaction(PushReaction.DESTROY)
     val CORN_SYRUP: Properties = ofFullCopy(HONEY_BLOCK)
         .mapColor(MapColor.PODZOL)
-        .sound(cornSyrupBlockSound)
+        .sound(DnDSoundTypes.CORN_SYRUP_BLOCK)
     val ROOT_BLOCK: Properties = Properties.of()
         .mapColor(MapColor.PODZOL)
         .instrument(NoteBlockInstrument.BASS)
@@ -34,7 +32,7 @@ object DnDBlockProperties {
         .isSuffocating(Blocks::never)
         .isViewBlocking(Blocks::never)
         .ignitedByLava()
-        .sound(rootBlockSound)
+        .sound(DnDSoundTypes.ROOT_BLOCK)
     val WILD_WHEAT: Properties = Properties.of()
         .mapColor(MapColor.PLANT)
         .noCollission()

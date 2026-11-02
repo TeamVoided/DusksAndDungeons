@@ -2,8 +2,6 @@
  * TODO(cleanup)
  */
 
-@file:Suppress("unused")
-
 package org.teamvoided.dusks_and_dungeons.util.block
 
 import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry
@@ -13,6 +11,7 @@ import net.minecraft.core.FrontAndTop
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.core.particles.ParticleTypes.SOUL_FIRE_FLAME
 import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.item.HoeItem
@@ -27,7 +26,6 @@ import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
-import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
@@ -36,6 +34,7 @@ import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.*
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockProperties
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDSoundTypes
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.helpers.addAndReturn
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock
@@ -44,25 +43,9 @@ import org.teamvoided.voidmill.sign.VoidWallHangingSignBlock
 import org.teamvoided.voidmill.sign.VoidWallSignBlock
 import java.util.function.ToIntFunction
 
-@Suppress("DEPRECATION")
-fun getId(block: Block): ResourceLocation = block.builtInRegistryHolder().key().location()
+fun getId(block: Block): ResourceLocation = BuiltInRegistries.BLOCK.getKey(block)
 
-fun symmetricalBox(xzMin: Double, yMin: Double, xzMax: Double, yMax: Double): VoxelShape =
-    Block.box(xzMin, yMin, xzMin, xzMax, yMax, xzMax)
-
-fun symmetricalBoxY(xzMin: Double, yMin: Double, yMax: Double): VoxelShape =
-    Block.box(xzMin, yMin, xzMin, 16 - xzMin, yMax, 16 - xzMin)
-
-fun symmetricalBoxZ(xyMin: Double, zMin: Double, zMax: Double): VoxelShape =
-    Block.box(xyMin, xyMin, zMin, 16 - xyMin, 16 - xyMin, zMax)
-
-fun symmetricalBoxX(yzMin: Double, xMin: Double, xMax: Double): VoxelShape =
-    Block.box(xMin, yzMin, yzMin, xMax, 16 - yzMin, 16 - yzMin)
-
-//val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 6.0)
-//val CENTER_SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 5.0, 16.0, 16.0, 11.0)
-
-fun BlockPlaceContext.isCrouching(): Boolean = this.player?.isCrouching == true
+fun BlockPlaceContext.isCrouching(): Boolean = player?.isCrouching == true
 
 fun BlockPlaceContext.getOrientation(): FrontAndTop {
     val nearestLookingDirection: Direction = nearestLookingDirection.opposite
@@ -144,8 +127,6 @@ fun <T : Any, Y : T> MutableCollection<T>.addDev(element: Y): Y {
     return element
 }
 
-fun blockOf(block: Block): Block = Block(ofFullCopy(block))
-
 fun stairsOf(block: Block): Block = StairBlock(block.defaultBlockState(), ofFullCopy(block))
 
 fun slabOf(block: Block): Block = SlabBlock(ofFullCopy(block))
@@ -189,13 +170,13 @@ fun wallHangingSignOf(woodType: WoodType, block: Block, hangingSign: Block): Blo
 
 
 // Candles
-fun bigCandleOf(candle: Block) = BigCandleBlock(ParticleTypes.FLAME, ofFullCopy(candle).sound(bigCandleSound))
+fun bigCandleOf(candle: Block) = BigCandleBlock(ParticleTypes.FLAME, ofFullCopy(candle).sound(DnDSoundTypes.BIG_CANDLE))
 fun bigCandleCakeOf(block: Block) = BigCandleCakeBlock(block, ParticleTypes.FLAME, ofFullCopy(CANDLE_CAKE))
 
 // Soul
 fun soulCandleOf(candle: Block) = SoulCandleBlock(ofFullCopy(candle))
 fun soulCandleCakeOf(block: Block) = SoulCandleCakeBlock(block, ofFullCopy(CANDLE_CAKE))
-fun bigSoulCandleOf(candle: Block) = BigCandleBlock(SOUL_FIRE_FLAME, ofFullCopy(candle).sound(bigCandleSound))
+fun bigSoulCandleOf(candle: Block) = BigCandleBlock(SOUL_FIRE_FLAME, ofFullCopy(candle).sound(DnDSoundTypes.BIG_CANDLE))
 fun bigSoulCandleCakeOf(block: Block) = BigCandleCakeBlock(block, SOUL_FIRE_FLAME, ofFullCopy(CANDLE_CAKE))
 
 // Other

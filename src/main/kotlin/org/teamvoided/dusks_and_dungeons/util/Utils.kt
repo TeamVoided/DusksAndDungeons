@@ -2,7 +2,7 @@ package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.util.Mth
 
-// TODO (1.0) either move this to a separate file or just move to companion objects for use cases
+// TODO(1.0) either move this to a separate file or just move to companion objects for use cases
 @Deprecated("Marked for removal in 1.0")
 object Utils {
 

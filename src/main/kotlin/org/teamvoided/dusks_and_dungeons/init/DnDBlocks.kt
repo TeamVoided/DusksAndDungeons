@@ -38,6 +38,7 @@ import org.teamvoided.dusks_and_dungeons.block.sapling.ThreeWideTreeSaplingBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockSetTypes
+import org.teamvoided.dusks_and_dungeons.init.misc.DnDSoundTypes
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDWoodTypes
 import org.teamvoided.dusks_and_dungeons.init.misc.VVAliases
 import org.teamvoided.dusks_and_dungeons.util.block.*
@@ -511,10 +512,10 @@ object DnDBlocks {
 
     // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Functional Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
 
-    val BIG_CHAIN = register("big_chain", ::BigChainBlock, ofFullCopy(CHAIN).sound(bigChainSound)).pickaxe().cutout()
-    val BIG_LANTERN = register("big_lantern", ::BigLanternBlock, ofFullCopy(LANTERN).sound(bigLanternSound)).pickaxe()
+    val BIG_CHAIN = register("big_chain", ::BigChainBlock, ofFullCopy(CHAIN).sound(DnDSoundTypes.BIG_CHAIN)).pickaxe().cutout()
+    val BIG_LANTERN = register("big_lantern", ::BigLanternBlock, ofFullCopy(LANTERN).sound(DnDSoundTypes.BIG_LANTERN)).pickaxe()
     val BIG_SOUL_LANTERN =
-        register("big_soul_lantern", ::BigLanternBlock, ofFullCopy(SOUL_LANTERN).sound(bigLanternSound)).pickaxe()
+        register("big_soul_lantern", ::BigLanternBlock, ofFullCopy(SOUL_LANTERN).sound(DnDSoundTypes.BIG_LANTERN)).pickaxe()
 
     val REDSTONE_LANTERN = register("redstone_lantern", ::RedstoneLanternBlock, Prop.RESTONE_LANTERN).pickaxe().cutout()
     val BIG_REDSTONE_LANTERN = register(
@@ -915,11 +916,13 @@ object DnDBlocks {
     }
 
     // TODO(1.0) make this use 21.11 rules
+    @Deprecated("Will be not usable post 1.21.1", replaceWith = ReplaceWith("register(name, block, Properties.of())"))
     fun <T : Block> registerOld(id: String, block: T): T {
         return register(id, { block }, Properties.of())
     }
 
     // TODO(1.0) make this use 21.11 rules
+    @Deprecated("Will be not usable post 1.21.1", replaceWith = ReplaceWith("registerNoItem(name, block, Properties.of())"))
     fun <T : Block> registerNoItemOld(name: String, block: T): T {
         return registerNoItem(name, { block }, Properties.of())
     }

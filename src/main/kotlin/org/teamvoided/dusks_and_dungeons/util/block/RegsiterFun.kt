@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy
 import org.teamvoided.dusks_and_dungeons.block.CuttableHollowLogBlock
 import org.teamvoided.dusks_and_dungeons.block.GravestoneBlock
-import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.COLOR_CONSORTIUM
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.SETS
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.register
@@ -28,7 +27,7 @@ import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
 
 // TODO delete this, it will case problems later
 fun registerHeadEquipable(id: String, block: Block): Block {
-    val regBlock = DnDBlocks.registerNoItem(id, { block }, Properties.of())
+    val regBlock = registerNoItemOld(id, block)
     DnDItems.register(id, { EquipableBlockItem(regBlock, it) })
     return regBlock
 }

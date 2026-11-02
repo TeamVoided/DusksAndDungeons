@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.util
 
 import com.mojang.serialization.Codec
@@ -14,6 +10,7 @@ import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.EitherHolder
 import java.util.function.Function
 
+// TODO (lib) move some of these codecs to voidlib
 object DnDCodecs {
 
     val NON_NEGATIVE_FLOAT = floatRangeWithMessage(0f, Float.MAX_VALUE) { "Value must be non-negative: $it" }
@@ -23,7 +20,7 @@ object DnDCodecs {
     val DAMAGE_TYPE_STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EitherHolder<DamageType>> =
         EitherHolder.streamCodec(Registries.DAMAGE_TYPE, DamageType.STREAM_CODEC)
 
-    val DAMAGE_TYPE_TAG_CODEC = TagKey.codec(Registries.DAMAGE_TYPE)
+    val DAMAGE_TYPE_TAG_CODEC: Codec<TagKey<DamageType>> = TagKey.codec(Registries.DAMAGE_TYPE)
     val DAMAGE_TYPE_TAG_STREAM_CODEC = tagKeyStreamCodec(Registries.DAMAGE_TYPE)
 
     val ITEM_TAG_STREAM_CODEC = tagKeyStreamCodec(Registries.ITEM)

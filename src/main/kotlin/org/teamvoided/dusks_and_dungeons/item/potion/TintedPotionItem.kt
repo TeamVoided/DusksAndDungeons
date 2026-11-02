@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.gameevent.GameEvent
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.appendTintedTooltip
-import org.teamvoided.dusks_and_dungeons.util.giveItem
+import org.teamvoided.voidlib.helpers.item.giveItem
 import org.teamvoided.taglighting.data.tags.TaglightingPotionTags
 import kotlin.jvm.optionals.getOrNull
 

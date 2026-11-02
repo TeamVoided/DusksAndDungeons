@@ -20,7 +20,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.flower.pot.FlowerPotWithSporesBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleOption
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
+import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
 
 class MushroomWithSporesPlantBlock(
     val color: Int, val particleChance: Double,

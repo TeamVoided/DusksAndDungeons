@@ -5,8 +5,26 @@
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.core.Direction
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+
+
+fun symmetricalBox(xzMin: Double, yMin: Double, xzMax: Double, yMax: Double): VoxelShape {
+    return Block.box(xzMin, yMin, xzMin, xzMax, yMax, xzMax)
+}
+
+fun symmetricalBoxY(xzMin: Double, yMin: Double, yMax: Double): VoxelShape {
+    return Block.box(xzMin, yMin, xzMin, 16 - xzMin, yMax, 16 - xzMin)
+}
+
+fun symmetricalBoxZ(xyMin: Double, zMin: Double, zMax: Double): VoxelShape {
+    return Block.box(xyMin, xyMin, zMin, 16 - xyMin, 16 - xyMin, zMax)
+}
+
+fun symmetricalBoxX(yzMin: Double, xMin: Double, xMax: Double): VoxelShape {
+    return Block.box(xMin, yzMin, yzMin, xMax, 16 - yzMin, 16 - yzMin)
+}
 
 fun VoxelShape.rotate(times: Int): VoxelShape {
     val shapes = arrayOf(this, Shapes.empty())

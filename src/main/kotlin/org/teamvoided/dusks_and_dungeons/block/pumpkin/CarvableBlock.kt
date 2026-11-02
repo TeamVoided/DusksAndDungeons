@@ -27,7 +27,7 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.phys.BlockHitResult
 import org.teamvoided.dusks_and_dungeons.util.asEquipmentSlot
 import org.teamvoided.dusks_and_dungeons.util.dropFromBlockInteractLootTable
-import org.teamvoided.dusks_and_dungeons.util.isShears
+import org.teamvoided.voidlib.helpers.item.isShears
 import org.teamvoided.dusks_and_dungeons.util.key
 
 interface CarvableBlock {

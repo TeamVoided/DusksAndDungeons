@@ -24,8 +24,8 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
 import org.teamvoided.dusks_and_dungeons.util.block.isCrouching
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxZ
+import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
+import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxZ
 
 open class BigLanternBlock(settings: Properties) : SixWayFacingBlock(settings), SimpleWaterloggedBlock {
 

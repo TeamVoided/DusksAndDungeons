@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.core.BlockPos
@@ -18,6 +14,8 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext
 import kotlin.math.max
 import kotlin.math.sqrt
 
+
+// getHitResult from the client
 
 fun Player.getHitResult(): HitResult = getHitResult(blockInteractionRange(), entityInteractionRange())
 
@@ -55,6 +53,8 @@ fun filterHitResult(hitResult: HitResult, from: Vec3, maxRange: Double): HitResu
     }
 }
 
+
+// getHitResult Non-Recursive variant for cuttable logs
 
 fun Player.getNonRecursiveHitResult(): HitResult =
     getNonRecursiveHitResult(blockInteractionRange(), entityInteractionRange())

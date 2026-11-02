@@ -31,8 +31,8 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
 import org.teamvoided.dusks_and_dungeons.util.block.getId
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxZ
+import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
+import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxZ
 
 open class SmallPumpkinBlock(private val carvedBlock: Block, settings: Properties) : SixWayFacingBlock(settings),
     CarvableBlock, SimpleWaterloggedBlock {

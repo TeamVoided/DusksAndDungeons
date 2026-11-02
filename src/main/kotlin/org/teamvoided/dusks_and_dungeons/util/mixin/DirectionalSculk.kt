@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.util.mixin
 
 import net.minecraft.core.BlockPos

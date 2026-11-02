@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.minecraft.world.item.Item
@@ -18,6 +14,10 @@ internal fun Block.tellWitnessesThatIWasMurdered(): Block = DnDBlocks.EVIL_BLOCK
 internal fun AbstractBlockSet.tellWitnessesThatIWasMurdered(): AbstractBlockSet {
     DnDBlocks.EVIL_BLOCKS.addAll(this.list)
     return this
+}
+
+fun joinEvilBlockItems() {
+    DnDItems.EVIL_ITEMS.addAll(DnDBlocks.EVIL_BLOCKS.map(Block::asItem))
 }
 
 @JvmField

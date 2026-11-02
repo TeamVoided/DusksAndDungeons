@@ -27,7 +27,7 @@ import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
+import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
 
 class HangingFloraBlock(properties: Properties) : Block(properties), BonemealableBlock, SimpleWaterloggedBlock {
 

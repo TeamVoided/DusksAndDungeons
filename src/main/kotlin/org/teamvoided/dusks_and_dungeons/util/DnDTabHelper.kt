@@ -1,6 +1,3 @@
-/*
- * TODO(cleanup)
- */
 
 package org.teamvoided.dusks_and_dungeons.util
 
@@ -13,6 +10,7 @@ import org.teamvoided.dusks_and_dungeons.util.DnDItemLists.stripedWoodLists
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
 import org.teamvoided.voidlib.helpers.mc.addAfter
 
+// I don't want to deal with this one actually
 fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {
     DnDBlockLists.logsAndStrippedLogs.forEachIndexed { idx, (log, strippedLog) ->
         addAfter(log, DnDBlockLists.hollowLogs[idx])
@@ -48,6 +46,7 @@ fun FabricItemGroupEntries.addColors(item: ItemLike, color: ColorConsortium<*>) 
 }
 
 
+// TODO rework to not be staggered
 fun FabricItemGroupEntries.addCandles() {
     val candles = listOf(
         DnDBlocks.BIG_CANDLES,
