@@ -9,7 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
+import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleOption
 import org.teamvoided.dusks_and_dungeons.particle.ShriekDirectionalParticleOption
 import org.teamvoided.dusks_and_dungeons.util.register
 
@@ -19,7 +19,7 @@ object DnDParticles {
     val AUTUMN_LEAF_PARTICLE = register("autumn_leaf")
     val CASCADE_LEAF_PARTICLE = register("cascade_leaf")
     val COLORABLE_OMINOUS_PARTICLE = register(
-        "colorable_ominous_spawning", ColorableParticleEffect.CODEC, ColorableParticleEffect.PACKET_CODEC
+        "colorable_ominous_spawning", ColorableParticleOption.CODEC, ColorableParticleOption.PACKET_CODEC
     )
     val SNOWFLAKE = register("snowflake")
     val SHRIEK_DIRECTIONAL = register( // TODO rename to directional_shriek

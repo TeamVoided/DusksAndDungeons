@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.particle
 
 import com.mojang.blaze3d.vertex.VertexConsumer
@@ -58,29 +54,34 @@ class ShriekDirectionalParticle(
     }
 
     class Provider(private val sprite: SpriteSet) : ParticleProvider<ShriekDirectionalParticleOption> {
+
         override fun createParticle(
-            options: ShriekDirectionalParticleOption,
-            clientLevel: ClientLevel,
+            options: ShriekDirectionalParticleOption, level: ClientLevel,
             x: Double, y: Double, z: Double,
             velX: Double, velY: Double, velZ: Double,
         ): Particle {
-            val particle = ShriekDirectionalParticle(clientLevel, x, y, z, options.direction, options.delay)
+            val particle = ShriekDirectionalParticle(level, x, y, z, options.direction, options.delay)
             particle.pickSprite(sprite)
             particle.setAlpha(1.0f)
             return particle
         }
+
     }
 
     companion object {
 
-        fun Direction.rotationFormDirection(): Vector3f {
-            return when (this) {
+        var ROTATION_MAP = Direction.entries.associateWith {
+            when (it) {
                 Direction.UP, Direction.DOWN -> Vector3f(-Utils.rotate60, 0f, 0f)
                 Direction.NORTH -> Vector3f(-Utils.rotate30, 0f, 0f)
                 Direction.SOUTH -> Vector3f(Utils.rotate30, 0f, 0f)
                 Direction.EAST -> Vector3f(Utils.rotate30, Utils.rotate90, 0f)
                 Direction.WEST -> Vector3f(-Utils.rotate30, Utils.rotate90, 0f)
             }
+        }
+
+        fun Direction.rotationFormDirection(): Vector3f {
+            return ROTATION_MAP[this] ?: error("Map was missing a Direction($this) entry")
         }
 
     }

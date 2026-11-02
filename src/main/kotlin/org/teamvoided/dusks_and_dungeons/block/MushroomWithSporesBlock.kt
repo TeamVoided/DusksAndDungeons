@@ -10,7 +10,7 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.HugeMushroomBlock
 import net.minecraft.world.level.block.state.BlockState
-import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
+import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleOption
 
 class MushroomWithSporesBlock(private val color: Int, private val particleChance: Double, settings: Properties) :
     HugeMushroomBlock(settings) {
@@ -26,7 +26,7 @@ class MushroomWithSporesBlock(private val color: Int, private val particleChance
             val yOffset = if (side.stepY == 0) random.nextDouble() else 0.5 + side.stepY * 0.65
             val zOffset = if (side.stepZ == 0) random.nextDouble() else 0.5 + side.stepZ * 0.65
             world.addParticle(
-                ColorableParticleEffect(color),
+                ColorableParticleOption(color),
                 pos.x + xOffset, pos.y + yOffset, pos.z + zOffset,
                 (random.nextDouble() - random.nextDouble()) * 0.125,
                 (random.nextDouble() * -0.1) - 0.1,

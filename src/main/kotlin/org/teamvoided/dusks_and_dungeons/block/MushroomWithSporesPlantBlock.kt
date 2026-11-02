@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.flower.pot.FlowerPotWithSporesBlock
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleEffect
+import org.teamvoided.dusks_and_dungeons.particle.ColorableParticleOption
 import org.teamvoided.dusks_and_dungeons.util.block.symmetricalBoxY
 
 class MushroomWithSporesPlantBlock(
@@ -64,7 +64,7 @@ class MushroomWithSporesPlantBlock(
                     offset = offset.add(0.0, 6 / 16.0, 0.0)
                 }
                 level.addParticle(
-                    ColorableParticleEffect(color),
+                    ColorableParticleOption(color),
                     pos.x + offset.x + (random.nextDouble() * 0.6 + 0.2),
                     pos.y + offset.y + (random.nextDouble() * 0.7 - 0.1),
                     pos.z + offset.z + (random.nextDouble() * 0.6 + 0.2),
