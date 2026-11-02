@@ -1,19 +1,15 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.entity.scarecrow
 
+import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.math.Axis
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.LivingEntityRenderer
-import net.minecraft.client.renderer.entity.layers.ElytraLayer
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer
+import net.minecraft.client.renderer.entity.layers.ElytraLayer
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer
-import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.resources.ResourceLocation
-import com.mojang.math.Axis
 import net.minecraft.util.Mth
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.mc
 import org.teamvoided.dusks_and_dungeons.client.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.model.ScarecrowEntityModel
@@ -24,15 +20,13 @@ import org.teamvoided.dusks_and_dungeons.util.pi
 
 class ScarecrowEntityRenderer(context: EntityRendererProvider.Context) :
     LivingEntityRenderer<ScarecrowEntity, ScarecrowEntityModel>(
-        context,
-        ScarecrowEntityModel(context.bakeLayer(DnDEntityModelLayers.SCARECROW)),
-        0f
+        context, ScarecrowEntityModel(context.bakeLayer(DnDEntityModelLayers.SCARECROW)), 0f
     ) {
 
     init {
-        this.addLayer(ItemInHandLayer(this, context.itemInHandRenderer))
-        this.addLayer(CustomHeadLayer(this, context.modelSet, context.itemInHandRenderer))
-        this.addLayer(
+        addLayer(ItemInHandLayer(this, context.itemInHandRenderer))
+        addLayer(CustomHeadLayer(this, context.modelSet, context.itemInHandRenderer))
+        addLayer(
             ScarecrowArmorFeatureRenderer(
                 this,
                 ScarecrowArmorEntityModel(context.bakeLayer(DnDEntityModelLayers.SCARECROW_INNER_ARMOR)),
@@ -40,17 +34,13 @@ class ScarecrowEntityRenderer(context: EntityRendererProvider.Context) :
                 context.modelManager
             )
         )
-        this.addLayer(ElytraLayer(this, context.modelSet))
-        this.addLayer(ScarecrowWoodFeatureRenderer(this, context.modelSet))
+        addLayer(ElytraLayer(this, context.modelSet))
+        addLayer(ScarecrowWoodFeatureRenderer(this, context.modelSet))
     }
 
     override fun setupRotations(
-        scarecrowEntity: ScarecrowEntity,
-        matrices: PoseStack,
-        animationProgress: Float,
-        bodyYaw: Float,
-        tickDelta: Float,
-        i: Float
+        scarecrowEntity: ScarecrowEntity, matrices: PoseStack,
+        animationProgress: Float, bodyYaw: Float, tickDelta: Float, i: Float,
     ) {
         matrices.mulPose(Axis.YP.rotationDegrees(180f - bodyYaw))
         val sinceLastHit = (scarecrowEntity.level().gameTime - scarecrowEntity.lastHitTime).toFloat() + tickDelta
@@ -60,14 +50,19 @@ class ScarecrowEntityRenderer(context: EntityRendererProvider.Context) :
     }
 
     override fun shouldShowName(scarecrowEntity: ScarecrowEntity): Boolean {
-        val distance = entityRenderDispatcher.distanceToSqr(scarecrowEntity)
-        val range = if (scarecrowEntity.isCrouching) 32.0f else 64.0f
-        return if (distance >= (range * range).toDouble()) false else scarecrowEntity.isCustomNameVisible
+        if (scarecrowEntity.isCustomNameVisible) {
+            val distance = entityRenderDispatcher.distanceToSqr(scarecrowEntity)
+            val range = if (scarecrowEntity.isCrouching) 32.0 else 64.0
+            return (distance < (range * range))
+        }
+        return false
     }
 
     override fun getTextureLocation(scarecrowEntity: ScarecrowEntity): ResourceLocation = TEXTURE
 
     companion object {
-        private val TEXTURE: ResourceLocation = id("minecraft", "textures/block/red_wool.png")
+
+        val TEXTURE: ResourceLocation = mc("textures/block/red_wool.png")
+
     }
 }

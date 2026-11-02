@@ -1,8 +1,4 @@
-/*
- * TODO(cleanup)
- */
-
-//
+package org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.render
 //import net.minecraft.client.render.VertexConsumerProvider
 //import net.minecraft.client.render.entity.feature.FeatureRenderer
 //import net.minecraft.client.render.entity.feature.FeatureRendererContext

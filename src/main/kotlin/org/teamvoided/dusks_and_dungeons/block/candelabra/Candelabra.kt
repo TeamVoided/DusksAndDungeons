@@ -191,7 +191,7 @@ object Candelabra {
         )
     ).map { list -> list.map { it.scale(PIXEL_SCALER) }.toTypedArray() }.toTypedArray()
 
-    val MISSING_OFFSET = Vec3(0.0, 1.0, 0.0)
+    val MISSING_OFFSET = Vec3(1.0, 1.0, 1.0)
 
     fun canAddToCandelabra(stack: ItemStack): Boolean = stack.`is`(DnDItemTags.GOES_IN_CANDELABRA)
 

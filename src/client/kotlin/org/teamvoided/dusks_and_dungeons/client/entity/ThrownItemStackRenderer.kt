@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.entity
 
 import com.mojang.blaze3d.vertex.PoseStack
@@ -20,7 +16,6 @@ import org.teamvoided.dusks_and_dungeons.entity.ThrownItemStack
 class ThrownItemStackRenderer(ctx: EntityRendererProvider.Context) : EntityRenderer<ThrownItemStack>(ctx) {
 
     private val itemRenderer: ItemRenderer = ctx.itemRenderer
-    val scale = 1.5f
     val fullBright = false
 
     override fun getBlockLightLevel(entity: ThrownItemStack, blockPos: BlockPos): Int {
@@ -31,24 +26,40 @@ class ThrownItemStackRenderer(ctx: EntityRendererProvider.Context) : EntityRende
         entity: ThrownItemStack, yaw: Float, tickDelta: Float,
         poseStack: PoseStack, multiBufferSource: MultiBufferSource, light: Int,
     ) {
-        if (entity.tickCount >= 2 || !(entityRenderDispatcher.camera.entity.distanceToSqr(entity) < MIN_CAMERA_DISTANCE_SQUARED)) {
-            poseStack.pushPose()
-            poseStack.scale(scale, scale, scale)
-            if (entity.inGround) {
-                poseStack.mulPose(Axis.XP.rotationDegrees(90f))
-            } else {
-                poseStack.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))
-                poseStack.mulPose(Axis.ZN.rotationDegrees(entity.getViewXRot(tickDelta) + ((entity.tickCount + tickDelta) * 20)))
-            }
-            itemRenderer.renderStatic(
-                entity.item, ItemDisplayContext.GROUND,
-                light, OverlayTexture.NO_OVERLAY,
-                poseStack, multiBufferSource,
-                entity.level(), entity.id
-            )
-            poseStack.popPose()
-            super.render(entity, yaw, tickDelta, poseStack, multiBufferSource, light)
+        if (!canRender(entity)) {
+            return
         }
+        // add check to render like brick or other
+        brickTypeRenderer(entity, poseStack, multiBufferSource, tickDelta, yaw, light)
+
+        super.render(entity, yaw, tickDelta, poseStack, multiBufferSource, light)
+    }
+
+    fun brickTypeRenderer(
+        entity: ThrownItemStack,
+        poseStack: PoseStack, multiBufferSource: MultiBufferSource,
+        tickDelta: Float, yaw: Float, light: Int,
+    ) {
+        poseStack.pushPose()
+        val scale = 1.5f
+        poseStack.scale(scale, scale, scale)
+        if (entity.inGround) {
+            poseStack.mulPose(Axis.XP.rotationDegrees(90f))
+        } else {
+            poseStack.mulPose(Axis.YN.rotationDegrees(entity.getViewYRot(tickDelta)))
+            poseStack.mulPose(Axis.ZN.rotationDegrees(entity.getViewXRot(tickDelta) + ((entity.tickCount + tickDelta) * 20)))
+        }
+        itemRenderer.renderStatic(
+            entity.item, ItemDisplayContext.GROUND,
+            light, OverlayTexture.NO_OVERLAY,
+            poseStack, multiBufferSource,
+            entity.level(), entity.id
+        )
+        poseStack.popPose()
+    }
+
+    fun canRender(entity: ThrownItemStack): Boolean {
+        return entity.tickCount >= 2 || !(entityRenderDispatcher.camera.entity.distanceToSqr(entity) < MIN_CAMERA_DISTANCE_SQUARED)
     }
 
     override fun getTextureLocation(entity: ThrownItemStack): ResourceLocation = TextureAtlas.LOCATION_BLOCKS

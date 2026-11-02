@@ -1,35 +1,31 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.render
 
+import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.math.Axis
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
-import net.minecraft.client.renderer.texture.OverlayTexture
+import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.Sheets
-import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.entity.layers.RenderLayer
 import net.minecraft.client.renderer.entity.RenderLayerParent
-import net.minecraft.client.resources.model.ModelManager
+import net.minecraft.client.renderer.entity.layers.RenderLayer
+import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.client.renderer.texture.TextureAtlas
-import net.minecraft.util.FastColor.ARGB32
-import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.client.resources.model.ModelManager
+import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
-import net.minecraft.world.item.component.DyedItemColor
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.ItemTags
+import net.minecraft.util.FastColor.ARGB32
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.armortrim.ArmorTrim
-import net.minecraft.core.Holder
-import net.minecraft.tags.ItemTags
-import net.minecraft.network.chat.Component
-import net.minecraft.ChatFormatting
-import net.minecraft.resources.ResourceLocation
-import com.mojang.math.Axis
+import net.minecraft.world.item.component.DyedItemColor
 import org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.model.ScarecrowArmorEntityModel
 import org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.model.ScarecrowEntityModel
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
@@ -54,12 +50,8 @@ class ScarecrowArmorFeatureRenderer(
     }
 
     private fun renderArmor(
-        matrices: PoseStack,
-        vertexConsumers: MultiBufferSource,
-        entity: ScarecrowEntity,
-        armorSlot: EquipmentSlot,
-        light: Int,
-        model: ScarecrowArmorEntityModel,
+        matrices: PoseStack, vertexConsumers: MultiBufferSource,
+        entity: ScarecrowEntity, armorSlot: EquipmentSlot, light: Int, model: ScarecrowArmorEntityModel,
     ) {
         val stack = entity.getItemBySlot(armorSlot)
         val item = stack.item
@@ -192,4 +184,5 @@ class ScarecrowArmorFeatureRenderer(
     }
 
     fun usesSecondLayer(slot: EquipmentSlot): Boolean = slot == EquipmentSlot.LEGS
+
 }

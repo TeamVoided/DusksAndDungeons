@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
@@ -39,15 +35,15 @@ class CandelabraRenderer(ctx: BlockEntityRendererProvider.Context) : BlockEntity
         val candles = state.getValue(CandelabraBlock.CANDLES)
         val isLit = state.getValue(CandelabraBlock.LIT)
 
-        val offsets = (block?.getCandleOffsets() ?: Candelabra.OFFSETS)[candles - 1]
+        val offsetArray = (block?.getCandleOffsets() ?: Candelabra.OFFSETS)[candles - 1]
         for ((index, stack) in candelabra.getCandles().withIndex()) {
             if (stack.isEmpty) {
                 continue
             }
             val item = stack.item
-            val off = offsets.getOrElse(index) { MISSING_OFFSET }
+            val offset = offsetArray.getOrNull(index) ?: MISSING_OFFSET
             poseStack.pushPose()
-            poseStack.translate(off.x, off.y, off.z)
+            poseStack.translate(offset.x, offset.y, offset.z)
             if (item is BlockItem) {
                 var state = candelabra.internalBlockStates[index]
                 state = state.trySetValue(AbstractCandleBlock.LIT, isLit)

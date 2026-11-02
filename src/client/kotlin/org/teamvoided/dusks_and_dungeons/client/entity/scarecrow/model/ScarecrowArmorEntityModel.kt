@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.model
 
 import com.mojang.blaze3d.vertex.PoseStack
@@ -12,13 +8,14 @@ import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.PartPose
 import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.CubeListBuilder
+import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.model.geom.builders.MeshDefinition
 import net.minecraft.core.Rotations
 import net.minecraft.world.entity.HumanoidArm
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
 
-class ScarecrowArmorEntityModel(root: ModelPart) : HierarchicalModel<ScarecrowEntity>(), ArmedModel,
-    HeadedModel {
+class ScarecrowArmorEntityModel(root: ModelPart) : HierarchicalModel<ScarecrowEntity>(), ArmedModel, HeadedModel {
+
     val post: ModelPart = root.getChild("post")
     val body: ModelPart = post.getChild("body")
 
@@ -68,13 +65,26 @@ class ScarecrowArmorEntityModel(root: ModelPart) : HierarchicalModel<ScarecrowEn
         leftLeg.visible = visible
     }
 
-
     override fun root(): ModelPart = post
+
     override fun getHead(): ModelPart = head
-    override fun translateToHand(arm: HumanoidArm, matrices: PoseStack) = getArm(arm).translateAndRotate(matrices)
+
+    override fun translateToHand(arm: HumanoidArm, matrices: PoseStack) {
+        getArm(arm).translateAndRotate(matrices)
+    }
+
     fun getArm(arm: HumanoidArm): ModelPart = if (arm == HumanoidArm.LEFT) leftArm else rightArm
 
     companion object {
+
+        fun createScarecrowInnerArmor(): LayerDefinition {
+            return LayerDefinition.create(getModelData(CubeDeformation(0.5f)), 64, 32)
+        }
+
+        fun createScarecrowOuterArmor(): LayerDefinition {
+            return LayerDefinition.create(getModelData(CubeDeformation(1f)), 64, 32)
+        }
+
         fun getModelData(dilation: CubeDeformation): MeshDefinition {
             val modelData = MeshDefinition()
             val modelPartData = modelData.root

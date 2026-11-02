@@ -1,11 +1,8 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client
 
 import me.fzzyhmstrs.fzzy_config.api.ConfigApi
 import me.fzzyhmstrs.fzzy_config.api.RegisterType
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.client.config.DnDClientConfig
 import org.teamvoided.dusks_and_dungeons.client.entity.DnDEntityModelLayers
@@ -32,7 +29,7 @@ object DusksAndDungeonsClient {
         DnDLevelEventHandlers.init()
         DnDClientNetworking.init()
 
-        registerBuiltInPack(MODID, BETTER_BRICK_NAMES)
+        registerBuiltInPack(MODID, BETTER_BRICK_NAMES, ResourcePackActivationType.DEFAULT_ENABLED)
 
         EventImpl.init()
         InvalidateResourcesCallback.EVENT.register {
