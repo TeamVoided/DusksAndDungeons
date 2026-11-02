@@ -34,7 +34,7 @@ class ShriekDirectionalParticle(
             val rot = Quaternionf()
             rot.rotationYXZ(rotVec.y, rotVec.x, rotVec.z)
             renderRotatedQuad(vertexConsumer, camera, rot, tickDelta)
-            rot.rotationYXZ(rotVec.y - Utils.rotate180, -rotVec.x, rotVec.z)
+            rot.rotationYXZ(rotVec.y - Utils.ROTATE_180, -rotVec.x, rotVec.z)
             renderRotatedQuad(vertexConsumer, camera, rot, tickDelta)
         }
     }
@@ -72,11 +72,11 @@ class ShriekDirectionalParticle(
 
         var ROTATION_MAP = Direction.entries.associateWith {
             when (it) {
-                Direction.UP, Direction.DOWN -> Vector3f(-Utils.rotate60, 0f, 0f)
-                Direction.NORTH -> Vector3f(-Utils.rotate30, 0f, 0f)
-                Direction.SOUTH -> Vector3f(Utils.rotate30, 0f, 0f)
-                Direction.EAST -> Vector3f(Utils.rotate30, Utils.rotate90, 0f)
-                Direction.WEST -> Vector3f(-Utils.rotate30, Utils.rotate90, 0f)
+                Direction.UP, Direction.DOWN -> Vector3f(-Utils.ROTATE_60, 0f, 0f)
+                Direction.NORTH -> Vector3f(-Utils.ROTATE_30, 0f, 0f)
+                Direction.SOUTH -> Vector3f(Utils.ROTATE_30, 0f, 0f)
+                Direction.EAST -> Vector3f(Utils.ROTATE_30, Utils.ROTATE_90, 0f)
+                Direction.WEST -> Vector3f(-Utils.ROTATE_30, Utils.ROTATE_90, 0f)
             }
         }
 
