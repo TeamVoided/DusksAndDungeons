@@ -59,6 +59,7 @@ object DusksAndDungeons {
 
     fun id(modId: String, path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
     fun mc(path: String): ResourceLocation = ResourceLocation.withDefaultNamespace(path)
+    @JvmStatic
     fun id(path: String) = id(MODID, path)
 
     @JvmStatic

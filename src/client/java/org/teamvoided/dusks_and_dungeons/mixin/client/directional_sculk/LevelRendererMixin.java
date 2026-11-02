@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,30 +24,35 @@ public class LevelRendererMixin {
 
     @Inject(method = "levelEvent", at = @At("HEAD"), cancellable = true)
     private void changeShriekParticles(int eventId, BlockPos pos, int data, CallbackInfo ci) {
-        if (eventId == 3007 && this.level.getBlockState(pos).hasProperty(BlockStateProperties.FACING)) {
-            BlockState blockState = this.level.getBlockState(pos);
-            Direction direction = blockState.getValue(BlockStateProperties.FACING);
-            var center = pos.getCenter();
-            for (int count = 0; count < 10; ++count) {
-                this.level.addParticle(
-                        new ShriekDirectionalParticleOption(direction, count * 5),
-                        false,
-                        center.x, center.y, center.z,
-                        0.0, 0.0, 0.0
-                );
-            }
-            boolean silent = blockState.hasProperty(BlockStateProperties.WATERLOGGED) && blockState.getValue(BlockStateProperties.WATERLOGGED);
-            if (!silent) {
-                level.playLocalSound(
-                        center.x, center.y, center.z,
-                        SoundEvents.SCULK_SHRIEKER_SHRIEK,
-                        SoundSource.BLOCKS,
-                        2F, 0.6F + level.random.nextFloat() * 0.4F,
-                        false
-                );
-            }
-            ci.cancel();
+        if (eventId != LevelEvent.PARTICLES_SCULK_SHRIEK) {
+            return;
         }
+        BlockState state = level.getBlockState(pos);
+        Direction direction = state.getOptionalValue(BlockStateProperties.FACING).orElse(null);
+        if (direction == null) {
+            return;
+        }
+
+        var center = pos.getCenter();
+        for (int count = 0; count < 10; ++count) {
+            level.addParticle(
+                    new ShriekDirectionalParticleOption(direction, count * 5),
+                    false,
+                    center.x, center.y, center.z,
+                    0.0, 0.0, 0.0
+            );
+        }
+        boolean isSilent = state.getOptionalValue(BlockStateProperties.WATERLOGGED).orElse(false);
+        if (!isSilent) {
+            level.playLocalSound(
+                    center.x, center.y, center.z,
+                    SoundEvents.SCULK_SHRIEKER_SHRIEK,
+                    SoundSource.BLOCKS,
+                    2F, 0.6F + level.random.nextFloat() * 0.4F,
+                    false
+            );
+        }
+        ci.cancel();
     }
 
 }

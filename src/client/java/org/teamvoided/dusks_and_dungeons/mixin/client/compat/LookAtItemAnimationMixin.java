@@ -1,4 +1,4 @@
-package org.teamvoided.dusks_and_dungeons.mixin.client;
+package org.teamvoided.dusks_and_dungeons.mixin.client.compat;
 
 import dev.tr7zw.notenoughanimations.animations.hands.LookAtItemAnimation;
 import net.minecraft.world.item.Item;

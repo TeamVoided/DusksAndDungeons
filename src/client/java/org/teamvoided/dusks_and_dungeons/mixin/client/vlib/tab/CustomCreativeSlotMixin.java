@@ -5,6 +5,7 @@ import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.teamvoided.dusks_and_dungeons.client.gui.screens.inventory.TabSectionController;
 
+// TODO(lib) move to voidlib
 @Mixin(targets = "net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen$CustomCreativeSlot")
 public abstract class CustomCreativeSlotMixin extends Slot {
 

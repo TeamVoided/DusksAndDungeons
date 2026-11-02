@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 import static net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen.*;
 
+// TODO(lib) move to voidlib
 @Mixin(ItemPickerMenu.class)
 public interface ItemPickerMenuAccessor {
 

@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.mixin.client.vlib;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -13,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 // TODO(lib) move to voidlib
+// TODO implement
 @Mixin(EntityRenderDispatcher.class)
 public class ShadowAttributeMixin {
 
