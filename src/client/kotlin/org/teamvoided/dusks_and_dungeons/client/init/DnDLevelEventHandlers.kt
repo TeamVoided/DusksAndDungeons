@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.init
 
 import net.minecraft.client.Minecraft
@@ -29,6 +25,7 @@ object DnDLevelEventHandlers {
         ID_HANDLERS[DnDLevelEvents.CUT_HOLLOW_LOG] = LevelEventHandler(::handleCutHollowLog)
     }
 
+    @FunctionalInterface
     fun interface LevelEventHandler {
 
         fun triggerEvent(client: Minecraft, level: ClientLevel, player: LocalPlayer, pos: BlockPos, data: Int)

@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack.EMPTY
 import org.teamvoided.voidlib.api.tab.TabSection
 import org.teamvoided.voidlib.api.tab.TabSectionRegistry
 
+// TODO(lib) move to voidlib
 object TabSectionController {
 
     @JvmField

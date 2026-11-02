@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.init
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking

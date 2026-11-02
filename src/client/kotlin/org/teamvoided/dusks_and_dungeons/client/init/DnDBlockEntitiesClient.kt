@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.init
 
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers

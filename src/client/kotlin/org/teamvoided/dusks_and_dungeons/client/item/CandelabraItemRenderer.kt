@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.item
 
 import com.mojang.blaze3d.vertex.PoseStack
@@ -37,10 +33,8 @@ object CandelabraItemRenderer {
             return null
         }
 
-        var candelabra = CANDELABRA_ITEM_CACHE[contents]
-
-        if (candelabra == null) {
-            candelabra = CandelabraBlockEntity(
+        return CANDELABRA_ITEM_CACHE.computeIfAbsent(contents) {
+            val candelabra = CandelabraBlockEntity(
                 BlockPos.ZERO,
                 block.defaultBlockState()
                     .setValue(CandelabraBlock.LIT, true)
@@ -48,10 +42,8 @@ object CandelabraItemRenderer {
             )
             candelabra.applyComponentsFromItemStack(stack)
             candelabra.updateStateCache(level)
-            CANDELABRA_ITEM_CACHE[contents] = candelabra
+            candelabra
         }
-
-        return candelabra
     }
 
     var vecPos: Vector3f? = null

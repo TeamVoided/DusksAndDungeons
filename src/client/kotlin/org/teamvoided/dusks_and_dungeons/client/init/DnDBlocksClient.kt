@@ -1,9 +1,6 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.client.init
 
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.client.color.block.BlockColor
@@ -18,14 +15,27 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE as BlockRenderLayerMap
 
 
 object DnDBlocksClient {
 
     fun init() {
+        registerBlockColors()
+        ALLOW_BLOCK_DUST_TINT.register { state, _, _ ->
+            state.block !in GRASS_TINT_BLOCKS || state.block in TINT_PARTICLES
+        }
+        // Block Render Type
+        CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderType.cutout()) }
+        TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderType.translucent()) }
+        if (!isDev()) {
+            CUTOUT_BLOCKS.clear()
+            TRANSLUCENT_BLOCKS.clear()
+        }
+    }
 
-        registerTint(
+    fun registerBlockColors() {
+        // Foliage
+        registerColor(
             { _, world, pos, _ -> foliageColor(world, pos) },
             DnDBlocks.OAK_LEAF_PILE,
             DnDBlocks.JUNGLE_LEAF_PILE,
@@ -33,31 +43,21 @@ object DnDBlocksClient {
             DnDBlocks.DARK_OAK_LEAF_PILE,
             DnDBlocks.MANGROVE_LEAF_PILE
         )
-        registerTint(FoliageColor.getEvergreenColor(), DnDBlocks.SPRUCE_LEAF_PILE)
-        registerTint(FoliageColor.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE)
-        registerTint({ _, world, pos, _ -> grassColor(world, pos) }, *GRASS_TINT_BLOCKS.toTypedArray())
-        registerTint(
+        registerColor(FoliageColor.getEvergreenColor(), DnDBlocks.SPRUCE_LEAF_PILE)
+        registerColor(FoliageColor.getBirchColor(), DnDBlocks.BIRCH_LEAF_PILE)
+        registerColor({ _, world, pos, _ -> grassColor(world, pos) }, *GRASS_TINT_BLOCKS.toTypedArray())
+        registerColor(
             { _, world, pos, tintIndex -> if (tintIndex != 0) grassColor(world, pos) else -1 },
             *DnDBlockLists.flowerbedBlocks.toTypedArray()
         )
-
-        registerTint({ _, world, pos, _ -> waterColor(world, pos) }, *WATER_TINT_BLOCKS.toTypedArray())
-
-        CUTOUT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.cutout()) }
-        TRANSLUCENT_BLOCKS.forEach { BlockRenderLayerMap.putBlock(it, RenderType.translucent()) }
-        ALLOW_BLOCK_DUST_TINT.register { state, _, _ -> state.block !in GRASS_TINT_BLOCKS || state.block in TINT_PARTICLES }
-
-        if (!isDev()) {
-            CUTOUT_BLOCKS.clear()
-            TRANSLUCENT_BLOCKS.clear()
-        }
-
+        // Water
+        registerColor({ _, world, pos, _ -> waterColor(world, pos) }, *WATER_TINT_BLOCKS.toTypedArray())
     }
 
-    fun registerTint(provider: BlockColor, vararg blocks: Block) =
+    fun registerColor(provider: BlockColor, vararg blocks: Block) =
         ColorProviderRegistry.BLOCK.register(provider, *blocks)
 
-    fun registerTint(tint: Int, vararg blocks: Block) = registerTint({ _, _, _, _ -> tint }, *blocks)
+    fun registerColor(tint: Int, vararg blocks: Block) = registerColor({ _, _, _, _ -> tint }, *blocks)
 
     fun grassColor(world: BlockAndTintGetter?, pos: BlockPos?): Int {
         return if (world != null && pos != null) BiomeColors.getAverageGrassColor(world, pos)

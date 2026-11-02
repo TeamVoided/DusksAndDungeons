@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.net
 
 import io.netty.buffer.ByteBuf
@@ -17,12 +13,15 @@ class DnDLevelEventPayload(val eventId: ResourceLocation, val pos: BlockPos, val
     override fun type(): CustomPacketPayload.Type<DnDLevelEventPayload> = ID
 
     companion object {
+
         val ID = CustomPacketPayload.Type<DnDLevelEventPayload>(id("level_event"))
+
         val CODEC: StreamCodec<ByteBuf, DnDLevelEventPayload> = StreamCodec.composite(
             ResourceLocation.STREAM_CODEC, DnDLevelEventPayload::eventId,
             BlockPos.STREAM_CODEC, DnDLevelEventPayload::pos,
             ByteBufCodecs.INT, DnDLevelEventPayload::data,
             ::DnDLevelEventPayload
         )
+
     }
 }
