@@ -1,13 +1,8 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.packs
 
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
+import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
 import org.teamvoided.voidlib.devin.provider.DevinLangProvider
@@ -20,12 +15,14 @@ class FancyNameLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvi
         DnDBlocks.CHISELED_RED_NETHER_BRICKS,
         DnDBlocks.RED_NETHER_BRICK_PILLAR,
     ) + DnDBlocks.POLISHED_RED_NETHER_BRICKS.list
+
     val warpedBricks = listOf(
         DnDBlocks.CRACKED_BLUE_NETHER_BRICKS,
         DnDBlocks.BLUE_NETHER_BRICK_FENCE,
         DnDBlocks.CHISELED_BLUE_NETHER_BRICKS,
         DnDBlocks.BLUE_NETHER_BRICK_PILLAR,
     ) + DnDBlocks.POLISHED_BLUE_NETHER_BRICKS.list + DnDBlocks.BLUE_NETHER_BRICKS.list
+
     val ashenBricks = listOf(
         DnDBlocks.CRACKED_GRAY_NETHER_BRICKS,
         DnDBlocks.GRAY_NETHER_BRICK_FENCE,
@@ -35,9 +32,9 @@ class FancyNameLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvi
 
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
-        crimsonBricks.forEach { gen.add(it.descriptionId, getLang(it.id)) }
-        warpedBricks.forEach { gen.add(it.descriptionId, getLang(it.id)) }
-        ashenBricks.forEach { gen.add(it.descriptionId, getLang(it.id)) }
+        crimsonBricks.forEach { gen.add(it.descriptionId, getLang(getId(it))) }
+        warpedBricks.forEach { gen.add(it.descriptionId, getLang(getId(it))) }
+        ashenBricks.forEach { gen.add(it.descriptionId, getLang(getId(it))) }
     }
 
     override fun doOverrides(lang: String): String {
@@ -46,7 +43,5 @@ class FancyNameLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvi
             .replace("Blue", "Warped")
             .replace("Gray", "Ashen")
     }
-
-    val Block.id get() = BuiltInRegistries.BLOCK.getKey(this)
 
 }

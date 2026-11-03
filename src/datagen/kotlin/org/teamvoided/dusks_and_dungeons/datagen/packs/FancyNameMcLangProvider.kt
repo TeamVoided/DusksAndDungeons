@@ -1,19 +1,14 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.packs
 
 import com.google.gson.JsonObject
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
 import org.teamvoided.voidlib.devin.provider.DevinLangProvider
@@ -38,11 +33,9 @@ class FancyNameMcLangProvider(o: FabricOutput, val provider: FutureProvider) : D
 
     override fun generateTranslations(lookup: HolderLookup.Provider, gen: TranslationBuilder) {
         gen.add(Items.NETHER_WART, "Crimson Wart")
-        nether.forEach { gen.add(it.descriptionId, getLang(it.id).replace("Nether", "Crimson")) }
-        crimsonBricks.forEach { gen.add(it.descriptionId, getLang(it.id).replace("Red", "Crimson")) }
+        nether.forEach { gen.add(it.descriptionId, getLang(getId(it)).replace("Nether", "Crimson")) }
+        crimsonBricks.forEach { gen.add(it.descriptionId, getLang(getId(it)).replace("Red", "Crimson")) }
     }
-
-    val Block.id get() = BuiltInRegistries.BLOCK.getKey(this)
 
     override fun run(writer: CachedOutput): CompletableFuture<*> {
         val translationEntries = TreeMap<String, String>()
