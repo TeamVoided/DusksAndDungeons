@@ -30,6 +30,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModProcessorList
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModStructureSets
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModStructures
 import org.teamvoided.dusks_and_dungeons.datagen.data.structure.ModTemplatePools
+import org.teamvoided.dusks_and_dungeons.datagen.data.tag.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.tag.DamageTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.tag.EntityTypeTagProvider
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModDensityFunctions
@@ -37,7 +38,6 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModNoises
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.recipes.RecipesProvider
-import org.teamvoided.dusks_and_dungeons.datagen.data.tag.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.ItemTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.ConfiguredFeatureCreator
@@ -63,6 +63,10 @@ object DnDData : DataGeneratorEntrypoint {
             addProvider(::BlockLootTableProvider)
             addProvider(::BlockInteractLootTablesProvider)
             addProvider(::ChestLootTablesProvider)
+            // Tags
+            addProvider(::BiomeTagsProvider)
+            addProvider(::DamageTypeTagProvider)
+            addProvider(::EntityTypeTagProvider)
             // Misc
             addProvider(::AdvancementsProvider)
 
@@ -72,9 +76,6 @@ object DnDData : DataGeneratorEntrypoint {
             addProvider(::RecipesProvider)
             val blockTags = addProvider(::BlockTagsProvider)
             addProvider { o, p -> ItemTagsProvider(o, p, blockTags) }
-            addProvider(::BiomeTagsProvider)
-            addProvider(::DamageTypeTagProvider)
-            addProvider(::EntityTypeTagProvider)
         }
 
         FancyNamesPack.create(gen)
