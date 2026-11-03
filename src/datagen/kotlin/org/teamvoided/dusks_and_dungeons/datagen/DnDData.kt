@@ -37,7 +37,7 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.ModNoises
 import org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome.BiomeCreator
 import org.teamvoided.dusks_and_dungeons.datagen.old.models.ModelProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.recipes.RecipesProvider
-import org.teamvoided.dusks_and_dungeons.datagen.old.tags.BiomeTagsProvider
+import org.teamvoided.dusks_and_dungeons.datagen.data.tag.BiomeTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.BlockTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.tags.ItemTagsProvider
 import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.ConfiguredFeatureCreator
