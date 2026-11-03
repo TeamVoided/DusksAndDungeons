@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.assets.lang
 
 import net.minecraft.core.HolderLookup

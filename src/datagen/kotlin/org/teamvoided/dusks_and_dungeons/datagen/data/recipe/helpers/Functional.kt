@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers
 
 import net.minecraft.data.recipes.*
@@ -91,10 +87,10 @@ fun RecipeOutput.shapelessDying(dyedItem: ItemLike, item: ItemLike, dye: ItemLik
 
 fun RecipeOutput.candelabra(candelabra: ItemLike, ingot: ItemLike, nuget: ItemLike) {
     ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, candelabra, 4)
-        .define('|', Ingredient.of(ingot))
-        .define('~', Ingredient.of(nuget))
         .pattern("~~~")
         .pattern(" | ")
+        .define('|', Ingredient.of(ingot))
+        .define('~', Ingredient.of(nuget))
         .unlockedBy(ingot)
         .unlockedBy(candelabra)
         .save(this)
@@ -105,11 +101,22 @@ fun RecipeOutput.candelabra(candelabra: ItemLike, ingot: ItemLike, nuget: ItemLi
 
 fun RecipeOutput.sconce(sconce: ItemLike, ingot: ItemLike, nuget: ItemLike) {
     ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, sconce)
-        .define('#', Ingredient.of(ingot))
-        .define('.', Ingredient.of(nuget))
         .pattern("##")
         .pattern("#.")
+        .define('#', Ingredient.of(ingot))
+        .define('.', Ingredient.of(nuget))
         .unlockedBy(ingot)
         .unlockedBy(sconce)
+        .save(this)
+}
+
+fun RecipeOutput.scaffolding(scaffolding: ItemLike, bamboo: ItemLike, string: ItemLike, count: Int = 6) {
+    ShapedRecipeBuilder.shaped(RecipeCategory.MISC, scaffolding, count)
+        .pattern("|~|")
+        .pattern("| |")
+        .pattern("| |")
+        .define('|', Ingredient.of(bamboo))
+        .define('~', Ingredient.of(string))
+        .unlockedBy(bamboo)
         .save(this)
 }

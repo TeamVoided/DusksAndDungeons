@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.recipe
 
 import net.minecraft.data.recipes.RecipeCategory
@@ -12,7 +8,6 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Items.IRON_INGOT
 import net.minecraft.world.item.Items.IRON_NUGGET
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.*
@@ -67,19 +62,12 @@ object FunctionalRecipes {
         output.sconce(DnDBlocks.IRON_SCONCE, IRON_INGOT, IRON_NUGGET)
 //        output.sconce(DnDBlocks.GOLD_SCONCE, Items.GOLD_INGOT, Items.GOLD_NUGGET)
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DnDBlocks.BIG_SCAFFOLDING, 6)
-            .define('|', Ingredient.of(Items.BAMBOO_PLANKS))
-            .define('~', Ingredient.of(Items.STRING))
-            .pattern("|~|")
-            .pattern("| |")
-            .pattern("| |")
-            .unlockedBy(Items.BAMBOO_PLANKS)
-            .save(output)
+        output.scaffolding(DnDBlocks.BIG_SCAFFOLDING, Items.BAMBOO_PLANKS, Items.STRING)
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DnDBlocks.TINTED_GLASS_PANE, 16)
+            .pattern("###")
+            .pattern("###")
             .define('#', Blocks.TINTED_GLASS)
-            .pattern("###")
-            .pattern("###")
             .unlockedBy(Blocks.TINTED_GLASS)
             .save(output)
 

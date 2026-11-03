@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.loot
 
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider
@@ -43,7 +39,8 @@ class BlockInteractLootTablesProvider(o: FabricOutput, p: FutureProvider) :
 
     fun BiConsumer<ResourceKey<LootTable>, LootTable.Builder>.pumpkin(block: Block, seed: Item, amount: Int = 4) {
         carvedBlock(
-            block, LootTable.lootTable().pool(
+            block,
+            LootTable.lootTable().pool(
                 LootPool.lootPool().add(item(seed).setCount(amount)).build()
             )
         )

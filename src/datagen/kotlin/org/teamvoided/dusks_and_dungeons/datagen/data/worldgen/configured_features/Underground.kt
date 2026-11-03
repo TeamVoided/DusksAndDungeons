@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.configured_features
 
 import net.minecraft.data.worldgen.BootstrapContext
@@ -17,8 +13,9 @@ import org.teamvoided.dusks_and_dungeons.datagen.old.worldgen.ConfiguredFeatureC
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 
 object Underground {
+
     fun BootstrapContext<ConfiguredFeature<*, *>>.underground() {
-        this.registerConfiguredFeature(
+        registerConfiguredFeature(
             DnDConfiguredFeature.AZURINE_SAND_ORE,
             Feature.ORE,
             ore(
@@ -31,9 +28,12 @@ object Underground {
 
     private fun ore(tag: TagKey<Block>, block: Block, size: Int, discardOnAirChance: Float = 0f): OreConfiguration {
         return OreConfiguration(
-            listOf(OreConfiguration.target(TagMatchTest(tag), block.defaultBlockState())),
+            listOf(
+                OreConfiguration.target(TagMatchTest(tag), block.defaultBlockState())
+            ),
             size,
             discardOnAirChance
         )
     }
+
 }

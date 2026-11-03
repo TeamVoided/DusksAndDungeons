@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome
 
 import net.minecraft.data.worldgen.BootstrapContext
@@ -25,6 +21,7 @@ object BiomeCreator : RegistryBootstrapper<Biome> {
         register(DnDBiomes.OVERGROWN_GROTTO, CaveBiomeCreator.overgrownGrotto(this))
     }
 
+    @Deprecated("replace at some point")
     fun biomeBuild(
         // TODO nuke this and make it be a better builder
         ss: MobSpawnSettings.Builder,

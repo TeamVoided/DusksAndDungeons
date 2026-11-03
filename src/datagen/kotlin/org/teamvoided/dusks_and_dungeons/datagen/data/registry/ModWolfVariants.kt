@@ -1,19 +1,16 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.registry
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.animal.WolfVariant
 import net.minecraft.world.level.biome.Biome
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.voidlib.devin.RegistryBootstrapper
-import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDWolfVariants
+import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 
 object ModWolfVariants : RegistryBootstrapper<WolfVariant> {
 
@@ -30,6 +27,6 @@ object ModWolfVariants : RegistryBootstrapper<WolfVariant> {
         )
     }
 
-    fun wolf(name: String, suffix: String = "") = id("entity/wolf/$name$suffix")
+    fun wolf(name: String, suffix: String = ""): ResourceLocation = id("entity/wolf/$name$suffix")
 
 }

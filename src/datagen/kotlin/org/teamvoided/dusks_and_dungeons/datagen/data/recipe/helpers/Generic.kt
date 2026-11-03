@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers
 
 import net.minecraft.data.recipes.RecipeBuilder

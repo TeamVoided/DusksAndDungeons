@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.registry
 
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -13,13 +9,12 @@ import net.minecraft.world.damagesource.DamageTypes
 import net.minecraft.world.item.EitherHolder
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
-import java.util.*
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 
 object ModThrownItemDefinitions : RegistryBootstrapper<ThrownItemDefinition> {
 
@@ -51,13 +46,7 @@ object ModThrownItemDefinitions : RegistryBootstrapper<ThrownItemDefinition> {
     ) {
         register(
             key, ThrownItemDefinition(
-                items,
-                damage,
-                EitherHolder(Optional.empty(), damageType),
-                power,
-                uncertainty,
-                cooldown,
-                blockBreakTag
+                items, damage, EitherHolder(damageType), power, uncertainty, cooldown, blockBreakTag
             )
         )
     }

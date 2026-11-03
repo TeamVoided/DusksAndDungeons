@@ -1,14 +1,10 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen
 
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.synth.NormalNoise
-import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoises
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 
 object ModNoises : RegistryBootstrapper<NormalNoise.NoiseParameters> {
 
@@ -23,7 +19,7 @@ object ModNoises : RegistryBootstrapper<NormalNoise.NoiseParameters> {
     ) {
         register(
             key, NormalNoise.NoiseParameters(
-                firstOctave, firstAmplitude.toDouble(), *amplitudes.map { it.toDouble() }.toDoubleArray()
+                firstOctave, firstAmplitude.toDouble(), *amplitudes.map(Number::toDouble).toDoubleArray()
             )
         )
     }

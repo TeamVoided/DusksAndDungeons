@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.structure
 
 import net.minecraft.core.registries.Registries
@@ -19,9 +15,9 @@ import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDStructures
 import org.teamvoided.dusks_and_dungeons.data.structure.DnDTemplatePool
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBiomeTags
-import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.MineStructure
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MineSettings
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 
 object ModStructures : RegistryBootstrapper<Structure> {
 

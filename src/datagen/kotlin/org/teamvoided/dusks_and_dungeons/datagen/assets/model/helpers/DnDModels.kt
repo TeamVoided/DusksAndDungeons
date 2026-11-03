@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
 import net.minecraft.data.models.model.ModelTemplate
@@ -115,6 +111,7 @@ data object DnDModels {
 
         val CARPET_TINTED = tintedBlock("carpet", WOOL)
         val CARPET_DOWN_TINTED = tintedBlock("carpet_down", "_down", WOOL)
+
     }
 
     val CARPET_DOWN = parent("carpet_down", "_down", WOOL)

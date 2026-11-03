@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.litho.modifiers
 
 import net.minecraft.world.level.block.Block

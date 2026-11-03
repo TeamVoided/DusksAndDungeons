@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.loot
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate

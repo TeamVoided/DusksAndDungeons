@@ -37,11 +37,11 @@ object WoodRecipes {
         woodFromLogs(DnDBlocks.STRIPPED_CASCADE_WOOD, DnDBlocks.STRIPPED_CASCADE_LOG)
         hangingSign(DnDItems.CASCADE_HANGING_SIGN, DnDBlocks.STRIPPED_CASCADE_LOG)
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, DnDBlocks.BLUE_DOOR, 3)
-            .define('#', Ingredient.of(DnDBlocks.CASCADE_PLANKS.asItem()))
-            .define('@', Ingredient.of(Items.GOLD_NUGGET))
             .pattern("## ")
             .pattern("##@")
             .pattern("## ")
+            .define('#', Ingredient.of(DnDBlocks.CASCADE_PLANKS.asItem()))
+            .define('@', Ingredient.of(Items.GOLD_NUGGET))
             .unlockedBy(DnDBlocks.CASCADE_PLANKS.asItem())
             .save(this)
     }

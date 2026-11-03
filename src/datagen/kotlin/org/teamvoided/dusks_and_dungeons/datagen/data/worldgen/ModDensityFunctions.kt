@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen
 
 import net.minecraft.core.Holder
@@ -13,21 +9,21 @@ import net.minecraft.world.level.levelgen.DensityFunction.NoiseHolder
 import net.minecraft.world.level.levelgen.DensityFunctions.HolderHolder
 import net.minecraft.world.level.levelgen.DensityFunctions.noise
 import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters
-import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDDensityFunctions
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDNoises
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 
 object ModDensityFunctions : RegistryBootstrapper<DensityFunction> {
 
     override fun BootstrapContext<DensityFunction>.init() {
-        val autumn_size = -.08
+        val autumnSize = -0.08
         register(
             DnDDensityFunctions.CASCADE_REGION,
-            noise(noiseHolder(DnDNoises.AUTUMN), autumn_size, 0.0)
+            noise(noiseHolder(DnDNoises.AUTUMN), autumnSize, 0.0)
         )
         register(
             DnDDensityFunctions.SYPIA_REGION,
-            noise(noiseHolder(DnDNoises.AUTUMN), -autumn_size * 0.7, 0.0),
+            noise(noiseHolder(DnDNoises.AUTUMN), -autumnSize * 0.7, 0.0),
         )
         register(
             DnDDensityFunctions.OVERGROWN_GROTTO_REGION,

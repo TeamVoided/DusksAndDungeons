@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome
 
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
@@ -26,7 +22,7 @@ object AutumnBiomeCreator {
     private const val AUTUMN_WATER_FOG = 0x050533
     private const val GOLDEN_FOLIAGE = 0xFFC759
     private const val AUTUMN_PLAINS_GRASS = 0xF09B4F
-    // TODO For Dusk: Make all biome colors be constants
+    // TODO(dusk) For Dusk: Make all biome colors be constants
 
     val MUSIC: Music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
 
@@ -85,8 +81,9 @@ object AutumnBiomeCreator {
             add9VegetalDecoration(DnDPlacedFeature.PATCH_GRASS_AUTUMN_PLAIN)
             add9VegetalDecoration(VegetationPlacements.PATCH_DEAD_BUSH_2)
             BiomeDefaultFeatures.addDefaultMushrooms(this)
-            if (golden)
+            if (golden) {
                 add9VegetalDecoration(VegetationPlacements.PATCH_SUGAR_CANE)
+            }
             else BiomeDefaultFeatures.addDefaultExtraVegetation(this)
             add4SurfaceStructures(DnDPlacedFeature.AUTUMN_FARMLANDS)
             addAutumnFeatures(golden)

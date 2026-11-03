@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome
 
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
@@ -33,7 +29,7 @@ object CaveBiomeCreator {
         }
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES)
 
-        // TODO For Dusk: extract colors as constants
+        // TODO(dusk) For Dusk: extract colors as constants
         return biomeBuild(spawns, generation, music, 0.5f, 0.5f, 0x56C468, 0x17543c, 0x9abe4b)
         //Color(0x58DC6E)
         //Color(0x56C468)

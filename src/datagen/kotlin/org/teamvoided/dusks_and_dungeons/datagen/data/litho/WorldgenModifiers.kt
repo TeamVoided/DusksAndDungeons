@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.litho
 
 import com.mojang.datafixers.util.Pair
@@ -30,7 +26,7 @@ object WorldgenModifiers : RegistryBootstrapper<WorldgenModifier> {
 
     override fun BootstrapContext<WorldgenModifier>.init() {
         register(
-            DnDWorldgenModifiers.DUSKS_AND_DUNGEONS_BIOMES_RULES,
+            DnDWorldgenModifiers.DUSKS_AND_DUNGEONS_BIOME_RULES,
             WorldgenModifier.builder()
                 .addSurfaceRule(Level.OVERWORLD, InjectionType.PREPEND, DnDSurfaceRules.overworld())
         )
@@ -40,24 +36,22 @@ object WorldgenModifiers : RegistryBootstrapper<WorldgenModifier> {
 
         register(
             DnDWorldgenModifiers.ADD_VERDANT_MINESHAFT,
-            WorldgenModifier.builder()
-                .addStructureSetEntries(
-                    structureSets.getOrThrow(BuiltinStructureSets.MINESHAFTS),
-                    StructureSet.StructureSelectionEntry(structures.getOrThrow(DnDStructures.VERDANT_MINESHAFT), 1)
-                )
+            WorldgenModifier.builder().addStructureSetEntries(
+                structureSets.getOrThrow(BuiltinStructureSets.MINESHAFTS),
+                StructureSet.StructureSelectionEntry(structures.getOrThrow(DnDStructures.VERDANT_MINESHAFT), 1)
+            )
         )
 
-        val procLists = lookup(Registries.PROCESSOR_LIST)
+        val processorLists = lookup(Registries.PROCESSOR_LIST)
 
         register(
             DnDWorldgenModifiers.ADD_CORN_CROP,
-            WorldgenModifier.builder()
-                .addProcessorListProcessors(
-                    procLists.getOrThrow(ProcessorLists.FARM_PLAINS),
-                    ruleProcessor(
-                        chanceReplaceRule(Blocks.WHEAT, 0.5f, DnDBlocks.CORN_CROP)
-                    )
+            WorldgenModifier.builder().addProcessorListProcessors(
+                processorLists.getOrThrow(ProcessorLists.FARM_PLAINS),
+                ruleProcessor(
+                    chanceReplaceRule(Blocks.WHEAT, 0.5f, DnDBlocks.CORN_CROP)
                 )
+            )
         )
 
         val pools = lookup(Registries.TEMPLATE_POOL)
@@ -65,14 +59,13 @@ object WorldgenModifiers : RegistryBootstrapper<WorldgenModifier> {
 
         register(
             DnDWorldgenModifiers.ADD_CORN_PILE,
-            WorldgenModifier.builder()
-                .addTemplatePoolElements(
-                    pools.getOrThrow(Pools.createKey("village/plains/decor")),
-                    Pair(
-                        StructurePoolElement.feature(placedFeatures.getOrThrow(DnDPlacedFeature.PILE_CORN))
-                            .apply(StructureTemplatePool.Projection.RIGID), 1
-                    )
+            WorldgenModifier.builder().addTemplatePoolElements(
+                pools.getOrThrow(Pools.createKey("village/plains/decor")),
+                Pair(
+                    StructurePoolElement.feature(placedFeatures.getOrThrow(DnDPlacedFeature.PILE_CORN))
+                        .apply(StructureTemplatePool.Projection.RIGID), 1
                 )
+            )
         )
     }
 

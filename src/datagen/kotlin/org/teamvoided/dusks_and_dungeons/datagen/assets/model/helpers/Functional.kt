@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
 import com.google.gson.JsonArray
@@ -271,7 +267,7 @@ fun denseCubeCondition(mask: Int): Condition {
 }
 
 
-// TODO generate everything
+// TODO(1.0) generate everything
 fun BlockModelGenerators.tintedPane(glass: Block, glassPane: Block) {
     ModelTemplates.FLAT_ITEM
         .create(ModelLocationUtils.getModelLocation(glassPane.asItem()), TextureMapping.layer0(glass), modelOutput)

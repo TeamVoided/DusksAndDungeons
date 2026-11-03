@@ -1,6 +1,4 @@
-/*
- * TODO(cleanup)
- */
+@file:Suppress("unused")
 
 package org.teamvoided.dusks_and_dungeons.datagen.data.worldgen.biome
 

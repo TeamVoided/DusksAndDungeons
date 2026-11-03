@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.registry
 
 import net.minecraft.data.worldgen.BootstrapContext
@@ -9,9 +5,9 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.damagesource.DamageEffects
 import net.minecraft.world.damagesource.DamageScaling
 import net.minecraft.world.damagesource.DamageType
-import org.teamvoided.voidlib.devin.RegistryBootstrapper
 import org.teamvoided.dusks_and_dungeons.data.registry.DnDDamageTypes
 import org.teamvoided.dusks_and_dungeons.util.toLangKey
+import org.teamvoided.voidlib.devin.RegistryBootstrapper
 
 object ModDamageTypes : RegistryBootstrapper<DamageType> {
 

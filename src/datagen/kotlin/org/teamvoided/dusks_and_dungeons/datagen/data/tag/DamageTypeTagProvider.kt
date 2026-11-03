@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.tag
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -20,4 +16,5 @@ class DamageTypeTagProvider(o: FabricOutput, p: FutureProvider) :
         getOrCreateTagBuilder(DnDDamageTypeTags.BRICK_DAMAGE)
             .add(DnDDamageTypes.THROWN_BRICK)
     }
+
 }

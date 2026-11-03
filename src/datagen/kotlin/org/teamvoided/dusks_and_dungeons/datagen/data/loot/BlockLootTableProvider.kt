@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.datagen.data.loot
 
 import net.minecraft.core.registries.Registries
@@ -18,6 +14,8 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import org.teamvoided.dusks_and_dungeons.block.LogPileBlock
 import org.teamvoided.dusks_and_dungeons.block.TripleTallPlantBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
+import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks.ICE_SET
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
@@ -33,12 +31,12 @@ import org.teamvoided.voidlib.devin.provider.VBlockLootTableProvider
 
 class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : VBlockLootTableProvider(o, p) {
 
-    // This list is here for manually written JSON files
+    // This list is here for MANUALLY written JSON files
     val manual = listOf(
         DnDBlocks.MOONBERRY_VINE
     )
 
-    val bookshelfs = listOf(
+    val bookshelves = listOf(
         DnDBlocks.SPRUCE_BOOKSHELF,
         DnDBlocks.BIRCH_BOOKSHELF,
         DnDBlocks.JUNGLE_BOOKSHELF,
@@ -74,6 +72,9 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : VBlockLootTab
                 is PinkPetalsBlock -> add(block, ::createPetalsDrops)
                 is FlowerPotBlock -> add(block) { createPotFlowerItemTable(block.potted) }
                 is InfestedBlock -> otherWhenSilkTouch(block, block.hostBlock)
+                is BrushableBlock -> add(block, noDrop())
+                is CandelabraBlock -> add(block, ::candelabraDrops)
+                is EmptyCandelabraBlock -> add(block, ::emptyCandelabraDrops)
                 else -> dropSelf(block)
             }
         }
@@ -91,11 +92,6 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : VBlockLootTab
         bigCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         soulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
         bigSoulCandles.forEach { (candle, cake) -> add(cake) { createCandleCakeDrops(candle) } }
-
-        add(DnDBlocks.IRON_CANDELABRA, ::candelabraDrops)
-        add(DnDBlocks.EMPTY_IRON_CANDELABRA, ::emptyCandelabraDrops)
-        add(DnDBlocks.IRON_WALL_CANDELABRA, ::candelabraDrops)
-        add(DnDBlocks.EMPTY_IRON_WALL_CANDELABRA, ::emptyCandelabraDrops)
 
         add(DnDBlocks.HEAVY_CUBE) { compositeBlockDrops(it, Items.HEAVY_CORE) }
 
@@ -119,10 +115,8 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : VBlockLootTab
                 blockProperty(Blocks.BEETROOTS).setProperty(BeetrootBlock.AGE, 3)
             )
         )
-        for (bookshelf in bookshelfs) {
-            add(bookshelf) {
-                createSingleItemTableWithSilkTouch(it, Items.BOOK, ConstantValue.exactly(3f))
-            }
+        for (bookshelf in bookshelves) {
+            add(bookshelf) { createSingleItemTableWithSilkTouch(it, Items.BOOK, ConstantValue.exactly(3f)) }
         }
 
         dropWhenSilkTouch(ICE_SET.slab)
@@ -142,8 +136,6 @@ class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : VBlockLootTab
             )
         }
 
-        add(DnDBlocks.SUSPICIOUS_RED_SAND, noDrop())
-        add(DnDBlocks.SUSPICIOUS_AZURINE_SAND, noDrop())
     }
 
 }

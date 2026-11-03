@@ -373,6 +373,7 @@ fun RecipeOutput.createStoneStairs(stairs: Block, source: Block) {
     createStonecutting(stairs, source)
 }
 
+@Deprecated("Old recipes will be removed")
 fun RecipeOutput.create2x2(output: ItemLike, input: ItemLike, count: Int = 4) {
     ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, output, count)
         .pattern("##")
