@@ -21,7 +21,7 @@
     "emi": [
       {
         "adapter": "kotlin",
-        "value": "org.teamvoided.dusks_and_dungeons.compat.DnDEmiPlugin"
+        "value": "org.teamvoided.dusks_and_dungeons.client.compat.DnDEmiPlugin"
       }
     ]
   },

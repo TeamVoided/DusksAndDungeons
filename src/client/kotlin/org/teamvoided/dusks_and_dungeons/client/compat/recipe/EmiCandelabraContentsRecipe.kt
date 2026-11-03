@@ -1,8 +1,4 @@
-/*
- * TODO(cleanup)
- */
-
-package org.teamvoided.dusks_and_dungeons.compat.recipe
+package org.teamvoided.dusks_and_dungeons.client.compat.recipe
 
 import dev.emi.emi.api.recipe.EmiPatternCraftingRecipe
 import dev.emi.emi.api.stack.EmiIngredient
@@ -15,17 +11,16 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDDataComponents.CANDELABRA_CONTENTS
 import java.util.*
 
-@Suppress("MISSING_DEPENDENCY_SUPERCLASS_WARNING")
-class EmiCandelabraContentsRecipe(val candelabra: EmiStack, id: ResourceLocation) :
-    EmiPatternCraftingRecipe(listOf(candelabra, CANDLES), candelabra, id) {
+class EmiCandelabraContentsRecipe(
+    val candelabra: EmiStack, id: ResourceLocation,
+) : EmiPatternCraftingRecipe(listOf(candelabra, CANDLES), candelabra, id) {
 
     override fun getInputWidget(slot: Int, x: Int, y: Int): SlotWidget {
-        if (slot == 0) {
-            return SlotWidget(candelabra, x, y)
-        } else if (slot == 1) {
-            return SlotWidget(CANDLES, x, y)
+        return when (slot) {
+            0 -> SlotWidget(candelabra, x, y)
+            1 -> SlotWidget(CANDLES, x, y)
+            else -> SlotWidget(EmiStack.EMPTY, x, y)
         }
-        return SlotWidget(EmiStack.EMPTY, x, y)
     }
 
     override fun getOutputWidget(x: Int, y: Int): SlotWidget {

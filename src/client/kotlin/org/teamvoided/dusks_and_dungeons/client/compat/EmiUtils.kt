@@ -1,8 +1,4 @@
-/*
- * TODO(cleanup)
- */
-
-package org.teamvoided.dusks_and_dungeons.compat
+package org.teamvoided.dusks_and_dungeons.client.compat
 
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiRecipe

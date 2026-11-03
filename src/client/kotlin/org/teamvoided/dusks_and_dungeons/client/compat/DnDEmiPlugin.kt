@@ -1,8 +1,4 @@
-/*
- * TODO(cleanup)
- */
-
-package org.teamvoided.dusks_and_dungeons.compat
+package org.teamvoided.dusks_and_dungeons.client.compat
 
 import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
@@ -25,12 +21,12 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.CarvableBlock
-import org.teamvoided.dusks_and_dungeons.compat.recipe.EmiCandelabraContentsRecipe
+import org.teamvoided.dusks_and_dungeons.client.compat.recipe.EmiCandelabraContentsRecipe
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
-import org.teamvoided.voidlib.impl.BlockStrippingRegistryIml
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.recipe.CandelabraContentsRecipe
+import org.teamvoided.voidlib.impl.BlockStrippingRegistryIml
 import java.util.function.Function
 
 object DnDEmiPlugin : EmiPlugin {
