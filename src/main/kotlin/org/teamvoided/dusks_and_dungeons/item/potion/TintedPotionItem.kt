@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.item.potion
 
 
@@ -30,8 +26,8 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.gameevent.GameEvent
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.appendTintedTooltip
-import org.teamvoided.voidlib.helpers.item.giveItem
 import org.teamvoided.taglighting.data.tags.TaglightingPotionTags
+import org.teamvoided.voidlib.helpers.item.giveItem
 import kotlin.jvm.optionals.getOrNull
 
 open class TintedPotionItem(properties: Properties) : PotionItem(properties) {

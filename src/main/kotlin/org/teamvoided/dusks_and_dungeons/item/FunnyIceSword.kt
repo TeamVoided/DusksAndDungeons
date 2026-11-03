@@ -1,20 +1,16 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.item
 
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.item.component.ItemAttributeModifiers
-import net.minecraft.world.item.component.Tool
+import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.core.BlockPos
+import net.minecraft.world.item.component.ItemAttributeModifiers
+import net.minecraft.world.item.component.Tool
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
 
-class FunnyIceSword(settings: Properties) : Item(settings) {
+class FunnyIceSword(properties: Properties) : Item(properties) {
 
 //    main click - normal attack
 //    hold secondary click, then release - spin-around attack
@@ -31,28 +27,23 @@ class FunnyIceSword(settings: Properties) : Item(settings) {
 
     //damage based on speed, ice skating?
 
-    override fun canAttackBlock(state: BlockState, world: Level, pos: BlockPos, miner: Player): Boolean {
-        return !miner.isCreative
+    override fun canAttackBlock(state: BlockState, level: Level, pos: BlockPos, player: Player): Boolean {
+        return !player.isCreative
     }
 
-    override fun hurtEnemy(stack: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean {
+    override fun hurtEnemy(weapon: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean {
         return true
     }
 
-//    override fun method_59978(stack: ItemStack, livingEntity: LivingEntity, livingEntity2: LivingEntity) {
-//        stack.damageEquipment(1, livingEntity2, EquipmentSlot.MAINHAND)
-//    }
-
-    override fun getEnchantmentValue(): Int {
-        return 15
-    }
+    override fun getEnchantmentValue(): Int = 15
 
     override fun isValidRepairItem(stack: ItemStack, ingredient: ItemStack): Boolean {
-        return false//ingredient.isOf(DnDItems.FREEZE_ROD)
+        return false //ingredient.isOf(DnDItems.FREEZE_ROD)
     }
 
 
     companion object {
+
         fun createToolComponent(): Tool {
             return Tool(listOf(), 1.0f, 2)
         }
