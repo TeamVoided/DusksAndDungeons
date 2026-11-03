@@ -9,9 +9,9 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import org.teamvoided.creative_works.util.mc.textMain
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.client.item.CandelabraItemRenderer
+import org.teamvoided.dusks_and_dungeons.util.isDev
 import kotlin.jvm.optionals.getOrNull
 
 object DnDClientDebug {

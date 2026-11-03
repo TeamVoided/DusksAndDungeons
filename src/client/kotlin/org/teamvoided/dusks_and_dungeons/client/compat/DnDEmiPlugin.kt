@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluids
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.CarvableBlock
 import org.teamvoided.dusks_and_dungeons.client.compat.recipe.EmiCandelabraContentsRecipe
@@ -26,6 +25,7 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDItemTags
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.recipe.CandelabraContentsRecipe
+import org.teamvoided.dusks_and_dungeons.util.isDev
 import org.teamvoided.voidlib.impl.BlockStrippingRegistryIml
 import java.util.function.Function
 

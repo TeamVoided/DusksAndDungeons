@@ -26,7 +26,6 @@ import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigCandleCakeBlock
@@ -35,6 +34,7 @@ import org.teamvoided.dusks_and_dungeons.block.big.SoulCandleCakeBlock
 import org.teamvoided.dusks_and_dungeons.block.pumpkin.*
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockProperties
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDSoundTypes
+import org.teamvoided.dusks_and_dungeons.util.isDev
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.helpers.addAndReturn
 import org.teamvoided.voidmill.sign.VoidCeilingHangingSignBlock

@@ -7,7 +7,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
-import org.teamvoided.dusks_and_dungeons.util.emptyItemList
+import org.teamvoided.dusks_and_dungeons.util.itemList
 import java.util.List.copyOf
 
 
@@ -68,11 +68,11 @@ data class CandelabraContents(val candles: NonNullList<ItemStack>) {
             }
         }
 
-        val ONE = CandelabraContents(emptyItemList(1))
-        val TWO = CandelabraContents(emptyItemList(2))
-        val THREE = CandelabraContents(emptyItemList(3))
-        val FOUR = CandelabraContents(emptyItemList(4))
-        val FIVE = CandelabraContents(emptyItemList(5))
+        val ONE = CandelabraContents(itemList(1))
+        val TWO = CandelabraContents(itemList(2))
+        val THREE = CandelabraContents(itemList(3))
+        val FOUR = CandelabraContents(itemList(4))
+        val FIVE = CandelabraContents(itemList(5))
 
         val CODEC: Codec<CandelabraContents> =
             ItemStack.OPTIONAL_CODEC

@@ -1,9 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
-@file:Suppress("unused")
-
 package org.teamvoided.dusks_and_dungeons.util
 
 import net.fabricmc.loader.api.FabricLoader
@@ -18,9 +12,6 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.phys.Vec3
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import kotlin.jvm.optionals.getOrNull
-
-const val pi = 3.1415927f
-const val rotate360 = 6.28319f
 
 fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
 
@@ -76,6 +67,6 @@ fun Direction.counterClockWise(rotations: Int): Direction {
 }
 
 
-fun emptyItemList(capacity: Int): NonNullList<ItemStack> {
+fun itemList(capacity: Int): NonNullList<ItemStack> {
     return NonNullList.withSize(capacity, ItemStack.EMPTY)
 }

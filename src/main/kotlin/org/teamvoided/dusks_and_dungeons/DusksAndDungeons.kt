@@ -61,8 +61,6 @@ object DusksAndDungeons {
     @JvmStatic
     fun id(path: String) = id(MODID, path)
 
-    @JvmStatic
-    fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
     fun isModLoaded(modId: String) = FabricLoader.getInstance().isModLoaded(modId)
 
 }

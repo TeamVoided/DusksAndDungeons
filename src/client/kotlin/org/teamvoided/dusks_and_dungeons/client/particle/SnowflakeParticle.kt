@@ -4,8 +4,8 @@ import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.*
 import net.minecraft.core.particles.ParticleGroup
 import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.util.Mth
 import net.minecraft.util.Mth.lerp
-import org.teamvoided.dusks_and_dungeons.util.pi
 import java.util.*
 import kotlin.math.max
 
@@ -53,7 +53,7 @@ class SnowflakeParticle(
                     lerpSpeed = 0.05f * Math.random().toFloat()
                 }
                 lerp += lerpSpeed
-                roll += pi * lerp(lerp, rotationSpeed1, rotationSpeed2) * 2.0f
+                roll += Mth.PI * lerp(lerp, rotationSpeed1, rotationSpeed2) * 2.0f
             }
             move(xd, yd, zd)
             xd *= 0.9

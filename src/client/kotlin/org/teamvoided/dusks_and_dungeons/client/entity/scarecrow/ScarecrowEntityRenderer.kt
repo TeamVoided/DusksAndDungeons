@@ -16,7 +16,6 @@ import org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.model.Scarecrow
 import org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.render.ScarecrowArmorFeatureRenderer
 import org.teamvoided.dusks_and_dungeons.client.entity.scarecrow.render.ScarecrowWoodFeatureRenderer
 import org.teamvoided.dusks_and_dungeons.entity.ScarecrowEntity
-import org.teamvoided.dusks_and_dungeons.util.pi
 
 class ScarecrowEntityRenderer(context: EntityRendererProvider.Context) :
     LivingEntityRenderer<ScarecrowEntity, ScarecrowEntityModel>(
@@ -45,7 +44,7 @@ class ScarecrowEntityRenderer(context: EntityRendererProvider.Context) :
         matrices.mulPose(Axis.YP.rotationDegrees(180f - bodyYaw))
         val sinceLastHit = (scarecrowEntity.level().gameTime - scarecrowEntity.lastHitTime).toFloat() + tickDelta
         if (sinceLastHit < ScarecrowEntity.WOBBLE_DURATION) {
-            matrices.mulPose(Axis.YP.rotationDegrees(Mth.sin(sinceLastHit / 1.5f * pi) * 3f))
+            matrices.mulPose(Axis.YP.rotationDegrees(Mth.sin(sinceLastHit / 1.5f * Mth.PI) * 3f))
         }
     }
 

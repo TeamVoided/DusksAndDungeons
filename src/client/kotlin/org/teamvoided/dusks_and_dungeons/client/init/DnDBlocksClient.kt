@@ -11,10 +11,10 @@ import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.FoliageColor
 import net.minecraft.world.level.GrassColor
 import net.minecraft.world.level.block.Block
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
 import org.teamvoided.dusks_and_dungeons.util.block.*
+import org.teamvoided.dusks_and_dungeons.util.isDev
 
 
 object DnDBlocksClient {

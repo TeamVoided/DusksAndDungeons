@@ -9,7 +9,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.MODID
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.tab.WoodsTab
 import org.teamvoided.dusks_and_dungeons.util.*

@@ -10,7 +10,7 @@ import net.minecraft.util.Mth.lerp
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.Vec3
-import org.teamvoided.dusks_and_dungeons.util.rotate360
+import org.teamvoided.dusks_and_dungeons.util.Utils
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
@@ -22,7 +22,7 @@ open class AutumnLeafParticle(
     velX: Double, velY: Double, velZ: Double
 ) : TextureSheetParticle(level, x, y, z, velX, velY, velZ) {
 
-    private val rotationSpeed: Float = (random.nextFloat() - 0.5f) * 0.1f * rotate360
+    private val rotationSpeed: Float = (random.nextFloat() - 0.5f) * 0.1f * Utils.ROTATE_360
     private val initialVelocity: Vec3
     private var isOnSurface: Boolean = false
     private var timeOnGround: Int = (random.nextInt(20) + 20)
@@ -33,7 +33,7 @@ open class AutumnLeafParticle(
         val scaleAndBounds = random.nextFloat() * 0.025f + 0.05f
         quadSize = scaleAndBounds
         setSize(scaleAndBounds, scaleAndBounds)
-        val velXZ = ((level.dayTime.toFloat() / 24000) + (random.nextFloat() - 0.5) * 0.1) * rotate360
+        val velXZ = ((level.dayTime.toFloat() / 24000) + (random.nextFloat() - 0.5) * 0.1) * Utils.ROTATE_360
         xd = velX + cos(velXZ) * 0.1
         yd = velY
         zd = velZ + sin(velXZ) * 0.1

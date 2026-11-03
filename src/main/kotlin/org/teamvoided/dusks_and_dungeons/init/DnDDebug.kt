@@ -19,9 +19,9 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
-import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.isDev
 import org.teamvoided.dusks_and_dungeons.block.meltable.Meltable
 import org.teamvoided.dusks_and_dungeons.debug.BlockFamilyValidator
+import org.teamvoided.dusks_and_dungeons.util.isDev
 
 @Suppress("unused")
 object DnDDebug {
