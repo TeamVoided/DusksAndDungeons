@@ -17,7 +17,7 @@ import net.minecraft.world.level.ItemLike
 import org.teamvoided.dusks_and_dungeons.recipe.MixedRecipePattern
 import org.teamvoided.dusks_and_dungeons.recipe.MixedShapedRecipe
 
-
+// TODO(lib) move to voidlib
 class MixedRecipeBuilder(
     private val category: RecipeCategory,
     result: ItemLike,

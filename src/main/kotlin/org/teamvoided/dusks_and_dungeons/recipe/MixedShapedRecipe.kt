@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.recipe
 
 import com.mojang.serialization.Codec
@@ -17,7 +13,7 @@ import net.minecraft.world.level.Level
 import org.teamvoided.dusks_and_dungeons.init.DnDRecipes
 import java.util.*
 
-
+// TODO(lib) move to voidlib
 class MixedShapedRecipe(
     group: String,
     category: CraftingBookCategory,

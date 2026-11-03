@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.recipe.builder
 
 import net.minecraft.advancements.AdvancementRequirements
@@ -19,6 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import org.teamvoided.dusks_and_dungeons.recipe.HurtItemRecipe
 
+// TODO(lib) move to voidlib
 class HurtItemRecipeBuilder(
     private val ingredient: Ingredient,
     private val damageTypeTag: TagKey<DamageType>,

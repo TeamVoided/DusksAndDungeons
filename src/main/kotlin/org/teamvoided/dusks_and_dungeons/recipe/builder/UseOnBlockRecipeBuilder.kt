@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 import org.teamvoided.dusks_and_dungeons.recipe.UseOnBlockRecipe
 import org.teamvoided.dusks_and_dungeons.recipe.UseOnBlockRecipe.Companion.asItemOrEmpty
 
+// TODO(lib) move to voidlib
 class UseOnBlockRecipeBuilder(
     private val ingredient: Ingredient,
     private val inputState: BlockState,

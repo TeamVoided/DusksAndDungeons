@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.recipe
 
 import com.google.common.annotations.VisibleForTesting
@@ -27,6 +23,7 @@ import kotlin.jvm.optionals.getOrNull
 import kotlin.math.max
 import kotlin.math.min
 
+// TODO(lib) move to voidlib
 class MixedRecipePattern(
     val width: Int, val height: Int,
     val ingredients: NonNullList<Ingredient>,

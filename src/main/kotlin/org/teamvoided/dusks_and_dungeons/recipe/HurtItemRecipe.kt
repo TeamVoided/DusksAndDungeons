@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.recipe
 
 import com.mojang.serialization.Codec
@@ -23,6 +19,7 @@ import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDRecipes
 import org.teamvoided.dusks_and_dungeons.util.DnDCodecs
 
+// TODO(lib) move to voidlib
 class HurtItemRecipe(
     group: String,
     input: Ingredient,
