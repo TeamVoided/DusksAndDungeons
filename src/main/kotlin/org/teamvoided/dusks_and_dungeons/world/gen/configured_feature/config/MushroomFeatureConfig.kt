@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.world.gen.configured_feature.config
 
 import com.mojang.serialization.Codec
@@ -24,9 +20,10 @@ open class MushroomFeatureConfig(
     val capHeight: IntProvider,
 ) : FeatureConfiguration {
     companion object {
-        val MAP_CODEC: MapCodec<MushroomFeatureConfig> =
-            RecordCodecBuilder.mapCodec { instance ->
-                instance.group(
+
+        val MAP_CODEC: MapCodec<MushroomFeatureConfig> = RecordCodecBuilder.mapCodec { inst ->
+            inst
+                .group(
                     TagKey.hashedCodec(Registries.BLOCK).fieldOf("replaceable").forGetter { it.replaceable },
                     TagKey.hashedCodec(Registries.BLOCK).fieldOf("ignores").forGetter { it.ignores },
                     TagKey.hashedCodec(Registries.BLOCK).fieldOf("can_place_on").forGetter { it.canPlaceOn },
@@ -34,8 +31,11 @@ open class MushroomFeatureConfig(
                     IntProvider.codec(1, 32).fieldOf("stem_height").forGetter { it.stemHeight },
                     BlockStateProvider.CODEC.fieldOf("cap_block").forGetter { it.capBlock },
                     IntProvider.codec(1, 16).fieldOf("cap_height").forGetter { it.capHeight },
-                ).apply(instance, ::MushroomFeatureConfig)
-            }
+                )
+                .apply(inst, ::MushroomFeatureConfig)
+        }
+
         val CODEC: Codec<MushroomFeatureConfig> = MAP_CODEC.codec()
+
     }
 }
