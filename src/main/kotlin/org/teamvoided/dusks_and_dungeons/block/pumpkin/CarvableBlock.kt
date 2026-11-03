@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.pumpkin
 
 import net.minecraft.core.BlockPos
@@ -27,9 +23,10 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.phys.BlockHitResult
 import org.teamvoided.dusks_and_dungeons.util.asEquipmentSlot
 import org.teamvoided.dusks_and_dungeons.util.dropFromBlockInteractLootTable
-import org.teamvoided.voidlib.helpers.item.isShears
 import org.teamvoided.dusks_and_dungeons.util.key
+import org.teamvoided.voidlib.helpers.item.isShears
 
+// TODO(vlib) move to voidlib
 interface CarvableBlock {
 
     fun getId(): ResourceLocation

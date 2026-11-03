@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.pumpkin
 
 import net.minecraft.core.BlockPos
@@ -34,7 +30,7 @@ import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxZ
 
-open class SmallPumpkinBlock(private val carvedBlock: Block, settings: Properties) : SixWayFacingBlock(settings),
+open class SmallPumpkinBlock(private val carvedBlock: Block, properties: Properties) : SixWayFacingBlock(properties),
     CarvableBlock, SimpleWaterloggedBlock {
 
     init {
@@ -43,6 +39,15 @@ open class SmallPumpkinBlock(private val carvedBlock: Block, settings: Propertie
                 .setValue(WATERLOGGED, false)
                 .setValue(FACING, Direction.UP)
         )
+    }
+
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
+        builder.add(WATERLOGGED)
+    }
+
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        return SHAPES[state.getValue(FACING)] ?: Shapes.block()
     }
 
     override fun getId(): ResourceLocation = getId(this)
@@ -73,11 +78,6 @@ open class SmallPumpkinBlock(private val carvedBlock: Block, settings: Propertie
             super.useItemOn(stack, state, level, pos, player, hand, hit)
     }
 
-    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        super.createBlockStateDefinition(builder)
-        builder.add(WATERLOGGED)
-    }
-
     override fun updateShape(
         state: BlockState, dir: Direction, neighborState: BlockState,
         level: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
@@ -96,10 +96,6 @@ open class SmallPumpkinBlock(private val carvedBlock: Block, settings: Propertie
         return defaultBlockState()
             .setValue(WATERLOGGED, ctx.level.getFluidState(ctx.clickedPos).`is`(Fluids.WATER))
             .setValue(FACING, ctx.clickedFace)
-    }
-
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return SHAPES[state.getValue(FACING)] ?: Shapes.block()
     }
 
     override fun isPathfindable(state: BlockState, type: PathComputationType): Boolean = false

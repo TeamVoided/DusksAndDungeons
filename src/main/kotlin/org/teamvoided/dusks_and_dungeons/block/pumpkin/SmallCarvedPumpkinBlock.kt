@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.pumpkin
 
 import net.minecraft.core.BlockPos
@@ -28,7 +24,7 @@ import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxZ
 
-class SmallCarvedPumpkinBlock(settings: Properties) : Block(settings) {
+class SmallCarvedPumpkinBlock(properties: Properties) : Block(properties) {
 
     init {
         registerDefaultState(
@@ -41,6 +37,10 @@ class SmallCarvedPumpkinBlock(settings: Properties) : Block(settings) {
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)
         builder.add(WATERLOGGED, ORIENTATION)
+    }
+
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        return SHAPES[state.getValue(ORIENTATION).front()] ?: Shapes.block()
     }
 
     override fun rotate(state: BlockState, rotation: Rotation): BlockState {
@@ -77,10 +77,6 @@ class SmallCarvedPumpkinBlock(settings: Properties) : Block(settings) {
         return defaultBlockState()
             .setValue(WATERLOGGED, ctx.level.getFluidState(ctx.clickedPos).`is`(Fluids.WATER))
             .setValue(ORIENTATION, orientation ?: FrontAndTop.UP_NORTH)
-    }
-
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return SHAPES[state.getValue(ORIENTATION).front()] ?: Shapes.block()
     }
 
     override fun isPathfindable(state: BlockState, type: PathComputationType): Boolean = false

@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.pumpkin
 
 import net.minecraft.core.BlockPos
@@ -18,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import org.teamvoided.dusks_and_dungeons.util.block.getId
 
-open class DnDPumpkinBlock(private val carvedBlock: Block, settings: Properties) : Block(settings), CarvableBlock {
+open class DnDPumpkinBlock(private val carvedBlock: Block, properties: Properties) : Block(properties), CarvableBlock {
 
     override fun getId(): ResourceLocation = getId(this)
 

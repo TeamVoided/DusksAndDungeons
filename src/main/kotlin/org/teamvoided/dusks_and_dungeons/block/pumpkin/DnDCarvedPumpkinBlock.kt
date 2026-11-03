@@ -1,38 +1,38 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.pumpkin
 
 import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.CarvedPumpkinBlock
-import net.minecraft.world.level.block.state.pattern.BlockPattern
-import net.minecraft.world.entity.Entity
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.CarvedPumpkinBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.pattern.BlockPattern
 
-class DnDCarvedPumpkinBlock(settings: Properties) : CarvedPumpkinBlock(settings) {
-    override fun onPlace(state: BlockState, world: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {
-        if (!oldState.`is`(state.block)) trySpawnGolem(world, pos)
+class DnDCarvedPumpkinBlock(properties: Properties) : CarvedPumpkinBlock(properties) {
+
+    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {
+        if (!oldState.`is`(state.block)) {
+            trySpawnGolem(level, pos)
+        }
     }
 
-    override fun canSpawnGolem(world: LevelReader, pos: BlockPos): Boolean {
+    override fun canSpawnGolem(level: LevelReader, pos: BlockPos): Boolean {
         return false
+        // TODO (1.0) add golems?
 //        return GolemPatterns.snowGolemDispenserPattern?.searchAround(world, pos) != null ||
 //                GolemPatterns.ironGolemDispenserPattern?.searchAround(world, pos) != null
     }
 
-    fun trySpawnGolem(world: Level, pos: BlockPos) {
+    fun trySpawnGolem(level: Level, pos: BlockPos) {
 
     }
 
     companion object {
 
-        fun spawnGolem(world: Level, result: BlockPattern.BlockPatternMatch, entity: Entity, pos: BlockPos) {
-            clearPatternBlocks(world, result)
+        fun spawnGolem(level: Level, result: BlockPattern.BlockPatternMatch, entity: Entity, pos: BlockPos) {
+            clearPatternBlocks(level, result)
             entity.moveTo(
                 pos.x.toDouble() + 0.5,
                 pos.y.toDouble() + 0.05,
@@ -40,17 +40,15 @@ class DnDCarvedPumpkinBlock(settings: Properties) : CarvedPumpkinBlock(settings)
                 0.0f,
                 0.0f
             )
-            world.addFreshEntity(entity)
-            val playersInArea = world.getEntitiesOfClass(
-                ServerPlayer::class.java, entity.boundingBox.inflate(5.0)
-            ).iterator()
+            level.addFreshEntity(entity)
+            val playersInArea =
+                level.getEntitiesOfClass(ServerPlayer::class.java, entity.boundingBox.inflate(5.0)).iterator()
 
-            while (playersInArea.hasNext()) {
-                val serverPlayerEntity = playersInArea.next() as ServerPlayer
-                CriteriaTriggers.SUMMONED_ENTITY.trigger(serverPlayerEntity, entity)
+            for (player in playersInArea) {
+                CriteriaTriggers.SUMMONED_ENTITY.trigger(player, entity)
             }
 
-            updatePatternBlocks(world, result)
+            updatePatternBlocks(level, result)
         }
     }
 
