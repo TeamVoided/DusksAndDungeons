@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.particle
 
 import com.mojang.serialization.Codec
@@ -17,7 +13,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDParticles
 
 class ShriekDirectionalParticleOption(val direction: Direction, val delay: Int) : ParticleOptions {
 
-    override fun getType(): ParticleType<ShriekDirectionalParticleOption> = DnDParticles.SHRIEK_DIRECTIONAL
+    override fun getType(): ParticleType<ShriekDirectionalParticleOption> = DnDParticles.DIRECTIONAL_SHRIEK
 
     companion object {
 
@@ -31,8 +27,8 @@ class ShriekDirectionalParticleOption(val direction: Direction, val delay: Int) 
         }
 
         val PACKET_CODEC: StreamCodec<RegistryFriendlyByteBuf, ShriekDirectionalParticleOption> = StreamCodec.composite(
-            Direction.STREAM_CODEC, { it.direction },
-            ByteBufCodecs.VAR_INT, { it.delay },
+            Direction.STREAM_CODEC, ShriekDirectionalParticleOption::direction,
+            ByteBufCodecs.VAR_INT, ShriekDirectionalParticleOption::delay,
             ::ShriekDirectionalParticleOption
         )
 

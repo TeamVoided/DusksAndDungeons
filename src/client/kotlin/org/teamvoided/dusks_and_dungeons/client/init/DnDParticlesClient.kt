@@ -16,7 +16,7 @@ object DnDParticlesClient {
         register(DnDParticles.SMALL_SOUL_FLAME_PARTICLE, FlameParticle::SmallFlameProvider)
         register(DnDParticles.SNOWFLAKE, SnowflakeParticle::Factory)
         register(DnDParticles.COLORABLE_OMINOUS_PARTICLE, ColorableOminousParticle::Factory)
-        register(DnDParticles.SHRIEK_DIRECTIONAL, ShriekDirectionalParticle::Provider)
+        register(DnDParticles.DIRECTIONAL_SHRIEK, ShriekDirectionalParticle::Provider)
     }
 
     fun <T : ParticleOptions> register(type: ParticleType<T>, constructor: PendingParticleFactory<T>) {
