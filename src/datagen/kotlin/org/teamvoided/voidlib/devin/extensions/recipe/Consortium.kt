@@ -1,11 +1,7 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.voidlib.devin.extensions.recipe
 
-import net.minecraft.world.level.block.Block
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createSlab
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createStair
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.createWall

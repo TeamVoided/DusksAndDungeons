@@ -5,11 +5,11 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.data.tags.c.CBlockTags
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
-import org.teamvoided.voidlib.devin.provider.tag.DBlockTagProvider
+import org.teamvoided.voidlib.devin.provider.tag.VBlockTagProvider
 
 object SandTags {
 
-    fun createTags(provider: DBlockTagProvider): Any = with(provider) {
+    fun createTags(provider: VBlockTagProvider): Any = with(provider) {
         // region Sand
         getOrCreateTagBuilder(BlockTags.SAND)
             .add(DnDBlocks.SUSPICIOUS_RED_SAND)

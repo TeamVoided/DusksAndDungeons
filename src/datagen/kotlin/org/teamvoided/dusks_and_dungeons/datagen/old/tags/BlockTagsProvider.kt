@@ -25,9 +25,9 @@ import org.teamvoided.voidlib.devin.FutureProvider
 import org.teamvoided.voidlib.devin.extensions.tag.add
 import org.teamvoided.voidlib.devin.extensions.tag.createColorTags
 import org.teamvoided.voidlib.devin.extensions.tag.createSetTags
-import org.teamvoided.voidlib.devin.provider.tag.DBlockTagProvider
+import org.teamvoided.voidlib.devin.provider.tag.VBlockTagProvider
 
-class BlockTagsProvider(o: FabricOutput, p: FutureProvider) : DBlockTagProvider(o, p) {
+class BlockTagsProvider(o: FabricOutput, p: FutureProvider) : VBlockTagProvider(o, p) {
 
     val excludeWood: List<AbstractBlockSet> = listOf(
         DnDBlocks.CRIMSON_HYPHAE, DnDBlocks.WARPED_HYPHAE,

@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.voidlib.devin.provider
 
 import net.fabricmc.fabric.api.datagen.v1.recipe.FabricRecipeExporter
@@ -11,7 +7,7 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 
-class OpenRecipeOutput(val output: RecipeOutput) : RecipeOutput, FabricRecipeExporter {
+class VRecipeOutput(val output: RecipeOutput) : RecipeOutput, FabricRecipeExporter {
 
     override fun accept(id: ResourceLocation, recipe: Recipe<*>, advancement: AdvancementHolder?) {
         return output.accept(id, recipe, advancement)

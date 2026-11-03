@@ -14,12 +14,12 @@ import org.teamvoided.dusks_and_dungeons.datagen.data.recipe.helpers.unlockedBy
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.create2x2
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.recipe.builder.MixedRecipeBuilder
-import org.teamvoided.voidlib.devin.provider.OpenRecipeOutput
+import org.teamvoided.voidlib.devin.provider.VRecipeOutput
 
 object MinecraftRecipeOverrides {
 
     fun build(dndOutput: RecipeOutput) {
-        val output = OpenRecipeOutput(dndOutput)
+        val output = VRecipeOutput(dndOutput)
 
         output.create2x2(Blocks.STONE_BRICKS, DnDBlocks.POLISHED_STONE)
 

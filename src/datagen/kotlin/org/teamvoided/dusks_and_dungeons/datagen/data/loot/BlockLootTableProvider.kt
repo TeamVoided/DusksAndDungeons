@@ -29,9 +29,9 @@ import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists.soulCandles
 import org.teamvoided.dusks_and_dungeons.util.isEmpty
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
-import org.teamvoided.voidlib.devin.provider.OpenBlockLootTableProvider
+import org.teamvoided.voidlib.devin.provider.VBlockLootTableProvider
 
-class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : OpenBlockLootTableProvider(o, p) {
+class BlockLootTableProvider(o: FabricOutput, p: FutureProvider) : VBlockLootTableProvider(o, p) {
 
     // This list is here for manually written JSON files
     val manual = listOf(

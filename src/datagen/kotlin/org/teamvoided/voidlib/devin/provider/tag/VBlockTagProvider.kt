@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
 
-abstract class DBlockTagProvider(o: FabricOutput, p: FutureProvider) : BlockTagProvider(o, p) {
+abstract class VBlockTagProvider(o: FabricOutput, p: FutureProvider) : BlockTagProvider(o, p) {
 
     public override fun getOrCreateTagBuilder(tag: TagKey<Block>): FabricTagProvider<Block>.FabricTagBuilder {
         return super.getOrCreateTagBuilder(tag)

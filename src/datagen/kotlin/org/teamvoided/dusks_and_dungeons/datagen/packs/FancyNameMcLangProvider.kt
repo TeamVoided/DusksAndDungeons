@@ -11,12 +11,12 @@ import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
-import org.teamvoided.voidlib.devin.provider.DevinLangProvider
+import org.teamvoided.voidlib.devin.provider.VLangProvider
 import java.nio.file.Path
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
-class FancyNameMcLangProvider(o: FabricOutput, val provider: FutureProvider) : DevinLangProvider(o, provider) {
+class FancyNameMcLangProvider(o: FabricOutput, val provider: FutureProvider) : VLangProvider(o, provider) {
 
     val crimsonBricks = listOf(
         Blocks.RED_NETHER_BRICKS,

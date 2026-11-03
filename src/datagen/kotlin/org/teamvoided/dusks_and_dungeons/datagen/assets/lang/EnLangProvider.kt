@@ -16,9 +16,9 @@ import org.teamvoided.dusks_and_dungeons.util.TINTED_TOOLTIP
 import org.teamvoided.dusks_and_dungeons.util.getModHolders
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
-import org.teamvoided.voidlib.devin.provider.DevinLangProvider
+import org.teamvoided.voidlib.devin.provider.VLangProvider
 
-class EnLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, p) {
+class EnLangProvider(o: FabricOutput, p: FutureProvider) : VLangProvider(o, p) {
 
     override fun generateTranslations(provider: HolderLookup.Provider, gen: TranslationBuilder) {
         getModHolders(BuiltInRegistries.ITEM).forEach { gen.add(it.value(), it.lang()) }

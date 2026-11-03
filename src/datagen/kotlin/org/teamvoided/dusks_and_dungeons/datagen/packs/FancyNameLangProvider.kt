@@ -5,9 +5,9 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
-import org.teamvoided.voidlib.devin.provider.DevinLangProvider
+import org.teamvoided.voidlib.devin.provider.VLangProvider
 
-class FancyNameLangProvider(o: FabricOutput, p: FutureProvider) : DevinLangProvider(o, p) {
+class FancyNameLangProvider(o: FabricOutput, p: FutureProvider) : VLangProvider(o, p) {
 
     val crimsonBricks = listOf(
         DnDBlocks.CRACKED_RED_NETHER_BRICKS,

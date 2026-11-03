@@ -1,9 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
-@file:Suppress("unused")
-
 package org.teamvoided.voidlib.devin.extensions.loot
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider

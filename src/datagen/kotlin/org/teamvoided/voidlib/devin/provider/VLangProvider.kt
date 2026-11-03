@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.voidlib.devin.provider
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
@@ -10,8 +6,8 @@ import net.minecraft.resources.ResourceLocation
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
 
-abstract class DevinLangProvider(val output: FabricOutput, p: FutureProvider, langCode: String = "en_us") :
-    FabricLanguageProvider(output, langCode, p) {
+abstract class VLangProvider(o: FabricOutput, p: FutureProvider, langCode: String = "en_us") :
+    FabricLanguageProvider(o, langCode, p) {
 
     fun <T : Any> Holder.Reference<T>.lang(): String = getLang(key().location())
 
@@ -28,7 +24,7 @@ abstract class DevinLangProvider(val output: FabricOutput, p: FutureProvider, la
         try {
             fn()
         } catch (e: Exception) {
-            if (e.message?.startsWith("Existing translation key found") != true || output.isStrictValidationEnabled) {
+            if (e.message?.startsWith("Existing translation key found") != true || dataOutput.isStrictValidationEnabled) {
                 LOGGER.warn("Exception found when gen lang entry for [${reference}]: ", e)
             }
         }
