@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.init
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
@@ -103,7 +99,7 @@ object DnDTabs {
         "dnd_experimental", FabricItemGroup.builder()
             .dndName("dnd_experimental")
             .icon(Blocks.BARRIER)
-            .displayItems { _, output -> if (isDev() && EVIL_ITEMS.isNotEmpty()) output.acceptAllLists(EVIL_ITEMS) }
+            .displayItems { _, output -> if (isDev()) output.acceptAllLists(EVIL_ITEMS) }
     )
 
     fun init() {
