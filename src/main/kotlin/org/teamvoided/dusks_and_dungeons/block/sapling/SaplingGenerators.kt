@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.sapling
 
 import net.minecraft.core.Direction
@@ -30,12 +26,11 @@ object SaplingGenerators {
 
     val OVERGROWTH_DOWN = singleTree("overgrowth_down", DnDConfiguredFeature.OVERGROWTH_TREE_DOWN)
     val OVERGROWTH = Direction.entries.associateWith { dir ->
-        when (dir.get3DDataValue()) {
-            0 -> OVERGROWTH_DOWN
-            2 -> singleTree("overgrowth_north", DnDConfiguredFeature.OVERGROWTH_TREE_NORTH)
-            3 ->  singleTree("overgrowth_south", DnDConfiguredFeature.OVERGROWTH_TREE_SOUTH)
-            4 -> singleTree("overgrowth_west", DnDConfiguredFeature.OVERGROWTH_TREE_WEST)
-            5 -> singleTree("overgrowth_east", DnDConfiguredFeature.OVERGROWTH_TREE_EAST)
+        when (dir) {
+            Direction.NORTH -> singleTree("overgrowth_north", DnDConfiguredFeature.OVERGROWTH_TREE_NORTH)
+            Direction.SOUTH -> singleTree("overgrowth_south", DnDConfiguredFeature.OVERGROWTH_TREE_SOUTH)
+            Direction.WEST -> singleTree("overgrowth_west", DnDConfiguredFeature.OVERGROWTH_TREE_WEST)
+            Direction.EAST -> singleTree("overgrowth_east", DnDConfiguredFeature.OVERGROWTH_TREE_EAST)
             else -> OVERGROWTH_DOWN
         }
     }

@@ -1,45 +1,36 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.sapling
 
-import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.BlockPos
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SaplingBlock
 import net.minecraft.world.level.block.grower.TreeGrower
-import net.minecraft.core.Holder
-import net.minecraft.resources.ResourceKey
-import net.minecraft.core.registries.Registries
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.core.BlockPos
-import net.minecraft.util.RandomSource
-import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.chunk.ChunkGenerator
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import org.teamvoided.dusks_and_dungeons.data.worldgen.DnDConfiguredFeature
 
+open class ThreeWideTreeSaplingBlock(grower: TreeGrower, settings: Properties) : SaplingBlock(grower, settings) {
 
-class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Properties) : SaplingBlock(
-    generator,
-    settings
-) {
-    override fun advanceTree(world: ServerLevel, pos: BlockPos, state: BlockState, random: RandomSource) {
-        if (state.getValue(STAGE) as Int == 0) world.setBlock(pos, state.cycle(STAGE), 4)
-        else generate(world, world.chunkSource.generator, pos, state, random)
+    override fun advanceTree(level: ServerLevel, pos: BlockPos, state: BlockState, random: RandomSource) {
+        if (state.getValue(STAGE) == 0) {
+            level.setBlock(pos, state.cycle(STAGE), 4)
+        } else {
+            generate(level, level.chunkSource.generator, pos, state, random)
+        }
     }
 
     fun generate(
-        world: ServerLevel,
-        chunkGenerator: ChunkGenerator,
-        pos: BlockPos,
-        state: BlockState,
-        random: RandomSource
+        level: ServerLevel, generator: ChunkGenerator, pos: BlockPos, state: BlockState, random: RandomSource,
     ): Boolean {
-        for (i in 1 downTo -1) {
-            for (j in 1 downTo -1) {
-                if (canGenerateLargeTree(state, world, pos, i, j)) {
-                    return this.generateThreeWideTree(world, chunkGenerator, pos, state, random, i, j)
+        for (x in 1 downTo -1) {
+            for (y in 1 downTo -1) {
+                if (canGenerateLargeTree(state, level, pos, x, y)) {
+                    return generateThreeWideTree(level, generator, pos, state, random, x, y)
                 }
             }
         }
@@ -47,70 +38,62 @@ class ThreeWideTreeSaplingBlock(generator: TreeGrower, settings: Properties) : S
     }
 
     fun generateThreeWideTree(
-        world: ServerLevel,
-        chunkGenerator: ChunkGenerator,
-        pos: BlockPos,
-        state: BlockState,
-        random: RandomSource,
-        x: Int,
-        z: Int
+        level: ServerLevel, generator: ChunkGenerator,
+        pos: BlockPos, state: BlockState, random: RandomSource, x: Int, z: Int,
     ): Boolean {
-        val registryKey = this.getThreeWideTreeFeature(random, false)
-        if (registryKey == null) {
-            return false
+        val key = getThreeWideTreeFeature(random, false)
+        val holder = level
+            .registryAccess()
+            .registryOrThrow(Registries.CONFIGURED_FEATURE)
+            .getHolder(key)
+            .orElse(null)
+            ?: return false
+
+        val configuredFeature = holder.value()
+        val blockState = Blocks.AIR.defaultBlockState()
+        level.setBlock(pos.offset(x - 1, 0, z - 1), blockState, UPDATE_INVISIBLE)
+        level.setBlock(pos.offset(x, 0, z - 1), blockState, UPDATE_INVISIBLE)
+        level.setBlock(pos.offset(x + 1, 0, z - 1), blockState, UPDATE_INVISIBLE)
+        level.setBlock(pos.offset(x - 1, 0, z), blockState, UPDATE_INVISIBLE)
+        level.setBlock(pos.offset(x, 0, z), blockState, UPDATE_INVISIBLE)
+        level.setBlock(pos.offset(x + 1, 0, z), blockState, UPDATE_INVISIBLE)
+        level.setBlock(pos.offset(x - 1, 0, z + 1), blockState, UPDATE_INVISIBLE)
+        level.setBlock(pos.offset(x, 0, z + 1), blockState, UPDATE_INVISIBLE)
+        level.setBlock(pos.offset(x + 1, 0, z + 1), blockState, UPDATE_INVISIBLE)
+        if (configuredFeature.place(level, generator, random, pos.offset(x, 0, z))) {
+            return true
         } else {
-            val holder: Holder<ConfiguredFeature<*, *>> = world
-                .registryAccess()
-                .registryOrThrow(Registries.CONFIGURED_FEATURE)
-                .getHolder(registryKey)
-                .orElse(null)
-            if (holder == null) {
-                return false
-            } else {
-                val configuredFeature = holder.value()
-                val blockState = Blocks.AIR.defaultBlockState()
-                world.setBlock(pos.offset(x - 1, 0, z - 1), blockState, UPDATE_INVISIBLE)
-                world.setBlock(pos.offset(x, 0, z - 1), blockState, UPDATE_INVISIBLE)
-                world.setBlock(pos.offset(x + 1, 0, z - 1), blockState, UPDATE_INVISIBLE)
-                world.setBlock(pos.offset(x - 1, 0, z), blockState, UPDATE_INVISIBLE)
-                world.setBlock(pos.offset(x, 0, z), blockState, UPDATE_INVISIBLE)
-                world.setBlock(pos.offset(x + 1, 0, z), blockState, UPDATE_INVISIBLE)
-                world.setBlock(pos.offset(x - 1, 0, z + 1), blockState, UPDATE_INVISIBLE)
-                world.setBlock(pos.offset(x, 0, z + 1), blockState, UPDATE_INVISIBLE)
-                world.setBlock(pos.offset(x + 1, 0, z + 1), blockState, UPDATE_INVISIBLE)
-                if (configuredFeature.place(world, chunkGenerator, random, pos.offset(x, 0, z))) {
-                    return true
-                } else {
-                    world.setBlock(pos.offset(x - 1, 0, z - 1), state, UPDATE_INVISIBLE)
-                    world.setBlock(pos.offset(x, 0, z - 1), state, UPDATE_INVISIBLE)
-                    world.setBlock(pos.offset(x + 1, 0, z - 1), state, UPDATE_INVISIBLE)
-                    world.setBlock(pos.offset(x - 1, 0, z), state, UPDATE_INVISIBLE)
-                    world.setBlock(pos.offset(x, 0, z), state, UPDATE_INVISIBLE)
-                    world.setBlock(pos.offset(x + 1, 0, z), state, UPDATE_INVISIBLE)
-                    world.setBlock(pos.offset(x - 1, 0, z + 1), state, UPDATE_INVISIBLE)
-                    world.setBlock(pos.offset(x, 0, z + 1), state, UPDATE_INVISIBLE)
-                    world.setBlock(pos.offset(x + 1, 0, z + 1), state, UPDATE_INVISIBLE)
-                    return false
-                }
-            }
+            level.setBlock(pos.offset(x - 1, 0, z - 1), state, UPDATE_INVISIBLE)
+            level.setBlock(pos.offset(x, 0, z - 1), state, UPDATE_INVISIBLE)
+            level.setBlock(pos.offset(x + 1, 0, z - 1), state, UPDATE_INVISIBLE)
+            level.setBlock(pos.offset(x - 1, 0, z), state, UPDATE_INVISIBLE)
+            level.setBlock(pos.offset(x, 0, z), state, UPDATE_INVISIBLE)
+            level.setBlock(pos.offset(x + 1, 0, z), state, UPDATE_INVISIBLE)
+            level.setBlock(pos.offset(x - 1, 0, z + 1), state, UPDATE_INVISIBLE)
+            level.setBlock(pos.offset(x, 0, z + 1), state, UPDATE_INVISIBLE)
+            level.setBlock(pos.offset(x + 1, 0, z + 1), state, UPDATE_INVISIBLE)
+            return false
         }
     }
 
-    fun getThreeWideTreeFeature(random: RandomSource, bees: Boolean): ResourceKey<ConfiguredFeature<*, *>> =
-        if (bees) DnDConfiguredFeature.CASCADE_TREE_AUTUMN else DnDConfiguredFeature.CASCADE_TREE
+    open fun getThreeWideTreeFeature(random: RandomSource, bees: Boolean): ResourceKey<ConfiguredFeature<*, *>> {
+        return if (bees) DnDConfiguredFeature.CASCADE_TREE_AUTUMN else DnDConfiguredFeature.CASCADE_TREE
+    }
 
     companion object {
-        fun canGenerateLargeTree(state: BlockState, world: BlockGetter, pos: BlockPos, x: Int, z: Int): Boolean {
+
+        fun canGenerateLargeTree(state: BlockState, level: BlockGetter, pos: BlockPos, x: Int, z: Int): Boolean {
             val block = state.block
-            return world.getBlockState(pos.offset(x - 1, 0, z - 1)).`is`(block) &&
-                    world.getBlockState(pos.offset(x, 0, z - 1)).`is`(block) &&
-                    world.getBlockState(pos.offset(x + 1, 0, z - 1)).`is`(block) &&
-                    world.getBlockState(pos.offset(x - 1, 0, z)).`is`(block) &&
-                    world.getBlockState(pos.offset(x, 0, z)).`is`(block) &&
-                    world.getBlockState(pos.offset(x + 1, 0, z)).`is`(block) &&
-                    world.getBlockState(pos.offset(x - 1, 0, z + 1)).`is`(block) &&
-                    world.getBlockState(pos.offset(x, 0, z + 1)).`is`(block) &&
-                    world.getBlockState(pos.offset(x + 1, 0, z + 1)).`is`(block)
+            return level.getBlockState(pos.offset(x - 1, 0, z - 1)).`is`(block) &&
+                    level.getBlockState(pos.offset(x, 0, z - 1)).`is`(block) &&
+                    level.getBlockState(pos.offset(x + 1, 0, z - 1)).`is`(block) &&
+                    level.getBlockState(pos.offset(x - 1, 0, z)).`is`(block) &&
+                    level.getBlockState(pos.offset(x, 0, z)).`is`(block) &&
+                    level.getBlockState(pos.offset(x + 1, 0, z)).`is`(block) &&
+                    level.getBlockState(pos.offset(x - 1, 0, z + 1)).`is`(block) &&
+                    level.getBlockState(pos.offset(x, 0, z + 1)).`is`(block) &&
+                    level.getBlockState(pos.offset(x + 1, 0, z + 1)).`is`(block)
         }
+
     }
 }
