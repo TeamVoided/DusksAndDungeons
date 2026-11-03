@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.meltable
 
 import net.minecraft.core.BlockPos
@@ -15,24 +11,21 @@ import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
-class MeltableSlabBlock(settings: Properties) : SlabBlock(settings) {
-    override fun skipRendering(state: BlockState, neighborState: BlockState, direction: Direction): Boolean {
-        return Meltable.shouldCullFace(state, neighborState, direction)
-                || super.skipRendering(state, neighborState, direction)
+class MeltableSlabBlock(properties: Properties) : SlabBlock(properties) {
+
+    override fun skipRendering(state: BlockState, neighborState: BlockState, dir: Direction): Boolean {
+        return super.skipRendering(state, neighborState, dir) || Meltable.shouldCullFace(state, neighborState, dir)
     }
 
     override fun playerDestroy(
-        world: Level,
-        player: Player,
-        pos: BlockPos,
-        state: BlockState,
-        blockEntity: BlockEntity?,
-        stack: ItemStack,
+        level: Level, player: Player, pos: BlockPos, state: BlockState, blockEntity: BlockEntity?, tool: ItemStack,
     ) {
-        super.playerDestroy(world, player, pos, state, blockEntity, stack)
-        Meltable.meltAfterBreak(world, pos, stack)
+        super.playerDestroy(level, player, pos, state, blockEntity, tool)
+        Meltable.meltAfterBreak(level, pos, tool)
     }
 
-    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) =
-        Meltable.meltFromLight(state, world, pos)
+    override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        Meltable.meltFromLight(state, level, pos)
+    }
+
 }

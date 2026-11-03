@@ -1,6 +1,3 @@
-/*
- * TODO(cleanup)
- */
 
 package org.teamvoided.dusks_and_dungeons.block.extra
 
@@ -12,7 +9,10 @@ import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate
 import java.util.function.Predicate
 
+// TODO figures out if we need to nuke this
+@Suppress("unused")
 object GolemPatterns {
+
     var snowGolemDispenserPattern: BlockPattern? = null
         get() {
             if (field == null) {
@@ -22,6 +22,7 @@ object GolemPatterns {
             }
             return field
         }
+
     var snowGolemPattern: BlockPattern? = null
         get() {
             if (field == null) {
@@ -32,6 +33,7 @@ object GolemPatterns {
             }
             return field
         }
+
     var ironGolemDispenserPattern: BlockPattern? = null
         get() {
             if (field == null) {
@@ -42,6 +44,7 @@ object GolemPatterns {
             }
             return field
         }
+
     var ironGolemPattern: BlockPattern? = null
         get() {
             if (field == null) {
@@ -54,9 +57,8 @@ object GolemPatterns {
             return field
         }
 
-    private val IS_ORANGE_CARVED_PUMPKIN_PREDICATE =
-        Predicate { state: BlockState? ->
-            state != null &&
-                    (state.`is`(Blocks.CARVED_PUMPKIN) || state.`is`(Blocks.JACK_O_LANTERN))
-        }
+    val IS_ORANGE_CARVED_PUMPKIN_PREDICATE = Predicate { state: BlockState? ->
+        state != null && (state.`is`(Blocks.CARVED_PUMPKIN) || state.`is`(Blocks.JACK_O_LANTERN))
+    }
+
 }
