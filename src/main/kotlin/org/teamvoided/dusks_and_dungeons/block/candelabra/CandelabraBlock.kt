@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import com.mojang.serialization.MapCodec
@@ -97,7 +93,7 @@ open class CandelabraBlock(properties: Properties) : AbstractCandleBlock(propert
         if (!state.getValue(AbstractCandleBlock.LIT)) return
         val be = level.getCandelabra(pos) ?: return
 
-        spawnCandelabraParticles(be, Vec3(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()), level, random, state)
+        spawnCandelabraParticles(be, Vec3(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()), level, random)
     }
 
     // Waterlogging

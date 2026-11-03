@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block.candelabra
 
 import net.minecraft.core.BlockPos
@@ -293,7 +289,7 @@ object Candelabra {
     )
 
     fun spawnCandelabraParticles(
-        be: CandelabraBlockEntity, pos: Vec3, level: Level, random: RandomSource, state: BlockState,
+        be: CandelabraBlockEntity, pos: Vec3, level: Level, random: RandomSource,
     ) {
         for ((idx, offset) in be.particleOffsets.withIndex()) {
             val virtualState = be.internalBlockStates[idx]
