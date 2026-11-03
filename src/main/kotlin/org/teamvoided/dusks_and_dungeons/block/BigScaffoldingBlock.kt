@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
@@ -26,7 +22,8 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class BigScaffoldingBlock(settings: Properties) : Block(settings), SimpleWaterloggedBlock {
+class BigScaffoldingBlock(properties: Properties) : Block(properties), SimpleWaterloggedBlock {
+
     public override fun codec(): MapCodec<BigScaffoldingBlock> = CODEC
 
     init {
@@ -41,66 +38,14 @@ class BigScaffoldingBlock(settings: Properties) : Block(settings), SimpleWaterlo
         builder.add(BlockStateProperties.WATERLOGGED, BOTTOM)
     }
 
-    override fun getShape(
-        state: BlockState, world: BlockGetter, pos: BlockPos, context: CollisionContext,
-    ): VoxelShape {
-        return if (!context.isHoldingItem(state.block.asItem()))
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        return if (!ctx.isHoldingItem(state.block.asItem()))
             if (state.getValue(BOTTOM))
                 UNSTABLE_SHAPE
             else
                 STABLE_SHAPE
         else
             Shapes.block()
-
-    }
-
-    override fun getInteractionShape(state: BlockState, world: BlockGetter, pos: BlockPos): VoxelShape = Shapes.block()
-
-    override fun canBeReplaced(state: BlockState, context: BlockPlaceContext): Boolean {
-        return context.itemInHand.`is`(asItem())
-    }
-
-    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
-        val blockPos = ctx.clickedPos
-        val world = ctx.level
-        return defaultBlockState()
-            .setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(blockPos).type == Fluids.WATER)
-            .setValue(BOTTOM, shouldHaveBottom(world, blockPos))
-    }
-
-    override fun playerWillDestroy(world: Level, pos: BlockPos, state: BlockState, player: Player): BlockState {
-        if (player.mainHandItem.`is`(asItem()) && world.getBlockState(pos.above()).`is`(this)) {
-            world.scheduleTick(pos.above(), this, 1)
-        }
-        return super.playerWillDestroy(world, pos, state, player)
-    }
-
-    override fun updateShape(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: LevelAccessor,
-        pos: BlockPos,
-        neighborPos: BlockPos,
-    ): BlockState {
-        val updatedState = super.updateShape(state, direction, neighborState, world, pos, neighborPos)
-        if (state.getValue(BlockStateProperties.WATERLOGGED)) {
-            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
-        }
-
-        return if (direction == Direction.DOWN)
-            updatedState.setValue(BOTTOM, shouldHaveBottom(world, pos))
-        else
-            updatedState
-    }
-
-    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
-        Direction.entries.forEach {
-            if (it != Direction.DOWN && world.getBlockState(pos.relative(it)).`is`(this)) {
-                world.scheduleTick(pos.relative(it), this, 1)
-            }
-        }
-        world.destroyBlock(pos, true)
     }
 
     override fun getCollisionShape(
@@ -112,6 +57,51 @@ class BigScaffoldingBlock(settings: Properties) : Block(settings), SimpleWaterlo
             UNSTABLE_BOTTOM_SHAPE
         else
             Shapes.empty()
+    }
+
+    override fun getInteractionShape(state: BlockState, level: BlockGetter, pos: BlockPos): VoxelShape = Shapes.block()
+
+    override fun canBeReplaced(state: BlockState, ctx: BlockPlaceContext): Boolean {
+        return ctx.itemInHand.`is`(asItem())
+    }
+
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
+        val blockPos = ctx.clickedPos
+        val world = ctx.level
+        return defaultBlockState()
+            .setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(blockPos).type == Fluids.WATER)
+            .setValue(BOTTOM, shouldHaveBottom(world, blockPos))
+    }
+
+    override fun playerWillDestroy(level: Level, pos: BlockPos, state: BlockState, player: Player): BlockState {
+        if (player.mainHandItem.`is`(asItem()) && level.getBlockState(pos.above()).`is`(this)) {
+            level.scheduleTick(pos.above(), this, 1)
+        }
+        return super.playerWillDestroy(level, pos, state, player)
+    }
+
+    override fun updateShape(
+        state: BlockState, direction: Direction, neighborState: BlockState,
+        level: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
+    ): BlockState {
+        val updatedState = super.updateShape(state, direction, neighborState, level, pos, neighborPos)
+        if (state.getValue(BlockStateProperties.WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level))
+        }
+
+        return if (direction == Direction.DOWN)
+            updatedState.setValue(BOTTOM, shouldHaveBottom(level, pos))
+        else
+            updatedState
+    }
+
+    override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        Direction.entries.forEach {
+            if (it != Direction.DOWN && level.getBlockState(pos.relative(it)).`is`(this)) {
+                level.scheduleTick(pos.relative(it), this, 1)
+            }
+        }
+        level.destroyBlock(pos, true)
     }
 
     override fun getFluidState(state: BlockState): FluidState {
