@@ -1,12 +1,9 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
@@ -35,23 +32,23 @@ class OvergrowthBushBlock(properties: Properties) : AzaleaBlock(properties) {
         builder.add(FACING)
     }
 
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        return SHAPES[state.getValue(FACING)] ?: Shapes.block()
+    }
+
     override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
         val offsetPos = pos.relative(state.getValue(FACING))
         return mayPlaceOn(level.getBlockState(offsetPos), level, offsetPos)
     }
 
     override fun isValidBonemealTarget(level: LevelReader, pos: BlockPos, state: BlockState): Boolean {
-        return state.getValue(FACING) != Direction.UP &&
-                level.getBlockState(pos.relative(state.getValue(FACING).opposite)).canBeReplaced()
+        val dir = state.getValue(FACING)
+        return dir != Direction.UP && level.getBlockState(pos.relative(dir.opposite)).`is`(BlockTags.REPLACEABLE)
     }
 
     override fun performBonemeal(level: ServerLevel, random: RandomSource, pos: BlockPos, state: BlockState) {
         val treeGrower = SaplingGenerators.OVERGROWTH[state.getValue(FACING)] ?: SaplingGenerators.OVERGROWTH_DOWN
         treeGrower.growTree(level, level.chunkSource.generator, pos, state, random)
-    }
-
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return SHAPES[state.getValue(FACING)] ?: Shapes.block()
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
@@ -62,11 +59,19 @@ class OvergrowthBushBlock(properties: Properties) : AzaleaBlock(properties) {
 
         val FACING: DirectionProperty = BlockStateProperties.FACING
 
-        val SHAPE_DOWN: VoxelShape =
-            Shapes.or(box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0), box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0))
-        val SHAPE_UP: VoxelShape = Shapes.or(box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0), box(6.0, 8.0, 6.0, 10.0, 16.0, 10.0))
-        val SHAPE_SIDE: VoxelShape =
-            Shapes.or(box(0.0, 0.0, 8.0, 16.0, 16.0, 16.0), box(6.0, 6.0, 0.0, 10.0, 10.0, 8.0))
+        val SHAPE_DOWN: VoxelShape = Shapes.or(
+            box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0),
+            box(6.0, 0.0, 6.0, 10.0, 8.0, 10.0)
+        )
+        val SHAPE_UP: VoxelShape = Shapes.or(
+            box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
+            box(6.0, 8.0, 6.0, 10.0, 16.0, 10.0)
+        )
+        val SHAPE_SIDE: VoxelShape = Shapes.or(
+            box(0.0, 0.0, 8.0, 16.0, 16.0, 16.0),
+            box(6.0, 6.0, 0.0, 10.0, 10.0, 8.0)
+        )
+        
         val SHAPES = SixWayFacingBlock.createShapeMap(SHAPE_DOWN, SHAPE_UP, SHAPE_SIDE)
 
     }

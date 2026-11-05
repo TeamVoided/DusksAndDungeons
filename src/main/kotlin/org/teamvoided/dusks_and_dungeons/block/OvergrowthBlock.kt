@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
@@ -20,13 +16,7 @@ import kotlin.jvm.optionals.getOrNull
 class OvergrowthBlock(properties: Properties) : MossBlock(properties) {
 
     override fun isValidBonemealTarget(level: LevelReader, pos: BlockPos, state: BlockState): Boolean {
-        if (level.getBlockState(pos.relative(Direction.UP)).isAir) {
-            return true
-        }
-        if (level.getBlockState(pos.relative(Direction.DOWN)).isAir) {
-            return true
-        }
-        return false
+        return level.getBlockState(pos.relative(Direction.UP)).isAir || level.getBlockState(pos.relative(Direction.DOWN)).isAir
     }
 
     override fun performBonemeal(level: ServerLevel, random: RandomSource, pos: BlockPos, state: BlockState) {

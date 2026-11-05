@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
@@ -12,7 +8,7 @@ import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
 
 class VivionbedBlock(properties: Properties) : PinkPetalsBlock(properties) {
 
-    override fun mayPlaceOn(floor: BlockState, world: BlockGetter, pos: BlockPos): Boolean {
+    override fun mayPlaceOn(floor: BlockState, level: BlockGetter, pos: BlockPos): Boolean {
         return floor.`is`(DnDBlockTags.SUPPORTS_VIVIONBED)
     }
 

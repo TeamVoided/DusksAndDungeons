@@ -390,7 +390,7 @@ class BlockTagsProvider(o: FabricOutput, p: FutureProvider) : VBlockTagProvider(
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
             .forceAddTag(BlockTags.DIRT)
             .add(Blocks.FARMLAND)
-        getOrCreateTagBuilder(DnDBlockTags.GOLD_MUSH_GROW_FROM)
+        getOrCreateTagBuilder(DnDBlockTags.GOLD_MUSH_SPREAD_FROM)
             .forceAddTag(BlockTags.LOGS)
             .add(Blocks.MYCELIUM)
         getOrCreateTagBuilder(DnDBlockTags.SUPPORTS_MOONBERRY)

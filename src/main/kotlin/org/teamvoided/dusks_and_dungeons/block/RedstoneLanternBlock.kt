@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
@@ -21,7 +17,10 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty
 class RedstoneLanternBlock(properties: Properties) : LanternBlock(properties) {
 
     init {
-        registerDefaultState(defaultBlockState().setValue(LIT, true))
+        registerDefaultState(
+            stateDefinition.any()
+                .setValue(LIT, true)
+        )
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
@@ -37,8 +36,10 @@ class RedstoneLanternBlock(properties: Properties) : LanternBlock(properties) {
     }
 
     override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, moved: Boolean) {
-        super.onRemove(state, level, pos, newState, false)
-        if (moved) return
+        super.onRemove(state, level, pos, newState, moved)
+        if (moved) {
+            return
+        }
 
         for (dir in Direction.entries) {
             level.updateNeighborsAt(pos.relative(dir), this)
@@ -55,16 +56,15 @@ class RedstoneLanternBlock(properties: Properties) : LanternBlock(properties) {
     }
 
     override fun getSignal(state: BlockState, level: BlockGetter, pos: BlockPos, dir: Direction): Int {
-        if (!state.getValue(LIT)) return 0
-
+        if (!state.getValue(LIT)) {
+            return 0
+        }
         return if ((state.getValue(HANGING) && Direction.DOWN != dir) || Direction.UP != dir) 15 else 0
     }
 
     override fun getDirectSignal(state: BlockState, level: BlockGetter, pos: BlockPos, dir: Direction): Int {
-        return if (state.getValue(HANGING))
-            if (dir == Direction.UP) state.getSignal(level, pos, dir) else 0
-        else
-            if (dir == Direction.DOWN) state.getSignal(level, pos, dir) else 0
+        val checkDir = if (state.getValue(HANGING)) Direction.UP else Direction.DOWN
+        return if (dir == checkDir) state.getSignal(level, pos, dir) else 0
     }
 
     override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {

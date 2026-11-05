@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
@@ -17,13 +13,21 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.rotate
 
-open class SixWayFacingBlock(settings: Properties) : Block(settings) {
-
-    init {
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP))
-    }
+open class SixWayFacingBlock(properties: Properties) : Block(properties) {
 
     public override fun codec(): MapCodec<out SixWayFacingBlock> = CODEC
+
+    init {
+        registerDefaultState(
+            stateDefinition.any()
+                .setValue(FACING, Direction.UP)
+        )
+    }
+
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
+        builder.add(FACING)
+    }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
         return super.getStateForPlacement(ctx)?.setValue(FACING, ctx.clickedFace)
@@ -35,11 +39,6 @@ open class SixWayFacingBlock(settings: Properties) : Block(settings) {
 
     override fun mirror(state: BlockState, mirror: Mirror): BlockState {
         return state.rotate(mirror.getRotation(state.getValue(FACING)))
-    }
-
-    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        super.createBlockStateDefinition(builder)
-        builder.add(FACING)
     }
 
     companion object {

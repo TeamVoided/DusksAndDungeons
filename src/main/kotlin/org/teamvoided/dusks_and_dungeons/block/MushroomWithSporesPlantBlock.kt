@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
@@ -24,8 +20,8 @@ import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
 
 class MushroomWithSporesPlantBlock(
     val color: Int, val particleChance: Double,
-    registryKey: ResourceKey<ConfiguredFeature<*, *>>, properties: Properties,
-) : MushroomBlock(registryKey, properties) {
+    feature: ResourceKey<ConfiguredFeature<*, *>>, properties: Properties,
+) : MushroomBlock(feature, properties) {
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
         val offset = state.getOffset(level, pos)
@@ -41,7 +37,7 @@ class MushroomWithSporesPlantBlock(
     }
 
     override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-        if (level.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_GROW_FROM)) {
+        if (level.getBlockState(pos.below()).`is`(DnDBlockTags.GOLD_MUSH_SPREAD_FROM)) {
             super.randomTick(state, level, pos, random)
         }
     }

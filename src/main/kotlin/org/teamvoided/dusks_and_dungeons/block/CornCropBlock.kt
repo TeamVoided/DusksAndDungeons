@@ -62,35 +62,35 @@ class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), Bone
 
     public override fun updateShape(
         state: BlockState, direction: Direction, neighborState: BlockState,
-        world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
+        level: LevelAccessor, pos: BlockPos, neighborPos: BlockPos
     ): BlockState {
         val blockSection = state.getValue(SECTION)
         return if (heightAtAge(state.getValue(AGE), 3)) {
-            super.updateShape(state, direction, neighborState, world, pos, neighborPos)
+            super.updateShape(state, direction, neighborState, level, pos, neighborPos)
         } else if (
             heightAtAge(state.getValue(AGE), 2) &&
             (direction.axis == Direction.Axis.Y) &&
             !(blockSection == TripleBlockSection.MIDDLE && direction == Direction.UP) &&
-            !state.canSurvive(world, pos)
+            !state.canSurvive(level, pos)
         ) {
             Blocks.AIR.defaultBlockState()
         } else {
-            if (state.canSurvive(world, pos)) state
+            if (state.canSurvive(level, pos)) state
             else Blocks.AIR.defaultBlockState()
         }
     }
 
     override fun neighborUpdatesAboveAndBelow(
         state: BlockState,
-        direction: Direction,
+        dir: Direction,
         neighborState: BlockState
     ): Boolean {
         if (heightAtAge(state.getValue(AGE), 3))
-            return super.neighborUpdatesAboveAndBelow(state, direction, neighborState)
+            return super.neighborUpdatesAboveAndBelow(state, dir, neighborState)
         else if (heightAtAge(state.getValue(AGE), 2)) {
             val section = state.getValue(SECTION)
-            return ((direction == Direction.UP && section != TripleBlockSection.MIDDLE && neighborState.`is`(this)) ||
-                    (direction == Direction.DOWN && section != TripleBlockSection.BOTTOM && neighborState.`is`(this)))
+            return ((dir == Direction.UP && section != TripleBlockSection.MIDDLE && neighborState.`is`(this)) ||
+                    (dir == Direction.DOWN && section != TripleBlockSection.BOTTOM && neighborState.`is`(this)))
         } else return true
     }
 
@@ -110,7 +110,7 @@ class CornCropBlock(settings: Properties) : TripleTallPlantBlock(settings), Bone
 
     public override fun canBeReplaced(state: BlockState, context: BlockPlaceContext): Boolean = false
 
-    override fun setPlacedBy(world: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) =
+    override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, entity: LivingEntity?, itemStack: ItemStack) =
         Unit
 
     public override fun isRandomlyTicking(state: BlockState): Boolean =
