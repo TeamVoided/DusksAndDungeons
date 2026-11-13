@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 
 
+// TODO compare to BigRedstoneLanternBlock
 class RedstoneLanternBlock(properties: Properties) : LanternBlock(properties) {
 
     init {

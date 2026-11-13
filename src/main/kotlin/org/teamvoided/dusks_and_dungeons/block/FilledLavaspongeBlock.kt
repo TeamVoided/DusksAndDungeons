@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
@@ -22,11 +18,11 @@ import org.teamvoided.dusks_and_dungeons.util.setBlockAndUpdateFluid
 import org.teamvoided.voidlib.helpers.mc.hasEnchantment
 
 class FilledLavaspongeBlock(
-    settings: Properties,
+    properties: Properties,
     val resultBlock: Block,
     val contactBlock: Block,
     val brokenResultBlock: Block? = null,
-) : Block(settings) {
+) : Block(properties) {
 
     fun convertBlock(level: Level, pos: BlockPos) {
         level.setBlockAndUpdateFluid(pos, resultBlock.defaultBlockState())
@@ -38,8 +34,8 @@ class FilledLavaspongeBlock(
         )
     }
 
-    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, state2: BlockState, bl: Boolean) {
-        super.onPlace(state, level, pos, state2, bl)
+    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, neighborState: BlockState, bl: Boolean) {
+        super.onPlace(state, level, pos, neighborState, bl)
         for (dir in Direction.entries) {
             if (level.getBlockState(pos.relative(dir)).`is`(contactBlock)) {
                 convertBlock(level, pos)

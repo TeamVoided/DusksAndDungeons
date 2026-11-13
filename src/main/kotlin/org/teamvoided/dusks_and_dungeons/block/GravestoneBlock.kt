@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
@@ -41,7 +37,8 @@ open class GravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, propertie
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        return ((if (state.getValue(CENTERED)) centerMap else wallMap)[state.getValue(FACING)]) ?: Shapes.block()
+        val shapeMap = if (state.getValue(CENTERED)) centerMap else wallMap
+        return shapeMap[state.getValue(FACING)] ?: Shapes.block()
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
@@ -101,5 +98,6 @@ open class GravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, propertie
         fun newGrave(properties: Properties) = GravestoneBlock(WALL_SHAPE, CENTER_SHAPE, properties)
         fun newSmallGrave(properties: Properties) = GravestoneBlock(SMALL_WALL_SHAPE, CENTER_CENTER_SHAPE, properties)
         fun newHeadstone(properties: Properties) = GravestoneBlock(HEADSTONE_SHAPE, CENTER_HEADSTONE_SHAPE, properties)
+
     }
 }

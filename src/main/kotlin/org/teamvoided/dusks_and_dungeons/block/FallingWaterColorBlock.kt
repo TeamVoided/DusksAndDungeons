@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import com.mojang.serialization.MapCodec
@@ -14,13 +10,17 @@ class FallingWaterColorBlock(properties: Properties) : FallingBlock(properties) 
 
     public override fun codec(): MapCodec<FallingWaterColorBlock> = CODEC
 
-    override fun getDustColor(blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos): Int {
-        val biome = blockGetter.getBiomeFabric(blockPos)
-        if (biome != null) return biome.value().waterColor
-        return 4159204
+    override fun getDustColor(state: BlockState, level: BlockGetter, pos: BlockPos): Int {
+        return level.getBiomeFabric(pos)?.value()?.waterColor ?: FALLBACK_COLOR
     }
 
     companion object {
+
+        // Here in case I did a bad:
+        // 4159204
+        const val FALLBACK_COLOR = 0x3F76E4
+
         val CODEC: MapCodec<FallingWaterColorBlock> = simpleCodec(::FallingWaterColorBlock)
+
     }
 }

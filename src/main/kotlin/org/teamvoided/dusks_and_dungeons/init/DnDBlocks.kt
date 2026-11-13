@@ -21,7 +21,7 @@ import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.*
-import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLuminance
+import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLightLevel
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
@@ -153,7 +153,7 @@ object DnDBlocks {
     val WILD_WHEAT = registerNoItem("wild_wheat", ::TallSpreadableBlock, Prop.WILD_WHEAT).grassLike()
     val GOLDEN_BEETROOTS = registerNoItem("golden_beetroots", ::GoldenBeetrootsBlock, Prop.GOLDEN_BEETROOT).grassLike()
     val MOONBERRY_VINE = register(
-        "moonberry_vine", ::MoonberryVineBlock, Prop.moonbery().moonberryLuminance(8, 11)
+        "moonberry_vine", ::MoonberryVineBlock, Prop.moonbery().moonberryLightLevel(8, 11)
     ).grassLike().flammableLogs()
     val MOONBERRY_VINELET = registerNoItem(
         "moonberry_vinelet", ::MoonberryVineletBlock, Prop.moonbery().randomTicks().instabreak()

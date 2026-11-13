@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
@@ -43,13 +39,13 @@ class HangingFloraBlock(properties: Properties) : Block(properties), Bonemealabl
         builder.add(TIP, WATERLOGGED)
     }
 
-    override fun isCollisionShapeFullBlock(blockState: BlockState, level: BlockGetter, pos: BlockPos): Boolean = false
-
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
         val shape = if (state.getValue(TIP)) TIP_SHAPE else SHAPE
         val offset = state.getOffset(level, pos)
         return shape.move(offset.x, offset.y, offset.z)
     }
+
+    override fun isCollisionShapeFullBlock(state: BlockState, level: BlockGetter, pos: BlockPos): Boolean = false
 
     override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos): Boolean = true
 
@@ -79,10 +75,12 @@ class HangingFloraBlock(properties: Properties) : Block(properties), Bonemealabl
         state: BlockState, dir: Direction, neighborState: BlockState,
         level: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
-        if (state.getValue(WATERLOGGED))
+        if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level))
-        if (!state.canSurvive(level, pos))
+        }
+        if (!state.canSurvive(level, pos)) {
             level.scheduleTick(pos, this, 1)
+        }
         return super.updateShape(state, dir, neighborState, level, pos, neighborPos)
             .setValue(TIP, !level.getBlockState(pos.below()).`is`(this))
     }
@@ -107,6 +105,7 @@ class HangingFloraBlock(properties: Properties) : Block(properties), Bonemealabl
         level.setBlock(bellow, defaultBlockState(), UPDATE_ALL)
     }
 
+    // TODO maybe rework these to use for loops
     fun getHeightAboveUpToMax(level: BlockGetter, pos: BlockPos): Int {
         var up = 0
         while (up < MAX_HEIGHT && level.getBlockState(pos.above(up + 1)).`is`(this)) {

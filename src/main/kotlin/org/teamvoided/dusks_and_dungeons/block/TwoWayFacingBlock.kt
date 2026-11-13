@@ -22,6 +22,7 @@ open class TwoWayFacingBlock(settings: Properties) : Block(settings) {
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
         builder.add(AXIS)
     }
 
@@ -32,12 +33,12 @@ open class TwoWayFacingBlock(settings: Properties) : Block(settings) {
         }
     }
 
-    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
 //        alternative that does the same as the column block
 //        val placementState = if (ctx.side.axis == Direction.Axis.Y) {
 //            defaultState.with(AXIS, getPlayerHorizontalFacingAxis(ctx))
 //        } else defaultState.with(AXIS, ctx.side.axis)
-        return defaultBlockState().setValue(AXIS, getPlayerHorizontalFacingAxis(ctx))
+        return super.getStateForPlacement(ctx)?.setValue(AXIS, getPlayerHorizontalFacingAxis(ctx))
     }
 
     //there's probably already a function that does the exact same thing, but I couldn't find it

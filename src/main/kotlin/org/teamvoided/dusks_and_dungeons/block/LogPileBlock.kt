@@ -1,7 +1,3 @@
-/*
- * TODO(cleanup)
- */
-
 package org.teamvoided.dusks_and_dungeons.block
 
 import net.minecraft.core.BlockPos
@@ -15,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
@@ -25,10 +22,10 @@ import org.teamvoided.dusks_and_dungeons.util.rotate
 import kotlin.math.min
 
 
-@Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
-open class LogPileBlock(settings: Properties) : TwoWayFacingBlock(settings), SimpleWaterloggedBlock {
+open class LogPileBlock(properties: Properties) : TwoWayFacingBlock(properties), SimpleWaterloggedBlock {
+
     init {
-        this.registerDefaultState(
+        registerDefaultState(
             stateDefinition.any()
                 .setValue(HANGING, false)
                 .setValue(PILE_LAYERS, 1)
@@ -37,68 +34,70 @@ open class LogPileBlock(settings: Properties) : TwoWayFacingBlock(settings), Sim
         )
     }
 
-    override fun canBeReplaced(state: BlockState, context: BlockPlaceContext): Boolean {
-        return if (context.itemInHand.`is`(this.asItem()) && state.getValue(PILE_LAYERS) < MAX_LAYERS) {
-            if (context.replacingClickedOnBlock()) {
-                context.clickedFace == if (state.getValue(HANGING)) Direction.DOWN else Direction.UP
-            } else true
-        } else false
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
+        builder.add(PILE_LAYERS, HANGING, WATERLOGGED)
     }
 
-    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
-        val blockPos = ctx.clickedPos
-        val oldState = ctx.level.getBlockState(blockPos)
-        val fluidState = ctx.level.getFluidState(blockPos)
-        if (oldState.`is`(this))
+    override fun getShape(state: BlockState, world: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
+        val axis = if (state.getValue(AXIS) == Direction.Axis.Z) 1 else 0
+        val shapeMap = if (state.getValue(HANGING)) HANGING_SHAPES else DEFAULT_SHAPES
+        return shapeMap[axis].getOrDefault(state.getValue(PILE_LAYERS), Shapes.block())
+    }
+
+    override fun canBeReplaced(state: BlockState, ctx: BlockPlaceContext): Boolean {
+        return ctx.itemInHand.`is`(asItem())
+                && state.getValue(PILE_LAYERS) < MAX_LAYERS
+                && (!ctx.replacingClickedOnBlock() || ctx.clickedFace == if (state.getValue(HANGING)) Direction.DOWN else Direction.UP)
+    }
+
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
+        val pos = ctx.clickedPos
+        val oldState = ctx.level.getBlockState(pos)
+        val fluidState = ctx.level.getFluidState(pos)
+        if (oldState.`is`(this)) {
             return oldState.setValue(PILE_LAYERS, addLayer(oldState.getValue(PILE_LAYERS)))
+        }
         val state = super.getStateForPlacement(ctx)
-            .setValue(WATERLOGGED, fluidState.type == Fluids.WATER)
-        val direction = ctx.clickedFace
-        if (direction != Direction.DOWN && (direction == Direction.UP || !(ctx.clickLocation.y - blockPos.y.toDouble() > 0.5)))
+            ?.setValue(WATERLOGGED, fluidState.type == Fluids.WATER)
+            ?: return null
+        val dir = ctx.clickedFace
+        if (dir != Direction.DOWN && (dir == Direction.UP || !(ctx.clickLocation.y - pos.y.toDouble() > 0.5))) {
             return state
+        }
         return rotate(state.setValue(HANGING, true))
     }
 
     override fun skipRendering(state: BlockState, stateFrom: BlockState, direction: Direction): Boolean {
-        return if (
-            direction.axis != Direction.Axis.Y &&
-            stateFrom.block is LogPileBlock &&
-            state.getValue(HANGING) == stateFrom.getValue(HANGING) &&
-            state.getValue(PILE_LAYERS) <= stateFrom.getValue(PILE_LAYERS) &&
-            state.getValue(AXIS) == stateFrom.getValue(AXIS)
-        ) true
-        else super.skipRendering(state, stateFrom, direction)
-    }
-
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, ctx: CollisionContext): VoxelShape {
-        val axis = if (state.getValue(AXIS) == Direction.Axis.Z) 1 else 0
-        return (
-                if (state.getValue(HANGING)) HANGING_SHAPES[axis]?.get(state.getValue(PILE_LAYERS))
-                else DEFAULT_SHAPES[axis]?.get(state.getValue(PILE_LAYERS))
-                ) ?: Shapes.block()
+        return direction.axis != Direction.Axis.Y &&
+                stateFrom.block is LogPileBlock &&
+                state.getValue(HANGING) == stateFrom.getValue(HANGING) &&
+                state.getValue(PILE_LAYERS) <= stateFrom.getValue(PILE_LAYERS) &&
+                state.getValue(AXIS) == stateFrom.getValue(AXIS)
+                || super.skipRendering(state, stateFrom, direction)
     }
 
     override fun updateShape(
-        state: BlockState, direction: Direction, neighborState: BlockState,
+        state: BlockState, dir: Direction, neighborState: BlockState,
         world: LevelAccessor, pos: BlockPos, neighborPos: BlockPos,
     ): BlockState {
-        if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
+        if (state.getValue(WATERLOGGED)) {
+            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))
+        }
         return state
     }
 
-    override fun getFluidState(state: BlockState): FluidState =
-        if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false) else super.getFluidState(state)
-
-    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        builder.add(PILE_LAYERS, HANGING, AXIS, WATERLOGGED)
+    override fun getFluidState(state: BlockState): FluidState {
+        return if (state.getValue(WATERLOGGED)) Fluids.WATER.getSource(false) else super.getFluidState(state)
     }
 
     companion object {
-        val MAX_LAYERS = 4
 
-        val PILE_LAYERS = IntegerProperty.create("layers", 1, MAX_LAYERS)
-        val HANGING = BlockStateProperties.HANGING
-        val AXIS = BlockStateProperties.HORIZONTAL_AXIS
+        const val MAX_LAYERS = 4
+
+        val PILE_LAYERS: IntegerProperty = IntegerProperty.create("layers", 1, MAX_LAYERS)
+        val HANGING: BooleanProperty = BlockStateProperties.HANGING
+        val AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
 
         val LAYER_1 = layer(0.0)
@@ -120,18 +119,22 @@ open class LogPileBlock(settings: Properties) : TwoWayFacingBlock(settings), Sim
             4 to Shapes.or(LAYER_4, LAYER_3, LAYER_2, LAYER_1)
         )
 
-        val DEFAULT_SHAPES = (0..1).associateWith { axis ->
-            (DEFAULT_LAYERS_TO_SHAPE.map { (i, shape) -> i to shape.rotate(axis) }.toMap())
+        val DEFAULT_SHAPES = Array(2) { axis ->
+            DEFAULT_LAYERS_TO_SHAPE.map { (i, shape) -> i to shape.rotate(axis) }.toMap()
         }
 
-        val HANGING_SHAPES = (0..1).associateWith { axis ->
-            (HANGING_LAYERS_TO_SHAPE.map { (i, shape) -> i to shape.rotate(axis) }.toMap())
+        val HANGING_SHAPES = Array(2) { axis ->
+            HANGING_LAYERS_TO_SHAPE.map { (i, shape) -> i to shape.rotate(axis) }.toMap()
         }
 
-        fun layer(height: Double, z: Boolean = false): VoxelShape =
-            if (z) box(2.0, height, 0.0, 14.0, height + 4, 16.0)
-            else box(0.0, height, 2.0, 16.0, height + 4, 14.0)
+        fun layer(height: Double, rotated: Boolean = false): VoxelShape {
+            return if (rotated)
+                box(2.0, height, 0.0, 14.0, height + 4, 16.0)
+            else
+                box(0.0, height, 2.0, 16.0, height + 4, 14.0)
+        }
 
         fun addLayer(i: Int): Int = min(MAX_LAYERS, (i + 1))
+
     }
 }
