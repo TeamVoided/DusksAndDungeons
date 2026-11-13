@@ -34,8 +34,8 @@ import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.util.multifaceRemoveFace
 
 
-// TODO(1.0) ask dusk if the berry count is right
-class MoonberryVineBlock(properties: Properties) : MultifaceBlock(properties), SimpleWaterloggedBlock, BonemealableBlock {
+class MoonberryVineBlock(properties: Properties) : MultifaceBlock(properties), SimpleWaterloggedBlock,
+    BonemealableBlock {
 
     public override fun codec(): MapCodec<MoonberryVineBlock> = CODEC
 
@@ -56,7 +56,7 @@ class MoonberryVineBlock(properties: Properties) : MultifaceBlock(properties), S
     }
 
     override fun isValidBonemealTarget(level: LevelReader, pos: BlockPos, state: BlockState): Boolean {
-        return state.getValue(BERRIES) < 2
+        return state.getValue(BERRIES) < MAX_BERRIES
     }
 
     override fun isBonemealSuccess(level: Level, random: RandomSource, pos: BlockPos, state: BlockState): Boolean {
@@ -123,8 +123,7 @@ class MoonberryVineBlock(properties: Properties) : MultifaceBlock(properties), S
         stack: ItemStack, state: BlockState, level: Level, pos: BlockPos,
         player: Player, hand: InteractionHand, hit: BlockHitResult,
     ): ItemInteractionResult {
-        val hasBerries = state.getValue(BERRIES) == 2
-        return if (!hasBerries && stack.`is`(Items.BONE_MEAL))
+        return if (state.getValue(BERRIES) != MAX_BERRIES && stack.`is`(Items.BONE_MEAL))
             ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
         else
             super.useItemOn(stack, state, level, pos, player, hand, hit)
@@ -152,12 +151,12 @@ class MoonberryVineBlock(properties: Properties) : MultifaceBlock(properties), S
     }
 
     override fun isRandomlyTicking(state: BlockState): Boolean {
-        return state.getValue(BERRIES) < 2
+        return state.getValue(BERRIES) < MAX_BERRIES
     }
 
     override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
         val berries = state.getValue(BERRIES)
-        if (berries < 3 && random.nextInt(5) == 0 && level.isNight) {
+        if (berries != MAX_BERRIES && random.nextInt(5) == 0 && level.isNight) {
             val blockState = state.setValue(BERRIES, berries + 1)
             level.setBlock(pos, blockState, 2)
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockState))
@@ -171,7 +170,8 @@ class MoonberryVineBlock(properties: Properties) : MultifaceBlock(properties), S
         val CODEC: MapCodec<MoonberryVineBlock> = simpleCodec(::MoonberryVineBlock)
 
         val WATERLOGGED: BooleanProperty = BlockStateProperties.WATERLOGGED
-        val BERRIES: IntegerProperty = IntegerProperty.create("berries", 0, 2)
+        const val MAX_BERRIES: Int = 2
+        val BERRIES: IntegerProperty = IntegerProperty.create("berries", 0, MAX_BERRIES)
 
         fun Properties.moonberryLightLevel(luminanceLow: Int, luminance: Int): Properties = lightLevel { state ->
             if (hasAnyFace(state) && state.getValue(BERRIES) > 0)
