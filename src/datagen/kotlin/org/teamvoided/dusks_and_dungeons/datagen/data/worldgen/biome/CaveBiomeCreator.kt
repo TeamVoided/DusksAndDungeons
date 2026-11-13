@@ -37,7 +37,6 @@ object CaveBiomeCreator {
         }
         val music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES)
 
-        // TODO(dusk) For Dusk: extract colors as constants
         return biomeBuild(
             spawns,
             generation,

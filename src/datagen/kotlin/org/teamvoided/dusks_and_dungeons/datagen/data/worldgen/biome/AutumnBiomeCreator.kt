@@ -30,7 +30,6 @@ object AutumnBiomeCreator {
     private const val GOLDEN_FOREST_FOLIAGE = GOLDEN_FOREST_GRASS
     private const val GOLDEN_PLAINS_GRASS = 15647087
     private const val GOLDEN_PLAINS_FOLIAGE = GOLDEN_FOREST_GRASS
-    // TODO(dusk) For Dusk: Make all biome colors be constants
 
     val MUSIC: Music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
 
