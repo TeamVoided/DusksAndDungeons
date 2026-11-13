@@ -20,8 +20,16 @@ object AutumnBiomeCreator {
 
     private const val AUTUMN_WATER = 0x164299
     private const val AUTUMN_WATER_FOG = 0x050533
-    private const val GOLDEN_FOLIAGE = 0xFFC759
+    private const val AUTUMN_RIVER_GRASS = 0xF8BA54
+    private const val AUTUMN_RIVER_FOLIAGE = 0xCC833B //CC8F3B
+    private const val AUTUMN_FOREST_GRASS = 16224051
+    private const val AUTUMN_FOREST_FOLIAGE = 15097636
     private const val AUTUMN_PLAINS_GRASS = 0xF09B4F
+    private const val AUTUMN_PLAINS_FOLIAGE = AUTUMN_FOREST_FOLIAGE
+    private const val GOLDEN_FOREST_GRASS = 0xFFC759
+    private const val GOLDEN_FOREST_FOLIAGE = GOLDEN_FOREST_GRASS
+    private const val GOLDEN_PLAINS_GRASS = 15647087
+    private const val GOLDEN_PLAINS_FOLIAGE = GOLDEN_FOREST_GRASS
     // TODO(dusk) For Dusk: Make all biome colors be constants
 
     val MUSIC: Music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST)
@@ -58,8 +66,8 @@ object AutumnBiomeCreator {
             spawns, generation, MUSIC,
             0.25f, 0.8f,
             AUTUMN_WATER, AUTUMN_WATER_FOG,
-            if (golden) GOLDEN_FOLIAGE else 16224051,
-            if (golden) GOLDEN_FOLIAGE else 15097636
+            if (golden) GOLDEN_FOREST_GRASS else AUTUMN_FOREST_GRASS,
+            if (golden) GOLDEN_FOREST_FOLIAGE else AUTUMN_FOREST_FOLIAGE
         )
     }
 //grass 16434531 15647087
@@ -83,8 +91,7 @@ object AutumnBiomeCreator {
             BiomeDefaultFeatures.addDefaultMushrooms(this)
             if (golden) {
                 add9VegetalDecoration(VegetationPlacements.PATCH_SUGAR_CANE)
-            }
-            else BiomeDefaultFeatures.addDefaultExtraVegetation(this)
+            } else BiomeDefaultFeatures.addDefaultExtraVegetation(this)
             add4SurfaceStructures(DnDPlacedFeature.AUTUMN_FARMLANDS)
             addAutumnFeatures(golden)
             add9VegetalDecoration(if (golden) DnDPlacedFeature.WILD_WHEAT_FIELD else DnDPlacedFeature.WILD_WHEAT)
@@ -94,8 +101,8 @@ object AutumnBiomeCreator {
             spawns, generation, MUSIC,
             0.25f, 0.8f,
             AUTUMN_WATER, AUTUMN_WATER_FOG,
-            if (golden) 15647087 else AUTUMN_PLAINS_GRASS,
-            if (golden) GOLDEN_FOLIAGE else 15097636
+            if (golden) GOLDEN_PLAINS_GRASS else AUTUMN_PLAINS_GRASS,
+            if (golden) GOLDEN_PLAINS_FOLIAGE else AUTUMN_PLAINS_FOLIAGE
         )
     }
 
@@ -125,7 +132,7 @@ object AutumnBiomeCreator {
             spawns, generation, MUSIC,
             0.25f, 0.8f,
             AUTUMN_WATER, AUTUMN_WATER_FOG,
-            0xF8BA54, 0xCC833B //CC8F3B
+            AUTUMN_RIVER_GRASS, AUTUMN_RIVER_FOLIAGE
         )
     }
 
