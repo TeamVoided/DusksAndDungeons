@@ -561,13 +561,13 @@ fun BlockModelGenerators.registerTreeMushroom(block: Block, parentModel: String)
 
 fun BlockModelGenerators.registerFlowerbed2(
     block: Block,
-    useDefault: Boolean = true,
+    useCustom: Boolean = false,
     parent: ResourceLocation = mc("block/flowerbed"),
 ) {
     this.createSimpleFlatItemModel(block.asItem())
     val texture = TextureMapping()
         .put(FLOWERBED, TextureMapping.getBlockTexture(block))
-        .put(STEM, if (useDefault) TextureMapping.getBlockTexture(block, "_stem") else id("block/petals_stem"))
+        .put(STEM, if (useCustom) TextureMapping.getBlockTexture(block, "_stem") else id("block/petals_stem"))
     val identifier = block(parent.suffix("_1"), "_1", FLOWERBED, STEM)
         .create(block, texture, this.modelOutput)
     val identifier2 = block(parent.suffix("_2"), "_2", FLOWERBED, STEM)

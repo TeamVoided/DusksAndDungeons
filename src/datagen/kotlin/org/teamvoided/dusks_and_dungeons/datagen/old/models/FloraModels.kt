@@ -20,6 +20,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 
 object FloraModels {
+    private val TALL_FLOWERBED = DusksAndDungeons.id("block/parent/foliage/tall_flowerbed")
 
     fun create(gen: BlockModelGenerators) {
         gen.registerGoldenMushroomPlant(DnDBlocks.GOLDEN_MUSHROOM, DnDBlocks.POTTED_GOLDEN_MUSHROOM)
@@ -34,13 +35,13 @@ object FloraModels {
         gen.overgrowthBush(DnDBlocks.OVERGROWTH_BUSH)
         gen.hangingOvergrowth(DnDBlocks.HANGING_OVERGROWTH)
 
-        gen.registerFlowerbed2(DnDBlocks.WHITE_PETALS, false)
-        gen.registerFlowerbed2(DnDBlocks.RED_PETALS, false)
-        gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS, false)
-        gen.registerFlowerbed2(DnDBlocks.BLUE_PETALS, false)
+        gen.registerFlowerbed2(DnDBlocks.WHITE_PETALS)
+        gen.registerFlowerbed2(DnDBlocks.RED_PETALS)
+        gen.registerFlowerbed2(DnDBlocks.ORANGE_PETALS)
+        gen.registerFlowerbed2(DnDBlocks.BLUE_PETALS)
         gen.registerFlowerbed2(DnDBlocks.COLD_WILDFLOWER, false, DusksAndDungeons.id("block/parent/wildflowerbed"))
-        gen.createFlowerBed(DnDBlocks.CRIMSON_VIVIONS)
-        gen.createFlowerBed(DnDBlocks.WARPED_VIVIONS)
+        gen.registerFlowerbed2(DnDBlocks.CRIMSON_VIVIONS, true, TALL_FLOWERBED)
+        gen.registerFlowerbed2(DnDBlocks.WARPED_VIVIONS, true, TALL_FLOWERBED)
 
         gen.createDoublePlant(DnDBlocks.WILD_WHEAT, BlockModelGenerators.TintState.NOT_TINTED)
         gen.createCropBlock(DnDBlocks.GOLDEN_BEETROOTS, BlockStateProperties.AGE_3, 0, 1, 2, 3)
