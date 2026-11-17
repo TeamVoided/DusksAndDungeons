@@ -3,6 +3,7 @@ package org.teamvoided.dusks_and_dungeons.datagen.assets.model
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers.*
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.model
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerBigCandle
 import org.teamvoided.dusks_and_dungeons.datagen.old.util.registerCandle2
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
@@ -22,6 +23,11 @@ object FunctionalModels {
         DnDBlockLists.bigCandles.forEach(gen::registerBigCandle)
         DnDBlockLists.soulCandles.forEach(gen::registerCandle2)
         DnDBlockLists.bigSoulCandles.forEach(gen::registerBigCandle)
+
+        gen.createTrivialBlock(DnDBlocks.EMPTY_JAR, DnDTexturedModels.EMPTY_JAR)
+        gen.createJarWithLayers(DnDBlocks.LAVA_JAR, DnDBlocks.EMPTY_JAR, Blocks.LAVA.model("_still"))
+        gen.createTrivialBlock(DnDBlocks.EMPTY_TINTED_JAR, DnDTexturedModels.EMPTY_JAR)
+        gen.createJarWithLayers(DnDBlocks.TINTED_LAVA_JAR, DnDBlocks.EMPTY_TINTED_JAR, Blocks.LAVA.model("_still"))
 
         gen.createCandelabra(DnDBlocks.EMPTY_IRON_CANDELABRA, DnDBlocks.IRON_CANDELABRA)
         gen.createWallCandelabra(

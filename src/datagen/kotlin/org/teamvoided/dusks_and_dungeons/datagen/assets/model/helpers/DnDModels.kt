@@ -1,9 +1,13 @@
 package org.teamvoided.dusks_and_dungeons.datagen.assets.model.helpers
 
 import net.minecraft.data.models.model.ModelTemplate
+import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.data.models.model.TextureSlot.*
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.model
 import java.util.*
 
 /**
@@ -25,6 +29,20 @@ data object DnDModels {
 
     val BIG_SCAFFOLDING_STABLE = parent("big_scaffolding_stable", "_stable", BOTTOM, SIDE, TOP)
     val BIG_SCAFFOLDING_UNSTABLE = parent("big_scaffolding_unstable", "_unstable", BOTTOM, SIDE, TOP)
+
+    val EMPTY_JAR = parent("jar/empty_jar", SIDE, END)
+    val JAR_2 = parent("jar/jar_2", "_2", SIDE, END, CONTENT)
+    val JAR_4 = parent("jar/jar_4", "_4", SIDE, END, CONTENT)
+    val JAR_6 = parent("jar/jar_6", "_6", SIDE, END, CONTENT)
+    val JAR_8 = parent("jar/jar_8", "_8", SIDE, END, CONTENT)
+    val JAR_10 = parent("jar/jar_10", "_10", SIDE, END, CONTENT)
+    val JAR_12 = parent("jar/jar_12", "_12", SIDE, END, CONTENT)
+    //val JAR_TINT_2 = parent("jar/jar_tint_2", "_2", SIDE, END, CONTENT)
+    //val JAR_TINT_4 = parent("jar/jar_tint_4", "_4", SIDE, END, CONTENT)
+    //val JAR_TINT_6 = parent("jar/jar_tint_6", "_6", SIDE, END, CONTENT)
+    //val JAR_TINT_8 = parent("jar/jar_tint_8", "_8", SIDE, END, CONTENT)
+    //val JAR_TINT_10 = parent("jar/jar_tint_10", "_10", SIDE, END, CONTENT)
+    //val JAR_TINT_12 = parent("jar/jar_tint_12", "_12", SIDE, END, CONTENT)
 
     val CANDELABRA_1 = parent("candelabra/1", "_1", TEXTURE)
     val CANDELABRA_2 = parent("candelabra/2", "_2", TEXTURE)

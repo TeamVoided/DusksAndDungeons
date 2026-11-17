@@ -1,0 +1,115 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "#side"
+	},
+	"elements": [
+		{
+			"name": "potion",
+			"from": [2, 1, 2],
+			"to": [14, 7, 14],
+			"color": 6,
+			"faces": {
+				"north": {"uv": [2, 9, 14, 15], "texture": "#content"},
+				"east": {"uv": [2, 9, 14, 15], "texture": "#content"},
+				"south": {"uv": [2, 9, 14, 15], "texture": "#content"},
+				"west": {"uv": [2, 9, 14, 15], "texture": "#content"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#content"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#content"}
+			}
+		},
+		{
+			"name": "up",
+			"from": [1, 14, 1],
+			"to": [15, 14, 15],
+			"faces": {
+				"up": {"uv": [1, 1, 15, 15], "texture": "#end"},
+				"down": {"uv": [1, 1, 15, 15], "texture": "#end"}
+			}
+		},
+		{
+			"name": "down",
+			"from": [1, 0, 1],
+			"to": [15, 0, 15],
+			"faces": {
+				"up": {"uv": [1, 2, 15, 16], "texture": "#side"},
+				"down": {"uv": [1, 2, 15, 16], "texture": "#side", "cullface": "down"}
+			}
+		},
+		{
+			"name": "north",
+			"from": [1, 0, 1],
+			"to": [15, 14, 1],
+			"faces": {
+				"north": {"uv": [1, 2, 15, 16], "texture": "#side"},
+				"south": {"uv": [1, 2, 15, 16], "texture": "#side"}
+			}
+		},
+		{
+			"name": "south",
+			"from": [1, 0, 15],
+			"to": [15, 14, 15],
+			"faces": {
+				"north": {"uv": [1, 2, 15, 16], "texture": "#side"},
+				"south": {"uv": [1, 2, 15, 16], "texture": "#side"}
+			}
+		},
+		{
+			"name": "west",
+			"from": [1, 0, 1],
+			"to": [1, 14, 15],
+			"faces": {
+				"east": {"uv": [1, 2, 15, 16], "texture": "#side"},
+				"west": {"uv": [1, 2, 15, 16], "texture": "#side"}
+			}
+		},
+		{
+			"name": "east",
+			"from": [15, 0, 1],
+			"to": [15, 14, 15],
+			"faces": {
+				"east": {"uv": [1, 2, 15, 16], "texture": "#side"},
+				"west": {"uv": [1, 2, 15, 16], "texture": "#side"}
+			}
+		},
+		{
+			"name": "regular",
+			"from": [5, 14, 5],
+			"to": [11, 16, 11],
+			"shade": false,
+			"faces": {
+				"north": {"uv": [5, 0, 11, 2], "texture": "#side"},
+				"east": {"uv": [5, 0, 11, 2], "texture": "#side"},
+				"south": {"uv": [5, 0, 11, 2], "texture": "#side"},
+				"west": {"uv": [5, 0, 11, 2], "texture": "#side"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#end", "cullface": "up"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "potion",
+			"origin": [0, 0, 0],
+			"scope": 0,
+			"color": 0,
+			"children": [0]
+		},
+		{
+			"name": "bottle",
+			"origin": [8, 8, 8],
+			"scope": 0,
+			"color": 0,
+			"children": [1, 2, 3, 4, 5, 6]
+		},
+		{
+			"name": "neck",
+			"origin": [8, 8, 8],
+			"scope": 0,
+			"color": 0,
+			"shade": false,
+			"children": [7]
+		}
+	]
+}

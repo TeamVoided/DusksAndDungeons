@@ -24,7 +24,9 @@ import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLightLevel
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.big.jar.BigJarBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.big.jar.BigJarWithLayersBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyWallCandelabraBlock
@@ -59,7 +61,7 @@ import org.teamvoided.dusks_and_dungeons.init.misc.DnDBlockProperties as Prop
 
 object DnDBlocks {
 
-    val BLOCKS get() = getModEntries(BuiltInRegistries.BLOCK)
+    val BLOCKS: List<Block> get() = getModEntries(BuiltInRegistries.BLOCK)
 
     // Collections
     val SETS = mutableSetOf<AbstractBlockSet>()
@@ -512,10 +514,16 @@ object DnDBlocks {
 
     // region 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ --- Functional Blocks --- 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️ 🕯️
 
-    val BIG_CHAIN = register("big_chain", ::BigChainBlock, ofFullCopy(CHAIN).sound(DnDSoundTypes.BIG_CHAIN)).pickaxe().cutout()
-    val BIG_LANTERN = register("big_lantern", ::BigLanternBlock, ofFullCopy(LANTERN).sound(DnDSoundTypes.BIG_LANTERN)).pickaxe()
+    val BIG_CHAIN =
+        register("big_chain", ::BigChainBlock, ofFullCopy(CHAIN).sound(DnDSoundTypes.BIG_CHAIN)).pickaxe().cutout()
+    val BIG_LANTERN =
+        register("big_lantern", ::BigLanternBlock, ofFullCopy(LANTERN).sound(DnDSoundTypes.BIG_LANTERN)).pickaxe()
     val BIG_SOUL_LANTERN =
-        register("big_soul_lantern", ::BigLanternBlock, ofFullCopy(SOUL_LANTERN).sound(DnDSoundTypes.BIG_LANTERN)).pickaxe()
+        register(
+            "big_soul_lantern",
+            ::BigLanternBlock,
+            ofFullCopy(SOUL_LANTERN).sound(DnDSoundTypes.BIG_LANTERN)
+        ).pickaxe()
 
     val REDSTONE_LANTERN = register("redstone_lantern", ::RedstoneLanternBlock, Prop.RESTONE_LANTERN).pickaxe().cutout()
     val BIG_REDSTONE_LANTERN = register(
@@ -856,6 +864,17 @@ object DnDBlocks {
         val BLACKSTONE_PRESSURE_PLATE = createStonePlate(Blocks.BLACKSTONE)
     */
 
+    val EMPTY_JAR: Block = register("jar", ::BigJarBlock, ofFullCopy(GLASS)).cutout()
+    val LAVA_JAR: Block = register("lava_jar", ::BigJarWithLayersBlock, ofFullCopy(EMPTY_JAR).luminance(15)).cutout()
+
+    val EMPTY_TINTED_JAR: Block = register(
+        "tinted_jar",
+        ::BigJarBlock,
+        ofFullCopy(EMPTY_JAR).mapColor(TINTED_GLASS.defaultMapColor())
+    ).translucent()
+    val TINTED_LAVA_JAR: Block =
+        register("tinted_lava_jar", ::BigJarWithLayersBlock, ofFullCopy(EMPTY_TINTED_JAR)).translucent()
+
 
     //    🌈 🌈 🌈 🌈 --- GAY BLOCK --- 🌈 🌈 🌈 🌈
     @Suppress("unused")
@@ -922,7 +941,10 @@ object DnDBlocks {
     }
 
     // TODO(1.0) make this use 21.11 rules
-    @Deprecated("Will be not usable post 1.21.1", replaceWith = ReplaceWith("registerNoItem(name, block, Properties.of())"))
+    @Deprecated(
+        "Will be not usable post 1.21.1",
+        replaceWith = ReplaceWith("registerNoItem(name, block, Properties.of())")
+    )
     fun <T : Block> registerNoItemOld(name: String, block: T): T {
         return registerNoItem(name, { block }, Properties.of())
     }

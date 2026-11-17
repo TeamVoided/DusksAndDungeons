@@ -13,6 +13,8 @@ object DnDTexturedModels {
 
     val CARPET_DOWN = createDefault(TextureMapping::wool, DnDModels.CARPET_DOWN)
 
+    val EMPTY_JAR = createDefault(DnDTextureMapping::jar, DnDModels.EMPTY_JAR)
+
     // region Tinted
     val TINTED_CUBE = createDefault(TextureMapping::cube, DnDModels.Tinted.CUBE_ALL)
     val TINTED_TOP_BOTTOM_WITH_WALL = createDefault(TextureMapping::cubeBottomTopWithWall, DnDModels.Tinted.CUBE_BOTTOM_TOP)

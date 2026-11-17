@@ -5,11 +5,8 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
-import net.minecraft.data.models.blockstates.Condition
+import net.minecraft.data.models.blockstates.*
 import net.minecraft.data.models.blockstates.Condition.condition
-import net.minecraft.data.models.blockstates.MultiPartGenerator
-import net.minecraft.data.models.blockstates.MultiVariantGenerator
-import net.minecraft.data.models.blockstates.PropertyDispatch
 import net.minecraft.data.models.blockstates.PropertyDispatch.property
 import net.minecraft.data.models.blockstates.Variant.variant
 import net.minecraft.data.models.blockstates.VariantProperties.*
@@ -17,13 +14,16 @@ import net.minecraft.data.models.model.*
 import net.minecraft.data.models.model.TextureSlot.*
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.block.CompositeBlock
 import org.teamvoided.dusks_and_dungeons.block.SconceBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.big.jar.BigJarWithLayersBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
 import org.teamvoided.dusks_and_dungeons.client.init.DnDItemsClient
+import org.teamvoided.dusks_and_dungeons.datagen.old.util.model
 import java.util.function.Supplier
 
 
@@ -107,6 +107,42 @@ fun BlockModelGenerators.createBigScaffolding(scaffolding: Block) {
     blockStateOutput.accept(
         MultiVariantGenerator.multiVariant(scaffolding)
             .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.BOTTOM, unstable, stable))
+    )
+}
+
+fun BlockModelGenerators.createJar(block: Block) {
+    val texture = TextureMapping()
+        .put(SIDE, block.model())
+        .put(END, block.model("_end"))
+    val model = DnDModels.EMPTY_JAR.create(block, texture, modelOutput)
+
+    blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(block)
+    )
+}
+
+fun BlockModelGenerators.createJarWithLayers(
+    layerJar: Block,
+    emptyJar: Block,
+    contents: ResourceLocation = Blocks.WATER.model("_still")
+) {
+    val texture = DnDTextureMapping.jarWithLayers(emptyJar, contents)
+    val models = listOf(
+        DnDModels.JAR_2,
+        DnDModels.JAR_4,
+        DnDModels.JAR_6,
+        DnDModels.JAR_8,
+        DnDModels.JAR_10,
+        DnDModels.JAR_12
+    ).map { it.create(layerJar, texture, modelOutput) }
+    delegateItemModel(layerJar, models[1]) //TODO("Funky item render in new version")
+
+    blockStateOutput.accept(
+        MultiVariantGenerator.multiVariant(layerJar).with(
+            property(BigJarWithLayersBlock.LEVEL_1_6).generate {
+                variant().with(MODEL, models[it - 1])
+            }
+        )
     )
 }
 
