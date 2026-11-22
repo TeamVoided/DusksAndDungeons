@@ -4,7 +4,7 @@ import net.minecraft.world.level.block.Block
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.log
 import org.teamvoided.voidlib.impl.BlockStrippingRegistryIml
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 object BlockStrippingRegistry {
 
     @JvmStatic

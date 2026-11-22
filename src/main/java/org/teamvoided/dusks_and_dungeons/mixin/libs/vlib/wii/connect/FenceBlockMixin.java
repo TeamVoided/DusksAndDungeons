@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.voidlib.api.BlockConnection;
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 @Mixin(FenceBlock.class)
 public abstract class FenceBlockMixin {
 

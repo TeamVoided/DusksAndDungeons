@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
 import net.minecraft.server.MinecraftServer
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 fun interface PostDataLoadEvent {
 
     fun dataLoaded(server: MinecraftServer)

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import static org.teamvoided.dusks_and_dungeons.item.DnDDispenserBehaviour.getCustomDispenseMethod;
 
-//TODO(lib) move to voidlib
+//TODO(vlib) move to voidlib
 @Mixin(DispenserBlock.class)
 public class DispenserBlockMixin {
 

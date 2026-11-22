@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import org.jetbrains.annotations.ApiStatus
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 object PrimaryModifierRegistryImpl {
 
     @ApiStatus.Internal

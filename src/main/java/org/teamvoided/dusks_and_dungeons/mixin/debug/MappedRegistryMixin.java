@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-// TODO(lib) Move to VoidLib
+// TODO(vlib) Move to VoidLib
 @Mixin(MappedRegistry.class)
 public abstract class MappedRegistryMixin<T> {
 

@@ -3,7 +3,7 @@ package org.teamvoided.voidlib.api
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 /**
  * Event for Invalidated caches for readable resources.
  * Made so I (end) have to write fewer Listeners.

@@ -8,7 +8,7 @@ import net.minecraft.server.packs.resources.ResourceManagerReloadListener
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.voidlib.api.InvalidateResourcesCallback
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 object EventImpl {
 
     fun init() {

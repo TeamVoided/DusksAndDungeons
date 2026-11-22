@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.IronBarsBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 @Suppress("unused")
 interface BlockConnection {
     /**

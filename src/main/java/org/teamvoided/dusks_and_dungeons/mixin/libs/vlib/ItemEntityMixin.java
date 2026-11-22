@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static org.teamvoided.dusks_and_dungeons.util.MixinHelperKt.processRecipe;
 
-// TODO(lib) move to VoidLib
+// TODO(vlib) move to VoidLib
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity {
 

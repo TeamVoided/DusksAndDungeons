@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static org.teamvoided.voidlib.impl.BlockStrippingRegistryIml.getPossibleStrippedState;
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 @Mixin(AxeItem.class)
 public abstract class AxeItemMixin {
 

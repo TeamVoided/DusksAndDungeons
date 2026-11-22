@@ -63,7 +63,7 @@ object DnDEmiPlugin : EmiPlugin {
 
     fun addWorldInteraction(registry: EmiRegistry, hiddenItems: Set<Item>) {
         val axes = getAxes()
-        // TODO(lib) this should be part of the voidlib plugin
+        // TODO(vlib) this should be part of the voidlib plugin
         for ((from, to) in BlockStrippingRegistryIml.BLOCK_STATE_MAP) {
             val input = EmiStack.of(from)
             val output = EmiStack.of(to)

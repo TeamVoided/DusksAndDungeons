@@ -18,7 +18,7 @@ import org.teamvoided.voidlib.impl.PrimaryModifierRegistryImpl;
 
 import java.util.function.Consumer;
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
 

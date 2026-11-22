@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import org.teamvoided.dusks_and_dungeons.init.DnDRecipes
 
-// TODO(lib) move to voidlib
+// TODO(vlib) move to voidlib
 class UseOnBlockRecipe(
     group: String,
     input: Ingredient,
