@@ -19,7 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-// TODO(vlib) Move to VoidLib
+// TODO(del) Update Voidlib Delete this
+@Deprecated()
 @Mixin(MappedRegistry.class)
 public abstract class MappedRegistryMixin<T> {
 

@@ -4,7 +4,8 @@ import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
 import net.minecraft.server.MinecraftServer
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun interface PostDataLoadEvent {
 
     fun dataLoaded(server: MinecraftServer)

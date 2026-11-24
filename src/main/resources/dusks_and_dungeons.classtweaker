@@ -1,4 +1,4 @@
 classTweaker v2 named
-
+# TODO(del) Update Voidlib Delete this
 transitive-inject-interface net/minecraft/world/phys/shapes/EntityCollisionContext org/teamvoided/voidlib/api/EntityCollisionContextExtension
 

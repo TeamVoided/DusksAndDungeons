@@ -49,7 +49,7 @@ object DusksAndDungeons {
         DnDNetworking.init()
         DnDEvents.init()
 
-        // TODO(vlib) move to voidlib
+        // TODO(del) Update Voidlib Delete this
         VEventInit.init()
 
         // Should always be initialized Last

@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.teamvoided.voidlib.api.EntityCollisionContextExtension;
 
-// TODO (lib) move to lib
+// TODO(del) Update Voidlib Delete this
+@Deprecated()
 @Mixin(EntityCollisionContext.class)
 public abstract class EntityCollisionContextMixin implements EntityCollisionContextExtension {
 

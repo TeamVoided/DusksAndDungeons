@@ -3,7 +3,7 @@ package org.teamvoided.dusks_and_dungeons.block.pumpkin
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.FrontAndTop
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
@@ -21,12 +21,12 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.pathfinder.PathComputationType
+import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
-import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxZ
 
@@ -50,7 +50,7 @@ open class SmallPumpkinBlock(private val carvedBlock: Block, properties: Propert
         return SHAPES[state.getValue(FACING)] ?: Shapes.block()
     }
 
-    override fun getId(): ResourceLocation = getId(this)
+    override fun getCarvingLootTable(): ResourceKey<LootTable> = CarvableBlock.crateKey(this)
 
     override fun getCarvedBlock(): Block = carvedBlock
 

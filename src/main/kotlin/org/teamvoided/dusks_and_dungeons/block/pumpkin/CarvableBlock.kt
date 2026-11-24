@@ -3,9 +3,9 @@ package org.teamvoided.dusks_and_dungeons.block.pumpkin
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
@@ -26,10 +26,11 @@ import org.teamvoided.dusks_and_dungeons.util.dropFromBlockInteractLootTable
 import org.teamvoided.dusks_and_dungeons.util.key
 import org.teamvoided.voidlib.helpers.item.isShears
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 interface CarvableBlock {
 
-    fun getId(): ResourceLocation
+    fun getCarvingLootTable(): ResourceKey<LootTable>
 
     fun getCarvedBlock(): Block
 
@@ -37,8 +38,6 @@ interface CarvableBlock {
 
 
     fun isCarvingTool(stack: ItemStack): Boolean = stack.isShears()
-
-    fun getCarvingLootTable(): ResourceKey<LootTable> = crateKey(getId())
 
     fun getGameEvent(player: Player, stack: ItemStack): Holder<GameEvent>? = GameEvent.SHEAR
 
@@ -90,8 +89,9 @@ interface CarvableBlock {
 
         const val LOOT_PREFIX = "carving/"
 
-        fun crateKey(id: ResourceLocation): ResourceKey<LootTable> {
-            return Registries.LOOT_TABLE.key(id.withPrefix(LOOT_PREFIX))
+        @Deprecated("Use Voidlib")
+        fun crateKey(block: Block): ResourceKey<LootTable> {
+            return Registries.LOOT_TABLE.key(BuiltInRegistries.BLOCK.getKey(block).withPrefix(LOOT_PREFIX))
         }
 
     }

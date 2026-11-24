@@ -37,13 +37,16 @@ import java.util.function.Predicate
 
 
 // All functions here have been backported from future versions and will become redundant on update
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 val CAN_BE_PICKED: Predicate<Entity> = EntitySelector.NO_SPECTATORS.and(Entity::isPickable)
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun getApproximateNearest(dx: Double, dy: Double, dz: Double): Direction {
     return getApproximateNearest(dx.toFloat(), dy.toFloat(), dz.toFloat())
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun getApproximateNearest(dx: Float, dy: Float, dz: Float): Direction {
     var result = Direction.NORTH
     var highestDot = Float.MIN_VALUE
@@ -60,49 +63,62 @@ fun getApproximateNearest(dx: Float, dy: Float, dz: Float): Direction {
     return result
 }
 
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun InteractionHand.asEquipmentSlot(): EquipmentSlot {
     return if (this == InteractionHand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun <T> tagKeyStreamCodec(resourceKey: ResourceKey<out Registry<T>>): StreamCodec<ByteBuf, TagKey<T>> {
     return ResourceLocation.STREAM_CODEC.map({ TagKey.create(resourceKey, it) }, { it.location() })
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun LevelReader.getMinY(): Int = dimensionType().minY()
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun LevelReader.getMaxY(): Int = dimensionType().minY()
 
 
 // region CompoundTag
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 val LOGGER: Logger = LoggerFactory.getLogger(CompoundTag::class.java.simpleName)
 
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun CompoundTag.getBooleanOr(string: String, defaultValue: Boolean): Boolean {
     return getByteOr(string, (if (defaultValue) 1 else 0).toByte()).toInt() != 0
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun CompoundTag.getByteOr(name: String, defaultValue: Byte): Byte {
     return if (contains(name, 1)) getByte(name) else defaultValue
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun CompoundTag.getIntOr(name: String, defaultValue: Int): Int {
     return if (contains(name, 3)) getInt(name) else defaultValue
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun <T : Any> CompoundTag.read(name: String, codec: Codec<T>): Optional<T> {
     return read(name, codec, NbtOps.INSTANCE)
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun <T : Any> CompoundTag.read(name: String, codec: Codec<T>, ops: DynamicOps<Tag>): Optional<T> {
     val tag = get(name) ?: return Optional.empty<T>()
     return codec.parse(ops, tag).resultOrPartial { LOGGER.error("Failed to read field ({}={}): {}", name, tag, it) }
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun <T : Any> CompoundTag.store(name: String, codec: Codec<T>, value: T) {
     store<T>(name, codec, NbtOps.INSTANCE, value)
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun <T : Any> CompoundTag.store(name: String, codec: Codec<T>, ops: DynamicOps<Tag>, value: T) {
     put(name, codec.encodeStart(ops, value).getOrThrow())
 }
@@ -111,6 +127,8 @@ fun <T : Any> CompoundTag.store(name: String, codec: Codec<T>, ops: DynamicOps<T
 
 
 // region LootTable
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun dropFromBlockInteractLootTable(
     level: ServerLevel,
     key: ResourceKey<LootTable>,
@@ -133,7 +151,8 @@ fun dropFromBlockInteractLootTable(
         consumer
     )
 }
-
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun dropFromLootTable(
     level: ServerLevel,
     key: ResourceKey<LootTable>,

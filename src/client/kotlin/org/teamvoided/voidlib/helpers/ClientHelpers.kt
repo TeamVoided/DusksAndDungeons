@@ -10,6 +10,9 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import java.util.function.Consumer
 
+
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun registerBuiltInPack(
     modId: String, id: ResourceLocation,
     packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL,
@@ -21,6 +24,8 @@ fun registerBuiltInPack(
     }
 }
 
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun registerBuiltInPack(
     modId: String, id: ResourceLocation, name: Component,
     packType: ResourcePackActivationType = ResourcePackActivationType.NORMAL,
@@ -32,6 +37,8 @@ fun registerBuiltInPack(
     }
 }
 
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 fun useMod(id: String, consumer: Consumer<ModContainer>) {
     FabricLoader.getInstance().getModContainer(id).ifPresent(consumer)
 }

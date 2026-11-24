@@ -11,7 +11,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.voidlib.api.BlockConnection;
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated()
 @Mixin(WallBlock.class)
 public abstract class WallBlockMixin extends Block {
 

@@ -18,7 +18,8 @@ import org.teamvoided.voidlib.impl.PrimaryModifierRegistryImpl;
 
 import java.util.function.Consumer;
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated()
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
 

@@ -9,6 +9,8 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 class EquipableItem(settings: Properties, val slot: EquipmentSlot = EquipmentSlot.HEAD) : Item(settings), Equipable {
 
     override fun getEquipmentSlot(): EquipmentSlot = slot

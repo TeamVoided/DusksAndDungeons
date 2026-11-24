@@ -10,6 +10,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 class EquipableBlockItem(
     block: Block, properties: Properties,
     val slot: EquipmentSlot = EquipmentSlot.HEAD,

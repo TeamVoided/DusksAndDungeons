@@ -8,10 +8,14 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.mixin.accessors.LootContextParamSetsAccessor
 import java.util.function.UnaryOperator
 
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 object DnDLootContext {
 
     val INTERACTING_ENTITY = contextParam<Entity>("interacting_entity")
 
+    // TODO(del) Update Voidlib Delete this
+    @Deprecated("Use Voidlib")
     val BLOCK_INTERACT = register("block_interact") { builder ->
         builder
             .required(LootContextParams.BLOCK_STATE)

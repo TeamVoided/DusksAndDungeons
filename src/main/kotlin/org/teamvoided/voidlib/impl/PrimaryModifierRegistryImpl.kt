@@ -10,7 +10,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import org.jetbrains.annotations.ApiStatus
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 object PrimaryModifierRegistryImpl {
 
     @ApiStatus.Internal

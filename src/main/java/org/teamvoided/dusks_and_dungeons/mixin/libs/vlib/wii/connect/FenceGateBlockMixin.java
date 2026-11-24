@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.teamvoided.voidlib.api.BlockConnection;
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated()
 @Mixin(FenceGateBlock.class)
 public abstract class FenceGateBlockMixin {
 

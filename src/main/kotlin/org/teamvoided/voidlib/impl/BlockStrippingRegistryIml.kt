@@ -5,7 +5,8 @@ import net.minecraft.world.level.block.state.BlockState
 import org.jetbrains.annotations.ApiStatus
 import java.util.*
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 object BlockStrippingRegistryIml {
 
     @ApiStatus.Internal

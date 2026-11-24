@@ -3,14 +3,19 @@ package org.teamvoided.voidlib.api
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 interface EntityCollisionContextExtension {
-
+    // TODO(del) Update Voidlib Delete this
+    @Deprecated("Use Voidlib")
     fun isHoldingItem(tag: TagKey<Item>): Boolean
 
-    // TODO check if this can be a hit pos instead?
+    // TODO(del) Update Voidlib Delete this
+    @Deprecated("Use Voidlib")
     fun setRecursive(state: Boolean)
 
+    // TODO(del) Update Voidlib Delete this
+    @Deprecated("Use Voidlib")
     fun isRecursive(): Boolean
 
 }

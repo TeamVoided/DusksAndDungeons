@@ -11,7 +11,6 @@ import org.teamvoided.dusks_and_dungeons.block.pumpkin.CarvableBlock
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.init.DnDLootContext.BLOCK_INTERACT
-import org.teamvoided.dusks_and_dungeons.util.block.getId
 import org.teamvoided.voidlib.devin.FabricOutput
 import org.teamvoided.voidlib.devin.FutureProvider
 import java.util.function.BiConsumer
@@ -47,7 +46,7 @@ class BlockInteractLootTablesProvider(o: FabricOutput, p: FutureProvider) :
     }
 
     fun BiConsumer<ResourceKey<LootTable>, LootTable.Builder>.carvedBlock(block: Block, table: LootTable.Builder) {
-        accept(CarvableBlock.crateKey(getId(block)), table)
+        accept(CarvableBlock.crateKey(block), table)
     }
 
 }

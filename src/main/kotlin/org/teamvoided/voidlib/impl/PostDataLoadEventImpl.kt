@@ -3,7 +3,8 @@ package org.teamvoided.voidlib.impl
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import org.teamvoided.voidlib.api.PostDataLoadEvent
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 object PostDataLoadEventImpl {
 
     fun init() {

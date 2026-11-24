@@ -63,7 +63,7 @@ object DnDEmiPlugin : EmiPlugin {
 
     fun addWorldInteraction(registry: EmiRegistry, hiddenItems: Set<Item>) {
         val axes = getAxes()
-        // TODO(vlib) this should be part of the voidlib plugin
+        // TODO(del) Update Voidlib Delete this
         for ((from, to) in BlockStrippingRegistryIml.BLOCK_STATE_MAP) {
             val input = EmiStack.of(from)
             val output = EmiStack.of(to)
@@ -75,6 +75,7 @@ object DnDEmiPlugin : EmiPlugin {
             }
         }
 
+        // TODO(del) Update Voidlib Delete this
         val shears = getShears()
         for (carved in BuiltInRegistries.ITEM.mapNotNull { if (it is BlockItem && it.block is CarvableBlock) it.block as CarvableBlock else null }) {
             val from = (carved as Block).asItem()
@@ -111,8 +112,12 @@ object DnDEmiPlugin : EmiPlugin {
         }
     }
 
+    // TODO(del) Update Voidlib Delete this
+    @Deprecated("Use Voidlib")
     fun synthetic(type: String, name: String): ResourceLocation = id("/$type/$name")
 
+    // TODO(del) Update Voidlib Delete this
+    @Deprecated("Use Voidlib")
     fun safely(name: String, runnable: Runnable) {
         try {
             runnable.run()
@@ -121,6 +126,8 @@ object DnDEmiPlugin : EmiPlugin {
         }
     }
 
+    // TODO(del) Update Voidlib Delete this
+    @Deprecated("Use Voidlib")
     fun EmiRegistry.addRecipeSafe(id: ResourceLocation, supplier: Function<ResourceLocation, EmiRecipe>) {
         try {
             addRecipe(supplier.apply(id))

@@ -8,7 +8,8 @@ import net.minecraft.server.packs.resources.ResourceManagerReloadListener
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.voidlib.api.InvalidateResourcesCallback
 
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated("delete")
 object EventImpl {
 
     fun init() {

@@ -10,7 +10,8 @@ import org.teamvoided.voidlib.impl.PrimaryModifierRegistryImpl
  * PrimaryModifierRegistry allows for registering Attribute Modifier Ids
  * so they display in the same way the vanilla attributes [Item.BASE_ATTACK_DAMAGE_ID], [Item.BASE_ATTACK_SPEED_ID] do in [ItemStack.addModifierTooltip].
  */
-// TODO(vlib) move to voidlib
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 object PrimaryModifierRegistry {
 
     @JvmStatic

@@ -12,10 +12,6 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.phys.Vec3
 
-fun InteractionHand.toSlot(): EquipmentSlot {
-    return if (this == InteractionHand.MAIN_HAND) EquipmentSlot.MAINHAND else EquipmentSlot.OFFHAND
-}
-
 fun ItemStack.hasEnchantment(enchantment: ResourceKey<Enchantment>): Boolean {
     return enchantments.keySet().any { it.`is`(enchantment) }
 }

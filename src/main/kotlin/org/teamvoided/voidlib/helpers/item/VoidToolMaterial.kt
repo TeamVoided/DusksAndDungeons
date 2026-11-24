@@ -9,6 +9,8 @@ import net.minecraft.world.item.Tier
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 
+// TODO(del) Update Voidlib Delete this
+@Deprecated("Use Voidlib")
 @JvmRecord
 data class VoidToolMaterial(
     val durability: Int,
