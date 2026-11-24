@@ -29,9 +29,10 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.block.SixWayFacingBlock
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxZ
+import org.teamvoided.voidlib.api.block.Carvable
 
 open class SmallPumpkinBlock(private val carvedBlock: Block, properties: Properties) : SixWayFacingBlock(properties),
-    CarvableBlock, SimpleWaterloggedBlock {
+    Carvable, SimpleWaterloggedBlock {
 
     init {
         registerDefaultState(
@@ -50,7 +51,7 @@ open class SmallPumpkinBlock(private val carvedBlock: Block, properties: Propert
         return SHAPES[state.getValue(FACING)] ?: Shapes.block()
     }
 
-    override fun getCarvingLootTable(): ResourceKey<LootTable> = CarvableBlock.crateKey(this)
+    override fun getCarvingLootTable(): ResourceKey<LootTable> = Carvable.crateKey(this)
 
     override fun getCarvedBlock(): Block = carvedBlock
 

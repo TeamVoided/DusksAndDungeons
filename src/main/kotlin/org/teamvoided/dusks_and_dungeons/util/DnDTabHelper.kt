@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Blocks
 import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.util.DnDItemLists.stripedWoodLists
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
-import org.teamvoided.voidlib.helpers.mc.addAfter
+import org.teamvoided.voidlib.world.item.addAfter
 
 // I don't want to deal with this one actually
 fun FabricItemGroupEntries.addWoodStuffAndLeafPiles(leaves: Boolean = true) {

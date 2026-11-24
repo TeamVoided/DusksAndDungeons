@@ -12,7 +12,7 @@ import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
 import org.teamvoided.dusks_and_dungeons.init.DnDItems.EVIL_ITEMS
 import org.teamvoided.dusks_and_dungeons.init.tab.WoodsTab
 import org.teamvoided.dusks_and_dungeons.util.*
-import org.teamvoided.voidlib.helpers.mc.*
+import org.teamvoided.voidlib.world.item.*
 
 
 object DnDTabs {

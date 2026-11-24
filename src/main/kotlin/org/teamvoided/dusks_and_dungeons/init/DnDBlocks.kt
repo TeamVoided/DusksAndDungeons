@@ -24,8 +24,8 @@ import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLightLevel
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigLanternBlock
-import org.teamvoided.dusks_and_dungeons.block.big.jar.BigJarBlock
 import org.teamvoided.dusks_and_dungeons.block.big.BigRedstoneLanternBlock
+import org.teamvoided.dusks_and_dungeons.block.big.jar.BigJarBlock
 import org.teamvoided.dusks_and_dungeons.block.big.jar.BigJarWithLayersBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.CandelabraBlock
 import org.teamvoided.dusks_and_dungeons.block.candelabra.EmptyCandelabraBlock
@@ -48,7 +48,7 @@ import org.teamvoided.dusks_and_dungeons.util.getModEntries
 import org.teamvoided.dusks_and_dungeons.util.key
 import org.teamvoided.dusks_and_dungeons.util.register
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
-import org.teamvoided.voidlib.api.BlockStrippingRegistry
+import org.teamvoided.voidlib.api.event.BlockStrippingRegistry
 import org.teamvoided.voidlib.consortium.block.color.ColorConsortium
 import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections
 import org.teamvoided.voidlib.consortium.block.color.VanillaColorCollections.CANDLES

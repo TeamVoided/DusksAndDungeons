@@ -9,9 +9,8 @@ import org.teamvoided.dusks_and_dungeons.client.entity.DnDEntityModelLayers
 import org.teamvoided.dusks_and_dungeons.client.init.*
 import org.teamvoided.dusks_and_dungeons.client.item.CandelabraItemRenderer
 import org.teamvoided.dusks_and_dungeons.client.util.BETTER_BRICK_NAMES
-import org.teamvoided.voidlib.api.InvalidateResourcesCallback
-import org.teamvoided.voidlib.helpers.registerBuiltInPack
-import org.teamvoided.voidlib.impl.EventImpl
+import org.teamvoided.voidlib.client.api.InvalidateResourcesCallback
+import org.teamvoided.voidlib.client.util.registerBuiltInResourcePack
 
 @Suppress("unused")
 object DusksAndDungeonsClient {
@@ -29,9 +28,8 @@ object DusksAndDungeonsClient {
         DnDLevelEventHandlers.init()
         DnDClientNetworking.init()
 
-        registerBuiltInPack(MODID, BETTER_BRICK_NAMES, ResourcePackActivationType.DEFAULT_ENABLED)
+        registerBuiltInResourcePack(MODID, BETTER_BRICK_NAMES, ResourcePackActivationType.DEFAULT_ENABLED)
 
-        EventImpl.init()
         InvalidateResourcesCallback.EVENT.register {
             CandelabraItemRenderer.CANDELABRA_ITEM_CACHE.clear()
         }

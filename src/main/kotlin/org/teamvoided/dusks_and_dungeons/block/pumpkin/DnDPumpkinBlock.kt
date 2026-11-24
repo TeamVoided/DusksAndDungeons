@@ -13,10 +13,11 @@ import net.minecraft.world.level.block.CarvedPumpkinBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.phys.BlockHitResult
+import org.teamvoided.voidlib.api.block.Carvable
 
-open class DnDPumpkinBlock(private val carvedBlock: Block, properties: Properties) : Block(properties), CarvableBlock {
+open class DnDPumpkinBlock(private val carvedBlock: Block, properties: Properties) : Block(properties), Carvable {
 
-    override fun getCarvingLootTable(): ResourceKey<LootTable>  = CarvableBlock.crateKey(this)
+    override fun getCarvingLootTable(): ResourceKey<LootTable> = Carvable.crateKey(this)
 
     override fun getCarvedBlock(): Block = carvedBlock
 

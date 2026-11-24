@@ -12,7 +12,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
 import org.teamvoided.dusks_and_dungeons.util.DnDBlockLists
-import org.teamvoided.voidlib.api.PostDataLoadEvent
+import org.teamvoided.voidlib.api.event.PostDataLoadEvent
 import org.teamvoided.voidlib.helpers.mc.compost
 import org.teamvoided.voidlib.helpers.mc.fuel
 

@@ -13,7 +13,7 @@ import org.teamvoided.dusks_and_dungeons.init.DnDBlocks
 import org.teamvoided.dusks_and_dungeons.init.DnDItems
 import org.teamvoided.voidlib.api.tab.TabSection
 import org.teamvoided.voidlib.api.tab.TabSectionRegistry
-import org.teamvoided.voidlib.helpers.mc.acceptAll
+import org.teamvoided.voidlib.world.item.acceptAll
 
 object WoodsTab {
 

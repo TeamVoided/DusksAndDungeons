@@ -28,7 +28,7 @@ import org.teamvoided.dusks_and_dungeons.item.potion.TintedSplashPotionItem
 import org.teamvoided.dusks_and_dungeons.util.getModEntries
 import org.teamvoided.dusks_and_dungeons.util.key
 import org.teamvoided.dusks_and_dungeons.util.tellWitnessesThatIWasMurdered
-import org.teamvoided.voidlib.helpers.item.EquipableItem
+import org.teamvoided.voidlib.world.item.EquipableItem
 import java.util.function.Consumer
 import java.util.function.Function
 import net.minecraft.world.item.ItemNameBlockItem as NameBlockItem

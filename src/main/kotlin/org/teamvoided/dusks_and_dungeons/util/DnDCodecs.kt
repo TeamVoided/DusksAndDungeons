@@ -8,6 +8,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.tags.TagKey
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.EitherHolder
+import org.teamvoided.voidlib.util.tagKeyStreamCodec
 import java.util.function.Function
 
 // TODO (lib) move some of these codecs to voidlib

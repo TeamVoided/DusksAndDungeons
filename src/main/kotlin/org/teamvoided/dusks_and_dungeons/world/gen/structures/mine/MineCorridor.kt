@@ -24,14 +24,14 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDStructurePiceTypes
-import org.teamvoided.dusks_and_dungeons.util.getBooleanOr
-import org.teamvoided.dusks_and_dungeons.util.getIntOr
-import org.teamvoided.dusks_and_dungeons.util.getMaxY
-import org.teamvoided.dusks_and_dungeons.util.getMinY
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MinePieces.TAG_HAS_PLACED_SPIDER
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MinePieces.TAG_HAS_RAILS
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MinePieces.TAG_HAS_SPIDERS
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MinePieces.TAG_NUM
+import org.teamvoided.voidlib.util.getBooleanOr
+import org.teamvoided.voidlib.util.getIntOr
+import org.teamvoided.voidlib.util.getMaxY
+import org.teamvoided.voidlib.util.getMinY
 
 @Suppress("SameParameterValue")
 class MineCorridor : MinePiece {

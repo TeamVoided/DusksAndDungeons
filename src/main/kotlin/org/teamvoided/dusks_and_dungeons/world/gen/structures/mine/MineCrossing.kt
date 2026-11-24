@@ -13,9 +13,9 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece
 import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDStructurePiceTypes
-import org.teamvoided.dusks_and_dungeons.util.getBooleanOr
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MinePieces.TAG_DIR
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MinePieces.TAG_TWO_FLOORED
+import org.teamvoided.voidlib.util.getBooleanOr
 
 class MineCrossing : MinePiece {
 

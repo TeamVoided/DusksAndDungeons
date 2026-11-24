@@ -37,8 +37,11 @@ import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.teamvoided.dusks_and_dungeons.util.*
-import org.teamvoided.voidlib.helpers.item.giveItem
+import org.teamvoided.dusks_and_dungeons.util.HEAVY_CUBE_TOOLTIP
+import org.teamvoided.dusks_and_dungeons.util.map
+import org.teamvoided.dusks_and_dungeons.util.scheduleFluidTick
+import org.teamvoided.dusks_and_dungeons.util.setBlockAndUpdateFluid
+import org.teamvoided.voidlib.world.item.giveItem
 
 open class CompositeBlock(properties: Properties) : HeavyCoreBlock(properties), BlockPickInteractionAware {
 

@@ -23,7 +23,7 @@ import org.teamvoided.voidlib.consortium.block.color.FullColorConsortium
 import org.teamvoided.voidlib.consortium.block.set.AbstractBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createBlockSet
 import org.teamvoided.voidlib.consortium.block.set.createHeadlessSet
-import org.teamvoided.voidlib.helpers.item.EquipableBlockItem
+import org.teamvoided.voidlib.world.item.EquipableBlockItem
 
 // TODO delete this, it will case problems later
 fun registerHeadEquipable(id: String, block: Block): Block {

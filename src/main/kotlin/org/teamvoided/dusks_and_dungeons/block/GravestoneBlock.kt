@@ -14,7 +14,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.data.tags.DnDBlockTags
-import org.teamvoided.voidlib.api.BlockConnection
+import org.teamvoided.voidlib.api.block.BlockConnection
 
 open class GravestoneBlock(shape: VoxelShape, centerShape: VoxelShape, properties: Properties) :
     HorizontalWaterloggedBlock(properties), BlockConnection {

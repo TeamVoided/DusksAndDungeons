@@ -37,8 +37,8 @@ import org.teamvoided.dusks_and_dungeons.data.registry.DnDThrownItemDefinitions
 import org.teamvoided.dusks_and_dungeons.init.DnDEntityTypes
 import org.teamvoided.dusks_and_dungeons.init.DnDRegistries
 import org.teamvoided.dusks_and_dungeons.item.throwable.ThrownItemDefinition
-import org.teamvoided.voidlib.helpers.item.giveItem
 import org.teamvoided.dusks_and_dungeons.util.key
+import org.teamvoided.voidlib.world.item.giveItem
 import kotlin.jvm.optionals.getOrNull
 
 class ThrownItemStack : ThrowableItemProjectile {

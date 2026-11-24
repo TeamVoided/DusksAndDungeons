@@ -14,7 +14,7 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.teamvoided.dusks_and_dungeons.util.rotate
 import org.teamvoided.dusks_and_dungeons.util.symmetricalBoxY
-import org.teamvoided.voidlib.api.BlockConnection
+import org.teamvoided.voidlib.api.block.BlockConnection
 
 class SconceBlock(properties: Properties) : HorizontalWaterloggedBlock(properties), BlockConnection {
 

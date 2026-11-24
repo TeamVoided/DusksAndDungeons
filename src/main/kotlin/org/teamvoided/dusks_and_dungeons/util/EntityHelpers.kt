@@ -11,6 +11,8 @@ import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.EntityCollisionContext
+import org.teamvoided.voidlib.util.CAN_BE_PICKED
+import org.teamvoided.voidlib.util.getApproximateNearest
 import kotlin.math.max
 import kotlin.math.sqrt
 

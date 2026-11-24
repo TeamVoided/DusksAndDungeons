@@ -13,9 +13,9 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece
 import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext
 import org.teamvoided.dusks_and_dungeons.init.worldgen.DnDStructurePiceTypes
-import org.teamvoided.dusks_and_dungeons.util.read
-import org.teamvoided.dusks_and_dungeons.util.store
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MinePieces.TAG_ENTRANCES
+import org.teamvoided.voidlib.util.read
+import org.teamvoided.voidlib.util.store
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.min
 

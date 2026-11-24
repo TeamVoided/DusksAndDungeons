@@ -13,8 +13,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.level.levelgen.structure.StructurePiece
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType
-import org.teamvoided.dusks_and_dungeons.util.getIntOr
 import org.teamvoided.dusks_and_dungeons.world.gen.structures.mine.MinePieces.TAG_TYPE
+import org.teamvoided.voidlib.util.getIntOr
 import kotlin.math.max
 import kotlin.math.min
 

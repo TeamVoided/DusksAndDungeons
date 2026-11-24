@@ -14,7 +14,6 @@ import org.teamvoided.dusks_and_dungeons.init.*
 import org.teamvoided.dusks_and_dungeons.init.events.DnDEvents
 import org.teamvoided.dusks_and_dungeons.init.misc.DnDFamilies
 import org.teamvoided.dusks_and_dungeons.util.joinEvilBlockItems
-import org.teamvoided.voidlib.init.VEventInit
 
 @Suppress("unused")
 object DusksAndDungeons {
@@ -33,7 +32,6 @@ object DusksAndDungeons {
         joinEvilBlockItems()
         DnDFamilies.init()
 
-        DnDLootContext.init()
         DnDRecipes.init()
 
         DnDDataComponents.init()
@@ -48,9 +46,6 @@ object DusksAndDungeons {
         DnDAttachmentTypes.init()
         DnDNetworking.init()
         DnDEvents.init()
-
-        // TODO(del) Update Voidlib Delete this
-        VEventInit.init()
 
         // Should always be initialized Last
         DnDDebug.init()

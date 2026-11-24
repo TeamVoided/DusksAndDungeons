@@ -3,10 +3,10 @@ package org.teamvoided.dusks_and_dungeons.effect
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
-import org.teamvoided.voidlib.helpers.effects.VoidStatusEffect
+import org.teamvoided.voidlib.world.effect.VMobEffect
 
 @Suppress("unused")
-class MadnessEffect : VoidStatusEffect {
+class MadnessEffect : VMobEffect {
 
     constructor(type: MobEffectCategory, color: Int) : super(type, color)
 

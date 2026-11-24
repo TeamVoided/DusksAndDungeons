@@ -56,10 +56,10 @@ dependencies {
     implementation("de.marhali:json5-java:3.0.0")
     modImplementation(libs.reef)
     include(libs.reef)
+    modImplementation(libs.voidlib)
     modImplementation(libs.voidmill)
     include(libs.voidmill)
     modImplementation(libs.taglighting)
-//    modImplementation(libs.voidlib)
     // Compatibility
     modCompileOnly("maven.modrinth:not-enough-animations:kaNdqksl")
     modImplementation("xaero.map:xaeroworldmap-fabric-1.21.1:1.46.0")
@@ -77,7 +77,7 @@ val uuid = iridium.fetchUUID(username) // Dev & vDev will always be null
 
 loom {
     splitEnvironmentSourceSets()
-    accessWidenerPath.set(File("src/main/resources/${iridium.modId}.classtweaker"))
+//    accessWidenerPath.set(File("src/main/resources/${iridium.modId}.classtweaker"))
 
     mods {
         register(iridium.modId) {
