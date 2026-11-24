@@ -18,7 +18,7 @@ public interface HolderMixin<T> {
     default <Y> Y moreClearHolders(@Nullable Y original) {
         if (original != null && original.equals("[unregistered]")) {
             //noinspection unchecked
-            return (Y) ("[unregistered:" + value().getClass().getSimpleName() + "]");
+            return (Y) ("[unregistered:" + value().getClass().getSimpleName() + ":" + value().toString() + "]");
         }
         return original;
     }
