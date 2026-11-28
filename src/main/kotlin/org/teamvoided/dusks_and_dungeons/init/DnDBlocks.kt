@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 import org.teamvoided.dusks_and_dungeons.DusksAndDungeons.id
+import org.teamvoided.dusks_and_dungeons.api.LightableRegistry
 import org.teamvoided.dusks_and_dungeons.block.*
 import org.teamvoided.dusks_and_dungeons.block.MoonberryVineBlock.Companion.moonberryLightLevel
 import org.teamvoided.dusks_and_dungeons.block.big.BigChainBlock
@@ -925,6 +926,7 @@ object DnDBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(DnDBlockTags.FLAMMABLE_LEAVES, 30, 60)
         FlammableBlockRegistry.getDefaultInstance().add(DnDBlockTags.BOOKSHELVES_THAT_BURN, 30, 20)
 
+        LightableRegistry.resisterLightCondition(CandelabraBlock::canLiteCandelabra)
         VVAliases.init()
     }
 

@@ -38,10 +38,11 @@
     "evil.UtilMixin",
     "libs.taglighting.FallLocationMixin",
     "libs.taglighting.LivingEntityMixin",
+    "libs.vlib.DispenseItemBehaviorMixin",
     "libs.vlib.DispenserBlockMixin",
     "libs.vlib.ItemEntityMixin",
     "libs.vlib.LighterItemMixin",
-    "libs.vlib.tab.CreativeModeTabMixin",
+    "libs.vlib.tab.CreativeModeTabMixin"
   ],
   "client": [],
   "injectors": {
